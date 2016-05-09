@@ -1,8 +1,9 @@
 // Karma configuration
 
 module.exports = function(config) {
-    var NODE_MODULES_ROOT_PATH = 'node_modules/';
     var APP_ROOT_PATH = 'app/';
+    var NODE_MODULES_ROOT_PATH = 'node_modules/';
+    var DEPENDENCIES_ROOT_PATH = 'app/shared/';
 
     config.set({
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -16,11 +17,15 @@ module.exports = function(config) {
         files: [
             /* External dependencies */
             NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
-            APP_ROOT_PATH + 'config/**/*-configuration.js',
-            APP_ROOT_PATH + '**/*-module.js',
+            NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
+            NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
+            NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
+
+            DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
+            DEPENDENCIES_ROOT_PATH + 'st-utils/**/*.js',
             APP_ROOT_PATH + 'app.js',
-            /* Application files */
-            'app/**/*.js', {
+            APP_ROOT_PATH + '**/*-module.js',
+            APP_ROOT_PATH + '**/*.js', {
                 pattern: 'tests/unit/**/*-spec.js',
                 included: true
             }

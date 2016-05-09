@@ -20,6 +20,12 @@
             .pipe(uglify())
             .pipe(minify())
             .pipe(gulp.dest('dist'));
+
+        gulp.src('app/shared/st-utils/**/*.js')
+            .pipe(concat('st-utils.js'))
+            .pipe(uglify())
+            .pipe(minify())
+            .pipe(gulp.dest('dist'));
     });
 
 }());

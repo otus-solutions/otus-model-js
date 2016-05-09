@@ -3,35 +3,30 @@
 
     angular
         .module('otusjs.model')
-        .factory('TextItemFactory', TextItemFactory);
+        .factory('EmailQuestionFactory', EmailQuestionFactory);
 
-    TextItemFactory.$inject = ['LabelFactory'];
-
-    function TextItemFactory(LabelFactory) {
+    function EmailQuestionFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new TextItem(templateID, prototype, LabelFactory);
+            return new EmailQuestion(templateID, prototype);
         }
 
         return self;
     }
 
-    function TextItem(templateID, prototype, LabelFactory) {
+    function EmailQuestion(templateID, prototype) {
         var self = this;
 
         self.extents = prototype.objectType;
-        self.objectType = 'TextItem';
+        self.objectType = 'EmailQuestion';
         self.templateID = templateID;
         self.dataType = 'String';
-        self.value = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
-        };
+        self.label = prototype.label;
+        self.metadata = prototype.metadata;
 
         self.toJson = toJson;
 
@@ -42,7 +37,8 @@
             json.objectType = self.objectType;
             json.templateID = self.templateID;
             json.dataType = self.dataType;
-            json.value = self.value;
+            json.label = self.label;
+            json.metadata = self.metadata;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
