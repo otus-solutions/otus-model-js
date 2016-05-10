@@ -15,13 +15,13 @@
     });
 
     gulp.task('compress', function() {
-        gulp.src('app/**/*.js')
+        gulp.src(['app/**/*-module.js', 'app/**/*.js', '!app/shared/**'])
             .pipe(concat('otus-model.js'))
             .pipe(uglify())
             .pipe(minify())
             .pipe(gulp.dest('dist'));
 
-        gulp.src(['app/shared/st-utils/*-module.js','app/shared/st-utils/*.js'])
+        gulp.src(['app/shared/st-utils/*-module.js', 'app/shared/st-utils/*.js'])
             .pipe(concat('st-utils.js'))
             .pipe(uglify())
             .pipe(minify())
