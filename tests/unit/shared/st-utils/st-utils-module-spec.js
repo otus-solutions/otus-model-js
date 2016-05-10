@@ -1,20 +1,19 @@
 describe('Studio Utils Test Suite', function() {
-
-    var $injector;
     var Mock = {};
 
     beforeEach(function() {
-        $injector = angular.injector(['utils']);
+        module('utils');
+
+        inject(function(_$injector_) {
+            service = _$injector_.get('UUIDService');
+            SurveyUUIDGenerator = _$injector_.get('SurveyUUIDGenerator', {
+                '$window': _$injector_.get('$window'),
+                'UUIDService': _$injector_.get('UUIDService')
+            });
+        });
     });
 
     describe('UUID Service when UUIDService.generateUUID()', function() {
-        var service;
-
-        beforeEach(function() {
-            $injector = angular.injector(['utils']);
-            service = $injector.get('UUID');
-        });
-
         it('should returns a random UUID', function() {
             expect(service.generateUUID()).not.toBeNull();
         });
@@ -26,20 +25,11 @@ describe('Studio Utils Test Suite', function() {
 
             expect(uuid.v1).toHaveBeenCalled();
         });
+
     });
 
+
     describe('SurveyUUIDGenerator Service when SurveyUUIDGenerator.generateSurveyUUID()', function() {
-
-        beforeEach(function() {
-            module('utils');
-
-            inject(function(_$injector_) {
-                SurveyUUIDGenerator = _$injector_.get('SurveyUUIDGenerator', {
-                    '$window': mockWindow(_$injector_),
-                    'UUID': mockUUID(_$injector_)
-                });
-            });
-        });
 
         it('should returns a encoded UUID', function() {
             expect(SurveyUUIDGenerator.generateSurveyUUID()).not.toBeNull();
@@ -47,7 +37,7 @@ describe('Studio Utils Test Suite', function() {
 
         it('should returns a encoded UUID with userUUID, repositoryUUID, surveyUUID', function() {
             var decodedUUID = Base64.decode(SurveyUUIDGenerator.generateSurveyUUID());
-            expect(decodedUUID).toContain("userUUID","repositoryUUID","surveyUUID");
+            expect(decodedUUID).toContain("userUUID", "repositoryUUID", "surveyUUID");
         });
 
         it('should calls a base64 encoded function', function() {
@@ -59,15 +49,5 @@ describe('Studio Utils Test Suite', function() {
         });
 
     });
-
-    function mockWindow($injector) {
-        Mock.$window = $injector.get('$window');
-        return Mock.$window;
-    }
-
-    function mockUUID(_$injector_) {
-        Mock.UUID = $injector.get('UUID');
-        return Mock.UUID;
-    }
 
 });
