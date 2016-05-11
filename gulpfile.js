@@ -17,14 +17,12 @@
     gulp.task('compress', function() {
         gulp.src(['app/**/*-module.js', 'app/**/*.js', '!app/shared/**'])
             .pipe(concat('otus-model.js'))
-            .pipe(uglify())
-            .pipe(minify())
+            .pipe(minify({'mangle' : false}))
             .pipe(gulp.dest('dist'));
 
         gulp.src(['app/shared/st-utils/*-module.js', 'app/shared/st-utils/*.js'])
             .pipe(concat('st-utils.js'))
-            .pipe(uglify())
-            .pipe(minify())
+            .pipe(minify({'mangle' : false}))
             .pipe(gulp.dest('dist'));
     });
 
