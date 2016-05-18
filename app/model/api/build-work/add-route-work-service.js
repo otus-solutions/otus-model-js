@@ -3,22 +3,22 @@
 
     angular
         .module('otusjs.model')
-        .service('AddRouteService', AddRouteService);
+        .service('AddRouteConditionService', AddRouteConditionService);
 
-    AddRouteService.$inject = [
+    AddRouteConditionService.$inject = [
         'WorkspaceService',
-        'RouteFactory'
+        'RouteConditionFactory'
     ];
 
-    function AddRouteService(WorkspaceService, RouteFactory) {
+    function AddRouteConditionService(WorkspaceService, RouteConditionFactory) {
         var self = this;
 
         self.execute = execute;
 
-        function execute(routeData) {
-            var route = RouteFactory.create(routeData.name, routeData.parentNavigation.origin, routeData.destination);
-            routeData.parentNavigation.addRoute(route);
-            return route;
+        function execute(conditionName, route) {
+            var routeCondition = RouteConditionFactory.create(conditionName);
+            route.addCondition(routeCondition);
+            return routeCondition;
         }
     }
 
