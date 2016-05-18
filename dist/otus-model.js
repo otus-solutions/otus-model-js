@@ -1,15 +1,15 @@
 (function() {
     'use strict';
 
-    angular.module('otusjs.model', []);
+    angular
+        .module('otusjs.navigation', []);
 
 }());
 
 (function() {
     'use strict';
 
-    angular
-        .module('otusjs.navigation', []);
+    angular.module('otusjs.model', []);
 
 }());
 
@@ -386,153 +386,6 @@
 
         function removeLastOption() {
             self.option.splice(-1, 1);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.model')
-        .factory('ImageItemFactory', ImageItemFactory);
-
-    ImageItemFactory.$inject = ['LabelFactory'];
-
-    function ImageItemFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(templateID, prototype) {
-            return new ImageItem(templateID, prototype, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function ImageItem(templateID, prototype, LabelFactory) {
-        var self = this;
-
-        self.extents = prototype.objectType;
-        self.objectType = 'ImageItem';
-        self.templateID = templateID;
-        self.dataType = 'String';
-        self.url = '';
-        self.footer = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
-        };
-
-        self.toJson = toJson;
-
-        function toJson() {
-            var json = {};
-
-            json.extents = self.extents;
-            json.objectType = self.objectType;
-            json.templateID = self.templateID;
-            json.dataType = self.dataType;
-            json.url = self.url;
-            json.footer = self.footer;
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.model')
-        .factory('PageItemFactory', PageItemFactory);
-
-    PageItemFactory.$inject = [
-        'TextItemFactory',
-        'ImageItemFactory'
-    ];
-
-    function PageItemFactory(TextItemFactory, ImageItemFactory) {
-        var self = this,
-
-            factoryMap = {
-                'TextItem': TextItemFactory,
-                'ImageItem': ImageItemFactory,
-            };
-
-        /* Public interface */
-        self.create = create;
-
-        function create(itemType, templateID) {
-            var item = new PageItem(templateID);
-            return factoryMap[itemType].create(templateID, item);
-        }
-
-        return self;
-    }
-
-    function PageItem(templateID) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'PageItem';
-        self.templateID = templateID;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.model')
-        .factory('TextItemFactory', TextItemFactory);
-
-    TextItemFactory.$inject = ['LabelFactory'];
-
-    function TextItemFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(templateID, prototype) {
-            return new TextItem(templateID, prototype, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function TextItem(templateID, prototype, LabelFactory) {
-        var self = this;
-
-        self.extents = prototype.objectType;
-        self.objectType = 'TextItem';
-        self.templateID = templateID;
-        self.dataType = 'String';
-        self.value = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
-        };
-
-        self.toJson = toJson;
-
-        function toJson() {
-            var json = {};
-
-            json.extents = self.extents;
-            json.objectType = self.objectType;
-            json.templateID = self.templateID;
-            json.dataType = self.dataType;
-            json.value = self.value;
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 
@@ -1069,6 +922,153 @@
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
+
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.model')
+        .factory('ImageItemFactory', ImageItemFactory);
+
+    ImageItemFactory.$inject = ['LabelFactory'];
+
+    function ImageItemFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(templateID, prototype) {
+            return new ImageItem(templateID, prototype, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function ImageItem(templateID, prototype, LabelFactory) {
+        var self = this;
+
+        self.extents = prototype.objectType;
+        self.objectType = 'ImageItem';
+        self.templateID = templateID;
+        self.dataType = 'String';
+        self.url = '';
+        self.footer = {
+            ptBR: LabelFactory.create(),
+            enUS: LabelFactory.create(),
+            esES: LabelFactory.create()
+        };
+
+        self.toJson = toJson;
+
+        function toJson() {
+            var json = {};
+
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.templateID = self.templateID;
+            json.dataType = self.dataType;
+            json.url = self.url;
+            json.footer = self.footer;
+
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.model')
+        .factory('PageItemFactory', PageItemFactory);
+
+    PageItemFactory.$inject = [
+        'TextItemFactory',
+        'ImageItemFactory'
+    ];
+
+    function PageItemFactory(TextItemFactory, ImageItemFactory) {
+        var self = this,
+
+            factoryMap = {
+                'TextItem': TextItemFactory,
+                'ImageItem': ImageItemFactory,
+            };
+
+        /* Public interface */
+        self.create = create;
+
+        function create(itemType, templateID) {
+            var item = new PageItem(templateID);
+            return factoryMap[itemType].create(templateID, item);
+        }
+
+        return self;
+    }
+
+    function PageItem(templateID) {
+        var self = this;
+
+        self.extents = 'StudioObject';
+        self.objectType = 'PageItem';
+        self.templateID = templateID;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.model')
+        .factory('TextItemFactory', TextItemFactory);
+
+    TextItemFactory.$inject = ['LabelFactory'];
+
+    function TextItemFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(templateID, prototype) {
+            return new TextItem(templateID, prototype, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function TextItem(templateID, prototype, LabelFactory) {
+        var self = this;
+
+        self.extents = prototype.objectType;
+        self.objectType = 'TextItem';
+        self.templateID = templateID;
+        self.dataType = 'String';
+        self.value = {
+            ptBR: LabelFactory.create(),
+            enUS: LabelFactory.create(),
+            esES: LabelFactory.create()
+        };
+
+        self.toJson = toJson;
+
+        function toJson() {
+            var json = {};
+
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.templateID = self.templateID;
+            json.dataType = self.dataType;
+            json.value = self.value;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
