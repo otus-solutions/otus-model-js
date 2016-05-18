@@ -8,7 +8,233 @@
 (function() {
     'use strict';
 
-    angular.module('otusjs', ['otusjs.model']);
+    angular
+        .module('otusjs.navigation', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs', [
+            'otusjs.model',
+            'otusjs.navigation',
+            'utils'
+        ]);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .factory('NavigationAddFactory', NavigationAddFactory);
+
+    NavigationAddFactory.$inject = ['NavigationContainerService'];
+
+    function NavigationAddFactory(NavigationContainerService) {
+        var self = this;
+
+        /* Public interdace */
+        self.create = create;
+
+        function create(questionContainer) {
+            return new NavigationAdd(questionContainer, NavigationContainerService);
+        }
+
+        return self;
+    }
+
+    function NavigationAdd(questionContainer, NavigationContainerService) {
+        var self = this;
+
+        self.questionContainer = questionContainer;
+
+        /* Public methods */
+        self.execute = execute;
+
+        function execute() {
+            var questionCount = self.questionContainer.length;
+
+            if (questionCount > 1) {
+                var question = self.questionContainer[questionCount - 2];
+                var questionDestination = self.questionContainer[questionCount - 1];
+
+                NavigationContainerService.createNavigationTo(question.templateID, questionDestination.templateID);
+            }
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('NavigationContainerService', NavigationContainerService);
+
+    NavigationContainerService.$inject = ['NavigationFactory'];
+
+    function NavigationContainerService(NavigationFactory) {
+        var self = this;
+        var navigationList = []; // TODO: To implement Immutable collection
+
+        /* Public methods */
+        self.init = init;
+        self.manageNavigation = manageNavigation;
+        self.getNavigationByOrigin = getNavigationByOrigin;
+        self.getNavigationList = getNavigationList;
+        self.getNavigationListSize = getNavigationListSize;
+        self.existsNavigationTo = existsNavigationTo;
+        self.createNavigationTo = createNavigationTo;
+        self.removeNavigationOf = removeNavigationOf;
+        self.removeNavigationByIndex = removeNavigationByIndex;
+        self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+
+        function init() {
+            navigationList = [];
+        }
+
+        function manageNavigation(navigationToManage) {
+            navigationList = navigationToManage;
+        }
+
+        function getNavigationList() {
+            return navigationList;
+        }
+
+        function getNavigationListSize() {
+            return navigationList.length;
+        }
+
+        function getNavigationByOrigin(origin) {
+            var filter = navigationList.filter(function(navigation) {
+                return findByOrigin(navigation, origin);
+            });
+
+            return filter[0];
+        }
+
+        function existsNavigationTo(origin) {
+            return (getNavigationByOrigin(origin)) ? true : false;
+        }
+
+        function createNavigationTo(origin, destination) {
+            navigationList.push(NavigationFactory.create(origin, destination));
+        }
+
+        function removeNavigationOf(questionID) {
+            var navigationToRemove = navigationList.filter(function(navigation) {
+                return findByOrigin(navigation, questionID);
+            });
+
+            var indexToRemove = navigationList.indexOf(navigationToRemove[0]);
+            if (indexToRemove > -1) navigationList.splice(indexToRemove, 1);
+        }
+
+        function removeNavigationByIndex(indexToRemove) {
+            navigationList.splice(indexToRemove, 1);
+        }
+
+        function removeCurrentLastNavigation(indexToRemove) {
+            navigationList.splice(-1, 1);
+        }
+
+        /* Private methods */
+        function findByOrigin(navigation, questionID) {
+            return navigation.origin === questionID;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('NavigationManagerService', NavigationManagerService);
+
+    NavigationManagerService.$inject = [
+        'NavigationContainerService',
+        'NavigationAddFactory',
+        'NavigationRemoveFactory'
+    ];
+
+    function NavigationManagerService(NavigationContainerService, NavigationAddFactory, NavigationRemoveFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.init = init;
+        self.getNavigationList = getNavigationList;
+        self.getNavigationByOrigin = getNavigationByOrigin;
+        self.addNavigation = addNavigation;
+        self.removeNavigation = removeNavigation;
+
+        function init() {
+            NavigationContainerService.init();
+        }
+
+        function getNavigationList() {
+            return NavigationContainerService.getNavigationList();
+        }
+
+        function getNavigationByOrigin(origin) {
+            return NavigationContainerService.getNavigationByOrigin(origin);
+        }
+
+        function addNavigation(questionContainer) {
+            var update = NavigationAddFactory.create(questionContainer);
+            update.execute();
+        }
+
+        function removeNavigation(templateID) {
+            var update = NavigationRemoveFactory.create(templateID);
+            update.execute();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .factory('NavigationRemoveFactory', NavigationRemoveFactory);
+
+    NavigationRemoveFactory.$inject = ['NavigationContainerService'];
+
+    function NavigationRemoveFactory(NavigationContainerService) {
+        var self = this;
+
+        /* Public interdace */
+        self.create = create;
+
+        function create(templateID) {
+            return new NavigationRemove(templateID, NavigationContainerService);
+        }
+
+        return self;
+    }
+
+    function NavigationRemove(templateID, NavigationContainerService) {
+        var self = this;
+
+        /* Public methods */
+        self.execute = execute;
+
+        function execute() {
+            if (NavigationContainerService.existsNavigationTo(templateID)) {
+                NavigationContainerService.removeNavigationOf(templateID);
+            } else {
+                NavigationContainerService.removeCurrentLastNavigation();
+            }
+        }
+    }
 
 }());
 
@@ -969,10 +1195,10 @@
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
         'SurveyUUIDGenerator',
-        'NavigationFactory'
+        'NavigationManagerService'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationFactory) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService) {
         var self = this;
 
         /* Public interdace */
@@ -982,14 +1208,13 @@
             var metainfo = SurveyMetaInfoFactory.create();
             var identity = SurveyIdentityFactory.create(name, acronym);
 
-            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), NavigationFactory);
+            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), NavigationManagerService);
         }
 
         return self;
     }
 
-    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationFactory) {
-
+    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -997,22 +1222,20 @@
         self.oid = uuid;
         self.identity = surveyIdentity;
         self.metainfo = surveyMetainfo;
-        self.questionContainer = {};
-        self.navigationList = [];
+        self.questionContainer = [];
+        self.NavigationManager = NavigationManagerService;
 
-        self.questionsCount = questionsCount;
+        self.NavigationManager.init();
+
+        /* Public methods */
         self.addQuestion = addQuestion;
+        self.questionsCount = questionsCount;
         self.removeQuestion = removeQuestion;
         self.updateQuestion = updateQuestion;
         self.fetchQuestionById = fetchQuestionById;
-        self.addNavigation = addNavigation;
-        self.removeNavigation = removeNavigation;
-        self.listNavigations = listNavigations;
-        self.listNavigation = listNavigation;
-        self.listNavigationByIndex = listNavigationByIndex;
-        self.fetchNavigationByOrigin = fetchNavigationByOrigin;
         self.toJson = toJson;
 
+        /* Question container methods */
         function questionsCount() {
             var propertyList = Object.keys(self.questionContainer).filter(function filterOnlyFields(property) {
                 return ((typeof property) != 'function');
@@ -1021,13 +1244,19 @@
         }
 
         function addQuestion(question) {
-            self.questionContainer[question.templateID] = question;
-            self.addNavigation(NavigationFactory.create(question.templateID));
+            self.questionContainer.push(question);
+            self.NavigationManager.addNavigation(self.questionContainer);
         }
 
-        function removeQuestion(question) {
-            delete self.questionContainer[question.templateID];
-            self.removeNavigation(question.templateID);
+        function removeQuestion(templateID) {
+            var questionToRemove = self.questionContainer.filter(function(question) {
+                return question.templateID === templateID;
+            });
+
+            var indexToRemove = self.questionContainer.indexOf(questionToRemove[0]);
+            if (indexToRemove > -1) self.questionContainer.splice(indexToRemove, 1);
+
+            self.NavigationManager.removeNavigation(questionToRemove[0].templateID);
         }
 
         function updateQuestion(question) {
@@ -1035,61 +1264,11 @@
         }
 
         function fetchQuestionById(templateID) {
-            return self.questionContainer[templateID];
-        }
-
-        function listNavigations() {
-            var clone = [];
-
-            self.navigationList.forEach(function(navigation) {
-                clone.push(navigation);
+            var fetch = self.questionContainer.filter(function(question) {
+                return question.templateID === templateID;
             });
 
-            return clone;
-        }
-
-        function listNavigation(criteria) {
-            return fetchByOrigin(criteria);
-        }
-
-        function listNavigationByIndex(index) {
-            return fetchByIndex(index);
-        }
-
-        function fetchNavigationByOrigin(origin) {
-            var filteredNavigation = self.navigationList.filter(function(navigation) {
-                return navigation.origin === origin;
-            });
-
-            return filteredNavigation[0];
-        }
-
-        function addNavigation(navigation) {
-            navigation.index = self.navigationList.length;
-            self.navigationList.push(navigation);
-        }
-
-        function removeNavigation(origin) {
-            var navigationToRemove = fetchByOrigin(origin);
-
-            var indexToRemove = self.navigationList.indexOf(navigationToRemove);
-            if (indexToRemove > -1) self.navigationList.splice(indexToRemove, 1);
-        }
-
-        function fetchByOrigin(origin) {
-            var filteredNavigation = self.navigationList.filter(function(navigation) {
-                return navigation.origin === origin;
-            });
-
-            return filteredNavigation[0];
-        }
-
-        function fetchByIndex(index) {
-            var filteredNavigation = self.navigationList.filter(function(navigation) {
-                return navigation.index === index;
-            });
-
-            return filteredNavigation[0];
+            return fetch[0];
         }
 
         function toJson() {
@@ -1100,12 +1279,12 @@
             json.oid = self.oid;
             json.identity = self.identity.toJson();
             json.metainfo = self.metainfo.toJson();
-            json.questionContainer = {};
+            json.questionContainer = [];
             for (var question in self.questionContainer) {
-                json.questionContainer[question] = self.questionContainer[question].toJson();
+                json.questionContainer.push(self.questionContainer[question].toJson());
             }
             json.navigationList = [];
-            self.navigationList.forEach(function(navigation) {
+            NavigationManagerService.getNavigationList().forEach(function(navigation) {
                 json.navigationList.push(navigation.toJson());
             });
 
@@ -1323,22 +1502,22 @@
 
     angular
         .module('otusjs.model')
-        .service('AddRouteService', AddRouteService);
+        .service('AddRouteConditionService', AddRouteConditionService);
 
-    AddRouteService.$inject = [
+    AddRouteConditionService.$inject = [
         'WorkspaceService',
-        'RouteFactory'
+        'RouteConditionFactory'
     ];
 
-    function AddRouteService(WorkspaceService, RouteFactory) {
+    function AddRouteConditionService(WorkspaceService, RouteConditionFactory) {
         var self = this;
 
         self.execute = execute;
 
-        function execute(routeData) {
-            var route = RouteFactory.create(routeData.name, routeData.parentNavigation.origin, routeData.destination);
-            routeData.parentNavigation.addRoute(route);
-            return route;
+        function execute(conditionName, route) {
+            var routeCondition = RouteConditionFactory.create(conditionName);
+            route.addCondition(routeCondition);
+            return routeCondition;
         }
     }
 
@@ -1353,25 +1532,18 @@
 
     AddRuleService.$inject = [
         'WorkspaceService',
-        'RuleFactory',
-        'RouteConditionFactory'
+        'RuleFactory'
     ];
 
-    function AddRuleService(WorkspaceService, RuleFactory, RouteConditionFactory) {
+    function AddRuleService(WorkspaceService, RuleFactory) {
         var self = this;
 
         self.execute = execute;
 
-        function execute(eventSource) {
-            var rule = RuleFactory.create(eventSource.when(), eventSource.operator(), eventSource.answer());
-
-            if (eventSource.route.getConditionSetSize() === 0) {
-                var newCondition = RouteConditionFactory.create('Condição');
-                eventSource.route.addCondition(newCondition);
-            }
-            eventSource.route.getConditionSet()[0].addRule(rule);
-
-            return rule;
+        function execute(ruleData, route) {
+            var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
+            route.conditionSet[0].addRule(newRule);
+            return newRule;
         }
     }
 
@@ -1428,7 +1600,7 @@
         self.execute = execute;
 
         function execute(question, survey) {
-            survey.removeQuestion(question);
+            survey.removeQuestion(question.templateID);
         }
     }
 
@@ -1448,6 +1620,25 @@
 
         function execute(routeData) {
             routeData.parentNavigation.removeRoute(routeData.name);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.model')
+        .service('RemoveRuleService', RemoveRuleService);
+
+    function RemoveRuleService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(rule, route) {
+            route.conditionSet[0].removeRule(rule);
         }
     }
 
@@ -1486,27 +1677,37 @@
         .module('otusjs.model')
         .factory('NavigationFactory', NavigationFactory);
 
-    function NavigationFactory() {
+    NavigationFactory.$inject = ['RouteFactory'];
+
+    function NavigationFactory(RouteFactory) {
         var self = this;
 
         self.create = create;
 
-        function create(origin) {
-            return new Navigation(origin);
+        function create(origin, destination) {
+            var navigation = new Navigation(origin);
+
+            if (destination) {
+                var defaultRoute = RouteFactory.create('1', navigation.origin, destination);
+                navigation.addRoute(defaultRoute);
+            }
+
+            return navigation;
         }
 
         return self;
     }
 
-    function Navigation(navigationOrigin) {
+    function Navigation(origin) {
         var self = this;
 
+        /* Object properties */
         self.extents = 'StudioObject';
         self.objectType = 'Navigation';
-        self.index = null;
-        self.origin = navigationOrigin;
+        self.origin = origin;
         self.routes = [];
 
+        /* Public methods */
         self.listRoutes = listRoutes;
         self.addRoute = addRoute;
         self.removeRoute = removeRoute;
@@ -1550,7 +1751,6 @@
 
             json.extents = self.extents;
             json.objectType = self.objectType;
-            json.index = self.index;
             json.origin = self.origin;
             json.routes = [];
             self.routes.forEach(function(route) {
@@ -1578,7 +1778,7 @@
         self.create = create;
 
         function create(name) {
-            return new RouteCondition(name.replace(' ', '_'));
+            return new RouteCondition(name);
         }
 
         return self;
@@ -1687,6 +1887,7 @@
         }
 
         function addCondition(condition) {
+            condition.name += getConditionSetSize() + 1;
             self.conditionSet.push(condition);
         }
 
@@ -1807,6 +2008,7 @@
         function toJson() {
             var json = {
                 when: when,
+                operator: operator,
                 answer: answer
             };
 

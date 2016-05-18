@@ -1,21 +1,23 @@
 describe('Survey', function() {
     var Mock = {};
     var survey;
+    var ORIGIN_1 = 'ORIGIN_1';
+    var ORIGIN_2 = 'ORIGIN_2';
 
     beforeEach(function() {
         module('otusjs');
-        module('utils');
 
         mockDatetime();
         mockIdentityData();
 
         inject(function(_$injector_) {
-            mockNavigation(_$injector_);
+            mockQuestions(_$injector_);
 
             factory = _$injector_.get('SurveyFactory', {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
-                'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_)
+                'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_),
+                'NavigationManagerService': mockNavigationManagerService(_$injector_)
             });
 
             mockJson();
@@ -24,63 +26,62 @@ describe('Survey', function() {
         });
     });
 
-    describe('listNavigations method', function() {
+    describe('question management', function() {
 
-        beforeEach(function() {
-            survey.addNavigation(Mock.navigation);
+        describe('addQuestion method', function() {
+
+            it('should add a question on survey', function() {
+                survey.addQuestion(Mock.question);
+
+                expect(survey.questionsCount()).toBeGreaterThan(0);
+            });
+
+            it('should call NavigationManagerService.addNavigation with new question ID', function() {
+                survey.addQuestion(Mock.question);
+
+                expect(Mock.NavigationManagerService.addNavigation).toHaveBeenCalled();
+            });
+
         });
 
-        it('should return an array of navigations', function() {
-            expect(survey.listNavigations()).toEqual(jasmine.any(Array));
+        describe('removeQuestion method', function() {
+
+            beforeEach(function() {
+                survey.addQuestion(Mock.question);
+            });
+
+            it('should remove a question on survey', function() {
+                survey.removeQuestion(Mock.question.templateID);
+                expect(survey.questionsCount()).toBe(0);
+            });
+
+            it('should call NavigationManagerService.removeNavigation with new question ID', function() {
+                survey.removeQuestion(Mock.question.templateID);
+
+                expect(Mock.NavigationManagerService.removeNavigation).toHaveBeenCalledWith(Mock.question.templateID);
+            });
+
         });
 
-    });
+        describe('fetchQuestionById method', function() {
 
-    describe('listNavigation method', function() {
+            beforeEach(function() {
+                survey.addQuestion(Mock.question);
+                survey.addQuestion(Mock.questionTwo);
+            });
 
-        beforeEach(function() {
-            survey.addNavigation(Mock.navigation);
-        });
-
-        it('should return a navigation by origin', function() {
-            expect(survey.listNavigation(Mock.ORIGIN)).toEqual(Mock.navigation);
-        });
-
-    });
-
-    describe('addNavigation method', function() {
-
-        beforeEach(function() {
-            survey.addNavigation(Mock.navigation);
-        });
-
-        it('should attach a new navigation in survey.navigation', function() {
-            expect(survey.listNavigations().length).toBe(1);
-        });
-
-    });
-
-    describe('removeNavigation method', function() {
-
-        beforeEach(function() {
-            survey.addNavigation(Mock.navigation);
-        });
-
-        it('should remove the navigation from survey.navigation by origin', function() {
-            survey.removeNavigation(Mock.ORIGIN);
-
-            expect(survey.listNavigations().length).toBe(0);
-        });
-
-    });
-
-    describe('toJson method', function() {
-
-        it('should return a well formatted json based on Survey', function() {
-            expect(survey.toJson()).toEqual(Mock.json);
+            it('should fetch the correct question on survey', function() {
+                expect(survey.fetchQuestionById(Mock.questionTwo.templateID)).toBe(Mock.questionTwo);
+                expect(survey.fetchQuestionById(Mock.questionTwo.templateID)).not.toBe(Mock.question);
+            });
         });
 
     });
+
+    function mockQuestions($injector) {
+        Mock.question = $injector.get('QuestionFactory').create('IntegerQuestion', ORIGIN_1);
+        Mock.questionTwo = $injector.get('QuestionFactory').create('CalendarQuestion', ORIGIN_2);
+    }
 
     function mockSurveyIdentityFactory($injector) {
         Mock.SurveyIdentityFactory = $injector.get('SurveyIdentityFactory');
@@ -98,15 +99,35 @@ describe('Survey', function() {
         return Mock.SurveyUUIDGenerator;
     }
 
+    function mockNavigationAddFactory($injector) {
+        Mock.NavigationAddFactory = $injector.get('NavigationAddFactory');
+
+        spyOn(Mock.NavigationAddFactory, 'create');
+
+        return Mock.NavigationAddFactory;
+    }
+
+    function mockNavigationRemoveFactory($injector) {
+        Mock.NavigationRemoveFactory = $injector.get('NavigationRemoveFactory');
+
+        spyOn(Mock.NavigationRemoveFactory, 'create');
+
+        return Mock.NavigationRemoveFactory;
+    }
+
+    function mockNavigationManagerService($injector) {
+        Mock.NavigationManagerService = $injector.get('NavigationManagerService');
+
+        spyOn(Mock.NavigationManagerService, 'addNavigation');
+        spyOn(Mock.NavigationManagerService, 'removeNavigation');
+
+        return Mock.NavigationManagerService;
+    }
+
     function mockIdentityData() {
         Mock.NAME = 'NAME';
         Mock.ACRONYM = 'ACRONYM';
         Mock.VERSION = 'VERSION';
-    }
-
-    function mockNavigation($injector) {
-        Mock.ORIGIN = 'ORIGIN';
-        Mock.navigation = $injector.get('NavigationFactory').create(Mock.ORIGIN);
     }
 
     function mockDatetime() {
@@ -135,7 +156,7 @@ describe('Survey', function() {
                 creationDatetime: Mock.now,
                 otusStudioVersion: ''
             },
-            questionContainer: {},
+            questionContainer: [],
             navigationList: []
         });
     }
