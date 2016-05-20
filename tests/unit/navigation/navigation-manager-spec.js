@@ -11,7 +11,7 @@ describe('NavigationManagerService', function() {
             service = _$injector_.get('NavigationManagerService', {
                 NavigationContainerService: mockNavigationContainerService(_$injector_),
                 NavigationAddFactory: mockNavigationAddFactory(_$injector_),
-                NavigationRemoveFactory: mockNavigationRemoveFactory(_$injector_)
+                NavigationRemoveService: mockNavigationRemoveService(_$injector_)
             });
         });
     });
@@ -94,16 +94,10 @@ describe('NavigationManagerService', function() {
 
     describe('removeNavigation method', function() {
 
-        it('should call NavigationRemoveFactory.create method', function() {
-            service.removeNavigation();
-
-            expect(Mock.NavigationRemoveFactory.create).toHaveBeenCalled();
-        });
-
         it('should call NavigationRemove.execute method', function() {
             service.removeNavigation(Mock.questionOne);
 
-            expect(Mock.NavigationRemove.execute).toHaveBeenCalled();
+            expect(Mock.NavigationRemoveService.execute).toHaveBeenCalled();
         });
 
     });
@@ -135,14 +129,12 @@ describe('NavigationManagerService', function() {
         return Mock.NavigationAddFactory;
     }
 
-    function mockNavigationRemoveFactory($injector) {
-        Mock.NavigationRemoveFactory = $injector.get('NavigationRemoveFactory');
-        Mock.NavigationRemove = $injector.get('NavigationRemoveFactory').create([]);
+    function mockNavigationRemoveService($injector) {
+        Mock.NavigationRemoveService = $injector.get('NavigationRemoveService');
 
-        spyOn(Mock.NavigationRemoveFactory, 'create').and.returnValue(Mock.NavigationRemove);
-        spyOn(Mock.NavigationRemove, 'execute');
+        spyOn(Mock.NavigationRemoveService, 'execute');
 
-        return Mock.NavigationRemoveFactory;
+        return Mock.NavigationRemoveService;
     }
 
 });

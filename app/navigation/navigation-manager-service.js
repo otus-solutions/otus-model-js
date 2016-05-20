@@ -8,10 +8,10 @@
     NavigationManagerService.$inject = [
         'NavigationContainerService',
         'NavigationAddFactory',
-        'NavigationRemoveFactory'
+        'NavigationRemoveService'
     ];
 
-    function NavigationManagerService(NavigationContainerService, NavigationAddFactory, NavigationRemoveFactory) {
+    function NavigationManagerService(NavigationContainerService, NavigationAddFactory, NavigationRemoveService) {
         var self = this;
 
         /* Public interface */
@@ -39,8 +39,7 @@
         }
 
         function removeNavigation(templateID) {
-            var update = NavigationRemoveFactory.create(templateID);
-            update.execute();
+            NavigationRemoveService.execute(templateID);
         }
     }
 

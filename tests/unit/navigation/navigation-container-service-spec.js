@@ -11,6 +11,8 @@ describe('NavigationContainerService', function() {
             service = _$injector_.get('NavigationContainerService', {
                 NavigationFactory: mockNavigationFactory(_$injector_)
             });
+
+            mockNavigationToManage(_$injector_);
         });
     });
 
@@ -25,6 +27,18 @@ describe('NavigationContainerService', function() {
             expect(service.getNavigationListSize()).toBe(4);
             service.init();
             expect(service.getNavigationListSize()).toBe(0);
+        });
+
+    });
+
+    describe('manage method', function() {
+
+        it('should initialize the array of navigations', function() {
+            service.init();
+            expect(service.getNavigationListSize()).toBe(0);
+
+            service.manageNavigation(Mock.navigationToManage);
+            expect(service.getNavigationListSize()).toBe(3);
         });
 
     });
@@ -226,6 +240,19 @@ describe('NavigationContainerService', function() {
     function mockNavigationFactory($injector) {
         Mock.NavigationFactory = $injector.get('NavigationFactory');
         return Mock.NavigationFactory;
+    }
+
+    function mockNavigationToManage($injector) {
+        Mock.navigationToManage = [];
+
+        var navigation = Mock.NavigationFactory.create(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+        Mock.navigationToManage.push(navigation);
+
+        navigation = Mock.NavigationFactory.create(Mock.questionTwo.templateID, Mock.questionThree.templateID);
+        Mock.navigationToManage.push(navigation);
+
+        navigation = Mock.NavigationFactory.create(Mock.questionThree.templateID, Mock.questionFour.templateID);
+        Mock.navigationToManage.push(navigation);
     }
 
 });

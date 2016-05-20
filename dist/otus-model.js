@@ -1,15 +1,15 @@
 (function() {
     'use strict';
 
-    angular
-        .module('otusjs.navigation', []);
+    angular.module('otusjs.model', []);
 
 }());
 
 (function() {
     'use strict';
 
-    angular.module('otusjs.model', []);
+    angular
+        .module('otusjs.navigation', []);
 
 }());
 
@@ -86,6 +86,8 @@
         self.init = init;
         self.manageNavigation = manageNavigation;
         self.getNavigationByOrigin = getNavigationByOrigin;
+        self.getNavigationByPosition = getNavigationByPosition;
+        self.getNavigationPosition = getNavigationPosition;
         self.getNavigationList = getNavigationList;
         self.getNavigationListSize = getNavigationListSize;
         self.existsNavigationTo = existsNavigationTo;
@@ -116,6 +118,19 @@
             });
 
             return filter[0];
+        }
+
+        function getNavigationByPosition(position) {
+            return navigationList[position];
+        }
+
+        function getNavigationPosition(origin) {
+            var navigation = getNavigationByOrigin(origin);
+            if (navigation) {
+                return navigationList.indexOf(navigation);
+            } else {
+                return null;
+            }
         }
 
         function existsNavigationTo(origin) {
@@ -161,10 +176,10 @@
     NavigationManagerService.$inject = [
         'NavigationContainerService',
         'NavigationAddFactory',
-        'NavigationRemoveFactory'
+        'NavigationRemoveService'
     ];
 
-    function NavigationManagerService(NavigationContainerService, NavigationAddFactory, NavigationRemoveFactory) {
+    function NavigationManagerService(NavigationContainerService, NavigationAddFactory, NavigationRemoveService) {
         var self = this;
 
         /* Public interface */
@@ -192,8 +207,7 @@
         }
 
         function removeNavigation(templateID) {
-            var update = NavigationRemoveFactory.create(templateID);
-            update.execute();
+            NavigationRemoveService.execute(templateID);
         }
     }
 
@@ -204,31 +218,26 @@
 
     angular
         .module('otusjs.navigation')
-        .factory('NavigationRemoveFactory', NavigationRemoveFactory);
+        .service('NavigationRemoveService', NavigationRemoveService);
 
-    NavigationRemoveFactory.$inject = ['NavigationContainerService'];
+    NavigationRemoveService.$inject = ['NavigationContainerService'];
 
-    function NavigationRemoveFactory(NavigationContainerService) {
-        var self = this;
-
-        /* Public interdace */
-        self.create = create;
-
-        function create(templateID) {
-            return new NavigationRemove(templateID, NavigationContainerService);
-        }
-
-        return self;
-    }
-
-    function NavigationRemove(templateID, NavigationContainerService) {
+    function NavigationRemoveService(NavigationContainerService) {
         var self = this;
 
         /* Public methods */
         self.execute = execute;
 
-        function execute() {
+        function execute(templateID) {
             if (NavigationContainerService.existsNavigationTo(templateID)) {
+                var navigationToRecicle = NavigationContainerService.getNavigationByOrigin(templateID);
+                var positionToRecicle = NavigationContainerService.getNavigationPosition(templateID);
+
+                if (positionToRecicle && positionToRecicle !== 0) {
+                    var navigationToUpdate = NavigationContainerService.getNavigationByPosition(positionToRecicle - 1);
+                    navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
+                }
+
                 NavigationContainerService.removeNavigationOf(templateID);
             } else {
                 NavigationContainerService.removeCurrentLastNavigation();
