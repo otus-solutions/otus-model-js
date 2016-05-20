@@ -6,7 +6,7 @@ describe('NavigationAddFactory', function() {
         module('otusjs');
 
         inject(function(_$injector_) {
-             mockSurvey(_$injector_);
+            mockSurvey(_$injector_);
 
             factory = _$injector_.get('NavigationAddFactory');
         });

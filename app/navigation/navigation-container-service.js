@@ -15,6 +15,8 @@
         self.init = init;
         self.manageNavigation = manageNavigation;
         self.getNavigationByOrigin = getNavigationByOrigin;
+        self.getNavigationByPosition = getNavigationByPosition;
+        self.getNavigationPosition = getNavigationPosition;
         self.getNavigationList = getNavigationList;
         self.getNavigationListSize = getNavigationListSize;
         self.existsNavigationTo = existsNavigationTo;
@@ -45,6 +47,19 @@
             });
 
             return filter[0];
+        }
+
+        function getNavigationByPosition(position) {
+            return navigationList[position];
+        }
+
+        function getNavigationPosition(origin) {
+            var navigation = getNavigationByOrigin(origin);
+            if (navigation) {
+                return navigationList.indexOf(navigation);
+            } else {
+                return null;
+            }
         }
 
         function existsNavigationTo(origin) {

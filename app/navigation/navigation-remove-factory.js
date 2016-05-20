@@ -28,6 +28,12 @@
 
         function execute() {
             if (NavigationContainerService.existsNavigationTo(templateID)) {
+                var navigationToRecicle = NavigationContainerService.getNavigationByOrigin(templateID);
+                var positionToRecicle = NavigationContainerService.getNavigationPosition(templateID);
+
+                var navigationToUpdate = NavigationContainerService.getNavigationByPosition(positionToRecicle - 1);
+                navigationToUpdate.routes = navigationToRecicle.routes;
+                
                 NavigationContainerService.removeNavigationOf(templateID);
             } else {
                 NavigationContainerService.removeCurrentLastNavigation();

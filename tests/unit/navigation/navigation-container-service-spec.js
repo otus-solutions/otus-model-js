@@ -79,18 +79,65 @@ describe('NavigationContainerService', function() {
 
     });
 
+    describe('getNavigationByPosition method', function() {
+
+        beforeEach(function() {
+            service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
+        });
+
+        it('should return the navigation when exists', function() {
+            var returnedNavigation = service.getNavigationByPosition(0);
+
+            expect(returnedNavigation.origin).toEqual(Mock.questionOne.templateID);
+        });
+
+        it('should return undefined when navigation not exists', function() {
+            var returnedNavigation = service.getNavigationByPosition(10);
+
+            expect(returnedNavigation).toBeUndefined();
+        });
+
+    });
+
+    describe('getNavigationPosition method', function() {
+
+        beforeEach(function() {
+            service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
+            service.createNavigationTo(Mock.questionThree.templateID, Mock.questionFour.templateID);
+        });
+
+        it('should return an integer that represents the index of navigation', function() {
+            var returnedValue = service.getNavigationPosition(Mock.questionOne.templateID);
+            expect(returnedValue).toBe(0);
+
+            returnedValue = service.getNavigationPosition(Mock.questionTwo.templateID);
+            expect(returnedValue).toBe(1);
+
+            returnedValue = service.getNavigationPosition(Mock.questionThree.templateID);
+            expect(returnedValue).toBe(2);
+        });
+
+        it('should return null when navigation does not exists', function() {
+            var returnedValue = service.getNavigationPosition(Mock.questionFour.templateID);
+            expect(returnedValue).toBe(null);
+        });
+
+    });
+
     describe('existsNavigationTo method', function() {
 
         it('should return true when navigation exists', function() {
-            service.createNavigationTo(Mock.questionOne);
+            service.createNavigationTo(Mock.questionOne.templateID);
 
-            expect(service.existsNavigationTo(Mock.questionOne)).toBe(true);
+            expect(service.existsNavigationTo(Mock.questionOne.templateID)).toBe(true);
         });
 
         it('should return false when navigation not exists', function() {
-            service.createNavigationTo(Mock.questionOne);
+            service.createNavigationTo(Mock.questionOne.templateID);
 
-            expect(service.existsNavigationTo(Mock.questionTwo)).toBe(false);
+            expect(service.existsNavigationTo(Mock.questionTwo.templateID)).toBe(false);
         });
 
     });
