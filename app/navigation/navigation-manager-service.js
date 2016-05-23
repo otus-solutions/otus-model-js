@@ -7,11 +7,11 @@
 
     NavigationManagerService.$inject = [
         'NavigationContainerService',
-        'NavigationAddFactory',
+        'NavigationAddService',
         'NavigationRemoveService'
     ];
 
-    function NavigationManagerService(NavigationContainerService, NavigationAddFactory, NavigationRemoveService) {
+    function NavigationManagerService(NavigationContainerService, NavigationAddService, NavigationRemoveService) {
         var self = this;
 
         /* Public interface */
@@ -33,9 +33,8 @@
             return NavigationContainerService.getNavigationByOrigin(origin);
         }
 
-        function addNavigation(questionContainer) {
-            var update = NavigationAddFactory.create(questionContainer);
-            update.execute();
+        function addNavigation() {
+            NavigationAddService.execute();
         }
 
         function removeNavigation(templateID) {

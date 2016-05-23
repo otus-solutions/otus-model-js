@@ -5,6 +5,7 @@
         .module('otusjs', [
             'otusjs.model',
             'otusjs.navigation',
+            'otusjs.question',
             'utils'
         ]);
 

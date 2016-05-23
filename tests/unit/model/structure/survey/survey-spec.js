@@ -1,8 +1,9 @@
 describe('Survey', function() {
     var Mock = {};
     var survey;
-    var ORIGIN_1 = 'ORIGIN_1';
-    var ORIGIN_2 = 'ORIGIN_2';
+
+    var Q1 = 'Q1';
+    var Q2 = 'Q2';
 
     beforeEach(function() {
         module('otusjs');
@@ -11,12 +12,11 @@ describe('Survey', function() {
         mockIdentityData();
 
         inject(function(_$injector_) {
-            mockQuestions(_$injector_);
-
             factory = _$injector_.get('SurveyFactory', {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
                 'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_),
+                'QuestionManagerService': mockQuestionManagerService(_$injector_),
                 'NavigationManagerService': mockNavigationManagerService(_$injector_)
             });
 
@@ -30,16 +30,18 @@ describe('Survey', function() {
 
         describe('addQuestion method', function() {
 
-            it('should add a question on survey', function() {
-                survey.addQuestion(Mock.question);
+            it('should call QuestionManagerService.addQuestion', function() {
+                survey.addQuestion();
 
-                expect(survey.questionsCount()).toBeGreaterThan(0);
+                expect(Mock.QuestionManagerService.addQuestion).toHaveBeenCalled();
             });
 
-            it('should call NavigationManagerService.addNavigation with new question ID', function() {
-                survey.addQuestion(Mock.question);
+            it('should call NavigationManagerService.addNavigation with question list', function() {
+                var questionList = Mock.QuestionManagerService.getQuestionList();
 
-                expect(Mock.NavigationManagerService.addNavigation).toHaveBeenCalled();
+                survey.addQuestion();
+
+                expect(Mock.NavigationManagerService.addNavigation).toHaveBeenCalledWith(questionList);
             });
 
         });
@@ -47,41 +49,38 @@ describe('Survey', function() {
         describe('removeQuestion method', function() {
 
             beforeEach(function() {
-                survey.addQuestion(Mock.question);
+                survey.addQuestion();
             });
 
-            it('should remove a question on survey', function() {
-                survey.removeQuestion(Mock.question.templateID);
-                expect(survey.questionsCount()).toBe(0);
+            it('should call QuestionManagerService.removeQuestion with new question ID', function() {
+                survey.removeQuestion(Q1);
+
+                expect(Mock.QuestionManagerService.removeQuestion).toHaveBeenCalledWith(Q1);
             });
 
             it('should call NavigationManagerService.removeNavigation with new question ID', function() {
-                survey.removeQuestion(Mock.question.templateID);
+                survey.removeQuestion(Q1);
 
-                expect(Mock.NavigationManagerService.removeNavigation).toHaveBeenCalledWith(Mock.question.templateID);
+                expect(Mock.NavigationManagerService.removeNavigation).toHaveBeenCalledWith(Q1);
             });
 
         });
 
-        describe('fetchQuestionById method', function() {
+        describe('getQuestionByTemplateID method', function() {
 
             beforeEach(function() {
-                survey.addQuestion(Mock.question);
-                survey.addQuestion(Mock.questionTwo);
+                survey.addQuestion();
+                survey.addQuestion();
             });
 
-            it('should fetch the correct question on survey', function() {
-                expect(survey.fetchQuestionById(Mock.questionTwo.templateID)).toBe(Mock.questionTwo);
-                expect(survey.fetchQuestionById(Mock.questionTwo.templateID)).not.toBe(Mock.question);
+            it('should call QuestionManagerService.getQuestionByTemplateID with template id', function() {
+                survey.getQuestionByTemplateID(Q1);
+
+                expect(Mock.QuestionManagerService.getQuestionByTemplateID).toHaveBeenCalledWith(Q1);
             });
         });
 
     });
-
-    function mockQuestions($injector) {
-        Mock.question = $injector.get('QuestionFactory').create('IntegerQuestion', ORIGIN_1);
-        Mock.questionTwo = $injector.get('QuestionFactory').create('CalendarQuestion', ORIGIN_2);
-    }
 
     function mockSurveyIdentityFactory($injector) {
         Mock.SurveyIdentityFactory = $injector.get('SurveyIdentityFactory');
@@ -122,6 +121,16 @@ describe('Survey', function() {
         spyOn(Mock.NavigationManagerService, 'removeNavigation');
 
         return Mock.NavigationManagerService;
+    }
+
+    function mockQuestionManagerService($injector) {
+        Mock.QuestionManagerService = $injector.get('QuestionManagerService');
+
+        spyOn(Mock.QuestionManagerService, 'addQuestion');
+        spyOn(Mock.QuestionManagerService, 'removeQuestion');
+        spyOn(Mock.QuestionManagerService, 'getQuestionByTemplateID');
+
+        return Mock.QuestionManagerService;
     }
 
     function mockIdentityData() {

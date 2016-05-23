@@ -10,7 +10,7 @@ describe('NavigationManagerService', function() {
 
             service = _$injector_.get('NavigationManagerService', {
                 NavigationContainerService: mockNavigationContainerService(_$injector_),
-                NavigationAddFactory: mockNavigationAddFactory(_$injector_),
+                NavigationAddService: mockNavigationAddService(_$injector_),
                 NavigationRemoveService: mockNavigationRemoveService(_$injector_)
             });
         });
@@ -62,32 +62,14 @@ describe('NavigationManagerService', function() {
             expect(Mock.NavigationContainerService.getNavigationByOrigin).toHaveBeenCalledWith(Mock.questionOne.templateID);
         });
 
-        xit('should return a navigation when exists', function() {
-            var returnedValue = service.getNavigationByOrigin(Mock.questionOne.templateID);
-
-            expect(returnedValue).toBeDefined();
-        });
-
-        it('should return undefined when navigation not exists', function() {
-            var returnedValue = service.getNavigationByOrigin('Q5');
-
-            expect(returnedValue).toBeUndefined();
-        });
-
     });
 
     describe('addNavigation method', function() {
 
-        it('should call NavigationAddFactory.create method', function() {
+        it('should call NavigationAddService.execute method', function() {
             service.addNavigation();
 
-            expect(Mock.NavigationAddFactory.create).toHaveBeenCalled();
-        });
-
-        it('should call NavigationAdd.execute method', function() {
-            service.addNavigation();
-
-            expect(Mock.NavigationAdd.execute).toHaveBeenCalled();
+            expect(Mock.NavigationAddService.execute).toHaveBeenCalled();
         });
 
     });
@@ -119,14 +101,12 @@ describe('NavigationManagerService', function() {
         return Mock.NavigationContainerService;
     }
 
-    function mockNavigationAddFactory($injector) {
-        Mock.NavigationAddFactory = $injector.get('NavigationAddFactory');
-        Mock.NavigationAdd = $injector.get('NavigationAddFactory').create([]);
+    function mockNavigationAddService($injector) {
+        Mock.NavigationAddService = $injector.get('NavigationAddService');
 
-        spyOn(Mock.NavigationAddFactory, 'create').and.returnValue(Mock.NavigationAdd);
-        spyOn(Mock.NavigationAdd, 'execute');
+        spyOn(Mock.NavigationAddService, 'execute');
 
-        return Mock.NavigationAddFactory;
+        return Mock.NavigationAddService;
     }
 
     function mockNavigationRemoveService($injector) {

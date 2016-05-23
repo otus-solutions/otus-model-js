@@ -4,7 +4,7 @@ describe('SurveyFactory', function() {
 
     beforeEach(function() {
         module('otusjs');
-        
+
         inject(function(_$injector_) {
             factory = _$injector_.get('SurveyFactory', {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
@@ -37,10 +37,6 @@ describe('SurveyFactory', function() {
 
         it('should return a Survey with a SurveyIdentity object type', function() {
             expect(survey.identity.objectType).toBe('SurveyIdentity');
-        });
-
-        it('should return a Survey with a literal object in question property', function() {
-            expect(survey.questionContainer instanceof Object).toEqual(true);
         });
 
         it('should call SurveyUUIDGenerator.generateSurveyUUID()', function() {

@@ -9,10 +9,11 @@
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
         'SurveyUUIDGenerator',
-        'NavigationManagerService'
+        'NavigationManagerService',
+        'QuestionManagerService'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService, QuestionManagerService) {
         var self = this;
 
         /* Public interdace */
@@ -21,14 +22,15 @@
         function create(name, acronym) {
             var metainfo = SurveyMetaInfoFactory.create();
             var identity = SurveyIdentityFactory.create(name, acronym);
+            var UUID = SurveyUUIDGenerator.generateSurveyUUID();
 
-            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), NavigationManagerService);
+            return new Survey(metainfo, identity, UUID, NavigationManagerService, QuestionManagerService);
         }
 
         return self;
     }
 
-    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService) {
+    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService, QuestionManagerService) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -36,53 +38,34 @@
         self.oid = uuid;
         self.identity = surveyIdentity;
         self.metainfo = surveyMetainfo;
-        self.questionContainer = [];
+        self.QuestionManager = QuestionManagerService;
         self.NavigationManager = NavigationManagerService;
 
         self.NavigationManager.init();
 
         /* Public methods */
+        self.getQuestionByTemplateID = getQuestionByTemplateID;
         self.addQuestion = addQuestion;
-        self.questionsCount = questionsCount;
         self.removeQuestion = removeQuestion;
         self.updateQuestion = updateQuestion;
-        self.fetchQuestionById = fetchQuestionById;
         self.toJson = toJson;
 
-        /* Question container methods */
-        function questionsCount() {
-            var propertyList = Object.keys(self.questionContainer).filter(function filterOnlyFields(property) {
-                return ((typeof property) != 'function');
-            });
-            return propertyList.length;
+        function getQuestionByTemplateID(templateID) {
+            return self.QuestionManager.getQuestionByTemplateID(templateID);
         }
 
         function addQuestion(question) {
-            self.questionContainer.push(question);
-            self.NavigationManager.addNavigation(self.questionContainer);
+            self.QuestionManager.addQuestion();
+            self.NavigationManager.addNavigation();
         }
 
         function removeQuestion(templateID) {
-            var questionToRemove = self.questionContainer.filter(function(question) {
-                return question.templateID === templateID;
-            });
-
-            var indexToRemove = self.questionContainer.indexOf(questionToRemove[0]);
-            if (indexToRemove > -1) self.questionContainer.splice(indexToRemove, 1);
-
-            self.NavigationManager.removeNavigation(questionToRemove[0].templateID);
+            self.QuestionManager.removeQuestion(templateID);
+            self.NavigationManager.removeNavigation(templateID);
         }
 
         function updateQuestion(question) {
             self.navigationList[question.templateID] = question;
-        }
-
-        function fetchQuestionById(templateID) {
-            var fetch = self.questionContainer.filter(function(question) {
-                return question.templateID === templateID;
-            });
-
-            return fetch[0];
         }
 
         function toJson() {

@@ -15,7 +15,7 @@
         'EmailQuestionFactory',
         'LabelFactory',
         'MetadataGroupFactory',
-		'PhoneQuestionFactory'
+        'PhoneQuestionFactory'
     ];
 
     function QuestionFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory, EmailQuestionFactory, LabelFactory, MetadataGroupFactory, PhoneQuestionFactory) {
@@ -24,12 +24,12 @@
             factoryMap = {
                 'CalendarQuestion': CalendarQuestionFactory,
                 'IntegerQuestion': IntegerQuestionFactory,
-                'DecimalQuestion' : DecimalQuestionFactory,
+                'DecimalQuestion': DecimalQuestionFactory,
                 'SingleSelectionQuestion': SingleSelectionQuestionFactory,
                 'TextQuestion': TextQuestionFactory,
                 'TimeQuestion': TimeQuestionFactory,
                 'EmailQuestion': EmailQuestionFactory,
-				'PhoneQuestion': PhoneQuestionFactory
+                'PhoneQuestion': PhoneQuestionFactory
             };
 
         /* Public interface */
