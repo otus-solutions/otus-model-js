@@ -5,7 +5,7 @@ describe('DecimalQuestionFactory', function() {
     QUESTION_ID = 'QUESTION_ID';
 
     beforeEach(function() {
-        module('otusjs.model');
+        module('otusjs');
 
         inject(function(_$injector_) {
             factory = _$injector_.get('DecimalQuestionFactory', {

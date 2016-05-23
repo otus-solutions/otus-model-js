@@ -3,7 +3,7 @@ describe('MetadataAnswerFactory', function() {
     var option;
 
     beforeEach(function() {
-        module('otusjs.model');
+        module('otusjs');
 
         inject(function(_$injector_) {
             factory = _$injector_.get('MetadataAnswerFactory', {

@@ -2,7 +2,7 @@ describe('Label suite:', function() {
 
     /* @BeforeScenario */
     beforeEach(function() {
-        module('otusjs.model');
+        module('otusjs');
 
         inject(function(_$injector_) {
             factory = _$injector_.get('LabelFactory');

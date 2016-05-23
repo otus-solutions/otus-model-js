@@ -3,7 +3,7 @@ describe('AnswerOptionFactory', function() {
     var option;
 
     beforeEach(function() {
-        module('otusjs.model');
+        module('otusjs');
 
         inject(function(_$injector_) {
             mockQuestion(_$injector_);

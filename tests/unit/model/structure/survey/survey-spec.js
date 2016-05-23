@@ -2,6 +2,7 @@ describe('Survey', function() {
     var Mock = {};
     var survey;
 
+    var QUESTION_TYPE = 'IntegerQuestion';
     var Q1 = 'Q1';
     var Q2 = 'Q2';
 
@@ -12,6 +13,8 @@ describe('Survey', function() {
         mockIdentityData();
 
         inject(function(_$injector_) {
+            mockQuestion(_$injector_);
+
             factory = _$injector_.get('SurveyFactory', {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
@@ -30,18 +33,28 @@ describe('Survey', function() {
 
         describe('addQuestion method', function() {
 
-            it('should call QuestionManagerService.addQuestion', function() {
-                survey.addQuestion();
+            it('should call QuestionManagerService.addQuestion with question type', function() {
+                survey.addQuestion(QUESTION_TYPE);
 
-                expect(Mock.QuestionManagerService.addQuestion).toHaveBeenCalled();
+                expect(Mock.QuestionManagerService.addQuestion).toHaveBeenCalledWith(QUESTION_TYPE, Mock.ACRONYM);
+            });
+
+            it('should call QuestionManagerService.addQuestion with template id prefix', function() {
+                survey.addQuestion(QUESTION_TYPE);
+
+                expect(Mock.QuestionManagerService.addQuestion).toHaveBeenCalledWith(QUESTION_TYPE, Mock.ACRONYM);
             });
 
             it('should call NavigationManagerService.addNavigation with question list', function() {
-                var questionList = Mock.QuestionManagerService.getQuestionList();
+                survey.addQuestion(QUESTION_TYPE);
 
-                survey.addQuestion();
+                expect(Mock.NavigationManagerService.addNavigation).toHaveBeenCalledWith();
+            });
 
-                expect(Mock.NavigationManagerService.addNavigation).toHaveBeenCalledWith(questionList);
+            it('should return the new created question', function() {
+                var question = survey.addQuestion(QUESTION_TYPE);
+
+                expect(question).toBeDefined();
             });
 
         });
@@ -126,7 +139,7 @@ describe('Survey', function() {
     function mockQuestionManagerService($injector) {
         Mock.QuestionManagerService = $injector.get('QuestionManagerService');
 
-        spyOn(Mock.QuestionManagerService, 'addQuestion');
+        spyOn(Mock.QuestionManagerService, 'addQuestion').and.returnValue(Mock.question);
         spyOn(Mock.QuestionManagerService, 'removeQuestion');
         spyOn(Mock.QuestionManagerService, 'getQuestionByTemplateID');
 
@@ -168,6 +181,10 @@ describe('Survey', function() {
             questionContainer: [],
             navigationList: []
         });
+    }
+
+    function mockQuestion($injector) {
+        Mock.question = $injector.get('QuestionFactory').create(QUESTION_TYPE, Q1);
     }
 
 });

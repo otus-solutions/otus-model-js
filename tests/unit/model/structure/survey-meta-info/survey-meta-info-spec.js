@@ -3,7 +3,7 @@ describe('SurveyMetaInfo', function() {
     var surveyMetainfo;
 
     beforeEach(function() {
-        module('otusjs.model');
+        module('otusjs');
 
         mockDatetime();
         mockJson();
