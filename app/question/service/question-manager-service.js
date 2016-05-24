@@ -14,6 +14,8 @@
     function QuestionManagerService(QuestionContainerService, QuestionAddService, QuestionRemoveService) {
         var self = this;
 
+        var incrementalIDValue = -1;
+
         /* Public interface */
         self.init = init;
         self.getQuestionList = getQuestionList;
@@ -39,7 +41,7 @@
         }
 
         function addQuestion(questionType, templateIDPrefix) {
-            var templateID = templateIDPrefix + QuestionContainerService.getQuestionListSize();
+            var templateID = templateIDPrefix + getNextIncrementalGenerator();
             var question = QuestionAddService.execute(questionType, templateID);
             return question;
         }
@@ -47,6 +49,12 @@
         function removeQuestion(templateID) {
             QuestionRemoveService.execute(templateID);
         }
+
+        function getNextIncrementalGenerator() {
+            console.log(incrementalIDValue);
+            return ++incrementalIDValue;
+        }
+
     }
 
 }());

@@ -2004,6 +2004,8 @@
     function QuestionManagerService(QuestionContainerService, QuestionAddService, QuestionRemoveService) {
         var self = this;
 
+        var incrementalIDValue = -1;
+
         /* Public interface */
         self.init = init;
         self.getQuestionList = getQuestionList;
@@ -2029,7 +2031,7 @@
         }
 
         function addQuestion(questionType, templateIDPrefix) {
-            var templateID = templateIDPrefix + QuestionContainerService.getQuestionListSize();
+            var templateID = templateIDPrefix + getNextIncrementalGenerator();
             var question = QuestionAddService.execute(questionType, templateID);
             return question;
         }
@@ -2037,6 +2039,12 @@
         function removeQuestion(templateID) {
             QuestionRemoveService.execute(templateID);
         }
+
+        function getNextIncrementalGenerator() {
+            console.log(incrementalIDValue);
+            return ++incrementalIDValue;
+        }
+
     }
 
 }());
@@ -2142,10 +2150,12 @@
             json.oid = self.oid;
             json.identity = self.identity.toJson();
             json.metainfo = self.metainfo.toJson();
+
             json.questionContainer = [];
-            for (var question in self.questionContainer) {
-                json.questionContainer.push(self.questionContainer[question].toJson());
-            }
+            self.QuestionManager.getQuestionList().forEach(function(question) {
+                json.questionContainer.push(question.toJson());
+            });
+
             json.navigationList = [];
             NavigationManagerService.getNavigationList().forEach(function(navigation) {
                 json.navigationList.push(navigation.toJson());

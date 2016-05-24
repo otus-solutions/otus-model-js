@@ -95,12 +95,6 @@ describe('QuestionManagerService', function() {
 
     describe('addQuestion method', function() {
 
-        it('should call QuestionContainerService.getQuestionListSize method', function() {
-            service.addQuestion(QUESTION_TYPE, TEMPLATE_ID_PREFIX);
-
-            expect(Mock.QuestionContainerService.getQuestionListSize).toHaveBeenCalled();
-        });
-
         it('should call QuestionAddService.execute method with question type', function() {
             service.addQuestion(QUESTION_TYPE, TEMPLATE_ID_PREFIX);
 
