@@ -7,7 +7,7 @@
 
     ModelFacadeService.$inject = [
         /* Question */
-        'QuestionFactory',
+        'SurveyItemFactory',
         /* Setter */
         'LabelFactory',
         'UnitFactory',
@@ -17,19 +17,19 @@
         'MetadataGroupFactory'
     ];
 
-    function ModelFacadeService(QuestionFactory, LabelFactory, UnitFactory, SurveyFactory, SurveyIdentityFactory, MetadataGroupFactory) {
+    function ModelFacadeService(SurveyItemFactory, LabelFactory, UnitFactory, SurveyFactory, SurveyIdentityFactory, MetadataGroupFactory) {
         var self = this;
 
         /* Public interface */
-        self.getQuestionFactory = getQuestionFactory;
+        self.getSurveyItemFactory = getSurveyItemFactory;
         self.getLabelFactory = getLabelFactory;
         self.getUnitFactory = getUnitFactory;
         self.getSurveyFactory = getSurveyFactory;
         self.getSurveyIdentityFactory = getSurveyIdentityFactory;
         self.getMetadataGroupFactory = getMetadataGroupFactory;
 
-        function getQuestionFactory() {
-            return QuestionFactory;
+        function getSurveyItemFactory() {
+            return SurveyItemFactory;
         }
 
         function getLabelFactory() {

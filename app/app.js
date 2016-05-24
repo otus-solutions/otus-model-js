@@ -6,8 +6,7 @@
             'otusjs.metadata',
             'otusjs.misc',
             'otusjs.navigation',
-            'otusjs.pageItem',
-            'otusjs.question',
+            'otusjs.surveyItem',
             'otusjs.survey',
             'utils'
         ]);

@@ -7,21 +7,21 @@
 
     NavigationAddService.$inject = [
         'NavigationContainerService',
-        'QuestionContainerService'
+        'SurveyItemContainerService'
     ];
 
-    function NavigationAddService(NavigationContainerService, QuestionContainerService) {
+    function NavigationAddService(NavigationContainerService, SurveyItemContainerService) {
         var self = this;
 
         /* Public methods */
         self.execute = execute;
 
         function execute() {
-            var questionCount = QuestionContainerService.getQuestionListSize();
+            var itemCount = SurveyItemContainerService.getItemListSize();
 
-            if (questionCount > 1) {
-                var origin = QuestionContainerService.getQuestionByPosition(questionCount - 2);
-                var destination = QuestionContainerService.getQuestionByPosition(questionCount - 1);
+            if (itemCount > 1) {
+                var origin = SurveyItemContainerService.getItemByPosition(itemCount - 2);
+                var destination = SurveyItemContainerService.getItemByPosition(itemCount - 1);
 
                 NavigationContainerService.createNavigationTo(origin.templateID, destination.templateID);
             }

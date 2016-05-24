@@ -6,7 +6,7 @@ describe('NavigationAddService', function() {
         module('otusjs');
 
         inject(function(_$injector_) {
-            mockQuestionContainerService(_$injector_);
+            mockSurveyItemContainerService(_$injector_);
 
             service = _$injector_.get('NavigationAddService', {
                 NavigationContainerService: mockNavigationContainerService(_$injector_)
@@ -16,14 +16,14 @@ describe('NavigationAddService', function() {
 
     describe('execute method', function() {
 
-        it('should call QuestionContainerService.getQuestionListSize', function() {
+        it('should call SurveyItemContainerService.getItemListSize', function() {
             service.execute();
 
-            expect(Mock.QuestionContainerService.getQuestionListSize).toHaveBeenCalled();
+            expect(Mock.SurveyItemContainerService.getItemListSize).toHaveBeenCalled();
         });
 
         it('should not create a navigation when survey has only one question', function() {
-            Mock.QuestionContainerService.manageQuestions([Mock.q1]);
+            Mock.SurveyItemContainerService.manageItems([Mock.q1]);
 
             service.execute();
 
@@ -31,7 +31,7 @@ describe('NavigationAddService', function() {
         });
 
         it('should create a navigation when survey has at least one question', function() {
-            Mock.QuestionContainerService.manageQuestions([Mock.q1, Mock.q2]);
+            Mock.SurveyItemContainerService.manageItems([Mock.q1, Mock.q2]);
 
             service.execute();
 
@@ -39,7 +39,7 @@ describe('NavigationAddService', function() {
         });
 
         it('should create a navigation to last added question', function() {
-            Mock.QuestionContainerService.manageQuestions([Mock.q1, Mock.q2]);
+            Mock.SurveyItemContainerService.manageItems([Mock.q1, Mock.q2]);
 
             service.execute();
 
@@ -52,16 +52,16 @@ describe('NavigationAddService', function() {
 
     });
 
-    function mockQuestionContainerService($injector) {
-        Mock.q1 = $injector.get('QuestionFactory').create('IntegerQuestion', 'Q1');
-        Mock.q2 = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q2');
+    function mockSurveyItemContainerService($injector) {
+        Mock.q1 = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
+        Mock.q2 = $injector.get('SurveyItemFactory').create('CalendarQuestion', 'Q2');
 
-        Mock.QuestionContainerService = $injector.get('QuestionContainerService');
+        Mock.SurveyItemContainerService = $injector.get('SurveyItemContainerService');
 
-        spyOn(Mock.QuestionContainerService, 'getQuestionByPosition').and.callThrough();
-        spyOn(Mock.QuestionContainerService, 'getQuestionListSize').and.callThrough();
+        spyOn(Mock.SurveyItemContainerService, 'getItemByPosition').and.callThrough();
+        spyOn(Mock.SurveyItemContainerService, 'getItemListSize').and.callThrough();
 
-        return Mock.QuestionContainerService;
+        return Mock.SurveyItemContainerService;
     }
 
     function mockNavigationContainerService($injector) {

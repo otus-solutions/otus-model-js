@@ -8,7 +8,7 @@ describe('ModelFacadeService', function() {
         inject(function(_$injector_) {
             /* @InjectMocks */
             service = _$injector_.get('ModelFacadeService', {
-                QuestionFactory: mockQuestionFactory(_$injector_),
+                SurveyItemFactory: mockSurveyItemFactory(_$injector_),
                 LabelFactory: mockLabelFactory(_$injector_),
                 UnitFactory: mockUnitFactory(_$injector_),
                 SurveyFactory: mockSurveyFactory(_$injector_),
@@ -19,8 +19,8 @@ describe('ModelFacadeService', function() {
 
     describe('Getting question factories', function() {
 
-        it('getQuestionFactory should return a QuestionFactory', function() {
-            var factory = service.getQuestionFactory();
+        it('getSurveyItemFactory should return a SurveyItemFactory', function() {
+            var factory = service.getSurveyItemFactory();
 
             expect(factory).toBeDefined();
         });
@@ -51,8 +51,8 @@ describe('ModelFacadeService', function() {
 
     });
 
-    function mockQuestionFactory($injector) {
-        return $injector.get('QuestionFactory');
+    function mockSurveyItemFactory($injector) {
+        return $injector.get('SurveyItemFactory');
     }
 
     function mockLabelFactory($injector) {

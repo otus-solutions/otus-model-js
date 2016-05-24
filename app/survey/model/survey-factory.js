@@ -10,10 +10,10 @@
         'SurveyMetaInfoFactory',
         'SurveyUUIDGenerator',
         'NavigationManagerService',
-        'QuestionManagerService'
+        'SurveyItemManagerService'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService, QuestionManagerService) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService, SurveyItemManagerService) {
         var self = this;
 
         /* Public interdace */
@@ -24,13 +24,13 @@
             var identity = SurveyIdentityFactory.create(name, acronym);
             var UUID = SurveyUUIDGenerator.generateSurveyUUID();
 
-            return new Survey(metainfo, identity, UUID, NavigationManagerService, QuestionManagerService);
+            return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
         }
 
         return self;
     }
 
-    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService, QuestionManagerService) {
+    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService, SurveyItemManagerService) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -38,42 +38,36 @@
         self.oid = uuid;
         self.identity = surveyIdentity;
         self.metainfo = surveyMetainfo;
-        self.QuestionManager = QuestionManagerService;
+        self.SurveyItemManager = SurveyItemManagerService;
         self.NavigationManager = NavigationManagerService;
 
         self.NavigationManager.init();
 
         /* Public methods */
-        self.getQuestionByTemplateID = getQuestionByTemplateID;
+        self.getItemByTemplateID = getItemByTemplateID;
         self.addItem = addItem;
-        self.addQuestion = addQuestion;
-        self.removeQuestion = removeQuestion;
-        self.updateQuestion = updateQuestion;
+        self.addItem = addItem;
+        self.removeItem = removeItem;
+        self.updateItem = updateItem;
         self.toJson = toJson;
 
-        function getQuestionByTemplateID(templateID) {
-            return self.QuestionManager.getQuestionByTemplateID(templateID);
-        }
-
-        function addQuestion(questionType) {
-            var question = self.QuestionManager.addQuestion(questionType, self.identity.acronym);
-            self.NavigationManager.addNavigation();
-            return question;
+        function getItemByTemplateID(templateID) {
+            return self.SurveyItemManager.getItemByTemplateID(templateID);
         }
 
         function addItem(type) {
-            var question = self.QuestionManager.addQuestion(questionType, self.identity.acronym);
+            var item = self.SurveyItemManager.addItem(type, self.identity.acronym);
             self.NavigationManager.addNavigation();
-            return question;
+            return item;
         }
 
-        function removeQuestion(templateID) {
-            self.QuestionManager.removeQuestion(templateID);
+        function removeItem(templateID) {
+            self.SurveyItemManager.removeItem(templateID);
             self.NavigationManager.removeNavigation(templateID);
         }
 
-        function updateQuestion(question) {
-            self.navigationList[question.templateID] = question;
+        function updateItem(item) {
+            self.navigationList[item.templateID] = item;
         }
 
         function toJson() {
@@ -85,9 +79,9 @@
             json.identity = self.identity.toJson();
             json.metainfo = self.metainfo.toJson();
 
-            json.questionContainer = [];
-            self.QuestionManager.getQuestionList().forEach(function(question) {
-                json.questionContainer.push(question.toJson());
+            json.itemContainer = [];
+            self.SurveyItemManager.getItemList().forEach(function(item) {
+                json.itemContainer.push(item.toJson());
             });
 
             json.navigationList = [];

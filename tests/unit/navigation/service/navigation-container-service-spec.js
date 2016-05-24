@@ -231,10 +231,10 @@ describe('NavigationContainerService', function() {
     });
 
     function mockQuestions($injector) {
-        Mock.questionOne = $injector.get('QuestionFactory').create('IntegerQuestion', 'Q1');
-        Mock.questionTwo = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q2');
-        Mock.questionThree = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q3');
-        Mock.questionFour = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q4');
+        Mock.questionOne = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
+        Mock.questionTwo = $injector.get('SurveyItemFactory').create('CalendarQuestion', 'Q2');
+        Mock.questionThree = $injector.get('SurveyItemFactory').create('CalendarQuestion', 'Q3');
+        Mock.questionFour = $injector.get('SurveyItemFactory').create('CalendarQuestion', 'Q4');
     }
 
     function mockNavigationFactory($injector) {

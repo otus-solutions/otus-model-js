@@ -19,7 +19,7 @@ describe('Survey', function() {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
                 'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_),
-                'QuestionManagerService': mockQuestionManagerService(_$injector_),
+                'SurveyItemManagerService': mockSurveyItemManagerService(_$injector_),
                 'NavigationManagerService': mockNavigationManagerService(_$injector_)
             });
 
@@ -29,67 +29,67 @@ describe('Survey', function() {
         });
     });
 
-    describe('question management', function() {
+    describe('item management', function() {
 
-        describe('addQuestion method', function() {
+        describe('addItem method', function() {
 
-            it('should call QuestionManagerService.addQuestion with question type', function() {
-                survey.addQuestion(QUESTION_TYPE);
+            it('should call SurveyItemManagerService.addItem with item type', function() {
+                survey.addItem(QUESTION_TYPE);
 
-                expect(Mock.QuestionManagerService.addQuestion).toHaveBeenCalledWith(QUESTION_TYPE, Mock.ACRONYM);
+                expect(Mock.SurveyItemManagerService.addItem).toHaveBeenCalledWith(QUESTION_TYPE, Mock.ACRONYM);
             });
 
-            it('should call QuestionManagerService.addQuestion with template id prefix', function() {
-                survey.addQuestion(QUESTION_TYPE);
+            it('should call SurveyItemManagerService.addItem with template id prefix', function() {
+                survey.addItem(QUESTION_TYPE);
 
-                expect(Mock.QuestionManagerService.addQuestion).toHaveBeenCalledWith(QUESTION_TYPE, Mock.ACRONYM);
+                expect(Mock.SurveyItemManagerService.addItem).toHaveBeenCalledWith(QUESTION_TYPE, Mock.ACRONYM);
             });
 
-            it('should call NavigationManagerService.addNavigation with question list', function() {
-                survey.addQuestion(QUESTION_TYPE);
+            it('should call NavigationManagerService.addNavigation with item list', function() {
+                survey.addItem(QUESTION_TYPE);
 
                 expect(Mock.NavigationManagerService.addNavigation).toHaveBeenCalledWith();
             });
 
-            it('should return the new created question', function() {
-                var question = survey.addQuestion(QUESTION_TYPE);
+            it('should return the new created item', function() {
+                var item = survey.addItem(QUESTION_TYPE);
 
-                expect(question).toBeDefined();
+                expect(item).toBeDefined();
             });
 
         });
 
-        describe('removeQuestion method', function() {
+        describe('removeItem method', function() {
 
             beforeEach(function() {
-                survey.addQuestion();
+                survey.addItem();
             });
 
-            it('should call QuestionManagerService.removeQuestion with new question ID', function() {
-                survey.removeQuestion(Q1);
+            it('should call SurveyItemManagerService.removeItem with new item ID', function() {
+                survey.removeItem(Q1);
 
-                expect(Mock.QuestionManagerService.removeQuestion).toHaveBeenCalledWith(Q1);
+                expect(Mock.SurveyItemManagerService.removeItem).toHaveBeenCalledWith(Q1);
             });
 
-            it('should call NavigationManagerService.removeNavigation with new question ID', function() {
-                survey.removeQuestion(Q1);
+            it('should call NavigationManagerService.removeNavigation with new item ID', function() {
+                survey.removeItem(Q1);
 
                 expect(Mock.NavigationManagerService.removeNavigation).toHaveBeenCalledWith(Q1);
             });
 
         });
 
-        describe('getQuestionByTemplateID method', function() {
+        describe('getItemByTemplateID method', function() {
 
             beforeEach(function() {
-                survey.addQuestion();
-                survey.addQuestion();
+                survey.addItem();
+                survey.addItem();
             });
 
-            it('should call QuestionManagerService.getQuestionByTemplateID with template id', function() {
-                survey.getQuestionByTemplateID(Q1);
+            it('should call SurveyItemManagerService.getItemByTemplateID with template id', function() {
+                survey.getItemByTemplateID(Q1);
 
-                expect(Mock.QuestionManagerService.getQuestionByTemplateID).toHaveBeenCalledWith(Q1);
+                expect(Mock.SurveyItemManagerService.getItemByTemplateID).toHaveBeenCalledWith(Q1);
             });
         });
 
@@ -136,14 +136,14 @@ describe('Survey', function() {
         return Mock.NavigationManagerService;
     }
 
-    function mockQuestionManagerService($injector) {
-        Mock.QuestionManagerService = $injector.get('QuestionManagerService');
+    function mockSurveyItemManagerService($injector) {
+        Mock.SurveyItemManagerService = $injector.get('SurveyItemManagerService');
 
-        spyOn(Mock.QuestionManagerService, 'addQuestion').and.returnValue(Mock.question);
-        spyOn(Mock.QuestionManagerService, 'removeQuestion');
-        spyOn(Mock.QuestionManagerService, 'getQuestionByTemplateID');
+        spyOn(Mock.SurveyItemManagerService, 'addItem').and.returnValue(Mock.item);
+        spyOn(Mock.SurveyItemManagerService, 'removeItem');
+        spyOn(Mock.SurveyItemManagerService, 'getItemByTemplateID');
 
-        return Mock.QuestionManagerService;
+        return Mock.SurveyItemManagerService;
     }
 
     function mockIdentityData() {
@@ -178,13 +178,13 @@ describe('Survey', function() {
                 creationDatetime: Mock.now,
                 otusStudioVersion: ''
             },
-            questionContainer: [],
+            itemContainer: [],
             navigationList: []
         });
     }
 
     function mockQuestion($injector) {
-        Mock.question = $injector.get('QuestionFactory').create(QUESTION_TYPE, Q1);
+        Mock.item = $injector.get('SurveyItemFactory').create(QUESTION_TYPE, Q1);
     }
 
 });
