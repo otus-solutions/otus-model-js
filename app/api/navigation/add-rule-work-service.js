@@ -6,11 +6,10 @@
         .service('AddRuleService', AddRuleService);
 
     AddRuleService.$inject = [
-        'WorkspaceService',
         'RuleFactory'
     ];
 
-    function AddRuleService(WorkspaceService, RuleFactory) {
+    function AddRuleService(RuleFactory) {
         var self = this;
 
         self.execute = execute;

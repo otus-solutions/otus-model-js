@@ -14,13 +14,13 @@
         self.create = create;
 
         function create(value, parentQuestionID) {
-            return new QuestionAnswerOption(value, parentQuestionID, LabelFactory);
+            return new AnswerOption(value, parentQuestionID, LabelFactory);
         }
 
         return self;
     }
 
-    function QuestionAnswerOption(value, parentQuestionID, LabelFactory) {
+    function AnswerOption(value, parentQuestionID, LabelFactory) {
         var self = this;
 
         self.extents = 'StudioObject';

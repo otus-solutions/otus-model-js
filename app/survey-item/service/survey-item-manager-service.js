@@ -12,7 +12,7 @@
     function SurveyItemManagerService(SurveyItemContainerService) {
         var self = this;
 
-        var incrementalIDValue = -1;
+        var incrementalIDValue = 0;
 
         /* Public interface */
         self.init = init;

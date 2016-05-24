@@ -6,11 +6,10 @@
         .service('AddRouteConditionService', AddRouteConditionService);
 
     AddRouteConditionService.$inject = [
-        'WorkspaceService',
         'RouteConditionFactory'
     ];
 
-    function AddRouteConditionService(WorkspaceService, RouteConditionFactory) {
+    function AddRouteConditionService(RouteConditionFactory) {
         var self = this;
 
         self.execute = execute;

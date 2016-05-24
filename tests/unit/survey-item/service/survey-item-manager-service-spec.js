@@ -96,13 +96,13 @@ describe('SurveyItemManagerService', function() {
         it('should call SurveyItemContainerService.createItem method with item type', function() {
             service.addItem(QUESTION_TYPE, TEMPLATE_ID_PREFIX);
 
-            expect(Mock.SurveyItemContainerService.createItem).toHaveBeenCalledWith(QUESTION_TYPE, TEMPLATE_ID_PREFIX + 0);
+            expect(Mock.SurveyItemContainerService.createItem).toHaveBeenCalledWith(QUESTION_TYPE, TEMPLATE_ID_PREFIX + 1);
         });
 
         it('should call SurveyItemContainerService.createItem method with templateID', function() {
             service.addItem(QUESTION_TYPE, TEMPLATE_ID_PREFIX);
 
-            expect(Mock.SurveyItemContainerService.createItem).toHaveBeenCalledWith(QUESTION_TYPE, TEMPLATE_ID_PREFIX + 0);
+            expect(Mock.SurveyItemContainerService.createItem).toHaveBeenCalledWith(QUESTION_TYPE, TEMPLATE_ID_PREFIX + 1);
         });
 
         it('should return the new item created', function() {

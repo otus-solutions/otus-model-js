@@ -21,9 +21,6 @@ describe('Label suite:', function() {
             expect(label.objectType).toBe('Label');
         });
 
-        xit('should return an Label with oid', function() {
-        });
-
         it('should return an Label with plainText equal to empty String', function() {
             expect(label.plainText.length).toBe(0);
         });

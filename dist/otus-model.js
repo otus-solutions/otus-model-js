@@ -115,279 +115,6 @@
 
     angular
         .module('otusjs.metadata')
-        .service('AddMetadataAnswerService', AddMetadataAnswerService);
-
-    AddMetadataAnswerService.$inject = [
-        'WorkspaceService',
-        'MetadataAnswerFactory'
-    ];
-
-    function AddMetadataAnswerService(WorkspaceService, MetadataAnswerFactory) {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(question) {
-            var metadataOption = MetadataAnswerFactory.create(question.metadata.option.length, question.templateID);
-            question.metadata.addOption(metadataOption);
-            return metadataOption;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .service('RemoveMetadataOptionService', RemoveMetadataOptionService);
-
-    function RemoveMetadataOptionService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(question) {
-            question.metadata.removeLastOption();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('AddRouteConditionService', AddRouteConditionService);
-
-    AddRouteConditionService.$inject = [
-        'WorkspaceService',
-        'RouteConditionFactory'
-    ];
-
-    function AddRouteConditionService(WorkspaceService, RouteConditionFactory) {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(conditionName, route) {
-            var routeCondition = RouteConditionFactory.create(conditionName);
-            route.addCondition(routeCondition);
-            return routeCondition;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('AddRouteService', AddRouteService);
-
-    AddRouteService.$inject = [
-        'WorkspaceService',
-        'RouteFactory'
-    ];
-
-    function AddRouteService(WorkspaceService, RouteFactory) {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(routeData) {
-            var route = RouteFactory.create(routeData.name, routeData.parentNavigation.origin, routeData.destination);
-            routeData.parentNavigation.addRoute(route);
-            return route;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('AddRuleService', AddRuleService);
-
-    AddRuleService.$inject = [
-        'WorkspaceService',
-        'RuleFactory'
-    ];
-
-    function AddRuleService(WorkspaceService, RuleFactory) {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(ruleData, route) {
-            var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
-            route.conditionSet[0].addRule(newRule);
-            return newRule;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('RemoveRouteService', RemoveRouteService);
-
-    function RemoveRouteService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(routeData) {
-            routeData.parentNavigation.removeRoute(routeData.name);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('RemoveRuleService', RemoveRuleService);
-
-    function RemoveRuleService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(rule, route) {
-            route.conditionSet[0].removeRule(rule);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('AddAnswerOptionService', AddAnswerOptionService);
-
-    AddAnswerOptionService.$inject = [
-        'WorkspaceService',
-        'AnswerOptionFactory'
-    ];
-
-    function AddAnswerOptionService(WorkspaceService, AnswerOptionFactory) {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(question) {
-            var answerOption = AnswerOptionFactory.create(question.option.length, question.templateID);
-            question.addOption(answerOption);
-            return answerOption;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('AddSurveyItemService', AddSurveyItemService);
-
-    AddSurveyItemService.$inject = [
-        'WorkspaceService'
-    ];
-
-    function AddSurveyItemService(WorkspaceService) {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(itemType) {
-            return WorkspaceService.getSurvey().addItem(itemType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('RemoveAnswerOptionService', RemoveAnswerOptionService);
-
-    function RemoveAnswerOptionService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(question) {
-            question.removeLastOption();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('RemoveSurveyItemService', RemoveSurveyItemService);
-
-    function RemoveSurveyItemService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, survey) {
-            survey.removeItem(item.templateID);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('UpdateQuestionService', UpdateQuestionService);
-
-    UpdateQuestionService.$inject = [
-        'WorkspaceService'
-    ];
-
-    function UpdateQuestionService(WorkspaceService) {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(data) {
-            var survey = WorkspaceService.getSurvey();
-            survey.updateQuestion(data.ngModel);
-            return data;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
         .factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
     MetadataAnswerFactory.$inject = ['LabelFactory'];
@@ -398,26 +125,25 @@
         /* Public interface */
         self.create = create;
 
-        function create(value, parentQuestionID) {
-            return new MetadataAnswer(value, parentQuestionID, LabelFactory);
+        function create(value) {
+            return new MetadataAnswer(value, LabelFactory);
         }
 
         return self;
     }
 
-    function MetadataAnswer(value, parentQuestionID, LabelFactory) {
+    function MetadataAnswer(value, LabelFactory) {
         var self = this;
 
         self.extends = 'StudioObject';
         self.objectType = 'MetadataAnswer';
-        self.value = value;
-        self.parentQuestionID = parentQuestionID;
         self.dataType = 'Integer';
         self.label = {
             'ptBR': LabelFactory.create(),
             'enUS': LabelFactory.create(),
             'esES': LabelFactory.create()
         };
+        self.value = value;
     }
 
 }());
@@ -437,43 +163,54 @@
         /* Public interface */
         self.create = create;
 
-        function create(name, questionOID) {
-            return new MetadataGroup(name, questionOID);
+        function create() {
+            return new MetadataGroup(MetadataAnswerFactory);
         }
 
         return self;
     }
 
-    function MetadataGroup(name, questionOID) {
+    function MetadataGroup(MetadataAnswerFactory) {
         var self = this;
 
         self.extents = 'StudioObject';
         self.objectType = 'MetadataGroup';
-        self.name = name;
-        self.parentQuestion = questionOID;
-        self.option = [];
+        self.options = [];
 
-        self.addOption = addOption;
+        /* Public methods */
+        self.getOptionListSize = getOptionListSize;
+        self.getOptionByValue = getOptionByValue;
+        self.createOption = createOption;
         self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
 
-        function addOption(option) {
-            self.option.push(option);
+        function getOptionListSize() {
+            return self.options.length;
         }
 
-        function removeOption(option) {
-            var indexToRemove = 0;
+        function getOptionByValue(value) {
+            return self.options[value - 1];
+        }
 
-            self.option.forEach(function(o) {
-                if (o.value === option.value) return;
-                else ++indexToRemove;
-            });
+        function createOption() {
+            var option = MetadataAnswerFactory.create(self.options.length + 1);
+            self.options.push(option);
+            return option;
+        }
 
-            self.option.splice(indexToRemove, 1);
+        function removeOption(value) {
+            self.options.splice((value - 1), 1);
+            reorderOptionValues();
         }
 
         function removeLastOption() {
-            self.option.splice(-1, 1);
+            self.options.splice(-1, 1);
+        }
+
+        function reorderOptionValues() {
+            self.options.forEach(function(option, index) {
+                option.value = ++index;
+            });
         }
     }
 
@@ -583,6 +320,233 @@
             writable: true,
             enumerable: true
         });
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .service('AddMetadataAnswerService', AddMetadataAnswerService);
+
+    function AddMetadataAnswerService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            return item.metadata.createOption();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .service('RemoveMetadataOptionService', RemoveMetadataOptionService);
+
+    function RemoveMetadataOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            item.metadata.removeLastOption();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('AddRouteConditionService', AddRouteConditionService);
+
+    AddRouteConditionService.$inject = [
+        'RouteConditionFactory'
+    ];
+
+    function AddRouteConditionService(RouteConditionFactory) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(conditionName, route) {
+            var routeCondition = RouteConditionFactory.create(conditionName);
+            route.addCondition(routeCondition);
+            return routeCondition;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('AddRouteService', AddRouteService);
+
+    AddRouteService.$inject = [
+        'RouteFactory'
+    ];
+
+    function AddRouteService(RouteFactory) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(routeData) {
+            var route = RouteFactory.create(routeData.name, routeData.parentNavigation.origin, routeData.destination);
+            routeData.parentNavigation.addRoute(route);
+            return route;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('AddRuleService', AddRuleService);
+
+    AddRuleService.$inject = [
+        'RuleFactory'
+    ];
+
+    function AddRuleService(RuleFactory) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(ruleData, route) {
+            var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
+            route.conditionSet[0].addRule(newRule);
+            return newRule;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('RemoveRouteService', RemoveRouteService);
+
+    function RemoveRouteService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(routeData) {
+            routeData.parentNavigation.removeRoute(routeData.name);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('RemoveRuleService', RemoveRuleService);
+
+    function RemoveRuleService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(rule, route) {
+            route.conditionSet[0].removeRule(rule);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.surveyItem')
+        .service('AddAnswerOptionService', AddAnswerOptionService);
+
+    function AddAnswerOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            return item.createOption();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.surveyItem')
+        .service('AddSurveyItemService', AddSurveyItemService);
+
+    function AddSurveyItemService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(itemType, survey) {
+            return survey.addItem(itemType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.surveyItem')
+        .service('RemoveAnswerOptionService', RemoveAnswerOptionService);
+
+    function RemoveAnswerOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            item.removeLastOption();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.surveyItem')
+        .service('RemoveSurveyItemService', RemoveSurveyItemService);
+
+    function RemoveSurveyItemService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, survey) {
+            survey.removeItem(item.templateID);
+        }
     }
 
 }());
@@ -1523,7 +1487,7 @@
     function SurveyItemManagerService(SurveyItemContainerService) {
         var self = this;
 
-        var incrementalIDValue = -1;
+        var incrementalIDValue = 0;
 
         /* Public interface */
         self.init = init;
@@ -1701,13 +1665,13 @@
         self.create = create;
 
         function create(value, parentQuestionID) {
-            return new QuestionAnswerOption(value, parentQuestionID, LabelFactory);
+            return new AnswerOption(value, parentQuestionID, LabelFactory);
         }
 
         return self;
     }
 
-    function QuestionAnswerOption(value, parentQuestionID, LabelFactory) {
+    function AnswerOption(value, parentQuestionID, LabelFactory) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -2108,24 +2072,42 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
-        self.option = [];
+        self.options = [];
 
         /* Public methods */
-        self.addOption = addOption;
+        self.getOptionListSize = getOptionListSize;
+        self.getOptionByValue = getOptionByValue;
+        self.createOption = createOption;
+        self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
         self.isQuestion = isQuestion;
         self.toJson = toJson;
+
+        function getOptionListSize() {
+            return self.options.length;
+        }
+
+        function getOptionByValue(value) {
+            return self.options[value - 1];
+        }
 
         function isQuestion() {
             return true;
         }
 
-        function addOption(option) {
-            self.option.push(option);
+        function createOption() {
+            var option = AnswerOptionFactory.create(self.options.length + 1);
+            self.options.push(option);
+            return option;
+        }
+
+        function removeOption(value) {
+            self.options.splice((value - 1), 1);
+            reorderOptionValues();
         }
 
         function removeLastOption() {
-            self.option.splice(-1);
+            self.options.splice(-1, 1);
         }
 
         function toJson() {
@@ -2136,10 +2118,16 @@
             json.templateID = self.templateID;
             json.dataType = self.dataType;
             json.label = self.label;
-            json.option = self.option;
+            json.options = self.options;
             json.metadata = self.metadata;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+        }
+
+        function reorderOptionValues() {
+            self.options.forEach(function(option, index) {
+                option.value = ++index;
+            });
         }
     }
 

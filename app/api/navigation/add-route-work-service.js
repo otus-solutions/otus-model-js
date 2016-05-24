@@ -6,11 +6,10 @@
         .service('AddRouteService', AddRouteService);
 
     AddRouteService.$inject = [
-        'WorkspaceService',
         'RouteFactory'
     ];
 
-    function AddRouteService(WorkspaceService, RouteFactory) {
+    function AddRouteService(RouteFactory) {
         var self = this;
 
         self.execute = execute;

@@ -16,10 +16,6 @@ describe('SingleSelectionQuestionFactory', function() {
 
     describe('SingleSelectionQuestion', function() {
 
-        xit('returned object should extends SurveyItem', function() {
-            expect(question.extends).toBe('SurveyItem');
-        });
-
         it('returned object should have objectType equal to SingleSelectionQuestion', function() {
             expect(question.objectType).toBe('SingleSelectionQuestion');
         });

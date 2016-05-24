@@ -10,13 +10,13 @@ describe('MetadataAnswerFactory', function() {
                 'LabelFactory': mockLabelFactory(_$injector_)
             });
 
-            option = factory.create('1234');
+            option = factory.create(0);
         });
     });
 
-    describe('MetadataAnswer', function() {
+    describe('create method', function() {
 
-        it('returned object should extends Question', function() {
+        it('returned object should extends StudioObject', function() {
             expect(option.extends).toBe('StudioObject');
         });
 
@@ -28,26 +28,20 @@ describe('MetadataAnswerFactory', function() {
             expect(option.dataType).toBe('Integer');
         });
 
-        xit('returned object should have parentQuestion equal to Question.oid', function() {
-            expect(option.parentQuestion).toBe('1234');
+        it('returned object should have a label object for enUS', function() {
+            expect(option.label.enUS).toBeDefined();
         });
 
         it('returned object should have a label object for ptBR', function() {
-            expect(option.label.ptBR).not.toBeNull();
-            expect(option.label.ptBR).not.toBeUndefined();
+            expect(option.label.ptBR).toBeDefined();
         });
 
-        it('returned object should have a label object for ptBR', function() {
-            expect(option.label.ptBR).not.toBeNull();
-            expect(option.label.ptBR).not.toBeUndefined();
+        it('returned object should have a label object for esES', function() {
+            expect(option.label.esES).toBeDefined();
         });
 
-        xit('call LabelFactory.create()', function() {
-            spyOn(Mock.LabelFactory, 'create');
-
-            factory.create('1234');
-
-            expect(Mock.LabelFactory.create.calls.count()).toEqual(3);
+        it('returned object should have a value property defined', function() {
+            expect(option.value).toBeDefined();
         });
 
     });
