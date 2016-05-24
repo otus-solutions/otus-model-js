@@ -45,6 +45,7 @@
 
         /* Public methods */
         self.getQuestionByTemplateID = getQuestionByTemplateID;
+        self.addItem = addItem;
         self.addQuestion = addQuestion;
         self.removeQuestion = removeQuestion;
         self.updateQuestion = updateQuestion;
@@ -55,6 +56,12 @@
         }
 
         function addQuestion(questionType) {
+            var question = self.QuestionManager.addQuestion(questionType, self.identity.acronym);
+            self.NavigationManager.addNavigation();
+            return question;
+        }
+
+        function addItem(type) {
             var question = self.QuestionManager.addQuestion(questionType, self.identity.acronym);
             self.NavigationManager.addNavigation();
             return question;

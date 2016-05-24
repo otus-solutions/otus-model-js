@@ -12,9 +12,7 @@ describe('QuestionManagerService', function() {
             mockQuestions(_$injector_);
 
             service = _$injector_.get('QuestionManagerService', {
-                QuestionContainerService: mockQuestionContainerService(_$injector_),
-                QuestionAddService: mockQuestionAddService(_$injector_),
-                QuestionRemoveService: mockQuestionRemoveService(_$injector_)
+                QuestionContainerService: mockQuestionContainerService(_$injector_)
             });
         });
     });
@@ -95,16 +93,16 @@ describe('QuestionManagerService', function() {
 
     describe('addQuestion method', function() {
 
-        it('should call QuestionAddService.execute method with question type', function() {
+        it('should call QuestionContainerService.createQuestion method with question type', function() {
             service.addQuestion(QUESTION_TYPE, TEMPLATE_ID_PREFIX);
 
-            expect(Mock.QuestionAddService.execute).toHaveBeenCalledWith(QUESTION_TYPE, TEMPLATE_ID_PREFIX + 0);
+            expect(Mock.QuestionContainerService.createQuestion).toHaveBeenCalledWith(QUESTION_TYPE, TEMPLATE_ID_PREFIX + 0);
         });
 
-        it('should call QuestionAddService.execute method with templateID', function() {
+        it('should call QuestionContainerService.createQuestion method with templateID', function() {
             service.addQuestion(QUESTION_TYPE, TEMPLATE_ID_PREFIX);
 
-            expect(Mock.QuestionAddService.execute).toHaveBeenCalledWith(QUESTION_TYPE, TEMPLATE_ID_PREFIX + 0);
+            expect(Mock.QuestionContainerService.createQuestion).toHaveBeenCalledWith(QUESTION_TYPE, TEMPLATE_ID_PREFIX + 0);
         });
 
         it('should return the new question created', function() {
@@ -117,12 +115,12 @@ describe('QuestionManagerService', function() {
 
     describe('removeQuestion method', function() {
 
-        it('should call QuestionRemove.execute method with template id', function() {
+        it('should call QuestionContainerService.removeQuestion method with template id', function() {
             Mock.QuestionContainerService.manageQuestions([Mock.questionOne, Mock.questionTwo, Mock.questionThree]);
 
             service.removeQuestion(Mock.questionOne.templateID);
 
-            expect(Mock.QuestionRemoveService.execute).toHaveBeenCalledWith(Mock.questionOne.templateID);
+            expect(Mock.QuestionContainerService.removeQuestion).toHaveBeenCalledWith(Mock.questionOne.templateID);
         });
 
     });
@@ -136,28 +134,14 @@ describe('QuestionManagerService', function() {
     function mockQuestionContainerService($injector) {
         Mock.QuestionContainerService = $injector.get('QuestionContainerService');
 
+        spyOn(Mock.QuestionContainerService, 'init');
+        spyOn(Mock.QuestionContainerService, 'createQuestion').and.callThrough();
+        spyOn(Mock.QuestionContainerService, 'removeQuestion').and.callThrough();
         spyOn(Mock.QuestionContainerService, 'getQuestionList').and.callThrough();
         spyOn(Mock.QuestionContainerService, 'getQuestionListSize').and.callThrough();
         spyOn(Mock.QuestionContainerService, 'getQuestionByTemplateID').and.callThrough();
-        spyOn(Mock.QuestionContainerService, 'init');
 
         return Mock.QuestionContainerService;
-    }
-
-    function mockQuestionAddService($injector) {
-        Mock.QuestionAddService = $injector.get('QuestionAddService');
-
-        spyOn(Mock.QuestionAddService, 'execute').and.callThrough();
-
-        return Mock.QuestionAddService;
-    }
-
-    function mockQuestionRemoveService($injector) {
-        Mock.QuestionRemoveService = $injector.get('QuestionRemoveService');
-
-        spyOn(Mock.QuestionRemoveService, 'execute');
-
-        return Mock.QuestionRemoveService;
     }
 
 });

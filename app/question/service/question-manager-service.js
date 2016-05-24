@@ -6,12 +6,10 @@
         .service('QuestionManagerService', QuestionManagerService);
 
     QuestionManagerService.$inject = [
-        'QuestionContainerService',
-        'QuestionAddService',
-        'QuestionRemoveService'
+        'QuestionContainerService'
     ];
 
-    function QuestionManagerService(QuestionContainerService, QuestionAddService, QuestionRemoveService) {
+    function QuestionManagerService(QuestionContainerService) {
         var self = this;
 
         var incrementalIDValue = -1;
@@ -42,16 +40,15 @@
 
         function addQuestion(questionType, templateIDPrefix) {
             var templateID = templateIDPrefix + getNextIncrementalGenerator();
-            var question = QuestionAddService.execute(questionType, templateID);
+            var question = QuestionContainerService.createQuestion(questionType, templateID);
             return question;
         }
 
         function removeQuestion(templateID) {
-            QuestionRemoveService.execute(templateID);
+            QuestionContainerService.removeQuestion(templateID);
         }
 
         function getNextIncrementalGenerator() {
-            console.log(incrementalIDValue);
             return ++incrementalIDValue;
         }
 
