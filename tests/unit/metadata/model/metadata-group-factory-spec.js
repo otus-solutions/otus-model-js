@@ -1,45 +1,37 @@
 describe('MetadataGroupFactory', function() {
     var Mock = {};
-    var NAME = 'NAME';
-    var QUESTION_ID = 'QUESTION_ID';
+    var factory, metadataGroup;
 
     beforeEach(function() {
         module('otusjs');
 
         inject(function(_$injector_) {
             factory = _$injector_.get('MetadataGroupFactory', {
-                'MetadataAnswerFactory': mockMetadataAnswerFactory(_$injector_)
+                MetadataAnswerFactory: mockMetadataAnswerFactory(_$injector_)
             });
         });
 
-        metadataGroup = factory.create(NAME, QUESTION_ID);
+        metadataGroup = factory.create();
     });
 
-    describe('MetadataGroupFactory.create()', function() {
+    describe('create method', function() {
 
-        it('should returned an object defined', function() {
+        it('should return an object defined', function() {
             expect(metadataGroup).toBeDefined();
         });
 
-        it('returned object should extends Question', function() {
+        it('returned object should extends StudioObject', function() {
             expect(metadataGroup.extents).toBe('StudioObject');
         });
 
-        it('return should an Label ObjectType', function() {
+        it('should return a MetadataGroup ObjectType', function() {
             expect(metadataGroup.objectType).toBe('MetadataGroup');
         });
 
-        it('return should an metadataGroup represent name', function() {
-            expect(metadataGroup.name).toBe(NAME);
+        it('should return a metadataGroup options', function() {
+            expect(metadataGroup.options).toEqual(jasmine.any(Object));
         });
 
-        it('return should an metadataGroup parentQuestion', function() {
-            expect(metadataGroup.parentQuestion).toBe(QUESTION_ID);
-        });
-
-        it('return should an metadataGroup option', function() {
-            expect(metadataGroup.option).toEqual(jasmine.any(Object));
-        });
     });
 
     function mockMetadataAnswerFactory($injector) {

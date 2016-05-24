@@ -21,9 +21,6 @@ describe('Unit suite:', function() {
             expect(unit.objectType).toBe('Unit');
         });
 
-        xit('should return an Unit with oid', function() {
-        });
-
         it('should return an Unit with plainText equal to empty String', function() {
             expect(unit.plainText.length).toBe(0);
         });

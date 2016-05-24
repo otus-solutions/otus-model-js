@@ -5,20 +5,13 @@
         .module('otusjs.metadata')
         .service('AddMetadataAnswerService', AddMetadataAnswerService);
 
-    AddMetadataAnswerService.$inject = [
-        'WorkspaceService',
-        'MetadataAnswerFactory'
-    ];
-
-    function AddMetadataAnswerService(WorkspaceService, MetadataAnswerFactory) {
+    function AddMetadataAnswerService() {
         var self = this;
 
         self.execute = execute;
 
-        function execute(question) {
-            var metadataOption = MetadataAnswerFactory.create(question.metadata.option.length, question.templateID);
-            question.metadata.addOption(metadataOption);
-            return metadataOption;
+        function execute(item) {
+            return item.metadata.createOption();
         }
     }
 

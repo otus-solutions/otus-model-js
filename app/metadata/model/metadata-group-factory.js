@@ -13,43 +13,54 @@
         /* Public interface */
         self.create = create;
 
-        function create(name, questionOID) {
-            return new MetadataGroup(name, questionOID);
+        function create() {
+            return new MetadataGroup(MetadataAnswerFactory);
         }
 
         return self;
     }
 
-    function MetadataGroup(name, questionOID) {
+    function MetadataGroup(MetadataAnswerFactory) {
         var self = this;
 
         self.extents = 'StudioObject';
         self.objectType = 'MetadataGroup';
-        self.name = name;
-        self.parentQuestion = questionOID;
-        self.option = [];
+        self.options = [];
 
-        self.addOption = addOption;
+        /* Public methods */
+        self.getOptionListSize = getOptionListSize;
+        self.getOptionByValue = getOptionByValue;
+        self.createOption = createOption;
         self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
 
-        function addOption(option) {
-            self.option.push(option);
+        function getOptionListSize() {
+            return self.options.length;
         }
 
-        function removeOption(option) {
-            var indexToRemove = 0;
+        function getOptionByValue(value) {
+            return self.options[value - 1];
+        }
 
-            self.option.forEach(function(o) {
-                if (o.value === option.value) return;
-                else ++indexToRemove;
-            });
+        function createOption() {
+            var option = MetadataAnswerFactory.create(self.options.length + 1);
+            self.options.push(option);
+            return option;
+        }
 
-            self.option.splice(indexToRemove, 1);
+        function removeOption(value) {
+            self.options.splice((value - 1), 1);
+            reorderOptionValues();
         }
 
         function removeLastOption() {
-            self.option.splice(-1, 1);
+            self.options.splice(-1, 1);
+        }
+
+        function reorderOptionValues() {
+            self.options.forEach(function(option, index) {
+                option.value = ++index;
+            });
         }
     }
 

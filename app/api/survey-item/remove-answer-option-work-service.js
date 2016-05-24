@@ -10,8 +10,8 @@
 
         self.execute = execute;
 
-        function execute(question) {
-            question.removeLastOption();
+        function execute(item) {
+            item.removeLastOption();
         }
     }
 
