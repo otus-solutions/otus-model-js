@@ -5,7 +5,6 @@
         .module('otusjs.surveyItem')
         .factory('CheckboxQuestionFactory', CheckboxQuestionFactory);
 
-
     CheckboxQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
@@ -23,7 +22,6 @@
         }
 
         return self;
-
     }
 
     function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory) {
@@ -34,11 +32,10 @@
         self.templateID = templateID;
         self.dataType = 'Integer';
         self.label = {
-            ptBR: LabelFactory.create();
-            enUS: LabelFactory.create();
-            esES: LabelFactory.create();
+            ptBR: LabelFactory.create(),
+            enUS: LabelFactory.create(),
+            esES: LabelFactory.create()
         };
-
         self.metadata = MetadataGroupFactory.create();
         self.options = [];
 
@@ -97,6 +94,6 @@
                 option.value = ++index;
             });
         }
-
     }
+
 }());
