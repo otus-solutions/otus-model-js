@@ -49,7 +49,7 @@
         }
 
         function getMetadataGroupFactory() {
-        	return MetadataGroupFactory;
+            return MetadataGroupFactory;
         }
     }
 
