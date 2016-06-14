@@ -365,12 +365,12 @@
         self.extends = 'StudioObject';
         self.objectType = 'MetadataAnswer';
         self.dataType = 'Integer';
+        self.value = value;
         self.label = {
             'ptBR': LabelFactory.create(),
             'enUS': LabelFactory.create(),
             'esES': LabelFactory.create()
         };
-        self.value = value;
     }
 
 }());
