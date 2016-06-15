@@ -17,7 +17,7 @@
         "test": "karma start karma.conf.js",
         "gulp": "gulp",
         "karma": "karma",
-        "build": "npm run gulp compress"
+        "build": "gulp compress"
     },
     "dependencies": {
         "gulp-concat": "2.6.0",
