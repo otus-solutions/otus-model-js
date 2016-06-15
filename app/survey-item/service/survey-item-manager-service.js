@@ -24,6 +24,7 @@
 
         function init() {
             SurveyItemContainerService.init();
+            incrementalIDValue = 0;
         }
 
         function getItemList() {

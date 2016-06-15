@@ -42,6 +42,7 @@
         self.NavigationManager = NavigationManagerService;
 
         self.NavigationManager.init();
+        self.SurveyItemManager.init();
 
         /* Public methods */
         self.getItemByTemplateID = getItemByTemplateID;

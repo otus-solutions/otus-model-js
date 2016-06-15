@@ -10,7 +10,8 @@ describe('SurveyFactory', function() {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
                 'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_),
-                'NavigationManagerService': mockNavigationManagerService(_$injector_)
+                'NavigationManagerService': mockNavigationManagerService(_$injector_),
+                'SurveyItemManagerService': mockSurveyItemManagerService(_$injector_)
             });
 
             survey = factory.create(jasmine.any(String), jasmine.any(String));
@@ -47,6 +48,14 @@ describe('SurveyFactory', function() {
             expect(Mock.SurveyUUIDGenerator.generateSurveyUUID).toHaveBeenCalled();
         });
 
+        it('should call SurveyItemManagerService.init()', function() {
+            spyOn(Mock.SurveyItemManagerService, 'init');
+
+            factory.create(jasmine.any(String), jasmine.any(String));
+
+            expect(Mock.SurveyItemManagerService.init).toHaveBeenCalled();
+        });
+
     });
 
     function mockSurveyIdentityFactory($injector) {
@@ -64,6 +73,11 @@ describe('SurveyFactory', function() {
 
     function mockNavigationManagerService($injector) {
         return $injector.get('NavigationManagerService');
+    }
+
+    function mockSurveyItemManagerService($injector) {
+        Mock.SurveyItemManagerService = $injector.get('SurveyItemManagerService');
+        return Mock.SurveyItemManagerService;
     }
 
 });
