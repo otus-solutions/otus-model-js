@@ -131,13 +131,13 @@
 
      function SurveyUUIDGenerator($window, UUIDService) {
          var self = this;
-         var userUUID = "userUUID:[" + $window.sessionStorage.userUUID + "]";
-         var surveyUUID = "surveyUUID:[" + UUIDService.generateUUID() + "]";
-         var repositoryUUID = "repositoryUUID:[ Not done yet ]";
 
          self.generateSurveyUUID = generateSurveyUUID;
 
          function generateSurveyUUID() {
+             var userUUID = "userUUID:[" + $window.sessionStorage.userUUID + "]";
+             var surveyUUID = "surveyUUID:[" + UUIDService.generateUUID() + "]";
+             var repositoryUUID = "repositoryUUID:[ Not done yet ]";
              return Base64.encode(userUUID + surveyUUID + repositoryUUID);
          }
      }

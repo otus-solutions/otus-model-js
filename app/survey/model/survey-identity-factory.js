@@ -10,6 +10,13 @@
 
         /* Public interface */
         self.create = create;
+        self.load = load;
+
+        function load(surveyIdentityJson) {
+            return new SurveyIdentity(surveyIdentityJson.name,
+                surveyIdentityJson.acronym,
+                surveyIdentityJson.version);
+        }
 
         function create(name, acronym, version) {
             return new SurveyIdentity(name, acronym, version);

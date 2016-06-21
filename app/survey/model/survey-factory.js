@@ -18,6 +18,15 @@
 
         /* Public interdace */
         self.create = create;
+        self.load = load;
+
+        function load(surveyTemplateJson) {
+          var metainfo = SurveyMetaInfoFactory.load(surveyTemplateJson.metainfo);
+          var identity = SurveyIdentityFactory.load(surveyTemplateJson.identity);
+          var UUID = surveyTemplateJson.oid;
+
+          return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+        }
 
         function create(name, acronym) {
             var metainfo = SurveyMetaInfoFactory.create();

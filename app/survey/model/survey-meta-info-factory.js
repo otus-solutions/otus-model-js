@@ -10,6 +10,11 @@
 
         /* Public interdace */
         self.create = create;
+        self.load = load;
+
+        function load(surveyMetaInfoJson) {
+          return new SurveyMetaInfo(surveyMetaInfoJson.creationDatetime);
+        }
 
         function create() {
             var now = Date.now();
