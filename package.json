@@ -1,49 +1,50 @@
 {
-    "name": "otus-model-js",
-    "version": "0.0.2-SNAPSHOT",
-    "description": "Model Otus",
-    "keywords": [
-        "model",
-        "otus",
-        "otus-studio"
-    ],
-    "url": "https://github.com/ccem-dev/otus-model-js",
-    "email": "ccem.projects@gmail.com",
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:ccem-dev/otus-model-js.git"
-    },
-    "scripts": {
-        "test": "karma start karma.conf.js",
-        "gulp": "gulp",
-        "karma": "karma",
-        "build": "gulp compress"
-    },
-    "dependencies": {
-        "gulp-concat": "2.6.0",
-        "gulp-minify": "0.0.11",
-        "angular": "^1.4.7",
-        "node-uuid": "^1.4.7",
-        "js-base64": "^2.1.9",
-        "gulp-sonar": "2.1.0"
-    },
-    "devDependencies": {
-        "angular-mocks": "^1.4.9",
-        "browser-sync": "2.11.2",
-        "browser-sync-middleware-spa": "^1.0.0",
-        "concurrently": "^1.0.0",
-        "gulp": "^3.9.1",
-        "gulp-rename": "^1.2.2",
-        "gulp-uglify": "^1.5.1",
-        "gulp-useref": "^3.0.4",
-        "jasmine-core": "^2.4.1",
-        "karma": "^0.13.19",
-        "karma-chrome-launcher": "^0.2.2",
-        "karma-htmlfile-reporter": "^0.2.2",
-        "karma-jasmine": "^0.3.6",
-        "karma-phantomjs-launcher": "^0.2.3",
-        "phantomjs": ">=1.9",
-        "phantomjs-prebuilt": "^2.1.2",
-        "gulp-bump": "2.1.0"
-    }
+  "name": "otus-model-js",
+  "version": "0.0.2-SNAPSHOT",
+  "description": "Model Otus",
+  "keywords": [
+    "model",
+    "otus",
+    "otus-studio"
+  ],
+  "url": "https://github.com/ccem-dev/otus-model-js",
+  "email": "ccem.projects@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ccem-dev/otus-model-js.git"
+  },
+  "scripts": {
+    "test": "karma start karma.conf.js",
+    "gulp": "gulp",
+    "karma": "karma",
+    "build": "gulp compress"
+  },
+  "dependencies": {
+    "gulp-concat": "2.6.0",
+    "gulp-minify": "0.0.11",
+    "angular": "^1.4.7",
+    "node-uuid": "^1.4.7",
+    "js-base64": "^2.1.9",
+    "gulp-sonar": "2.1.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.9",
+    "browser-sync": "2.11.2",
+    "browser-sync-middleware-spa": "^1.0.0",
+    "concurrently": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-bump": "2.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.1",
+    "gulp-useref": "^3.0.4",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.19",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-coverage": "^1.0.0",
+    "karma-htmlfile-reporter": "^0.2.2",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.3",
+    "phantomjs": ">=1.9",
+    "phantomjs-prebuilt": "^2.1.2"
+  }
 }
