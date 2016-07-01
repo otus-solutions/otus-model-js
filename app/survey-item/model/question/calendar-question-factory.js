@@ -8,22 +8,23 @@
     CalendarQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
+        'ValidationOptionFactory'
     ];
 
-    function CalendarQuestionFactory(LabelFactory, MetadataGroupFactory) {
+    function CalendarQuestionFactory(LabelFactory, MetadataGroupFactory, ValidationOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CalendarQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory);
+            return new CalendarQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, ValidationOptionFactory);
         }
 
         return self;
     }
 
-    function CalendarQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory) {
+    function CalendarQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, ValidationOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -36,6 +37,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
+        self.validate = ValidationOptionFactory.create();
 
         /* Public methods */
         self.isQuestion = isQuestion;
@@ -54,6 +56,7 @@
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
+            json.validate = self.validate;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
