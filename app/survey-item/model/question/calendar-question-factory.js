@@ -41,10 +41,24 @@
 
         /* Public methods */
         self.isQuestion = isQuestion;
+        self.validators = validators;
         self.toJson = toJson;
+
 
         function isQuestion() {
             return true;
+        }
+
+        function validators() {
+            var validatorsList = [
+                'mandatory',
+                'minDate',
+                'maxDate',
+                'rangeDate',
+                'futureDate',
+                'pastDate'
+            ];
+            return validatorsList;
         }
 
         function toJson() {
