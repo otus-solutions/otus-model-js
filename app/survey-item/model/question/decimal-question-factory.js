@@ -8,22 +8,23 @@
     DecimalQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'UnitFactory'
+        'UnitFactory',
+        'ValidationOptionFactory'
     ];
 
-    function DecimalQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory) {
+    function DecimalQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, ValidationOptionFactory) {
         var self = this;
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new DecimalQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory);
+            return new DecimalQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, ValidationOptionFactory);
         }
 
         return self;
     }
 
-    function DecimalQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory) {
+    function DecimalQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, ValidationOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -36,6 +37,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
+        self.validate = ValidationOptionFactory.create();
         self.unit = {
             ptBR: UnitFactory.create(),
             enUS: UnitFactory.create(),
@@ -44,10 +46,24 @@
 
         /* Public methods */
         self.isQuestion = isQuestion;
+        self.validators = validators;
         self.toJson = toJson;
 
         function isQuestion() {
             return true;
+        }
+
+        function validators() {
+            var validatorsList = [
+                'mandatory',
+                'distinct',
+                'lowerLimit',
+                'upperLimit',
+                'in',
+                'scale'
+            ];
+
+            return validatorsList;
         }
 
         function toJson() {
@@ -60,6 +76,8 @@
             json.label = self.label;
             json.metadata = self.metadata;
             json.unit = self.unit;
+            json.validate = self.validate;
+
 
             return JSON.stringify(json);
         }

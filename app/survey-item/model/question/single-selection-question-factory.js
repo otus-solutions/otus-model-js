@@ -8,23 +8,24 @@
     SingleSelectionQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'AnswerOptionFactory'
+        'AnswerOptionFactory',
+        'ValidationOptionFactory'
     ];
 
-    function SingleSelectionQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory) {
+    function SingleSelectionQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory, ValidationOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory);
+            return new SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, ValidationOptionFactory);
         }
 
         return self;
     }
 
-    function SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory) {
+    function SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, ValidationOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;

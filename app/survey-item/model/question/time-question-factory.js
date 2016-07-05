@@ -8,22 +8,23 @@
     TimeQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
+        'ValidationOptionFactory'
     ];
 
-    function TimeQuestionFactory(LabelFactory, MetadataGroupFactory) {
+    function TimeQuestionFactory(LabelFactory, MetadataGroupFactory, ValidationOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new TimeQuestion(templateID, prototype,LabelFactory, MetadataGroupFactory);
+            return new TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, ValidationOptionFactory);
         }
 
         return self;
     }
 
-    function TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory) {
+    function TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, ValidationOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -36,13 +37,25 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
+        self.validate = ValidationOptionFactory.create();
 
         /* Public methods */
         self.isQuestion = isQuestion;
+        self.validators = validators;
         self.toJson = toJson;
 
         function isQuestion() {
             return true;
+        }
+
+        function validators() {
+            var validatorsList = [
+                'mandatory',
+                'minTime',
+                'maxTime',
+                'parameter'
+            ];
+            return validatorsList
         }
 
         function toJson() {
@@ -54,6 +67,7 @@
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
+            json.validate = self.validate;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }

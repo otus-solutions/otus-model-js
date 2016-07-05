@@ -8,23 +8,24 @@
     CheckboxQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'AnswerOptionFactory'
+        'AnswerOptionFactory',
+        'ValidationOptionFactory'
     ];
 
-    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory) {
+    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory, ValidationOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory);
+            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, ValidationOptionFactory);
         }
 
         return self;
     }
 
-    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory) {
+    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, ValidationOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -37,6 +38,8 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
+        self.validate = ValidationOptionFactory.create();
+
         self.options = [];
 
         /* Public methods */
@@ -46,6 +49,7 @@
         self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
         self.isQuestion = isQuestion;
+        self.validators = validators;
         self.toJson = toJson;
 
         function getOptionListSize() {
@@ -58,6 +62,14 @@
 
         function isQuestion() {
             return true;
+        }
+
+        function validators() {
+            var validatorsList = [
+                'mandatory'
+            ];
+            return validatorsList;
+
         }
 
         function createOption() {
@@ -85,6 +97,7 @@
             json.label = self.label;
             json.options = self.options;
             json.metadata = self.metadata;
+            json.validate = self.validate;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
