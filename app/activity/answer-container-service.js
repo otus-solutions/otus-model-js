@@ -5,40 +5,54 @@
         .module('otusjs.activity')
         .service('AnswerContainerService', AnswerContainerService);
 
-    AnswerContainerService.$inject = ['AnswerFactory'];
-
-    function AnswerContainerService(AnswerFactory) {
+    function AnswerContainerService() {
+        var self = this;
         var answerList = [];
 
         /* Public methods */
         self.init = init;
-        self.addAnswer = addAnswer;
-        self.removeAnswer = removeAnswer;
+        self.updateAnswer = updateAnswer;
+        self.existsAnswerTo = existsAnswerTo;
         self.searchAnswer = searchAnswer;
         self.answerListSize = answerListSize;
+        self.addAnswer = addAnswer;
 
         function init() {
             answerList = [];
         }
 
-        // AnswerContainerFactory.add(elemento);
-        // AnswerContainerFactory.remove(elemento);
-        // AnswerContainerFactory.search();
-
-        function addAnswer(AnswerFactory) {
-            answerList.push(AnswerFactory);
+        function updateAnswer(Answer) {
+            if (!existsAnswerTo(Answer)) {
+                _addAnswer(Answer);
+            } else if (!Answer.isFilled()) {
+                _removeAnswer();
+            } else {
+                _replaceAnswer();
+            }
         }
 
-        function removeAnswer() {
+        function addAnswer(Answer) {
+            answerList.push(Answer);
+        }
+
+        function _removeAnswer(Answer) {
 
         }
 
-        function searchAnswer() {
+        function existsAnswerTo(questionID) {
+            var answer = searchAnswer(questionID);
+            if (answer === undefined)
+                return false;
+            else
+                return true;
+        }
 
+        function searchAnswer(questionID) {
+            return {questionID: 'PW1'};
         }
 
         function answerListSize() {
-
+            return answerList.length;
         }
     }
 

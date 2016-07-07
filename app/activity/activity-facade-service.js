@@ -17,6 +17,8 @@
 
         function fillQuestion(Question, answerValue, Metadata) {
             var answer = AnswerFactory.create(Question, answerValue, Metadata);
+            contar.add(answer);
+
         }
     }
 

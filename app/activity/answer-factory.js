@@ -17,7 +17,6 @@
         return self;
     }
 
-    // fachada.fillQuestion(self.Item, answer, metadata);
     function Answer(Question, answer, Metadata) {
         var self = this;
         self.objectType = Question.objectType;
@@ -27,9 +26,27 @@
 
         /* Public methods */
         self.getObjectAnswer = getObjectAnswer;
+        self.removeAnswer = removeAnswer;
+        self.removeMetadata = removeMetadata;
+        self.isFilled = isFilled;
 
         function getObjectAnswer() {
             return self;
+        }
+
+        function removeAnswer() {
+            self.value = undefined;
+        }
+
+        function removeMetadata() {
+            self.metadata = undefined;
+        }
+
+        function isFilled() {
+            if (self.value === undefined && self.metadata === undefined)
+                return true;
+            else
+                return false;
         }
     }
 
