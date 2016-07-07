@@ -15,8 +15,8 @@
         /* Public interface */
         self.fillQuestion = fillQuestion;
 
-        function fillQuestion(Question, answerValue, metadataValue) {
-            var answer = AnswerFactory.create(Question, answerValue, metadataValue);
+        function fillQuestion(Question, answerValue, Metadata) {
+            var answer = AnswerFactory.create(Question, answerValue, Metadata);
         }
     }
 

@@ -5,6 +5,7 @@ describe('ActivityFacadeService', function() {
     /* @BeforeScenario */
     beforeEach(function() {
         module('otusjs');
+        module('otusjs.activity');
 
         inject(function(_$injector_) {
             /* @InjectMocks */
@@ -14,14 +15,18 @@ describe('ActivityFacadeService', function() {
         });
     });
 
-    describe('create method', function() {
-        it('should call function for fill of question', function() {
-            service.fillQuestion(Mock.item, Mock.answer, Mock.metadata);
-            expect(Mock.AnswerFactory.fillQuestion).toHaveBeenCalledWith(Mock.item);
+    describe('fillQuestion method', function() {
+      
+        it('should call AnswerFactory.create', function() {
+            spyOn(Mock.AnswerFactory, 'create');
+            service.fillQuestion(jasmine.any(Object), jasmine.any(String), jasmine.any(Object));
+            expect(Mock.AnswerFactory.create).toHaveBeenCalledWith(jasmine.any(Object), jasmine.any(String), jasmine.any(Object));
         });
+
     });
 
     function mockAnswerFactory($injector) {
-        return $injector.get('AnswerFactory');
+        Mock.AnswerFactory = $injector.get('AnswerFactory');
+        return Mock.AnswerFactory;
     }
 });

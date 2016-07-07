@@ -8,6 +8,7 @@
             'otusjs.navigation',
             'otusjs.surveyItem',
             'otusjs.survey',
+            'otusjs.activity',
             'utils'
         ]);
 

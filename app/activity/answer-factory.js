@@ -6,20 +6,24 @@
         .factory('AnswerFactory', AnswerFactory);
 
     function AnswerFactory() {
+        var self = this;
 
-        function create(Question, answer, metadata) {
-            return new Answer(Question, answer, metadata);
+        self.create = create;
+
+        function create(Question, answer, Metadata) {
+            return new Answer(Question, answer, Metadata);
         }
+
+        return self;
     }
 
     // fachada.fillQuestion(self.Item, answer, metadata);
-
-    function Answer(Question, answer, metadata) {
+    function Answer(Question, answer, Metadata) {
         var self = this;
         self.objectType = Question.objectType;
         self.questionID = Question.templateID;
         self.value = answer;
-        self.metadata = metadata;
+        self.metadata = Metadata;
 
         /* Public methods */
         self.getObjectAnswer = getObjectAnswer;
