@@ -18,30 +18,52 @@ describe('AnswerContainerService', function() {
     });
 
     describe('addAnswer method', function() {
+        var answer;
+
+        beforeEach(function() {
+            answer = answerFactory.create(MockAnswer.Question, MockAnswer.ANSWER, MockAnswer.Metadata);
+        });
 
         it('should to include new answer on list', function() {
+            containerService.addAnswer(answer);
+            expect(containerService.searchAnswer(MockQuestionIDFirstAnswer.questionID)).toEqual(answer);
+        });
 
+    });
+
+    describe('answerListSize method', function() {
+        var answer;
+
+        beforeEach(function() {
+            answer = answerFactory.create(MockAnswer.Question, MockAnswer.ANSWER, MockAnswer.Metadata);
+        });
+
+        it('should return length of list equals one', function() {
+            containerService.addAnswer(answer);
+            expect(containerService.answerListSize()).toEqual(1);
+        });
+
+        it('should return length equal zero, when list is empty', function() {
+            expect(containerService.answerListSize()).toEqual(0);
         });
 
     });
 
     describe('searchAnswer method', function() {
-
         var answer;
 
         beforeEach(function() {
             answer = answerFactory.create(MockAnswer.Question, MockAnswer.ANSWER, MockAnswer.Metadata);
-            // containerService.updateAnswer(answer);
+            containerService.addAnswer(answer);
         });
 
-        fit('should return correct answer, exist answer on list', function() {
+        it('should return correct answer, exist answer on list', function() {
             var foundAnswer = containerService.searchAnswer(MockQuestionIDFirstAnswer.questionID);
-
             expect(foundAnswer.questionID).toEqual(answer.questionID);
         });
 
-        fit('should return undefined answer, does not exist answer on list', function() {
-            var answer = containerService.searchAnswer(MockQuestionIDSecondAnswer.questionID);
+        it('should return undefined answer, does not exist answer on list', function() {
+            answer = containerService.searchAnswer(MockQuestionIDSecondAnswer.questionID);
 
             expect(answer).toEqual(undefined);
         });
