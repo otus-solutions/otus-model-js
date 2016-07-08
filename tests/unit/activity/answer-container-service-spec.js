@@ -108,6 +108,12 @@ describe('AnswerContainerService', function() {
         });
     });
 
+    describe('replaceAnswer method', function() {
+        it('should return ', function() {
+
+        });
+    });
+
     function mocksQuestionID() {
         MockQuestionIDFirstAnswer.questionID = 'PW1';
         MockQuestionIDSecondAnswer.questionID = 'PW2';

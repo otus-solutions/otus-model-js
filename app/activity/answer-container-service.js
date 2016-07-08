@@ -37,7 +37,8 @@
 
         function replaceAnswer(Answer) {
             var index = getIndexAnswerOnList(Answer.questionID);
-            answerList.splice(index, 1, Answer);
+            var answerReplaced = answerList.splice(index, 1, Answer);
+            return answerReplaced;
         }
 
         function removeAnswer(questionID) {
