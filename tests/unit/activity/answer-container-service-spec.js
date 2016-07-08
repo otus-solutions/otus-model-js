@@ -38,7 +38,7 @@ describe('AnswerContainerService', function() {
             answer = answerFactory.create(MockAnswer.Question, MockAnswer.ANSWER, MockAnswer.Metadata);
         });
 
-        it('should return length of list equals one', function() {
+        it('should return length of list equals one, when list has one answer', function() {
             containerService.addAnswer(answer);
             expect(containerService.answerListSize()).toEqual(1);
         });
@@ -68,6 +68,44 @@ describe('AnswerContainerService', function() {
             expect(answer).toEqual(undefined);
         });
 
+    });
+
+    describe('getIndexAnswerOnList method', function() {
+        var answer;
+
+        beforeEach(function() {
+            answer = answerFactory.create(MockAnswer.Question, MockAnswer.ANSWER, MockAnswer.Metadata);
+            containerService.addAnswer(answer);
+        });
+
+        it('should return index of elemente on list', function() {
+            var index = containerService.getIndexAnswerOnList(MockQuestionIDFirstAnswer.questionID);
+            expect(index).not.toEqual(undefined);
+        });
+
+        it('should return index of element in list, return should to be a number zero', function() {
+            var index = containerService.getIndexAnswerOnList(MockQuestionIDFirstAnswer.questionID);
+            expect(index).toEqual(0);
+        });
+    });
+
+    describe('removeAnswer method', function() {
+        var answer;
+
+        beforeEach(function() {
+            answer = answerFactory.create(MockAnswer.Question, MockAnswer.ANSWER, MockAnswer.Metadata);
+            containerService.addAnswer(answer);
+        });
+
+        it('should return true when removed element in list', function() {
+            var result = containerService.removeAnswer(MockQuestionIDFirstAnswer.questionID);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when none element removed of list', function() {
+            var result = containerService.removeAnswer(MockQuestionIDSecondAnswer.questionID);
+            expect(result).toEqual(false);
+        });
     });
 
     function mocksQuestionID() {

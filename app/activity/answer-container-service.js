@@ -15,18 +15,19 @@
         self.addAnswer = addAnswer;
         self.answerListSize = answerListSize;
         self.removeAnswer = removeAnswer;
+        self.getIndexAnswerOnList = getIndexAnswerOnList;
 
         function init() {
             answerList = [];
         }
 
         function updateAnswer(Answer) {
-            if (!existsAnswerTo(Answer)) {
+            if (!existsAnswerTo(Answer.questionID)) {
                 addAnswer(Answer);
             } else if (!Answer.isFilled()) {
-                removeAnswer();
+                removeAnswer(Answer.questionID);
             } else {
-                replaceAnswer();
+                replaceAnswer(Answer);
             }
         }
 
@@ -34,7 +35,29 @@
             answerList.push(Answer);
         }
 
-        function removeAnswer(Answer) {}
+        function replaceAnswer(Answer) {
+            var index = getIndexAnswerOnList(Answer.questionID);
+            answerList.splice(index, 1, Answer);
+        }
+
+        function removeAnswer(questionID) {
+            var aswer = searchAnswer(questionID);
+            if (aswer === undefined) {
+                return false;
+            } else {
+                var index = getIndexAnswerOnList(questionID);
+                answerList.splice(index, 1);
+                return true;
+            }
+        }
+
+        function getIndexAnswerOnList(questionID) {
+            for (var i = 0; i < answerList.length; i++) {
+                if (answerList[i].questionID === questionID) {
+                    return i;
+                }
+            }
+        }
 
         function existsAnswerTo(questionID) {
             for (var i = 0; i < answerList.length; i++) {
