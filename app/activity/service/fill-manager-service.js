@@ -15,9 +15,6 @@
         self.getFillingIndex = getFillingIndex;
         self.existsFillingTo = existsFillingTo;
         self.searchFillingByID = searchFillingByID;
-        self.add = add;
-        self.removeFilling = removeFilling;
-        self.replaceFilling = replaceFilling;
         self.updateFilling = updateFilling;
 
         function init() {
@@ -34,12 +31,22 @@
         }
 
         function existsFillingTo(questionID) {
-            return (searchFillingByID(questionID) !== null);
+            return (_searchByID(questionID)) ? true : false;
         }
 
         function searchFillingByID(questionID) {
             var result = _searchByID(questionID);
             return (result) ? result.filling : null;
+        }
+
+        function updateFilling(filling) {
+            if (!existsFillingTo(filling.questionID)) {
+                add(filling);
+            } else if (filling.isFilled()) {
+                return replaceFilling(filling);
+            } else {
+                return removeFilling(filling.questionID);
+            }
         }
 
         function _searchByID(questionID) {
@@ -56,20 +63,11 @@
             return result;
         }
 
-        function add(filling) {
+        function _add(filling) {
             fillingList.push(filling);
         }
 
-        function removeFilling(questionID) {
-            var result = _searchByID(questionID);
-            if (result !== undefined) {
-                return fillingList.splice(result.index, 1)[0];
-            } else {
-                return null;
-            }
-        }
-
-        function replaceFilling(filling) {
+        function _replaceFilling(filling) {
             var result = _searchByID(filling.questionID);
             if (result !== undefined) {
                 return fillingList.splice(result.index, 1, filling)[0];
@@ -78,13 +76,12 @@
             }
         }
 
-        function updateFilling(filling) {
-            if (!existsFillingTo(filling.questionID)) {
-                add(filling);
-            } else if (filling.isFilled()) {
-                return replaceFilling(filling);
+        function _removeFilling(questionID) {
+            var result = _searchByID(questionID);
+            if (result !== undefined) {
+                return fillingList.splice(result.index, 1)[0];
             } else {
-                return removeFilling(filling.questionID);
+                return null;
             }
         }
     }

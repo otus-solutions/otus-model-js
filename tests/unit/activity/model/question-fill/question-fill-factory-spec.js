@@ -55,24 +55,6 @@ describe('QuestionFillFactory', function() {
 
     });
 
-    describe('isFilled method', function() {
-        var questionFill;
-
-        beforeEach(function() {
-            questionFill = factory.create(QID1, Mock.answer, Mock.metadata);
-        });
-
-        fit('should return true when answer, metadata and comment filled', function() {
-            var result = questionFill.isFilled();
-
-            expect(result).toEqual(true);
-        });
-
-        xit('should return false when answer, metadata and comment not filled', function() {
-
-        });
-    });
-
     function mockAnswerFill($injector) {
         Mock.answer = $injector.get('AnswerFillFactory').create();
     }

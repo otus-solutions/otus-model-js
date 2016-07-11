@@ -5,13 +5,17 @@
         .module('otusjs.activity')
         .factory('QuestionFillFactory', QuestionFillFactory);
 
-    function QuestionFillFactory() {
+    QuestionFillFactory.$inject = ['AnswerFillFactory', 'MetadataFillFactory'];
+
+    function QuestionFillFactory(AnswerFillFactory, MetadataFillFactory) {
         var self = this;
 
         self.create = create;
 
         function create(questionID, answer, metadata, comment) {
-            return new QuestionFill(questionID, answer, metadata, comment);
+            var answerFill = AnswerFillFactory.create(answer);
+            var metadataFill = MetadataFillFactory.create(metadata);
+            return new QuestionFill(questionID, answerFill, metadataFill, comment);
         }
 
         return self;
@@ -31,7 +35,7 @@
         self.toJson = toJson;
 
         function isFilled() {
-            return (self.answer || self.metadata || self.comment);
+            return  self.answer.isFilled() || self.metadata.isFilled() || !!self.comment;
         }
 
         function toJson() {

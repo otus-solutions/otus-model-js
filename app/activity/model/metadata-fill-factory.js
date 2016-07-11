@@ -25,7 +25,12 @@
         self.value = (value === undefined) ? null : value;
 
         /* Public methods */
+        self.isFilled = isFilled;
         self.toJson = toJson;
+
+        function isFilled() {
+            return (self.value) ? true : false;
+        }
 
         function toJson() {
             var json = {};

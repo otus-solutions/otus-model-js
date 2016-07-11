@@ -15,6 +15,28 @@ describe('AnswerFill', function() {
 
     });
 
+    describe('isFilled method', function() {
+
+        it('should return true when value is not null or undefined', function() {
+            var answer = factory.create(ANSWER_VALUE);
+
+            expect(answer.isFilled()).toBe(true);
+        });
+
+        it('should return false when value is null', function() {
+            var answer = factory.create(null);
+
+            expect(answer.isFilled()).toBe(false);
+        });
+
+        it('should return false when value is undefined', function() {
+            var answer = factory.create();
+
+            expect(answer.isFilled()).toBe(false);
+        });
+
+    });
+
     describe('toJson method', function() {
 
         it('should return a well formatted json based on instance of AnswerFill', function() {

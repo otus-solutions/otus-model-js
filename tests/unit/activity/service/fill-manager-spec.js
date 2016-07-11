@@ -98,77 +98,6 @@ describe('FillingManagerService', function() {
 
     });
 
-    describe('add method', function() {
-        var filling;
-
-        beforeEach(function() {
-            filling = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, COMMENT);
-        });
-
-        it('should to include new filling in list', function() {
-            service.add(filling);
-
-            expect(service.searchFillingByID(QID1)).toEqual(filling);
-        });
-
-    });
-
-    describe('removeFilling method', function() {
-        var fillingQID1, fillingQID2;
-
-        beforeEach(function() {
-            fillingQID1 = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, COMMENT);
-            fillingQID2 = Mock.QuestionFillFactory.create(QID2, ANSWER, METADATA, COMMENT);
-            service.add(fillingQID1);
-            service.add(fillingQID2);
-        });
-
-        it('should return object filling when removed element in list', function() {
-            var result = service.removeFilling(fillingQID1.questionID);
-
-            expect(result).toEqual(fillingQID1);
-        });
-
-        it('should return null when none element removed of list', function() {
-            service.removeFilling(fillingQID1.questionID);
-            var result = service.removeFilling(fillingQID1.questionID);
-
-            expect(result).toBe(null);
-        });
-
-        it('should remove exactly the element requested', function() {
-            service.removeFilling(fillingQID1.questionID);
-
-            expect(service.existsFillingTo(QID1)).toBe(false);
-            expect(service.existsFillingTo(QID2)).toBe(true);
-        });
-
-    });
-
-    describe('replaceFilling method', function() {
-        var filling1, filling2;
-
-        beforeEach(function() {
-            filling1 = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, COMMENT);
-            service.add(filling1);
-        });
-
-        it('should return object substituted on list', function() {
-            var fillingModified = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, NEW_COMMENT);
-            var resultOfReplace = service.replaceFilling(fillingModified);
-            var resultOfSearch = service.searchFillingByID(resultOfReplace.questionID);
-
-            expect(resultOfReplace).toEqual(filling1);
-            expect(resultOfSearch).toEqual(fillingModified);
-        });
-
-        xit('should return null when none element replace of list', function() {
-            var result = service.replaceFilling(filling2);
-
-            expect(result).toEqual(null);
-        });
-    });
-
     describe('updateFilling method', function() {
         var filling1, filling1Clone;
 
@@ -197,6 +126,83 @@ describe('FillingManagerService', function() {
 
         it('should remove when filling is empty', function() {
             service.updateFilling(filling1);
+            emptyFilling1 = Mock.QuestionFillFactory.create(QID1);
+
+            service.updateFilling(emptyFilling1);
+
+            expect(service.fillingListSize()).toBe(0);
+        });
+
+    });
+
+    describe('add method', function() {
+        var filling;
+
+        beforeEach(function() {
+            filling = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, COMMENT);
+        });
+
+        xit('should to include new filling in list', function() {
+            service.add(filling);
+
+            expect(service.searchFillingByID(QID1)).toEqual(filling);
+        });
+
+    });
+
+    describe('removeFilling method', function() {
+        var fillingQID1, fillingQID2;
+
+        beforeEach(function() {
+            fillingQID1 = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, COMMENT);
+            fillingQID2 = Mock.QuestionFillFactory.create(QID2, ANSWER, METADATA, COMMENT);
+            service.add(fillingQID1);
+            service.add(fillingQID2);
+        });
+
+        xit('should return object filling when removed element in list', function() {
+            var result = service.removeFilling(fillingQID1.questionID);
+
+            expect(result).toEqual(fillingQID1);
+        });
+
+        xit('should return null when none element removed of list', function() {
+            service.removeFilling(fillingQID1.questionID);
+            var result = service.removeFilling(fillingQID1.questionID);
+
+            expect(result).toBe(null);
+        });
+
+        xit('should remove exactly the element requested', function() {
+            service.removeFilling(fillingQID1.questionID);
+
+            expect(service.existsFillingTo(QID1)).toBe(false);
+            expect(service.existsFillingTo(QID2)).toBe(true);
+        });
+
+    });
+
+    describe('replaceFilling method', function() {
+        var filling1, filling2;
+
+        beforeEach(function() {
+            filling1 = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, COMMENT);
+            service.add(filling1);
+        });
+
+        xit('should return object substituted on list', function() {
+            var fillingModified = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, NEW_COMMENT);
+            var resultOfReplace = service.replaceFilling(fillingModified);
+            var resultOfSearch = service.searchFillingByID(resultOfReplace.questionID);
+
+            expect(resultOfReplace).toEqual(filling1);
+            expect(resultOfSearch).toEqual(fillingModified);
+        });
+
+        xit('should return null when none element replace of list', function() {
+            var result = service.replaceFilling(filling2);
+
+            expect(result).toEqual(null);
         });
 
     });
