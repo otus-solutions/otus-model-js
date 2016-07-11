@@ -25,9 +25,14 @@
         self.answer = answer;
         self.metadata = metadata;
         self.comment = (comment === undefined) ? '' : comment;
+        self.isFilled = isFilled;
 
         /* Public methods */
         self.toJson = toJson;
+
+        function isFilled() {
+            return (self.answer || self.metadata || self.comment);
+        }
 
         function toJson() {
             var json = {};

@@ -11,75 +11,81 @@
 
         /* Public methods */
         self.init = init;
-        self.searchAnswerByID = searchAnswerByID;
-        self.add = add;
         self.fillingListSize = fillingListSize;
-        self.removeAnswer = removeAnswer;
-        self.getIndexAnswerOnList = getIndexAnswerOnList;
+        self.getFillingIndex = getFillingIndex;
+        self.existsFillingTo = existsFillingTo;
+        self.searchFillingByID = searchFillingByID;
+        self.add = add;
+        self.removeFilling = removeFilling;
+        self.replaceFilling = replaceFilling;
+        self.updateFilling = updateFilling;
 
         function init() {
             fillingList = [];
         }
 
-        function getFillingIndex(questionID) {
-            fillingList.forEach(function(filling, index) {
-                if (filling.questionID === questionID) {
-                    return index;
-                }
-            });
-
-            return null;
+        function fillingListSize() {
+            return fillingList.length;
         }
 
-        function searchFillingByID(questionID) {
-            fillingList.forEach(function(filling, index) {
-                if (filling.questionID === questionID) {
-                    return filling;
-                }
-            });
-
-            return null;
+        function getFillingIndex(questionID) {
+            var result = _searchByID(questionID);
+            return (result) ? result.index : null;
         }
 
         function existsFillingTo(questionID) {
-            return (searchAnswerByID(questionID) !== null);
+            return (searchFillingByID(questionID) !== null);
         }
 
-        function add(Answer) {
-            fillingList.push(Answer);
+        function searchFillingByID(questionID) {
+            var result = _searchByID(questionID);
+            return (result) ? result.filling : null;
         }
 
-        function updateAnswer(Answer) {
-            if (!existsAnswerTo(Answer.questionID)) {
-                add(Answer);
-            } else if (!Answer.isFilled()) {
-                removeAnswer(Answer.questionID);
+        function _searchByID(questionID) {
+            var result;
+
+            fillingList.forEach(function(filling, index) {
+                if (filling.questionID === questionID) {
+                    result = {};
+                    result.filling = filling;
+                    result.index = index;
+                }
+            });
+
+            return result;
+        }
+
+        function add(filling) {
+            fillingList.push(filling);
+        }
+
+        function removeFilling(questionID) {
+            var result = _searchByID(questionID);
+            if (result !== undefined) {
+                return fillingList.splice(result.index, 1)[0];
             } else {
-                replaceAnswer(Answer);
+                return null;
             }
         }
 
-
-
-        function removeAnswer(questionID) {
-            var aswer = searchAnswerByID(questionID);
-            if (aswer === undefined) {
-                return false;
+        function replaceFilling(filling) {
+            var result = _searchByID(filling.questionID);
+            if (result !== undefined) {
+                return fillingList.splice(result.index, 1, filling)[0];
             } else {
-                var index = getIndexAnswerOnList(questionID);
-                fillingList.splice(index, 1);
-                return true;
+                return null;
             }
         }
 
-        function replaceAnswer(Answer) {
-            var index = getIndexAnswerOnList(Answer.questionID);
-            var answerReplaced = fillingList.splice(index, 1, Answer);
-            return answerReplaced;
-        }
-
-        function fillingListSize() {
-            return fillingList.length;
+        function updateFilling(filling) {
+            if (!existsFillingTo(filling.questionID)) {
+                add(filling);
+            } else if (filling.isFilled()) {
+                return replaceFilling(filling);
+            } else {
+                return removeFilling(filling.questionID);
+            }
         }
     }
 
