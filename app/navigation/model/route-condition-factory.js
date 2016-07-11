@@ -43,7 +43,9 @@
 
         function addRule(rule) {
             var ruleNotExist = (self.rules.indexOf(rule) === -1);
-            if (ruleNotExist) self.rules.push(rule);
+            if (ruleNotExist) {
+                self.rules.push(rule);
+            }
         }
 
         function removeRule(rule) {

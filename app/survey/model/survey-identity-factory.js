@@ -25,14 +25,13 @@
         return self;
     }
 
-    function SurveyIdentity(name, acronym, version) {
+    function SurveyIdentity(name, acronym) {
         var self = this;
 
         self.extents = 'StudioObject';
         self.objectType = 'SurveyIdentity';
         self.name = name;
         self.acronym = acronym;
-        // self.version = version;
         self.recommendedTo = '';
         self.description = '';
         self.keywords = [];
@@ -46,7 +45,6 @@
             json.objectType = self.objectType;
             json.name = self.name;
             json.acronym = self.acronym;
-            // json.version = self.version;
             json.recommendedTo = self.recommendedTo;
             json.description = self.description;
             json.keywords = self.keywords;

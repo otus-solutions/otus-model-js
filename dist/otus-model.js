@@ -2,6 +2,14 @@
     'use strict';
 
     angular
+        .module('otusjs.activity', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.metadata', []);
 
 }());
@@ -48,8 +56,174 @@
             'otusjs.navigation',
             'otusjs.surveyItem',
             'otusjs.survey',
+            'otusjs.activity',
             'utils'
         ]);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.activity')
+        .service('ActivityFacadeService', ActivityFacadeService);
+
+    ActivityFacadeService.$inject = [
+        'AnswerFactory'
+    ];
+
+    function ActivityFacadeService(AnswerFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.fillQuestion = fillQuestion;
+
+        function fillQuestion(Question, answerValue, Metadata) {
+            var answer = AnswerFactory.create(Question, answerValue, Metadata);
+            //TODO: adicioanr reposta na lista
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.activity')
+        .service('AnswerContainerService', AnswerContainerService);
+
+    function AnswerContainerService() {
+        var self = this;
+        var answerList = [];
+
+        /* Public methods */
+        self.init = init;
+        self.searchAnswer = searchAnswer;
+        self.addAnswer = addAnswer;
+        self.answerListSize = answerListSize;
+        self.removeAnswer = removeAnswer;
+        self.getIndexAnswerOnList = getIndexAnswerOnList;
+
+        function init() {
+            answerList = [];
+        }
+
+        function updateAnswer(Answer) {
+            if (!existsAnswerTo(Answer.questionID)) {
+                addAnswer(Answer);
+            } else if (!Answer.isFilled()) {
+                removeAnswer(Answer.questionID);
+            } else {
+                replaceAnswer(Answer);
+            }
+        }
+
+        function addAnswer(Answer) {
+            answerList.push(Answer);
+        }
+
+        function replaceAnswer(Answer) {
+            var index = getIndexAnswerOnList(Answer.questionID);
+            answerList.splice(index, 1, Answer);
+        }
+
+        function removeAnswer(questionID) {
+            var aswer = searchAnswer(questionID);
+            if (aswer === undefined) {
+                return false;
+            } else {
+                var index = getIndexAnswerOnList(questionID);
+                answerList.splice(index, 1);
+                return true;
+            }
+        }
+
+        function getIndexAnswerOnList(questionID) {
+            for (var i = 0; i < answerList.length; i++) {
+                if (answerList[i].questionID === questionID) {
+                    return i;
+                }
+            }
+        }
+
+        function existsAnswerTo(questionID) {
+            for (var i = 0; i < answerList.length; i++) {
+                if (answerList[i].questionID === questionID) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function searchAnswer(questionID) {
+            for (var i = 0; i < answerList.length; i++) {
+                if (answerList[i].questionID === questionID) {
+                    return answerList[i];
+                }
+            }
+            return undefined;
+        }
+
+        function answerListSize() {
+            return answerList.length;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.activity')
+        .factory('AnswerFactory', AnswerFactory);
+
+    function AnswerFactory() {
+        var self = this;
+
+        self.create = create;
+
+        function create(Question, answer, Metadata) {
+            return new Answer(Question, answer, Metadata);
+        }
+
+        return self;
+    }
+
+    function Answer(Question, answer, Metadata) {
+        var self = this;
+        self.objectType = Question.objectType;
+        self.questionID = Question.templateID;
+        self.value = answer;
+        self.metadata = Metadata;
+
+        /* Public methods */
+        self.getObjectAnswer = getObjectAnswer;
+        self.removeAnswer = removeAnswer;
+        self.removeMetadata = removeMetadata;
+        self.isFilled = isFilled;
+
+        function getObjectAnswer() {
+            return self;
+        }
+
+        function removeAnswer() {
+            self.value = undefined;
+        }
+
+        function removeMetadata() {
+            self.metadata = undefined;
+        }
+
+        function isFilled() {
+            if (self.value === undefined && self.metadata === undefined)
+                return true;
+            else
+                return false;
+        }
+    }
 
 }());
 
@@ -615,7 +789,10 @@
             });
 
             var indexToRemove = self.routes.indexOf(routeToRemove[0]);
-            if (indexToRemove > -1) self.routes.splice(indexToRemove, 1);
+            if (indexToRemove > -1) {
+                self.routes.splice(indexToRemove, 1);
+            }
+
             return routeToRemove[0];
         }
 
@@ -690,7 +867,9 @@
 
         function addRule(rule) {
             var ruleNotExist = (self.rules.indexOf(rule) === -1);
-            if (ruleNotExist) self.rules.push(rule);
+            if (ruleNotExist) {
+                self.rules.push(rule);
+            }
         }
 
         function removeRule(rule) {
@@ -772,13 +951,16 @@
             self.conditionSet.push(condition);
         }
 
-        function removeCondition(condition) {
+        function removeCondition() {
             var conditionToRemove = self.conditionSet.filter(function(condition) {
                 return condition.name === name;
             });
 
             var indexToRemove = self.conditionSet.indexOf(conditionToRemove[0]);
-            if (indexToRemove > -1) self.conditionSet.splice(indexToRemove, 1);
+            if (indexToRemove > -1) {
+                self.conditionSet.splice(indexToRemove, 1);
+            }
+
             return conditionToRemove[0];
         }
 
@@ -1009,14 +1191,16 @@
             });
 
             var indexToRemove = navigationList.indexOf(navigationToRemove[0]);
-            if (indexToRemove > -1) navigationList.splice(indexToRemove, 1);
+            if (indexToRemove > -1) {
+                navigationList.splice(indexToRemove, 1);
+            }
         }
 
         function removeNavigationByIndex(indexToRemove) {
             navigationList.splice(indexToRemove, 1);
         }
 
-        function removeCurrentLastNavigation(indexToRemove) {
+        function removeCurrentLastNavigation() {
             navigationList.splice(-1, 1);
         }
 
@@ -1242,14 +1426,13 @@
         return self;
     }
 
-    function SurveyIdentity(name, acronym, version) {
+    function SurveyIdentity(name, acronym) {
         var self = this;
 
         self.extents = 'StudioObject';
         self.objectType = 'SurveyIdentity';
         self.name = name;
         self.acronym = acronym;
-        // self.version = version;
         self.recommendedTo = '';
         self.description = '';
         self.keywords = [];
@@ -1263,7 +1446,6 @@
             json.objectType = self.objectType;
             json.name = self.name;
             json.acronym = self.acronym;
-            // json.version = self.version;
             json.recommendedTo = self.recommendedTo;
             json.description = self.description;
             json.keywords = self.keywords;
@@ -1389,7 +1571,7 @@
         return self;
     }
 
-    function SurveyItem(templateID, LabelFactory, MetadataGroupFactory) {
+    function SurveyItem(templateID) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -1479,14 +1661,16 @@
             });
 
             var indexToRemove = itemList.indexOf(itemToRemove[0]);
-            if (indexToRemove > -1) itemList.splice(indexToRemove, 1);
+            if (indexToRemove > -1) {
+                itemList.splice(indexToRemove, 1);
+            }
         }
 
         function removeItemByPosition(indexToRemove) {
             itemList.splice(indexToRemove, 1);
         }
 
-        function removeCurrentLastItem(indexToRemove) {
+        function removeCurrentLastItem() {
             itemList.splice(-1, 1);
         }
 

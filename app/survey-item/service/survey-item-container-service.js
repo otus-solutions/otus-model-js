@@ -78,14 +78,16 @@
             });
 
             var indexToRemove = itemList.indexOf(itemToRemove[0]);
-            if (indexToRemove > -1) itemList.splice(indexToRemove, 1);
+            if (indexToRemove > -1) {
+                itemList.splice(indexToRemove, 1);
+            }
         }
 
         function removeItemByPosition(indexToRemove) {
             itemList.splice(indexToRemove, 1);
         }
 
-        function removeCurrentLastItem(indexToRemove) {
+        function removeCurrentLastItem() {
             itemList.splice(-1, 1);
         }
 
