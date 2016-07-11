@@ -30,7 +30,7 @@ describe('FillingManagerService', function() {
         });
 
         it('should return length of list equals one, when list has one filling', function() {
-            service.add(filling);
+            service.updateFilling(filling);
             expect(service.fillingListSize()).toEqual(1);
         });
 
@@ -45,7 +45,7 @@ describe('FillingManagerService', function() {
 
         beforeEach(function() {
             filling = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, COMMENT);
-            service.add(filling);
+            service.updateFilling(filling);
         });
 
         it('should return index of elemente on list', function() {
@@ -67,7 +67,7 @@ describe('FillingManagerService', function() {
 
         beforeEach(function() {
             filling = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, COMMENT);
-            service.add(filling);
+            service.updateFilling(filling);
         });
 
         it('should return true when the filling exist in the list', function() {
@@ -85,7 +85,7 @@ describe('FillingManagerService', function() {
 
         beforeEach(function() {
             filling = Mock.QuestionFillFactory.create(QID1, ANSWER, METADATA, COMMENT);
-            service.add(filling);
+            service.updateFilling(filling);
         });
 
         it('should return correct filling, exist filling on list', function() {

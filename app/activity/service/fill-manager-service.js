@@ -41,11 +41,11 @@
 
         function updateFilling(filling) {
             if (!existsFillingTo(filling.questionID)) {
-                add(filling);
+                _add(filling);
             } else if (filling.isFilled()) {
-                return replaceFilling(filling);
+                return _replaceFilling(filling);
             } else {
-                return removeFilling(filling.questionID);
+                return _removeFilling(filling.questionID);
             }
         }
 
