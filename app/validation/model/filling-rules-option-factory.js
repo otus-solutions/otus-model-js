@@ -3,35 +3,35 @@
 
     angular
         .module('otusjs.validation')
-        .factory('ValidationOptionFactory', ValidationOptionFactory);
+        .factory('FillingRulesOptionFactory', FillingRulesOptionFactory);
 
-    ValidationOptionFactory.$inject = ['ValidationAnswerFactory'];
+    FillingRulesOptionFactory.$inject = ['RulesFactory'];
 
-    function ValidationOptionFactory(ValidationAnswerFactory) {
+    function FillingRulesOptionFactory(RulesFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new ValidationOption(ValidationAnswerFactory);
+            return new FillingRules(RulesFactory);
         }
 
         return self;
     }
 
-    function ValidationOption(ValidationAnswerFactory) {
+    function FillingRules(RulesFactory) {
         var self = this;
 
         self.extends = 'StudioObject';
-        self.objectType = 'ValidationOption';
+        self.objectType = 'FillingRules';
         self.options = [];
 
         /* Public methods */
         self.createOption = createOption;
 
         function createOption() {
-            var option = ValidationAnswerFactory.create(self.options.length + 1);
+            var option = RulesFactory.create(self.options.length + 1);
             self.options.push(option);
             return option;
         }

@@ -8,23 +8,23 @@
     TimeQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'ValidationOptionFactory'
+        'FillingRulesOptionFactory'
     ];
 
-    function TimeQuestionFactory(LabelFactory, MetadataGroupFactory, ValidationOptionFactory) {
+    function TimeQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, ValidationOptionFactory);
+            return new TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, ValidationOptionFactory) {
+    function TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -37,7 +37,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
-        self.validate = ValidationOptionFactory.create();
+        self.validate = FillingRulesOptionFactory.create();
 
         /* Public methods */
         self.isQuestion = isQuestion;

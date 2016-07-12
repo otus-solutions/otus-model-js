@@ -9,22 +9,22 @@
         'LabelFactory',
         'MetadataGroupFactory',
         'UnitFactory',
-        'ValidationOptionFactory'
+        'FillingRulesOptionFactory'
     ];
 
-    function DecimalQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, ValidationOptionFactory) {
+    function DecimalQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
         var self = this;
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new DecimalQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, ValidationOptionFactory);
+            return new DecimalQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function DecimalQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, ValidationOptionFactory) {
+    function DecimalQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -37,7 +37,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
-        self.validate = ValidationOptionFactory.create();
+        self.validate = FillingRulesOptionFactory.create();
         self.unit = {
             ptBR: UnitFactory.create(),
             enUS: UnitFactory.create(),

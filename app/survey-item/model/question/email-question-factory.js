@@ -8,23 +8,23 @@
     EmailQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'ValidationOptionFactory'
+        'FillingRulesOptionFactory'
     ];
 
-    function EmailQuestionFactory(LabelFactory, MetadataGroupFactory, ValidationOptionFactory) {
+    function EmailQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new EmailQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, ValidationOptionFactory);
+            return new EmailQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function EmailQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, ValidationOptionFactory) {
+    function EmailQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -37,7 +37,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
-        self.validate = ValidationOptionFactory.create();
+        self.validate = FillingRulesOptionFactory.create();
 
         /* Public methods */
         self.isQuestion = isQuestion;

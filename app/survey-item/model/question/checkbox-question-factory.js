@@ -9,23 +9,23 @@
         'LabelFactory',
         'MetadataGroupFactory',
         'AnswerOptionFactory',
-        'ValidationOptionFactory'
+        'FillingRulesOptionFactory'
     ];
 
-    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory, ValidationOptionFactory) {
+    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, ValidationOptionFactory);
+            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, ValidationOptionFactory) {
+    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -38,7 +38,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
-        self.validate = ValidationOptionFactory.create();
+        self.validate = FillingRulesOptionFactory.create();
 
         self.options = [];
 

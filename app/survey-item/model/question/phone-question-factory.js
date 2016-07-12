@@ -8,23 +8,23 @@
     PhoneQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'ValidationOptionFactory'
+        'FillingRulesOptionFactory'
     ];
 
-    function PhoneQuestionFactory(LabelFactory, MetadataGroupFactory, ValidationOptionFactory) {
+    function PhoneQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new PhoneQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, ValidationOptionFactory);
+            return new PhoneQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function PhoneQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, ValidationOptionFactory) {
+    function PhoneQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -37,7 +37,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
-        self.validate = ValidationOptionFactory.create();
+        self.validate = FillingRulesOptionFactory.create();
 
         /* Public methods */
         self.isQuestion = isQuestion;

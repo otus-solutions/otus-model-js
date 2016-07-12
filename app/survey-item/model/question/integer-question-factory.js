@@ -9,23 +9,23 @@
         'LabelFactory',
         'MetadataGroupFactory',
         'UnitFactory',
-        'ValidationOptionFactory'
+        'FillingRulesOptionFactory'
     ];
 
-    function IntegerQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, ValidationOptionFactory) {
+    function IntegerQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, ValidationOptionFactory);
+            return new IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, ValidationOptionFactory) {
+    function IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -38,7 +38,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
-        self.validate = ValidationOptionFactory.create();
+        self.validate = FillingRulesOptionFactory.create();
         self.unit = {
             ptBR: UnitFactory.create(),
             enUS: UnitFactory.create(),

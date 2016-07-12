@@ -3,10 +3,10 @@
 
     angular
         .module('otusjs.validation')
-        .service('AddValidationService', AddValidationService);
+        .service('AddFillingRulesService', AddFillingRulesService);
 
 
-    function AddValidationService(){
+    function AddFillingRulesService(){
         var self = this;
 
         self.execute = execute;
