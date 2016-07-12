@@ -5,6 +5,7 @@ describe('ActivitySurveyFactory', function() {
     var CATEGORY = 'category_test';
     var GROUP = 'group_test';
     var TEMPLATE_IOD = '123456';
+    var ACTIVITY_ID = 1;
     var Mock = {};
 
     beforeEach(function() {
@@ -13,6 +14,7 @@ describe('ActivitySurveyFactory', function() {
 
         inject(function(_$injector_) {
             mockUser(_$injector_);
+            mockJson();
 
             factory = _$injector_.get('ActivitySurveyFactory', {
                 StatusHistoryManagerService: mockStatusHistoryManagerService(_$injector_),
@@ -26,6 +28,10 @@ describe('ActivitySurveyFactory', function() {
     describe('create method', function() {
         it('should return an object of type Activity', function() {
             expect(activity.objectType).toEqual(ACTIVITY);
+        });
+
+        it('should return id activity equal a one', function() {
+            expect(activity.activityID).toEqual(ACTIVITY_ID);
         });
 
         it('should return attribute category equal to contructor paramenter', function() {
@@ -49,6 +55,28 @@ describe('ActivitySurveyFactory', function() {
         });
 
     });
+
+    describe('toJson method', function() {
+
+        it('should return a well formatted json', function() {
+            activity = factory.create(CATEGORY, GROUP, TEMPLATE_IOD, Mock.user);
+
+            expect(activity.toJson()).toEqual(Mock.json);
+        });
+
+    });
+
+    function mockJson() {
+        Mock.json = JSON.stringify({
+            objectType: 'Activity',
+            activityID: 1,
+            category: CATEGORY,
+            group: GROUP,
+            templateOID: TEMPLATE_IOD,
+            fillContainer: Mock.FillingManagerService,
+            statusHistory: Mock.StatusHistoryManagerService
+        });
+    }
 
     function mockUser() {
         Mock.user = {

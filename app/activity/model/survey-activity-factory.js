@@ -17,13 +17,13 @@
 
         function create(category, group, templateOID, user) {
             StatusHistoryManagerService.newCreatedRegistry(user);
-            return new ActivitySurvey(category, group, templateOID, StatusHistoryManagerService, FillingManagerService);
+            return new ActivitySurvey(category, group, templateOID, FillingManagerService, StatusHistoryManagerService);
         }
 
         return self;
     }
 
-    function ActivitySurvey(category, group, templateOID, StatusHistoryManagerService, FillingManagerService) {
+    function ActivitySurvey(category, group, templateOID, FillingManagerService, StatusHistoryManagerService) {
         var self = this;
 
         self.objectType = 'Activity';
