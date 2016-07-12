@@ -30,8 +30,8 @@
         /* Public methods */
         self.createOption = createOption;
 
-        function createOption() {
-            var option = RulesFactory.create(self.options.length + 1);
+        function createOption(type) {
+            var option = RulesFactory.create(type);
             self.options.push(option);
             return option;
         }

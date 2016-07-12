@@ -11,8 +11,8 @@
 
         self.execute = execute;
 
-        function execute(item) {
-            return item.validate.createOption();
+        function execute(item, validatorType) {
+            return item.validate.createOption(validatorType);
         }
     }
 

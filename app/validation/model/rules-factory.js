@@ -20,10 +20,10 @@
 
     function Rule(type) {
         var self = this;
-
+        console.log(type);
         self.extends = 'StudioObject';
         self.objectType = 'Rule';
-        // self.type = type;
+        self.type = type;
         // self.data = FactoryDataRule.create(type)
     }
 

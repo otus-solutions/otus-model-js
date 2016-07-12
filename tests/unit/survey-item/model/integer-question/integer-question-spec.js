@@ -43,7 +43,8 @@ describe('IntegerQuestion', function() {
                 ptBR: $injector.get('UnitFactory').create(),
                 enUS: $injector.get('UnitFactory').create(),
                 esES: $injector.get('UnitFactory').create()
-            }
+            },
+            validate: $injector.get('FillingRulesOptionFactory').create()
         });
     }
 

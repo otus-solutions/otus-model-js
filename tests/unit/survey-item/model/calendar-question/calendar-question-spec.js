@@ -38,7 +38,9 @@ describe('CalendarQuestion', function() {
                 enUS: $injector.get('LabelFactory').create(),
                 esES: $injector.get('LabelFactory').create()
             },
-            metadata: $injector.get('MetadataGroupFactory').create()
+            metadata: $injector.get('MetadataGroupFactory').create(),
+            validate: $injector.get('FillingRulesOptionFactory').create()
+
         });
     }
 
