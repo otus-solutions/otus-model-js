@@ -3,11 +3,11 @@
 
     angular
         .module('otusjs.validation')
-        .factory('FuturedateValidatorFactory', FuturedateValidatorFactory);
+        .factory('FutureDateValidatorFactory', FutureDateValidatorFactory);
 
-    FuturedateValidatorFactory.$inject = ['LabelFactory'];
+    FutureDateValidatorFactory.$inject = ['LabelFactory'];
 
-    function FuturedateValidatorFactory(LabelFactory) {
+    function FutureDateValidatorFactory(LabelFactory) {
         var self = this;
 
         /* Public interface */
