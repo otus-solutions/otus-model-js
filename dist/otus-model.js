@@ -1684,7 +1684,7 @@
 
         self.extends = 'StudioObject';
         self.objectType = 'FillingRules';
-        self.options = [];
+        self.options = {};
 
         /* Public methods */
         self.createOption = createOption;
@@ -2785,7 +2785,7 @@
         self.extends = 'StudioObject';
         self.objectType = 'FutureDateValidator';
         self.dataType = 'Date';
-        self.value = value;
+        self.value = new Date;
     }
 
 }());

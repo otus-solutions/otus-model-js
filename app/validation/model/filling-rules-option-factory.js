@@ -25,7 +25,7 @@
 
         self.extends = 'StudioObject';
         self.objectType = 'FillingRules';
-        self.options = [];
+        self.options = {};
 
         /* Public methods */
         self.createOption = createOption;
