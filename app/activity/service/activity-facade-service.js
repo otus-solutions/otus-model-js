@@ -11,14 +11,22 @@
         'AnswerFillFactory',
         'MetadataFillFactory',
         'QuestionFillFactory',
-        'ActivitySurvey'
+        'ActivitySurveyFactory'
     ];
 
-    function ActivityFacadeService(FillingManagerService, StatusHistoryManagerService, AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurvey) {
+    function ActivityFacadeService(FillingManagerService, StatusHistoryManagerService, AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
         var self = this;
 
         /* Public interface */
-        self.fillQuestion = fillQuestion;
+        self.createAnswerFill = createAnswerFill;
+        self.createMetadataFill = createMetadataFill;
+        self.createQuestionFill = createQuestionFill;
+        self.addFillingOnList = addFillingOnList;
+        self.updateFillingOnList = updateFillingOnList;
+        self.removeFillingOnList = removeFillingOnList;
+        self.searchFillingByIDOnList = searchFillingByIDOnList;
+        self.createActivitySurvey = createActivitySurvey;
+
 
         /**
 
@@ -60,7 +68,7 @@
         }
 
         function createActivitySurvey(category, group, templateOID) {
-            return ActivitySurvey.create(category, group, templateOID, FillingManagerService, StatusHistoryManagerService)
+            return ActivitySurveyFactory.create(category, group, templateOID, FillingManagerService, StatusHistoryManagerService);
         }
     }
 
