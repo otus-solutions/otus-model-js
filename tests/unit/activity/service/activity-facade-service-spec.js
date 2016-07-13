@@ -22,35 +22,6 @@ describe('ActivityFacadeService', function() {
         });
     });
 
-    describe('createAnswerFill method', function() {
-        it('should return new object type of AnswerFill', function() {
-            var answer = service.createAnswerFill();
-
-            expect(answer.objectType).toEqual('AnswerFill');
-        });
-
-        it('should return an object with attribute value equal to parameter', function() {
-            var answer = service.createAnswerFill(ANSWER);
-
-            expect(answer.value).toEqual(ANSWER);
-        });
-    });
-
-
-    describe('createMetadataFill method', function() {
-        it('should return new object type of AnswerFill', function() {
-            var metadata = service.createMetadataFill();
-
-            expect(metadata.objectType).toEqual('MetadataFill');
-        });
-
-        it('should return an object with attribute value equal to parameter', function() {
-            var metadata = service.createMetadataFill(METADATA);
-
-            expect(metadata.value).toEqual(METADATA);
-        });
-    });
-
     describe('createQuestionFill method', function() {
         it('should return new object type of QuestionFill', function() {
             var questionFill = service.createQuestionFill();
