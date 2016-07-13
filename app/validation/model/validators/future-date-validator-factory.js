@@ -5,33 +5,26 @@
         .module('otusjs.validation')
         .factory('FutureDateValidatorFactory', FutureDateValidatorFactory);
 
-    FutureDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function FutureDateValidatorFactory(LabelFactory) {
+    function FutureDateValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new FuturedateValidator(value, LabelFactory);
+            return new FutureDateValidator(value);
         }
 
         return self;
     }
 
-    function FuturedateValidator(value, LabelFactory) {
+    function FutureDateValidator(value) {
         var self = this;
 
         self.extends = 'StudioObject';
-        self.objectType = 'FuturedateValidator';
-        self.dataType = 'String';
+        self.objectType = 'FutureDateValidator';
+        self.dataType = 'Date';
         self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
     }
 
 }());

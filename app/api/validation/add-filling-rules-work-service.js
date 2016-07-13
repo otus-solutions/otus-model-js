@@ -12,7 +12,7 @@
         self.execute = execute;
 
         function execute(item, validatorType) {
-            return item.validate.createOption(validatorType);
+            return item.fillingRules.createOption(validatorType);
         }
     }
 

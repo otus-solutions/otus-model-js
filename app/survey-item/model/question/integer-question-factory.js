@@ -38,7 +38,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
-        self.validate = FillingRulesOptionFactory.create();
+        self.fillingRules = FillingRulesOptionFactory.create();
         self.unit = {
             ptBR: UnitFactory.create(),
             enUS: UnitFactory.create(),
@@ -76,7 +76,7 @@
             json.label = self.label;
             json.metadata = self.metadata;
             json.unit = self.unit;
-            json.validate = self.validate;
+            json.fillingRules = self.fillingRules;
 
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');

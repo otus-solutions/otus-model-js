@@ -3,35 +3,30 @@
 
     angular
         .module('otusjs.validation')
-        .factory('PastdateValidatorFactory', PastdateValidatorFactory);
+        .factory('PastDateValidatorFactory', PastDateValidatorFactory);
 
-    PastdateValidatorFactory.$inject = ['LabelFactory'];
+    PastDateValidatorFactory.$inject = ['LabelFactory'];
 
-    function PastdateValidatorFactory(LabelFactory) {
+    function PastDateValidatorFactory(LabelFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new PastdateValidator(value, LabelFactory);
+            return new PastDateValidator(value, LabelFactory);
         }
 
         return self;
     }
 
-    function PastdateValidator(value, LabelFactory) {
+    function PastDateValidator(value, LabelFactory) {
         var self = this;
 
         self.extends = 'StudioObject';
-        self.objectType = 'PastdateValidator';
-        self.dataType = 'String';
+        self.objectType = 'PastDateValidator';
+        self.dataType = 'Date';
         self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
     }
 
 }());

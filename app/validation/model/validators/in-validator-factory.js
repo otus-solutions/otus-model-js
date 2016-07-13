@@ -25,13 +25,8 @@
 
         self.extends = 'StudioObject';
         self.objectType = 'InValidator';
-        self.dataType = 'Integer';
+        self.dataType = 'Array';
         self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
     }
 
 }());

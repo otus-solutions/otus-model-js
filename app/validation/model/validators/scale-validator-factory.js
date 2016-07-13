@@ -27,11 +27,6 @@
         self.objectType = 'ScaleValidator';
         self.dataType = 'Integer';
         self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
     }
 
 }());

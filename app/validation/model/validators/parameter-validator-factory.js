@@ -1,1 +1,32 @@
-//TODO
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('ParameterValidatorFactory', ParameterValidatorFactory);
+
+    ParameterValidatorFactory.$inject = ['LabelFactory'];
+
+    function ParameterValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new ParameterValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function ParameterValidator(value, LabelFactory) {
+        var self = this;
+
+        self.extends = 'StudioObject';
+        self.objectType = 'ParameterValidator';
+        self.dataType = 'String';
+        self.value = value;
+    }
+
+}());

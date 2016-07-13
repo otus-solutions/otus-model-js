@@ -4,27 +4,29 @@
     angular
         .module('otusjs.validation')
         .factory('RulesFactory', RulesFactory);
+        RulesFactory.$inject=[
+          'FillingRulesDataFactory'
+        ];
 
-    function RulesFactory() {
+    function RulesFactory(FillingRulesDataFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(type) {
-            return new Rule(type);
+        function create(validatorType) {
+            return new Rule(FillingRulesDataFactory, validatorType);
         }
 
         return self;
     }
 
-    function Rule(type) {
+    function Rule(FillingRulesDataFactory, validatorType) {
         var self = this;
-        console.log(type);
         self.extends = 'StudioObject';
         self.objectType = 'Rule';
-        self.type = type;
-        // self.data = FactoryDataRule.create(type)
+        self.validatorType = validatorType;
+        self.data = FillingRulesDataFactory.create(validatorType)
     }
 
 }());

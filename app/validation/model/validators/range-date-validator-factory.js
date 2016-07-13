@@ -3,35 +3,30 @@
 
     angular
         .module('otusjs.validation')
-        .factory('RangedateValidatorFactory', RangedateValidatorFactory);
+        .factory('RangeDateValidatorFactory', RangeDateValidatorFactory);
 
-    RangedateValidatorFactory.$inject = ['LabelFactory'];
+    RangeDateValidatorFactory.$inject = ['LabelFactory'];
 
-    function RangedateValidatorFactory(LabelFactory) {
+    function RangeDateValidatorFactory(LabelFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new RangedateValidator(value, LabelFactory);
+            return new RangeDateValidator(value, LabelFactory);
         }
 
         return self;
     }
 
-    function RangedateValidator(value, LabelFactory) {
+    function RangeDateValidator(value, LabelFactory) {
         var self = this;
 
         self.extends = 'StudioObject';
-        self.objectType = 'RangedateValidator';
-        self.dataType = 'String';
+        self.objectType = 'RangeDateValidator';
+        self.dataType = 'Array';
         self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
     }
 
 }());

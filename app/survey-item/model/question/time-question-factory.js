@@ -37,7 +37,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
-        self.validate = FillingRulesOptionFactory.create();
+        self.fillingRules = FillingRulesOptionFactory.create();
 
         /* Public methods */
         self.isQuestion = isQuestion;
@@ -67,7 +67,7 @@
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
-            json.validate = self.validate;
+            json.fillingRules = self.fillingRules;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }

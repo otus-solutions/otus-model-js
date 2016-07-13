@@ -27,11 +27,6 @@
         self.objectType = 'MaxTimeValidator';
         self.dataType = 'String';
         self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
     }
 
 }());

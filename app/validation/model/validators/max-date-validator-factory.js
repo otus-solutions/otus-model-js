@@ -25,13 +25,8 @@
 
         self.extends = 'StudioObject';
         self.objectType = 'MaxDateValidator';
-        self.dataType = 'String';
+        self.dataType = 'Date';
         self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
     }
 
 }());
