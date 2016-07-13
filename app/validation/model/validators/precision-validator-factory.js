@@ -26,7 +26,7 @@
         self.extends = 'StudioObject';
         self.objectType = 'PrecisionValidator';
         self.dataType = 'Integer';
-        self.value = value;
+        self.value = 0;
     }
 
 }());

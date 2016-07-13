@@ -26,7 +26,7 @@
         self.extends = 'StudioObject';
         self.objectType = 'MinLengthValidator';
         self.dataType = 'Integer';
-        self.value = value;
+        self.value = 0;
     }
 
 }());

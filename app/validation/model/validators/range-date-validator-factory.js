@@ -26,7 +26,7 @@
         self.extends = 'StudioObject';
         self.objectType = 'RangeDateValidator';
         self.dataType = 'Array';
-        self.value = value;
+        self.value = [];
     }
 
 }());

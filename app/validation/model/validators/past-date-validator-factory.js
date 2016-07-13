@@ -25,8 +25,8 @@
 
         self.extends = 'StudioObject';
         self.objectType = 'PastDateValidator';
-        self.dataType = 'Date';
-        self.value = value;
+        self.dataType = 'LocalDate';
+        self.value = new Date();
     }
 
 }());

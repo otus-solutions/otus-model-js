@@ -25,8 +25,8 @@
 
         self.extends = 'StudioObject';
         self.objectType = 'MinTimeValidator';
-        self.dataType = 'String';
-        self.value = value;
+        self.dataType = 'LocalTime';
+        self.value = '';
     }
 
 }());

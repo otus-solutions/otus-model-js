@@ -23,8 +23,8 @@
 
         self.extends = 'StudioObject';
         self.objectType = 'FutureDateValidator';
-        self.dataType = 'Date';
-        self.value = value;
+        self.dataType = 'LocalDate';
+        self.value = new Date();
     }
 
 }());

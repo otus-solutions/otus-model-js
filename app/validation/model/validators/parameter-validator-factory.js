@@ -26,7 +26,7 @@
         self.extends = 'StudioObject';
         self.objectType = 'ParameterValidator';
         self.dataType = 'String';
-        self.value = value;
+        self.value = '';
     }
 
 }());
