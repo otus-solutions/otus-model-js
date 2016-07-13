@@ -26,7 +26,7 @@
         self.extends = 'StudioObject';
         self.objectType = 'InValidator';
         self.dataType = 'Array';
-        self.value = value;
+        self.value = [];
     }
 
 }());

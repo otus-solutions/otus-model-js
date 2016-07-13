@@ -26,7 +26,7 @@
         self.extends = 'StudioObject';
         self.objectType = 'AlphanumericValidator';
         self.dataType = 'Boolean';
-        self.value = value;
+        self.value = false;
     }
 
 }());

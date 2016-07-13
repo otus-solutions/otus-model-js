@@ -25,8 +25,8 @@
 
         self.extends = 'StudioObject';
         self.objectType = 'DistinctValidator';
-        self.dataType = 'Integer';
-        self.value = value;
+        self.dataType = 'Array';
+        self.value = [];
     }
 
 }());
