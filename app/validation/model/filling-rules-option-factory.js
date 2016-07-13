@@ -32,7 +32,7 @@
 
         function createOption(type) {
             var option = RulesFactory.create(type);
-            self.options.push(option);
+            self.options[type]=option;
             return option;
         }
 
