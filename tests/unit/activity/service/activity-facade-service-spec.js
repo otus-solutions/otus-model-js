@@ -1,5 +1,9 @@
 describe('ActivityFacadeService', function() {
     var factory;
+    var CATEGORY = 'category';
+    var GROUP = 'group';
+    var TEMPLATE_OID = '12345';
+    var USER = 'user';
     var ANSWER = 'answer';
     var METADATA = 'metadata';
     var COMMENT = 'comment';
@@ -14,8 +18,6 @@ describe('ActivityFacadeService', function() {
         inject(function(_$injector_) {
 
             service = _$injector_.get('ActivityFacadeService', {
-                FillingManagerService: mockFillingManagerService(_$injector_),
-                StatusHistoryManagerService: mockStatusHistoryManagerService(_$injector_),
                 AnswerFillFactory: mockAnswerFillFactory(_$injector_),
                 MetadataFillFactory: mockMetadataFillFactory(_$injector_),
                 QuestionFillFactory: mockQuestionFillFactory(_$injector_),
@@ -25,80 +27,65 @@ describe('ActivityFacadeService', function() {
         });
     });
 
+    describe('initializeActivitySurvey method', function() {
+        it('should initialize ActivitySurvey call method create', function() {
+            service.initializeActivitySurvey();
 
-    describe('init method', function() {
-        it('should call methods of initialization for FillingManagerService and StatusHistoryManagerService', function() {
-            service.init();
-
-            expect(Mock.FillingManagerService.init).toHaveBeenCalled();
-            expect(Mock.StatusHistoryManagerService.init).toHaveBeenCalled();
+            expect(Mock.ActivitySurveyFactory.create).toHaveBeenCalled();
         });
 
-        xit('should initialize method newCreatedRegistry with parameter', function() {
-            service.init(Mock.user);
+        it('should return an object with attribute category equal to parameter', function() {
+            service.initializeActivitySurvey(CATEGORY, GROUP, TEMPLATE_OID, Mock.user);
 
-            expect(Mock.StatusHistoryManagerService.newCreatedRegistry).toHaveBeenCalledWith(Mock.user);
+            expect(service.activitySurvey.category).toEqual(CATEGORY);
         });
+
+        it('should return an object with attribute group equal to parameter', function() {
+            service.initializeActivitySurvey(CATEGORY, GROUP, TEMPLATE_OID, Mock.user);
+
+            expect(service.activitySurvey.group).toEqual(GROUP);
+        });
+
+        it('should return an object with attribute templateOID equal to parameter', function() {
+            service.initializeActivitySurvey(CATEGORY, GROUP, TEMPLATE_OID, Mock.user);
+
+            expect(service.activitySurvey.templateOID).toEqual(TEMPLATE_OID);
+        });
+
     });
 
     describe('createQuestionFill method', function() {
         beforeEach(function() {
-            service.init();
+            service.initializeActivitySurvey(CATEGORY, GROUP, TEMPLATE_OID, Mock.user);
         });
 
         it('should return an object of type QuestionFill', function() {
-            var questionFill = service.createQuestionFill();
+            var questionFill = service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
 
             expect(questionFill.objectType).toEqual(QUESTION_FILL_TYPE);
         });
 
-        it('should initialize method of AnswerFillFactory with parameter ANSWER', function() {
-            service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
+        it('should call method create of AnswerFillFactory with parameter ANSWER', function() {
+            var questionFill = service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
 
             expect(Mock.AnswerFillFactory.create).toHaveBeenCalledWith(ANSWER);
         });
 
-
-        it('should initialize method of MetadataFillFactory with parameter METADATA', function() {
-            service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
+        it('should call method create of MetadataFillFactory with parameter METADATA', function() {
+            var questionFill = service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
 
             expect(Mock.MetadataFillFactory.create).toHaveBeenCalledWith(METADATA);
         });
 
-        it('should initialize method of MetadataFillFactory with parameter COMMENT', function() {
-            var result = service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
-
-            expect(result.comment).toEqual(COMMENT);
-        });
-
-        it('should initialize method of FillingManagerService with parameter QuestionFill', function() {
+        it('should call method create of ActivitySurveyFactory with parameter QuestionFill', function() {
             var questionFill = service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
 
-            expect(Mock.FillingManagerService.updateFilling).toHaveBeenCalledWith(questionFill);
+            expect(Mock.MetadataFillFactory.create).toHaveBeenCalledWith(METADATA);
         });
-
     });
 
     function mockUser($injector) {
         Mock.user = $injector.get('ActivityUserFactory').create('User Name', 'user@email.com');
-    }
-
-    function mockFillingManagerService($injector) {
-        Mock.FillingManagerService = $injector.get('FillingManagerService');
-
-        spyOn(Mock.FillingManagerService, 'init').and.callThrough();
-        spyOn(Mock.FillingManagerService, 'updateFilling').and.callThrough();
-
-        return Mock.FillingManagerService;
-    }
-
-    function mockStatusHistoryManagerService($injector) {
-        Mock.StatusHistoryManagerService = $injector.get('StatusHistoryManagerService');
-
-        spyOn(Mock.StatusHistoryManagerService, 'init').and.callThrough();
-        spyOn(Mock.StatusHistoryManagerService, 'newCreatedRegistry').and.callThrough();
-
-        return Mock.StatusHistoryManagerService;
     }
 
     function mockAnswerFillFactory($injector) {
@@ -124,6 +111,9 @@ describe('ActivityFacadeService', function() {
 
     function mockActivitySurveyFactory($injector) {
         Mock.ActivitySurveyFactory = $injector.get('ActivitySurveyFactory');
+
+        spyOn(Mock.ActivitySurveyFactory, 'create').and.callThrough();
+
         return Mock.ActivitySurveyFactory;
     }
 });

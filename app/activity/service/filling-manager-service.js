@@ -17,6 +17,8 @@
         self.searchFillingByID = searchFillingByID;
         self.updateFilling = updateFilling;
 
+        init();
+
         function init() {
             fillingList = [];
         }
