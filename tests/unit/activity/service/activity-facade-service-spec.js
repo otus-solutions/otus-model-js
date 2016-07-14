@@ -1,32 +1,62 @@
 describe('ActivityFacadeService', function() {
+    var factory;
+    var ANSWER = 'answer';
+    var METADATA = 'metadata';
     var Mock = {};
-    var service;
 
-    /* @BeforeScenario */
     beforeEach(function() {
+
         module('otusjs');
-        module('otusjs.activity');
 
         inject(function(_$injector_) {
-            /* @InjectMocks */
+
             service = _$injector_.get('ActivityFacadeService', {
-                AnswerFactory: mockAnswerFactory(_$injector_)
+                FillingManagerService: mockFillingManagerService(_$injector_),
+                StatusHistoryManagerService: mockStatusHistoryManagerService(_$injector_),
+                AnswerFillFactory: mockAnswerFillFactory(_$injector_),
+                MetadataFillFactory: mockMetadataFillFactory(_$injector_),
+                QuestionFillFactory: mockQuestionFillFactory(_$injector_),
+                ActivitySurveyFactory: mockActivitySurveyFactory(_$injector_)
             });
+
         });
     });
 
-    describe('fillQuestion method', function() {
+    describe('createQuestionFill method', function() {
+        it('should return new object type of QuestionFill', function() {
+            var questionFill = service.createQuestionFill();
 
-        xit('should call AnswerFactory.create', function() {
-            spyOn(Mock.AnswerFactory, 'create');
-            service.fillQuestion(jasmine.any(Object), jasmine.any(String), jasmine.any(Object));
-            expect(Mock.AnswerFactory.create).toHaveBeenCalledWith(jasmine.any(Object), jasmine.any(String), jasmine.any(Object));
+            expect(questionFill.objectType).toEqual('QuestionFill');
         });
-
     });
 
-    function mockAnswerFactory($injector) {
-        Mock.AnswerFactory = $injector.get('AnswerFactory');
-        return Mock.AnswerFactory;
+    function mockFillingManagerService($injector) {
+        Mock.FillingManagerService = $injector.get('FillingManagerService');
+        return Mock.FillingManagerService;
+    }
+
+    function mockStatusHistoryManagerService($injector) {
+        Mock.StatusHistoryManagerService = $injector.get('StatusHistoryManagerService');
+        return Mock.StatusHistoryManagerService;
+    }
+
+    function mockAnswerFillFactory($injector) {
+        Mock.AnswerFillFactory = $injector.get('AnswerFillFactory');
+        return Mock.AnswerFillFactory;
+    }
+
+    function mockMetadataFillFactory($injector) {
+        Mock.MetadataFillFactory = $injector.get('MetadataFillFactory');
+        return Mock.MetadataFillFactory;
+    }
+
+    function mockQuestionFillFactory($injector) {
+        Mock.QuestionFillFactory = $injector.get('QuestionFillFactory');
+        return Mock.QuestionFillFactory;
+    }
+
+    function mockActivitySurveyFactory($injector) {
+        Mock.ActivitySurveyFactory = $injector.get('ActivitySurveyFactory');
+        return Mock.ActivitySurveyFactory;
     }
 });
