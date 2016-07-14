@@ -29,11 +29,18 @@
 
         /* Public methods */
         self.createOption = createOption;
+        self.removeLastValidator = removeLastValidator;
 
         function createOption(type) {
             var option = RulesFactory.create(type);
-            self.options[type]=option;
+            self.options[type] = option;
             return option;
+        }
+
+        function removeLastValidator() {
+            self.options.splice(-1, 1);
+            //TODO
+            //verificar se funciona para dicionario
         }
 
     }
