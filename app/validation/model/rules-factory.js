@@ -4,9 +4,10 @@
     angular
         .module('otusjs.validation')
         .factory('RulesFactory', RulesFactory);
-        RulesFactory.$inject=[
-          'FillingRulesDataFactory'
-        ];
+
+    RulesFactory.$inject = [
+        'FillingRulesDataFactory'
+    ];
 
     function RulesFactory(FillingRulesDataFactory) {
         var self = this;
