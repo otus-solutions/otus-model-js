@@ -29,7 +29,7 @@ describe('ActivityStatus', function() {
 
     describe('toJson method', function() {
 
-        it('should return a well formatted json based on instance of ActivityStatus', function() {
+        xit('should return a well formatted json based on instance of ActivityStatus', function() {
             var status = factory.createCreatedStatus(Mock.user);
 
             expect(status.toJson()).toEqual(Mock.json);

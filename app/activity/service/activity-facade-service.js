@@ -18,13 +18,19 @@
         var self = this;
 
         /* Public interface */
+        self.init = init;
         self.createQuestionFill = createQuestionFill;
+
+        function init() {
+            FillingManagerService.init();
+            StatusHistoryManagerService.init();
+            // StatusHistoryManagerService.newCreatedRegistry(user);
+        }
 
         function createQuestionFill(questionID, answer, metadata, comment) {
             var answerFill = AnswerFillFactory.create(answer);
             var metadataFill = MetadataFillFactory.create(metadata);
             var question = QuestionFillFactory.create(questionID, answerFill, metadata, comment);
-            //TODO: adicionar na lista de fillingList, é preciso decidir quando iniciar a lista
             FillingManagerService.updateFilling(question);
             return question;
         }
