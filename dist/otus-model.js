@@ -18,7 +18,7 @@
     'use strict';
 
     angular
-        .module('otusjs.navigation', []);
+        .module('otusjs.misc', []);
 
 }());
 
@@ -26,7 +26,7 @@
     'use strict';
 
     angular
-        .module('otusjs.misc', []);
+        .module('otusjs.navigation', []);
 
 }());
 
@@ -571,44 +571,6 @@
     'use strict';
 
     angular
-        .module('otusjs.metadata')
-        .service('AddMetadataAnswerService', AddMetadataAnswerService);
-
-    function AddMetadataAnswerService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            return item.metadata.createOption();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .service('RemoveMetadataOptionService', RemoveMetadataOptionService);
-
-    function RemoveMetadataOptionService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            item.metadata.removeLastOption();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.activity')
         .service('ActivityFacadeService', ActivityFacadeService);
 
@@ -748,6 +710,7 @@
 
     function StatusHistoryManagerService(ActivityStatusFactory) {
         var self = this;
+        var history;
 
         self.init = init;
         self.historySize = historySize;
@@ -804,6 +767,44 @@
     }
 
 })();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .service('AddMetadataAnswerService', AddMetadataAnswerService);
+
+    function AddMetadataAnswerService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            return item.metadata.createOption();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .service('RemoveMetadataOptionService', RemoveMetadataOptionService);
+
+    function RemoveMetadataOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            item.metadata.removeLastOption();
+        }
+    }
+
+}());
 
 (function() {
     'use strict';
@@ -1096,6 +1097,114 @@
                 option.value = ++index;
             });
         }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('LabelFactory', LabelFactory);
+
+    function LabelFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Label();
+        }
+
+        return self;
+    }
+
+    function Label() {
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Label',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('UnitFactory', UnitFactory);
+
+    function UnitFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Unit();
+        }
+
+        return self;
+    }
+
+    function Unit() {
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Unit',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
     }
 
 }());
@@ -1671,114 +1780,6 @@
     'use strict';
 
     angular
-        .module('otusjs.misc')
-        .factory('LabelFactory', LabelFactory);
-
-    function LabelFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new Label();
-        }
-
-        return self;
-    }
-
-    function Label() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'objectType', {
-            value: 'Label',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.misc')
-        .factory('UnitFactory', UnitFactory);
-
-    function UnitFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new Unit();
-        }
-
-        return self;
-    }
-
-    function Unit() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'objectType', {
-            value: 'Unit',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.survey')
         .factory('SurveyFactory', SurveyFactory);
 
@@ -1994,81 +1995,6 @@
 
     angular
         .module('otusjs.surveyItem')
-        .factory('SurveyItemFactory', SurveyItemFactory);
-
-    SurveyItemFactory.$inject = [
-        /* Question items */
-        'CalendarQuestionFactory',
-        'IntegerQuestionFactory',
-        'DecimalQuestionFactory',
-        'SingleSelectionQuestionFactory',
-        'CheckboxQuestionFactory',
-        'TextQuestionFactory',
-        'TimeQuestionFactory',
-        'EmailQuestionFactory',
-        'PhoneQuestionFactory',
-        /* Miscelaneous items */
-        'TextItemFactory',
-        'ImageItemFactory'
-    ];
-
-    function SurveyItemFactory(
-        CalendarQuestionFactory,
-        IntegerQuestionFactory,
-        DecimalQuestionFactory,
-        SingleSelectionQuestionFactory,
-        CheckboxQuestionFactory,
-        TextQuestionFactory,
-        TimeQuestionFactory,
-        EmailQuestionFactory,
-        PhoneQuestionFactory,
-        TextItemFactory,
-        ImageItemFactory) {
-
-        var self = this;
-
-        var factoryMap = {
-            /* Question items */
-            'CalendarQuestion': CalendarQuestionFactory,
-            'IntegerQuestion': IntegerQuestionFactory,
-            'DecimalQuestion': DecimalQuestionFactory,
-            'SingleSelectionQuestion': SingleSelectionQuestionFactory,
-            'CheckboxQuestion' : CheckboxQuestionFactory,
-            'TextQuestion': TextQuestionFactory,
-            'TimeQuestion': TimeQuestionFactory,
-            'EmailQuestion': EmailQuestionFactory,
-            'PhoneQuestion': PhoneQuestionFactory,
-            /* Miscelaneous items */
-            'TextItem': TextItemFactory,
-            'ImageItem': ImageItemFactory
-        };
-
-        /* Public interface */
-        self.create = create;
-
-        function create(itemType, templateID) {
-            var item = new SurveyItem(templateID);
-            return factoryMap[itemType].create(templateID, item);
-        }
-
-        return self;
-    }
-
-    function SurveyItem(templateID) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'SurveyItem';
-        self.templateID = templateID;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
         .service('SurveyItemContainerService', SurveyItemContainerService);
 
     SurveyItemContainerService.$inject = ['SurveyItemFactory'];
@@ -2220,6 +2146,81 @@
             return ++incrementalIDValue;
         }
 
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.surveyItem')
+        .factory('SurveyItemFactory', SurveyItemFactory);
+
+    SurveyItemFactory.$inject = [
+        /* Question items */
+        'CalendarQuestionFactory',
+        'IntegerQuestionFactory',
+        'DecimalQuestionFactory',
+        'SingleSelectionQuestionFactory',
+        'CheckboxQuestionFactory',
+        'TextQuestionFactory',
+        'TimeQuestionFactory',
+        'EmailQuestionFactory',
+        'PhoneQuestionFactory',
+        /* Miscelaneous items */
+        'TextItemFactory',
+        'ImageItemFactory'
+    ];
+
+    function SurveyItemFactory(
+        CalendarQuestionFactory,
+        IntegerQuestionFactory,
+        DecimalQuestionFactory,
+        SingleSelectionQuestionFactory,
+        CheckboxQuestionFactory,
+        TextQuestionFactory,
+        TimeQuestionFactory,
+        EmailQuestionFactory,
+        PhoneQuestionFactory,
+        TextItemFactory,
+        ImageItemFactory) {
+
+        var self = this;
+
+        var factoryMap = {
+            /* Question items */
+            'CalendarQuestion': CalendarQuestionFactory,
+            'IntegerQuestion': IntegerQuestionFactory,
+            'DecimalQuestion': DecimalQuestionFactory,
+            'SingleSelectionQuestion': SingleSelectionQuestionFactory,
+            'CheckboxQuestion' : CheckboxQuestionFactory,
+            'TextQuestion': TextQuestionFactory,
+            'TimeQuestion': TimeQuestionFactory,
+            'EmailQuestion': EmailQuestionFactory,
+            'PhoneQuestion': PhoneQuestionFactory,
+            /* Miscelaneous items */
+            'TextItem': TextItemFactory,
+            'ImageItem': ImageItemFactory
+        };
+
+        /* Public interface */
+        self.create = create;
+
+        function create(itemType, templateID) {
+            var item = new SurveyItem(templateID);
+            return factoryMap[itemType].create(templateID, item);
+        }
+
+        return self;
+    }
+
+    function SurveyItem(templateID) {
+        var self = this;
+
+        self.extents = 'StudioObject';
+        self.objectType = 'SurveyItem';
+        self.templateID = templateID;
     }
 
 }());

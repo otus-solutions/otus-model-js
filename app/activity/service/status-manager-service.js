@@ -9,6 +9,7 @@
 
     function StatusHistoryManagerService(ActivityStatusFactory) {
         var self = this;
+        var history;
 
         self.init = init;
         self.historySize = historySize;
