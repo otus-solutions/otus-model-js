@@ -40,6 +40,7 @@
             var metadataFill = MetadataFillFactory.create(metadata);
             var question = QuestionFillFactory.create(questionID, answerFill, metadata, comment);
             self.activitySurvey.fillContainer.updateFilling(question);
+            console.log(self.activitySurvey);
             return question;
         }
 
