@@ -30,6 +30,7 @@
             var question = QuestionFillFactory.create(questionID, answerFill, metadata, comment);
             //console.log(question);
             self.activitySurvey.fillContainer.updateFilling(question);
+            console.log(self.activitySurvey);
             return question;
         }
 
