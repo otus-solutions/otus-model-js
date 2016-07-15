@@ -31,11 +31,11 @@ describe('FillingManagerService', function() {
 
         it('should return length of list equals one, when list has one filling', function() {
             service.updateFilling(filling);
-            expect(service.fillingListSize()).toEqual(1);
+            expect(service.listSize()).toEqual(1);
         });
 
         it('should return length equal zero, when list is empty', function() {
-            expect(service.fillingListSize()).toEqual(0);
+            expect(service.listSize()).toEqual(0);
         });
 
     });
@@ -121,16 +121,22 @@ describe('FillingManagerService', function() {
 
             expect(result.comment).not.toEqual(filling1.comment);
             expect(result.comment).toEqual(filling2.comment);
-            expect(service.fillingListSize()).toBe(1);
+            expect(service.listSize()).toBe(1);
         });
 
         it('should remove when filling is empty', function() {
             service.updateFilling(filling1);
-            emptyFilling1 = Mock.QuestionFillFactory.create(QID1);
-
+            var emptyFilling1 = Mock.QuestionFillFactory.create(QID1);
             service.updateFilling(emptyFilling1);
 
-            expect(service.fillingListSize()).toBe(0);
+            expect(service.listSize()).toBe(0);
+        });
+
+        it('should return size list equal zero when question is empty', function() {
+            var emptyFilling1 = Mock.QuestionFillFactory.create(QID1);
+            service.updateFilling(emptyFilling1);
+
+            expect(service.listSize()).toBe(0);
         });
 
     });

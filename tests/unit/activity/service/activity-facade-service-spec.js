@@ -27,63 +27,6 @@ describe('ActivityFacadeService', function() {
         });
     });
 
-    describe('initializeActivitySurvey method', function() {
-        it('should initialize ActivitySurvey call method create', function() {
-            service.initializeActivitySurvey();
-
-            expect(Mock.ActivitySurveyFactory.create).toHaveBeenCalled();
-        });
-
-        it('should return an object with attribute category equal to parameter', function() {
-            service.initializeActivitySurvey(CATEGORY, GROUP, TEMPLATE_OID, Mock.user);
-
-            expect(service.activitySurvey.category).toEqual(CATEGORY);
-        });
-
-        it('should return an object with attribute group equal to parameter', function() {
-            service.initializeActivitySurvey(CATEGORY, GROUP, TEMPLATE_OID, Mock.user);
-
-            expect(service.activitySurvey.group).toEqual(GROUP);
-        });
-
-        it('should return an object with attribute templateOID equal to parameter', function() {
-            service.initializeActivitySurvey(CATEGORY, GROUP, TEMPLATE_OID, Mock.user);
-
-            expect(service.activitySurvey.templateOID).toEqual(TEMPLATE_OID);
-        });
-
-    });
-
-    describe('createQuestionFill method', function() {
-        beforeEach(function() {
-            service.initializeActivitySurvey(CATEGORY, GROUP, TEMPLATE_OID, Mock.user);
-        });
-
-        it('should return an object of type QuestionFill', function() {
-            var questionFill = service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
-
-            expect(questionFill.objectType).toEqual(QUESTION_FILL_TYPE);
-        });
-
-        it('should call method create of AnswerFillFactory with parameter ANSWER', function() {
-            var questionFill = service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
-
-            expect(Mock.AnswerFillFactory.create).toHaveBeenCalledWith(ANSWER);
-        });
-
-        it('should call method create of MetadataFillFactory with parameter METADATA', function() {
-            var questionFill = service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
-
-            expect(Mock.MetadataFillFactory.create).toHaveBeenCalledWith(METADATA);
-        });
-
-        it('should call method create of ActivitySurveyFactory with parameter QuestionFill', function() {
-            var questionFill = service.createQuestionFill(QUESTION_ID, ANSWER, METADATA, COMMENT);
-
-            expect(Mock.MetadataFillFactory.create).toHaveBeenCalledWith(METADATA);
-        });
-    });
-
     function mockUser($injector) {
         Mock.user = $injector.get('ActivityUserFactory').create('User Name', 'user@email.com');
     }

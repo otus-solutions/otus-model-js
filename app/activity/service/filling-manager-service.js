@@ -11,7 +11,7 @@
 
         /* Public methods */
         self.init = init;
-        self.fillingListSize = fillingListSize;
+        self.listSize = listSize;
         self.getFillingIndex = getFillingIndex;
         self.existsFillingTo = existsFillingTo;
         self.searchFillingByID = searchFillingByID;
@@ -23,7 +23,7 @@
             fillingList = [];
         }
 
-        function fillingListSize() {
+        function listSize() {
             return fillingList.length;
         }
 
@@ -42,10 +42,12 @@
         }
 
         function updateFilling(filling) {
-            if (!existsFillingTo(filling.questionID)) {
-                _add(filling);
-            } else if (filling.isFilled()) {
-                return _replaceFilling(filling);
+            if (filling.isFilled()) {
+                if (!existsFillingTo(filling.questionID)) {
+                    _add(filling);
+                } else {
+                    return _replaceFilling(filling);
+                }
             } else {
                 return _removeFilling(filling.questionID);
             }
