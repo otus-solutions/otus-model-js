@@ -36,10 +36,9 @@
         }
 
         function createQuestionFill(questionID, answer, metadata, comment) {
-            var answerFill = AnswerFillFactory.create(answer);
-            var metadataFill = MetadataFillFactory.create(metadata);
-            var question = QuestionFillFactory.create(questionID, answerFill, metadataFill, comment);
+            var question = QuestionFillFactory.create(questionID, answer, metadata, comment);
             self.activitySurvey.fillContainer.updateFilling(question);
+            //console.log(self.activitySurvey);
             return question;
         }
 
