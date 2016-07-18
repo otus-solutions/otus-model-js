@@ -45,7 +45,7 @@
             futureDate: FutureDateValidatorFactory,
             in: InValidatorFactory,
             lowerLimit: LowerLimitValidatorFactory,
-            lowercase: LowerCaseValidatorFactory,
+            lowerCase: LowerCaseValidatorFactory,
             maxDate: MaxDateValidatorFactory,
             maxLength: MaxLengthValidatorFactory,
             maxTime: MaxTimeValidatorFactory,

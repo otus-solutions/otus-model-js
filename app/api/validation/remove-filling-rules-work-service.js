@@ -10,8 +10,8 @@
 
         self.execute = execute;
 
-        function execute(item) {
-            item.fillingRules.removeLastValidator();
+        function execute(item, fillingRuleType) {
+            item.fillingRules.removeLastValidator(fillingRuleType);
         }
     }
 

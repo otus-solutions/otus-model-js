@@ -23,10 +23,7 @@
     function MaxDateValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'MaxDateValidator';
-        self.dataType = 'LocalDate';
-        self.value = new Date();
+        self.reference = new Date();
     }
 
 }());

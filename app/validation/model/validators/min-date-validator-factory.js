@@ -23,10 +23,7 @@
     function MinDateValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'MinDateValidator';
-        self.dataType = 'LocalDate';
-        self.value = new Date();
+        self.reference = new Date();
     }
 
 }());

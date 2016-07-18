@@ -23,10 +23,7 @@
     function LowerLimitValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'LowerLimitValidator';
-        self.dataType = 'Integer';
-        self.value = 0;
+        self.reference = null;
     }
 
 }());

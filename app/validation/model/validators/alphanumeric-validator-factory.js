@@ -23,10 +23,7 @@
     function AlphanumericValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'AlphanumericValidator';
-        self.dataType = 'Boolean';
-        self.value = false;
+        self.reference = true;
     }
 
 }());

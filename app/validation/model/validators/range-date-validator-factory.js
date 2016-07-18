@@ -23,10 +23,7 @@
     function RangeDateValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'RangeDateValidator';
-        self.dataType = 'Array';
-        self.value = [];
+        self.reference = {'initial': new Date(), 'end': new Date()};
     }
 
 }());

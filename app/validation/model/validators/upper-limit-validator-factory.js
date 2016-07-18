@@ -23,10 +23,7 @@
     function UpperLimitValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'UpperLimitValidator';
-        self.dataType = 'Integer';
-        self.value = 0;
+        self.reference = null;
     }
 
 }());

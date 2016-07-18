@@ -37,10 +37,8 @@
             return option;
         }
 
-        function removeLastValidator() {
-            self.options.splice(-1, 1);
-            //TODO
-            //verificar se funciona para dicionario
+        function removeLastValidator(type) {
+            delete self.options[type];
         }
 
     }

@@ -52,7 +52,7 @@
             var validatorsList = [
                 'mandatory',
                 'alphanumeric',
-                'lowercase',
+                'lowerCase',
                 'minLength',
                 'maxLength',
                 'specials',

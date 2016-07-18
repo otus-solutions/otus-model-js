@@ -23,10 +23,7 @@
     function InValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'InValidator';
-        self.dataType = 'Array';
-        self.value = [];
+        self.reference = {'initial':null, 'end': null};
     }
 
 }());

@@ -23,10 +23,7 @@
     function MaxLengthValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'MaxLengthValidator';
-        self.dataType = 'Integer';
-        self.value = 0;
+        self.size = null;
     }
 
 }());

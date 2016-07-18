@@ -23,10 +23,7 @@
     function DistinctValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'DistinctValidator';
-        self.dataType = 'Array';
-        self.value = [];
+        self.reference = null;
     }
 
 }());

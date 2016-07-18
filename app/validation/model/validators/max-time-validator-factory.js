@@ -23,10 +23,7 @@
     function MaxTimeValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'MaxTimeValidator';
-        self.dataType = 'LocalTime';
-        self.value = '';
+        self.reference = '';
     }
 
 }());

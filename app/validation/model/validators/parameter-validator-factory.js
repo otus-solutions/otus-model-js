@@ -23,10 +23,7 @@
     function ParameterValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'ParameterValidator';
-        self.dataType = 'String';
-        self.value = '';
+        self.reference = '';
     }
 
 }());

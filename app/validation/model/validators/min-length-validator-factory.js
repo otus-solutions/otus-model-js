@@ -23,10 +23,7 @@
     function MinLengthValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'MinLengthValidator';
-        self.dataType = 'Integer';
-        self.value = 0;
+        self.size = null;
     }
 
 }());

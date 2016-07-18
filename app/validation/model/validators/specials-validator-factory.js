@@ -23,10 +23,7 @@
     function SpecialsValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'SpecialsValidator';
-        self.dataType = 'Boolean';
-        self.value = false;
+        self.reference = true;
 
     }
 

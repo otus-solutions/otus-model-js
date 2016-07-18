@@ -23,10 +23,7 @@
     function MinTimeValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'MinTimeValidator';
-        self.dataType = 'LocalTime';
-        self.value = '';
+        self.reference = '';
     }
 
 }());

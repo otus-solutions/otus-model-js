@@ -23,10 +23,7 @@
     function ScaleValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'ScaleValidator';
-        self.dataType = 'Integer';
-        self.value = 0;
+        self.reference = null;
     }
 
 }());

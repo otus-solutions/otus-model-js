@@ -23,10 +23,7 @@
     function UpperCaseValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'UpperCaseValidator';
-        self.dataType = 'Boolean';
-        self.value = false;
+        self.reference = true;
     }
 
 }());

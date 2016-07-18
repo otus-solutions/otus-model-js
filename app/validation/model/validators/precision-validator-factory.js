@@ -23,10 +23,7 @@
     function PrecisionValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'PrecisionValidator';
-        self.dataType = 'Integer';
-        self.value = 0;
+        self.reference = null;
     }
 
 }());

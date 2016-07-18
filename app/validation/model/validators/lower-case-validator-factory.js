@@ -23,10 +23,7 @@
     function LowerCaseValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'LowerCaseValidator';
-        self.dataType = 'Boolean';
-        self.value = false;
+        self.reference = true;
     }
 
 }());

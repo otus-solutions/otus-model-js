@@ -23,10 +23,7 @@
     function MandatoryValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'MandatoryValidator';
-        self.dataType = 'Boolean';
-        self.value = false;
+        self.reference = false;
     }
 
 }());
