@@ -46,6 +46,7 @@
             in: InValidatorFactory,
             lowerLimit: LowerLimitValidatorFactory,
             lowerCase: LowerCaseValidatorFactory,
+            mandatory: MandatoryValidatorFactory,
             maxDate: MaxDateValidatorFactory,
             maxLength: MaxLengthValidatorFactory,
             maxTime: MaxTimeValidatorFactory,
