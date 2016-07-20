@@ -11,7 +11,7 @@
         self.execute = execute;
 
         function execute(item, fillingRuleType) {
-            item.fillingRules.removeLastValidator(fillingRuleType);
+            item.fillingRules.removeFillingRules(fillingRuleType);
         }
     }
 

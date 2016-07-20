@@ -29,7 +29,7 @@
 
         /* Public methods */
         self.createOption = createOption;
-        self.removeLastValidator = removeLastValidator;
+        self.removeFillingRules = removeFillingRules;
 
         function createOption(type) {
             var option = RulesFactory.create(type);
@@ -37,7 +37,7 @@
             return option;
         }
 
-        function removeLastValidator(type) {
+        function removeFillingRules(type) {
             delete self.options[type];
         }
 

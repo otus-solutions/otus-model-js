@@ -379,7 +379,7 @@
         self.execute = execute;
 
         function execute(item, fillingRuleType) {
-            item.fillingRules.removeLastValidator(fillingRuleType);
+            item.fillingRules.removeFillingRules(fillingRuleType);
         }
     }
 
@@ -1420,6 +1420,7 @@
             in: InValidatorFactory,
             lowerLimit: LowerLimitValidatorFactory,
             lowerCase: LowerCaseValidatorFactory,
+            mandatory: MandatoryValidatorFactory,
             maxDate: MaxDateValidatorFactory,
             maxLength: MaxLengthValidatorFactory,
             maxTime: MaxTimeValidatorFactory,
@@ -1474,7 +1475,7 @@
 
         /* Public methods */
         self.createOption = createOption;
-        self.removeLastValidator = removeLastValidator;
+        self.removeFillingRules = removeFillingRules;
 
         function createOption(type) {
             var option = RulesFactory.create(type);
@@ -1482,7 +1483,7 @@
             return option;
         }
 
-        function removeLastValidator(type) {
+        function removeFillingRules(type) {
             delete self.options[type];
         }
 
@@ -3324,8 +3325,8 @@
             var validatorsList = [
                 'mandatory',
                 'minTime',
-                'maxTime',
-                'parameter'
+                'maxTime'
+                // 'parameter'
             ];
             return validatorsList
         }

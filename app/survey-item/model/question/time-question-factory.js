@@ -52,8 +52,8 @@
             var validatorsList = [
                 'mandatory',
                 'minTime',
-                'maxTime',
-                'parameter'
+                'maxTime'
+                // 'parameter'
             ];
             return validatorsList
         }
