@@ -39,7 +39,7 @@ describe('TimeQuestion', function() {
                 esES: $injector.get('LabelFactory').create()
             },
             metadata: $injector.get('MetadataGroupFactory').create(),
-            validate: $injector.get('FillingRulesOptionFactory').create()
+            fillingRules: $injector.get('FillingRulesOptionFactory').create()
         });
     }
 

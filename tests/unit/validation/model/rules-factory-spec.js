@@ -2,7 +2,7 @@ describe('RulesFactory', function() {
     var Mock = {};
     var factory;
     beforeEach(function() {
-        module('otusjs.validation');
+        module('otusjs');
 
         inject(function(_$injector_) {
           factory = _$injector_.get('RulesFactory');
@@ -21,7 +21,10 @@ describe('RulesFactory', function() {
       Mock.rule = JSON.stringify({
         extends: 'StudioObject',
         objectType: 'Rule',
-        type: 'upperCase'
+        validatorType: 'upperCase',
+        data: {
+          reference: true
+        }
       });
     };
 
