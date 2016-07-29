@@ -30,6 +30,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'CheckboxQuestion';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'Integer';
         self.label = {
             ptBR: LabelFactory.create(),
@@ -81,6 +82,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.options = self.options;

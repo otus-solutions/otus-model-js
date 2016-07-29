@@ -32,6 +32,7 @@ describe('IntegerQuestion', function() {
             extents: 'SurveyItem',
             objectType: 'IntegerQuestion',
             templateID: Mock.TEMPLATE_ID,
+            customID: Mock.TEMPLATE_ID,
             dataType: 'Integer',
             label: {
                 ptBR: $injector.get('LabelFactory').create(),
