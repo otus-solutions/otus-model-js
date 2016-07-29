@@ -3,12 +3,13 @@
 
     angular
         .module('otusjs', [
+            'otusjs.survey',
+            'otusjs.activity',
+            'otusjs.surveyItem',
             'otusjs.metadata',
             'otusjs.misc',
             'otusjs.navigation',
             'otusjs.validation',
-            'otusjs.surveyItem',
-            'otusjs.survey',
             'utils'
         ]);
 

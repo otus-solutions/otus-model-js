@@ -54,13 +54,16 @@
             self.conditionSet.push(condition);
         }
 
-        function removeCondition(condition) {
+        function removeCondition() {
             var conditionToRemove = self.conditionSet.filter(function(condition) {
                 return condition.name === name;
             });
 
             var indexToRemove = self.conditionSet.indexOf(conditionToRemove[0]);
-            if (indexToRemove > -1) self.conditionSet.splice(indexToRemove, 1);
+            if (indexToRemove > -1) {
+                self.conditionSet.splice(indexToRemove, 1);
+            }
+
             return conditionToRemove[0];
         }
 

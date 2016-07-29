@@ -63,7 +63,7 @@
         return self;
     }
 
-    function SurveyItem(templateID, LabelFactory, MetadataGroupFactory) {
+    function SurveyItem(templateID) {
         var self = this;
 
         self.extents = 'StudioObject';

@@ -62,7 +62,10 @@
             });
 
             var indexToRemove = self.routes.indexOf(routeToRemove[0]);
-            if (indexToRemove > -1) self.routes.splice(indexToRemove, 1);
+            if (indexToRemove > -1) {
+                self.routes.splice(indexToRemove, 1);
+            }
+
             return routeToRemove[0];
         }
 

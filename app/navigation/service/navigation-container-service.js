@@ -76,14 +76,16 @@
             });
 
             var indexToRemove = navigationList.indexOf(navigationToRemove[0]);
-            if (indexToRemove > -1) navigationList.splice(indexToRemove, 1);
+            if (indexToRemove > -1) {
+                navigationList.splice(indexToRemove, 1);
+            }
         }
 
         function removeNavigationByIndex(indexToRemove) {
             navigationList.splice(indexToRemove, 1);
         }
 
-        function removeCurrentLastNavigation(indexToRemove) {
+        function removeCurrentLastNavigation() {
             navigationList.splice(-1, 1);
         }
 
