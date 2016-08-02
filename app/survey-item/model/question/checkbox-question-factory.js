@@ -27,6 +27,8 @@
     function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory) {
         var self = this;
 
+        var _alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
         self.extents = prototype.objectType;
         self.objectType = 'CheckboxQuestion';
         self.templateID = templateID;
@@ -43,6 +45,7 @@
         /* Public methods */
         self.getOptionListSize = getOptionListSize;
         self.getOptionByValue = getOptionByValue;
+        self.getOptionByOptionID = getOptionByOptionID;
         self.createOption = createOption;
         self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
@@ -51,6 +54,16 @@
 
         function getOptionListSize() {
             return self.options.length;
+        }
+
+        function getOptionByOptionID(optionID) {
+            var aux;
+            for (var i = 0; i < self.options.length; i++) {
+                if (self.options[i].optionID === optionID) {
+                    aux = self.options[i];
+                }
+            }
+            return aux;
         }
 
         function getOptionByValue(value) {
@@ -62,9 +75,13 @@
         }
 
         function createOption() {
-            var option = CheckboxAnswerOptionFactory.create(self.options.length + 1);
+            var option = CheckboxAnswerOptionFactory.create(_generateOptionId());
             self.options.push(option);
             return option;
+        }
+
+        function _generateOptionId() {
+            return self.templateID + _alphabet.charAt(self.options.length);
         }
 
         function removeOption(value) {

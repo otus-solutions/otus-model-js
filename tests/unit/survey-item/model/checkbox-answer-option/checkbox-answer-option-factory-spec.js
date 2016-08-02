@@ -24,6 +24,14 @@ describe('CheckboxAnswerOptionFactory', function() {
             expect(option.objectType).toBe('CheckboxAnswerOption');
         });
 
+        it('returned object should have optionID equal passed param', function() {
+            expect(option.optionID).toBe('TPL-ID');
+        });
+
+        it('returned object should have customID equal passed param', function() {
+            expect(option.customOptionID).toBe('TPL-ID');
+        });
+
         it('returned object should have dataType equal to Boolean', function() {
             expect(option.dataType).toBe('Boolean');
         });

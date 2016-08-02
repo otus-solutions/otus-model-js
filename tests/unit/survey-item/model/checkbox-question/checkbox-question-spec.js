@@ -36,16 +36,6 @@ describe('CheckboxQuestion', function() {
 
     });
 
-    describe('getOptionByValue method', function() {
-
-        it('should the option with parameter value', function() {
-            question.createOption();
-            expect(question.getOptionByValue(1).value).toBe(1);
-            expect(question.getOptionByValue(1).value).not.toBe(2);
-        });
-
-    });
-
     describe('createOption method', function() {
 
         beforeEach(function() {
@@ -58,6 +48,15 @@ describe('CheckboxQuestion', function() {
 
         it('should add a new metadata answer option in group', function() {
             expect(question.getOptionListSize()).toBe(1);
+        });
+
+        it('should create a new option with optionID TPL_IDa', function() {
+          expect(question.getOptionByOptionID('TPL_IDa').optionID).toBe('TPL_IDa');
+        });
+
+        it('should create a new option with optionID TPL_IDb', function() {
+          question.createOption();
+          expect(question.getOptionByOptionID('TPL_IDb').optionID).toBe('TPL_IDb');
         });
 
     });
@@ -101,11 +100,6 @@ describe('CheckboxQuestion', function() {
 
             expect(question.getOptionListSize()).toBe(3);
 
-            expect(question.getOptionByValue(1).value).toBe(1);
-            expect(question.getOptionByValue(2).value).toBe(2);
-            expect(question.getOptionByValue(3).value).toBe(3);
-
-            expect(question.getOptionByValue(4)).toBeUndefined();
         });
 
     });
