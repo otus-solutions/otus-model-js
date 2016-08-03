@@ -170,7 +170,8 @@ describe('CheckboxQuestion', function() {
                 esES: $injector.get('LabelFactory').create()
             },
             options: [],
-            metadata: $injector.get('MetadataGroupFactory').create()
+            metadata: $injector.get('MetadataGroupFactory').create(),
+            fillingRules: $injector.get('FillingRulesOptionFactory').create()
         });
     }
 

@@ -8,23 +8,24 @@
     IntegerQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'UnitFactory'
+        'UnitFactory',
+        'FillingRulesOptionFactory'
     ];
 
-    function IntegerQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory) {
+    function IntegerQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory);
+            return new IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory) {
+    function IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -38,6 +39,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
+        self.fillingRules = FillingRulesOptionFactory.create();
         self.unit = {
             ptBR: UnitFactory.create(),
             enUS: UnitFactory.create(),
@@ -46,10 +48,23 @@
 
         /* Public methods */
         self.isQuestion = isQuestion;
+        self.validators = validators;
         self.toJson = toJson;
 
         function isQuestion() {
             return true;
+        }
+
+        function validators() {
+            var validatorsList = [
+                'mandatory',
+                'distinct',
+                'lowerLimit',
+                'upperLimit',
+                'precision',
+                'in'
+            ];
+            return validatorsList;
         }
 
         function toJson() {
@@ -63,6 +78,8 @@
             json.label = self.label;
             json.metadata = self.metadata;
             json.unit = self.unit;
+            json.fillingRules = self.fillingRules;
+
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
