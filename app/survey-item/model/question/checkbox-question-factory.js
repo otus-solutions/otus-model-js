@@ -32,7 +32,7 @@
         self.objectType = 'CheckboxQuestion';
         self.templateID = templateID;
         self.customID = templateID;
-        self.dataType = 'Group';
+        self.dataType = 'Array';
         self.label = {
             ptBR: LabelFactory.create(),
             enUS: LabelFactory.create(),

@@ -163,7 +163,7 @@ describe('CheckboxQuestion', function() {
             objectType: 'CheckboxQuestion',
             templateID: Mock.TEMPLATE_ID,
             customID: Mock.TEMPLATE_ID,
-            dataType: 'Group',
+            dataType: 'Array',
             label: {
                 ptBR: $injector.get('LabelFactory').create(),
                 enUS: $injector.get('LabelFactory').create(),
