@@ -4,6 +4,7 @@ describe('SurveyItemContainerService', function() {
 
     var QUESTION_TYPE = 'IntegerQuestion';
     var INEXISTENT_TEMPLATE_ID = 'Q5';
+    var INEXISTENT_CUSTOM_ID = 'Q5';
 
     beforeEach(function() {
         module('otusjs');
@@ -86,6 +87,26 @@ describe('SurveyItemContainerService', function() {
             expect(returnedItem).toBeUndefined();
         });
 
+    });
+
+    describe('getItemByCustomID method', function() {
+
+        beforeEach(function() {
+            service.manageItems(Mock.itemsToManage);
+        });
+
+        it('should return the item when exists', function() {
+            var returnedItemCustomID = service.getItemByCustomID(Mock.itemOne.customID);
+
+            expect(returnedItemCustomID.customID).toEqual(Mock.itemOne.customID);
+        });
+
+        it('should return undefined when item not exists', function() {
+            var returnedItemCustomID = service.getItemByCustomID(INEXISTENT_CUSTOM_ID);
+
+            expect(returnedItemCustomID).toBeUndefined();
+        });
+        
     });
 
     describe('getItemByPosition method', function() {

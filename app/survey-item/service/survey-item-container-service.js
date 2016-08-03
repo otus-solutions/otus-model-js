@@ -15,6 +15,7 @@
         self.init = init;
         self.manageItems = manageItems;
         self.getItemByTemplateID = getItemByTemplateID;
+        self.getItemByCustomID = getItemByCustomID;
         self.getItemByPosition = getItemByPosition;
         self.getItemPosition = getItemPosition;
         self.getItemList = getItemList;
@@ -49,6 +50,14 @@
             return filter[0];
         }
 
+        function getItemByCustomID(customID) {
+            var filter = itemList.filter(function(item) {
+                return findByCustomID(item, customID);
+            });
+
+            return filter[0];
+        }
+
         function getItemByPosition(position) {
             return itemList[position];
         }
@@ -62,8 +71,8 @@
             }
         }
 
-        function existsItem(templateID) {
-            return (getItemByTemplateID(templateID)) ? true : false;
+        function existsItem(id) {
+            return (getItemByTemplateID(id) || getItemByCustomID(id)) ? true : false;
         }
 
         function createItem(itemType, templateID) {
@@ -94,6 +103,10 @@
         /* Private methods */
         function findByTemplateID(item, templateID) {
             return item.templateID === templateID;
+        }
+
+        function findByCustomID(item, customID) {
+            return item.customID === customID;
         }
     }
 

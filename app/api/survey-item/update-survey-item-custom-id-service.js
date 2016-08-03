@@ -22,8 +22,6 @@
             // it needs a service to validate if is a valid or available id
             item.customID = id;
         }
-
-        }
     }
 
 }());

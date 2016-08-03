@@ -4,6 +4,8 @@ describe('SurveyItemManagerService', function() {
 
     var QUESTION_TYPE = 'IntegerQuestion';
     var TEMPLATE_ID_PREFIX = 'TPL';
+    var CUSTOM_ID_PREFIX = 'TPL';
+    var INEXISTENT_CUSTOM_ID = 'Q1';
 
     beforeEach(function() {
         module('otusjs');
@@ -121,6 +123,21 @@ describe('SurveyItemManagerService', function() {
             service.removeItem(Mock.itemOne.templateID);
 
             expect(Mock.SurveyItemContainerService.removeItem).toHaveBeenCalledWith(Mock.itemOne.templateID);
+        });
+
+    });
+
+    describe('exists method', function() {
+        beforeEach(function() {
+            var item = service.addItem(QUESTION_TYPE, CUSTOM_ID_PREFIX);
+        });
+
+        it('should return true when item exists', function() {
+            expect(service.existsItem("TPL1")).toBe(true);
+        });
+
+        it('should return false when item not exists', function() {
+            expect(service.existsItem(INEXISTENT_CUSTOM_ID)).toBe(false);
         });
 
     });

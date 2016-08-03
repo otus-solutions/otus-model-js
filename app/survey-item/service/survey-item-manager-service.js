@@ -21,6 +21,7 @@
         self.getItemByTemplateID = getItemByTemplateID;
         self.addItem = addItem;
         self.removeItem = removeItem;
+        self.existsItem = existsItem;
 
         function init() {
             SurveyItemContainerService.init();
@@ -51,6 +52,10 @@
 
         function getNextIncrementalGenerator() {
             return ++incrementalIDValue;
+        }
+
+        function existsItem(id) {
+            return SurveyItemContainerService.existsItem(id);
         }
 
     }
