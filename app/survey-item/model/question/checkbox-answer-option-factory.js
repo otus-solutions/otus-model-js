@@ -36,6 +36,11 @@
 
         /* Public methods */
         self.toJson = toJson;
+        self.setCustomOptionID = setCustomOptionID;
+
+        function setCustomOptionID(id) {
+            self.customOptionID = id;
+        }
 
         function toJson() {
             var json = {};

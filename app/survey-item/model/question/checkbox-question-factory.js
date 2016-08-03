@@ -8,32 +8,31 @@
     CheckboxQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'CheckboxAnswerOptionFactory'
+        'CheckboxAnswerOptionFactory',
+        'CheckboxSuffixIDGenerator'
     ];
 
-    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory) {
+    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, CheckboxSuffixIDGenerator) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory);
+            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, CheckboxSuffixIDGenerator);
         }
 
         return self;
     }
 
-    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory) {
+    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, CheckboxSuffixIDGenerator) {
         var self = this;
-
-        var _alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
         self.extents = prototype.objectType;
         self.objectType = 'CheckboxQuestion';
         self.templateID = templateID;
         self.customID = templateID;
-        self.dataType = 'Integer';
+        self.dataType = 'Group';
         self.label = {
             ptBR: LabelFactory.create(),
             enUS: LabelFactory.create(),
@@ -57,7 +56,7 @@
         }
 
         function getOptionByOptionID(optionID) {
-            var aux;
+            var aux = null;
             for (var i = 0; i < self.options.length; i++) {
                 if (self.options[i].optionID === optionID) {
                     aux = self.options[i];
@@ -81,7 +80,7 @@
         }
 
         function _generateOptionId() {
-            return self.templateID + _alphabet.charAt(self.options.length);
+            return self.customID + CheckboxSuffixIDGenerator.generateSuffixByOptionsLength(self.options.length);
         }
 
         function removeOption(value) {
