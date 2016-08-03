@@ -9,6 +9,7 @@
             'otusjs.metadata',
             'otusjs.misc',
             'otusjs.navigation',
+            'otusjs.validation',
             'utils'
         ]);
 

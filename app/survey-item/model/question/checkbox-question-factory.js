@@ -8,38 +8,40 @@
     CheckboxQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'CheckboxAnswerOptionFactory'
+        'CheckboxAnswerOptionFactory',
+        'CheckboxSuffixIDGenerator',
+        'FillingRulesOptionFactory'
     ];
 
-    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory) {
+    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, CheckboxSuffixIDGenerator, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory);
+            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, CheckboxSuffixIDGenerator, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory) {
+    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, CheckboxSuffixIDGenerator, FillingRulesOptionFactory) {
         var self = this;
-
-        var _alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
         self.extents = prototype.objectType;
         self.objectType = 'CheckboxQuestion';
         self.templateID = templateID;
         self.customID = templateID;
-        self.dataType = 'Integer';
+        self.dataType = 'Array';
         self.label = {
             ptBR: LabelFactory.create(),
             enUS: LabelFactory.create(),
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
+        self.fillingRules = FillingRulesOptionFactory.create();
+
         self.options = [];
 
         /* Public methods */
@@ -50,6 +52,7 @@
         self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
         self.isQuestion = isQuestion;
+        self.validators = validators;
         self.toJson = toJson;
 
         function getOptionListSize() {
@@ -57,7 +60,7 @@
         }
 
         function getOptionByOptionID(optionID) {
-            var aux;
+            var aux = null;
             for (var i = 0; i < self.options.length; i++) {
                 if (self.options[i].optionID === optionID) {
                     aux = self.options[i];
@@ -74,6 +77,14 @@
             return true;
         }
 
+        function validators() {
+            var validatorsList = [
+                'mandatory'
+            ];
+            return validatorsList;
+
+        }
+
         function createOption() {
             var option = CheckboxAnswerOptionFactory.create(_generateOptionId());
             self.options.push(option);
@@ -81,7 +92,7 @@
         }
 
         function _generateOptionId() {
-            return self.templateID + _alphabet.charAt(self.options.length);
+            return self.customID + CheckboxSuffixIDGenerator.generateSuffixByOptionsLength(self.options.length);
         }
 
         function removeOption(value) {
@@ -104,6 +115,7 @@
             json.label = self.label;
             json.options = self.options;
             json.metadata = self.metadata;
+            json.fillingRules = self.fillingRules;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }

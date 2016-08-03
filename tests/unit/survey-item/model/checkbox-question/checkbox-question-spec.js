@@ -61,6 +61,22 @@ describe('CheckboxQuestion', function() {
 
     });
 
+    describe('getOptionByOptionID method', function() {
+        var createdOption;
+        beforeEach(function() {
+            createdOption = question.createOption();
+        });
+
+        it('should get a object option by id - TPL_IDa', function() {
+          expect(question.getOptionByOptionID('TPL_IDa')).toBe(createdOption);
+        });
+
+        it('should return null if id is not found', function() {
+          expect(question.getOptionByOptionID('ID_NOT_FOUND')).toBe(null);
+        });
+
+    });
+
     describe('removeOption method', function() {
 
         beforeEach(function() {
@@ -147,14 +163,15 @@ describe('CheckboxQuestion', function() {
             objectType: 'CheckboxQuestion',
             templateID: Mock.TEMPLATE_ID,
             customID: Mock.TEMPLATE_ID,
-            dataType: 'Integer',
+            dataType: 'Array',
             label: {
                 ptBR: $injector.get('LabelFactory').create(),
                 enUS: $injector.get('LabelFactory').create(),
                 esES: $injector.get('LabelFactory').create()
             },
             options: [],
-            metadata: $injector.get('MetadataGroupFactory').create()
+            metadata: $injector.get('MetadataGroupFactory').create(),
+            fillingRules: $injector.get('FillingRulesOptionFactory').create()
         });
     }
 

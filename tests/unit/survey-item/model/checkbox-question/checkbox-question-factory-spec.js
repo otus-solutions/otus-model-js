@@ -25,7 +25,7 @@ describe('CheckboxQuestionFactory', function() {
         });
 
         it('returned object should have dataType equal to LocalDate', function() {
-            expect(question.dataType).toBe('Integer');
+            expect(question.dataType).toBe('Array');
         });
 
         it('returned object should have a label object for ptBR locale', function() {

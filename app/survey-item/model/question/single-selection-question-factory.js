@@ -8,23 +8,24 @@
     SingleSelectionQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'AnswerOptionFactory'
+        'AnswerOptionFactory',
+        'FillingRulesOptionFactory'
     ];
 
-    function SingleSelectionQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory) {
+    function SingleSelectionQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory);
+            return new SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory) {
+    function SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -38,6 +39,7 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
+        self.fillingRules = FillingRulesOptionFactory.create();
         self.options = [];
 
         /* Public methods */
@@ -47,6 +49,7 @@
         self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
         self.isQuestion = isQuestion;
+        self.validators = validators;
         self.toJson = toJson;
 
         function getOptionListSize() {
@@ -59,6 +62,13 @@
 
         function isQuestion() {
             return true;
+        }
+
+        function validators() {
+            var validatorsList = [
+                'mandatory'
+            ];
+            return validatorsList;
         }
 
         function createOption() {
@@ -87,6 +97,7 @@
             json.label = self.label;
             json.options = self.options;
             json.metadata = self.metadata;
+            json.fillingRules = self.fillingRules;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }

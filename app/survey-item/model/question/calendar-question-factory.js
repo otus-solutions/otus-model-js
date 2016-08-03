@@ -8,22 +8,23 @@
     CalendarQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
+        'FillingRulesOptionFactory'
     ];
 
-    function CalendarQuestionFactory(LabelFactory, MetadataGroupFactory) {
+    function CalendarQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CalendarQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory);
+            return new CalendarQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function CalendarQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory) {
+    function CalendarQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -37,13 +38,28 @@
             esES: LabelFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
+        self.fillingRules = FillingRulesOptionFactory.create();
 
         /* Public methods */
         self.isQuestion = isQuestion;
+        self.validators = validators;
         self.toJson = toJson;
+
 
         function isQuestion() {
             return true;
+        }
+
+        function validators() {
+            var validatorsList = [
+                'mandatory',
+                'minDate',
+                'maxDate',
+                'rangeDate',
+                'futureDate',
+                'pastDate'
+            ];
+            return validatorsList;
         }
 
         function toJson() {
@@ -56,6 +72,7 @@
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
+            json.fillingRules = self.fillingRules;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
