@@ -93,6 +93,34 @@ describe('Survey', function() {
             });
         });
 
+        describe('getItemByCustomID method', function() {
+
+            beforeEach(function() {
+                survey.addItem();
+                survey.addItem();
+            });
+
+            it('should call SurveyItemManagerService.getItemByCustomID with template id', function() {
+                survey.getItemByCustomID(Q1);
+
+                expect(Mock.SurveyItemManagerService.getItemByCustomID).toHaveBeenCalledWith(Q1);
+            });
+        });
+
+        describe('getItemByID method', function() {
+
+            beforeEach(function() {
+                survey.addItem();
+                survey.addItem();
+            });
+
+            it('should call SurveyItemManagerService.getItemByID with template id', function() {
+                survey.getItemByID(Q1);
+
+                expect(Mock.SurveyItemManagerService.getItemByID).toHaveBeenCalledWith(Q1);
+            });
+        });
+
     });
 
     function mockSurveyIdentityFactory($injector) {
@@ -142,6 +170,8 @@ describe('Survey', function() {
         spyOn(Mock.SurveyItemManagerService, 'addItem').and.returnValue(Mock.item);
         spyOn(Mock.SurveyItemManagerService, 'removeItem');
         spyOn(Mock.SurveyItemManagerService, 'getItemByTemplateID');
+        spyOn(Mock.SurveyItemManagerService, 'getItemByCustomID');
+        spyOn(Mock.SurveyItemManagerService, 'getItemByID');
 
         return Mock.SurveyItemManagerService;
     }

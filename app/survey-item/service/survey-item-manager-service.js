@@ -19,6 +19,8 @@
         self.getItemList = getItemList;
         self.getItemListSize = getItemListSize;
         self.getItemByTemplateID = getItemByTemplateID;
+        self.getItemByCustomID = getItemByCustomID;
+        self.getItemByID = getItemByID;
         self.addItem = addItem;
         self.removeItem = removeItem;
         self.existsItem = existsItem;
@@ -38,6 +40,14 @@
 
         function getItemByTemplateID(templateID) {
             return SurveyItemContainerService.getItemByTemplateID(templateID);
+        }
+
+        function getItemByCustomID(customID) {
+            return SurveyItemContainerService.getItemByCustomID(customID);
+        }
+
+        function getItemByID(id) {
+            return SurveyItemContainerService.getItemByID(id);
         }
 
         function addItem(itemType, templateIDPrefix) {

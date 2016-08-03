@@ -5,13 +5,15 @@ describe('SurveyItemContainerService', function() {
     var QUESTION_TYPE = 'IntegerQuestion';
     var INEXISTENT_TEMPLATE_ID = 'Q5';
     var INEXISTENT_CUSTOM_ID = 'Q5';
+    var INEXISTENT_ID = 'NOT_FOUND';
 
     beforeEach(function() {
         module('otusjs');
 
         inject(function(_$injector_) {
             service = _$injector_.get('SurveyItemContainerService', {
-                SurveyItemFactory: mockSurveyItemFactory(_$injector_)
+                SurveyItemFactory: mockSurveyItemFactory(_$injector_),
+                UpdateSurveyItemCustomID: mockUpdateSurveyItemCustomID(_$injector_)
             });
 
             mockItems();
@@ -106,7 +108,44 @@ describe('SurveyItemContainerService', function() {
 
             expect(returnedItemCustomID).toBeUndefined();
         });
-        
+
+    });
+
+    describe('getItemByID method', function() {
+
+        beforeEach(function() {
+            service.manageItems(Mock.itemsToManage);
+        });
+
+        describe('should verify between the both properties of the item and return it when exists', function() {
+
+            it('criteria by templateID - UNCHANGED CUSTOM_ID', function() {
+                var returnedItem = service.getItemByID("Q1");
+
+                expect(returnedItem).toEqual(Mock.itemOne);
+            });
+
+            it('criteria by templateID - CHANGED CUSTOM_ID', function() {
+                Mock.UpdateSurveyItemCustomID.execute(Mock.itemOne, 'MyCustomID_1');
+                var returnedItem = service.getItemByID("Q1");
+
+                expect(returnedItem).toEqual(Mock.itemOne);
+            });
+
+            it('criteria by customID - CHANGED CUSTOM_ID', function() {
+                Mock.UpdateSurveyItemCustomID.execute(Mock.itemOne, 'MyCustomID_1');
+                var returnedItem = service.getItemByID("MyCustomID_1");
+
+                expect(returnedItem).toEqual(Mock.itemOne);
+            });
+
+            it('should return undefined when item not exists', function() {
+                var returnedItemCustomID = service.getItemByID(INEXISTENT_ID);
+
+                expect(returnedItemCustomID).toBeUndefined();
+            });
+        });
+
     });
 
     describe('getItemByPosition method', function() {
@@ -251,6 +290,11 @@ describe('SurveyItemContainerService', function() {
     function mockSurveyItemFactory($injector) {
         Mock.SurveyItemFactory = $injector.get('SurveyItemFactory');
         return Mock.SurveyItemFactory;
+    }
+
+    function mockUpdateSurveyItemCustomID($injector) {
+        Mock.UpdateSurveyItemCustomID = $injector.get('UpdateSurveyItemCustomID');
+        return Mock.UpdateSurveyItemCustomID;
     }
 
     function mockItems() {

@@ -53,6 +53,16 @@ describe('SurveyItemManagerService', function() {
 
     });
 
+    describe('getItemListSize method', function() {
+
+        it('should call SurveyItemContainerService.getItemListSize method', function() {
+            service.getItemListSize();
+
+            expect(Mock.SurveyItemContainerService.getItemListSize).toHaveBeenCalled();
+        });
+
+    });
+
     describe('getItemByTemplateID method', function() {
 
         beforeEach(function() {
@@ -83,12 +93,62 @@ describe('SurveyItemManagerService', function() {
 
     });
 
-    describe('getItemListSize method', function() {
+    describe('getItemByCustomID method', function() {
 
-        it('should call SurveyItemContainerService.getItemListSize method', function() {
-            service.getItemListSize();
+        beforeEach(function() {
+            Mock.SurveyItemContainerService.manageItems([Mock.itemOne, Mock.itemTwo, Mock.itemThree]);
+        });
 
-            expect(Mock.SurveyItemContainerService.getItemListSize).toHaveBeenCalled();
+        it('should be defined in service', function() {
+            expect(service.getItemByCustomID).toBeDefined();
+        });
+
+        it('should call SurveyItemContainerService.getItemByCustomID method with origin', function() {
+            service.getItemByCustomID(Mock.itemOne.customID);
+
+            expect(Mock.SurveyItemContainerService.getItemByCustomID).toHaveBeenCalledWith(Mock.itemOne.customID);
+        });
+
+        it('should return a item when exists', function() {
+            var returnedValue = service.getItemByCustomID(Mock.itemOne.customID);
+
+            expect(returnedValue).toBeDefined();
+        });
+
+        it('should return undefined when navigation not exists', function() {
+            var returnedValue = service.getItemByCustomID('Q5');
+
+            expect(returnedValue).toBeUndefined();
+        });
+
+    });
+
+    describe('getItemByID method', function() {
+
+        beforeEach(function() {
+            Mock.SurveyItemContainerService.manageItems([Mock.itemOne, Mock.itemTwo, Mock.itemThree]);
+        });
+
+        it('should be defined in service', function() {
+            expect(service.getItemByID).toBeDefined();
+        });
+
+        it('should call SurveyItemContainerService.getItemByID method with origin', function() {
+            service.getItemByID('Q1');
+
+            expect(Mock.SurveyItemContainerService.getItemByID).toHaveBeenCalledWith('Q1');
+        });
+
+        it('should return a item when exists', function() {
+            var returnedValue = service.getItemByID('Q1');
+
+            expect(returnedValue).toBeDefined();
+        });
+
+        it('should return undefined when navigation not exists', function() {
+            var returnedValue = service.getItemByID('Q5');
+
+            expect(returnedValue).toBeUndefined();
         });
 
     });
@@ -157,6 +217,8 @@ describe('SurveyItemManagerService', function() {
         spyOn(Mock.SurveyItemContainerService, 'getItemList').and.callThrough();
         spyOn(Mock.SurveyItemContainerService, 'getItemListSize').and.callThrough();
         spyOn(Mock.SurveyItemContainerService, 'getItemByTemplateID').and.callThrough();
+        spyOn(Mock.SurveyItemContainerService, 'getItemByCustomID').and.callThrough();
+        spyOn(Mock.SurveyItemContainerService, 'getItemByID').and.callThrough();
 
         return Mock.SurveyItemContainerService;
     }

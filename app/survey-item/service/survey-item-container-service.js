@@ -14,12 +14,13 @@
         /* Public methods */
         self.init = init;
         self.manageItems = manageItems;
-        self.getItemByTemplateID = getItemByTemplateID;
-        self.getItemByCustomID = getItemByCustomID;
-        self.getItemByPosition = getItemByPosition;
-        self.getItemPosition = getItemPosition;
         self.getItemList = getItemList;
         self.getItemListSize = getItemListSize;
+        self.getItemByTemplateID = getItemByTemplateID;
+        self.getItemByCustomID = getItemByCustomID;
+        self.getItemByID = getItemByID;
+        self.getItemByPosition = getItemByPosition;
+        self.getItemPosition = getItemPosition;
         self.existsItem = existsItem;
         self.createItem = createItem;
         self.removeItem = removeItem;
@@ -56,6 +57,15 @@
             });
 
             return filter[0];
+        }
+
+        function getItemByID(id) {
+            var item = getItemByTemplateID(id);
+            if(item) {
+                return item;
+            } else {
+                return getItemByCustomID(id);
+            }
         }
 
         function getItemByPosition(position) {

@@ -56,7 +56,7 @@
         /* Public methods */
         self.getItemByTemplateID = getItemByTemplateID;
         self.getItemByCustomID = getItemByCustomID;
-        self.addItem = addItem;
+        self.getItemByID = getItemByID;
         self.addItem = addItem;
         self.removeItem = removeItem;
         self.updateItem = updateItem;
@@ -68,6 +68,10 @@
 
         function getItemByCustomID(customID) {
             return self.SurveyItemManager.getItemByCustomID(customID);
+        }
+
+        function getItemByID(id) {
+            return self.SurveyItemManager.getItemByID(id);
         }
 
         function addItem(type) {
