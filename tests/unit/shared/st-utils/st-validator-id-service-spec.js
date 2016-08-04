@@ -3,29 +3,19 @@ describe('ValidatorIDService', function() {
 
     beforeEach(function() {
         module('utils');
-    });
 
-    inject(function(_$injector_) {
-        mockSurvey(_$injector_);
+        inject(function(_$injector_) {
 
-        service = _$injector_.get('ValidatorIDService', {
-            SurveyItemFactory: mockSurveyItemFactory(_$injector_)
-        });
-    });
-
-    describe('validator id', function() {
-
-        it('is available', function() {
+            service = _$injector_.get('ValidatorIDService');
 
         });
     });
 
-    function mockSurvey($injector) {
-        Mock.survey = $injector.get('SurveyFactory').create(NAME, ACRONYM);
-    }
+    describe('isAvailable method', function() {
 
-    function mockSurveyItemFactory($injector) {
-        return $injector.get('SurveyItemFactory');
-    }
+        it('should return true when on the survey does not exists a item with a passed id', function() {
+            
+        });
+    });
 
 });

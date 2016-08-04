@@ -5,13 +5,14 @@
         .module('utils')
         .service('ValidatorIDService', ValidatorIDService);
 
-    function ValidatorIDService(SurveyItemFactory) {
+    function ValidatorIDService() {
         var self = this;
 
         self.isAvailable = isAvailable;
 
         function isAvailable(survey, id) {
-            return survey.SurveyItemManager.existsItem(id);
+            return !survey.existsItem(id);
         }
     }
+
 }());
