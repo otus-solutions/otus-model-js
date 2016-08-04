@@ -112,11 +112,11 @@
 
         /* Private methods */
         function findByTemplateID(item, templateID) {
-            return item.templateID === templateID;
+            return item.templateID.toLowerCase() === templateID.toLowerCase();
         }
 
         function findByCustomID(item, customID) {
-            return item.customID === customID;
+            return item.customID.toLowerCase() === customID.toLowerCase();
         }
     }
 

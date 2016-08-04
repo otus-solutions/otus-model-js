@@ -11,7 +11,7 @@
         self.isAvailable = isAvailable;
 
         function isAvailable(survey, id) {
-            return !survey.existsItem(id);
+            return survey.isAvailableID(id);
         }
     }
 

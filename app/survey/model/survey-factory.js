@@ -54,11 +54,12 @@
         self.SurveyItemManager.init();
 
         /* Public methods */
+        self.addItem = addItem;
+        self.removeItem = removeItem;
         self.getItemByTemplateID = getItemByTemplateID;
         self.getItemByCustomID = getItemByCustomID;
         self.getItemByID = getItemByID;
-        self.addItem = addItem;
-        self.removeItem = removeItem;
+        self.isAvailableID = isAvailableID;
         self.updateItem = updateItem;
         self.toJson = toJson;
 
@@ -72,6 +73,10 @@
 
         function getItemByID(id) {
             return self.SurveyItemManager.getItemByID(id);
+        }
+
+        function isAvailableID(id){
+            return !self.SurveyItemManager.existsItem(id);
         }
 
         function addItem(type) {

@@ -83,6 +83,12 @@ describe('SurveyItemContainerService', function() {
             expect(returnedItem.templateID).toEqual(Mock.itemOne.templateID);
         });
 
+        it('should return the item when exists ignoring the camelcase', function() {
+            var returnedItem = service.getItemByTemplateID(Mock.itemOne.templateID.toLowerCase());
+
+            expect(returnedItem.templateID).toEqual(Mock.itemOne.templateID);
+        });
+
         it('should return undefined when item not exists', function() {
             var returnedItem = service.getItemByTemplateID(INEXISTENT_TEMPLATE_ID);
 
@@ -99,6 +105,12 @@ describe('SurveyItemContainerService', function() {
 
         it('should return the item when exists', function() {
             var returnedItemCustomID = service.getItemByCustomID(Mock.itemOne.customID);
+
+            expect(returnedItemCustomID.customID).toEqual(Mock.itemOne.customID);
+        });
+
+        it('should return the item when exists ignoring camel case', function() {
+            var returnedItemCustomID = service.getItemByCustomID(Mock.itemOne.customID.toUpperCase());
 
             expect(returnedItemCustomID.customID).toEqual(Mock.itemOne.customID);
         });

@@ -5,6 +5,7 @@ describe('Survey', function() {
     var QUESTION_TYPE = 'IntegerQuestion';
     var Q1 = 'Q1';
     var Q2 = 'Q2';
+    var AVAILABLE_ID = 'AvailableID';
 
     beforeEach(function() {
         module('otusjs');
@@ -62,7 +63,7 @@ describe('Survey', function() {
         describe('removeItem method', function() {
 
             beforeEach(function() {
-                survey.addItem();
+                survey.addItem(QUESTION_TYPE);
             });
 
             it('should call SurveyItemManagerService.removeItem with new item ID', function() {
@@ -82,8 +83,8 @@ describe('Survey', function() {
         describe('getItemByTemplateID method', function() {
 
             beforeEach(function() {
-                survey.addItem();
-                survey.addItem();
+                survey.addItem(QUESTION_TYPE);
+                survey.addItem(QUESTION_TYPE);
             });
 
             it('should call SurveyItemManagerService.getItemByTemplateID with template id', function() {
@@ -96,8 +97,8 @@ describe('Survey', function() {
         describe('getItemByCustomID method', function() {
 
             beforeEach(function() {
-                survey.addItem();
-                survey.addItem();
+                survey.addItem(QUESTION_TYPE);
+                survey.addItem(QUESTION_TYPE);
             });
 
             it('should call SurveyItemManagerService.getItemByCustomID with template id', function() {
@@ -110,8 +111,8 @@ describe('Survey', function() {
         describe('getItemByID method', function() {
 
             beforeEach(function() {
-                survey.addItem();
-                survey.addItem();
+                survey.addItem(QUESTION_TYPE);
+                survey.addItem(QUESTION_TYPE);
             });
 
             it('should call SurveyItemManagerService.getItemByID with template id', function() {
@@ -121,6 +122,17 @@ describe('Survey', function() {
             });
         });
 
+        describe('isAvailableID method', function() {
+
+            it('should return true when passed id is not used', function() {
+                expect(survey.isAvailableID(AVAILABLE_ID)).toBe(true);
+            });
+
+            it('should return false when id is used', function() {
+                survey.addItem(QUESTION_TYPE);
+                expect(survey.isAvailableID('ACRONYM1')).toBe(false);
+            });
+        });
     });
 
     function mockSurveyIdentityFactory($injector) {
@@ -167,7 +179,7 @@ describe('Survey', function() {
     function mockSurveyItemManagerService($injector) {
         Mock.SurveyItemManagerService = $injector.get('SurveyItemManagerService');
 
-        spyOn(Mock.SurveyItemManagerService, 'addItem').and.returnValue(Mock.item);
+        spyOn(Mock.SurveyItemManagerService, 'addItem').and.callThrough();
         spyOn(Mock.SurveyItemManagerService, 'removeItem');
         spyOn(Mock.SurveyItemManagerService, 'getItemByTemplateID');
         spyOn(Mock.SurveyItemManagerService, 'getItemByCustomID');
