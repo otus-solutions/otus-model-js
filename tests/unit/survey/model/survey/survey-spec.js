@@ -3,6 +3,7 @@ describe('Survey', function() {
     var survey;
 
     var QUESTION_TYPE = 'IntegerQuestion';
+    var CHECKBOX_TYPE = 'CheckboxQuestion';
     var Q1 = 'Q1';
     var Q2 = 'Q2';
     var AVAILABLE_ID = 'AvailableID';
@@ -156,6 +157,15 @@ describe('Survey', function() {
             it('should return false when id is used', function() {
                 survey.addItem(QUESTION_TYPE);
                 expect(survey.isAvailableCustomID('ACRONYM1')).toBe(false);
+            });
+
+            it('should verify questions and custom options id', function() {
+                var IntegerQuestion = survey.addItem(QUESTION_TYPE);
+                var CheckboxQuestion = survey.addItem(CHECKBOX_TYPE);
+                CheckboxQuestion.createOption();
+                CheckboxQuestion.createOption();
+
+                expect(survey.isAvailableCustomID('ACRONYM2a')).toBe(false);
             });
         });
     });

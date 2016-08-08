@@ -21,6 +21,7 @@
         self.getItemByTemplateID = getItemByTemplateID;
         self.getItemByCustomID = getItemByCustomID;
         self.getItemByID = getItemByID;
+        self.getAllCustomOptionsID = getAllCustomOptionsID;
         self.addItem = addItem;
         self.removeItem = removeItem;
         self.existsItem = existsItem;
@@ -48,6 +49,19 @@
 
         function getItemByID(id) {
             return SurveyItemContainerService.getItemByID(id);
+        }
+
+        function getAllCustomOptionsID() {
+            var customOptionsID = [];
+            var checkboxQuestions = SurveyItemContainerService.getAllCheckboxQuestion();
+            if(checkboxQuestions.length > 0) {
+                checkboxQuestions.forEach(function(checkboxQuestion){
+                    checkboxQuestion.getAllCustomOptionsID().forEach(function(customOptionID){
+                        customOptionsID.push(customOptionID);
+                    });
+                });
+            }
+            return customOptionsID;
         }
 
         function addItem(itemType, templateIDPrefix) {

@@ -3,6 +3,7 @@ describe('SurveyItemManagerService', function() {
     var service;
 
     var QUESTION_TYPE = 'IntegerQuestion';
+    var CHECKBOX_TYPE = 'CheckboxQuestion';
     var TEMPLATE_ID_PREFIX = 'TPL';
     var CUSTOM_ID_PREFIX = 'TPL';
     var INEXISTENT_CUSTOM_ID = 'Q1';
@@ -153,6 +154,26 @@ describe('SurveyItemManagerService', function() {
 
     });
 
+    describe('getAllCustomOptionID method', function() {
+
+        beforeEach(function() {
+            Mock.SurveyItemContainerService.manageItems([Mock.itemFour, Mock.itemFive]);
+        });
+
+        it('should return a empty array if there are no options', function() {
+            expect(service.getAllCustomOptionsID()).toEqual([]);
+        });
+
+        it('should return all customOptionID of all Checkbox Questions', function(){
+            Mock.itemFour.createOption();
+            Mock.itemFour.createOption();
+            Mock.itemFive.createOption();
+            Mock.itemFive.createOption();
+            expect(service.getAllCustomOptionsID()).toEqual(['Q4a', 'Q4b', 'Q5a', 'Q5b']);
+        });
+
+    });
+
     describe('addItem method', function() {
 
         it('should call SurveyItemContainerService.createItem method with item type', function() {
@@ -206,6 +227,8 @@ describe('SurveyItemManagerService', function() {
         Mock.itemOne = $injector.get('SurveyItemFactory').create(QUESTION_TYPE, 'Q1');
         Mock.itemTwo = $injector.get('SurveyItemFactory').create(QUESTION_TYPE, 'Q2');
         Mock.itemThree = $injector.get('SurveyItemFactory').create(QUESTION_TYPE, 'Q3');
+        Mock.itemFour = $injector.get('SurveyItemFactory').create(CHECKBOX_TYPE, 'Q4');
+        Mock.itemFive = $injector.get('SurveyItemFactory').create(CHECKBOX_TYPE, 'Q5');
     }
 
     function mockSurveyItemContainerService($injector) {
@@ -222,5 +245,6 @@ describe('SurveyItemManagerService', function() {
 
         return Mock.SurveyItemContainerService;
     }
+
 
 });

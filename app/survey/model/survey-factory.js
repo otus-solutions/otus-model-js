@@ -81,7 +81,13 @@
         }
 
         function isAvailableCustomID(id){
-            return self.SurveyItemManager.getItemByCustomID(id) ? false : true;
+            var foundCustomOptionID = false;
+            self.SurveyItemManager.getAllCustomOptionsID().forEach(function(customOptionID){
+                if(customOptionID === id) {
+                    foundCustomOptionID = true;
+                }
+            });
+            return (self.SurveyItemManager.getItemByCustomID(id) || foundCustomOptionID) ? false : true;
         }
 
         function addItem(type) {

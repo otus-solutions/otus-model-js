@@ -53,6 +53,7 @@
         self.removeLastOption = removeLastOption;
         self.isQuestion = isQuestion;
         self.validators = validators;
+        self.getAllCustomOptionsID = getAllCustomOptionsID;
         self.toJson = toJson;
 
         function getOptionListSize() {
@@ -102,6 +103,14 @@
 
         function removeLastOption() {
             self.options.splice(-1, 1);
+        }
+
+        function getAllCustomOptionsID() {
+            var customOptionsID = [];
+            self.options.forEach(function(option){
+                customOptionsID.push(option.customOptionID);
+            });
+            return customOptionsID;
         }
 
         function toJson() {

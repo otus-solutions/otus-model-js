@@ -19,6 +19,7 @@
         self.getItemByTemplateID = getItemByTemplateID;
         self.getItemByCustomID = getItemByCustomID;
         self.getItemByID = getItemByID;
+        self.getAllCheckboxQuestion = getAllCheckboxQuestion;
         self.getItemByPosition = getItemByPosition;
         self.getItemPosition = getItemPosition;
         self.existsItem = existsItem;
@@ -66,6 +67,16 @@
             } else {
                 return getItemByCustomID(id);
             }
+        }
+
+        function getAllCheckboxQuestion() {
+            var occurences = [];
+            itemList.filter(function(item) {
+                if(item.objectType === "CheckboxQuestion") {
+                    occurences.push(item);
+                }
+            });
+            return occurences;
         }
 
         function getItemByPosition(position) {
