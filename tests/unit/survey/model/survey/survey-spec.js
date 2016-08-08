@@ -6,6 +6,7 @@ describe('Survey', function() {
     var Q1 = 'Q1';
     var Q2 = 'Q2';
     var AVAILABLE_ID = 'AvailableID';
+    var AVAILABLE_CUSTOM_ID = 'AvailableCustomID';
 
     beforeEach(function() {
         module('otusjs');
@@ -131,6 +132,30 @@ describe('Survey', function() {
             it('should return false when id is used', function() {
                 survey.addItem(QUESTION_TYPE);
                 expect(survey.isAvailableID('ACRONYM1')).toBe(false);
+            });
+        });
+
+        describe('isAvailableCustomID method', function() {
+
+            /**
+             *
+             * É quando alterar CK1 -> teste
+                                CK2 -> CK1
+             *
+             */
+             it('should return true if second id overwrite first id', function() {
+
+             });
+
+            it('should return true when passed id is not used', function() {
+                expect(survey.isAvailableCustomID(AVAILABLE_ID)).toBe(true);
+            });
+
+            fit('should return false when id is used', function() {
+                survey.addItem(QUESTION_TYPE);
+                console.log(survey.SurveyItemManager.getItemList());
+                console.log(survey.SurveyItemManager.getItemByCustomID('ACRONYM1'));
+                expect(survey.isAvailableCustomID('ACRONYM1')).toBe(false);
             });
         });
     });
