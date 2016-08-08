@@ -120,6 +120,23 @@ describe('CheckboxQuestion', function() {
 
     });
 
+    describe('getAllCustomOptionID', function() {
+
+        beforeEach(function() {
+            question.createOption();
+        });
+
+        it('should return all customOptionID with one option', function() {
+            expect(question.getAllCustomOptionsID()).toContain('TPL_IDa');
+        });
+
+        it('should return all customOptionID with two options', function() {
+            question.createOption();
+            expect(question.getAllCustomOptionsID()).toEqual(['TPL_IDa', 'TPL_IDb']);
+        });
+
+    })
+
     describe('toJson method', function() {
 
         it('should return a well formatted json based on CheckboxQuestion', function() {

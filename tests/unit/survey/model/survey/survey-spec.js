@@ -3,6 +3,7 @@ describe('Survey', function() {
     var survey;
 
     var QUESTION_TYPE = 'IntegerQuestion';
+    var CHECKBOX_TYPE = 'CheckboxQuestion';
     var Q1 = 'Q1';
     var Q2 = 'Q2';
     var AVAILABLE_ID = 'AvailableID';
@@ -22,7 +23,8 @@ describe('Survey', function() {
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
                 'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_),
                 'SurveyItemManagerService': mockSurveyItemManagerService(_$injector_),
-                'NavigationManagerService': mockNavigationManagerService(_$injector_)
+                'NavigationManagerService': mockNavigationManagerService(_$injector_),
+                'UpdateSurveyItemCustomID': mockUpdateSurveyItemCustomID(_$injector_)
             });
 
             mockJson();
@@ -84,6 +86,7 @@ describe('Survey', function() {
         describe('getItemByTemplateID method', function() {
 
             beforeEach(function() {
+                spyOn(Mock.SurveyItemManagerService, 'getItemByTemplateID');
                 survey.addItem(QUESTION_TYPE);
                 survey.addItem(QUESTION_TYPE);
             });
@@ -98,6 +101,8 @@ describe('Survey', function() {
         describe('getItemByCustomID method', function() {
 
             beforeEach(function() {
+                spyOn(Mock.SurveyItemManagerService, 'getItemByCustomID');
+
                 survey.addItem(QUESTION_TYPE);
                 survey.addItem(QUESTION_TYPE);
             });
@@ -137,25 +142,30 @@ describe('Survey', function() {
 
         describe('isAvailableCustomID method', function() {
 
-            /**
-             *
-             * É quando alterar CK1 -> teste
-                                CK2 -> CK1
-             *
-             */
-             it('should return true if second id overwrite first id', function() {
+             it('should return true if a customID of first item was changed', function() {
+                 var item1 = survey.addItem(QUESTION_TYPE); //ACRONYM1
+                 var item2 = survey.addItem(QUESTION_TYPE); //ACRONYM2
 
+                 Mock.UpdateSurveyItemCustomID.execute(item1, 'teste');
+                 expect(survey.isAvailableCustomID('ACRONYM1')).toBe(true);
              });
 
             it('should return true when passed id is not used', function() {
                 expect(survey.isAvailableCustomID(AVAILABLE_ID)).toBe(true);
             });
 
-            fit('should return false when id is used', function() {
+            it('should return false when id is used', function() {
                 survey.addItem(QUESTION_TYPE);
-                console.log(survey.SurveyItemManager.getItemList());
-                console.log(survey.SurveyItemManager.getItemByCustomID('ACRONYM1'));
                 expect(survey.isAvailableCustomID('ACRONYM1')).toBe(false);
+            });
+
+            it('should verify questions and custom options id', function() {
+                var IntegerQuestion = survey.addItem(QUESTION_TYPE);
+                var CheckboxQuestion = survey.addItem(CHECKBOX_TYPE);
+                CheckboxQuestion.createOption();
+                CheckboxQuestion.createOption();
+
+                expect(survey.isAvailableCustomID('ACRONYM2a')).toBe(false);
             });
         });
     });
@@ -206,8 +216,6 @@ describe('Survey', function() {
 
         spyOn(Mock.SurveyItemManagerService, 'addItem').and.callThrough();
         spyOn(Mock.SurveyItemManagerService, 'removeItem');
-        spyOn(Mock.SurveyItemManagerService, 'getItemByTemplateID');
-        spyOn(Mock.SurveyItemManagerService, 'getItemByCustomID');
         spyOn(Mock.SurveyItemManagerService, 'getItemByID');
 
         return Mock.SurveyItemManagerService;
@@ -252,6 +260,10 @@ describe('Survey', function() {
 
     function mockQuestion($injector) {
         Mock.item = $injector.get('SurveyItemFactory').create(QUESTION_TYPE, Q1);
+    }
+
+    function mockUpdateSurveyItemCustomID($injector) {
+        Mock.UpdateSurveyItemCustomID = $injector.get('UpdateSurveyItemCustomID');
     }
 
 });

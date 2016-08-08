@@ -160,6 +160,20 @@ describe('SurveyItemContainerService', function() {
 
     });
 
+    describe('getAllCheckboxQuestion method', function() {
+
+        beforeEach(function() {
+            mockCheckboxQuestions();
+            mockCheckboxQuestionToItemToManage();
+            service.manageItems(Mock.checkboxQuestionToManage);
+        });
+
+        it('should return all Checkbox question', function() {
+            expect(service.getAllCheckboxQuestion()).toEqual(Mock.checkboxQuestionToManage);
+        });
+
+    });
+
     describe('getItemByPosition method', function() {
 
         beforeEach(function() {
@@ -322,6 +336,21 @@ describe('SurveyItemContainerService', function() {
         Mock.itemsToManage.push(Mock.itemTwo);
         Mock.itemsToManage.push(Mock.itemThree);
         Mock.itemsToManage.push(Mock.itemFour);
+    }
+
+    function mockCheckboxQuestions() {
+        Mock.CheckboxQuestion1 = Mock.SurveyItemFactory.create('CheckboxQuestion', 'CK1');
+        Mock.CheckboxQuestion2 = Mock.SurveyItemFactory.create('CheckboxQuestion', 'CK2');
+        Mock.CheckboxQuestion3 = Mock.SurveyItemFactory.create('CheckboxQuestion', 'CK3');
+        Mock.CheckboxQuestion4 = Mock.SurveyItemFactory.create('CheckboxQuestion', 'CK4');
+    }
+
+    function mockCheckboxQuestionToItemToManage() {
+        Mock.checkboxQuestionToManage = [];
+        Mock.checkboxQuestionToManage.push(Mock.CheckboxQuestion1);
+        Mock.checkboxQuestionToManage.push(Mock.CheckboxQuestion2);
+        Mock.checkboxQuestionToManage.push(Mock.CheckboxQuestion3);
+        Mock.checkboxQuestionToManage.push(Mock.CheckboxQuestion4);
     }
 
 });
