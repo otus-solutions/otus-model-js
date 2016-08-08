@@ -60,6 +60,7 @@
         self.getItemByCustomID = getItemByCustomID;
         self.getItemByID = getItemByID;
         self.isAvailableID = isAvailableID;
+        self.isAvailableCustomID = isAvailableCustomID;
         self.updateItem = updateItem;
         self.toJson = toJson;
 
@@ -77,6 +78,10 @@
 
         function isAvailableID(id){
             return !self.SurveyItemManager.existsItem(id);
+        }
+
+        function isAvailableCustomID(id){
+            return self.SurveyItemManager.getItemByCustomID(id) ? false : true;
         }
 
         function addItem(type) {
