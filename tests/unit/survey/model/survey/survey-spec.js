@@ -142,13 +142,13 @@ describe('Survey', function() {
 
         describe('isAvailableCustomID method', function() {
 
-             it('should return true if a customID of first item was changed', function() {
-                 var item1 = survey.addItem(QUESTION_TYPE); //ACRONYM1
-                 var item2 = survey.addItem(QUESTION_TYPE); //ACRONYM2
+            it('should return true if a customID of first item was changed', function() {
+                var item1 = survey.addItem(QUESTION_TYPE); //ACRONYM1
+                var item2 = survey.addItem(QUESTION_TYPE); //ACRONYM2
 
-                 Mock.UpdateSurveyItemCustomID.execute(item1, 'teste');
-                 expect(survey.isAvailableCustomID('ACRONYM1')).toBe(true);
-             });
+                Mock.UpdateSurveyItemCustomID.execute(item1, 'teste');
+                expect(survey.isAvailableCustomID('ACRONYM1')).toBe(true);
+            });
 
             it('should return true when passed id is not used', function() {
                 expect(survey.isAvailableCustomID(AVAILABLE_ID)).toBe(true);

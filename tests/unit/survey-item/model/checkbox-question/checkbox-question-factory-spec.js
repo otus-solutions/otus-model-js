@@ -6,7 +6,7 @@ describe('CheckboxQuestionFactory', function() {
         module('otusjs');
 
         inject(function(_$injector_) {
-            mockQuestion(_$injector_);
+        mockQuestion(_$injector_);
 
             factory = _$injector_.get('CheckboxQuestionFactory');
         });

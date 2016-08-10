@@ -6,7 +6,7 @@ describe('SurveyItemManagerService', function() {
     var CHECKBOX_TYPE = 'CheckboxQuestion';
     var TEMPLATE_ID_PREFIX = 'TPL';
     var CUSTOM_ID_PREFIX = 'TPL';
-    var INEXISTENT_CUSTOM_ID = 'Q1';
+    var INEXISTENT_CUSTOM_ID = 'INEXISTENT_CUSTOM_ID';
 
     beforeEach(function() {
         module('otusjs');
@@ -164,7 +164,7 @@ describe('SurveyItemManagerService', function() {
             expect(service.getAllCustomOptionsID()).toEqual([]);
         });
 
-        it('should return all customOptionID of all Checkbox Questions', function(){
+        it('should return all customOptionID of all Checkbox Questions', function() {
             Mock.itemFour.createOption();
             Mock.itemFour.createOption();
             Mock.itemFive.createOption();
@@ -194,6 +194,29 @@ describe('SurveyItemManagerService', function() {
             expect(item).toBeDefined();
         });
 
+        describe('in case of already exists a item with a templateID', function() {
+
+            it('should increment correctly - the added item must have the templateID Q2', function() {
+                Mock.SurveyItemContainerService.manageItems([Mock.itemOne]);
+                var item = service.addItem(QUESTION_TYPE, 'Q');
+                expect(item.templateID).not.toBe('Q1');
+                expect(item.templateID).toBe('Q2');
+            });
+
+            it('should increment correctly - the added item must have the templateID Q3', function() {
+                Mock.SurveyItemContainerService.manageItems([Mock.itemOne, Mock.itemTwo]);
+                var item = service.addItem(QUESTION_TYPE, 'Q');
+                expect(item.templateID).toBe('Q3');
+            });
+
+            it('should increment correctly - the added item must have the templateID Q4', function() {
+                Mock.SurveyItemContainerService.manageItems([Mock.itemOne, Mock.itemTwo, Mock.itemThree]);
+                var item = service.addItem(QUESTION_TYPE, 'Q');
+                expect(item.templateID).toBe('Q4');
+            });
+
+        });
+
     });
 
     describe('removeItem method', function() {
@@ -219,6 +242,27 @@ describe('SurveyItemManagerService', function() {
 
         it('should return false when item not exists', function() {
             expect(service.existsItem(INEXISTENT_CUSTOM_ID)).toBe(false);
+        });
+
+    });
+
+    describe('isAvailableCustomID method', function() {
+
+        beforeEach(function() {
+            Mock.SurveyItemContainerService.manageItems([Mock.itemFour, Mock.itemFive]);
+        });
+
+        it("should return true if does not exists a item or a checkboxAnswerOption with a passed id", function() {
+            expect(service.isAvailableCustomID('NOT_USED_ID')).toBe(true);
+        });
+
+        it("should return false if exists a item", function() {
+            expect(service.isAvailableCustomID('Q4')).toBe(false);
+        });
+
+        it("should return false if exists a checkboxAnswerOption with a passed id", function() {
+            Mock.itemFive.createOption();
+            expect(service.isAvailableCustomID('Q5a')).toBe(false);
         });
 
     });

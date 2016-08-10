@@ -25,6 +25,7 @@
         self.addItem = addItem;
         self.removeItem = removeItem;
         self.existsItem = existsItem;
+        self.isAvailableCustomID = isAvailableCustomID;
 
         function init() {
             SurveyItemContainerService.init();
@@ -65,7 +66,10 @@
         }
 
         function addItem(itemType, templateIDPrefix) {
-            var templateID = templateIDPrefix + getNextIncrementalGenerator();
+            var templateID;
+            do {
+                templateID = templateIDPrefix + getNextIncrementalGenerator();
+            } while (!isAvailableCustomID(templateID));
             var item = SurveyItemContainerService.createItem(itemType, templateID);
             return item;
         }
@@ -82,6 +86,15 @@
             return SurveyItemContainerService.existsItem(id);
         }
 
+        function isAvailableCustomID(id) {
+            var foundCustomOptionID = false;
+            getAllCustomOptionsID().forEach(function(customOptionID){
+                if(customOptionID === id) {
+                    foundCustomOptionID = true;
+                }
+            });
+            return (getItemByCustomID(id) || foundCustomOptionID) ? false : true;
+        }
     }
 
 }());

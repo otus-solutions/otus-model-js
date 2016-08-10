@@ -45,9 +45,11 @@
         self.options = [];
 
         /* Public methods */
+        self.getOptionList = getOptionList;
         self.getOptionListSize = getOptionListSize;
         self.getOptionByValue = getOptionByValue;
         self.getOptionByOptionID = getOptionByOptionID;
+        self.getOptionByCustomOptionID = getOptionByCustomOptionID;
         self.createOption = createOption;
         self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
@@ -55,6 +57,10 @@
         self.validators = validators;
         self.getAllCustomOptionsID = getAllCustomOptionsID;
         self.toJson = toJson;
+
+        function getOptionList() {
+            return self.options;
+        }
 
         function getOptionListSize() {
             return self.options.length;
@@ -64,6 +70,16 @@
             var aux = null;
             for (var i = 0; i < self.options.length; i++) {
                 if (self.options[i].optionID === optionID) {
+                    aux = self.options[i];
+                }
+            }
+            return aux;
+        }
+
+        function getOptionByCustomOptionID(customOptionID) {
+            var aux = null;
+            for (var i = 0; i < self.options.length; i++) {
+                if (self.options[i].customOptionID === customOptionID) {
                     aux = self.options[i];
                 }
             }

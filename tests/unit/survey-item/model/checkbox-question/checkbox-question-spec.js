@@ -18,6 +18,19 @@ describe('CheckboxQuestion', function() {
         });
     });
 
+    describe('getOptionList method', function() {
+
+        it('should return the option list', function() {
+            var optionList = [];
+            optionList.push(question.createOption());
+            optionList.push(question.createOption());
+            optionList.push(question.createOption());
+            optionList.push(question.createOption());
+            expect(question.getOptionList()).toEqual(optionList);
+        });
+
+    });
+
     describe('getOptionListSize method', function() {
 
         it('should return the size of option list', function() {
@@ -46,7 +59,7 @@ describe('CheckboxQuestion', function() {
             expect(Mock.CheckboxAnswerOptionFactory.create).toHaveBeenCalled();
         });
 
-        it('should add a new metadata answer option in group', function() {
+        it('should add a new option in group', function() {
             expect(question.getOptionListSize()).toBe(1);
         });
 
@@ -54,15 +67,26 @@ describe('CheckboxQuestion', function() {
           expect(question.getOptionByOptionID('TPL_IDa').optionID).toBe('TPL_IDa');
         });
 
+        it('should create a new option with customOptionID TPL_IDa', function() {
+          expect(question.getOptionByOptionID('TPL_IDa').customOptionID).toBe('TPL_IDa');
+        });
+
         it('should create a new option with optionID TPL_IDb', function() {
           question.createOption();
           expect(question.getOptionByOptionID('TPL_IDb').optionID).toBe('TPL_IDb');
         });
 
+        it('should create a new option with customOptionID TPL_IDb', function() {
+          question.createOption();
+          expect(question.getOptionByOptionID('TPL_IDb').customOptionID).toBe('TPL_IDb');
+        });
+
     });
 
     describe('getOptionByOptionID method', function() {
+
         var createdOption;
+
         beforeEach(function() {
             createdOption = question.createOption();
         });
@@ -73,6 +97,24 @@ describe('CheckboxQuestion', function() {
 
         it('should return null if id is not found', function() {
           expect(question.getOptionByOptionID('ID_NOT_FOUND')).toBe(null);
+        });
+
+    });
+
+    describe('getOptionByCustomOptionID method', function() {
+
+        var createdOption;
+
+        beforeEach(function() {
+            createdOption = question.createOption();
+        });
+
+        it('should get a object option by id - TPL_IDa', function() {
+          expect(question.getOptionByCustomOptionID('TPL_IDa')).toBe(createdOption);
+        });
+
+        it('should return null if id is not found', function() {
+          expect(question.getOptionByCustomOptionID('ID_NOT_FOUND')).toBe(null);
         });
 
     });
@@ -135,7 +177,7 @@ describe('CheckboxQuestion', function() {
             expect(question.getAllCustomOptionsID()).toEqual(['TPL_IDa', 'TPL_IDb']);
         });
 
-    })
+    });
 
     describe('toJson method', function() {
 
