@@ -1018,6 +1018,26 @@
     'use strict';
 
     angular
+        .module('otusjs.surveyItem')
+        .service('UpdateSurveyItemCustomID', UpdateSurveyItemCustomID);
+
+    function UpdateSurveyItemCustomID() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, id) {
+            // it needs a service to validate if is a valid or available id
+            item.customID = id;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.validation')
         .service('AddFillingRulesService', AddFillingRulesService);
 
@@ -1890,15 +1910,34 @@
         self.SurveyItemManager.init();
 
         /* Public methods */
-        self.getItemByTemplateID = getItemByTemplateID;
-        self.addItem = addItem;
         self.addItem = addItem;
         self.removeItem = removeItem;
+        self.getItemByTemplateID = getItemByTemplateID;
+        self.getItemByCustomID = getItemByCustomID;
+        self.getItemByID = getItemByID;
+        self.isAvailableID = isAvailableID;
+        self.isAvailableCustomID = isAvailableCustomID;
         self.updateItem = updateItem;
         self.toJson = toJson;
 
         function getItemByTemplateID(templateID) {
             return self.SurveyItemManager.getItemByTemplateID(templateID);
+        }
+
+        function getItemByCustomID(customID) {
+            return self.SurveyItemManager.getItemByCustomID(customID);
+        }
+
+        function getItemByID(id) {
+            return self.SurveyItemManager.getItemByID(id);
+        }
+
+        function isAvailableID(id){
+            return !self.SurveyItemManager.existsItem(id);
+        }
+
+        function isAvailableCustomID(id){
+            return self.SurveyItemManager.isAvailableCustomID(id);
         }
 
         function addItem(type) {
@@ -2139,11 +2178,14 @@
         /* Public methods */
         self.init = init;
         self.manageItems = manageItems;
-        self.getItemByTemplateID = getItemByTemplateID;
-        self.getItemByPosition = getItemByPosition;
-        self.getItemPosition = getItemPosition;
         self.getItemList = getItemList;
         self.getItemListSize = getItemListSize;
+        self.getItemByTemplateID = getItemByTemplateID;
+        self.getItemByCustomID = getItemByCustomID;
+        self.getItemByID = getItemByID;
+        self.getAllCheckboxQuestion = getAllCheckboxQuestion;
+        self.getItemByPosition = getItemByPosition;
+        self.getItemPosition = getItemPosition;
         self.existsItem = existsItem;
         self.createItem = createItem;
         self.removeItem = removeItem;
@@ -2174,6 +2216,33 @@
             return filter[0];
         }
 
+        function getItemByCustomID(customID) {
+            var filter = itemList.filter(function(item) {
+                return findByCustomID(item, customID);
+            });
+
+            return filter[0];
+        }
+
+        function getItemByID(id) {
+            var item = getItemByTemplateID(id);
+            if(item) {
+                return item;
+            } else {
+                return getItemByCustomID(id);
+            }
+        }
+
+        function getAllCheckboxQuestion() {
+            var occurences = [];
+            itemList.filter(function(item) {
+                if(item.objectType === "CheckboxQuestion") {
+                    occurences.push(item);
+                }
+            });
+            return occurences;
+        }
+
         function getItemByPosition(position) {
             return itemList[position];
         }
@@ -2187,8 +2256,8 @@
             }
         }
 
-        function existsItem(templateID) {
-            return (getItemByTemplateID(templateID)) ? true : false;
+        function existsItem(id) {
+            return (getItemByTemplateID(id) || getItemByCustomID(id)) ? true : false;
         }
 
         function createItem(itemType, templateID) {
@@ -2218,7 +2287,11 @@
 
         /* Private methods */
         function findByTemplateID(item, templateID) {
-            return item.templateID === templateID;
+            return item.templateID.toLowerCase() === templateID.toLowerCase();
+        }
+
+        function findByCustomID(item, customID) {
+            return item.customID.toLowerCase() === customID.toLowerCase();
         }
     }
 
@@ -2245,8 +2318,13 @@
         self.getItemList = getItemList;
         self.getItemListSize = getItemListSize;
         self.getItemByTemplateID = getItemByTemplateID;
+        self.getItemByCustomID = getItemByCustomID;
+        self.getItemByID = getItemByID;
+        self.getAllCustomOptionsID = getAllCustomOptionsID;
         self.addItem = addItem;
         self.removeItem = removeItem;
+        self.existsItem = existsItem;
+        self.isAvailableCustomID = isAvailableCustomID;
 
         function init() {
             SurveyItemContainerService.init();
@@ -2265,8 +2343,32 @@
             return SurveyItemContainerService.getItemByTemplateID(templateID);
         }
 
+        function getItemByCustomID(customID) {
+            return SurveyItemContainerService.getItemByCustomID(customID);
+        }
+
+        function getItemByID(id) {
+            return SurveyItemContainerService.getItemByID(id);
+        }
+
+        function getAllCustomOptionsID() {
+            var customOptionsID = [];
+            var checkboxQuestions = SurveyItemContainerService.getAllCheckboxQuestion();
+            if(checkboxQuestions.length > 0) {
+                checkboxQuestions.forEach(function(checkboxQuestion){
+                    checkboxQuestion.getAllCustomOptionsID().forEach(function(customOptionID){
+                        customOptionsID.push(customOptionID);
+                    });
+                });
+            }
+            return customOptionsID;
+        }
+
         function addItem(itemType, templateIDPrefix) {
-            var templateID = templateIDPrefix + getNextIncrementalGenerator();
+            var templateID;
+            do {
+                templateID = templateIDPrefix + getNextIncrementalGenerator();
+            } while (!isAvailableCustomID(templateID));
             var item = SurveyItemContainerService.createItem(itemType, templateID);
             return item;
         }
@@ -2279,6 +2381,19 @@
             return ++incrementalIDValue;
         }
 
+        function existsItem(id) {
+            return SurveyItemContainerService.existsItem(id);
+        }
+
+        function isAvailableCustomID(id) {
+            var foundCustomOptionID = false;
+            getAllCustomOptionsID().forEach(function(customOptionID){
+                if(customOptionID === id) {
+                    foundCustomOptionID = true;
+                }
+            });
+            return (getItemByCustomID(id) || foundCustomOptionID) ? false : true;
+        }
     }
 
 }());
@@ -2464,6 +2579,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'ImageItem';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'String';
         self.url = '';
         self.footer = {
@@ -2486,6 +2602,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.url = self.url;
             json.footer = self.footer;
@@ -2524,6 +2641,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'TextItem';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'String';
         self.value = {
             ptBR: LabelFactory.create(),
@@ -2545,6 +2663,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.value = self.value;
 
@@ -2642,6 +2761,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'CalendarQuestion';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'LocalDate';
         self.label = {
             ptBR: LabelFactory.create(),
@@ -2679,10 +2799,83 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
             json.fillingRules = self.fillingRules;
+
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.surveyItem')
+        .factory('CheckboxAnswerOptionFactory', CheckboxAnswerOptionFactory);
+
+    CheckboxAnswerOptionFactory.$inject = ['LabelFactory'];
+
+    function CheckboxAnswerOptionFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+        self.createWithData = createWithData;
+
+        function create(optionID) {
+            return new CheckboxAnswerOption(optionID, LabelFactory);
+        }
+
+        function createWithData(checkboxAnswerOptionJSON) {
+            var parsedJson = JSON.parse(checkboxAnswerOptionJSON);
+            var CheckboxAnswerOptionObject = new CheckboxAnswerOption(parsedJson.optionID, LabelFactory);
+
+            CheckboxAnswerOptionObject.optionID = parsedJson.optionID;
+            CheckboxAnswerOptionObject.customOptionID = parsedJson.customOptionID;
+            CheckboxAnswerOptionObject.label = parsedJson.label;
+
+            return CheckboxAnswerOptionObject;
+        }
+
+        return self;
+    }
+
+    function CheckboxAnswerOption(optionID, LabelFactory) {
+        var self = this;
+
+        self.extents = 'StudioObject';
+        self.objectType = 'CheckboxAnswerOption';
+        self.optionID = optionID;
+        self.customOptionID = optionID;
+        self.dataType = 'Boolean';
+        self.label = {
+            ptBR: LabelFactory.create(),
+            enUS: LabelFactory.create(),
+            esES: LabelFactory.create()
+        };
+
+        /* Public methods */
+        self.toJson = toJson;
+        self.setCustomOptionID = setCustomOptionID;
+
+        function setCustomOptionID(id) {
+            self.customOptionID = id;
+        }
+
+        function toJson() {
+            var json = {};
+
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.optionID = self.optionID;
+            json.customOptionID = self.customOptionID;
+            json.dataType = self.dataType;
+            json.label = self.label;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
@@ -2700,30 +2893,31 @@
     CheckboxQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'AnswerOptionFactory',
+        'CheckboxAnswerOptionFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
+    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory);
+            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
+    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
         self.objectType = 'CheckboxQuestion';
         self.templateID = templateID;
-        self.dataType = 'Integer';
+        self.customID = templateID;
+        self.dataType = 'Array';
         self.label = {
             ptBR: LabelFactory.create(),
             enUS: LabelFactory.create(),
@@ -2735,17 +2929,46 @@
         self.options = [];
 
         /* Public methods */
+        self.getOptionList = getOptionList;
         self.getOptionListSize = getOptionListSize;
         self.getOptionByValue = getOptionByValue;
+        self.getOptionByOptionID = getOptionByOptionID;
+        self.getOptionByCustomOptionID = getOptionByCustomOptionID;
         self.createOption = createOption;
+        self.loadJsonOption = loadJsonOption;
         self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
         self.isQuestion = isQuestion;
         self.validators = validators;
+        self.getAllCustomOptionsID = getAllCustomOptionsID;
         self.toJson = toJson;
+
+        function getOptionList() {
+            return self.options;
+        }
 
         function getOptionListSize() {
             return self.options.length;
+        }
+
+        function getOptionByOptionID(optionID) {
+            var aux = null;
+            for (var i = 0; i < self.options.length; i++) {
+                if (self.options[i].optionID === optionID) {
+                    aux = self.options[i];
+                }
+            }
+            return aux;
+        }
+
+        function getOptionByCustomOptionID(customOptionID) {
+            var aux = null;
+            for (var i = 0; i < self.options.length; i++) {
+                if (self.options[i].customOptionID === customOptionID) {
+                    aux = self.options[i];
+                }
+            }
+            return aux;
         }
 
         function getOptionByValue(value) {
@@ -2764,8 +2987,14 @@
 
         }
 
-        function createOption() {
-            var option = AnswerOptionFactory.create(self.options.length + 1);
+        function createOption(id) {
+            var option = CheckboxAnswerOptionFactory.create(id);
+            self.options.push(option);
+            return option;
+        }
+
+        function loadJsonOption(checkboxAnswerOptionJSON) {
+            var option = CheckboxAnswerOptionFactory.createWithData(checkboxAnswerOptionJSON);
             self.options.push(option);
             return option;
         }
@@ -2779,12 +3008,21 @@
             self.options.splice(-1, 1);
         }
 
+        function getAllCustomOptionsID() {
+            var customOptionsID = [];
+            self.options.forEach(function(option){
+                customOptionsID.push(option.customOptionID);
+            });
+            return customOptionsID;
+        }
+
         function toJson() {
             var json = {};
 
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.options = self.options;
@@ -2835,6 +3073,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'DecimalQuestion';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'Decimal';
         self.label = {
             ptBR: LabelFactory.create(),
@@ -2877,6 +3116,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
@@ -2921,6 +3161,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'EmailQuestion';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'String';
         self.label = {
             ptBR: LabelFactory.create(),
@@ -2952,6 +3193,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
@@ -2997,6 +3239,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'IntegerQuestion';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'Integer';
         self.label = {
             ptBR: LabelFactory.create(),
@@ -3038,6 +3281,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
@@ -3083,6 +3327,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'PhoneQuestion';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'Integer';
         self.label = {
             ptBR: LabelFactory.create(),
@@ -3115,6 +3360,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
@@ -3161,6 +3407,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'SingleSelectionQuestion';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'Integer';
         self.label = {
             ptBR: LabelFactory.create(),
@@ -3221,6 +3468,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.options = self.options;
@@ -3271,6 +3519,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'TextQuestion';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'String';
         self.label = {
             ptBR: LabelFactory.create(),
@@ -3308,6 +3557,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
@@ -3352,6 +3602,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'TimeQuestion';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'LocalTime';
         self.label = {
             ptBR: LabelFactory.create(),
@@ -3386,6 +3637,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.metadata = self.metadata;
