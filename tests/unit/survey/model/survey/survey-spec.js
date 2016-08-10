@@ -162,8 +162,8 @@ describe('Survey', function() {
             it('should verify questions and custom options id', function() {
                 var IntegerQuestion = survey.addItem(QUESTION_TYPE);
                 var CheckboxQuestion = survey.addItem(CHECKBOX_TYPE);
-                CheckboxQuestion.createOption();
-                CheckboxQuestion.createOption();
+                CheckboxQuestion.createOption('ACRONYM2a');
+                CheckboxQuestion.createOption('ACRONYM2b');
 
                 expect(survey.isAvailableCustomID('ACRONYM2a')).toBe(false);
             });

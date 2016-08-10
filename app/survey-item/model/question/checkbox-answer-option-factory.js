@@ -12,9 +12,21 @@
 
         /* Public interface */
         self.create = create;
+        self.createWithData = createWithData;
 
         function create(optionID) {
             return new CheckboxAnswerOption(optionID, LabelFactory);
+        }
+
+        function createWithData(checkboxAnswerOptionJSON) {
+            var parsedJson = JSON.parse(checkboxAnswerOptionJSON);
+            var CheckboxAnswerOptionObject = new CheckboxAnswerOption(parsedJson.optionID, LabelFactory);
+
+            CheckboxAnswerOptionObject.optionID = parsedJson.optionID;
+            CheckboxAnswerOptionObject.customOptionID = parsedJson.customOptionID;
+            CheckboxAnswerOptionObject.label = parsedJson.label;
+
+            return CheckboxAnswerOptionObject;
         }
 
         return self;

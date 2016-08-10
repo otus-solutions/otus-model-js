@@ -22,10 +22,10 @@ describe('CheckboxQuestion', function() {
 
         it('should return the option list', function() {
             var optionList = [];
-            optionList.push(question.createOption());
-            optionList.push(question.createOption());
-            optionList.push(question.createOption());
-            optionList.push(question.createOption());
+            optionList.push(question.createOption('TPL_IDa'));
+            optionList.push(question.createOption('TPL_IDb'));
+            optionList.push(question.createOption('TPL_IDc'));
+            optionList.push(question.createOption('TPL_IDd'));
             expect(question.getOptionList()).toEqual(optionList);
         });
 
@@ -34,13 +34,13 @@ describe('CheckboxQuestion', function() {
     describe('getOptionListSize method', function() {
 
         it('should return the size of option list', function() {
-            question.createOption();
+            question.createOption('TPL_IDa');
             expect(question.getOptionListSize()).toBe(1);
 
-            question.createOption();
+            question.createOption('TPL_IDb');
             expect(question.getOptionListSize()).toBe(2);
 
-            question.createOption();
+            question.createOption('TPL_IDc');
             expect(question.getOptionListSize()).toBe(3);
 
             question.removeOption(2);
@@ -52,7 +52,7 @@ describe('CheckboxQuestion', function() {
     describe('createOption method', function() {
 
         beforeEach(function() {
-            question.createOption();
+            question.createOption('TPL_IDa');
         });
 
         it('should call CheckboxAnswerOptionFactory.create', function() {
@@ -71,14 +71,31 @@ describe('CheckboxQuestion', function() {
           expect(question.getOptionByOptionID('TPL_IDa').customOptionID).toBe('TPL_IDa');
         });
 
-        it('should create a new option with optionID TPL_IDb', function() {
-          question.createOption();
-          expect(question.getOptionByOptionID('TPL_IDb').optionID).toBe('TPL_IDb');
+    });
+
+    describe('loadJsonOption method', function() {
+
+        beforeEach(function() {
+            var option = Mock.CheckboxAnswerOptionFactory.create('TPL_IDa');
+            var optionJSON = option.toJson();
+            question.loadJsonOption(optionJSON);
+
         });
 
-        it('should create a new option with customOptionID TPL_IDb', function() {
-          question.createOption();
-          expect(question.getOptionByOptionID('TPL_IDb').customOptionID).toBe('TPL_IDb');
+        it('should call CheckboxAnswerOptionFactory.createWithData', function() {
+            expect(Mock.CheckboxAnswerOptionFactory.createWithData).toHaveBeenCalled();
+        });
+
+        it('should add a new option in group', function() {
+            expect(question.getOptionListSize()).toBe(1);
+        });
+
+        it('should create a new option with optionID TPL_IDa', function() {
+          expect(question.getOptionByOptionID('TPL_IDa').optionID).toBe('TPL_IDa');
+        });
+
+        it('should create a new option with customOptionID TPL_IDa', function() {
+          expect(question.getOptionByOptionID('TPL_IDa').customOptionID).toBe('TPL_IDa');
         });
 
     });
@@ -88,7 +105,7 @@ describe('CheckboxQuestion', function() {
         var createdOption;
 
         beforeEach(function() {
-            createdOption = question.createOption();
+            createdOption = question.createOption('TPL_IDa');
         });
 
         it('should get a object option by id - TPL_IDa', function() {
@@ -106,7 +123,7 @@ describe('CheckboxQuestion', function() {
         var createdOption;
 
         beforeEach(function() {
-            createdOption = question.createOption();
+            createdOption = question.createOption('TPL_IDa');
         });
 
         it('should get a object option by id - TPL_IDa', function() {
@@ -122,10 +139,10 @@ describe('CheckboxQuestion', function() {
     describe('removeOption method', function() {
 
         beforeEach(function() {
-            question.createOption();
-            question.createOption();
-            question.createOption();
-            question.createOption();
+            question.createOption('TPL_IDa');
+            question.createOption('TPL_IDb');
+            question.createOption('TPL_IDc');
+            question.createOption('TPL_IDd');
         });
 
         it('should reomve an option by value from option list', function() {
@@ -147,10 +164,10 @@ describe('CheckboxQuestion', function() {
     describe('removeLastOption method', function() {
 
         beforeEach(function() {
-            question.createOption();
-            question.createOption();
-            question.createOption();
-            question.createOption();
+            question.createOption('TPL_IDa');
+            question.createOption('TPL_IDb');
+            question.createOption('TPL_IDc');
+            question.createOption('TPL_IDd');
         });
 
         it('should reomve the last option from option list', function() {
@@ -165,7 +182,7 @@ describe('CheckboxQuestion', function() {
     describe('getAllCustomOptionID', function() {
 
         beforeEach(function() {
-            question.createOption();
+            question.createOption('TPL_IDa');
         });
 
         it('should return all customOptionID with one option', function() {
@@ -173,7 +190,7 @@ describe('CheckboxQuestion', function() {
         });
 
         it('should return all customOptionID with two options', function() {
-            question.createOption();
+            question.createOption('TPL_IDb');
             expect(question.getAllCustomOptionsID()).toEqual(['TPL_IDa', 'TPL_IDb']);
         });
 
@@ -207,6 +224,7 @@ describe('CheckboxQuestion', function() {
         Mock.CheckboxAnswerOptionFactory = $injector.get('CheckboxAnswerOptionFactory');
 
         spyOn(Mock.CheckboxAnswerOptionFactory, 'create').and.callThrough();
+        spyOn(Mock.CheckboxAnswerOptionFactory, 'createWithData').and.callThrough();
 
         return Mock.CheckboxAnswerOptionFactory;
     }

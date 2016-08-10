@@ -165,10 +165,10 @@ describe('SurveyItemManagerService', function() {
         });
 
         it('should return all customOptionID of all Checkbox Questions', function() {
-            Mock.itemFour.createOption();
-            Mock.itemFour.createOption();
-            Mock.itemFive.createOption();
-            Mock.itemFive.createOption();
+            Mock.itemFour.createOption('Q4a');
+            Mock.itemFour.createOption('Q4b');
+            Mock.itemFive.createOption('Q5a');
+            Mock.itemFive.createOption('Q5b');
             expect(service.getAllCustomOptionsID()).toEqual(['Q4a', 'Q4b', 'Q5a', 'Q5b']);
         });
 
@@ -261,7 +261,7 @@ describe('SurveyItemManagerService', function() {
         });
 
         it("should return false if exists a checkboxAnswerOption with a passed id", function() {
-            Mock.itemFive.createOption();
+            Mock.itemFive.createOption('Q5a');
             expect(service.isAvailableCustomID('Q5a')).toBe(false);
         });
 

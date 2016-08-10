@@ -9,24 +9,23 @@
         'LabelFactory',
         'MetadataGroupFactory',
         'CheckboxAnswerOptionFactory',
-        'CheckboxSuffixIDGenerator',
         'FillingRulesOptionFactory'
     ];
 
-    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, CheckboxSuffixIDGenerator, FillingRulesOptionFactory) {
+    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, CheckboxSuffixIDGenerator, FillingRulesOptionFactory);
+            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, CheckboxSuffixIDGenerator, FillingRulesOptionFactory) {
+    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -51,6 +50,7 @@
         self.getOptionByOptionID = getOptionByOptionID;
         self.getOptionByCustomOptionID = getOptionByCustomOptionID;
         self.createOption = createOption;
+        self.loadJsonOption = loadJsonOption;
         self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
         self.isQuestion = isQuestion;
@@ -102,14 +102,16 @@
 
         }
 
-        function createOption() {
-            var option = CheckboxAnswerOptionFactory.create(_generateOptionId());
+        function createOption(id) {
+            var option = CheckboxAnswerOptionFactory.create(id);
             self.options.push(option);
             return option;
         }
 
-        function _generateOptionId() {
-            return self.customID + CheckboxSuffixIDGenerator.generateSuffixByOptionsLength(self.options.length);
+        function loadJsonOption(checkboxAnswerOptionJSON) {
+            var option = CheckboxAnswerOptionFactory.createWithData(checkboxAnswerOptionJSON);
+            self.options.push(option);
+            return option;
         }
 
         function removeOption(value) {
