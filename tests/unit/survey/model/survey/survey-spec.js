@@ -3,8 +3,11 @@ describe('Survey', function() {
     var survey;
 
     var QUESTION_TYPE = 'IntegerQuestion';
+    var CHECKBOX_TYPE = 'CheckboxQuestion';
     var Q1 = 'Q1';
     var Q2 = 'Q2';
+    var AVAILABLE_ID = 'AvailableID';
+    var AVAILABLE_CUSTOM_ID = 'AvailableCustomID';
 
     beforeEach(function() {
         module('otusjs');
@@ -20,7 +23,8 @@ describe('Survey', function() {
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
                 'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_),
                 'SurveyItemManagerService': mockSurveyItemManagerService(_$injector_),
-                'NavigationManagerService': mockNavigationManagerService(_$injector_)
+                'NavigationManagerService': mockNavigationManagerService(_$injector_),
+                'UpdateSurveyItemCustomID': mockUpdateSurveyItemCustomID(_$injector_)
             });
 
             mockJson();
@@ -62,7 +66,7 @@ describe('Survey', function() {
         describe('removeItem method', function() {
 
             beforeEach(function() {
-                survey.addItem();
+                survey.addItem(QUESTION_TYPE);
             });
 
             it('should call SurveyItemManagerService.removeItem with new item ID', function() {
@@ -82,8 +86,9 @@ describe('Survey', function() {
         describe('getItemByTemplateID method', function() {
 
             beforeEach(function() {
-                survey.addItem();
-                survey.addItem();
+                spyOn(Mock.SurveyItemManagerService, 'getItemByTemplateID');
+                survey.addItem(QUESTION_TYPE);
+                survey.addItem(QUESTION_TYPE);
             });
 
             it('should call SurveyItemManagerService.getItemByTemplateID with template id', function() {
@@ -93,6 +98,76 @@ describe('Survey', function() {
             });
         });
 
+        describe('getItemByCustomID method', function() {
+
+            beforeEach(function() {
+                spyOn(Mock.SurveyItemManagerService, 'getItemByCustomID');
+
+                survey.addItem(QUESTION_TYPE);
+                survey.addItem(QUESTION_TYPE);
+            });
+
+            it('should call SurveyItemManagerService.getItemByCustomID with template id', function() {
+                survey.getItemByCustomID(Q1);
+
+                expect(Mock.SurveyItemManagerService.getItemByCustomID).toHaveBeenCalledWith(Q1);
+            });
+        });
+
+        describe('getItemByID method', function() {
+
+            beforeEach(function() {
+                survey.addItem(QUESTION_TYPE);
+                survey.addItem(QUESTION_TYPE);
+            });
+
+            it('should call SurveyItemManagerService.getItemByID with template id', function() {
+                survey.getItemByID(Q1);
+
+                expect(Mock.SurveyItemManagerService.getItemByID).toHaveBeenCalledWith(Q1);
+            });
+        });
+
+        describe('isAvailableID method', function() {
+
+            it('should return true when passed id is not used', function() {
+                expect(survey.isAvailableID(AVAILABLE_ID)).toBe(true);
+            });
+
+            it('should return false when id is used', function() {
+                survey.addItem(QUESTION_TYPE);
+                expect(survey.isAvailableID('ACRONYM1')).toBe(false);
+            });
+        });
+
+        describe('isAvailableCustomID method', function() {
+
+            it('should return true if a customID of first item was changed', function() {
+                var item1 = survey.addItem(QUESTION_TYPE); //ACRONYM1
+                var item2 = survey.addItem(QUESTION_TYPE); //ACRONYM2
+
+                Mock.UpdateSurveyItemCustomID.execute(item1, 'teste');
+                expect(survey.isAvailableCustomID('ACRONYM1')).toBe(true);
+            });
+
+            it('should return true when passed id is not used', function() {
+                expect(survey.isAvailableCustomID(AVAILABLE_ID)).toBe(true);
+            });
+
+            it('should return false when id is used', function() {
+                survey.addItem(QUESTION_TYPE);
+                expect(survey.isAvailableCustomID('ACRONYM1')).toBe(false);
+            });
+
+            it('should verify questions and custom options id', function() {
+                var IntegerQuestion = survey.addItem(QUESTION_TYPE);
+                var CheckboxQuestion = survey.addItem(CHECKBOX_TYPE);
+                CheckboxQuestion.createOption('ACRONYM2a');
+                CheckboxQuestion.createOption('ACRONYM2b');
+
+                expect(survey.isAvailableCustomID('ACRONYM2a')).toBe(false);
+            });
+        });
     });
 
     function mockSurveyIdentityFactory($injector) {
@@ -139,9 +214,9 @@ describe('Survey', function() {
     function mockSurveyItemManagerService($injector) {
         Mock.SurveyItemManagerService = $injector.get('SurveyItemManagerService');
 
-        spyOn(Mock.SurveyItemManagerService, 'addItem').and.returnValue(Mock.item);
+        spyOn(Mock.SurveyItemManagerService, 'addItem').and.callThrough();
         spyOn(Mock.SurveyItemManagerService, 'removeItem');
-        spyOn(Mock.SurveyItemManagerService, 'getItemByTemplateID');
+        spyOn(Mock.SurveyItemManagerService, 'getItemByID');
 
         return Mock.SurveyItemManagerService;
     }
@@ -185,6 +260,10 @@ describe('Survey', function() {
 
     function mockQuestion($injector) {
         Mock.item = $injector.get('SurveyItemFactory').create(QUESTION_TYPE, Q1);
+    }
+
+    function mockUpdateSurveyItemCustomID($injector) {
+        Mock.UpdateSurveyItemCustomID = $injector.get('UpdateSurveyItemCustomID');
     }
 
 });

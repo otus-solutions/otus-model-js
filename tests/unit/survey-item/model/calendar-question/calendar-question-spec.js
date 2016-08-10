@@ -31,6 +31,7 @@ describe('CalendarQuestion', function() {
             extents: 'SurveyItem',
             objectType: 'CalendarQuestion',
             templateID: Mock.TEMPLATE_ID,
+            customID: Mock.TEMPLATE_ID,
             dataType: 'LocalDate',
             label: {
                 ptBR: $injector.get('LabelFactory').create(),

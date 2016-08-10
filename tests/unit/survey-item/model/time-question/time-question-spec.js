@@ -32,6 +32,7 @@ describe('TimeQuestion', function() {
             extents: 'SurveyItem',
             objectType: 'TimeQuestion',
             templateID: Mock.TEMPLATE_ID,
+            customID: Mock.TEMPLATE_ID,
             dataType: 'LocalTime',
             label: {
                 ptBR: $injector.get('LabelFactory').create(),

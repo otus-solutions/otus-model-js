@@ -26,6 +26,7 @@
         self.extents = prototype.objectType;
         self.objectType = 'TextItem';
         self.templateID = templateID;
+        self.customID = templateID;
         self.dataType = 'String';
         self.value = {
             ptBR: LabelFactory.create(),
@@ -47,6 +48,7 @@
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.value = self.value;
 

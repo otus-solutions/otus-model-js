@@ -14,11 +14,14 @@
         /* Public methods */
         self.init = init;
         self.manageItems = manageItems;
-        self.getItemByTemplateID = getItemByTemplateID;
-        self.getItemByPosition = getItemByPosition;
-        self.getItemPosition = getItemPosition;
         self.getItemList = getItemList;
         self.getItemListSize = getItemListSize;
+        self.getItemByTemplateID = getItemByTemplateID;
+        self.getItemByCustomID = getItemByCustomID;
+        self.getItemByID = getItemByID;
+        self.getAllCheckboxQuestion = getAllCheckboxQuestion;
+        self.getItemByPosition = getItemByPosition;
+        self.getItemPosition = getItemPosition;
         self.existsItem = existsItem;
         self.createItem = createItem;
         self.removeItem = removeItem;
@@ -49,6 +52,33 @@
             return filter[0];
         }
 
+        function getItemByCustomID(customID) {
+            var filter = itemList.filter(function(item) {
+                return findByCustomID(item, customID);
+            });
+
+            return filter[0];
+        }
+
+        function getItemByID(id) {
+            var item = getItemByTemplateID(id);
+            if(item) {
+                return item;
+            } else {
+                return getItemByCustomID(id);
+            }
+        }
+
+        function getAllCheckboxQuestion() {
+            var occurences = [];
+            itemList.filter(function(item) {
+                if(item.objectType === "CheckboxQuestion") {
+                    occurences.push(item);
+                }
+            });
+            return occurences;
+        }
+
         function getItemByPosition(position) {
             return itemList[position];
         }
@@ -62,8 +92,8 @@
             }
         }
 
-        function existsItem(templateID) {
-            return (getItemByTemplateID(templateID)) ? true : false;
+        function existsItem(id) {
+            return (getItemByTemplateID(id) || getItemByCustomID(id)) ? true : false;
         }
 
         function createItem(itemType, templateID) {
@@ -93,7 +123,11 @@
 
         /* Private methods */
         function findByTemplateID(item, templateID) {
-            return item.templateID === templateID;
+            return item.templateID.toLowerCase() === templateID.toLowerCase();
+        }
+
+        function findByCustomID(item, customID) {
+            return item.customID.toLowerCase() === customID.toLowerCase();
         }
     }
 

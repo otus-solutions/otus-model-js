@@ -32,6 +32,7 @@ describe('TextQuestion', function() {
             extents: 'SurveyItem',
             objectType: 'TextQuestion',
             templateID: Mock.TEMPLATE_ID,
+            customID: Mock.TEMPLATE_ID,
             dataType: 'String',
             label: {
                 ptBR: $injector.get('LabelFactory').create(),

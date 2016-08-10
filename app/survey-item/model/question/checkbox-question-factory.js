@@ -8,30 +8,31 @@
     CheckboxQuestionFactory.$inject = [
         'LabelFactory',
         'MetadataGroupFactory',
-        'AnswerOptionFactory',
+        'CheckboxAnswerOptionFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
+    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory);
+            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
+    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
         self.objectType = 'CheckboxQuestion';
         self.templateID = templateID;
-        self.dataType = 'Integer';
+        self.customID = templateID;
+        self.dataType = 'Array';
         self.label = {
             ptBR: LabelFactory.create(),
             enUS: LabelFactory.create(),
@@ -43,17 +44,46 @@
         self.options = [];
 
         /* Public methods */
+        self.getOptionList = getOptionList;
         self.getOptionListSize = getOptionListSize;
         self.getOptionByValue = getOptionByValue;
+        self.getOptionByOptionID = getOptionByOptionID;
+        self.getOptionByCustomOptionID = getOptionByCustomOptionID;
         self.createOption = createOption;
+        self.loadJsonOption = loadJsonOption;
         self.removeOption = removeOption;
         self.removeLastOption = removeLastOption;
         self.isQuestion = isQuestion;
         self.validators = validators;
+        self.getAllCustomOptionsID = getAllCustomOptionsID;
         self.toJson = toJson;
+
+        function getOptionList() {
+            return self.options;
+        }
 
         function getOptionListSize() {
             return self.options.length;
+        }
+
+        function getOptionByOptionID(optionID) {
+            var aux = null;
+            for (var i = 0; i < self.options.length; i++) {
+                if (self.options[i].optionID === optionID) {
+                    aux = self.options[i];
+                }
+            }
+            return aux;
+        }
+
+        function getOptionByCustomOptionID(customOptionID) {
+            var aux = null;
+            for (var i = 0; i < self.options.length; i++) {
+                if (self.options[i].customOptionID === customOptionID) {
+                    aux = self.options[i];
+                }
+            }
+            return aux;
         }
 
         function getOptionByValue(value) {
@@ -72,8 +102,14 @@
 
         }
 
-        function createOption() {
-            var option = AnswerOptionFactory.create(self.options.length + 1);
+        function createOption(id) {
+            var option = CheckboxAnswerOptionFactory.create(id);
+            self.options.push(option);
+            return option;
+        }
+
+        function loadJsonOption(checkboxAnswerOptionJSON) {
+            var option = CheckboxAnswerOptionFactory.createWithData(checkboxAnswerOptionJSON);
             self.options.push(option);
             return option;
         }
@@ -87,12 +123,21 @@
             self.options.splice(-1, 1);
         }
 
+        function getAllCustomOptionsID() {
+            var customOptionsID = [];
+            self.options.forEach(function(option){
+                customOptionsID.push(option.customOptionID);
+            });
+            return customOptionsID;
+        }
+
         function toJson() {
             var json = {};
 
             json.extents = self.extents;
             json.objectType = self.objectType;
             json.templateID = self.templateID;
+            json.customID = self.customID;
             json.dataType = self.dataType;
             json.label = self.label;
             json.options = self.options;

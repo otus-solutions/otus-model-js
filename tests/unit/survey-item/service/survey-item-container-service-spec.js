@@ -4,13 +4,16 @@ describe('SurveyItemContainerService', function() {
 
     var QUESTION_TYPE = 'IntegerQuestion';
     var INEXISTENT_TEMPLATE_ID = 'Q5';
+    var INEXISTENT_CUSTOM_ID = 'Q5';
+    var INEXISTENT_ID = 'NOT_FOUND';
 
     beforeEach(function() {
         module('otusjs');
 
         inject(function(_$injector_) {
             service = _$injector_.get('SurveyItemContainerService', {
-                SurveyItemFactory: mockSurveyItemFactory(_$injector_)
+                SurveyItemFactory: mockSurveyItemFactory(_$injector_),
+                UpdateSurveyItemCustomID: mockUpdateSurveyItemCustomID(_$injector_)
             });
 
             mockItems();
@@ -80,10 +83,93 @@ describe('SurveyItemContainerService', function() {
             expect(returnedItem.templateID).toEqual(Mock.itemOne.templateID);
         });
 
+        it('should return the item when exists ignoring the camelcase', function() {
+            var returnedItem = service.getItemByTemplateID(Mock.itemOne.templateID.toLowerCase());
+
+            expect(returnedItem.templateID).toEqual(Mock.itemOne.templateID);
+        });
+
         it('should return undefined when item not exists', function() {
             var returnedItem = service.getItemByTemplateID(INEXISTENT_TEMPLATE_ID);
 
             expect(returnedItem).toBeUndefined();
+        });
+
+    });
+
+    describe('getItemByCustomID method', function() {
+
+        beforeEach(function() {
+            service.manageItems(Mock.itemsToManage);
+        });
+
+        it('should return the item when exists', function() {
+            var returnedItemCustomID = service.getItemByCustomID(Mock.itemOne.customID);
+
+            expect(returnedItemCustomID.customID).toEqual(Mock.itemOne.customID);
+        });
+
+        it('should return the item when exists ignoring camel case', function() {
+            var returnedItemCustomID = service.getItemByCustomID(Mock.itemOne.customID.toUpperCase());
+
+            expect(returnedItemCustomID.customID).toEqual(Mock.itemOne.customID);
+        });
+
+        it('should return undefined when item not exists', function() {
+            var returnedItemCustomID = service.getItemByCustomID(INEXISTENT_CUSTOM_ID);
+
+            expect(returnedItemCustomID).toBeUndefined();
+        });
+
+    });
+
+    describe('getItemByID method', function() {
+
+        beforeEach(function() {
+            service.manageItems(Mock.itemsToManage);
+        });
+
+        describe('should verify between the both properties of the item and return it when exists', function() {
+
+            it('criteria by templateID - UNCHANGED CUSTOM_ID', function() {
+                var returnedItem = service.getItemByID("Q1");
+
+                expect(returnedItem).toEqual(Mock.itemOne);
+            });
+
+            it('criteria by templateID - CHANGED CUSTOM_ID', function() {
+                Mock.UpdateSurveyItemCustomID.execute(Mock.itemOne, 'MyCustomID_1');
+                var returnedItem = service.getItemByID("Q1");
+
+                expect(returnedItem).toEqual(Mock.itemOne);
+            });
+
+            it('criteria by customID - CHANGED CUSTOM_ID', function() {
+                Mock.UpdateSurveyItemCustomID.execute(Mock.itemOne, 'MyCustomID_1');
+                var returnedItem = service.getItemByID("MyCustomID_1");
+
+                expect(returnedItem).toEqual(Mock.itemOne);
+            });
+
+            it('should return undefined when item not exists', function() {
+                var returnedItemCustomID = service.getItemByID(INEXISTENT_ID);
+
+                expect(returnedItemCustomID).toBeUndefined();
+            });
+        });
+
+    });
+
+    describe('getAllCheckboxQuestion method', function() {
+
+        beforeEach(function() {
+            mockCheckboxQuestions();
+            mockCheckboxQuestionToItemToManage();
+            service.manageItems(Mock.checkboxQuestionToManage);
+        });
+
+        it('should return all Checkbox question', function() {
+            expect(service.getAllCheckboxQuestion()).toEqual(Mock.checkboxQuestionToManage);
         });
 
     });
@@ -232,6 +318,11 @@ describe('SurveyItemContainerService', function() {
         return Mock.SurveyItemFactory;
     }
 
+    function mockUpdateSurveyItemCustomID($injector) {
+        Mock.UpdateSurveyItemCustomID = $injector.get('UpdateSurveyItemCustomID');
+        return Mock.UpdateSurveyItemCustomID;
+    }
+
     function mockItems() {
         Mock.itemOne = Mock.SurveyItemFactory.create(QUESTION_TYPE, 'Q1');
         Mock.itemTwo = Mock.SurveyItemFactory.create(QUESTION_TYPE, 'Q2');
@@ -245,6 +336,21 @@ describe('SurveyItemContainerService', function() {
         Mock.itemsToManage.push(Mock.itemTwo);
         Mock.itemsToManage.push(Mock.itemThree);
         Mock.itemsToManage.push(Mock.itemFour);
+    }
+
+    function mockCheckboxQuestions() {
+        Mock.CheckboxQuestion1 = Mock.SurveyItemFactory.create('CheckboxQuestion', 'CK1');
+        Mock.CheckboxQuestion2 = Mock.SurveyItemFactory.create('CheckboxQuestion', 'CK2');
+        Mock.CheckboxQuestion3 = Mock.SurveyItemFactory.create('CheckboxQuestion', 'CK3');
+        Mock.CheckboxQuestion4 = Mock.SurveyItemFactory.create('CheckboxQuestion', 'CK4');
+    }
+
+    function mockCheckboxQuestionToItemToManage() {
+        Mock.checkboxQuestionToManage = [];
+        Mock.checkboxQuestionToManage.push(Mock.CheckboxQuestion1);
+        Mock.checkboxQuestionToManage.push(Mock.CheckboxQuestion2);
+        Mock.checkboxQuestionToManage.push(Mock.CheckboxQuestion3);
+        Mock.checkboxQuestionToManage.push(Mock.CheckboxQuestion4);
     }
 
 });

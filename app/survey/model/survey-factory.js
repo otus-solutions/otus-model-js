@@ -54,15 +54,34 @@
         self.SurveyItemManager.init();
 
         /* Public methods */
-        self.getItemByTemplateID = getItemByTemplateID;
-        self.addItem = addItem;
         self.addItem = addItem;
         self.removeItem = removeItem;
+        self.getItemByTemplateID = getItemByTemplateID;
+        self.getItemByCustomID = getItemByCustomID;
+        self.getItemByID = getItemByID;
+        self.isAvailableID = isAvailableID;
+        self.isAvailableCustomID = isAvailableCustomID;
         self.updateItem = updateItem;
         self.toJson = toJson;
 
         function getItemByTemplateID(templateID) {
             return self.SurveyItemManager.getItemByTemplateID(templateID);
+        }
+
+        function getItemByCustomID(customID) {
+            return self.SurveyItemManager.getItemByCustomID(customID);
+        }
+
+        function getItemByID(id) {
+            return self.SurveyItemManager.getItemByID(id);
+        }
+
+        function isAvailableID(id){
+            return !self.SurveyItemManager.existsItem(id);
+        }
+
+        function isAvailableCustomID(id){
+            return self.SurveyItemManager.isAvailableCustomID(id);
         }
 
         function addItem(type) {
