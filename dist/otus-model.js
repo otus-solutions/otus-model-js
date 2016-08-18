@@ -18,7 +18,7 @@
     'use strict';
 
     angular
-        .module('otusjs.misc', []);
+        .module('otusjs.navigation', []);
 
 }());
 
@@ -26,7 +26,7 @@
     'use strict';
 
     angular
-        .module('otusjs.navigation', []);
+        .module('otusjs.misc', []);
 
 }());
 
@@ -1038,45 +1038,6 @@
     'use strict';
 
     angular
-        .module('otusjs.validation')
-        .service('AddFillingRulesService', AddFillingRulesService);
-
-
-    function AddFillingRulesService(){
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, validatorType) {
-            return item.fillingRules.createOption(validatorType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
-
-    function RemoveFillingRulesWorkService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, fillingRuleType) {
-            item.fillingRules.removeFillingRules(fillingRuleType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.metadata')
         .factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
@@ -1174,6 +1135,688 @@
             self.options.forEach(function(option, index) {
                 option.value = ++index;
             });
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .service('AddFillingRulesService', AddFillingRulesService);
+
+
+    function AddFillingRulesService(){
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, validatorType) {
+            return item.fillingRules.createOption(validatorType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
+
+    function RemoveFillingRulesWorkService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, fillingRuleType) {
+            item.fillingRules.removeFillingRules(fillingRuleType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .factory('NavigationFactory', NavigationFactory);
+
+    NavigationFactory.$inject = ['RouteFactory'];
+
+    function NavigationFactory(RouteFactory) {
+        var self = this;
+
+        self.create = create;
+        self.fromJson = fromJson;
+
+        function create(origin, destination) {
+            var navigation = new Navigation(origin);
+
+            if (destination) {
+                var defaultRoute = RouteFactory.create('1', navigation.origin, destination);
+                navigation.addRoute(defaultRoute);
+            }
+
+            return navigation;
+        }
+
+        function fromJson(json) {
+          var jsonObj = JSON.parse(json);
+          var navigation = new Navigation(jsonObj.origin);
+
+          jsonObj.routes.forEach(function(route) {
+            var newRoute = RouteFactory.fromJson(JSON.stringify(route));
+            navigation.addRoute(newRoute);
+          });
+
+          return navigation;
+        }
+
+        return self;
+    }
+
+    function Navigation(origin) {
+        var self = this;
+
+        /* Object properties */
+        self.extents = 'StudioObject';
+        self.objectType = 'Navigation';
+        self.origin = origin;
+        self.routes = [];
+
+        /* Public methods */
+        self.listRoutes = listRoutes;
+        self.addRoute = addRoute;
+        self.removeRoute = removeRoute;
+        self.updateRoute = updateRoute;
+        self.toJson = toJson;
+
+        function listRoutes() {
+            var clone = [];
+
+            self.routes.forEach(function(route) {
+                clone.push(route);
+            });
+
+            return clone;
+        }
+
+        function addRoute(route) {
+            self.routes.push(route);
+        }
+
+        function removeRoute(name) {
+            var routeToRemove = self.routes.filter(function(route) {
+                return route.name === name;
+            });
+
+            var indexToRemove = self.routes.indexOf(routeToRemove[0]);
+            if (indexToRemove > -1) {
+                self.routes.splice(indexToRemove, 1);
+            }
+
+            return routeToRemove[0];
+        }
+
+        function updateRoute(route) {
+            self.routes.forEach(function(currentRoute) {
+                if (currentRoute.index === route.index) {
+                    self.routes[currentRoute.index] = route;
+                }
+            });
+        }
+
+        function toJson() {
+            var json = {};
+
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.origin = self.origin;
+            json.routes = [];
+            self.routes.forEach(function(route) {
+                json.routes.push(route.toJson());
+            });
+
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+        }
+
+    }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.navigation')
+    .factory('RouteConditionFactory', factory);
+
+  factory.$inject = [
+    'RuleFactory'
+  ];
+
+  function factory(RuleFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create(name) {
+      return new RouteCondition(name);
+    }
+
+    function fromJson(json) {
+      var jsonObj = JSON.parse(json);
+      var condition = new RouteCondition(jsonObj.name);
+
+      jsonObj.rules.forEach(function(rule) {
+        var newRule = RuleFactory.fromJson(JSON.stringify(rule));
+        condition.addRule(newRule);
+      });
+
+      return condition;
+    }
+
+    return self;
+  }
+
+  function RouteCondition(conditionName) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'RouteCondition';
+    self.name = conditionName;
+    self.rules = [];
+
+    /* Public methods */
+    self.listRules = listRules;
+    self.addRule = addRule;
+    self.removeRule = removeRule;
+    self.toJson = toJson;
+
+    function listRules() {
+      var clone = [];
+
+      self.rules.forEach(function(rule) {
+        clone.push(rule);
+      });
+
+      return clone;
+    }
+
+    function addRule(rule) {
+      var ruleNotExist = (self.rules.indexOf(rule) === -1);
+      if (ruleNotExist) {
+        self.rules.push(rule);
+      }
+    }
+
+    function removeRule(rule) {
+      var indexToRemove = self.rules.indexOf(rule);
+      self.rules.splice(indexToRemove, 1);
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.extents = 'StudioObject';
+      json.objectType = 'RouteCondition';
+      json.name = self.name;
+      json.rules = [];
+
+      self.rules.forEach(function(rule) {
+        json.rules.push(rule.toJson());
+      });
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.navigation')
+    .factory('RouteFactory', factory);
+
+  factory.$inject = ['RouteConditionFactory'];
+
+  function factory(RouteConditionFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create(name, origin, destination) {
+      return new Route(name, origin, destination);
+    }
+
+    function fromJson(json) {
+      var jsonObj = JSON.parse(json);
+      var route = new Route(jsonObj.name, jsonObj.origin, jsonObj.destination);
+
+      jsonObj.conditionSet.forEach(function(condition) {
+        condition = (condition instanceof Object) ? JSON.stringify(condition) : condition;
+        var newCondition = RouteConditionFactory.fromJson(condition);
+        route.addCondition(newCondition);
+      });
+
+      return route;
+    }
+
+    return self;
+  }
+
+  function Route(routeName, routeOrigin, routeDestination) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'Route';
+    self.name = routeName;
+    self.origin = routeOrigin;
+    self.destination = routeDestination;
+    self.conditionSet = [];
+
+    /* Public interface */
+    self.getConditionSet = getConditionSet;
+    self.addCondition = addCondition;
+    self.removeCondition = removeCondition;
+    self.getConditionSetSize = getConditionSetSize;
+    self.toJson = toJson;
+
+    function getConditionSet() {
+      var clone = [];
+
+      self.conditionSet.forEach(function(condition) {
+        clone.push(condition);
+      });
+
+      return clone;
+    }
+
+    function getConditionSetSize() {
+      return self.conditionSet.length;
+    }
+
+    function addCondition(condition) {
+      condition.name += getConditionSetSize() + 1;
+      self.conditionSet.push(condition);
+    }
+
+    function removeCondition(name) {
+      var conditionToRemove = self.conditionSet.filter(function(condition) {
+        return condition.name === name;
+      });
+
+      var indexToRemove = self.conditionSet.indexOf(conditionToRemove[0]);
+      if (indexToRemove > -1) {
+        self.conditionSet.splice(indexToRemove, 1);
+      }
+
+      return conditionToRemove[0];
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.name = self.name;
+      json.origin = self.origin;
+      json.destination = self.destination;
+      json.index = self.index;
+      json.conditionSet = [];
+
+      if (self.conditionSet) {
+        for (var conditionName in self.conditionSet) {
+          json.conditionSet[conditionName] = self.conditionSet[conditionName].toJson();
+        }
+      }
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.navigation')
+    .factory('RuleFactory', RuleFactory);
+
+  function RuleFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create(when, operator, answer) {
+      return new Rule(when, operator, answer);
+    }
+
+    function fromJson(json) {
+      var jsonObj = JSON.parse(json);
+      var rule = new Rule(jsonObj.when);
+      var operator;
+      var answerValue;
+
+      for (operator in jsonObj.answer) {
+        answerValue = jsonObj.answer[operator];
+        break;
+      }
+
+      rule.answer[operator] = answerValue;
+
+      return rule;
+    }
+
+    return self;
+  }
+
+  function Rule(when, operator, answer) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'Rule';
+    self.when = when;
+    self.answer = answer || {};
+    self.operator = operator;
+
+    /* Public methods */
+    self.within = within;
+    self.equal = equal;
+    self.greater = greater;
+    self.greaterEqual = greaterEqual;
+    self.lower = lower;
+    self.lowerEqual = lowerEqual;
+    self.between = between;
+    self.contains = contains;
+    self.toJson = toJson;
+
+    function within(arrayValues) {
+      defineAnswer('within', arrayValues);
+    }
+
+    function equal(value) {
+      defineAnswer('equal', value);
+    }
+
+    function greater(value) {
+      defineAnswer('greater', value);
+    }
+
+    function greaterEqual(value) {
+      defineAnswer('greaterEqual', value);
+    }
+
+    function lower(value) {
+      defineAnswer('lower', value);
+    }
+
+    function lowerEqual(value) {
+      defineAnswer('lowerEqual', value);
+    }
+
+    function between(start, end) {
+      if (Array.isArray(start)) {
+        defineAnswer('between', start);
+      } else {
+        defineAnswer('between', [start, end]);
+      }
+    }
+
+    function contains(value) {
+      defineAnswer('contains', value);
+    }
+
+    function defineAnswer(operator, value) {
+      self.answer = {};
+      self.answer[operator] = value;
+    }
+
+    function toJson() {
+      var json = {}
+
+      json.when = self.when;
+      json.operator = self.operator;
+      json.answer = self.answer;
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+  }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('NavigationAddService', NavigationAddService);
+
+    NavigationAddService.$inject = [
+        'NavigationContainerService',
+        'SurveyItemContainerService'
+    ];
+
+    function NavigationAddService(NavigationContainerService, SurveyItemContainerService) {
+        var self = this;
+
+        /* Public methods */
+        self.execute = execute;
+
+        function execute() {
+            var itemCount = SurveyItemContainerService.getItemListSize();
+
+            if (itemCount > 1) {
+                var origin = SurveyItemContainerService.getItemByPosition(itemCount - 2);
+                var destination = SurveyItemContainerService.getItemByPosition(itemCount - 1);
+
+                NavigationContainerService.createNavigationTo(origin.templateID, destination.templateID);
+            }
+        }
+    }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.navigation')
+    .service('NavigationContainerService', NavigationContainerService);
+
+  NavigationContainerService.$inject = ['NavigationFactory'];
+
+  function NavigationContainerService(NavigationFactory) {
+    var self = this;
+    var navigationList = []; // TODO: To implement Immutable collection
+
+    /* Public methods */
+    self.init = init;
+    self.loadJsonData = loadJsonData;
+    self.manageNavigation = manageNavigation;
+    self.getNavigationByOrigin = getNavigationByOrigin;
+    self.getNavigationByPosition = getNavigationByPosition;
+    self.getNavigationPosition = getNavigationPosition;
+    self.getNavigationList = getNavigationList;
+    self.getNavigationListSize = getNavigationListSize;
+    self.existsNavigationTo = existsNavigationTo;
+    self.createNavigationTo = createNavigationTo;
+    self.removeNavigationOf = removeNavigationOf;
+    self.removeNavigationByIndex = removeNavigationByIndex;
+    self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+
+    function init() {
+      navigationList = [];
+    }
+
+    function loadJsonData(data) {
+      data.forEach(function(navigationData) {
+        navigationList.push(NavigationFactory.fromJson(navigationData));
+      });
+    }
+
+    function manageNavigation(navigationToManage) {
+      navigationList = navigationToManage;
+    }
+
+    function getNavigationList() {
+      return navigationList;
+    }
+
+    function getNavigationListSize() {
+      return navigationList.length;
+    }
+
+    function getNavigationByOrigin(origin) {
+      var filter = navigationList.filter(function(navigation) {
+        return findByOrigin(navigation, origin);
+      });
+
+      return filter[0];
+    }
+
+    function getNavigationByPosition(position) {
+      return navigationList[position];
+    }
+
+    function getNavigationPosition(origin) {
+      var navigation = getNavigationByOrigin(origin);
+      if (navigation) {
+        return navigationList.indexOf(navigation);
+      } else {
+        return null;
+      }
+    }
+
+    function existsNavigationTo(origin) {
+      return (getNavigationByOrigin(origin)) ? true : false;
+    }
+
+    function createNavigationTo(origin, destination) {
+      navigationList.push(NavigationFactory.create(origin, destination));
+    }
+
+    function removeNavigationOf(questionID) {
+      var navigationToRemove = navigationList.filter(function(navigation) {
+        return findByOrigin(navigation, questionID);
+      });
+
+      var indexToRemove = navigationList.indexOf(navigationToRemove[0]);
+      if (indexToRemove > -1) {
+        navigationList.splice(indexToRemove, 1);
+      }
+    }
+
+    function removeNavigationByIndex(indexToRemove) {
+      navigationList.splice(indexToRemove, 1);
+    }
+
+    function removeCurrentLastNavigation() {
+      navigationList.splice(-1, 1);
+    }
+
+    /* Private methods */
+    function findByOrigin(navigation, questionID) {
+      return navigation.origin === questionID;
+    }
+  }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('NavigationManagerService', NavigationManagerService);
+
+    NavigationManagerService.$inject = [
+        'NavigationContainerService',
+        'NavigationAddService',
+        'NavigationRemoveService'
+    ];
+
+    function NavigationManagerService(NavigationContainerService, NavigationAddService, NavigationRemoveService) {
+        var self = this;
+
+        /* Public interface */
+        self.init = init;
+        self.loadJsonData = loadJsonData;
+        self.getNavigationList = getNavigationList;
+        self.getNavigationByOrigin = getNavigationByOrigin;
+        self.addNavigation = addNavigation;
+        self.removeNavigation = removeNavigation;
+
+        function init() {
+            NavigationContainerService.init();
+        }
+
+        function loadJsonData(data) {
+            NavigationContainerService.loadJsonData(data);
+        }
+
+        function getNavigationList() {
+            return NavigationContainerService.getNavigationList();
+        }
+
+        function getNavigationByOrigin(origin) {
+            return NavigationContainerService.getNavigationByOrigin(origin);
+        }
+
+        function addNavigation() {
+            NavigationAddService.execute();
+        }
+
+        function removeNavigation(templateID) {
+            NavigationRemoveService.execute(templateID);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('NavigationRemoveService', NavigationRemoveService);
+
+    NavigationRemoveService.$inject = ['NavigationContainerService'];
+
+    function NavigationRemoveService(NavigationContainerService) {
+        var self = this;
+
+        /* Public methods */
+        self.execute = execute;
+
+        function execute(templateID) {
+            if (NavigationContainerService.existsNavigationTo(templateID)) {
+                var navigationToRecicle = NavigationContainerService.getNavigationByOrigin(templateID);
+                var positionToRecicle = NavigationContainerService.getNavigationPosition(templateID);
+
+                if (positionToRecicle && positionToRecicle !== 0) {
+                    var navigationToUpdate = NavigationContainerService.getNavigationByPosition(positionToRecicle - 1);
+                    navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
+                }
+
+                NavigationContainerService.removeNavigationOf(templateID);
+            } else {
+                NavigationContainerService.removeCurrentLastNavigation();
+            }
         }
     }
 
@@ -1283,573 +1926,6 @@
             writable: true,
             enumerable: true
         });
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .factory('NavigationFactory', NavigationFactory);
-
-    NavigationFactory.$inject = ['RouteFactory'];
-
-    function NavigationFactory(RouteFactory) {
-        var self = this;
-
-        self.create = create;
-
-        function create(origin, destination) {
-            var navigation = new Navigation(origin);
-
-            if (destination) {
-                var defaultRoute = RouteFactory.create('1', navigation.origin, destination);
-                navigation.addRoute(defaultRoute);
-            }
-
-            return navigation;
-        }
-
-        return self;
-    }
-
-    function Navigation(origin) {
-        var self = this;
-
-        /* Object properties */
-        self.extents = 'StudioObject';
-        self.objectType = 'Navigation';
-        self.origin = origin;
-        self.routes = [];
-
-        /* Public methods */
-        self.listRoutes = listRoutes;
-        self.addRoute = addRoute;
-        self.removeRoute = removeRoute;
-        self.updateRoute = updateRoute;
-        self.toJson = toJson;
-
-        function listRoutes() {
-            var clone = [];
-
-            self.routes.forEach(function(route) {
-                clone.push(route);
-            });
-
-            return clone;
-        }
-
-        function addRoute(route) {
-            self.routes.push(route);
-        }
-
-        function removeRoute(name) {
-            var routeToRemove = self.routes.filter(function(route) {
-                return route.name === name;
-            });
-
-            var indexToRemove = self.routes.indexOf(routeToRemove[0]);
-            if (indexToRemove > -1) {
-                self.routes.splice(indexToRemove, 1);
-            }
-
-            return routeToRemove[0];
-        }
-
-        function updateRoute(route) {
-            self.routes.forEach(function(currentRoute) {
-                if (currentRoute.index === route.index) {
-                    self.routes[currentRoute.index] = route;
-                }
-            });
-        }
-
-        function toJson() {
-            var json = {};
-
-            json.extents = self.extents;
-            json.objectType = self.objectType;
-            json.origin = self.origin;
-            json.routes = [];
-            self.routes.forEach(function(route) {
-                json.routes.push(route.toJson());
-            });
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .factory('RouteConditionFactory', RouteConditionFactory);
-
-    function RouteConditionFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(name) {
-            return new RouteCondition(name);
-        }
-
-        return self;
-    }
-
-    function RouteCondition(conditionName) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'RouteCondition';
-        self.name = conditionName;
-        self.rules = [];
-
-        self.listRules = listRules;
-        self.addRule = addRule;
-        self.removeRule = removeRule;
-        self.toJson = toJson;
-
-        function listRules() {
-            var clone = [];
-
-            self.rules.forEach(function(rule) {
-                clone.push(rule);
-            });
-
-            return clone;
-        }
-
-        function addRule(rule) {
-            var ruleNotExist = (self.rules.indexOf(rule) === -1);
-            if (ruleNotExist) {
-                self.rules.push(rule);
-            }
-        }
-
-        function removeRule(rule) {
-            var indexToRemove = self.rules.indexOf(rule);
-            self.rules.splice(indexToRemove, 1);
-        }
-
-        function toJson() {
-            var json = {
-                extents: 'StudioObject',
-                objectType: 'RouteCondition',
-                name: self.name,
-                rules: []
-            };
-
-            self.rules.forEach(function(rule) {
-                json.rules.push(rule.toJson());
-            });
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .factory('RouteFactory', RouteFactory);
-
-    function RouteFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(name, origin, destination) {
-            return new Route(name, origin, destination);
-        }
-
-        return self;
-    }
-
-    function Route(routeName, routeOrigin, routeDestination) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'Route';
-        self.origin = routeOrigin;
-        self.destination = routeDestination;
-        self.conditionSet = [];
-        self.name = routeName;
-
-        /* Public interface */
-        self.getConditionSet = getConditionSet;
-        self.addCondition = addCondition;
-        self.removeCondition = removeCondition;
-        self.getConditionSetSize = getConditionSetSize;
-        self.toJson = toJson;
-
-        function getConditionSet() {
-            var clone = [];
-
-            self.conditionSet.forEach(function(condition) {
-                clone.push(condition);
-            });
-
-            return clone;
-        }
-
-        function getConditionSetSize() {
-            return getConditionSet().length;
-        }
-
-        function addCondition(condition) {
-            condition.name += getConditionSetSize() + 1;
-            self.conditionSet.push(condition);
-        }
-
-        function removeCondition() {
-            var conditionToRemove = self.conditionSet.filter(function(condition) {
-                return condition.name === name;
-            });
-
-            var indexToRemove = self.conditionSet.indexOf(conditionToRemove[0]);
-            if (indexToRemove > -1) {
-                self.conditionSet.splice(indexToRemove, 1);
-            }
-
-            return conditionToRemove[0];
-        }
-
-        function toJson() {
-            var json = {
-                extents: self.extents,
-                objectType: self.objectType,
-                name: self.name,
-                origin: self.origin,
-                destination: self.destination,
-                index: self.index
-            };
-
-            if (self.conditionSet) {
-                json.conditionSet = {};
-
-                for (var conditionName in self.conditionSet) {
-                    json.conditionSet[conditionName] = self.conditionSet[conditionName].toJson();
-                }
-            }
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .factory('RuleFactory', RuleFactory);
-
-    function RuleFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(when, operator, answer) {
-            return new Rule(when, operator, answer);
-        }
-
-        return self;
-    }
-
-    function Rule(when, operator, answer) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'Rule';
-        self.when = when;
-        self.answer = answer;
-        self.operator = operator;
-
-        self.within = within;
-        self.equal = equal;
-        self.greater = greater;
-        self.greaterEqual = greaterEqual;
-        self.lower = lower;
-        self.lowerEqual = lowerEqual;
-        self.between = between;
-        self.contains = contains;
-        self.toJson = toJson;
-
-        function within(arrayValues) {
-            defineAnswer('within', arrayValues);
-        }
-
-        function equal(value) {
-            defineAnswer('equal', value);
-        }
-
-        function greater(value) {
-            defineAnswer('greater', value);
-        }
-
-        function greaterEqual(value) {
-            defineAnswer('greaterEqual', value);
-        }
-
-        function lower(value) {
-            defineAnswer('lower', value);
-        }
-
-        function lowerEqual(value) {
-            defineAnswer('lowerEqual', value);
-        }
-
-        function between(start, end) {
-            if (Array.isArray(start)) {
-                defineAnswer('between', start);
-            } else {
-                defineAnswer('between', [start, end]);
-            }
-        }
-
-        function contains(value) {
-            defineAnswer('contains', value);
-        }
-
-        function defineAnswer(operator, value) {
-            answer = {};
-            answer[operator] = value;
-        }
-
-        function toJson() {
-            var json = {
-                when: when,
-                operator: operator,
-                answer: answer
-            };
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('NavigationAddService', NavigationAddService);
-
-    NavigationAddService.$inject = [
-        'NavigationContainerService',
-        'SurveyItemContainerService'
-    ];
-
-    function NavigationAddService(NavigationContainerService, SurveyItemContainerService) {
-        var self = this;
-
-        /* Public methods */
-        self.execute = execute;
-
-        function execute() {
-            var itemCount = SurveyItemContainerService.getItemListSize();
-
-            if (itemCount > 1) {
-                var origin = SurveyItemContainerService.getItemByPosition(itemCount - 2);
-                var destination = SurveyItemContainerService.getItemByPosition(itemCount - 1);
-
-                NavigationContainerService.createNavigationTo(origin.templateID, destination.templateID);
-            }
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('NavigationContainerService', NavigationContainerService);
-
-    NavigationContainerService.$inject = ['NavigationFactory'];
-
-    function NavigationContainerService(NavigationFactory) {
-        var self = this;
-        var navigationList = []; // TODO: To implement Immutable collection
-
-        /* Public methods */
-        self.init = init;
-        self.manageNavigation = manageNavigation;
-        self.getNavigationByOrigin = getNavigationByOrigin;
-        self.getNavigationByPosition = getNavigationByPosition;
-        self.getNavigationPosition = getNavigationPosition;
-        self.getNavigationList = getNavigationList;
-        self.getNavigationListSize = getNavigationListSize;
-        self.existsNavigationTo = existsNavigationTo;
-        self.createNavigationTo = createNavigationTo;
-        self.removeNavigationOf = removeNavigationOf;
-        self.removeNavigationByIndex = removeNavigationByIndex;
-        self.removeCurrentLastNavigation = removeCurrentLastNavigation;
-
-        function init() {
-            navigationList = [];
-        }
-
-        function manageNavigation(navigationToManage) {
-            navigationList = navigationToManage;
-        }
-
-        function getNavigationList() {
-            return navigationList;
-        }
-
-        function getNavigationListSize() {
-            return navigationList.length;
-        }
-
-        function getNavigationByOrigin(origin) {
-            var filter = navigationList.filter(function(navigation) {
-                return findByOrigin(navigation, origin);
-            });
-
-            return filter[0];
-        }
-
-        function getNavigationByPosition(position) {
-            return navigationList[position];
-        }
-
-        function getNavigationPosition(origin) {
-            var navigation = getNavigationByOrigin(origin);
-            if (navigation) {
-                return navigationList.indexOf(navigation);
-            } else {
-                return null;
-            }
-        }
-
-        function existsNavigationTo(origin) {
-            return (getNavigationByOrigin(origin)) ? true : false;
-        }
-
-        function createNavigationTo(origin, destination) {
-            navigationList.push(NavigationFactory.create(origin, destination));
-        }
-
-        function removeNavigationOf(questionID) {
-            var navigationToRemove = navigationList.filter(function(navigation) {
-                return findByOrigin(navigation, questionID);
-            });
-
-            var indexToRemove = navigationList.indexOf(navigationToRemove[0]);
-            if (indexToRemove > -1) {
-                navigationList.splice(indexToRemove, 1);
-            }
-        }
-
-        function removeNavigationByIndex(indexToRemove) {
-            navigationList.splice(indexToRemove, 1);
-        }
-
-        function removeCurrentLastNavigation() {
-            navigationList.splice(-1, 1);
-        }
-
-        /* Private methods */
-        function findByOrigin(navigation, questionID) {
-            return navigation.origin === questionID;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('NavigationManagerService', NavigationManagerService);
-
-    NavigationManagerService.$inject = [
-        'NavigationContainerService',
-        'NavigationAddService',
-        'NavigationRemoveService'
-    ];
-
-    function NavigationManagerService(NavigationContainerService, NavigationAddService, NavigationRemoveService) {
-        var self = this;
-
-        /* Public interface */
-        self.init = init;
-        self.getNavigationList = getNavigationList;
-        self.getNavigationByOrigin = getNavigationByOrigin;
-        self.addNavigation = addNavigation;
-        self.removeNavigation = removeNavigation;
-
-        function init() {
-            NavigationContainerService.init();
-        }
-
-        function getNavigationList() {
-            return NavigationContainerService.getNavigationList();
-        }
-
-        function getNavigationByOrigin(origin) {
-            return NavigationContainerService.getNavigationByOrigin(origin);
-        }
-
-        function addNavigation() {
-            NavigationAddService.execute();
-        }
-
-        function removeNavigation(templateID) {
-            NavigationRemoveService.execute(templateID);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('NavigationRemoveService', NavigationRemoveService);
-
-    NavigationRemoveService.$inject = ['NavigationContainerService'];
-
-    function NavigationRemoveService(NavigationContainerService) {
-        var self = this;
-
-        /* Public methods */
-        self.execute = execute;
-
-        function execute(templateID) {
-            if (NavigationContainerService.existsNavigationTo(templateID)) {
-                var navigationToRecicle = NavigationContainerService.getNavigationByOrigin(templateID);
-                var positionToRecicle = NavigationContainerService.getNavigationPosition(templateID);
-
-                if (positionToRecicle && positionToRecicle !== 0) {
-                    var navigationToUpdate = NavigationContainerService.getNavigationByPosition(positionToRecicle - 1);
-                    navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
-                }
-
-                NavigationContainerService.removeNavigationOf(templateID);
-            } else {
-                NavigationContainerService.removeCurrentLastNavigation();
-            }
-        }
     }
 
 }());
