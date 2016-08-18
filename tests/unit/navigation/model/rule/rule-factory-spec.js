@@ -30,7 +30,7 @@ describe('RuleFactory', function() {
     });
 
     it('should return a RuleCondition object with a valid when value', function() {
-      expect(rule.when).toBeDefined();
+      expect(rule.when).toEqual('QUESTION_ID');
     });
 
   });
@@ -52,6 +52,16 @@ describe('RuleFactory', function() {
 
     it('should return a RuleCondition object with objectType value equal to "RuleCondition"', function() {
       expect(rule.objectType).toBe('Rule');
+    });
+
+    it('should return a RuleCondition object with a valid when value', function() {
+      expect(rule.when).toEqual('QUESTION_ID');
+    });
+
+    it('should return a RuleCondition object with a valid answer', function() {
+      expect(rule.answer).toBeDefined();
+      expect(rule.answer.contains).toBeDefined();
+      expect(rule.answer.contains).toBe('ANSWER');
     });
 
   });

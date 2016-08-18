@@ -1,92 +1,107 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.navigation')
-        .factory('RouteFactory', RouteFactory);
+  angular
+    .module('otusjs.navigation')
+    .factory('RouteFactory', factory);
 
-    function RouteFactory() {
-        var self = this;
+  factory.$inject = ['RouteConditionFactory'];
 
-        /* Public interface */
-        self.create = create;
+  function factory(RouteConditionFactory) {
+    var self = this;
 
-        function create(name, origin, destination) {
-            return new Route(name, origin, destination);
-        }
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        return self;
+    function create(name, origin, destination) {
+      return new Route(name, origin, destination);
     }
 
-    function Route(routeName, routeOrigin, routeDestination) {
-        var self = this;
+    function fromJson(json) {
+      var jsonObj = JSON.parse(json);
+      var route = new Route(jsonObj.name, jsonObj.origin, jsonObj.destination);
 
-        self.extents = 'StudioObject';
-        self.objectType = 'Route';
-        self.origin = routeOrigin;
-        self.destination = routeDestination;
-        self.conditionSet = [];
-        self.name = routeName;
+      jsonObj.conditionSet.forEach(function(condition) {
+        condition = (condition instanceof Object) ? JSON.stringify(condition) : condition;
+        var newCondition = RouteConditionFactory.fromJson(condition);
+        route.addCondition(newCondition);
+      });
 
-        /* Public interface */
-        self.getConditionSet = getConditionSet;
-        self.addCondition = addCondition;
-        self.removeCondition = removeCondition;
-        self.getConditionSetSize = getConditionSetSize;
-        self.toJson = toJson;
-
-        function getConditionSet() {
-            var clone = [];
-
-            self.conditionSet.forEach(function(condition) {
-                clone.push(condition);
-            });
-
-            return clone;
-        }
-
-        function getConditionSetSize() {
-            return getConditionSet().length;
-        }
-
-        function addCondition(condition) {
-            condition.name += getConditionSetSize() + 1;
-            self.conditionSet.push(condition);
-        }
-
-        function removeCondition() {
-            var conditionToRemove = self.conditionSet.filter(function(condition) {
-                return condition.name === name;
-            });
-
-            var indexToRemove = self.conditionSet.indexOf(conditionToRemove[0]);
-            if (indexToRemove > -1) {
-                self.conditionSet.splice(indexToRemove, 1);
-            }
-
-            return conditionToRemove[0];
-        }
-
-        function toJson() {
-            var json = {
-                extents: self.extents,
-                objectType: self.objectType,
-                name: self.name,
-                origin: self.origin,
-                destination: self.destination,
-                index: self.index
-            };
-
-            if (self.conditionSet) {
-                json.conditionSet = {};
-
-                for (var conditionName in self.conditionSet) {
-                    json.conditionSet[conditionName] = self.conditionSet[conditionName].toJson();
-                }
-            }
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-        }
+      return route;
     }
+
+    return self;
+  }
+
+  function Route(routeName, routeOrigin, routeDestination) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'Route';
+    self.name = routeName;
+    self.origin = routeOrigin;
+    self.destination = routeDestination;
+    self.conditionSet = [];
+
+    /* Public interface */
+    self.getConditionSet = getConditionSet;
+    self.addCondition = addCondition;
+    self.removeCondition = removeCondition;
+    self.getConditionSetSize = getConditionSetSize;
+    self.toJson = toJson;
+
+    function getConditionSet() {
+      var clone = [];
+
+      self.conditionSet.forEach(function(condition) {
+        clone.push(condition);
+      });
+
+      return clone;
+    }
+
+    function getConditionSetSize() {
+      return self.conditionSet.length;
+    }
+
+    function addCondition(condition) {
+      condition.name += getConditionSetSize() + 1;
+      self.conditionSet.push(condition);
+    }
+
+    function removeCondition(name) {
+      var conditionToRemove = self.conditionSet.filter(function(condition) {
+        return condition.name === name;
+      });
+
+      var indexToRemove = self.conditionSet.indexOf(conditionToRemove[0]);
+      if (indexToRemove > -1) {
+        self.conditionSet.splice(indexToRemove, 1);
+      }
+
+      return conditionToRemove[0];
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.name = self.name;
+      json.origin = self.origin;
+      json.destination = self.destination;
+      json.index = self.index;
+      json.conditionSet = [];
+
+      if (self.conditionSet) {
+        for (var conditionName in self.conditionSet) {
+          json.conditionSet[conditionName] = self.conditionSet[conditionName].toJson();
+        }
+      }
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+  }
 
 }());

@@ -11,6 +11,7 @@
         var self = this;
 
         self.create = create;
+        self.fromJson = fromJson;
 
         function create(origin, destination) {
             var navigation = new Navigation(origin);
@@ -21,6 +22,18 @@
             }
 
             return navigation;
+        }
+
+        function fromJson(json) {
+          var jsonObj = JSON.parse(json);
+          var navigation = new Navigation(jsonObj.origin);
+
+          jsonObj.routes.forEach(function(route) {
+            var newRoute = RouteFactory.fromJson(JSON.stringify(route));
+            navigation.addRoute(newRoute);
+          });
+
+          return navigation;
         }
 
         return self;
