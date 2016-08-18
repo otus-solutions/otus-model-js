@@ -1,35 +1,68 @@
 describe('RuleFactory', function() {
-    var Mock = {};
-    var rule;
+
+  var Mock = {};
+  var rule;
+
+  beforeEach(function() {
+    module('otusjs');
+
+    inject(function(_$injector_) {
+      factory = _$injector_.get('RuleFactory');
+    });
+  });
+
+  describe('create method', function() {
 
     beforeEach(function() {
-        module('studio');
-
-        inject(function(_$injector_) {
-            factory = _$injector_.get('RuleFactory');
-        });
-
-        rule = factory.create('QUESTION_ID');
+      rule = factory.create('QUESTION_ID');
     });
 
-    describe('create method', function() {
-
-        xit('should return a defined object', function() {
-            expect(rule).toBeDefined();
-        });
-
-        xit('should return a RuleCondition object with extends value equal to "StudioObject"', function() {
-            expect(rule.getExtents()).toBe('StudioObject');
-        });
-
-        xit('should return a RuleCondition object with objectType value equal to "RuleCondition"', function() {
-            expect(rule.getObjectType()).toBe('Rule');
-        });
-
-        xit('should return a RuleCondition object with a valid when value', function() {
-            expect(rule.getWhen()).toBeDefined();
-        });
-
+    it('should return a defined object', function() {
+      expect(rule).toBeDefined();
     });
+
+    it('should return a RuleCondition object with extends value equal to "StudioObject"', function() {
+      expect(rule.extents).toBe('StudioObject');
+    });
+
+    it('should return a RuleCondition object with objectType value equal to "RuleCondition"', function() {
+      expect(rule.objectType).toBe('Rule');
+    });
+
+    it('should return a RuleCondition object with a valid when value', function() {
+      expect(rule.when).toBeDefined();
+    });
+
+  });
+
+  describe('fromJson method', function() {
+
+    beforeEach(function() {
+      mockJson();
+      rule = factory.fromJson(Mock.json);
+    });
+
+    it('should return a defined object', function() {
+      expect(rule).toBeDefined();
+    });
+
+    it('should return a RuleCondition object with extends value equal to "StudioObject"', function() {
+      expect(rule.extents).toBe('StudioObject');
+    });
+
+    it('should return a RuleCondition object with objectType value equal to "RuleCondition"', function() {
+      expect(rule.objectType).toBe('Rule');
+    });
+
+  });
+
+  function mockJson() {
+    Mock.json = JSON.stringify({
+      when: 'QUESTION_ID',
+      answer: {
+        contains: 'ANSWER'
+      }
+    });
+  }
 
 });

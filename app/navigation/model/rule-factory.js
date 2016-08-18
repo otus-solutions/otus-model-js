@@ -10,9 +10,17 @@
 
         /* Public interface */
         self.create = create;
+        self.fromJson = fromJson;
 
         function create(when, operator, answer) {
             return new Rule(when, operator, answer);
+        }
+
+        function fromJson(json) {
+            var rule = new Rule();
+            var jsonObj = JSON.parse(json);
+
+            return rule;
         }
 
         return self;
@@ -74,16 +82,16 @@
         }
 
         function defineAnswer(operator, value) {
-            answer = {};
-            answer[operator] = value;
+            self.answer = {};
+            self.answer[operator] = value;
         }
 
         function toJson() {
-            var json = {
-                when: when,
-                operator: operator,
-                answer: answer
-            };
+            var json = {}
+
+            json.when = self.when;
+            json.operator = self.operator;
+            json.answer = self.answer;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }

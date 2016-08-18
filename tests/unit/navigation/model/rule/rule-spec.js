@@ -22,12 +22,12 @@ describe('Rule', function() {
             rule.within(POSSIBLE_VALUES);
         });
 
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
-        xit('should set the array values to "within" property', function() {
-            expect(rule.getAnswer().within).toBe(POSSIBLE_VALUES);
+        it('should set the array values to "within" property', function() {
+            expect(rule.answer.within).toBe(POSSIBLE_VALUES);
         });
 
     });
@@ -40,12 +40,12 @@ describe('Rule', function() {
             rule.equal(POSSIBLE_VALUE);
         });
 
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
-        xit('should set the array values to "equal" property', function() {
-            expect(rule.getAnswer().equal).toBe(POSSIBLE_VALUE);
+        it('should set the array values to "equal" property', function() {
+            expect(rule.answer.equal).toBe(POSSIBLE_VALUE);
         });
 
     });
@@ -58,12 +58,12 @@ describe('Rule', function() {
             rule.greater(POSSIBLE_VALUE);
         });
 
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
-        xit('should set the array values to "greater" property', function() {
-            expect(rule.getAnswer().greater).toBe(POSSIBLE_VALUE);
+        it('should set the array values to "greater" property', function() {
+            expect(rule.answer.greater).toBe(POSSIBLE_VALUE);
         });
 
     });
@@ -76,12 +76,12 @@ describe('Rule', function() {
             rule.greaterEqual(POSSIBLE_VALUE);
         });
 
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
-        xit('should set the array values to "greaterEqual" property', function() {
-            expect(rule.getAnswer().greaterEqual).toBe(POSSIBLE_VALUE);
+        it('should set the array values to "greaterEqual" property', function() {
+            expect(rule.answer.greaterEqual).toBe(POSSIBLE_VALUE);
         });
 
     });
@@ -94,12 +94,12 @@ describe('Rule', function() {
             rule.lower(POSSIBLE_VALUE);
         });
 
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
-        xit('should set the array values to "lower" property', function() {
-            expect(rule.getAnswer().lower).toBe(POSSIBLE_VALUE);
+        it('should set the array values to "lower" property', function() {
+            expect(rule.answer.lower).toBe(POSSIBLE_VALUE);
         });
 
     });
@@ -112,12 +112,12 @@ describe('Rule', function() {
             rule.lowerEqual(POSSIBLE_VALUE);
         });
 
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
-        xit('should set the array values to "lowerEqual" property', function() {
-            expect(rule.getAnswer().lowerEqual).toBe(POSSIBLE_VALUE);
+        it('should set the array values to "lowerEqual" property', function() {
+            expect(rule.answer.lowerEqual).toBe(POSSIBLE_VALUE);
         });
 
     });
@@ -126,21 +126,21 @@ describe('Rule', function() {
 
         var POSSIBLE_RANGE = [1, 10];
 
-        xit('should attach the condition to rule.getAnswer()', function() {
+        it('should attach the condition to rule.answer', function() {
             rule.between(1, 10);
-            expect(rule.getAnswer()).toBeDefined();
+            expect(rule.answer).toBeDefined();
         });
 
-        xit('should set the array values to "between" property', function() {
+        it('should set the array values to "between" property', function() {
             rule.between([1, 10]);
 
-            expect(rule.getAnswer().between).toEqual(POSSIBLE_RANGE);
+            expect(rule.answer.between).toEqual(POSSIBLE_RANGE);
         });
 
-        xit('should set the array values to "between" property', function() {
+        it('should set the array values to "between" property', function() {
             rule.between(1, 10);
 
-            expect(rule.getAnswer().between).toEqual(POSSIBLE_RANGE);
+            expect(rule.answer.between).toEqual(POSSIBLE_RANGE);
         });
 
     });
@@ -151,32 +151,30 @@ describe('Rule', function() {
             rule.contains(Mock.ANSWER);
         });
 
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
-        xit('should set the array values to "contains" property', function() {
-            expect(rule.getAnswer().contains).toBe(Mock.ANSWER);
+        it('should set the array values to "contains" property', function() {
+            expect(rule.answer.contains).toBe(Mock.ANSWER);
         });
 
     });
 
     describe('toJson method', function() {
+
         var json;
 
         beforeEach(function() {
             rule.contains(Mock.ANSWER);
-            json = rule.toJson();
+            json = JSON.parse(rule.toJson());
         });
 
-        xit('result a json version with when attribute', function() {
-            expect(json.when).toBeDefined();
+        it('result a json version with when attribute', function() {
             expect(json.when).toEqual(Mock.WHEN);
         });
 
-        xit('result a json version with answer attribute', function() {
-            expect(json.when).toBeDefined();
-            expect(json.answer.contains).toBeDefined();
+        it('result a json version with answer attribute', function() {
             expect(json.answer.contains).toEqual(Mock.ANSWER);
         });
 
