@@ -25,7 +25,7 @@
         }
 
         function fromJson(json) {
-          var jsonObj = JSON.parse(json);
+          var jsonObj = JSON.parse(JSON.stringify(json));
           var navigation = new Navigation(jsonObj.origin);
 
           jsonObj.routes.forEach(function(route) {

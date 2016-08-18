@@ -86,29 +86,42 @@ describe('NavigationFactory', function() {
   }
 
   function mockJson() {
+    // Mock.json = JSON.stringify({
+    //   extents: 'StudioObject',
+    //   objectType: 'Navigation',
+    //   origin: Mock.ORIGIN,
+    //   routes: [{
+    //     extents: 'StudioObject',
+    //     objectType: 'Route',
+    //     name: Mock.ROUTE_NAME,
+    //     origin: Mock.ORIGIN,
+    //     destination: Mock.DESTINATION,
+    //     conditionSet: [{
+    //       extents: 'StudioObject',
+    //       objectType: 'RouteCondition',
+    //       name: Mock.CONDITION_NAME,
+    //       rules: [{
+    //         when: 'QUESTION_ID',
+    //         answer: {
+    //           contains: 'ANSWER'
+    //         }
+    //       }]
+    //     }]
+    //   }]
+    // });
     Mock.json = JSON.stringify({
       extents: 'StudioObject',
       objectType: 'Navigation',
-      origin: Mock.ORIGIN,
+      origin: 'CAD1',
       routes: [{
         extents: 'StudioObject',
         objectType: 'Route',
-        name: Mock.ROUTE_NAME,
-        origin: Mock.ORIGIN,
-        destination: Mock.DESTINATION,
-        conditionSet: [{
-          extents: 'StudioObject',
-          objectType: 'RouteCondition',
-          name: Mock.CONDITION_NAME,
-          rules: [{
-            when: 'QUESTION_ID',
-            answer: {
-              contains: 'ANSWER'
-            }
-          }]
-        }]
+        name: '1',
+        origin: 'CAD1',
+        destination: 'CAD2',
+        conditionSet: []
       }]
-    });
+    })
   }
 
 });
