@@ -829,6 +829,102 @@
     'use strict';
 
     angular
+        .module('otusjs.surveyItem')
+        .service('AddAnswerOptionService', AddAnswerOptionService);
+
+    function AddAnswerOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            return item.createOption();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.surveyItem')
+        .service('AddSurveyItemService', AddSurveyItemService);
+
+    function AddSurveyItemService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(itemType, survey) {
+            return survey.addItem(itemType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.surveyItem')
+        .service('RemoveAnswerOptionService', RemoveAnswerOptionService);
+
+    function RemoveAnswerOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            item.removeLastOption();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.surveyItem')
+        .service('RemoveSurveyItemService', RemoveSurveyItemService);
+
+    function RemoveSurveyItemService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, survey) {
+            survey.removeItem(item.templateID);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.surveyItem')
+        .service('UpdateSurveyItemCustomID', UpdateSurveyItemCustomID);
+
+    function UpdateSurveyItemCustomID() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, id) {
+            // it needs a service to validate if is a valid or available id
+            item.customID = id;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.navigation')
         .service('AddRouteConditionService', AddRouteConditionService);
 
@@ -933,102 +1029,6 @@
 
         function execute(rule, route) {
             route.conditionSet[0].removeRule(rule);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('AddAnswerOptionService', AddAnswerOptionService);
-
-    function AddAnswerOptionService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            return item.createOption();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('AddSurveyItemService', AddSurveyItemService);
-
-    function AddSurveyItemService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(itemType, survey) {
-            return survey.addItem(itemType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('RemoveAnswerOptionService', RemoveAnswerOptionService);
-
-    function RemoveAnswerOptionService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            item.removeLastOption();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('RemoveSurveyItemService', RemoveSurveyItemService);
-
-    function RemoveSurveyItemService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, survey) {
-            survey.removeItem(item.templateID);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('UpdateSurveyItemCustomID', UpdateSurveyItemCustomID);
-
-    function UpdateSurveyItemCustomID() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, id) {
-            // it needs a service to validate if is a valid or available id
-            item.customID = id;
         }
     }
 
@@ -1772,6 +1772,7 @@
     }
 
     function loadJsonData(data) {
+      init();
       data.forEach(function(navigationData) {
         navigationList.push(NavigationFactory.fromJson(navigationData));
       });
