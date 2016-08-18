@@ -13,6 +13,7 @@
 
     /* Public methods */
     self.init = init;
+    self.loadJsonData = loadJsonData;
     self.manageNavigation = manageNavigation;
     self.getNavigationByOrigin = getNavigationByOrigin;
     self.getNavigationByPosition = getNavigationByPosition;
@@ -27,6 +28,12 @@
 
     function init() {
       navigationList = [];
+    }
+
+    function loadJsonData(data) {
+      data.forEach(function(navigationData) {
+        navigationList.push(NavigationFactory.fromJson(navigationData));
+      });
     }
 
     function manageNavigation(navigationToManage) {

@@ -16,6 +16,7 @@
 
         /* Public interface */
         self.init = init;
+        self.loadJsonData = loadJsonData;
         self.getNavigationList = getNavigationList;
         self.getNavigationByOrigin = getNavigationByOrigin;
         self.addNavigation = addNavigation;
@@ -23,6 +24,10 @@
 
         function init() {
             NavigationContainerService.init();
+        }
+
+        function loadJsonData(data) {
+            NavigationContainerService.loadJsonData(data);
         }
 
         function getNavigationList() {
