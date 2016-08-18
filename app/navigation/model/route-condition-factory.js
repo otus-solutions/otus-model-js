@@ -1,72 +1,90 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.navigation')
-        .factory('RouteConditionFactory', RouteConditionFactory);
+  angular
+    .module('otusjs.navigation')
+    .factory('RouteConditionFactory', factory);
 
-    function RouteConditionFactory() {
-        var self = this;
+  factory.$inject = [
+    'RuleFactory'
+  ];
 
-        /* Public interface */
-        self.create = create;
+  function factory(RuleFactory) {
+    var self = this;
 
-        function create(name) {
-            return new RouteCondition(name);
-        }
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        return self;
+    function create(name) {
+      return new RouteCondition(name);
     }
 
-    function RouteCondition(conditionName) {
-        var self = this;
+    function fromJson(json) {
+      var jsonObj = JSON.parse(json);
+      var condition = new RouteCondition(jsonObj.name);
 
-        self.extents = 'StudioObject';
-        self.objectType = 'RouteCondition';
-        self.name = conditionName;
-        self.rules = [];
+      jsonObj.rules.forEach(function(rule) {
+        var newRule = RuleFactory.fromJson(JSON.stringify(rule));
+        condition.addRule(newRule);
+      });
 
-        self.listRules = listRules;
-        self.addRule = addRule;
-        self.removeRule = removeRule;
-        self.toJson = toJson;
-
-        function listRules() {
-            var clone = [];
-
-            self.rules.forEach(function(rule) {
-                clone.push(rule);
-            });
-
-            return clone;
-        }
-
-        function addRule(rule) {
-            var ruleNotExist = (self.rules.indexOf(rule) === -1);
-            if (ruleNotExist) {
-                self.rules.push(rule);
-            }
-        }
-
-        function removeRule(rule) {
-            var indexToRemove = self.rules.indexOf(rule);
-            self.rules.splice(indexToRemove, 1);
-        }
-
-        function toJson() {
-            var json = {
-                extents: 'StudioObject',
-                objectType: 'RouteCondition',
-                name: self.name,
-                rules: []
-            };
-
-            self.rules.forEach(function(rule) {
-                json.rules.push(rule.toJson());
-            });
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-        }
+      return condition;
     }
+
+    return self;
+  }
+
+  function RouteCondition(conditionName) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'RouteCondition';
+    self.name = conditionName;
+    self.rules = [];
+
+    /* Public methods */
+    self.listRules = listRules;
+    self.addRule = addRule;
+    self.removeRule = removeRule;
+    self.toJson = toJson;
+
+    function listRules() {
+      var clone = [];
+
+      self.rules.forEach(function(rule) {
+        clone.push(rule);
+      });
+
+      return clone;
+    }
+
+    function addRule(rule) {
+      var ruleNotExist = (self.rules.indexOf(rule) === -1);
+      if (ruleNotExist) {
+        self.rules.push(rule);
+      }
+    }
+
+    function removeRule(rule) {
+      var indexToRemove = self.rules.indexOf(rule);
+      self.rules.splice(indexToRemove, 1);
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.extents = 'StudioObject';
+      json.objectType = 'RouteCondition';
+      json.name = self.name;
+      json.rules = [];
+
+      self.rules.forEach(function(rule) {
+        json.rules.push(rule.toJson());
+      });
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+  }
 
 }());
