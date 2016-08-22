@@ -9,7 +9,7 @@
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
         'SurveyUUIDGenerator',
-        'NavigationManagerService',
+        'otusjs.model.navigation.NavigationManagerService',
         'SurveyItemManagerService'
     ];
 
