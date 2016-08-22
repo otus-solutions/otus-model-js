@@ -23,7 +23,8 @@
     function PastDateValidator(value, LabelFactory) {
         var self = this;
 
-        self.reference = new Date();
+        self.reference = true; 
+        self.data = new Date();
     }
 
 }());
