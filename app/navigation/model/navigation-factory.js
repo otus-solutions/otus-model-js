@@ -6,17 +6,18 @@
     .factory('otusjs.model.navigation.NavigationFactory', factory);
 
   factory.$inject = [
-    'otusjs.model.navigation.RouteFactory'
+    'otusjs.model.navigation.RouteFactory',
+  'ExceptionService'
   ];
 
-  function factory(RouteFactory) {
+  function factory(RouteFactory, ExceptionService) {
     var self = this;
 
     self.create = create;
     self.fromJson = fromJson;
 
     function create(origin, destination) {
-      var navigation = new Navigation(origin);
+      var navigation = new Navigation(origin, ExceptionService);
 
       if (destination) {
         var defaultRoute = RouteFactory.create('1', navigation.origin, destination);
@@ -46,7 +47,7 @@
     return self;
   }
 
-  function Navigation(origin) {
+  function Navigation(origin, ExceptionService) {
     var self = this;
 
     /* Object properties */
@@ -73,7 +74,11 @@
     }
 
     function addRoute(route) {
-      self.routes.push(route);
+      if (route.origin !== route.destination) {
+        self.routes.push(route);
+      } else {
+        throw new ExceptionService.InvalidStateError('Rota que refere-se a si mesma diretamente');
+      }
     }
 
     function removeRoute(name) {
@@ -110,6 +115,8 @@
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
+  }
+
   }
 
 }());
