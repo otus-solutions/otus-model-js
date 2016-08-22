@@ -21,7 +21,7 @@ describe('Navigation', function() {
   describe('addRoute method', function() {
 
     it('should push a new route in route list', function() {
-      navigation.addRoute(jasmine.any(Object));
+      navigation.addRoute(Mock.route);
 
       expect(navigation.listRoutes().length).toBe(1);
     });
@@ -83,12 +83,13 @@ describe('Navigation', function() {
   function mockNavigationProperties() {
     Mock.STUDIO_OBJECT = 'StudioObject';
     Mock.ORIGIN = 'ORIGIN';
+    Mock.DESTINATION = 'DESTINATION';
     Mock.TO = 'TO';
     Mock.ROUTE_NAME = Mock.ORIGIN + '-' + Mock.TO + '-' + 0;
   }
 
   function mockRoute($injector) {
-    Mock.route = $injector.get('RouteFactory').create(Mock.ORIGIN, Mock.ORIGIN, Mock.TO);
+    Mock.route = $injector.get('RouteFactory').create(Mock.ORIGIN, Mock.DESTINATION, Mock.TO);
   }
 
   function mockJson() {

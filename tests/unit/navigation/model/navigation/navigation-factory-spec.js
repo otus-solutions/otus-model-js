@@ -8,6 +8,7 @@ describe('NavigationFactory', function() {
 
     inject(function(_$injector_) {
       factory = _$injector_.get('NavigationFactory');
+      exception = _$injector_.get('ExceptionService');
     });
   });
 
@@ -51,6 +52,20 @@ describe('NavigationFactory', function() {
         expect(navigation.listRoutes().length).toBe(0);
       });
 
+    });
+
+    describe('addRoute method', function() {
+      it('when origin and destination are not equals then throw not SelfReferenceException', function() {
+        expect(function() {
+          navigation = factory.create(Mock.ORIGIN, Mock.DESTINATION);
+        }).not.toThrow();
+      });
+
+      it('when origin and destination are equals should then throw exception SelfReferenceException', function() {
+        expect(function() {
+          navigation = factory.create(Mock.ORIGIN, Mock.ORIGIN);
+        }).toThrowError(exception.InvalidStateError);
+      });
     });
 
   });
