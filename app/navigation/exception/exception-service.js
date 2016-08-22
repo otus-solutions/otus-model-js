@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-    .module('otusjs.navigation')
-    .service('ExceptionService', ExceptionService);
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.ExceptionService', service);
 
-  function ExceptionService() {
+  function service() {
     var self = this;
 
     self.InvalidStateError = createErrorType('InvalidRouteException');
@@ -19,7 +19,5 @@
       E.prototype.constructor = E;
       return E;
     }
-
   }
-
 }());

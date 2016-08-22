@@ -7,7 +7,7 @@ describe('ExceptionService', function() {
     module('otusjs');
 
     inject(function(_$injector_) {
-      service = _$injector_.get('ExceptionService');
+      service = _$injector_.get('otusjs.model.navigation.ExceptionService');
     });
   });
 

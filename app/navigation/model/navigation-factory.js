@@ -7,7 +7,7 @@
 
   factory.$inject = [
     'otusjs.model.navigation.RouteFactory',
-  'ExceptionService'
+    'otusjs.model.navigation.ExceptionService'
   ];
 
   function factory(RouteFactory, ExceptionService) {
@@ -116,7 +116,4 @@
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
   }
-
-  }
-
 }());
