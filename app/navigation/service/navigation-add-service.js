@@ -1,31 +1,30 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.navigation')
-        .service('NavigationAddService', NavigationAddService);
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationAddService', service);
 
-    NavigationAddService.$inject = [
-        'NavigationContainerService',
-        'SurveyItemContainerService'
-    ];
+  service.$inject = [
+    'otusjs.model.navigation.NavigationContainerService',
+    'SurveyItemContainerService'
+  ];
 
-    function NavigationAddService(NavigationContainerService, SurveyItemContainerService) {
-        var self = this;
+  function service(NavigationContainerService, SurveyItemContainerService) {
+    var self = this;
 
-        /* Public methods */
-        self.execute = execute;
+    /* Public methods */
+    self.execute = execute;
 
-        function execute() {
-            var itemCount = SurveyItemContainerService.getItemListSize();
+    function execute() {
+      var itemCount = SurveyItemContainerService.getItemListSize();
 
-            if (itemCount > 1) {
-                var origin = SurveyItemContainerService.getItemByPosition(itemCount - 2);
-                var destination = SurveyItemContainerService.getItemByPosition(itemCount - 1);
+      if (itemCount > 1) {
+        var origin = SurveyItemContainerService.getItemByPosition(itemCount - 2);
+        var destination = SurveyItemContainerService.getItemByPosition(itemCount - 1);
 
-                NavigationContainerService.createNavigationTo(origin.templateID, destination.templateID);
-            }
-        }
+        NavigationContainerService.createNavigationTo(origin.templateID, destination.templateID);
+      }
     }
-
+  }
 }());

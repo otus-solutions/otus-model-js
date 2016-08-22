@@ -2,12 +2,14 @@
   'use strict';
 
   angular
-    .module('otusjs.navigation')
-    .service('NavigationContainerService', NavigationContainerService);
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationContainerService', service);
 
-  NavigationContainerService.$inject = ['NavigationFactory'];
+  service.$inject = [
+    'otusjs.model.navigation.NavigationFactory'
+  ];
 
-  function NavigationContainerService(NavigationFactory) {
+  function service(NavigationFactory) {
     var self = this;
     var navigationList = []; // TODO: To implement Immutable collection
 

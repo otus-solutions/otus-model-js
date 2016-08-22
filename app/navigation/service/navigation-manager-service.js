@@ -1,50 +1,50 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.navigation')
-        .service('NavigationManagerService', NavigationManagerService);
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationManagerService', service);
 
-    NavigationManagerService.$inject = [
-        'NavigationContainerService',
-        'NavigationAddService',
-        'NavigationRemoveService'
-    ];
+  service.$inject = [
+    'otusjs.model.navigation.NavigationContainerService',
+    'otusjs.model.navigation.NavigationAddService',
+    'otusjs.model.navigation.NavigationRemoveService'
+  ];
 
-    function NavigationManagerService(NavigationContainerService, NavigationAddService, NavigationRemoveService) {
-        var self = this;
+  function service(NavigationContainerService, NavigationAddService, NavigationRemoveService) {
+    var self = this;
 
-        /* Public interface */
-        self.init = init;
-        self.loadJsonData = loadJsonData;
-        self.getNavigationList = getNavigationList;
-        self.getNavigationByOrigin = getNavigationByOrigin;
-        self.addNavigation = addNavigation;
-        self.removeNavigation = removeNavigation;
+    /* Public interface */
+    self.init = init;
+    self.loadJsonData = loadJsonData;
+    self.getNavigationList = getNavigationList;
+    self.getNavigationByOrigin = getNavigationByOrigin;
+    self.addNavigation = addNavigation;
+    self.removeNavigation = removeNavigation;
 
-        function init() {
-            NavigationContainerService.init();
-        }
-
-        function loadJsonData(data) {
-            NavigationContainerService.loadJsonData(data);
-        }
-
-        function getNavigationList() {
-            return NavigationContainerService.getNavigationList();
-        }
-
-        function getNavigationByOrigin(origin) {
-            return NavigationContainerService.getNavigationByOrigin(origin);
-        }
-
-        function addNavigation() {
-            NavigationAddService.execute();
-        }
-
-        function removeNavigation(templateID) {
-            NavigationRemoveService.execute(templateID);
-        }
+    function init() {
+      NavigationContainerService.init();
     }
+
+    function loadJsonData(data) {
+      NavigationContainerService.loadJsonData(data);
+    }
+
+    function getNavigationList() {
+      return NavigationContainerService.getNavigationList();
+    }
+
+    function getNavigationByOrigin(origin) {
+      return NavigationContainerService.getNavigationByOrigin(origin);
+    }
+
+    function addNavigation() {
+      NavigationAddService.execute();
+    }
+
+    function removeNavigation(templateID) {
+      NavigationRemoveService.execute(templateID);
+    }
+  }
 
 }());

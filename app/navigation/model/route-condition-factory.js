@@ -2,11 +2,11 @@
   'use strict';
 
   angular
-    .module('otusjs.navigation')
-    .factory('RouteConditionFactory', factory);
+    .module('otusjs.model.navigation')
+    .factory('otusjs.model.navigation.RouteConditionFactory', factory);
 
   factory.$inject = [
-    'RuleFactory'
+    'otusjs.model.navigation.RuleFactory'
   ];
 
   function factory(RuleFactory) {

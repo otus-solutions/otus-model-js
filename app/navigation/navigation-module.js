@@ -1,7 +1,7 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.navigation', []);
+  angular
+    .module('otusjs.model.navigation', []);
 
 }());

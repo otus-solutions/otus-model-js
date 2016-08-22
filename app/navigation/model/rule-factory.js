@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-    .module('otusjs.navigation')
-    .factory('RuleFactory', RuleFactory);
+    .module('otusjs.model.navigation')
+    .factory('otusjs.model.navigation.RuleFactory', factory);
 
-  function RuleFactory() {
+  function factory() {
     var self = this;
 
     /* Public interface */
