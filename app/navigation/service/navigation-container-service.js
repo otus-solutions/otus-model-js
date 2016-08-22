@@ -31,6 +31,7 @@
     }
 
     function loadJsonData(data) {
+      init();
       data.forEach(function(navigationData) {
         navigationList.push(NavigationFactory.fromJson(navigationData));
       });
