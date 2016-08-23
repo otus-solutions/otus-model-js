@@ -21,6 +21,7 @@
         self.getItemByTemplateID = getItemByTemplateID;
         self.getItemByCustomID = getItemByCustomID;
         self.getItemByID = getItemByID;
+        self.getItemPosition = getItemPosition;
         self.getAllCustomOptionsID = getAllCustomOptionsID;
         self.addItem = addItem;
         self.removeItem = removeItem;
@@ -50,6 +51,10 @@
 
         function getItemByID(id) {
             return SurveyItemContainerService.getItemByID(id);
+        }
+
+        function getItemPosition(customID) {
+            return SurveyItemContainerService.getItemPosition(customID);
         }
 
         function getAllCustomOptionsID() {

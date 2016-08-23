@@ -111,7 +111,7 @@ describe('NavigationManagerService', function() {
     });
 
     it('should get the item index of respective navigation', function() {
-      expect(Mock.SurveyItemManagerService.getItemByCustomID).toHaveBeenCalled();
+      expect(Mock.SurveyItemManagerService.getItemPosition).toHaveBeenCalled();
     });
 
     it('should filter all previous item of parameter item', function() {
@@ -160,7 +160,7 @@ describe('NavigationManagerService', function() {
     Mock.SurveyItemManagerService = $injector.get('SurveyItemManagerService');
     injections.SurveyItemManagerService = Mock.SurveyItemManagerService;
     spyOn(Mock.SurveyItemManagerService, 'getItemList').and.returnValue(Mock.questions);
-    spyOn(Mock.SurveyItemManagerService, 'getItemByCustomID').and.returnValue(3);
+    spyOn(Mock.SurveyItemManagerService, 'getItemPosition').and.returnValue(3);
   }
 
 });

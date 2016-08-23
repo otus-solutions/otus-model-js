@@ -49,7 +49,7 @@
     }
 
     function getAvaiableRuleCriterionTargets(referenceItemID) {
-      var referenceItemIndex = SurveyItemManagerService.getItemByCustomID(referenceItemID);
+      var referenceItemIndex = SurveyItemManagerService.getItemPosition(referenceItemID);
       var allItems = SurveyItemManagerService.getItemList();
 
       var avaiableItems = allItems.filter(function(item, index) {
