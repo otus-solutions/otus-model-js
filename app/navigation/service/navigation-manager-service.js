@@ -8,10 +8,11 @@
   service.$inject = [
     'otusjs.model.navigation.NavigationContainerService',
     'otusjs.model.navigation.NavigationAddService',
-    'otusjs.model.navigation.NavigationRemoveService'
+    'otusjs.model.navigation.NavigationRemoveService',
+    'SurveyItemManagerService'
   ];
 
-  function service(NavigationContainerService, NavigationAddService, NavigationRemoveService) {
+  function service(NavigationContainerService, NavigationAddService, NavigationRemoveService, SurveyItemManagerService) {
     var self = this;
 
     /* Public interface */
@@ -21,6 +22,7 @@
     self.getNavigationByOrigin = getNavigationByOrigin;
     self.addNavigation = addNavigation;
     self.removeNavigation = removeNavigation;
+    self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
 
     function init() {
       NavigationContainerService.init();
@@ -44,6 +46,17 @@
 
     function removeNavigation(templateID) {
       NavigationRemoveService.execute(templateID);
+    }
+
+    function getAvaiableRuleCriterionTargets(referenceItemID) {
+      var referenceItemIndex = SurveyItemManagerService.getItemByCustomID(referenceItemID);
+      var allItems = SurveyItemManagerService.getItemList();
+
+      var avaiableItems = allItems.filter(function(item, index) {
+        return index < referenceItemIndex;
+      });
+
+      return avaiableItems;
     }
   }
 
