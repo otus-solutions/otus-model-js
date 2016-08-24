@@ -6,22 +6,25 @@
     .service('otusjs.model.navigation.NavigationManagerService', service);
 
   service.$inject = [
+    'SurveyItemManagerService',
     'otusjs.model.navigation.NavigationContainerService',
     'otusjs.model.navigation.NavigationAddService',
     'otusjs.model.navigation.NavigationRemoveService',
     'otusjs.model.navigation.NavigationValidatorService',
-    'SurveyItemManagerService'
+    'otusjs.model.navigation.RouteAddService'
   ];
 
-  function service(NavigationContainerService, NavigationAddService, NavigationRemoveService, NavigationValidatorService, SurveyItemManagerService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, NavigationValidatorService, RouteAddService) {
     var self = this;
 
     /* Public interface */
     self.init = init;
     self.loadJsonData = loadJsonData;
     self.getNavigationList = getNavigationList;
-    self.getNavigationByOrigin = getNavigationByOrigin;
+    self.selectNavigationByOrigin = selectNavigationByOrigin;
+    self.selectedNavigation = selectedNavigation;
     self.addNavigation = addNavigation;
+    self.addRoute = addRoute;
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
 
@@ -37,12 +40,21 @@
       return NavigationContainerService.getNavigationList();
     }
 
-    function getNavigationByOrigin(origin) {
-      return NavigationContainerService.getNavigationByOrigin(origin);
+    function selectNavigationByOrigin(origin) {
+      _selectedNavigation = NavigationContainerService.getNavigationByOrigin(origin);
+      return _selectedNavigation;
+    }
+
+    function selectedNavigation() {
+      return _selectedNavigation;
     }
 
     function addNavigation() {
       NavigationAddService.execute();
+    }
+	
+	function addRoute(routeData) {
+      return RouteAddService.execute(routeData, _selectedNavigation);
     }
 
     function removeNavigation(templateID) {
