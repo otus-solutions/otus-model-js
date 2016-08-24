@@ -16,7 +16,7 @@
 
   function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, NavigationValidatorService, AddRouteTaskService) {
     var self = this;
-    var _selectedNavigation = {};
+    var _selectedNavigation = null;
 
     /* Public interface */
     self.init = init;
