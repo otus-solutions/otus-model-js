@@ -10,6 +10,14 @@
     'use strict';
 
     angular
+        .module('otusjs.metadata', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.misc', []);
 
 }());
@@ -26,14 +34,6 @@
     'use strict';
 
     angular
-        .module('otusjs.metadata', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.survey', []);
 
 }());
@@ -42,7 +42,7 @@
     'use strict';
 
     angular
-        .module('otusjs.surveyItem', []);
+        .module('otusjs.validation', []);
 
 }());
 
@@ -50,7 +50,7 @@
     'use strict';
 
     angular
-        .module('otusjs.validation', []);
+        .module('otusjs.surveyItem', []);
 
 }());
 
@@ -127,217 +127,6 @@
     }
 
 }());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.activity')
-        .service('ActivityFacadeService', ActivityFacadeService);
-
-    ActivityFacadeService.$inject = [
-        'AnswerFillFactory',
-        'MetadataFillFactory',
-        'QuestionFillFactory',
-        'ActivitySurveyFactory'
-    ];
-
-    function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
-        var self = this;
-        self.activitySurvey = null;
-
-        /* Public interface */
-        self.createActivity = createActivity;
-        self.createQuestionFill = createQuestionFill;
-        self.openActivitySurvey = openActivitySurvey;
-        self.initializeActivitySurvey = initializeActivitySurvey;
-
-
-        function createActivity(category, group, templateOID, user) {
-            self.activitySurvey = ActivitySurveyFactory.create(category, group, templateOID, user);
-        }
-
-        function openActivitySurvey() {
-            self.activitySurvey.statusHistory.newOpenedRegistry();
-        }
-
-        function initializeActivitySurvey() {
-            self.activitySurvey.statusHistory.newInitializedOnlineRegistry();
-        }
-
-        function createQuestionFill(questionID, answer, metadata, comment) {
-            var question = QuestionFillFactory.create(questionID, answer, metadata, comment);
-            self.activitySurvey.fillContainer.updateFilling(question);
-            //console.log(self.activitySurvey);
-            return question;
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.activity')
-        .service('FillingManagerService', FillingManagerService);
-
-    function FillingManagerService() {
-        var self = this;
-        var fillingList = [];
-
-        /* Public methods */
-        self.init = init;
-        self.listSize = listSize;
-        self.getFillingIndex = getFillingIndex;
-        self.existsFillingTo = existsFillingTo;
-        self.searchFillingByID = searchFillingByID;
-        self.updateFilling = updateFilling;
-
-        init();
-
-        function init() {
-            fillingList = [];
-        }
-
-        function listSize() {
-            return fillingList.length;
-        }
-
-        function getFillingIndex(questionID) {
-            var result = _searchByID(questionID);
-            return (result) ? result.index : null;
-        }
-
-        function existsFillingTo(questionID) {
-            return (_searchByID(questionID)) ? true : false;
-        }
-
-        function searchFillingByID(questionID) {
-            var result = _searchByID(questionID);
-            return (result) ? result.filling : null;
-        }
-
-        function updateFilling(filling) {
-            if (filling.isFilled()) {
-                if (!existsFillingTo(filling.questionID)) {
-                    _add(filling);
-                } else {
-                    return _replaceFilling(filling);
-                }
-            } else {
-                return _removeFilling(filling.questionID);
-            }
-        }
-
-        function _searchByID(questionID) {
-            var result;
-
-            fillingList.forEach(function(filling, index) {
-                if (filling.questionID === questionID) {
-                    result = {};
-                    result.filling = filling;
-                    result.index = index;
-                }
-            });
-
-            return result;
-        }
-
-        function _add(filling) {
-            fillingList.push(filling);
-        }
-
-        function _replaceFilling(filling) {
-            var result = _searchByID(filling.questionID);
-            if (result !== undefined) {
-                return fillingList.splice(result.index, 1, filling)[0];
-            } else {
-                return null;
-            }
-        }
-
-        function _removeFilling(questionID) {
-            var result = _searchByID(questionID);
-            if (result !== undefined) {
-                return fillingList.splice(result.index, 1)[0];
-            } else {
-                return null;
-            }
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.activity')
-        .service('StatusHistoryManagerService', StatusHistoryManagerService);
-
-    StatusHistoryManagerService.$inject = ['ActivityStatusFactory'];
-
-    function StatusHistoryManagerService(ActivityStatusFactory) {
-        var self = this;
-        var history;
-
-        self.init = init;
-        self.historySize = historySize;
-        self.getHistory = getHistory;
-        self.newCreatedRegistry = newCreatedRegistry;
-        self.newInitializedOfflineRegistry = newInitializedOfflineRegistry;
-        self.newInitializedOnlineRegistry = newInitializedOnlineRegistry;
-        self.newOpenedRegistry = newOpenedRegistry;
-        self.newSavedRegistry = newSavedRegistry;
-        self.newFinalizedRegistry = newFinalizedRegistry;
-        self.toJson = toJson;
-
-        init();
-
-        function init() {
-            history = [];
-        }
-
-        function getHistory() {
-            return history;
-        }
-
-        function newCreatedRegistry(user) {
-            history.push(ActivityStatusFactory.createCreatedStatus(user));
-        }
-
-        function newInitializedOfflineRegistry(user) {
-            history.push(ActivityStatusFactory.createInitializedOfflineStatus(user));
-        }
-
-        function newInitializedOnlineRegistry(user) {
-            history.push(ActivityStatusFactory.createInitializedOnlineStatus(user));
-        }
-
-        function newOpenedRegistry(user) {
-            history.push(ActivityStatusFactory.createOpenedStatus(user));
-        }
-
-        function newSavedRegistry(user) {
-            history.push(ActivityStatusFactory.createSavedStatus(user));
-        }
-
-        function newFinalizedRegistry(user) {
-            history.push(ActivityStatusFactory.createFinalizedStatus(user));
-        }
-
-        function historySize() {
-            return history.length;
-        }
-
-        function toJson() {
-            return JSON.stringify(history);
-        }
-    }
-
-})();
 
 (function() {
     'use strict';
@@ -791,6 +580,217 @@
     'use strict';
 
     angular
+        .module('otusjs.activity')
+        .service('ActivityFacadeService', ActivityFacadeService);
+
+    ActivityFacadeService.$inject = [
+        'AnswerFillFactory',
+        'MetadataFillFactory',
+        'QuestionFillFactory',
+        'ActivitySurveyFactory'
+    ];
+
+    function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
+        var self = this;
+        self.activitySurvey = null;
+
+        /* Public interface */
+        self.createActivity = createActivity;
+        self.createQuestionFill = createQuestionFill;
+        self.openActivitySurvey = openActivitySurvey;
+        self.initializeActivitySurvey = initializeActivitySurvey;
+
+
+        function createActivity(category, group, templateOID, user) {
+            self.activitySurvey = ActivitySurveyFactory.create(category, group, templateOID, user);
+        }
+
+        function openActivitySurvey() {
+            self.activitySurvey.statusHistory.newOpenedRegistry();
+        }
+
+        function initializeActivitySurvey() {
+            self.activitySurvey.statusHistory.newInitializedOnlineRegistry();
+        }
+
+        function createQuestionFill(questionID, answer, metadata, comment) {
+            var question = QuestionFillFactory.create(questionID, answer, metadata, comment);
+            self.activitySurvey.fillContainer.updateFilling(question);
+            //console.log(self.activitySurvey);
+            return question;
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.activity')
+        .service('FillingManagerService', FillingManagerService);
+
+    function FillingManagerService() {
+        var self = this;
+        var fillingList = [];
+
+        /* Public methods */
+        self.init = init;
+        self.listSize = listSize;
+        self.getFillingIndex = getFillingIndex;
+        self.existsFillingTo = existsFillingTo;
+        self.searchFillingByID = searchFillingByID;
+        self.updateFilling = updateFilling;
+
+        init();
+
+        function init() {
+            fillingList = [];
+        }
+
+        function listSize() {
+            return fillingList.length;
+        }
+
+        function getFillingIndex(questionID) {
+            var result = _searchByID(questionID);
+            return (result) ? result.index : null;
+        }
+
+        function existsFillingTo(questionID) {
+            return (_searchByID(questionID)) ? true : false;
+        }
+
+        function searchFillingByID(questionID) {
+            var result = _searchByID(questionID);
+            return (result) ? result.filling : null;
+        }
+
+        function updateFilling(filling) {
+            if (filling.isFilled()) {
+                if (!existsFillingTo(filling.questionID)) {
+                    _add(filling);
+                } else {
+                    return _replaceFilling(filling);
+                }
+            } else {
+                return _removeFilling(filling.questionID);
+            }
+        }
+
+        function _searchByID(questionID) {
+            var result;
+
+            fillingList.forEach(function(filling, index) {
+                if (filling.questionID === questionID) {
+                    result = {};
+                    result.filling = filling;
+                    result.index = index;
+                }
+            });
+
+            return result;
+        }
+
+        function _add(filling) {
+            fillingList.push(filling);
+        }
+
+        function _replaceFilling(filling) {
+            var result = _searchByID(filling.questionID);
+            if (result !== undefined) {
+                return fillingList.splice(result.index, 1, filling)[0];
+            } else {
+                return null;
+            }
+        }
+
+        function _removeFilling(questionID) {
+            var result = _searchByID(questionID);
+            if (result !== undefined) {
+                return fillingList.splice(result.index, 1)[0];
+            } else {
+                return null;
+            }
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.activity')
+        .service('StatusHistoryManagerService', StatusHistoryManagerService);
+
+    StatusHistoryManagerService.$inject = ['ActivityStatusFactory'];
+
+    function StatusHistoryManagerService(ActivityStatusFactory) {
+        var self = this;
+        var history;
+
+        self.init = init;
+        self.historySize = historySize;
+        self.getHistory = getHistory;
+        self.newCreatedRegistry = newCreatedRegistry;
+        self.newInitializedOfflineRegistry = newInitializedOfflineRegistry;
+        self.newInitializedOnlineRegistry = newInitializedOnlineRegistry;
+        self.newOpenedRegistry = newOpenedRegistry;
+        self.newSavedRegistry = newSavedRegistry;
+        self.newFinalizedRegistry = newFinalizedRegistry;
+        self.toJson = toJson;
+
+        init();
+
+        function init() {
+            history = [];
+        }
+
+        function getHistory() {
+            return history;
+        }
+
+        function newCreatedRegistry(user) {
+            history.push(ActivityStatusFactory.createCreatedStatus(user));
+        }
+
+        function newInitializedOfflineRegistry(user) {
+            history.push(ActivityStatusFactory.createInitializedOfflineStatus(user));
+        }
+
+        function newInitializedOnlineRegistry(user) {
+            history.push(ActivityStatusFactory.createInitializedOnlineStatus(user));
+        }
+
+        function newOpenedRegistry(user) {
+            history.push(ActivityStatusFactory.createOpenedStatus(user));
+        }
+
+        function newSavedRegistry(user) {
+            history.push(ActivityStatusFactory.createSavedStatus(user));
+        }
+
+        function newFinalizedRegistry(user) {
+            history.push(ActivityStatusFactory.createFinalizedStatus(user));
+        }
+
+        function historySize() {
+            return history.length;
+        }
+
+        function toJson() {
+            return JSON.stringify(history);
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.metadata')
         .service('AddMetadataAnswerService', AddMetadataAnswerService);
 
@@ -964,6 +964,112 @@
     'use strict';
 
     angular
+        .module('otusjs.metadata')
+        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
+
+    MetadataAnswerFactory.$inject = ['LabelFactory'];
+
+    function MetadataAnswerFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MetadataAnswer(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MetadataAnswer(value, LabelFactory) {
+        var self = this;
+
+        self.extends = 'StudioObject';
+        self.objectType = 'MetadataAnswer';
+        self.dataType = 'Integer';
+        self.value = value;
+        self.label = {
+            'ptBR': LabelFactory.create(),
+            'enUS': LabelFactory.create(),
+            'esES': LabelFactory.create()
+        };
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .factory('MetadataGroupFactory', MetadataGroupFactory);
+
+    MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
+
+    function MetadataGroupFactory(MetadataAnswerFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MetadataGroup(MetadataAnswerFactory);
+        }
+
+        return self;
+    }
+
+    function MetadataGroup(MetadataAnswerFactory) {
+        var self = this;
+
+        self.extents = 'StudioObject';
+        self.objectType = 'MetadataGroup';
+        self.options = [];
+
+        /* Public methods */
+        self.getOptionListSize = getOptionListSize;
+        self.getOptionByValue = getOptionByValue;
+        self.createOption = createOption;
+        self.removeOption = removeOption;
+        self.removeLastOption = removeLastOption;
+
+        function getOptionListSize() {
+            return self.options.length;
+        }
+
+        function getOptionByValue(value) {
+            return self.options[value - 1];
+        }
+
+        function createOption() {
+            var option = MetadataAnswerFactory.create(self.options.length + 1);
+            self.options.push(option);
+            return option;
+        }
+
+        function removeOption(value) {
+            self.options.splice((value - 1), 1);
+            reorderOptionValues();
+        }
+
+        function removeLastOption() {
+            self.options.splice(-1, 1);
+        }
+
+        function reorderOptionValues() {
+            self.options.forEach(function(option, index) {
+                option.value = ++index;
+            });
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.misc')
         .factory('LabelFactory', LabelFactory);
 
@@ -1122,6 +1228,30 @@
     }
   }
 })();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.ExceptionService', service);
+
+  function service() {
+    var self = this;
+
+    self.InvalidStateError = createErrorType('InvalidRouteException');
+
+    function createErrorType(name) {
+      function E(message) {
+        this.message = message;
+      }
+      E.prototype = Object.create(Error.prototype);
+      E.prototype.name = name;
+      E.prototype.constructor = E;
+      return E;
+    }
+  }
+}());
 
 (function() {
   'use strict';
@@ -1553,434 +1683,6 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.ExceptionService', service);
-
-  function service() {
-    var self = this;
-
-    self.InvalidStateError = createErrorType('InvalidRouteException');
-
-    function createErrorType(name) {
-      function E(message) {
-        this.message = message;
-      }
-      E.prototype = Object.create(Error.prototype);
-      E.prototype.name = name;
-      E.prototype.constructor = E;
-      return E;
-    }
-  }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationAddService', service);
-
-  service.$inject = [
-    'otusjs.model.navigation.NavigationContainerService',
-    'SurveyItemContainerService'
-  ];
-
-  function service(NavigationContainerService, SurveyItemContainerService) {
-    var self = this;
-
-    /* Public methods */
-    self.execute = execute;
-
-    function execute() {
-      var itemCount = SurveyItemContainerService.getItemListSize();
-
-      if (itemCount > 1) {
-        var origin = SurveyItemContainerService.getItemByPosition(itemCount - 2);
-        var destination = SurveyItemContainerService.getItemByPosition(itemCount - 1);
-
-        NavigationContainerService.createNavigationTo(origin.templateID, destination.templateID);
-      }
-    }
-  }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationContainerService', service);
-
-  service.$inject = [
-    'otusjs.model.navigation.NavigationFactory'
-  ];
-
-  function service(NavigationFactory) {
-    var self = this;
-    var navigationList = []; // TODO: To implement Immutable collection
-
-    /* Public methods */
-    self.init = init;
-    self.loadJsonData = loadJsonData;
-    self.manageNavigation = manageNavigation;
-    self.getNavigationByOrigin = getNavigationByOrigin;
-    self.getNavigationByPosition = getNavigationByPosition;
-    self.getNavigationPosition = getNavigationPosition;
-    self.getNavigationList = getNavigationList;
-    self.getNavigationListSize = getNavigationListSize;
-    self.existsNavigationTo = existsNavigationTo;
-    self.createNavigationTo = createNavigationTo;
-    self.removeNavigationOf = removeNavigationOf;
-    self.removeNavigationByIndex = removeNavigationByIndex;
-    self.removeCurrentLastNavigation = removeCurrentLastNavigation;
-
-    function init() {
-      navigationList = [];
-    }
-
-    function loadJsonData(data) {
-      init();
-      data.forEach(function(navigationData) {
-        navigationList.push(NavigationFactory.fromJson(navigationData));
-      });
-    }
-
-    function manageNavigation(navigationToManage) {
-      navigationList = navigationToManage;
-    }
-
-    function getNavigationList() {
-      return navigationList;
-    }
-
-    function getNavigationListSize() {
-      return navigationList.length;
-    }
-
-    function getNavigationByOrigin(origin) {
-      var filter = navigationList.filter(function(navigation) {
-        return findByOrigin(navigation, origin);
-      });
-
-      return filter[0];
-    }
-
-    function getNavigationByPosition(position) {
-      return navigationList[position];
-    }
-
-    function getNavigationPosition(origin) {
-      var navigation = getNavigationByOrigin(origin);
-      if (navigation) {
-        return navigationList.indexOf(navigation);
-      } else {
-        return null;
-      }
-    }
-
-    function existsNavigationTo(origin) {
-      return (getNavigationByOrigin(origin)) ? true : false;
-    }
-
-    function createNavigationTo(origin, destination) {
-      navigationList.push(NavigationFactory.create(origin, destination));
-    }
-
-    function removeNavigationOf(questionID) {
-      var navigationToRemove = navigationList.filter(function(navigation) {
-        return findByOrigin(navigation, questionID);
-      });
-
-      var indexToRemove = navigationList.indexOf(navigationToRemove[0]);
-      if (indexToRemove > -1) {
-        navigationList.splice(indexToRemove, 1);
-      }
-    }
-
-    function removeNavigationByIndex(indexToRemove) {
-      navigationList.splice(indexToRemove, 1);
-    }
-
-    function removeCurrentLastNavigation() {
-      navigationList.splice(-1, 1);
-    }
-
-    /* Private methods */
-    function findByOrigin(navigation, questionID) {
-      return navigation.origin === questionID;
-    }
-  }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationManagerService', service);
-
-  service.$inject = [
-    'SurveyItemManagerService',
-    'otusjs.model.navigation.NavigationContainerService',
-    'otusjs.model.navigation.NavigationAddService',
-    'otusjs.model.navigation.NavigationRemoveService',
-    'otusjs.model.navigation.RouteAddService'
-  ];
-
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, RouteAddService) {
-    var self = this;
-    var _selectedNavigation = null;
-
-    /* Public interface */
-    self.init = init;
-    self.loadJsonData = loadJsonData;
-    self.getNavigationList = getNavigationList;
-    self.selectNavigationByOrigin = selectNavigationByOrigin;
-    self.selectedNavigation = selectedNavigation;
-    self.addNavigation = addNavigation;
-    self.addRoute = addRoute;
-    self.removeNavigation = removeNavigation;
-    self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
-
-    function init() {
-      NavigationContainerService.init();
-    }
-
-    function loadJsonData(data) {
-      NavigationContainerService.loadJsonData(data);
-    }
-
-    function getNavigationList() {
-      return NavigationContainerService.getNavigationList();
-    }
-
-    function selectNavigationByOrigin(origin) {
-      _selectedNavigation = NavigationContainerService.getNavigationByOrigin(origin);
-      return _selectedNavigation;
-    }
-
-    function selectedNavigation() {
-      return _selectedNavigation;
-    }
-
-    function addNavigation() {
-      NavigationAddService.execute();
-    }
-
-    function addRoute(routeData) {
-      return RouteAddService.execute(routeData, _selectedNavigation);
-    }
-
-    function removeNavigation(templateID) {
-      NavigationRemoveService.execute(templateID);
-    }
-
-    function getAvaiableRuleCriterionTargets(referenceItemID) {
-      var referenceItemIndex = SurveyItemManagerService.getItemPosition(referenceItemID);
-      var allItems = SurveyItemManagerService.getItemList();
-
-      var avaiableItems = allItems.filter(function(item, index) {
-        return index < referenceItemIndex;
-      });
-
-      return avaiableItems;
-    }
-  }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationRemoveService', service);
-
-  service.$inject = [
-    'otusjs.model.navigation.NavigationContainerService'
-  ];
-
-  function service(NavigationContainerService) {
-    var self = this;
-
-    /* Public methods */
-    self.execute = execute;
-
-    function execute(templateID) {
-      if (NavigationContainerService.existsNavigationTo(templateID)) {
-        var navigationToRecicle = NavigationContainerService.getNavigationByOrigin(templateID);
-        var positionToRecicle = NavigationContainerService.getNavigationPosition(templateID);
-
-        if (positionToRecicle && positionToRecicle !== 0) {
-          var navigationToUpdate = NavigationContainerService.getNavigationByPosition(positionToRecicle - 1);
-          navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
-        }
-
-        NavigationContainerService.removeNavigationOf(templateID);
-      } else {
-        NavigationContainerService.removeCurrentLastNavigation();
-      }
-    }
-  }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.RouteAddService', service);
-
-  service.$inject = [
-    'otusjs.model.navigation.RouteFactory',
-    'otusjs.model.navigation.RouteConditionFactory',
-    'otusjs.model.navigation.RuleFactory'
-  ];
-
-  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
-    var self = this;
-
-    /* Public methods */
-    self.execute = execute;
-
-    function execute(routeData, navigation) {
-      var newRoute = RouteFactory.create(routeData.origin, routeData.destination);
-
-      routeData.conditionSet.forEach(function(condition) {
-        var newCondition = RouteConditionFactory.create(condition.name);
-
-        condition.rules.forEach(function(rule) {
-          var newRule = RuleFactory.create(rule.when.customID, rule.operator.type);
-
-          if (rule.answer instanceof Object) {
-            newRule[rule.operator.type](rule.answer.value);
-          } else {
-            newRule[rule.operator.type](rule.answer);
-          }
-
-          newCondition.addRule(newRule);
-        });
-
-        newRoute.addCondition(newCondition);
-      });
-
-      navigation.addRoute(newRoute);
-      return newRoute;
-    }
-  }
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
-
-    MetadataAnswerFactory.$inject = ['LabelFactory'];
-
-    function MetadataAnswerFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MetadataAnswer(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function MetadataAnswer(value, LabelFactory) {
-        var self = this;
-
-        self.extends = 'StudioObject';
-        self.objectType = 'MetadataAnswer';
-        self.dataType = 'Integer';
-        self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .factory('MetadataGroupFactory', MetadataGroupFactory);
-
-    MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
-
-    function MetadataGroupFactory(MetadataAnswerFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new MetadataGroup(MetadataAnswerFactory);
-        }
-
-        return self;
-    }
-
-    function MetadataGroup(MetadataAnswerFactory) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'MetadataGroup';
-        self.options = [];
-
-        /* Public methods */
-        self.getOptionListSize = getOptionListSize;
-        self.getOptionByValue = getOptionByValue;
-        self.createOption = createOption;
-        self.removeOption = removeOption;
-        self.removeLastOption = removeLastOption;
-
-        function getOptionListSize() {
-            return self.options.length;
-        }
-
-        function getOptionByValue(value) {
-            return self.options[value - 1];
-        }
-
-        function createOption() {
-            var option = MetadataAnswerFactory.create(self.options.length + 1);
-            self.options.push(option);
-            return option;
-        }
-
-        function removeOption(value) {
-            self.options.splice((value - 1), 1);
-            reorderOptionValues();
-        }
-
-        function removeLastOption() {
-            self.options.splice(-1, 1);
-        }
-
-        function reorderOptionValues() {
-            self.options.forEach(function(option, index) {
-                option.value = ++index;
-            });
-        }
-    }
-
-}());
-
-(function() {
     'use strict';
 
     angular
@@ -2209,6 +1911,401 @@
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
+    }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationContainerService', service);
+
+  service.$inject = [
+    'otusjs.model.navigation.NavigationFactory'
+  ];
+
+  function service(NavigationFactory) {
+    var self = this;
+    var navigationList = []; // TODO: To implement Immutable collection
+
+    /* Public methods */
+    self.init = init;
+    self.loadJsonData = loadJsonData;
+    self.manageNavigation = manageNavigation;
+    self.getNavigationByOrigin = getNavigationByOrigin;
+    self.getNavigationByPosition = getNavigationByPosition;
+    self.getNavigationPosition = getNavigationPosition;
+    self.getNavigationList = getNavigationList;
+    self.getNavigationListSize = getNavigationListSize;
+    self.existsNavigationTo = existsNavigationTo;
+    self.createNavigationTo = createNavigationTo;
+    self.removeNavigationOf = removeNavigationOf;
+    self.removeNavigationByIndex = removeNavigationByIndex;
+    self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+
+    function init() {
+      navigationList = [];
+    }
+
+    function loadJsonData(data) {
+      init();
+      data.forEach(function(navigationData) {
+        navigationList.push(NavigationFactory.fromJson(navigationData));
+      });
+    }
+
+    function manageNavigation(navigationToManage) {
+      navigationList = navigationToManage;
+    }
+
+    function getNavigationList() {
+      return navigationList;
+    }
+
+    function getNavigationListSize() {
+      return navigationList.length;
+    }
+
+    function getNavigationByOrigin(origin) {
+      var filter = navigationList.filter(function(navigation) {
+        return findByOrigin(navigation, origin);
+      });
+
+      return filter[0];
+    }
+
+    function getNavigationByPosition(position) {
+      return navigationList[position];
+    }
+
+    function getNavigationPosition(origin) {
+      var navigation = getNavigationByOrigin(origin);
+      if (navigation) {
+        return navigationList.indexOf(navigation);
+      } else {
+        return null;
+      }
+    }
+
+    function existsNavigationTo(origin) {
+      return (getNavigationByOrigin(origin)) ? true : false;
+    }
+
+    function createNavigationTo(origin, destination) {
+      navigationList.push(NavigationFactory.create(origin, destination));
+    }
+
+    function removeNavigationOf(questionID) {
+      var navigationToRemove = navigationList.filter(function(navigation) {
+        return findByOrigin(navigation, questionID);
+      });
+
+      var indexToRemove = navigationList.indexOf(navigationToRemove[0]);
+      if (indexToRemove > -1) {
+        navigationList.splice(indexToRemove, 1);
+      }
+    }
+
+    function removeNavigationByIndex(indexToRemove) {
+      navigationList.splice(indexToRemove, 1);
+    }
+
+    function removeCurrentLastNavigation() {
+      navigationList.splice(-1, 1);
+    }
+
+    /* Private methods */
+    function findByOrigin(navigation, questionID) {
+      return navigation.origin === questionID;
+    }
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationManagerService', service);
+
+  service.$inject = [
+    'SurveyItemManagerService',
+    'otusjs.model.navigation.NavigationContainerService',
+    'otusjs.model.navigation.NavigationAddService',
+    'otusjs.model.navigation.NavigationRemoveService',
+    'otusjs.model.navigation.NavigationValidatorService',
+    'otusjs.model.navigation.RouteAddService'
+  ];
+
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, NavigationValidatorService, RouteAddService) {
+    var self = this;
+
+    /* Public interface */
+    self.init = init;
+    self.loadJsonData = loadJsonData;
+    self.getNavigationList = getNavigationList;
+    self.selectNavigationByOrigin = selectNavigationByOrigin;
+    self.selectedNavigation = selectedNavigation;
+    self.addNavigation = addNavigation;
+    self.addRoute = addRoute;
+    self.removeNavigation = removeNavigation;
+    self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
+
+    function init() {
+      NavigationContainerService.init();
+    }
+
+    function loadJsonData(data) {
+      NavigationContainerService.loadJsonData(data);
+    }
+
+    function getNavigationList() {
+      return NavigationContainerService.getNavigationList();
+    }
+
+    function selectNavigationByOrigin(origin) {
+      _selectedNavigation = NavigationContainerService.getNavigationByOrigin(origin);
+      return _selectedNavigation;
+    }
+
+    function selectedNavigation() {
+      return _selectedNavigation;
+    }
+
+    function addNavigation() {
+      NavigationAddService.execute();
+    }
+	
+	function addRoute(routeData) {
+      return RouteAddService.execute(routeData, _selectedNavigation);
+    }
+
+    function removeNavigation(templateID) {
+      NavigationRemoveService.execute(templateID);
+    }
+
+    function getAvaiableRuleCriterionTargets(referenceItemID) {
+      var referenceItemIndex = SurveyItemManagerService.getItemPosition(referenceItemID);
+      var allItems = SurveyItemManagerService.getItemList();
+
+      var avaiableItems = allItems.filter(function(item, index) {
+        return index < referenceItemIndex;
+      });
+
+      return avaiableItems;
+    }
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationValidatorService', service);
+
+  service.$inject = [
+    'otusjs.model.navigation.NavigationContainerService',
+    'otusjs.model.navigation.ExceptionService'
+  ];
+
+  function service(NavigationContainerService, ExceptionService) {
+    var self = this;
+    var navigationList = [];
+
+    /* Public methods */
+    self.init = init;
+    self.isRouteValid = isRouteValid;
+
+    init();
+
+    function init() {
+      navigationList = NavigationContainerService.getNavigationList();
+      //console.log(NavigationContainerService.getNavigationList());
+    }
+
+    function isRouteValid(origin, destination) {
+      if (origin !== destination) {
+        //console.log(origin);
+        //console.log(navigationList);
+        //console.log(_searchByID(origin));
+      } else {
+        throw new ExceptionService.InvalidStateError('Rota que refere-se a si mesma diretamente');
+      }
+      //TODO: não é um destino que vem antes da origem
+      //TODO: então é válido
+    }
+
+    function _searchByID(questionID) {
+      var routes = [];
+      navigationList.forEach(function(question, index) {
+        if (question.templateID === questionID) {
+          result = {};
+          result.filling = filling;
+          result.index = index;
+        }
+      });
+
+      return routes;
+    }
+
+  }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('FillingRulesDataFactory', FillingRulesDataFactory);
+
+    FillingRulesDataFactory.$inject = [
+        'AlphanumericValidatorFactory',
+        'DistinctValidatorFactory',
+        'FutureDateValidatorFactory',
+        'InValidatorFactory',
+        'LowerCaseValidatorFactory',
+        'LowerLimitValidatorFactory',
+        'MandatoryValidatorFactory',
+        'MaxDateValidatorFactory',
+        'MaxLengthValidatorFactory',
+        'MaxTimeValidatorFactory',
+        'MinDateValidatorFactory',
+        'MinLengthValidatorFactory',
+        'MinTimeValidatorFactory',
+        'ParameterValidatorFactory',
+        'PastDateValidatorFactory',
+        'PrecisionValidatorFactory',
+        'RangeDateValidatorFactory',
+        'ScaleValidatorFactory',
+        'SpecialsValidatorFactory',
+        'UpperCaseValidatorFactory',
+        'UpperLimitValidatorFactory'
+    ];
+
+    function FillingRulesDataFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerCaseValidatorFactory, LowerLimitValidatorFactory, MandatoryValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(validator) {
+          return validatorsTemplates[validator].create();
+        }
+
+        var validatorsTemplates = {
+            alphanumeric: AlphanumericValidatorFactory,
+            distinct: DistinctValidatorFactory,
+            futureDate: FutureDateValidatorFactory,
+            in: InValidatorFactory,
+            lowerLimit: LowerLimitValidatorFactory,
+            lowerCase: LowerCaseValidatorFactory,
+            mandatory: MandatoryValidatorFactory,
+            maxDate: MaxDateValidatorFactory,
+            maxLength: MaxLengthValidatorFactory,
+            maxTime: MaxTimeValidatorFactory,
+            minDate: MinDateValidatorFactory,
+            minLength: MinLengthValidatorFactory,
+            minTime: MinTimeValidatorFactory,
+            parameter: ParameterValidatorFactory,
+            pastDate: PastDateValidatorFactory,
+            precision: PrecisionValidatorFactory,
+            rangeDate: RangeDateValidatorFactory,
+            scale: ScaleValidatorFactory,
+            specials: SpecialsValidatorFactory,
+            upperCase: UpperCaseValidatorFactory,
+            upperLimit: UpperLimitValidatorFactory
+        }
+
+
+        return self;
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('FillingRulesOptionFactory', FillingRulesOptionFactory);
+
+    FillingRulesOptionFactory.$inject = ['RulesFactory'];
+
+    function FillingRulesOptionFactory(RulesFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new FillingRules(RulesFactory);
+        }
+
+        return self;
+    }
+
+    function FillingRules(RulesFactory) {
+        var self = this;
+
+        self.extends = 'StudioObject';
+        self.objectType = 'FillingRules';
+        self.options = {};
+
+        /* Public methods */
+        self.createOption = createOption;
+        self.removeFillingRules = removeFillingRules;
+
+        function createOption(type) {
+            var option = RulesFactory.create(type);
+            self.options[type] = option;
+            return option;
+        }
+
+        function removeFillingRules(type) {
+            delete self.options[type];
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('RulesFactory', RulesFactory);
+
+    RulesFactory.$inject = [
+        'FillingRulesDataFactory'
+    ];
+
+    function RulesFactory(FillingRulesDataFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(validatorType) {
+            return new Rule(FillingRulesDataFactory, validatorType);
+        }
+
+        return self;
+    }
+
+    function Rule(FillingRulesDataFactory, validatorType) {
+        var self = this;
+        self.extends = 'StudioObject';
+        self.objectType = 'Rule';
+        self.validatorType = validatorType;
+        self.data = FillingRulesDataFactory.create(validatorType)
     }
 
 }());
@@ -2530,72 +2627,688 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.AddRouteTaskService', service);
+
+  service.$inject = [
+    'otusjs.model.navigation.RouteFactory',
+    'otusjs.model.navigation.RouteConditionFactory',
+    'otusjs.model.navigation.RuleFactory'
+  ];
+
+  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
+    var self = this;
+
+    /* Public methods */
+    self.execute = execute;
+
+    function execute(routeData, navigation) {
+      var newRoute = RouteFactory.create(routeData.origin, routeData.destination);
+      _setupConditions(newRoute, routeData);
+      navigation.addRoute(newRoute);
+      return newRoute;
+    }
+
+    function _setupConditions(newRoute, routeData) {
+      routeData.conditionSet.forEach(function(conditionData) {
+        var newCondition = RouteConditionFactory.create(conditionData.name);
+        _setupRules(newCondition, conditionData);
+        newRoute.addCondition(newCondition);
+      });
+    }
+
+    function _setupRules(newCondition, conditionData) {
+      conditionData.rules.forEach(function(ruleData) {
+        var newRule = RuleFactory.create(ruleData.when.customID, ruleData.operator.type);
+        _setupAnswer(newRule, ruleData);
+        newCondition.addRule(newRule);
+      });
+    }
+
+    function _setupAnswer(newRule, ruleData) {
+      if (ruleData.answer instanceof Object) {
+        newRule[ruleData.operator.type](ruleData.answer.value);
+      } else {
+        newRule[ruleData.operator.type](ruleData.answer);
+      }
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationAddService', service);
+
+  service.$inject = [
+    'otusjs.model.navigation.NavigationContainerService',
+    'SurveyItemContainerService'
+  ];
+
+  function service(NavigationContainerService, SurveyItemContainerService) {
+    var self = this;
+
+    /* Public methods */
+    self.execute = execute;
+
+    function execute() {
+      var itemCount = SurveyItemContainerService.getItemListSize();
+
+      if (itemCount > 1) {
+        var origin = SurveyItemContainerService.getItemByPosition(itemCount - 2);
+        var destination = SurveyItemContainerService.getItemByPosition(itemCount - 1);
+
+        NavigationContainerService.createNavigationTo(origin.templateID, destination.templateID);
+      }
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationRemoveService', service);
+
+  service.$inject = [
+    'otusjs.model.navigation.NavigationContainerService'
+  ];
+
+  function service(NavigationContainerService) {
+    var self = this;
+
+    /* Public methods */
+    self.execute = execute;
+
+    function execute(templateID) {
+      if (NavigationContainerService.existsNavigationTo(templateID)) {
+        var navigationToRecicle = NavigationContainerService.getNavigationByOrigin(templateID);
+        var positionToRecicle = NavigationContainerService.getNavigationPosition(templateID);
+
+        if (positionToRecicle && positionToRecicle !== 0) {
+          var navigationToUpdate = NavigationContainerService.getNavigationByPosition(positionToRecicle - 1);
+          navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
+        }
+
+        NavigationContainerService.removeNavigationOf(templateID);
+      } else {
+        NavigationContainerService.removeCurrentLastNavigation();
+      }
+    }
+  }
+
+}());
+
+(function() {
     'use strict';
 
     angular
         .module('otusjs.validation')
-        .factory('FillingRulesDataFactory', FillingRulesDataFactory);
+        .factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
 
-    FillingRulesDataFactory.$inject = [
-        'AlphanumericValidatorFactory',
-        'DistinctValidatorFactory',
-        'FutureDateValidatorFactory',
-        'InValidatorFactory',
-        'LowerCaseValidatorFactory',
-        'LowerLimitValidatorFactory',
-        'MandatoryValidatorFactory',
-        'MaxDateValidatorFactory',
-        'MaxLengthValidatorFactory',
-        'MaxTimeValidatorFactory',
-        'MinDateValidatorFactory',
-        'MinLengthValidatorFactory',
-        'MinTimeValidatorFactory',
-        'ParameterValidatorFactory',
-        'PastDateValidatorFactory',
-        'PrecisionValidatorFactory',
-        'RangeDateValidatorFactory',
-        'ScaleValidatorFactory',
-        'SpecialsValidatorFactory',
-        'UpperCaseValidatorFactory',
-        'UpperLimitValidatorFactory'
-    ];
+    AlphanumericValidatorFactory.$inject = ['LabelFactory'];
 
-    function FillingRulesDataFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerCaseValidatorFactory, LowerLimitValidatorFactory, MandatoryValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
+    function AlphanumericValidatorFactory(LabelFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(validator) {
-          return validatorsTemplates[validator].create();
+        function create(value) {
+            return new AlphanumericValidator(value, LabelFactory);
         }
-
-        var validatorsTemplates = {
-            alphanumeric: AlphanumericValidatorFactory,
-            distinct: DistinctValidatorFactory,
-            futureDate: FutureDateValidatorFactory,
-            in: InValidatorFactory,
-            lowerLimit: LowerLimitValidatorFactory,
-            lowerCase: LowerCaseValidatorFactory,
-            mandatory: MandatoryValidatorFactory,
-            maxDate: MaxDateValidatorFactory,
-            maxLength: MaxLengthValidatorFactory,
-            maxTime: MaxTimeValidatorFactory,
-            minDate: MinDateValidatorFactory,
-            minLength: MinLengthValidatorFactory,
-            minTime: MinTimeValidatorFactory,
-            parameter: ParameterValidatorFactory,
-            pastDate: PastDateValidatorFactory,
-            precision: PrecisionValidatorFactory,
-            rangeDate: RangeDateValidatorFactory,
-            scale: ScaleValidatorFactory,
-            specials: SpecialsValidatorFactory,
-            upperCase: UpperCaseValidatorFactory,
-            upperLimit: UpperLimitValidatorFactory
-        }
-
 
         return self;
+    }
+
+    function AlphanumericValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = true;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('DistinctValidatorFactory', DistinctValidatorFactory);
+
+    DistinctValidatorFactory.$inject = ['LabelFactory'];
+
+    function DistinctValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new DistinctValidatorFactory(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function DistinctValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = null;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('FutureDateValidatorFactory', FutureDateValidatorFactory);
+
+    function FutureDateValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new FutureDateValidator(value);
+        }
+
+        return self;
+    }
+
+    function FutureDateValidator(value) {
+        var self = this;
+
+        self.reference = new Date();
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('InValidatorFactory', InValidatorFactory);
+
+    InValidatorFactory.$inject = ['LabelFactory'];
+
+    function InValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new InValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function InValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = {'initial':null, 'end': null};
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('LowerCaseValidatorFactory', LowerCaseValidatorFactory);
+
+    LowerCaseValidatorFactory.$inject = ['LabelFactory'];
+
+    function LowerCaseValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new LowerCaseValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function LowerCaseValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = true;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('LowerLimitValidatorFactory', LowerLimitValidatorFactory);
+
+    LowerLimitValidatorFactory.$inject = ['LabelFactory'];
+
+    function LowerLimitValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new LowerLimitValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function LowerLimitValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = null;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('MandatoryValidatorFactory', MandatoryValidatorFactory);
+
+    MandatoryValidatorFactory.$inject = ['LabelFactory'];
+
+    function MandatoryValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MandatoryValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MandatoryValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = false;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('MaxDateValidatorFactory', MaxDateValidatorFactory);
+
+    MaxDateValidatorFactory.$inject = ['LabelFactory'];
+
+    function MaxDateValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MaxDateValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MaxDateValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = new Date();
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('MaxLengthValidatorFactory', MaxLengthValidatorFactory);
+
+    MaxLengthValidatorFactory.$inject = ['LabelFactory'];
+
+    function MaxLengthValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MaxLengthValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MaxLengthValidator(value, LabelFactory) {
+        var self = this;
+
+        self.size = null;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
+
+    MaxTimeValidatorFactory.$inject = ['LabelFactory'];
+
+    function MaxTimeValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MaxTimeValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MaxTimeValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = '';
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('MinDateValidatorFactory', MinDateValidatorFactory);
+
+    MinDateValidatorFactory.$inject = ['LabelFactory'];
+
+    function MinDateValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MinDateValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MinDateValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = new Date();
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('MinLengthValidatorFactory', MinLengthValidatorFactory);
+
+    MinLengthValidatorFactory.$inject = ['LabelFactory'];
+
+    function MinLengthValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MinLengthValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MinLengthValidator(value, LabelFactory) {
+        var self = this;
+
+        self.size = null;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
+
+    MinTimeValidatorFactory.$inject = ['LabelFactory'];
+
+    function MinTimeValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MinTimeValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MinTimeValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = '';
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('ParameterValidatorFactory', ParameterValidatorFactory);
+
+    ParameterValidatorFactory.$inject = ['LabelFactory'];
+
+    function ParameterValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new ParameterValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function ParameterValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = '';
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('PastDateValidatorFactory', PastDateValidatorFactory);
+
+    PastDateValidatorFactory.$inject = ['LabelFactory'];
+
+    function PastDateValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new PastDateValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function PastDateValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = new Date();
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('PrecisionValidatorFactory', PrecisionValidatorFactory);
+
+    PrecisionValidatorFactory.$inject = ['LabelFactory'];
+
+    function PrecisionValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new PrecisionValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function PrecisionValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = null;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('RangeDateValidatorFactory', RangeDateValidatorFactory);
+
+    RangeDateValidatorFactory.$inject = ['LabelFactory'];
+
+    function RangeDateValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new RangeDateValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function RangeDateValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = {'initial': new Date(), 'end': new Date()};
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('ScaleValidatorFactory', ScaleValidatorFactory);
+
+    ScaleValidatorFactory.$inject = ['LabelFactory'];
+
+    function ScaleValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new ScaleValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function ScaleValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = null;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('SpecialsValidatorFactory', SpecialsValidatorFactory);
+
+    SpecialsValidatorFactory.$inject = ['LabelFactory'];
+
+    function SpecialsValidatorFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new SpecialsValidator(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function SpecialsValidator(value, LabelFactory) {
+        var self = this;
+
+        self.reference = true;
 
     }
 
@@ -2606,44 +3319,27 @@
 
     angular
         .module('otusjs.validation')
-        .factory('FillingRulesOptionFactory', FillingRulesOptionFactory);
+        .factory('UpperCaseValidatorFactory', UpperCaseValidatorFactory);
 
-    FillingRulesOptionFactory.$inject = ['RulesFactory'];
+    UpperCaseValidatorFactory.$inject = ['LabelFactory'];
 
-    function FillingRulesOptionFactory(RulesFactory) {
+    function UpperCaseValidatorFactory(LabelFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new FillingRules(RulesFactory);
+        function create(value) {
+            return new UpperCaseValidator(value, LabelFactory);
         }
 
         return self;
     }
 
-    function FillingRules(RulesFactory) {
+    function UpperCaseValidator(value, LabelFactory) {
         var self = this;
 
-        self.extends = 'StudioObject';
-        self.objectType = 'FillingRules';
-        self.options = {};
-
-        /* Public methods */
-        self.createOption = createOption;
-        self.removeFillingRules = removeFillingRules;
-
-        function createOption(type) {
-            var option = RulesFactory.create(type);
-            self.options[type] = option;
-            return option;
-        }
-
-        function removeFillingRules(type) {
-            delete self.options[type];
-        }
-
+        self.reference = true;
     }
 
 }());
@@ -2653,31 +3349,27 @@
 
     angular
         .module('otusjs.validation')
-        .factory('RulesFactory', RulesFactory);
+        .factory('UpperLimitValidatorFactory', UpperLimitValidatorFactory);
 
-    RulesFactory.$inject = [
-        'FillingRulesDataFactory'
-    ];
+    UpperLimitValidatorFactory.$inject = ['LabelFactory'];
 
-    function RulesFactory(FillingRulesDataFactory) {
+    function UpperLimitValidatorFactory(LabelFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(validatorType) {
-            return new Rule(FillingRulesDataFactory, validatorType);
+        function create(value) {
+            return new UpperLimitValidator(value, LabelFactory);
         }
 
         return self;
     }
 
-    function Rule(FillingRulesDataFactory, validatorType) {
+    function UpperLimitValidator(value, LabelFactory) {
         var self = this;
-        self.extends = 'StudioObject';
-        self.objectType = 'Rule';
-        self.validatorType = validatorType;
-        self.data = FillingRulesDataFactory.create(validatorType)
+
+        self.reference = null;
     }
 
 }());
@@ -3776,635 +4468,6 @@
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
-
-    AlphanumericValidatorFactory.$inject = ['LabelFactory'];
-
-    function AlphanumericValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new AlphanumericValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function AlphanumericValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = true;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('DistinctValidatorFactory', DistinctValidatorFactory);
-
-    DistinctValidatorFactory.$inject = ['LabelFactory'];
-
-    function DistinctValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new DistinctValidatorFactory(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function DistinctValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = null;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('FutureDateValidatorFactory', FutureDateValidatorFactory);
-
-    function FutureDateValidatorFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new FutureDateValidator(value);
-        }
-
-        return self;
-    }
-
-    function FutureDateValidator(value) {
-        var self = this;
-
-        self.reference = new Date();
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('InValidatorFactory', InValidatorFactory);
-
-    InValidatorFactory.$inject = ['LabelFactory'];
-
-    function InValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new InValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function InValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = {'initial':null, 'end': null};
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('LowerCaseValidatorFactory', LowerCaseValidatorFactory);
-
-    LowerCaseValidatorFactory.$inject = ['LabelFactory'];
-
-    function LowerCaseValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new LowerCaseValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function LowerCaseValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = true;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('LowerLimitValidatorFactory', LowerLimitValidatorFactory);
-
-    LowerLimitValidatorFactory.$inject = ['LabelFactory'];
-
-    function LowerLimitValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new LowerLimitValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function LowerLimitValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = null;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('MandatoryValidatorFactory', MandatoryValidatorFactory);
-
-    MandatoryValidatorFactory.$inject = ['LabelFactory'];
-
-    function MandatoryValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MandatoryValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function MandatoryValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = false;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('MaxDateValidatorFactory', MaxDateValidatorFactory);
-
-    MaxDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function MaxDateValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MaxDateValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function MaxDateValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = new Date();
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('MaxLengthValidatorFactory', MaxLengthValidatorFactory);
-
-    MaxLengthValidatorFactory.$inject = ['LabelFactory'];
-
-    function MaxLengthValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MaxLengthValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function MaxLengthValidator(value, LabelFactory) {
-        var self = this;
-
-        self.size = null;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
-
-    MaxTimeValidatorFactory.$inject = ['LabelFactory'];
-
-    function MaxTimeValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MaxTimeValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function MaxTimeValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = '';
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('MinDateValidatorFactory', MinDateValidatorFactory);
-
-    MinDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function MinDateValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MinDateValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function MinDateValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = new Date();
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('MinLengthValidatorFactory', MinLengthValidatorFactory);
-
-    MinLengthValidatorFactory.$inject = ['LabelFactory'];
-
-    function MinLengthValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MinLengthValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function MinLengthValidator(value, LabelFactory) {
-        var self = this;
-
-        self.size = null;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
-
-    MinTimeValidatorFactory.$inject = ['LabelFactory'];
-
-    function MinTimeValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MinTimeValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function MinTimeValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = '';
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('ParameterValidatorFactory', ParameterValidatorFactory);
-
-    ParameterValidatorFactory.$inject = ['LabelFactory'];
-
-    function ParameterValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new ParameterValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function ParameterValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = '';
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('PastDateValidatorFactory', PastDateValidatorFactory);
-
-    PastDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function PastDateValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new PastDateValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function PastDateValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = new Date();
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('PrecisionValidatorFactory', PrecisionValidatorFactory);
-
-    PrecisionValidatorFactory.$inject = ['LabelFactory'];
-
-    function PrecisionValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new PrecisionValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function PrecisionValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = null;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('RangeDateValidatorFactory', RangeDateValidatorFactory);
-
-    RangeDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function RangeDateValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new RangeDateValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function RangeDateValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = {'initial': new Date(), 'end': new Date()};
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('ScaleValidatorFactory', ScaleValidatorFactory);
-
-    ScaleValidatorFactory.$inject = ['LabelFactory'];
-
-    function ScaleValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new ScaleValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function ScaleValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = null;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('SpecialsValidatorFactory', SpecialsValidatorFactory);
-
-    SpecialsValidatorFactory.$inject = ['LabelFactory'];
-
-    function SpecialsValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new SpecialsValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function SpecialsValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = true;
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('UpperCaseValidatorFactory', UpperCaseValidatorFactory);
-
-    UpperCaseValidatorFactory.$inject = ['LabelFactory'];
-
-    function UpperCaseValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new UpperCaseValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function UpperCaseValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = true;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('UpperLimitValidatorFactory', UpperLimitValidatorFactory);
-
-    UpperLimitValidatorFactory.$inject = ['LabelFactory'];
-
-    function UpperLimitValidatorFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new UpperLimitValidator(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function UpperLimitValidator(value, LabelFactory) {
-        var self = this;
-
-        self.reference = null;
     }
 
 }());
