@@ -24,6 +24,7 @@
     self.selectNavigationByOrigin = selectNavigationByOrigin;
     self.selectedNavigation = selectedNavigation;
     self.addNavigation = addNavigation;
+    self.addRoute = addRoute;
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
 
