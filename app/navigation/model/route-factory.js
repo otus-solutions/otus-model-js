@@ -17,7 +17,7 @@
     self.fromJson = fromJson;
 
     function create(origin, destination) {
-      return new Route(name, origin, destination);
+      return new Route(origin, destination);
     }
 
     function fromJson(json) {
