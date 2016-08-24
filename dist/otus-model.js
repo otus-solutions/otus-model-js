@@ -961,61 +961,6 @@
 }());
 
 (function() {
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationApiService', service);
-
-  service.$inject = [
-    'otusjs.model.navigation.RouteFactory',
-    'otusjs.model.navigation.RouteConditionFactory',
-    'otusjs.model.navigation.RuleFactory'
-  ];
-
-  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
-    var self = this;
-
-    /* Public methods */
-    self.addRoute = addRoute;
-    self.addRouteCondition = addRouteCondition;
-    self.addConditionRule = addConditionRule;
-    self.removeRoute = removeRoute;
-    self.removeRouteCondition = removeRouteCondition;
-    self.removeConditionRule = removeConditionRule;
-
-    function addRoute(routeData, navigation) {
-      var route = RouteFactory.create(routeData.name, routeData.origin, routeData.destination);
-      navigation.addRoute(route);
-      return route;
-    }
-
-    function addRouteCondition(conditionName, route) {
-      var routeCondition = RouteConditionFactory.create(conditionName);
-      route.addCondition(routeCondition);
-      return routeCondition;
-    }
-
-    function addConditionRule(ruleData, routeCondition) {
-      var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
-      routeCondition.addRule(newRule);
-      return newRule;
-    }
-
-    function removeRoute() {
-      routeData.parentNavigation.removeRoute(routeData.name);
-    }
-
-    function removeRouteCondition() {
-
-    }
-
-    function removeConditionRule() {
-      route.conditionSet[0].removeRule(rule);
-    }
-  }
-})();
-
-(function() {
     'use strict';
 
     angular
@@ -1120,6 +1065,61 @@
     }
 
 }());
+
+(function() {
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationApiService', service);
+
+  service.$inject = [
+    'otusjs.model.navigation.RouteFactory',
+    'otusjs.model.navigation.RouteConditionFactory',
+    'otusjs.model.navigation.RuleFactory'
+  ];
+
+  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
+    var self = this;
+
+    /* Public methods */
+    self.addRoute = addRoute;
+    self.addRouteCondition = addRouteCondition;
+    self.addConditionRule = addConditionRule;
+    self.removeRoute = removeRoute;
+    self.removeRouteCondition = removeRouteCondition;
+    self.removeConditionRule = removeConditionRule;
+
+    function addRoute(routeData, navigation) {
+      var route = RouteFactory.create(routeData.name, routeData.origin, routeData.destination);
+      navigation.addRoute(route);
+      return route;
+    }
+
+    function addRouteCondition(conditionName, route) {
+      var routeCondition = RouteConditionFactory.create(conditionName);
+      route.addCondition(routeCondition);
+      return routeCondition;
+    }
+
+    function addConditionRule(ruleData, routeCondition) {
+      var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
+      routeCondition.addRule(newRule);
+      return newRule;
+    }
+
+    function removeRoute() {
+      routeData.parentNavigation.removeRoute(routeData.name);
+    }
+
+    function removeRouteCondition() {
+
+    }
+
+    function removeConditionRule() {
+      route.conditionSet[0].removeRule(rule);
+    }
+  }
+})();
 
 (function() {
   'use strict';
@@ -1725,20 +1725,23 @@
     .service('otusjs.model.navigation.NavigationManagerService', service);
 
   service.$inject = [
+    'SurveyItemManagerService',
     'otusjs.model.navigation.NavigationContainerService',
     'otusjs.model.navigation.NavigationAddService',
     'otusjs.model.navigation.NavigationRemoveService',
-    'SurveyItemManagerService'
+    'otusjs.model.navigation.RouteAddService'
   ];
 
-  function service(NavigationContainerService, NavigationAddService, NavigationRemoveService, SurveyItemManagerService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, RouteAddService) {
     var self = this;
+    var _selectedNavigation = null;
 
     /* Public interface */
     self.init = init;
     self.loadJsonData = loadJsonData;
     self.getNavigationList = getNavigationList;
-    self.getNavigationByOrigin = getNavigationByOrigin;
+    self.selectNavigationByOrigin = selectNavigationByOrigin;
+    self.selectedNavigation = selectedNavigation;
     self.addNavigation = addNavigation;
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
@@ -1755,12 +1758,21 @@
       return NavigationContainerService.getNavigationList();
     }
 
-    function getNavigationByOrigin(origin) {
-      return NavigationContainerService.getNavigationByOrigin(origin);
+    function selectNavigationByOrigin(origin) {
+      _selectedNavigation = NavigationContainerService.getNavigationByOrigin(origin);
+      return _selectedNavigation;
+    }
+
+    function selectedNavigation() {
+      return _selectedNavigation;
     }
 
     function addNavigation() {
       NavigationAddService.execute();
+    }
+
+    function addRoute(routeData) {
+      return RouteAddService.execute(routeData, _selectedNavigation);
     }
 
     function removeNavigation(templateID) {
@@ -1815,6 +1827,32 @@
     }
   }
 
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.RouteAddService', service);
+
+  service.$inject = [
+    'otusjs.model.navigation.RouteFactory',
+    'otusjs.model.navigation.RuleFactory'
+  ];
+
+  function service(RouteFactory, RuleFactory) {
+    var self = this;
+
+    /* Public methods */
+    self.execute = execute;
+
+    function execute(routeData, navigation) {
+      var route = RouteFactory.create(routeData.name, routeData.origin, routeData.destination);
+      navigation.addRoute(route);
+      return route;
+    }
+  }
 }());
 
 (function() {

@@ -9,10 +9,10 @@ describe('NavigationManagerService', function() {
 
     inject(function(_$injector_) {
       mockQuestions(_$injector_);
+      mockSurveyItemContainerService(_$injector_);
       mockNavigationContainerService(_$injector_);
       mockNavigationAddService(_$injector_);
       mockNavigationRemoveService(_$injector_);
-      mockSurveyItemContainerService(_$injector_);
 
       service = _$injector_.get('otusjs.model.navigation.NavigationManagerService', injections);
     });
@@ -64,16 +64,23 @@ describe('NavigationManagerService', function() {
 
   });
 
-  describe('getNavigationByOrigin method', function() {
+  describe('selectNavigationByOrigin method', function() {
 
     it('should be defined in service', function() {
-      expect(service.getNavigationByOrigin).toBeDefined();
+      expect(service.selectNavigationByOrigin).toBeDefined();
     });
 
     it('should call NavigationContainerService.getNavigationByOrigin method with origin', function() {
-      service.getNavigationByOrigin(Mock.Q1.templateID);
+      service.selectNavigationByOrigin(Mock.Q1.templateID);
 
       expect(Mock.NavigationContainerService.getNavigationByOrigin).toHaveBeenCalledWith(Mock.Q1.templateID);
+    });
+
+    it('should store a reference to requested navigation', function() {
+      service.selectNavigationByOrigin(Mock.Q1.templateID);
+      var selectedNavigation = service.selectedNavigation();
+
+      expect(selectedNavigation.origin).toEqual(Mock.Q1.templateID);
     });
 
   });
