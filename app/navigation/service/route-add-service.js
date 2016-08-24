@@ -24,7 +24,7 @@
         var newCondition = RouteConditionFactory.create(condition.name);
 
         condition.rules.forEach(function(rule) {
-          var newRule = RuleFactory.create(rule.when.customID);
+          var newRule = RuleFactory.create(rule.when.customID, rule.operator.type);
 
           if (rule.answer instanceof Object) {
             newRule[rule.operator.type]();
