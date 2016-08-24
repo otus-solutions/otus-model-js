@@ -9,10 +9,11 @@
     'otusjs.model.navigation.NavigationContainerService',
     'otusjs.model.navigation.NavigationAddService',
     'otusjs.model.navigation.NavigationRemoveService',
+    'otusjs.model.navigation.NavigationValidatorService',
     'SurveyItemManagerService'
   ];
 
-  function service(NavigationContainerService, NavigationAddService, NavigationRemoveService, SurveyItemManagerService) {
+  function service(NavigationContainerService, NavigationAddService, NavigationRemoveService, NavigationValidatorService, SurveyItemManagerService) {
     var self = this;
 
     /* Public interface */
