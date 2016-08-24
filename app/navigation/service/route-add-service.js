@@ -39,7 +39,7 @@
       });
 
       navigation.addRoute(newRoute);
-      return route;
+      return newRoute;
     }
   }
 }());
