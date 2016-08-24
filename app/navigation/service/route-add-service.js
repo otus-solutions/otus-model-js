@@ -18,10 +18,10 @@
     self.execute = execute;
 
     function execute(routeData, navigation) {
-      var route = RouteFactory.create(routeData.origin, routeData.destination);
+      var newRoute = RouteFactory.create(routeData.origin, routeData.destination);
 
       routeData.conditionSet.forEach(function(condition) {
-        var condition = RouteConditionFactory.create(condition.name);
+        var newCondition = RouteConditionFactory.create(condition.name);
 
         condition.rules.forEach(function(rule) {
           var newRule = RuleFactory.create(rule.when.customID);
@@ -32,13 +32,13 @@
             newRule[rule.operator.type](rule.answer);
           }
 
-          condition.addRule(newRule);
+          newCondition.addRule(newRule);
         });
 
-        route.addCondition(condition);
+        route.addCondition(newCondition);
       });
 
-      navigation.addRoute(route);
+      navigation.addRoute(newRoute);
       return route;
     }
   }
