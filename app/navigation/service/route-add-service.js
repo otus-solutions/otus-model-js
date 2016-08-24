@@ -35,7 +35,7 @@
           newCondition.addRule(newRule);
         });
 
-        route.addCondition(newCondition);
+        newRoute.addCondition(newCondition);
       });
 
       navigation.addRoute(newRoute);
