@@ -15,6 +15,14 @@
 }());
 
 (function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc', []);
+
+}());
+
+(function() {
   'use strict';
 
   angular
@@ -26,7 +34,7 @@
     'use strict';
 
     angular
-        .module('otusjs.misc', []);
+        .module('otusjs.survey', []);
 
 }());
 
@@ -35,14 +43,6 @@
 
     angular
         .module('otusjs.surveyItem', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.survey', []);
 
 }());
 
@@ -1067,6 +1067,114 @@
 }());
 
 (function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('LabelFactory', LabelFactory);
+
+    function LabelFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Label();
+        }
+
+        return self;
+    }
+
+    function Label() {
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Label',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('UnitFactory', UnitFactory);
+
+    function UnitFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Unit();
+        }
+
+        return self;
+    }
+
+    function Unit() {
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Unit',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+    }
+
+}());
+
+(function() {
 
   angular
     .module('otusjs.model.navigation')
@@ -1120,6 +1228,30 @@
     }
   }
 })();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.ExceptionService', service);
+
+  function service() {
+    var self = this;
+
+    self.InvalidStateError = createErrorType('InvalidRouteException');
+
+    function createErrorType(name) {
+      function E(message) {
+        this.message = message;
+      }
+      E.prototype = Object.create(Error.prototype);
+      E.prototype.name = name;
+      E.prototype.constructor = E;
+      return E;
+    }
+  }
+}());
 
 (function() {
   'use strict';
@@ -1558,30 +1690,6 @@
 
   angular
     .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.ExceptionService', service);
-
-  function service() {
-    var self = this;
-
-    self.InvalidStateError = createErrorType('InvalidRouteException');
-
-    function createErrorType(name) {
-      function E(message) {
-        this.message = message;
-      }
-      E.prototype = Object.create(Error.prototype);
-      E.prototype.name = name;
-      E.prototype.constructor = E;
-      return E;
-    }
-  }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
     .service('otusjs.model.navigation.NavigationAddService', service);
 
   service.$inject = [
@@ -1839,10 +1947,11 @@
 
   service.$inject = [
     'otusjs.model.navigation.RouteFactory',
+    'otusjs.model.navigation.RouteConditionFactory',
     'otusjs.model.navigation.RuleFactory'
   ];
 
-  function service(RouteFactory, RuleFactory) {
+  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
     var self = this;
 
     /* Public methods */
@@ -1850,6 +1959,25 @@
 
     function execute(routeData, navigation) {
       var route = RouteFactory.create(routeData.origin, routeData.destination);
+
+      routeData.conditionSet.forEach(function(condition) {
+        var condition = RouteConditionFactory.create(condition.name);
+
+        condition.rules.forEach(function(rule) {
+          var newRule = RuleFactory.create(rule.when.customID);
+
+          if (rule.answer instanceof Object) {
+            newRule[rule.operator.type]();
+          } else {
+            newRule[rule.operator.type](rule.answer);
+          }
+
+          condition.addRule(newRule);
+        });
+
+        route.addCondition(condition);
+      });
+
       navigation.addRoute(route);
       return route;
     }
@@ -1860,52 +1988,124 @@
     'use strict';
 
     angular
-        .module('otusjs.misc')
-        .factory('LabelFactory', LabelFactory);
+        .module('otusjs.survey')
+        .factory('SurveyFactory', SurveyFactory);
 
-    function LabelFactory() {
+    SurveyFactory.$inject = [
+        'SurveyIdentityFactory',
+        'SurveyMetaInfoFactory',
+        'SurveyUUIDGenerator',
+        'otusjs.model.navigation.NavigationManagerService',
+        'SurveyItemManagerService'
+    ];
+
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService, SurveyItemManagerService) {
         var self = this;
 
-        /* Public interface */
+        /* Public interdace */
         self.create = create;
+        self.load = load;
 
-        function create() {
-            return new Label();
+        function load(surveyTemplateJson) {
+          var metainfo = SurveyMetaInfoFactory.load(surveyTemplateJson.metainfo);
+          var identity = SurveyIdentityFactory.load(surveyTemplateJson.identity);
+          var UUID = surveyTemplateJson.oid;
+
+          return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+        }
+
+        function create(name, acronym) {
+            var metainfo = SurveyMetaInfoFactory.create();
+            var identity = SurveyIdentityFactory.create(name, acronym);
+            var UUID = SurveyUUIDGenerator.generateSurveyUUID();
+
+            return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
         }
 
         return self;
     }
 
-    function Label() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService, SurveyItemManagerService) {
+        var self = this;
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'Label',
-            writable: false,
-            enumerable: true
-        });
+        self.extents = 'StudioObject';
+        self.objectType = 'Survey';
+        self.oid = uuid;
+        self.identity = surveyIdentity;
+        self.metainfo = surveyMetainfo;
+        self.SurveyItemManager = SurveyItemManagerService;
+        self.NavigationManager = NavigationManagerService;
 
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
+        self.NavigationManager.init();
+        self.SurveyItemManager.init();
 
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
+        /* Public methods */
+        self.addItem = addItem;
+        self.removeItem = removeItem;
+        self.getItemByTemplateID = getItemByTemplateID;
+        self.getItemByCustomID = getItemByCustomID;
+        self.getItemByID = getItemByID;
+        self.isAvailableID = isAvailableID;
+        self.isAvailableCustomID = isAvailableCustomID;
+        self.updateItem = updateItem;
+        self.toJson = toJson;
 
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
+        function getItemByTemplateID(templateID) {
+            return self.SurveyItemManager.getItemByTemplateID(templateID);
+        }
+
+        function getItemByCustomID(customID) {
+            return self.SurveyItemManager.getItemByCustomID(customID);
+        }
+
+        function getItemByID(id) {
+            return self.SurveyItemManager.getItemByID(id);
+        }
+
+        function isAvailableID(id){
+            return !self.SurveyItemManager.existsItem(id);
+        }
+
+        function isAvailableCustomID(id){
+            return self.SurveyItemManager.isAvailableCustomID(id);
+        }
+
+        function addItem(type) {
+            var item = self.SurveyItemManager.addItem(type, self.identity.acronym);
+            self.NavigationManager.addNavigation();
+            return item;
+        }
+
+        function removeItem(templateID) {
+            self.SurveyItemManager.removeItem(templateID);
+            self.NavigationManager.removeNavigation(templateID);
+        }
+
+        function updateItem(item) {
+            self.navigationList[item.templateID] = item;
+        }
+
+        function toJson() {
+            var json = {};
+
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.oid = self.oid;
+            json.identity = self.identity.toJson();
+            json.metainfo = self.metainfo.toJson();
+
+            json.itemContainer = [];
+            self.SurveyItemManager.getItemList().forEach(function(item) {
+                json.itemContainer.push(item.toJson());
+            });
+
+            json.navigationList = [];
+            NavigationManagerService.getNavigationList().forEach(function(navigation) {
+                json.navigationList.push(navigation.toJson());
+            });
+
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+        }
     }
 
 }());
@@ -1914,52 +2114,105 @@
     'use strict';
 
     angular
-        .module('otusjs.misc')
-        .factory('UnitFactory', UnitFactory);
+        .module('otusjs.survey')
+        .factory('SurveyIdentityFactory', SurveyIdentityFactory);
 
-    function UnitFactory() {
+    function SurveyIdentityFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
+        self.load = load;
 
-        function create() {
-            return new Unit();
+        function load(surveyIdentityJson) {
+            return new SurveyIdentity(surveyIdentityJson.name,
+                surveyIdentityJson.acronym,
+                surveyIdentityJson.version);
+        }
+
+        function create(name, acronym, version) {
+            return new SurveyIdentity(name, acronym, version);
         }
 
         return self;
     }
 
-    function Unit() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+    function SurveyIdentity(name, acronym) {
+        var self = this;
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'Unit',
-            writable: false,
-            enumerable: true
-        });
+        self.extents = 'StudioObject';
+        self.objectType = 'SurveyIdentity';
+        self.name = name;
+        self.acronym = acronym;
+        self.recommendedTo = '';
+        self.description = '';
+        self.keywords = [];
 
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
+        self.toJson = toJson;
 
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
+        function toJson() {
+            var json = {};
 
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.name = self.name;
+            json.acronym = self.acronym;
+            json.recommendedTo = self.recommendedTo;
+            json.description = self.description;
+            json.keywords = self.keywords;
+
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.survey')
+        .factory('SurveyMetaInfoFactory', SurveyMetaInfoFactory);
+
+    function SurveyMetaInfoFactory() {
+        var self = this;
+
+        /* Public interdace */
+        self.create = create;
+        self.load = load;
+
+        function load(surveyMetaInfoJson) {
+          return new SurveyMetaInfo(surveyMetaInfoJson.creationDatetime);
+        }
+
+        function create() {
+            var now = Date.now();
+            return new SurveyMetaInfo(now);
+        }
+
+        return self;
+    }
+
+    function SurveyMetaInfo(creationDatetime) {
+        var self = this;
+
+        self.extents = 'StudioObject';
+        self.objectType = 'SurveyMetaInfo';
+        self.creationDatetime = creationDatetime;
+        self.otusStudioVersion = '';
+
+        self.toJson = toJson;
+
+        function toJson() {
+            var json = {};
+
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.creationDatetime = self.creationDatetime;
+            json.otusStudioVersion = self.otusStudioVersion;
+
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+        }
     }
 
 }());
@@ -2275,239 +2528,6 @@
                 }
             });
             return (getItemByCustomID(id) || foundCustomOptionID) ? false : true;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.survey')
-        .factory('SurveyFactory', SurveyFactory);
-
-    SurveyFactory.$inject = [
-        'SurveyIdentityFactory',
-        'SurveyMetaInfoFactory',
-        'SurveyUUIDGenerator',
-        'otusjs.model.navigation.NavigationManagerService',
-        'SurveyItemManagerService'
-    ];
-
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService, SurveyItemManagerService) {
-        var self = this;
-
-        /* Public interdace */
-        self.create = create;
-        self.load = load;
-
-        function load(surveyTemplateJson) {
-          var metainfo = SurveyMetaInfoFactory.load(surveyTemplateJson.metainfo);
-          var identity = SurveyIdentityFactory.load(surveyTemplateJson.identity);
-          var UUID = surveyTemplateJson.oid;
-
-          return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
-        }
-
-        function create(name, acronym) {
-            var metainfo = SurveyMetaInfoFactory.create();
-            var identity = SurveyIdentityFactory.create(name, acronym);
-            var UUID = SurveyUUIDGenerator.generateSurveyUUID();
-
-            return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
-        }
-
-        return self;
-    }
-
-    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService, SurveyItemManagerService) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'Survey';
-        self.oid = uuid;
-        self.identity = surveyIdentity;
-        self.metainfo = surveyMetainfo;
-        self.SurveyItemManager = SurveyItemManagerService;
-        self.NavigationManager = NavigationManagerService;
-
-        self.NavigationManager.init();
-        self.SurveyItemManager.init();
-
-        /* Public methods */
-        self.addItem = addItem;
-        self.removeItem = removeItem;
-        self.getItemByTemplateID = getItemByTemplateID;
-        self.getItemByCustomID = getItemByCustomID;
-        self.getItemByID = getItemByID;
-        self.isAvailableID = isAvailableID;
-        self.isAvailableCustomID = isAvailableCustomID;
-        self.updateItem = updateItem;
-        self.toJson = toJson;
-
-        function getItemByTemplateID(templateID) {
-            return self.SurveyItemManager.getItemByTemplateID(templateID);
-        }
-
-        function getItemByCustomID(customID) {
-            return self.SurveyItemManager.getItemByCustomID(customID);
-        }
-
-        function getItemByID(id) {
-            return self.SurveyItemManager.getItemByID(id);
-        }
-
-        function isAvailableID(id){
-            return !self.SurveyItemManager.existsItem(id);
-        }
-
-        function isAvailableCustomID(id){
-            return self.SurveyItemManager.isAvailableCustomID(id);
-        }
-
-        function addItem(type) {
-            var item = self.SurveyItemManager.addItem(type, self.identity.acronym);
-            self.NavigationManager.addNavigation();
-            return item;
-        }
-
-        function removeItem(templateID) {
-            self.SurveyItemManager.removeItem(templateID);
-            self.NavigationManager.removeNavigation(templateID);
-        }
-
-        function updateItem(item) {
-            self.navigationList[item.templateID] = item;
-        }
-
-        function toJson() {
-            var json = {};
-
-            json.extents = self.extents;
-            json.objectType = self.objectType;
-            json.oid = self.oid;
-            json.identity = self.identity.toJson();
-            json.metainfo = self.metainfo.toJson();
-
-            json.itemContainer = [];
-            self.SurveyItemManager.getItemList().forEach(function(item) {
-                json.itemContainer.push(item.toJson());
-            });
-
-            json.navigationList = [];
-            NavigationManagerService.getNavigationList().forEach(function(navigation) {
-                json.navigationList.push(navigation.toJson());
-            });
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.survey')
-        .factory('SurveyIdentityFactory', SurveyIdentityFactory);
-
-    function SurveyIdentityFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-        self.load = load;
-
-        function load(surveyIdentityJson) {
-            return new SurveyIdentity(surveyIdentityJson.name,
-                surveyIdentityJson.acronym,
-                surveyIdentityJson.version);
-        }
-
-        function create(name, acronym, version) {
-            return new SurveyIdentity(name, acronym, version);
-        }
-
-        return self;
-    }
-
-    function SurveyIdentity(name, acronym) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'SurveyIdentity';
-        self.name = name;
-        self.acronym = acronym;
-        self.recommendedTo = '';
-        self.description = '';
-        self.keywords = [];
-
-        self.toJson = toJson;
-
-        function toJson() {
-            var json = {};
-
-            json.extents = self.extents;
-            json.objectType = self.objectType;
-            json.name = self.name;
-            json.acronym = self.acronym;
-            json.recommendedTo = self.recommendedTo;
-            json.description = self.description;
-            json.keywords = self.keywords;
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.survey')
-        .factory('SurveyMetaInfoFactory', SurveyMetaInfoFactory);
-
-    function SurveyMetaInfoFactory() {
-        var self = this;
-
-        /* Public interdace */
-        self.create = create;
-        self.load = load;
-
-        function load(surveyMetaInfoJson) {
-          return new SurveyMetaInfo(surveyMetaInfoJson.creationDatetime);
-        }
-
-        function create() {
-            var now = Date.now();
-            return new SurveyMetaInfo(now);
-        }
-
-        return self;
-    }
-
-    function SurveyMetaInfo(creationDatetime) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'SurveyMetaInfo';
-        self.creationDatetime = creationDatetime;
-        self.otusStudioVersion = '';
-
-        self.toJson = toJson;
-
-        function toJson() {
-            var json = {};
-
-            json.extents = self.extents;
-            json.objectType = self.objectType;
-            json.creationDatetime = self.creationDatetime;
-            json.otusStudioVersion = self.otusStudioVersion;
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 
