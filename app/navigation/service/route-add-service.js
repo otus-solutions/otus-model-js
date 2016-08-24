@@ -27,7 +27,7 @@
           var newRule = RuleFactory.create(rule.when.customID, rule.operator.type);
 
           if (rule.answer instanceof Object) {
-            newRule[rule.operator.type]();
+            newRule[rule.operator.type](rule.answer.value);
           } else {
             newRule[rule.operator.type](rule.answer);
           }
