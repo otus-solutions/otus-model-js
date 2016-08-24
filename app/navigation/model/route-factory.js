@@ -16,13 +16,13 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(name, origin, destination) {
+    function create(origin, destination) {
       return new Route(name, origin, destination);
     }
 
     function fromJson(json) {
       var jsonObj = JSON.parse(json);
-      var route = new Route(jsonObj.name, jsonObj.origin, jsonObj.destination);
+      var route = new Route(jsonObj.origin, jsonObj.destination);
 
       jsonObj.conditionSet.forEach(function(condition) {
         condition = (condition instanceof Object) ? JSON.stringify(condition) : condition;
@@ -36,12 +36,12 @@
     return self;
   }
 
-  function Route(routeName, routeOrigin, routeDestination) {
+  function Route(routeOrigin, routeDestination) {
     var self = this;
 
     self.extents = 'StudioObject';
     self.objectType = 'Route';
-    self.name = routeName;
+    self.name = routeOrigin + '_' + routeDestination;
     self.origin = routeOrigin;
     self.destination = routeDestination;
     self.conditionSet = [];

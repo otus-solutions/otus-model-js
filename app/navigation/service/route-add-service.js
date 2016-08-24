@@ -17,7 +17,7 @@
     self.execute = execute;
 
     function execute(routeData, navigation) {
-      var route = RouteFactory.create(routeData.name, routeData.origin, routeData.destination);
+      var route = RouteFactory.create(routeData.origin, routeData.destination);
       navigation.addRoute(route);
       return route;
     }
