@@ -10,12 +10,12 @@
     'otusjs.model.navigation.NavigationContainerService',
     'otusjs.model.navigation.NavigationAddService',
     'otusjs.model.navigation.NavigationRemoveService',
+    'otusjs.model.navigation.NavigationValidatorService',
     'otusjs.model.navigation.RouteAddService'
   ];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, RouteAddService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, NavigationValidatorService, RouteAddService) {
     var self = this;
-    var _selectedNavigation = null;
 
     /* Public interface */
     self.init = init;
@@ -52,8 +52,8 @@
     function addNavigation() {
       NavigationAddService.execute();
     }
-
-    function addRoute(routeData) {
+	
+	function addRoute(routeData) {
       return RouteAddService.execute(routeData, _selectedNavigation);
     }
 
@@ -72,4 +72,5 @@
       return avaiableItems;
     }
   }
+
 }());
