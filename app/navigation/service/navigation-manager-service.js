@@ -53,7 +53,7 @@
       NavigationAddService.execute();
     }
 
-	function addRoute(routeData) {
+    function addRoute(routeData) {
       return AddRouteTaskService.execute(routeData, _selectedNavigation);
     }
 
