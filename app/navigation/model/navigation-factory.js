@@ -104,7 +104,9 @@
     }
 
     function hasRoute(routeName) {
-      return self.routes.some(route => route.name === routeName);
+      return self.routes.some(function(route) {
+        return route.name === routeName;
+      });
     }
 
     function toJson() {
