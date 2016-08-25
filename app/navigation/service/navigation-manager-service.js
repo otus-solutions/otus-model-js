@@ -56,7 +56,7 @@
     }
 
     function applyRoute(routeData) {
-      if (_selectedNavigation.hasRoute(routeData.name)) {
+      if (_selectedNavigation.hasRoute(routeData)) {
         return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
       } else {
         return AddRouteTaskService.execute(routeData, _selectedNavigation);

@@ -103,10 +103,19 @@
       });
     }
 
-    function hasRoute(routeName) {
-      return self.routes.some(function(route) {
-        return route.name === routeName;
-      });
+    function hasRoute(routeData) {
+      if (routeData.name) {
+        return self.routes.some(function(route) {
+          return route.name === routeData.name;
+        });
+      } else if (routeData.origin && routeData.destination) {
+        return self.routes.some(function(route) {
+          return (route.origin === routeData.origin && route.destination === routeData.destination);
+        });
+      } else {
+        // TODO Lançar uma exceção aqui porque ficou impossível de determinar
+        return undefined;
+      }
     }
 
     function toJson() {
