@@ -95,9 +95,9 @@
     }
 
     function updateRoute(route) {
-      self.routes.forEach(function(currentRoute) {
+      self.routes.forEach(function(currentRoute, index) {
         if (currentRoute.name === route.name) {
-          currentRoute = route;
+          self.routes[index] = route;
         }
       });
     }
