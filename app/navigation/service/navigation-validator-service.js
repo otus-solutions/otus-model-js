@@ -39,7 +39,7 @@
     }
 
     function _searchByID(questionID) {
-      var result;
+      var result = null;
 
       itemList.forEach(function(question, index) {
         if (question.customID === questionID) {
