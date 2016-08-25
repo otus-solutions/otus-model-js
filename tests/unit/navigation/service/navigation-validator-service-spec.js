@@ -1,37 +1,31 @@
 describe('NavigationValidatorService', function() {
   var Mock = {};
 
-
   beforeEach(function() {
     module('otusjs');
 
-    mockNavigationProperties();
-
     inject(function(_$injector_) {
+
       mockQuestions(_$injector_);
 
       service = _$injector_.get('otusjs.model.navigation.NavigationValidatorService', {
-        NavigationContainerService: mockNavigationContainerService(_$injector_),
+        SurveyItemContainerService: mockSurveyItemContainerService(_$injector_),
         ExceptionService: mockExceptionService(_$injector_)
       });
+
     });
 
   });
 
   describe('init', function() {
-    it('should called method getNavigationList', function() {
+    it('should called method getItemList', function() {
       service.init();
 
-      expect(Mock.NavigationContainerService.getNavigationList).toHaveBeenCalled();
+      expect(Mock.SurveyItemContainerService.getItemList).toHaveBeenCalled();
     });
   });
 
   describe('isRouteValid', function() {
-
-    beforeEach(function() {
-      Mock.NavigationContainerService.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
-      Mock.NavigationContainerService.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
-    });
 
     it('should return exception when origin and destination is equal', function() {
       expect(function() {
@@ -45,14 +39,34 @@ describe('NavigationValidatorService', function() {
       }).not.toThrowError(Mock.ExceptionService.InvalidStateError);
     });
 
+    it('should return exception when destination is a question previous a origin ', function() {
+      expect(function() {
+        service.isRouteValid(Mock.questionTwo.templateID, Mock.questionOne.templateID);
+      }).toThrowError(Mock.ExceptionService.InvalidStateError);
+    });
+
+    it('should return true when destination is a question after a origin', function() {
+      var result = service.isRouteValid(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+
+      expect(result).toEqual(true);
+    });
+
   });
 
-  function mockNavigationContainerService($injector) {
-    Mock.NavigationContainerService = $injector.get('otusjs.model.navigation.NavigationContainerService');
+  function mockQuestions($injector) {
+    Mock.questionOne = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
+    Mock.questionTwo = $injector.get('SurveyItemFactory').create('CalendarQuestion', 'Q2');
+    Mock.questionThree = $injector.get('SurveyItemFactory').create('CalendarQuestion', 'Q3');
+    Mock.questionFour = $injector.get('SurveyItemFactory').create('CalendarQuestion', 'Q4');
+    Mock.questions = [Mock.questionOne, Mock.questionTwo, Mock.questionThree, Mock.questionFour];
+  }
 
-    spyOn(Mock.NavigationContainerService, 'getNavigationList').and.callThrough();
+  function mockSurveyItemContainerService($injector) {
+    Mock.SurveyItemContainerService = $injector.get('SurveyItemContainerService');
 
-    return Mock.NavigationContainerService;
+    spyOn(Mock.SurveyItemContainerService, 'getItemList').and.returnValue(Mock.questions);
+
+    return Mock.SurveyItemContainerService;
   }
 
   function mockExceptionService($injector) {
@@ -60,15 +74,4 @@ describe('NavigationValidatorService', function() {
     return Mock.ExceptionService;
   }
 
-  function mockQuestions($injector) {
-    Mock.questionOne = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
-    Mock.questionTwo = $injector.get('SurveyItemFactory').create('CalendarQuestion', 'Q2');
-    Mock.questionThree = $injector.get('SurveyItemFactory').create('CalendarQuestion', 'Q3');
-    Mock.questionFour = $injector.get('SurveyItemFactory').create('CalendarQuestion', 'Q4');
-  }
-
-  function mockNavigationProperties() {
-    Mock.ORIGIN = 'ORIGIN';
-    Mock.DESTINATION = 'DESTINATION';
-  }
 });

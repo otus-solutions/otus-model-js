@@ -74,11 +74,7 @@
     }
 
     function addRoute(route) {
-      if (route.origin !== route.destination) {
         self.routes.push(route);
-      } else {
-        throw new ExceptionService.InvalidStateError('Rota que refere-se a si mesma diretamente');
-      }
     }
 
     function removeRoute(name) {
