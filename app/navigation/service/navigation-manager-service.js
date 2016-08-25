@@ -26,6 +26,7 @@
     self.selectedNavigation = selectedNavigation;
     self.addNavigation = addNavigation;
     self.addRoute = addRoute;
+    self.updateRoute = updateRoute;
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
 
@@ -56,6 +57,10 @@
 
     function addRoute(routeData) {
       return AddRouteTaskService.execute(routeData, _selectedNavigation);
+    }
+
+    function updateRoute(routeData) {
+      return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
     }
 
     function removeNavigation(templateID) {
