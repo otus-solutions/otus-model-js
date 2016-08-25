@@ -11,10 +11,11 @@
     'otusjs.model.navigation.NavigationAddService',
     'otusjs.model.navigation.NavigationRemoveService',
     'otusjs.model.navigation.NavigationValidatorService',
-    'otusjs.model.navigation.AddRouteTaskService'
+    'otusjs.model.navigation.AddRouteTaskService',
+    'otusjs.model.navigation.UpdateRouteTaskService'
   ];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, NavigationValidatorService, AddRouteTaskService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, NavigationValidatorService, AddRouteTaskService, UpdateRouteTaskService) {
     var self = this;
     var _selectedNavigation = null;
 
