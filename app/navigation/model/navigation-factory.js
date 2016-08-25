@@ -61,6 +61,7 @@
     self.addRoute = addRoute;
     self.removeRoute = removeRoute;
     self.updateRoute = updateRoute;
+    self.hasRoute = hasRoute;
     self.toJson = toJson;
 
     function listRoutes() {
@@ -100,6 +101,10 @@
           self.routes[index] = route;
         }
       });
+    }
+
+    function hasRoute(routeName) {
+      return self.routes.some(route => route.name === routeName);
     }
 
     function toJson() {
