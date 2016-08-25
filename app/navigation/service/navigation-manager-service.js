@@ -26,8 +26,7 @@
     self.selectNavigationByOrigin = selectNavigationByOrigin;
     self.selectedNavigation = selectedNavigation;
     self.addNavigation = addNavigation;
-    self.addRoute = addRoute;
-    self.updateRoute = updateRoute;
+    self.applyRoute = applyRoute;
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
 
@@ -56,12 +55,12 @@
       NavigationAddService.execute();
     }
 
-    function addRoute(routeData) {
-      return AddRouteTaskService.execute(routeData, _selectedNavigation);
-    }
-
-    function updateRoute(routeData) {
-      return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
+    function applyRoute(routeData) {
+      if (_selectedNavigation.hasRoute(routeData)) {
+        return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
+      } else {
+        return AddRouteTaskService.execute(routeData, _selectedNavigation);
+      }
     }
 
     function removeNavigation(templateID) {

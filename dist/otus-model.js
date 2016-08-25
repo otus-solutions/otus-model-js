@@ -15,18 +15,18 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation', []);
-
-}());
-
-(function() {
     'use strict';
 
     angular
         .module('otusjs.misc', []);
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation', []);
 
 }());
 
@@ -1067,6 +1067,114 @@
 }());
 
 (function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('LabelFactory', LabelFactory);
+
+    function LabelFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Label();
+        }
+
+        return self;
+    }
+
+    function Label() {
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Label',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('UnitFactory', UnitFactory);
+
+    function UnitFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Unit();
+        }
+
+        return self;
+    }
+
+    function Unit() {
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Unit',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+    }
+
+}());
+
+(function() {
 
   angular
     .module('otusjs.model.navigation')
@@ -1208,6 +1316,7 @@
     self.addRoute = addRoute;
     self.removeRoute = removeRoute;
     self.updateRoute = updateRoute;
+    self.hasRoute = hasRoute;
     self.toJson = toJson;
 
     function listRoutes() {
@@ -1242,11 +1351,26 @@
     }
 
     function updateRoute(route) {
-      self.routes.forEach(function(currentRoute) {
-        if (currentRoute.index === route.index) {
-          self.routes[currentRoute.index] = route;
+      self.routes.forEach(function(currentRoute, index) {
+        if (currentRoute.name === route.name) {
+          self.routes[index] = route;
         }
       });
+    }
+
+    function hasRoute(routeData) {
+      if (routeData.name) {
+        return self.routes.some(function(route) {
+          return route.name === routeData.name;
+        });
+      } else if (routeData.origin && routeData.destination) {
+        return self.routes.some(function(route) {
+          return (route.origin === routeData.origin && route.destination === routeData.destination);
+        });
+      } else {
+        // TODO Lançar uma exceção aqui porque ficou impossível de determinar
+        return undefined;
+      }
     }
 
     function toJson() {
@@ -1711,8 +1835,7 @@
     self.selectNavigationByOrigin = selectNavigationByOrigin;
     self.selectedNavigation = selectedNavigation;
     self.addNavigation = addNavigation;
-    self.addRoute = addRoute;
-    self.updateRoute = updateRoute;
+    self.applyRoute = applyRoute;
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
 
@@ -1741,12 +1864,12 @@
       NavigationAddService.execute();
     }
 
-    function addRoute(routeData) {
-      return AddRouteTaskService.execute(routeData, _selectedNavigation);
-    }
-
-    function updateRoute(routeData) {
-      return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
+    function applyRoute(routeData) {
+      if (_selectedNavigation.hasRoute(routeData)) {
+        return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
+      } else {
+        return AddRouteTaskService.execute(routeData, _selectedNavigation);
+      }
     }
 
     function removeNavigation(templateID) {
@@ -1820,114 +1943,6 @@
     }
 
   }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.misc')
-        .factory('LabelFactory', LabelFactory);
-
-    function LabelFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new Label();
-        }
-
-        return self;
-    }
-
-    function Label() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'objectType', {
-            value: 'Label',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.misc')
-        .factory('UnitFactory', UnitFactory);
-
-    function UnitFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new Unit();
-        }
-
-        return self;
-    }
-
-    function Unit() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'objectType', {
-            value: 'Unit',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-    }
 
 }());
 

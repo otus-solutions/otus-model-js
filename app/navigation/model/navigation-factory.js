@@ -61,6 +61,7 @@
     self.addRoute = addRoute;
     self.removeRoute = removeRoute;
     self.updateRoute = updateRoute;
+    self.hasRoute = hasRoute;
     self.toJson = toJson;
 
     function listRoutes() {
@@ -91,11 +92,26 @@
     }
 
     function updateRoute(route) {
-      self.routes.forEach(function(currentRoute) {
-        if (currentRoute.index === route.index) {
-          self.routes[currentRoute.index] = route;
+      self.routes.forEach(function(currentRoute, index) {
+        if (currentRoute.name === route.name) {
+          self.routes[index] = route;
         }
       });
+    }
+
+    function hasRoute(routeData) {
+      if (routeData.name) {
+        return self.routes.some(function(route) {
+          return route.name === routeData.name;
+        });
+      } else if (routeData.origin && routeData.destination) {
+        return self.routes.some(function(route) {
+          return (route.origin === routeData.origin && route.destination === routeData.destination);
+        });
+      } else {
+        // TODO Lançar uma exceção aqui porque ficou impossível de determinar
+        return undefined;
+      }
     }
 
     function toJson() {
