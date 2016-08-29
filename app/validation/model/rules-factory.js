@@ -27,7 +27,7 @@
         self.extends = 'StudioObject';
         self.objectType = 'Rule';
         self.validatorType = validatorType;
-        self.data = FillingRulesDataFactory.create(validatorType)
+        self.data = FillingRulesDataFactory.create(validatorType);
     }
 
 }());

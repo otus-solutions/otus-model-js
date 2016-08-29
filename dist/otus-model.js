@@ -829,119 +829,6 @@
     'use strict';
 
     angular
-        .module('otusjs.navigation')
-        .service('AddRouteConditionService', AddRouteConditionService);
-
-    AddRouteConditionService.$inject = [
-        'RouteConditionFactory'
-    ];
-
-    function AddRouteConditionService(RouteConditionFactory) {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(conditionName, route) {
-            var routeCondition = RouteConditionFactory.create(conditionName);
-            route.addCondition(routeCondition);
-            return routeCondition;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('AddRouteService', AddRouteService);
-
-    AddRouteService.$inject = [
-        'RouteFactory'
-    ];
-
-    function AddRouteService(RouteFactory) {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(routeData) {
-            var route = RouteFactory.create(routeData.name, routeData.parentNavigation.origin, routeData.destination);
-            routeData.parentNavigation.addRoute(route);
-            return route;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('AddRuleService', AddRuleService);
-
-    AddRuleService.$inject = [
-        'RuleFactory'
-    ];
-
-    function AddRuleService(RuleFactory) {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(ruleData, route) {
-            var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
-            route.conditionSet[0].addRule(newRule);
-            return newRule;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('RemoveRouteService', RemoveRouteService);
-
-    function RemoveRouteService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(routeData) {
-            routeData.parentNavigation.removeRoute(routeData.name);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.navigation')
-        .service('RemoveRuleService', RemoveRuleService);
-
-    function RemoveRuleService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(rule, route) {
-            route.conditionSet[0].removeRule(rule);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.surveyItem')
         .service('AddAnswerOptionService', AddAnswerOptionService);
 
@@ -1068,6 +955,119 @@
 
         function execute(item, fillingRuleType) {
             item.fillingRules.removeFillingRules(fillingRuleType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('AddRouteConditionService', AddRouteConditionService);
+
+    AddRouteConditionService.$inject = [
+        'RouteConditionFactory'
+    ];
+
+    function AddRouteConditionService(RouteConditionFactory) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(conditionName, route) {
+            var routeCondition = RouteConditionFactory.create(conditionName);
+            route.addCondition(routeCondition);
+            return routeCondition;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('AddRouteService', AddRouteService);
+
+    AddRouteService.$inject = [
+        'RouteFactory'
+    ];
+
+    function AddRouteService(RouteFactory) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(routeData) {
+            var route = RouteFactory.create(routeData.name, routeData.parentNavigation.origin, routeData.destination);
+            routeData.parentNavigation.addRoute(route);
+            return route;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('AddRuleService', AddRuleService);
+
+    AddRuleService.$inject = [
+        'RuleFactory'
+    ];
+
+    function AddRuleService(RuleFactory) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(ruleData, route) {
+            var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
+            route.conditionSet[0].addRule(newRule);
+            return newRule;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('RemoveRouteService', RemoveRouteService);
+
+    function RemoveRouteService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(routeData) {
+            routeData.parentNavigation.removeRoute(routeData.name);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.navigation')
+        .service('RemoveRuleService', RemoveRuleService);
+
+    function RemoveRuleService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(rule, route) {
+            route.conditionSet[0].removeRule(rule);
         }
     }
 
@@ -2546,7 +2546,7 @@
         self.extends = 'StudioObject';
         self.objectType = 'Rule';
         self.validatorType = validatorType;
-        self.data = FillingRulesDataFactory.create(validatorType)
+        self.data = FillingRulesDataFactory.create(validatorType);
     }
 
 }());
@@ -3732,7 +3732,7 @@
     function FutureDateValidator(value) {
         var self = this;
 
-        self.reference = new Date();
+        self.reference = false;
     }
 
 }());
@@ -4092,7 +4092,7 @@
     function PastDateValidator(value, LabelFactory) {
         var self = this;
 
-        self.reference = new Date();
+        self.reference = false;         
     }
 
 }());
