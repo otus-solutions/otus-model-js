@@ -6,13 +6,13 @@
     .service('otusjs.model.navigation.NavigationValidatorService', service);
 
   service.$inject = [
-    'otusjs.model.navigation.NavigationContainerService',
+    'SurveyItemContainerService',
     'otusjs.model.navigation.ExceptionService'
   ];
 
-  function service(NavigationContainerService, ExceptionService) {
+  function service(SurveyItemContainerService, ExceptionService) {
     var self = this;
-    var navigationList = [];
+    var itemList = [];
 
     /* Public methods */
     self.init = init;
@@ -21,35 +21,35 @@
     init();
 
     function init() {
-      navigationList = NavigationContainerService.getNavigationList();
-      //console.log(NavigationContainerService.getNavigationList());
+      itemList = SurveyItemContainerService.getItemList();
     }
 
     function isRouteValid(origin, destination) {
-      if (origin !== destination) {
-        //console.log(origin);
-        //console.log(navigationList);
-        //console.log(_searchByID(origin));
-      } else {
+      if (origin === destination) {
         throw new ExceptionService.InvalidStateError('Rota que refere-se a si mesma diretamente');
+      } else {
+        var origenInList = _searchByID(origin);
+        var destinationInList = _searchByID(destination);
+        if (origenInList.index < destinationInList.index) {
+          return true;
+        } else {
+          throw new ExceptionService.InvalidStateError('A nova rota não deve referenciar questões anteriores');
+        }
       }
-      //TODO: não é um destino que vem antes da origem
-      //TODO: então é válido
     }
 
     function _searchByID(questionID) {
-      var routes = [];
-      navigationList.forEach(function(question, index) {
-        if (question.templateID === questionID) {
+      var result = null;
+
+      itemList.forEach(function(question, index) {
+        if (question.customID === questionID) {
           result = {};
-          result.filling = filling;
+          result.question = question;
           result.index = index;
         }
       });
-
-      return routes;
+      return result;
     }
-
   }
 
 }());
