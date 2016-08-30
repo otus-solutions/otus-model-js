@@ -47,6 +47,7 @@
     /* Public methods */
     self.within = within;
     self.equal = equal;
+    self.notEqual = notEqual;
     self.greater = greater;
     self.greaterEqual = greaterEqual;
     self.lower = lower;
@@ -57,6 +58,10 @@
 
     function within(arrayValues) {
       defineAnswer('within', arrayValues);
+    }
+
+    function notEqual(value) {
+      defineAnswer('notEqual', value);
     }
 
     function equal(value) {

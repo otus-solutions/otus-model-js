@@ -6,11 +6,10 @@
     .service('otusjs.model.navigation.NavigationValidatorService', service);
 
   service.$inject = [
-    'SurveyItemContainerService',
-    'otusjs.model.navigation.ExceptionService'
+    'SurveyItemContainerService'
   ];
 
-  function service(SurveyItemContainerService, ExceptionService) {
+  function service(SurveyItemContainerService) {
     var self = this;
     var itemList = [];
 
@@ -26,14 +25,14 @@
 
     function isRouteValid(origin, destination) {
       if (origin === destination) {
-        throw new ExceptionService.InvalidStateError('Rota que refere-se a si mesma diretamente');
+        return false;
       } else {
         var origenInList = _searchByID(origin);
         var destinationInList = _searchByID(destination);
         if (origenInList.index < destinationInList.index) {
           return true;
         } else {
-          throw new ExceptionService.InvalidStateError('A nova rota não deve referenciar questões anteriores');
+          return false;
         }
       }
     }

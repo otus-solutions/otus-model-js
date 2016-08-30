@@ -13,7 +13,7 @@ describe('NavigationManagerService', function() {
       mockNavigationContainerService(_$injector_);
       mockNavigationAddService(_$injector_);
       mockNavigationRemoveService(_$injector_);
-      mockExceptionService(_$injector_);
+      mockNavigationValidatorService(_$injector_);
       mockRouteData();
 
       service = _$injector_.get('otusjs.model.navigation.NavigationManagerService', injections);
@@ -98,14 +98,10 @@ describe('NavigationManagerService', function() {
   });
 
   describe('applyRoute method', function() {
-    it('should return exception when routeData is not route valid', function() {
-      //expect(function() {
-        service.applyRoute(Mock.routeData);
-      //}).toThrowError(Mock.ExceptionService.InvalidStateError);
-    });
+    it('should called method isRouteValid', function() {
+      service.applyRoute(Mock.routeData);
 
-    it('should return true when routeData is route valid', function() {
-
+      expect(Mock.NavigationValidatorService.isRouteValid).toHaveBeenCalled();
     });
   });
 
@@ -191,9 +187,10 @@ describe('NavigationManagerService', function() {
     spyOn(Mock.SurveyItemManagerService, 'getItemPosition').and.returnValue(3);
   }
 
-  function mockExceptionService($injector) {
-    Mock.ExceptionService = $injector.get('otusjs.model.navigation.ExceptionService');
-    return Mock.ExceptionService;
+  function mockNavigationValidatorService($injector) {
+    Mock.NavigationValidatorService = $injector.get('otusjs.model.navigation.NavigationValidatorService');
+    injections.NavigationValidatorService = Mock.NavigationValidatorService;
+    spyOn(Mock.NavigationValidatorService, 'isRouteValid');
   }
 
 });

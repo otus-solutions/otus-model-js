@@ -12,11 +12,10 @@
     'otusjs.model.navigation.NavigationRemoveService',
     'otusjs.model.navigation.AddRouteTaskService',
     'otusjs.model.navigation.UpdateRouteTaskService',
-    'otusjs.model.navigation.ExceptionService',
     'otusjs.model.navigation.NavigationValidatorService'
   ];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, AddRouteTaskService, UpdateRouteTaskService, ExceptionService, NavigationValidatorService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, AddRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
     var self = this;
     var _selectedNavigation = null;
 
@@ -57,18 +56,11 @@
     }
 
     function applyRoute(routeData) {
-      try {
-        console.log(NavigationValidatorService.isRouteValid(routeData.origin, routeData.destination));
-        if (NavigationValidatorService.isRouteValid(routeData.origin, routeData.destination)) {
-          if (_selectedNavigation.hasRoute(routeData)) {
-            return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
-          } else {
-            return AddRouteTaskService.execute(routeData, _selectedNavigation);
-          }
-        }
-      } catch (e) {
-        if (e instanceof ExceptionService.InvalidStateError) {
-          throw new ExceptionService.InvalidStateError('InvalidStateError');
+      if (NavigationValidatorService.isRouteValid(routeData.origin, routeData.destination)) {
+        if (_selectedNavigation.hasRoute(routeData)) {
+          return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
+        } else {
+          return AddRouteTaskService.execute(routeData, _selectedNavigation);
         }
       }
     }

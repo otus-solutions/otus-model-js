@@ -829,6 +829,45 @@
     'use strict';
 
     angular
+        .module('otusjs.validation')
+        .service('AddFillingRulesService', AddFillingRulesService);
+
+
+    function AddFillingRulesService(){
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, validatorType) {
+            return item.fillingRules.createOption(validatorType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
+
+    function RemoveFillingRulesWorkService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, fillingRuleType) {
+            item.fillingRules.removeFillingRules(fillingRuleType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.surveyItem')
         .service('AddAnswerOptionService', AddAnswerOptionService);
 
@@ -916,45 +955,6 @@
         function execute(item, id) {
             // it needs a service to validate if is a valid or available id
             item.customID = id;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .service('AddFillingRulesService', AddFillingRulesService);
-
-
-    function AddFillingRulesService(){
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, validatorType) {
-            return item.fillingRules.createOption(validatorType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
-
-    function RemoveFillingRulesWorkService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, fillingRuleType) {
-            item.fillingRules.removeFillingRules(fillingRuleType);
         }
     }
 
@@ -1067,6 +1067,61 @@
 }());
 
 (function() {
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationApiService', service);
+
+  service.$inject = [
+    'otusjs.model.navigation.RouteFactory',
+    'otusjs.model.navigation.RouteConditionFactory',
+    'otusjs.model.navigation.RuleFactory'
+  ];
+
+  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
+    var self = this;
+
+    /* Public methods */
+    self.addRoute = addRoute;
+    self.addRouteCondition = addRouteCondition;
+    self.addConditionRule = addConditionRule;
+    self.removeRoute = removeRoute;
+    self.removeRouteCondition = removeRouteCondition;
+    self.removeConditionRule = removeConditionRule;
+
+    function addRoute(routeData, navigation) {
+      var route = RouteFactory.create(routeData.name, routeData.origin, routeData.destination);
+      navigation.addRoute(route);
+      return route;
+    }
+
+    function addRouteCondition(conditionName, route) {
+      var routeCondition = RouteConditionFactory.create(conditionName);
+      route.addCondition(routeCondition);
+      return routeCondition;
+    }
+
+    function addConditionRule(ruleData, routeCondition) {
+      var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
+      routeCondition.addRule(newRule);
+      return newRule;
+    }
+
+    function removeRoute() {
+      routeData.parentNavigation.removeRoute(routeData.name);
+    }
+
+    function removeRouteCondition() {
+
+    }
+
+    function removeConditionRule() {
+      route.conditionSet[0].removeRule(rule);
+    }
+  }
+})();
+
+(function() {
     'use strict';
 
     angular
@@ -1175,61 +1230,6 @@
 }());
 
 (function() {
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationApiService', service);
-
-  service.$inject = [
-    'otusjs.model.navigation.RouteFactory',
-    'otusjs.model.navigation.RouteConditionFactory',
-    'otusjs.model.navigation.RuleFactory'
-  ];
-
-  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
-    var self = this;
-
-    /* Public methods */
-    self.addRoute = addRoute;
-    self.addRouteCondition = addRouteCondition;
-    self.addConditionRule = addConditionRule;
-    self.removeRoute = removeRoute;
-    self.removeRouteCondition = removeRouteCondition;
-    self.removeConditionRule = removeConditionRule;
-
-    function addRoute(routeData, navigation) {
-      var route = RouteFactory.create(routeData.name, routeData.origin, routeData.destination);
-      navigation.addRoute(route);
-      return route;
-    }
-
-    function addRouteCondition(conditionName, route) {
-      var routeCondition = RouteConditionFactory.create(conditionName);
-      route.addCondition(routeCondition);
-      return routeCondition;
-    }
-
-    function addConditionRule(ruleData, routeCondition) {
-      var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
-      routeCondition.addRule(newRule);
-      return newRule;
-    }
-
-    function removeRoute() {
-      routeData.parentNavigation.removeRoute(routeData.name);
-    }
-
-    function removeRouteCondition() {
-
-    }
-
-    function removeConditionRule() {
-      route.conditionSet[0].removeRule(rule);
-    }
-  }
-})();
-
-(function() {
   'use strict';
 
   angular
@@ -1239,7 +1239,7 @@
   function service() {
     var self = this;
 
-    self.InvalidStateError = createErrorType('InvalidRouteException');
+    self.InvalidStateError = createErrorType('InvalidStateError');
 
     function createErrorType(name) {
       function E(message) {
@@ -1633,6 +1633,7 @@
     /* Public methods */
     self.within = within;
     self.equal = equal;
+    self.notEqual = notEqual;
     self.greater = greater;
     self.greaterEqual = greaterEqual;
     self.lower = lower;
@@ -1643,6 +1644,10 @@
 
     function within(arrayValues) {
       defineAnswer('within', arrayValues);
+    }
+
+    function notEqual(value) {
+      defineAnswer('notEqual', value);
     }
 
     function equal(value) {
@@ -1815,13 +1820,12 @@
     'otusjs.model.navigation.NavigationContainerService',
     'otusjs.model.navigation.NavigationAddService',
     'otusjs.model.navigation.NavigationRemoveService',
-    'otusjs.model.navigation.NavigationValidatorService',
     'otusjs.model.navigation.AddRouteTaskService',
     'otusjs.model.navigation.UpdateRouteTaskService',
-    'otusjs.model.navigation.ExceptionService'
+    'otusjs.model.navigation.NavigationValidatorService'
   ];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, NavigationValidatorService, AddRouteTaskService, UpdateRouteTaskService, ExceptionService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, AddRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
     var self = this;
     var _selectedNavigation = null;
 
@@ -1862,15 +1866,11 @@
     }
 
     function applyRoute(routeData) {
-      try {
+      if (NavigationValidatorService.isRouteValid(routeData.origin, routeData.destination)) {
         if (_selectedNavigation.hasRoute(routeData)) {
           return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
         } else {
           return AddRouteTaskService.execute(routeData, _selectedNavigation);
-        }
-      } catch (e) {
-        if (e instanceof ExceptionService.InvalidStateError) {
-          console.log("Opa!");
         }
       }
     }
@@ -1901,11 +1901,10 @@
     .service('otusjs.model.navigation.NavigationValidatorService', service);
 
   service.$inject = [
-    'SurveyItemContainerService',
-    'otusjs.model.navigation.ExceptionService'
+    'SurveyItemContainerService'
   ];
 
-  function service(SurveyItemContainerService, ExceptionService) {
+  function service(SurveyItemContainerService) {
     var self = this;
     var itemList = [];
 
@@ -1921,14 +1920,14 @@
 
     function isRouteValid(origin, destination) {
       if (origin === destination) {
-        throw new ExceptionService.InvalidStateError('Rota que refere-se a si mesma diretamente');
+        return false;
       } else {
         var origenInList = _searchByID(origin);
         var destinationInList = _searchByID(destination);
         if (origenInList.index < destinationInList.index) {
           return true;
         } else {
-          throw new ExceptionService.InvalidStateError('A nova rota não deve referenciar questões anteriores');
+          return false;
         }
       }
     }

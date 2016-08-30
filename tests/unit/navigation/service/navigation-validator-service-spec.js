@@ -27,22 +27,16 @@ describe('NavigationValidatorService', function() {
 
   describe('isRouteValid', function() {
 
-    it('should return exception when origin and destination is equal', function() {
-      expect(function() {
-        service.isRouteValid(Mock.questionOne.customID, Mock.questionOne.customID);
-      }).toThrowError(Mock.ExceptionService.InvalidStateError);
+    it('should return false when origin and destination is equal', function() {
+      expect(service.isRouteValid(Mock.questionOne.customID, Mock.questionOne.customID)).toEqual(false);
     });
 
-    it('should not return exception when origin and destination are different', function() {
-      expect(function() {
-        service.isRouteValid(Mock.questionOne.customID, Mock.questionTwo.customID);
-      }).not.toThrowError(Mock.ExceptionService.InvalidStateError);
+    it('should not return true when origin and destination are different', function() {
+      expect(service.isRouteValid(Mock.questionOne.customID, Mock.questionTwo.customID)).toEqual(true);
     });
 
-    it('should return exception when destination is a question previous a origin ', function() {
-      expect(function() {
-        service.isRouteValid(Mock.questionTwo.customID, Mock.questionOne.customID);
-      }).toThrowError(Mock.ExceptionService.InvalidStateError);
+    it('should return false when destination is a question previous a origin ', function() {
+      expect(service.isRouteValid(Mock.questionTwo.customID, Mock.questionOne.customID)).toEqual(false);
     });
 
     it('should not return exception when destination is a question after a origin', function() {
