@@ -58,6 +58,7 @@
 
     /* Public methods */
     self.listRoutes = listRoutes;
+    self.getRoute = getRoute;
     self.addRoute = addRoute;
     self.removeRoute = removeRoute;
     self.updateRoute = updateRoute;
@@ -72,6 +73,14 @@
       });
 
       return clone;
+    }
+
+    function getRoute(routeData) {
+      var route = self.routes.some(function(route) {
+        return route.name === routeData.name;
+      });
+
+      return route[0];
     }
 
     function addRoute(route) {
