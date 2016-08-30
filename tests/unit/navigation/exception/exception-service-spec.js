@@ -2,6 +2,7 @@ describe('ExceptionService', function() {
   var Mock = {};
 
   Mock.ORIGIN = 'Rota que refere-se a si mesma diretamente';
+  Mock.NAME = 'InvalidStateError';
 
   beforeEach(function() {
     module('otusjs');
@@ -28,7 +29,7 @@ describe('ExceptionService', function() {
     });
 
     it('should return name of exception with InvalidStateError', function() {
-      expect(exception.name).toEqual('InvalidRouteException');
+      expect(exception.name).toEqual(Mock.NAME);
     });
 
     it('should return the same message passed as parameter', function() {

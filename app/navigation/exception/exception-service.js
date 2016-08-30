@@ -8,7 +8,7 @@
   function service() {
     var self = this;
 
-    self.InvalidStateError = createErrorType('InvalidRouteException');
+    self.InvalidStateError = createErrorType('InvalidStateError');
 
     function createErrorType(name) {
       function E(message) {

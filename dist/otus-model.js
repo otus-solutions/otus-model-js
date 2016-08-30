@@ -15,18 +15,18 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation', []);
-
-}());
-
-(function() {
     'use strict';
 
     angular
         .module('otusjs.misc', []);
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation', []);
 
 }());
 
@@ -829,6 +829,45 @@
     'use strict';
 
     angular
+        .module('otusjs.validation')
+        .service('AddFillingRulesService', AddFillingRulesService);
+
+
+    function AddFillingRulesService(){
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, validatorType) {
+            return item.fillingRules.createOption(validatorType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
+
+    function RemoveFillingRulesWorkService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, fillingRuleType) {
+            item.fillingRules.removeFillingRules(fillingRuleType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.surveyItem')
         .service('AddAnswerOptionService', AddAnswerOptionService);
 
@@ -916,45 +955,6 @@
         function execute(item, id) {
             // it needs a service to validate if is a valid or available id
             item.customID = id;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .service('AddFillingRulesService', AddFillingRulesService);
-
-
-    function AddFillingRulesService(){
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, validatorType) {
-            return item.fillingRules.createOption(validatorType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
-
-    function RemoveFillingRulesWorkService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, fillingRuleType) {
-            item.fillingRules.removeFillingRules(fillingRuleType);
         }
     }
 
@@ -1122,6 +1122,114 @@
 })();
 
 (function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('LabelFactory', LabelFactory);
+
+    function LabelFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Label();
+        }
+
+        return self;
+    }
+
+    function Label() {
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Label',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('UnitFactory', UnitFactory);
+
+    function UnitFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Unit();
+        }
+
+        return self;
+    }
+
+    function Unit() {
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Unit',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+    }
+
+}());
+
+(function() {
   'use strict';
 
   angular
@@ -1131,7 +1239,7 @@
   function service() {
     var self = this;
 
-    self.InvalidStateError = createErrorType('InvalidRouteException');
+    self.InvalidStateError = createErrorType('InvalidStateError');
 
     function createErrorType(name) {
       function E(message) {
@@ -1222,11 +1330,7 @@
     }
 
     function addRoute(route) {
-      if (route.origin !== route.destination) {
         self.routes.push(route);
-      } else {
-        throw new ExceptionService.InvalidStateError('Rota que refere-se a si mesma diretamente');
-      }
     }
 
     function removeRoute(name) {
@@ -1716,12 +1820,12 @@
     'otusjs.model.navigation.NavigationContainerService',
     'otusjs.model.navigation.NavigationAddService',
     'otusjs.model.navigation.NavigationRemoveService',
-    'otusjs.model.navigation.NavigationValidatorService',
     'otusjs.model.navigation.AddRouteTaskService',
-    'otusjs.model.navigation.UpdateRouteTaskService'
+    'otusjs.model.navigation.UpdateRouteTaskService',
+    'otusjs.model.navigation.NavigationValidatorService'
   ];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, NavigationValidatorService, AddRouteTaskService, UpdateRouteTaskService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, AddRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
     var self = this;
     var _selectedNavigation = null;
 
@@ -1762,10 +1866,12 @@
     }
 
     function applyRoute(routeData) {
-      if (_selectedNavigation.hasRoute(routeData)) {
-        return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
-      } else {
-        return AddRouteTaskService.execute(routeData, _selectedNavigation);
+      if (NavigationValidatorService.isRouteValid(routeData.origin, routeData.destination)) {
+        if (_selectedNavigation.hasRoute(routeData)) {
+          return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
+        } else {
+          return AddRouteTaskService.execute(routeData, _selectedNavigation);
+        }
       }
     }
 
@@ -1795,13 +1901,12 @@
     .service('otusjs.model.navigation.NavigationValidatorService', service);
 
   service.$inject = [
-    'otusjs.model.navigation.NavigationContainerService',
-    'otusjs.model.navigation.ExceptionService'
+    'SurveyItemContainerService'
   ];
 
-  function service(NavigationContainerService, ExceptionService) {
+  function service(SurveyItemContainerService) {
     var self = this;
-    var navigationList = [];
+    var itemList = [];
 
     /* Public methods */
     self.init = init;
@@ -1810,144 +1915,36 @@
     init();
 
     function init() {
-      navigationList = NavigationContainerService.getNavigationList();
-      //console.log(NavigationContainerService.getNavigationList());
+      itemList = SurveyItemContainerService.getItemList();
     }
 
     function isRouteValid(origin, destination) {
-      if (origin !== destination) {
-        //console.log(origin);
-        //console.log(navigationList);
-        //console.log(_searchByID(origin));
+      if (origin === destination) {
+        return false;
       } else {
-        throw new ExceptionService.InvalidStateError('Rota que refere-se a si mesma diretamente');
+        var origenInList = _searchByID(origin);
+        var destinationInList = _searchByID(destination);
+        if (origenInList.index < destinationInList.index) {
+          return true;
+        } else {
+          return false;
+        }
       }
-      //TODO: não é um destino que vem antes da origem
-      //TODO: então é válido
     }
 
     function _searchByID(questionID) {
-      var routes = [];
-      navigationList.forEach(function(question, index) {
-        if (question.templateID === questionID) {
+      var result = null;
+
+      itemList.forEach(function(question, index) {
+        if (question.customID === questionID) {
           result = {};
-          result.filling = filling;
+          result.question = question;
           result.index = index;
         }
       });
-
-      return routes;
+      return result;
     }
-
   }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.misc')
-        .factory('LabelFactory', LabelFactory);
-
-    function LabelFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new Label();
-        }
-
-        return self;
-    }
-
-    function Label() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'objectType', {
-            value: 'Label',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.misc')
-        .factory('UnitFactory', UnitFactory);
-
-    function UnitFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new Unit();
-        }
-
-        return self;
-    }
-
-    function Unit() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'objectType', {
-            value: 'Unit',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-    }
 
 }());
 
