@@ -56,13 +56,13 @@
     }
 
     function applyRoute(routeData) {
-      if (NavigationValidatorService.isRouteValid(routeData.origin, routeData.destination)) {
+      // if (NavigationValidatorService.isRouteValid(routeData.origin, routeData.destination)) {
         if (_selectedNavigation.hasRoute(routeData)) {
           return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
         } else {
           return AddRouteTaskService.execute(routeData, _selectedNavigation);
         }
-      }
+      // }
     }
 
     function removeNavigation(templateID) {
