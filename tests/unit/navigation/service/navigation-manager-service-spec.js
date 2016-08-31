@@ -134,10 +134,11 @@ describe('NavigationManagerService', function() {
     });
 
     it('should filter all previous item of parameter item', function() {
-      expect(avaiableItems.length).toBe(3);
+      expect(avaiableItems.length).toBe(4);
       expect(avaiableItems[0]).toBe(Mock.Q1);
       expect(avaiableItems[1]).toBe(Mock.Q2);
       expect(avaiableItems[2]).toBe(Mock.Q3);
+      expect(avaiableItems[3]).toBe(Mock.Q4);
     });
 
   });

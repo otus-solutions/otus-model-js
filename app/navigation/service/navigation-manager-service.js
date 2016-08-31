@@ -74,7 +74,7 @@
       var allItems = SurveyItemManagerService.getItemList();
 
       var avaiableItems = allItems.filter(function(item, index) {
-        return index < referenceItemIndex;
+        return index <= referenceItemIndex;
       });
 
       return avaiableItems;
