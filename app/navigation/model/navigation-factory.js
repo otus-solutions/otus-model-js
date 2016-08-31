@@ -76,11 +76,18 @@
     }
 
     function getRoute(routeData) {
-      var route = self.routes.some(function(route) {
-        return route.name === routeData.name;
+      var routeToReturn = null;
+
+      self.routes.some(function(route) {
+        if (route.name === routeData.name) {
+          routeToReturn = route;
+          return true;
+        } else {
+          return false;
+        }
       });
 
-      return route[0];
+      return routeToReturn;
     }
 
     function addRoute(route) {
