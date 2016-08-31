@@ -2820,7 +2820,7 @@
 
     function _setupAnswer(rule, ruleData) {
       if (ruleData.answer instanceof Object) {
-        rule[ruleData.operator.type](ruleData.answer.value);
+        rule[ruleData.operator.type](ruleData.answer.option.value);
       } else {
         rule[ruleData.operator.type](ruleData.answer);
       }
