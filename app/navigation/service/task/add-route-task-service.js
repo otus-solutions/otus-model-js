@@ -18,34 +18,28 @@
     self.execute = execute;
 
     function execute(routeData, navigation) {
-      var newRoute = RouteFactory.create(routeData.origin, routeData.destination);
-      _setupConditions(newRoute, routeData);
-      navigation.addRoute(newRoute);
-      return newRoute;
+      var route = RouteFactory.create(routeData.origin, routeData.destination);
+      _setupConditions(route, routeData);
+      navigation.addRoute(route);
+      return route;
     }
 
-    function _setupConditions(newRoute, routeData) {
+    function _setupConditions(route, routeData) {
       routeData.conditionSet.forEach(function(conditionData) {
-        var newCondition = RouteConditionFactory.create(conditionData.name);
-        _setupRules(newCondition, conditionData);
-        newRoute.addCondition(newCondition);
+        var condition = RouteConditionFactory.create(conditionData.name);
+        _setupRules(condition, conditionData);
+        route.addCondition(condition);
       });
     }
 
-    function _setupRules(newCondition, conditionData) {
+    function _setupRules(condition, conditionData) {
       conditionData.rules.forEach(function(ruleData) {
-        var newRule = RuleFactory.create(ruleData.when.customID, ruleData.operator.type);
-        _setupAnswer(newRule, ruleData);
-        newCondition.addRule(newRule);
+        var when = ruleData.when.customID || ruleData.when;
+        var operator = ruleData.operator.type || ruleData.operator;
+        var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
+        var rule = RuleFactory.create(when, operator, answer);
+        condition.addRule(rule);
       });
-    }
-
-    function _setupAnswer(newRule, ruleData) {
-      if (ruleData.answer instanceof Object) {
-        newRule[ruleData.operator.type](ruleData.answer.option.value);
-      } else {
-        newRule[ruleData.operator.type](ruleData.answer.option);
-      }
     }
   }
 }());

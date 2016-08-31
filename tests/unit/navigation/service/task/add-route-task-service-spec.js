@@ -41,7 +41,10 @@ describe('AddRouteTaskService', function() {
     });
 
     it('should instance a Rule for each rule in condition', function() {
-      expect(Mock.RuleFactory.create).toHaveBeenCalledWith(Mock.ruleData.when.customID, Mock.ruleData.operator.type);
+      var when = Mock.ruleData.when.customID;
+      var operator = Mock.ruleData.operator.type;
+      var answer = Mock.ruleData.answer.option.value;
+      expect(Mock.RuleFactory.create).toHaveBeenCalledWith(when, operator, answer);
     });
 
     it('should add the new Rule into new RouteCondition', function() {
@@ -91,9 +94,12 @@ describe('AddRouteTaskService', function() {
 
     Mock.ruleData = {};
     Mock.ruleData.when = {};
-    Mock.ruleData.customID = 'Q1';
+    Mock.ruleData.when.customID = 'Q1';
     Mock.ruleData.operator = {};
     Mock.ruleData.operator.type = 'equal';
+    Mock.ruleData.answer = {};
+    Mock.ruleData.answer.option = {};
+    Mock.ruleData.answer.option.value = 1;
 
     Mock.routeData.conditionSet.push(Mock.conditionData);
     Mock.conditionData.rules.push(Mock.ruleData);

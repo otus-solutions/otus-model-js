@@ -41,13 +41,5 @@
         condition.addRule(rule);
       });
     }
-
-    function _setupAnswer(rule, ruleData) {
-      if (ruleData.answer instanceof Object) {
-        rule.answer = ruleData.answer.option.value;
-      } else {
-        rule.answer = ruleData.answer;
-      }
-    }
   }
 }());
