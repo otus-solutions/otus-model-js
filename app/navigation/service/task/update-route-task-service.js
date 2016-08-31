@@ -42,9 +42,9 @@
 
     function _setupAnswer(rule, ruleData) {
       if (ruleData.answer instanceof Object) {
-        rule[ruleData.operator.type](ruleData.answer.option.value);
+        rule.answer = ruleData.answer.option.value;
       } else {
-        rule[ruleData.operator.type](ruleData.answer);
+        rule = ruleData.answer;
       }
     }
   }
