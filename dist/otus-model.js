@@ -2812,9 +2812,9 @@
 
     function _setupRules(condition, conditionData) {
       conditionData.rules.forEach(function(ruleData) {
-        var when = self.ruleData.when.customID || self.ruleData.when;
-        var operator = self.ruleData.operator.type || self.ruleData.operator;
-        var answer = (self.ruleData.answer.option) ? self.ruleData.answer.option.value : self.ruleData.answer;
+        var when = ruleData.when.customID || ruleData.when;
+        var operator = ruleData.operator.type || ruleData.operator;
+        var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
         var rule = RuleFactory.create(when, operator, answer);
         condition.addRule(rule);
       });
