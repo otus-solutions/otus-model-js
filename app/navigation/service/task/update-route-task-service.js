@@ -34,8 +34,10 @@
 
     function _setupRules(condition, conditionData) {
       conditionData.rules.forEach(function(ruleData) {
-        var rule = RuleFactory.create(ruleData.when.customID, ruleData.operator.type);
-        _setupAnswer(rule, ruleData);
+        var when = self.ruleData.when.customID || self.ruleData.when;
+        var operator = self.ruleData.operator.type || self.ruleData.operator;
+        var answer = (self.ruleData.answer.option) ? self.ruleData.answer.option.value : self.ruleData.answer;
+        var rule = RuleFactory.create(when, operator, answer);
         condition.addRule(rule);
       });
     }
@@ -44,7 +46,7 @@
       if (ruleData.answer instanceof Object) {
         rule.answer = ruleData.answer.option.value;
       } else {
-        rule = ruleData.answer;
+        rule.answer = ruleData.answer;
       }
     }
   }
