@@ -1620,17 +1620,7 @@
 
     function fromJson(json) {
       var jsonObj = JSON.parse(json);
-      var rule = new Rule(jsonObj.when);
-      var operator;
-      var answerValue;
-
-      for (operator in jsonObj.answer) {
-        answerValue = jsonObj.answer[operator];
-        break;
-      }
-
-      rule.answer[operator] = answerValue;
-
+      var rule = new Rule(jsonObj.when, jsonObj.operator, jsonObj.answer);
       return rule;
     }
 
@@ -1700,7 +1690,8 @@
 
     function defineAnswer(operator, value) {
       self.answer = {};
-      self.answer[operator] = value;
+      // self.answer[operator] = value;
+      self.answer = value;
     }
 
     function toJson() {
