@@ -23,6 +23,7 @@
     self.init = init;
     self.loadJsonData = loadJsonData;
     self.getNavigationList = getNavigationList;
+    self.getDefaultNavigationPath = getDefaultNavigationPath;
     self.selectNavigationByOrigin = selectNavigationByOrigin;
     self.selectedNavigation = selectedNavigation;
     self.addNavigation = addNavigation;
@@ -40,6 +41,25 @@
 
     function getNavigationList() {
       return NavigationContainerService.getNavigationList();
+    }
+
+    function getDefaultNavigationPath() {
+      var navigations = getNavigationList();
+      var currentPathState = navigations[0];
+      var defaultPath = [currentPathState];
+
+      navigations.forEach(function(navigation) {
+        if (navigation.origin === currentPathState.getDefaultRoute().target) {
+          defaultPath.push(navigation);
+          currentPathState = navigation;
+        }
+      });
+
+      return defaultPath;
+    }
+
+    function getPathDeviations() {
+
     }
 
     function selectNavigationByOrigin(origin) {

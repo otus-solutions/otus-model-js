@@ -49,6 +49,7 @@
 
   function Navigation(origin, ExceptionService) {
     var self = this;
+    var _defaultRoute = null;
 
     /* Object properties */
     self.extents = 'StudioObject';
@@ -90,8 +91,15 @@
       return routeToReturn;
     }
 
+    function getDefaultRoute() {
+      _defaultRoute;
+    }
+
     function addRoute(route) {
-        self.routes.push(route);
+      if (route.getConditionSetSize() === 0) {
+        _defaultRoute = route;
+      }
+      self.routes.push(route);
     }
 
     function removeRoute(name) {
