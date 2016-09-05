@@ -49,7 +49,7 @@
       var defaultPath = [currentPathState];
 
       navigations.forEach(function(navigation) {
-        if (navigation.origin === currentPathState.getDefaultRoute().target) {
+        if (navigation.origin === currentPathState.getDefaultRoute().destination) {
           defaultPath.push(navigation);
           currentPathState = navigation;
         }
