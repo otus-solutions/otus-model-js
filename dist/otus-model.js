@@ -1315,6 +1315,7 @@
     /* Public methods */
     self.listRoutes = listRoutes;
     self.getRoute = getRoute;
+    self.getDefaultRoute = getDefaultRoute;
     self.addRoute = addRoute;
     self.removeRoute = removeRoute;
     self.updateRoute = updateRoute;
