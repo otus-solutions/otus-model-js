@@ -30,6 +30,8 @@
         route.addCondition(newCondition);
       });
 
+      route.isDefault = jsonObj.isDefault;
+
       return route;
     }
 
