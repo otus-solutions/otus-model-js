@@ -45,6 +45,7 @@
     self.origin = routeOrigin;
     self.destination = routeDestination;
     self.conditionSet = [];
+    self.isDefault = false;
 
     /* Public interface */
     self.getConditionSet = getConditionSet;
@@ -95,6 +96,7 @@
       json.destination = self.destination;
       json.index = self.index;
       json.conditionSet = [];
+      json.isDefault = self.isDefault;
 
       if (self.conditionSet) {
         for (var conditionName in self.conditionSet) {

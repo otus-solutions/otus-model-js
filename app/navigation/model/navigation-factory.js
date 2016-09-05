@@ -99,6 +99,7 @@
     function addRoute(route) {
       if (route.getConditionSetSize() === 0) {
         _defaultRoute = route;
+        _defaultRoute.isDefault = true;
       }
       self.routes.push(route);
     }
