@@ -93,7 +93,7 @@
     }
 
     function getDefaultRoute() {
-      _defaultRoute;
+      return _defaultRoute;
     }
 
     function addRoute(route) {
