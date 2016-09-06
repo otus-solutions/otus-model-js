@@ -11,11 +11,12 @@
     'otusjs.model.navigation.NavigationAddService',
     'otusjs.model.navigation.NavigationRemoveService',
     'otusjs.model.navigation.AddRouteTaskService',
+    'otusjs.model.navigation.RemoveRouteTaskService',
     'otusjs.model.navigation.UpdateRouteTaskService',
     'otusjs.model.navigation.NavigationValidatorService'
   ];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, AddRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, AddRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
     var self = this;
     var _selectedNavigation = null;
 
@@ -28,6 +29,7 @@
     self.selectedNavigation = selectedNavigation;
     self.addNavigation = addNavigation;
     self.applyRoute = applyRoute;
+    self.deleteRoute = deleteRoute;
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
 
@@ -58,10 +60,6 @@
       return defaultPath;
     }
 
-    function getPathDeviations() {
-
-    }
-
     function selectNavigationByOrigin(origin) {
       _selectedNavigation = NavigationContainerService.getNavigationByOrigin(origin);
       return _selectedNavigation;
@@ -83,6 +81,10 @@
           return AddRouteTaskService.execute(routeData, _selectedNavigation);
         }
       // }
+    }
+
+    function deleteRoute(routeData) {
+      RemoveRouteTaskService.execute(routeData);
     }
 
     function removeNavigation(templateID) {
