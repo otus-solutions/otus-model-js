@@ -157,7 +157,7 @@
     }
 
     function isOrphan() {
-      return !self.inNavigations.length && navigation.index > 0;
+      return !self.inNavigations.length && self.index > 0;
     }
 
     function toJson() {
