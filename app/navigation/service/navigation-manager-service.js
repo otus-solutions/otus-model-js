@@ -84,7 +84,7 @@
     }
 
     function deleteRoute(routeData) {
-      RemoveRouteTaskService.execute(routeData);
+      RemoveRouteTaskService.execute(routeData, _selectedNavigation);
     }
 
     function removeNavigation(templateID) {
