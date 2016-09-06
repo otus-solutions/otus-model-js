@@ -6,21 +6,20 @@
     .factory('otusjs.model.navigation.NavigationFactory', factory);
 
   factory.$inject = [
-    'otusjs.model.navigation.RouteFactory',
-    'otusjs.model.navigation.ExceptionService'
+    'otusjs.model.navigation.RouteFactory'
   ];
 
-  function factory(RouteFactory, ExceptionService) {
+  function factory(RouteFactory) {
     var self = this;
 
     self.create = create;
     self.fromJson = fromJson;
 
     function create(origin, destination) {
-      var navigation = new Navigation(origin, ExceptionService);
+      var navigation = new Navigation(origin);
 
       if (destination) {
-        var defaultRoute = RouteFactory.create('1', navigation.origin, destination);
+        var defaultRoute = RouteFactory.create(navigation.origin, destination);
         navigation.addRoute(defaultRoute);
       }
 
@@ -41,13 +40,15 @@
         navigation.addRoute(newRoute);
       });
 
+      navigation.isDefault = jsonObj.isDefault;
+
       return navigation;
     }
 
     return self;
   }
 
-  function Navigation(origin, ExceptionService) {
+  function Navigation(origin) {
     var self = this;
     var _defaultRoute = null;
 
@@ -55,6 +56,7 @@
     self.extents = 'StudioObject';
     self.objectType = 'Navigation';
     self.origin = origin;
+    self.isDefault = true;
     self.routes = [];
 
     /* Public methods */
