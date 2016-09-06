@@ -15,7 +15,7 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(origin, destination) {
+    function create(index, origin, destination) {
       var navigation = new Navigation(origin);
 
       if (destination) {
@@ -40,6 +40,7 @@
         navigation.addRoute(newRoute);
       });
 
+      navigation.inNavigations = jsonObj.inNavigations;
       navigation.isDefault = jsonObj.isDefault;
 
       return navigation;
@@ -48,7 +49,7 @@
     return self;
   }
 
-  function Navigation(origin) {
+  function Navigation(index, origin) {
     var self = this;
     var _defaultRoute = null;
 
@@ -56,6 +57,7 @@
     self.extents = 'StudioObject';
     self.objectType = 'Navigation';
     self.origin = origin;
+    self.index = index;
     self.isDefault = true;
     self.routes = [];
     self.inNavigations = [];
@@ -155,7 +157,7 @@
     }
 
     function isOrphan() {
-      return !self.inNavigations.length;
+      return !self.inNavigations.length && navigation.index > 0;
     }
 
     function toJson() {
@@ -164,6 +166,11 @@
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.origin = self.origin;
+      json.index = self.index;
+      json.inNavigations = [];
+      self.inNavigations.forEach(function(navigation) {
+        json.inNavigations.push(navigation);
+      });
       json.isDefault = self.isDefault;
       json.routes = [];
       self.routes.forEach(function(route) {
