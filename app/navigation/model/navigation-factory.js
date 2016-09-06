@@ -149,8 +149,8 @@
 
     function removeInNavigation(origin) {
       self.inNavigations.some(function(navigation, index) {
-        if (navigation.origin === origin) {
-          self.routes.splice(index, 1);
+        if (navigation === origin) {
+          self.inNavigations.splice(index, 1);
           return true;
         }
       });
