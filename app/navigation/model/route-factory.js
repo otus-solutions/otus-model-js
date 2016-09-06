@@ -97,8 +97,8 @@
       json.origin = self.origin;
       json.destination = self.destination;
       json.index = self.index;
-      json.conditionSet = [];
       json.isDefault = self.isDefault;
+      json.conditionSet = [];
 
       if (self.conditionSet) {
         for (var conditionName in self.conditionSet) {

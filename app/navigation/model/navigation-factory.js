@@ -148,6 +148,7 @@
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.origin = self.origin;
+      json.isDefault = self.isDefault;
       json.routes = [];
       self.routes.forEach(function(route) {
         json.routes.push(route.toJson());
