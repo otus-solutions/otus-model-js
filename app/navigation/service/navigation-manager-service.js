@@ -32,6 +32,7 @@
     self.deleteRoute = deleteRoute;
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
+    self.listOrphanNavigations = listOrphanNavigations;
 
     function init() {
       NavigationContainerService.init();
@@ -101,6 +102,9 @@
 
       return avaiableItems;
     }
-  }
 
+    function listOrphanNavigations() {
+      return NavigationContainerService.getOrphanNavigations();
+    }
+  }
 }());

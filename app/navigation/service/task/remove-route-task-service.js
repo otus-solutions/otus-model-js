@@ -5,7 +5,11 @@
     .module('otusjs.model.navigation')
     .service('otusjs.model.navigation.RemoveRouteTaskService', service);
 
-  function service() {
+  service.$inject = [
+    'otusjs.model.navigation.NavigationContainerService'
+  ]
+
+  function service(NavigationContainerService) {
     var self = this;
 
     /* Public methods */
@@ -13,6 +17,8 @@
 
     function execute(routeData, navigation) {
       navigation.removeRoute(routeData.name);
+      var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
+      nextNavigation.removeInNavigation(routeData.origin);
     }
   }
 }());

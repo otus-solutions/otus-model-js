@@ -8,10 +8,11 @@
   service.$inject = [
     'otusjs.model.navigation.RouteFactory',
     'otusjs.model.navigation.RouteConditionFactory',
-    'otusjs.model.navigation.RuleFactory'
+    'otusjs.model.navigation.RuleFactory',
+    'otusjs.model.navigation.NavigationContainerService'
   ];
 
-  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
+  function service(RouteFactory, RouteConditionFactory, RuleFactory, NavigationContainerService) {
     var self = this;
 
     /* Public methods */
@@ -21,6 +22,8 @@
       var route = RouteFactory.create(routeData.origin, routeData.destination);
       _setupConditions(route, routeData);
       navigation.addRoute(route);
+      var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
+      nextNavigation.inNavigations.push(routeData.origin);
       return route;
     }
 

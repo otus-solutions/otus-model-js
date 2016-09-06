@@ -58,6 +58,7 @@
     self.origin = origin;
     self.isDefault = true;
     self.routes = [];
+    self.inNavigations = [];
 
     /* Public methods */
     self.listRoutes = listRoutes;
@@ -67,6 +68,8 @@
     self.removeRoute = removeRoute;
     self.updateRoute = updateRoute;
     self.hasRoute = hasRoute;
+    self.removeInNavigation = removeInNavigation;
+    self.isOrphan = isOrphan;
     self.toJson = toJson;
 
     function listRoutes() {
@@ -140,6 +143,19 @@
         // TODO Lançar uma exceção aqui porque ficou impossível de determinar
         return undefined;
       }
+    }
+
+    function removeInNavigation(origin) {
+      self.inNavigations.some(function(navigation, index) {
+        if (navigation.origin === origin) {
+          self.routes.splice(index, 1);
+          return true;
+        }
+      });
+    }
+
+    function isOrphan() {
+      return !self.inNavigations.length;
     }
 
     function toJson() {
