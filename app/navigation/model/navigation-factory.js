@@ -33,7 +33,7 @@
         var jsonObj = JSON.parse(JSON.stringify(json));
       }
 
-      var navigation = new Navigation(jsonObj.origin);
+      var navigation = new Navigation(jsonObj.index, jsonObj.origin);
 
       jsonObj.routes.forEach(function(route) {
         var newRoute = RouteFactory.fromJson(JSON.stringify(route));
