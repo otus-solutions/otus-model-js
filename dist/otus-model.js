@@ -1175,6 +1175,30 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.ExceptionService', service);
+
+  function service() {
+    var self = this;
+
+    self.InvalidStateError = createErrorType('InvalidStateError');
+
+    function createErrorType(name) {
+      function E(message) {
+        this.message = message;
+      }
+      E.prototype = Object.create(Error.prototype);
+      E.prototype.name = name;
+      E.prototype.constructor = E;
+      return E;
+    }
+  }
+}());
+
+(function() {
 
   angular
     .module('otusjs.model.navigation')
@@ -1335,7 +1359,10 @@
     }
 
     function addRoute(route) {
-      if (route.getConditionSetSize() === 0) {
+      if (!self.routes.length) {
+        _defaultRoute = route;
+        _defaultRoute.isDefault = true;
+      } else if (route.getConditionSetSize() === 0) {
         _defaultRoute = route;
         _defaultRoute.isDefault = true;
       }
@@ -1399,9 +1426,7 @@
       json.origin = self.origin;
       json.index = self.index;
       json.inNavigations = [];
-      self.inNavigations.forEach(function(navigation) {
-        json.inNavigations.push(navigation);
-      });
+      json.inNavigations = self.inNavigations;
       json.isDefault = self.isDefault;
       json.routes = [];
       self.routes.forEach(function(route) {
@@ -1727,30 +1752,6 @@
 
   angular
     .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.ExceptionService', service);
-
-  function service() {
-    var self = this;
-
-    self.InvalidStateError = createErrorType('InvalidStateError');
-
-    function createErrorType(name) {
-      function E(message) {
-        this.message = message;
-      }
-      E.prototype = Object.create(Error.prototype);
-      E.prototype.name = name;
-      E.prototype.constructor = E;
-      return E;
-    }
-  }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
     .service('otusjs.model.navigation.NavigationContainerService', service);
 
   service.$inject = [
@@ -2034,159 +2035,6 @@
     'use strict';
 
     angular
-        .module('otusjs.validation')
-        .factory('FillingRulesDataFactory', FillingRulesDataFactory);
-
-    FillingRulesDataFactory.$inject = [
-        'AlphanumericValidatorFactory',
-        'DistinctValidatorFactory',
-        'FutureDateValidatorFactory',
-        'InValidatorFactory',
-        'LowerCaseValidatorFactory',
-        'LowerLimitValidatorFactory',
-        'MandatoryValidatorFactory',
-        'MaxDateValidatorFactory',
-        'MaxLengthValidatorFactory',
-        'MaxTimeValidatorFactory',
-        'MinDateValidatorFactory',
-        'MinLengthValidatorFactory',
-        'MinTimeValidatorFactory',
-        'ParameterValidatorFactory',
-        'PastDateValidatorFactory',
-        'PrecisionValidatorFactory',
-        'RangeDateValidatorFactory',
-        'ScaleValidatorFactory',
-        'SpecialsValidatorFactory',
-        'UpperCaseValidatorFactory',
-        'UpperLimitValidatorFactory'
-    ];
-
-    function FillingRulesDataFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerCaseValidatorFactory, LowerLimitValidatorFactory, MandatoryValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(validator) {
-          return validatorsTemplates[validator].create();
-        }
-
-        var validatorsTemplates = {
-            alphanumeric: AlphanumericValidatorFactory,
-            distinct: DistinctValidatorFactory,
-            futureDate: FutureDateValidatorFactory,
-            in: InValidatorFactory,
-            lowerLimit: LowerLimitValidatorFactory,
-            lowerCase: LowerCaseValidatorFactory,
-            mandatory: MandatoryValidatorFactory,
-            maxDate: MaxDateValidatorFactory,
-            maxLength: MaxLengthValidatorFactory,
-            maxTime: MaxTimeValidatorFactory,
-            minDate: MinDateValidatorFactory,
-            minLength: MinLengthValidatorFactory,
-            minTime: MinTimeValidatorFactory,
-            parameter: ParameterValidatorFactory,
-            pastDate: PastDateValidatorFactory,
-            precision: PrecisionValidatorFactory,
-            rangeDate: RangeDateValidatorFactory,
-            scale: ScaleValidatorFactory,
-            specials: SpecialsValidatorFactory,
-            upperCase: UpperCaseValidatorFactory,
-            upperLimit: UpperLimitValidatorFactory
-        }
-
-
-        return self;
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('FillingRulesOptionFactory', FillingRulesOptionFactory);
-
-    FillingRulesOptionFactory.$inject = ['RulesFactory'];
-
-    function FillingRulesOptionFactory(RulesFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new FillingRules(RulesFactory);
-        }
-
-        return self;
-    }
-
-    function FillingRules(RulesFactory) {
-        var self = this;
-
-        self.extends = 'StudioObject';
-        self.objectType = 'FillingRules';
-        self.options = {};
-
-        /* Public methods */
-        self.createOption = createOption;
-        self.removeFillingRules = removeFillingRules;
-
-        function createOption(type) {
-            var option = RulesFactory.create(type);
-            self.options[type] = option;
-            return option;
-        }
-
-        function removeFillingRules(type) {
-            delete self.options[type];
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('RulesFactory', RulesFactory);
-
-    RulesFactory.$inject = [
-        'FillingRulesDataFactory'
-    ];
-
-    function RulesFactory(FillingRulesDataFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(validatorType) {
-            return new Rule(FillingRulesDataFactory, validatorType);
-        }
-
-        return self;
-    }
-
-    function Rule(FillingRulesDataFactory, validatorType) {
-        var self = this;
-        self.extends = 'StudioObject';
-        self.objectType = 'Rule';
-        self.validatorType = validatorType;
-        self.data = FillingRulesDataFactory.create(validatorType)
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.survey')
         .factory('SurveyFactory', SurveyFactory);
 
@@ -2412,6 +2260,159 @@
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('FillingRulesDataFactory', FillingRulesDataFactory);
+
+    FillingRulesDataFactory.$inject = [
+        'AlphanumericValidatorFactory',
+        'DistinctValidatorFactory',
+        'FutureDateValidatorFactory',
+        'InValidatorFactory',
+        'LowerCaseValidatorFactory',
+        'LowerLimitValidatorFactory',
+        'MandatoryValidatorFactory',
+        'MaxDateValidatorFactory',
+        'MaxLengthValidatorFactory',
+        'MaxTimeValidatorFactory',
+        'MinDateValidatorFactory',
+        'MinLengthValidatorFactory',
+        'MinTimeValidatorFactory',
+        'ParameterValidatorFactory',
+        'PastDateValidatorFactory',
+        'PrecisionValidatorFactory',
+        'RangeDateValidatorFactory',
+        'ScaleValidatorFactory',
+        'SpecialsValidatorFactory',
+        'UpperCaseValidatorFactory',
+        'UpperLimitValidatorFactory'
+    ];
+
+    function FillingRulesDataFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerCaseValidatorFactory, LowerLimitValidatorFactory, MandatoryValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(validator) {
+          return validatorsTemplates[validator].create();
+        }
+
+        var validatorsTemplates = {
+            alphanumeric: AlphanumericValidatorFactory,
+            distinct: DistinctValidatorFactory,
+            futureDate: FutureDateValidatorFactory,
+            in: InValidatorFactory,
+            lowerLimit: LowerLimitValidatorFactory,
+            lowerCase: LowerCaseValidatorFactory,
+            mandatory: MandatoryValidatorFactory,
+            maxDate: MaxDateValidatorFactory,
+            maxLength: MaxLengthValidatorFactory,
+            maxTime: MaxTimeValidatorFactory,
+            minDate: MinDateValidatorFactory,
+            minLength: MinLengthValidatorFactory,
+            minTime: MinTimeValidatorFactory,
+            parameter: ParameterValidatorFactory,
+            pastDate: PastDateValidatorFactory,
+            precision: PrecisionValidatorFactory,
+            rangeDate: RangeDateValidatorFactory,
+            scale: ScaleValidatorFactory,
+            specials: SpecialsValidatorFactory,
+            upperCase: UpperCaseValidatorFactory,
+            upperLimit: UpperLimitValidatorFactory
+        }
+
+
+        return self;
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('FillingRulesOptionFactory', FillingRulesOptionFactory);
+
+    FillingRulesOptionFactory.$inject = ['RulesFactory'];
+
+    function FillingRulesOptionFactory(RulesFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new FillingRules(RulesFactory);
+        }
+
+        return self;
+    }
+
+    function FillingRules(RulesFactory) {
+        var self = this;
+
+        self.extends = 'StudioObject';
+        self.objectType = 'FillingRules';
+        self.options = {};
+
+        /* Public methods */
+        self.createOption = createOption;
+        self.removeFillingRules = removeFillingRules;
+
+        function createOption(type) {
+            var option = RulesFactory.create(type);
+            self.options[type] = option;
+            return option;
+        }
+
+        function removeFillingRules(type) {
+            delete self.options[type];
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .factory('RulesFactory', RulesFactory);
+
+    RulesFactory.$inject = [
+        'FillingRulesDataFactory'
+    ];
+
+    function RulesFactory(FillingRulesDataFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(validatorType) {
+            return new Rule(FillingRulesDataFactory, validatorType);
+        }
+
+        return self;
+    }
+
+    function Rule(FillingRulesDataFactory, validatorType) {
+        var self = this;
+        self.extends = 'StudioObject';
+        self.objectType = 'Rule';
+        self.validatorType = validatorType;
+        self.data = FillingRulesDataFactory.create(validatorType)
     }
 
 }());

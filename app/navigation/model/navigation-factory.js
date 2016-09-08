@@ -104,7 +104,10 @@
     }
 
     function addRoute(route) {
-      if (route.getConditionSetSize() === 0) {
+      if (!self.routes.length) {
+        _defaultRoute = route;
+        _defaultRoute.isDefault = true;
+      } else if (route.getConditionSetSize() === 0) {
         _defaultRoute = route;
         _defaultRoute.isDefault = true;
       }
@@ -168,9 +171,7 @@
       json.origin = self.origin;
       json.index = self.index;
       json.inNavigations = [];
-      self.inNavigations.forEach(function(navigation) {
-        json.inNavigations.push(navigation);
-      });
+      json.inNavigations = self.inNavigations;
       json.isDefault = self.isDefault;
       json.routes = [];
       self.routes.forEach(function(route) {
