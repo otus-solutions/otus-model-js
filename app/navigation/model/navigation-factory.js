@@ -133,6 +133,9 @@
       self.routes.forEach(function(currentRoute, index) {
         if (currentRoute.name === route.name) {
           self.routes[index] = route;
+          if (route.isDefault) {
+            _defaultRoute = route;
+          }
         }
       });
     }
