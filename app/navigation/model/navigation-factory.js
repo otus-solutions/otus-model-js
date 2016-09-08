@@ -104,10 +104,7 @@
     }
 
     function addRoute(route) {
-      if (!self.routes.length) {
-        _defaultRoute = route;
-        _defaultRoute.isDefault = true;
-      } else if (route.getConditionSetSize() === 0) {
+      if (!_defaultRoute) {
         _defaultRoute = route;
         _defaultRoute.isDefault = true;
       }
@@ -119,12 +116,17 @@
         return route.name === name;
       });
 
-      var indexToRemove = self.routes.indexOf(routeToRemove[0]);
+      routeToRemove = routeToRemove[0];
+
+      var indexToRemove = self.routes.indexOf(routeToRemove);
       if (indexToRemove > -1) {
         self.routes.splice(indexToRemove, 1);
+        if (routeToRemove.name === _defaultRoute.name) {
+          _defaultRoute = null;
+        }
       }
 
-      return routeToRemove[0];
+      return routeToRemove;
     }
 
     function updateRoute(route) {
