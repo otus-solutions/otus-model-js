@@ -1,8 +1,6 @@
 describe('Rule', function() {
 
   var Mock = {};
-  var EXTENTS = 'SurveyTemplateObject';
-  var OBJECT_TYPE = 'Rule';
   var DIFF_OBJECT_TYPE = 'DiffRule';
   var WHEN = 'QID';
   var DIFF_WHEN = 'QID13';

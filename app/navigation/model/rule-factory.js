@@ -35,10 +35,65 @@
     self.answer = answer;
 
     /* Public methods */
+    self.within = within;
+    self.equal = equal;
+    self.notEqual = notEqual;
+    self.greater = greater;
+    self.greaterEqual = greaterEqual;
+    self.lower = lower;
+    self.lowerEqual = lowerEqual;
+    self.between = between;
+    self.contains = contains;
+
     self.equals = equals;
     self.selfsame = selfsame;
     self.clone = clone;
     self.toJson = toJson;
+
+    function within(arrayValues) {
+      defineAnswer('within', arrayValues);
+    }
+
+    function notEqual(value) {
+      defineAnswer('notEqual', value);
+    }
+
+    function equal(value) {
+      defineAnswer('equal', value);
+    }
+
+    function greater(value) {
+      defineAnswer('greater', value);
+    }
+
+    function greaterEqual(value) {
+      defineAnswer('greaterEqual', value);
+    }
+
+    function lower(value) {
+      defineAnswer('lower', value);
+    }
+
+    function lowerEqual(value) {
+      defineAnswer('lowerEqual', value);
+    }
+
+    function between(start, end) {
+      if (Array.isArray(start)) {
+        defineAnswer('between', start);
+      } else {
+        defineAnswer('between', [start, end]);
+      }
+    }
+
+    function contains(value) {
+      defineAnswer('contains', value);
+    }
+
+    function defineAnswer(operator, value) {
+      self.operator = operator;
+      self.answer = value;
+    }
 
     function equals(other) {
       if (other.objectType !== self.objectType) {

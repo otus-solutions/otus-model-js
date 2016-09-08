@@ -23,52 +23,92 @@
     function fromJson(json) {
       var jsonObj = JSON.parse(json);
       var condition = new RouteCondition(jsonObj.name);
-
-      jsonObj.rules.forEach(function(rule) {
-        var newRule = RuleFactory.fromJson(JSON.stringify(rule));
-        condition.addRule(newRule);
-      });
-
+      condition.rules = jsonObj.rules.map(_mapRules);
       return condition;
+    }
+
+    function _mapRules(ruleJson) {
+      return RuleFactory.fromJson(JSON.stringify(ruleJson))
     }
 
     return self;
   }
 
-  function RouteCondition(conditionName) {
+  function RouteCondition(name) {
     var self = this;
 
-    self.extents = 'StudioObject';
+    self.extents = 'SurveyTemplateObject';
     self.objectType = 'RouteCondition';
-    self.name = conditionName;
+    self.name = name;
     self.rules = [];
 
     /* Public methods */
-    self.listRules = listRules;
     self.addRule = addRule;
     self.removeRule = removeRule;
+    self.listRules = listRules;
+    self.getRuleByIndex = getRuleByIndex;
+
+    self.equals = equals;
+    self.selfsame = selfsame;
+    self.clone = clone;
     self.toJson = toJson;
+
+    function addRule(newRule) {
+      if (!_ruleExists(newRule)) {
+        self.rules.push(newRule);
+      }
+    }
+
+    function removeRule(rule) {
+      var index = self.rules.indexOf(rule);
+      if (index > -1) {
+        self.rules.splice(index, 1);
+      }
+    }
 
     function listRules() {
       var clone = [];
 
       self.rules.forEach(function(rule) {
-        clone.push(rule);
+        clone.push(rule.clone());
       });
 
       return clone;
     }
 
-    function addRule(rule) {
-      var ruleNotExist = (self.rules.indexOf(rule) === -1);
-      if (ruleNotExist) {
-        self.rules.push(rule);
-      }
+    function getRuleByIndex(index) {
+      return self.rules[index];
     }
 
-    function removeRule(rule) {
-      var indexToRemove = self.rules.indexOf(rule);
-      self.rules.splice(indexToRemove, 1);
+    function equals(other) {
+      if (other.objectType !== self.objectType) {
+        return false;
+      }
+
+      if (other.name !== self.name) {
+        return false;
+      }
+
+      if (other.rules.length === self.rules.length) {
+        var hasEqualRules = other.rules.some(function(rule, index) {
+          return self.rules[index].equals(rule);
+        });
+        if (!hasEqualRules) {
+          return false;
+        }
+      } else {
+        return false;
+      }
+
+      return true;
+    }
+
+    function selfsame(other) {
+      return Object.is(self, other);
+    }
+
+    function clone() {
+      return Object.assign(new RouteCondition(), self);
     }
 
     function toJson() {
@@ -84,6 +124,12 @@
       });
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+
+    function _ruleExists(newRule) {
+      return self.rules.some(function(rule) {
+        return newRule.equals(rule);
+      });
     }
   }
 }());
