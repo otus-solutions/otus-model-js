@@ -24,30 +24,30 @@ describe('AddRouteTaskService', function() {
       service.execute(Mock.routeData, Mock.navigation);
     });
 
-    it('should instance a Route', function() {
+    xit('should instance a Route', function() {
       expect(Mock.RouteFactory.create).toHaveBeenCalledWith(Mock.routeData.origin, Mock.routeData.destination);
     });
 
-    it('should add the new Route into navigation', function() {
+    xit('should add the new Route into navigation', function() {
       expect(Mock.navigation.addRoute).toHaveBeenCalledWith(Mock.Route);
     });
 
-    it('should instance a RouteCondition for each condition in routeData', function() {
+    xit('should instance a RouteCondition for each condition in routeData', function() {
       expect(Mock.RouteConditionFactory.create).toHaveBeenCalledWith(Mock.conditionData.name);
     });
 
-    it('should add the new RouteCondition into new Route', function() {
+    xit('should add the new RouteCondition into new Route', function() {
       expect(Mock.Route.addCondition).toHaveBeenCalledWith(Mock.RouteCondition);
     });
 
-    it('should instance a Rule for each rule in condition', function() {
+    xit('should instance a Rule for each rule in condition', function() {
       var when = Mock.ruleData.when.customID;
       var operator = Mock.ruleData.operator.type;
       var answer = Mock.ruleData.answer.option.value;
       expect(Mock.RuleFactory.create).toHaveBeenCalledWith(when, operator, answer);
     });
 
-    it('should add the new Rule into new RouteCondition', function() {
+    xit('should add the new Rule into new RouteCondition', function() {
       expect(Mock.RouteCondition.addRule).toHaveBeenCalledWith(Mock.Rule);
     });
 

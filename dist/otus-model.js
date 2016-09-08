@@ -15,18 +15,18 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation', []);
-
-}());
-
-(function() {
     'use strict';
 
     angular
         .module('otusjs.misc', []);
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation', []);
 
 }());
 
@@ -1067,6 +1067,114 @@
 }());
 
 (function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('LabelFactory', LabelFactory);
+
+    function LabelFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Label();
+        }
+
+        return self;
+    }
+
+    function Label() {
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Label',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('UnitFactory', UnitFactory);
+
+    function UnitFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Unit();
+        }
+
+        return self;
+    }
+
+    function Unit() {
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Unit',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+    }
+
+}());
+
+(function() {
 
   angular
     .module('otusjs.model.navigation')
@@ -1568,73 +1676,52 @@
   function Rule(when, operator, answer) {
     var self = this;
 
-    self.extents = 'StudioObject';
+    self.extents = 'SurveyTemplateObject';
     self.objectType = 'Rule';
     self.when = when;
-    self.answer = answer || {};
     self.operator = operator;
+    self.answer = answer;
 
     /* Public methods */
-    self.within = within;
-    self.equal = equal;
-    self.notEqual = notEqual;
-    self.greater = greater;
-    self.greaterEqual = greaterEqual;
-    self.lower = lower;
-    self.lowerEqual = lowerEqual;
-    self.between = between;
-    self.contains = contains;
+    self.equals = equals;
+    self.selfsame = selfsame;
+    self.clone = clone;
     self.toJson = toJson;
 
-    function within(arrayValues) {
-      defineAnswer('within', arrayValues);
-    }
-
-    function notEqual(value) {
-      defineAnswer('notEqual', value);
-    }
-
-    function equal(value) {
-      defineAnswer('equal', value);
-    }
-
-    function greater(value) {
-      defineAnswer('greater', value);
-    }
-
-    function greaterEqual(value) {
-      defineAnswer('greaterEqual', value);
-    }
-
-    function lower(value) {
-      defineAnswer('lower', value);
-    }
-
-    function lowerEqual(value) {
-      defineAnswer('lowerEqual', value);
-    }
-
-    function between(start, end) {
-      if (Array.isArray(start)) {
-        defineAnswer('between', start);
-      } else {
-        defineAnswer('between', [start, end]);
+    function equals(other) {
+      if (other.objectType !== self.objectType) {
+        return false;
       }
+
+      if (other.when !== self.when) {
+        return false;
+      }
+
+      if (other.operator !== self.operator) {
+        return false;
+      }
+
+      if (other.answer !== self.answer) {
+        return false;
+      }
+
+      return true;
     }
 
-    function contains(value) {
-      defineAnswer('contains', value);
+    function selfsame(other) {
+      return Object.is(self, other);
     }
 
-    function defineAnswer(operator, value) {
-      self.answer = {};
-      // self.answer[operator] = value;
-      self.answer = value;
+    function clone() {
+      var clone = new Rule();
+      return Object.assign(clone, self);
     }
 
     function toJson() {
       var json = {}
 
+      json.extents = self.extents;
+      json.objectType = self.objectType;
       json.when = self.when;
       json.operator = self.operator;
       json.answer = self.answer;
@@ -1925,114 +2012,6 @@
       return result;
     }
   }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.misc')
-        .factory('LabelFactory', LabelFactory);
-
-    function LabelFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new Label();
-        }
-
-        return self;
-    }
-
-    function Label() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'objectType', {
-            value: 'Label',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.misc')
-        .factory('UnitFactory', UnitFactory);
-
-    function UnitFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new Unit();
-        }
-
-        return self;
-    }
-
-    function Unit() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'objectType', {
-            value: 'Unit',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-    }
 
 }());
 
