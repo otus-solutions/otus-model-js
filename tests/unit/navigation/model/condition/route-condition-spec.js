@@ -70,10 +70,34 @@ describe('RouteCondition', function() {
 
     it('should return true when two objects have the same properties and equal values', function() {
       var conditionA = factory.create(CONDITION_NAME);
+      var conditionB = factory.create(CONDITION_NAME);
+      expect(conditionA.equals(conditionB)).toBe(true);
+
       conditionA.addRule(Mock.ruleA);
+      conditionB.addRule(Mock.ruleA);
+      expect(conditionA.equals(conditionB)).toBe(true);
+    });
+
+    it('should return true when two objects have same rules in the list but in different order', function() {
+      var conditionA = factory.create(CONDITION_NAME);
+      conditionA.addRule(Mock.ruleA);
+      conditionA.addRule(Mock.ruleB);
+
+      var conditionB = factory.create(CONDITION_NAME);
+      conditionB.addRule(Mock.ruleB);
+      conditionB.addRule(Mock.ruleA);
+
+      expect(conditionA.equals(conditionB)).toBe(true);
+    });
+
+    it('should return true when two objects have same rules in the list and equal order', function() {
+      var conditionA = factory.create(CONDITION_NAME);
+      conditionA.addRule(Mock.ruleA);
+      conditionA.addRule(Mock.ruleB);
 
       var conditionB = factory.create(CONDITION_NAME);
       conditionB.addRule(Mock.ruleA);
+      conditionB.addRule(Mock.ruleB);
 
       expect(conditionA.equals(conditionB)).toBe(true);
     });
@@ -108,18 +132,6 @@ describe('RouteCondition', function() {
 
       var conditionB = factory.create(CONDITION_NAME);
       conditionB.addRule(Mock.ruleB);
-
-      expect(conditionA.equals(conditionB)).toBe(false);
-    });
-
-    it('should return false when two objects have same rules in the list but in different order', function() {
-      var conditionA = factory.create(CONDITION_NAME);
-      conditionA.addRule(Mock.ruleA);
-      conditionA.addRule(Mock.ruleB);
-
-      var conditionB = factory.create(CONDITION_NAME);
-      conditionB.addRule(Mock.ruleB);
-      conditionB.addRule(Mock.ruleA);
 
       expect(conditionA.equals(conditionB)).toBe(false);
     });
@@ -169,7 +181,7 @@ describe('RouteCondition', function() {
       condition.addRule(Mock.ruleA);
     });
 
-    xit('should return a well formatted json based on RouteCondition', function() {
+    it('should return a well formatted json based on RouteCondition', function() {
       expect(condition.toJson()).toEqual(Mock.json);
     });
 

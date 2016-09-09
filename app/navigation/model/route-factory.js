@@ -22,17 +22,15 @@
 
     function fromJson(json) {
       var jsonObj = JSON.parse(json);
-      var route = new Route(jsonObj.origin, jsonObj.destination);
-
-      jsonObj.conditionSet.forEach(function(condition) {
-        condition = (condition instanceof Object) ? JSON.stringify(condition) : condition;
-        var newCondition = RouteConditionFactory.fromJson(condition);
-        route.addCondition(newCondition);
-      });
-
+      var route = create(jsonObj.origin, jsonObj.destination);
+      route.conditions = jsonObj.conditions.map(_mapConditions);
       route.isDefault = jsonObj.isDefault;
-
       return route;
+    }
+
+    function _mapConditions(condition) {
+      condition = (condition instanceof Object) ? JSON.stringify(condition) : condition;
+      return RouteConditionFactory.fromJson(condition);
     }
 
     return self;
@@ -41,51 +39,90 @@
   function Route(routeOrigin, routeDestination) {
     var self = this;
 
-    self.extents = 'StudioObject';
+    self.extents = 'SurveyTemplateObject';
     self.objectType = 'Route';
-    self.name = routeOrigin + '_' + routeDestination;
     self.origin = routeOrigin;
     self.destination = routeDestination;
-    self.conditionSet = [];
+    self.name = routeOrigin + '_' + routeDestination;
     self.isDefault = false;
+    self.conditions = [];
 
     /* Public interface */
-    self.getConditionSet = getConditionSet;
+    self.listConditions = listConditions;
     self.addCondition = addCondition;
     self.removeCondition = removeCondition;
-    self.getConditionSetSize = getConditionSetSize;
+    self.equals = equals;
+    self.selfsame = selfsame;
+    self.clone = clone;
     self.toJson = toJson;
 
-    function getConditionSet() {
+    function listConditions() {
       var clone = [];
 
-      self.conditionSet.forEach(function(condition) {
+      self.conditions.forEach(function(condition) {
         clone.push(condition);
       });
 
       return clone;
     }
 
-    function getConditionSetSize() {
-      return self.conditionSet.length;
-    }
-
     function addCondition(condition) {
-      condition.name += getConditionSetSize() + 1;
-      self.conditionSet.push(condition);
+      if (!_conditionExists(condition)) {
+        self.conditions.push(condition);
+      }
     }
 
-    function removeCondition(name) {
-      var conditionToRemove = self.conditionSet.filter(function(condition) {
-        return condition.name === name;
-      });
+    function removeCondition(condition) {
+      var index = self.conditions.indexOf(condition);
+      if (index > -1) {
+        self.conditions.splice(index, 1);
+      }
+    }
 
-      var indexToRemove = self.conditionSet.indexOf(conditionToRemove[0]);
-      if (indexToRemove > -1) {
-        self.conditionSet.splice(indexToRemove, 1);
+    function equals(other) {
+      if (other.objectType !== self.objectType) {
+        return false;
       }
 
-      return conditionToRemove[0];
+      if (other.origin !== self.origin) {
+        return false;
+      }
+
+      if (other.destination !== self.destination) {
+        return false;
+      }
+
+      if (other.name !== self.name) {
+        return false;
+      }
+
+      if (other.conditions.length === self.conditions.length) {
+        if (self.conditions.length > 0) {
+          var hasEqualConditions = other.conditions.some(function(otherCondition) {
+            return self.conditions.some(function(selfCondition) {
+              return selfCondition.equals(otherCondition);
+            });
+          });
+
+          if (!hasEqualConditions) {
+            return false;
+          }
+        } else {
+          return true;
+        }
+      } else {
+        return false;
+      }
+
+      return true;
+    }
+
+    function selfsame(other) {
+      return Object.is(self, other);
+    }
+
+    function clone() {
+      return Object.assign(new Route(), self);
     }
 
     function toJson() {
@@ -93,20 +130,21 @@
 
       json.extents = self.extents;
       json.objectType = self.objectType;
-      json.name = self.name;
       json.origin = self.origin;
       json.destination = self.destination;
-      json.index = self.index;
+      json.name = self.name;
       json.isDefault = self.isDefault;
-      json.conditionSet = [];
-
-      if (self.conditionSet) {
-        for (var conditionName in self.conditionSet) {
-          json.conditionSet[conditionName] = self.conditionSet[conditionName].toJson();
-        }
-      }
+      json.conditions = self.conditions.map(function(condition) {
+        return condition.toJson();
+      });
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+
+    function _conditionExists(newCondition) {
+      return self.conditions.some(function(condition) {
+        return newCondition.equals(condition);
+      });
     }
   }
 }());

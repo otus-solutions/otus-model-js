@@ -40,6 +40,7 @@
     self.extents = 'SurveyTemplateObject';
     self.objectType = 'RouteCondition';
     self.name = name;
+    self.index = null;
     self.rules = [];
 
     /* Public methods */
@@ -90,11 +91,18 @@
       }
 
       if (other.rules.length === self.rules.length) {
-        var hasEqualRules = other.rules.some(function(rule, index) {
-          return self.rules[index].equals(rule);
-        });
-        if (!hasEqualRules) {
-          return false;
+        if (self.rules.length > 0) {
+          var hasEqualRules = other.rules.some(function(otherRule) {
+            return self.rules.some(function(selfRule) {
+              return selfRule.equals(otherRule);
+            });
+          });
+
+          if (!hasEqualRules) {
+            return false;
+          }
+        } else {
+          return true;
         }
       } else {
         return false;
@@ -117,10 +125,8 @@
       json.extents = 'StudioObject';
       json.objectType = 'RouteCondition';
       json.name = self.name;
-      json.rules = [];
-
-      self.rules.forEach(function(rule) {
-        json.rules.push(rule.toJson());
+      json.rules = self.rules.map(function(rule) {
+        return rule.toJson();
       });
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
