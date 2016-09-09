@@ -15,70 +15,87 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(index, origin, destination) {
-      var navigation = new Navigation(origin);
-
-      if (destination) {
-        var defaultRoute = RouteFactory.create(navigation.origin, destination);
-        navigation.addRoute(defaultRoute);
+    function create(origin, destination) {
+      if (!origin || !destination) {
+        return null;
       }
 
-      return navigation;
+      var defaultRoute = RouteFactory.createDefault(origin, destination);
+      if (!defaultRoute) {
+        return null;
+      }
+
+      return new Navigation(origin, defaultRoute);
     }
 
     function fromJson(json) {
-      if (typeof json === 'string') {
-        var jsonObj = JSON.parse(json);
-      } else if (typeof json === 'object') {
-        var jsonObj = JSON.parse(JSON.stringify(json));
+      var jsonObj = _parse(json);
+
+      if (!jsonObj.origin || (!jsonObj.routes.length || !jsonObj.routes[0].destination)) {
+        return null;
       }
 
-      var navigation = new Navigation(jsonObj.index, jsonObj.origin);
+      return _rebuildNavigation(jsonObj);
+    }
 
-      jsonObj.routes.forEach(function(route) {
-        var newRoute = RouteFactory.fromJson(JSON.stringify(route));
-        navigation.addRoute(newRoute);
+    function _rebuildNavigation(json) {
+      var navigation = new Navigation(json.origin);
+      navigation.inNavigations = json.inNavigations;
+      navigation.isDefault = json.isDefault;
+      navigation.routes = json.routes.map(function(route) {
+        return RouteFactory.fromJson(JSON.stringify(route));
       });
-
-      navigation.inNavigations = jsonObj.inNavigations;
-      navigation.isDefault = jsonObj.isDefault;
-
       return navigation;
+    }
+
+    function _parse(json) {
+      if (typeof json === 'string') {
+        return JSON.parse(json);
+      } else if (typeof json === 'object') {
+        return JSON.parse(JSON.stringify(json));
+      }
     }
 
     return self;
   }
 
-  function Navigation(index, origin) {
+  function Navigation(origin, defaultRoute) {
     var self = this;
-    var _defaultRoute = null;
+    var _defaultRoute = defaultRoute;
 
     /* Object properties */
-    self.extents = 'StudioObject';
+    self.extents = 'SurveyTemplateObject';
     self.objectType = 'Navigation';
     self.origin = origin;
-    self.index = index;
+    self.index = null;
     self.isDefault = true;
-    self.routes = [];
     self.inNavigations = [];
+    self.routes = [defaultRoute];
 
     /* Public methods */
     self.listRoutes = listRoutes;
     self.getRoute = getRoute;
     self.getDefaultRoute = getDefaultRoute;
-    self.addRoute = addRoute;
-    self.removeRoute = removeRoute;
+    self.addAlternativeRoute = addAlternativeRoute;
+    self.removeRouteByName = removeRouteByName;
     self.updateRoute = updateRoute;
     self.hasRoute = hasRoute;
     self.removeInNavigation = removeInNavigation;
     self.isOrphan = isOrphan;
+    self.equals = equals;
+    self.selfsame = selfsame;
+    self.clone = clone;
     self.toJson = toJson;
 
     function listRoutes() {
       var clone = [];
 
-      self.routes.forEach(function(route) {
-        clone.push(route);
+      clone = self.routes.map(function(route) {
+        if (route) {
+          return route.clone();
+        } else {
+          return null;
+        }
       });
 
       return clone;
@@ -96,45 +113,52 @@
         }
       });
 
-      return routeToReturn;
+      return routeToReturn.clone();
     }
 
     function getDefaultRoute() {
-      return _defaultRoute;
-    }
-
-    function addRoute(route) {
       if (!_defaultRoute) {
-        _defaultRoute = route;
-        _defaultRoute.isDefault = true;
+        return null;
+      } else {
+        return _defaultRoute.clone();
       }
-      self.routes.push(route);
     }
 
-    function removeRoute(name) {
-      var routeToRemove = self.routes.filter(function(route) {
-        return route.name === name;
-      });
-
-      routeToRemove = routeToRemove[0];
-
-      var indexToRemove = self.routes.indexOf(routeToRemove);
-      if (indexToRemove > -1) {
-        self.routes.splice(indexToRemove, 1);
-        if (routeToRemove.name === _defaultRoute.name) {
-          _defaultRoute = null;
-        }
+    function addAlternativeRoute(route) {
+      if (!_routeExists(route) && route.conditions.length) {
+        route.isDefault = false;
+        self.routes.push(route);
       }
+    }
 
-      return routeToRemove;
+    function removeRouteByName(name) {
+      self.routes.some(function(route, index) {
+        if (route.name === name) {
+          self.routes.splice(index, 1);
+          if (route.isDefault) {
+            _defaultRoute = null;
+          }
+          return true;
+        }
+      });
     }
 
     function updateRoute(route) {
-      self.routes.forEach(function(currentRoute, index) {
-        if (currentRoute.name === route.name) {
-          self.routes[index] = route;
+      self.routes.some(function(currentRoute, index) {
+        if (_isCurrentDefaultRoute(route)) {
           if (route.isDefault) {
-            _defaultRoute = route;
+            _updateDefaultRoute(route);
+          } else {
+            _removeDefaultRoute();
+            addAlternativeRoute(route);
+          }
+          return true;
+        } else {
+          if (route.isDefault) {
+            self.routes.splice(index, 1);
+            _updateDefaultRoute(route);
+          } else {
+            self.routes[index] = route;
           }
         }
       });
@@ -168,6 +192,45 @@
       return !self.inNavigations.length && self.index > 0;
     }
 
+    function equals(other) {
+      if (other.objectType !== self.objectType) {
+        return false;
+      }
+
+      if (other.index !== self.index) {
+        return false;
+      }
+
+      if (other.routes.length === self.routes.length) {
+
+        if (self.routes.length > 0) {
+          var hasEqualRoutes = other.routes.some(function(otherRoute) {
+            return self.routes.some(function(selfRoute) {
+              return selfRoute.equals(otherRoute);
+            });
+          });
+
+          if (!hasEqualRoutes) {
+            return false;
+          }
+        } else {
+          return true;
+        }
+      } else {
+        return false;
+      }
+
+      return true;
+    }
+
+    function selfsame(other) {
+      return Object.is(self, other);
+    }
+
+    function clone() {
+      return Object.assign(new Navigation(), self);
+    }
+
     function toJson() {
       var json = {};
 
@@ -175,15 +238,34 @@
       json.objectType = self.objectType;
       json.origin = self.origin;
       json.index = self.index;
-      json.inNavigations = [];
-      json.inNavigations = self.inNavigations;
       json.isDefault = self.isDefault;
-      json.routes = [];
-      self.routes.forEach(function(route) {
-        json.routes.push(route.toJson());
+      json.inNavigations = self.inNavigations;
+      json.routes = self.routes.map(function(route) {
+        return route.toJson();
       });
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+
+    function _routeExists(newRoute) {
+      return self.routes.some(function(route) {
+        return route && newRoute.equals(route);
+      });
+    }
+
+    function _isCurrentDefaultRoute(route) {
+      return (route.name === _defaultRoute.name);
+    }
+
+    function _updateDefaultRoute(route) {
+      _defaultRoute = route;
+      _defaultRoute.conditions = [];
+      self.routes[0] = _defaultRoute;
+    }
+
+    function _removeDefaultRoute() {
+      _defaultRoute = null;
+      self.routes[0] = null;
     }
   }
 }());

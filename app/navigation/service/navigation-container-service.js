@@ -86,7 +86,9 @@
     }
 
     function createNavigationTo(origin, destination) {
-      _navigationList.push(NavigationFactory.create(origin, destination));
+      var newNavigation = NavigationFactory.create(origin, destination);
+      newNavigation.index = _navigationList.length;
+      _navigationList.push(newNavigation);
     }
 
     function removeNavigationOf(questionID) {

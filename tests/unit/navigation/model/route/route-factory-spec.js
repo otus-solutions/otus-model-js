@@ -13,11 +13,13 @@ describe('RouteFactory', function() {
       mockCondition(_$injector_);
       factory = _$injector_.get('otusjs.model.navigation.RouteFactory');
     });
-
-    route = factory.create(ORIGIN, DESTINATION);
   });
 
   describe('create method', function() {
+
+    beforeEach(function() {
+      route = factory.create(ORIGIN, DESTINATION);
+    })
 
     it('should return a Route object with extends value equal to "SurveyTemplateObject"', function() {
       expect(route.extents).toBe('SurveyTemplateObject');
@@ -39,8 +41,45 @@ describe('RouteFactory', function() {
       expect(route.name).toEqual(ROUTE_NAME);
     });
 
-    it('should return a Route object with a valid isDefault value', function() {
+    it('should return a Route object with isDefault equals false', function() {
       expect(route.isDefault).toEqual(false);
+    });
+
+    it('should return a Route object with a empty condition list', function() {
+      expect(route.listConditions()).toEqual(jasmine.any(Array));
+      expect(route.listConditions().length).toBe(0);
+    });
+
+  });
+
+  describe('createDefault method', function() {
+
+    beforeEach(function() {
+      route = factory.createDefault(ORIGIN, DESTINATION);
+    });
+
+    it('should return a Route object with extends value equal to "SurveyTemplateObject"', function() {
+      expect(route.extents).toBe('SurveyTemplateObject');
+    });
+
+    it('should return a Route object with objectType value equal to "Route"', function() {
+      expect(route.objectType).toBe('Route');
+    });
+
+    it('should return a Route object with a valid origin value', function() {
+      expect(route.origin).toEqual(ORIGIN);
+    });
+
+    it('should return a Route object with a valid destination value', function() {
+      expect(route.destination).toEqual(DESTINATION);
+    });
+
+    it('should return a Route object with a valid name value', function() {
+      expect(route.name).toEqual(ROUTE_NAME);
+    });
+
+    it('should return a Route object with isDefault equals true', function() {
+      expect(route.isDefault).toEqual(true);
     });
 
     it('should return a Route object with a empty condition list', function() {

@@ -14,10 +14,21 @@
 
     /* Public interface */
     self.create = create;
+    self.createDefault = createDefault;
     self.fromJson = fromJson;
 
     function create(origin, destination) {
       return new Route(origin, destination);
+    }
+
+    function createDefault(origin, destination) {
+      var route = create(origin, destination);
+
+      if (route) {
+        route.isDefault = true;
+      }
+
+      return route;
     }
 
     function fromJson(json) {
