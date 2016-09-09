@@ -86,7 +86,7 @@ describe('UpdateRouteTaskService', function() {
     Mock.routeData = {}
     Mock.routeData.origin = 'Q2';
     Mock.routeData.destination = 'Q4';
-    Mock.routeData.conditionSet = [];
+    Mock.routeData.conditions = [];
 
     Mock.conditionData = {};
     Mock.conditionData.name = 'CONDITION_NAME';
@@ -101,7 +101,7 @@ describe('UpdateRouteTaskService', function() {
     Mock.ruleData.answer.option = {};
     Mock.ruleData.answer.option.value = 1;
 
-    Mock.routeData.conditionSet.push(Mock.conditionData);
+    Mock.routeData.conditions.push(Mock.conditionData);
     Mock.conditionData.rules.push(Mock.ruleData);
   }
 

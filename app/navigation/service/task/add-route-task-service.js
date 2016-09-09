@@ -28,7 +28,7 @@
     }
 
     function _setupConditions(route, routeData) {
-      routeData.conditionSet.forEach(function(conditionData) {
+      routeData.conditions.forEach(function(conditionData) {
         var condition = RouteConditionFactory.create(conditionData.name);
         _setupRules(condition, conditionData);
         route.addCondition(condition);

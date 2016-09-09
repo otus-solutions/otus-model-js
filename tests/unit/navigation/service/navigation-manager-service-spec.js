@@ -158,7 +158,7 @@ describe('NavigationManagerService', function() {
     Mock.routeData = {};
     Mock.routeData.origin = 'Q2';
     Mock.routeData.destination = 'Q4';
-    Mock.routeData.conditionSet = [];
+    Mock.routeData.conditions = [];
   }
 
   function mockNavigationContainerService($injector) {

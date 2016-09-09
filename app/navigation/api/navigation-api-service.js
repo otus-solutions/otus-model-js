@@ -48,7 +48,7 @@
     }
 
     function removeConditionRule() {
-      route.conditionSet[0].removeRule(rule);
+      route.conditions[0].removeRule(rule);
     }
   }
 })();
