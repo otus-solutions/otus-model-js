@@ -156,7 +156,7 @@
         } else {
           if (route.isDefault) {
             self.routes.splice(index, 1);
-            _updateDefaultRoute(route);
+            _setupDefaultRoute(route);
           } else {
             self.routes[index] = route;
           }
@@ -263,9 +263,15 @@
       self.routes[0] = _defaultRoute;
     }
 
+    function _setupDefaultRoute(route) {
+      _defaultRoute = route;
+      _defaultRoute.conditions = [];
+      self.routes.unshift(_defaultRoute);
+    }
+
     function _removeDefaultRoute() {
       _defaultRoute = null;
-      self.routes[0] = _defaultRoute;
+      self.routes.shift();
     }
   }
 }());
