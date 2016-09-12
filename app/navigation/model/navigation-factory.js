@@ -40,6 +40,7 @@
 
     function _rebuildNavigation(json) {
       var navigation = create(json.origin, json.routes[0].destination);
+      navigation.index = json.index;
       navigation.inNavigations = json.inNavigations;
       navigation.isDefault = json.isDefault;
       navigation.routes = json.routes.map(function(route) {
@@ -153,7 +154,7 @@
             // TODO: Make the RouteFactory capable to construct alterantive
             // routes and remove the below 'conditions' array initialization
             if (!route.conditions.length) {
-              route.conditions = [];              
+              route.conditions = [];
             }
             addAlternativeRoute(route);
           }
