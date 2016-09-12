@@ -39,7 +39,7 @@
     }
 
     function _rebuildNavigation(json) {
-      var navigation = new Navigation(json.origin);
+      var navigation = create(json.origin, json.routes[0].destination);
       navigation.inNavigations = json.inNavigations;
       navigation.isDefault = json.isDefault;
       navigation.routes = json.routes.map(function(route) {
@@ -265,7 +265,7 @@
 
     function _removeDefaultRoute() {
       _defaultRoute = null;
-      self.routes[0] = null;
+      self.routes[0] = _defaultRoute;
     }
   }
 }());
