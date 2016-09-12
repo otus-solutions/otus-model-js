@@ -152,7 +152,9 @@
             _removeDefaultRoute();
             // TODO: Make the RouteFactory capable to construct alterantive
             // routes and remove the below 'conditions' array initialization
-            route.conditions = []
+            if (!route.conditions.length) {
+              route.conditions = [];              
+            }
             addAlternativeRoute(route);
           }
           return true;
