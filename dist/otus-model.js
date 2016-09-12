@@ -3107,7 +3107,7 @@
     self.execute = execute;
 
     function execute(routeData, navigation) {
-      navigation.removeRoute(routeData.name);
+      navigation.removeRouteByName(routeData.name);
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
       nextNavigation.removeInNavigation(routeData.origin);
     }
