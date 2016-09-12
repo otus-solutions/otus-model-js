@@ -254,7 +254,7 @@
     }
 
     function _isCurrentDefaultRoute(route) {
-      return (route.name === _defaultRoute.name);
+      return (_defaultRoute && route.name === _defaultRoute.name);
     }
 
     function _updateDefaultRoute(route) {
