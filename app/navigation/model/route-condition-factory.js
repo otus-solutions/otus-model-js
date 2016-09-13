@@ -16,15 +16,26 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(name) {
-      return new RouteCondition(name);
+    function create(name, rule) {
+      var condition = null;
+
+      if (rule) {
+        condition = new RouteCondition(name, rule);
+      }
+
+      return condition;
     }
 
     function fromJson(json) {
       var jsonObj = JSON.parse(json);
       var condition = new RouteCondition(jsonObj.name);
       condition.rules = jsonObj.rules.map(_mapRules);
-      return condition;
+
+      if (condition.rules) {
+        return condition;
+      } else {
+        return null;
+      }
     }
 
     function _mapRules(ruleJson) {
@@ -34,18 +45,19 @@
     return self;
   }
 
-  function RouteCondition(name) {
+  function RouteCondition(name, rule) {
     var self = this;
 
     self.extents = 'SurveyTemplateObject';
     self.objectType = 'RouteCondition';
-    self.name = name;
+    self.name = name || 'ROUTE_CONDITION';
     self.index = null;
-    self.rules = [];
+    self.rules = [rule];
 
     /* Public methods */
     self.addRule = addRule;
     self.removeRule = removeRule;
+    self.updateRule = updateRule;
     self.listRules = listRules;
     self.getRuleByIndex = getRuleByIndex;
 
@@ -61,10 +73,19 @@
     }
 
     function removeRule(rule) {
-      var index = self.rules.indexOf(rule);
-      if (index > -1) {
-        self.rules.splice(index, 1);
+      if (self.rules.length > 1) {
+        var index = self.rules.indexOf(rule);
+        if (index > -1) {
+          self.rules.splice(index, 1);
+        }
       }
+    }
+
+    function updateRule(rule) {
+      var indexToUpdate = _findRuleIndex(rule);
+      var ruleToUpdate = getRuleByIndex(indexToUpdate);
+      ruleToUpdate.when = rule.when;
+      ruleToUpdate[rule.operator](rule.answer);
     }
 
     function listRules() {
@@ -133,9 +154,22 @@
     }
 
     function _ruleExists(newRule) {
-      return self.rules.some(function(rule) {
-        return newRule.equals(rule);
+      if (_findRuleIndex(newRule) > -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function _findRuleIndex(ruleToSearch) {
+      var result = -1;
+      self.rules.some(function(rule, index) {
+        if (ruleToSearch.equals(rule)) {
+          result = index;
+          return true;
+        }
       });
+      return result;
     }
   }
 }());

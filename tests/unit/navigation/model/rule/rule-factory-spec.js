@@ -22,10 +22,6 @@ describe('RuleFactory', function() {
       rule = factory.create(WHEN, OPERATOR,ANSWER);
     });
 
-    it('should return a defined object', function() {
-      expect(rule).toBeDefined();
-    });
-
     it('should return a Rule object with extends value equal to "SurveyTemplateObject"', function() {
       expect(rule.extents).toBe(EXTENTS);
     });

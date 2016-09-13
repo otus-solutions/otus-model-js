@@ -15,10 +15,10 @@ describe('RouteFactory', function() {
     });
   });
 
-  describe('create method', function() {
+  describe('createAlternative method', function() {
 
     beforeEach(function() {
-      route = factory.create(ORIGIN, DESTINATION);
+      route = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
     })
 
     it('should return a Route object with extends value equal to "SurveyTemplateObject"', function() {
@@ -45,9 +45,9 @@ describe('RouteFactory', function() {
       expect(route.isDefault).toEqual(false);
     });
 
-    it('should return a Route object with a empty condition list', function() {
+    it('should return a Route object with a condition list with at least one condition', function() {
       expect(route.listConditions()).toEqual(jasmine.any(Array));
-      expect(route.listConditions().length).toBe(0);
+      expect(route.listConditions().length).toBe(1);
     });
 
   });
@@ -128,9 +128,11 @@ describe('RouteFactory', function() {
   });
 
   function mockCondition($injector) {
+    var RuleFactory = $injector.get('otusjs.model.navigation.RuleFactory');
+    var rule = RuleFactory.create('QID1', 'equal', 1);
     var conditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
-    Mock.FakeRouteCondition = conditionFactory.create('Fake Condition');
-    Mock.NoRealRouteCondition = conditionFactory.create('No Real Condition');
+    Mock.conditionA = conditionFactory.create('CONDITION_A', rule);
+    Mock.conditionB = conditionFactory.create('CONDITION_A', rule);
   }
 
   function mockJson() {
@@ -141,7 +143,7 @@ describe('RouteFactory', function() {
       origin: ORIGIN,
       destination: DESTINATION,
       isDefault: true,
-      conditions: [Mock.FakeRouteCondition.toJson()]
+      conditions: [Mock.conditionA.toJson()]
     });
   }
 

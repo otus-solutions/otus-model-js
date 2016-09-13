@@ -1,4 +1,4 @@
-describe('RuleFactory', function() {
+describe('RouteConditionFactory', function() {
 
   var Mock = {};
   var routeCondition;
@@ -10,10 +10,11 @@ describe('RuleFactory', function() {
     module('otusjs');
 
     inject(function(_$injector_) {
+      mockRule(_$injector_);
       factory = _$injector_.get('otusjs.model.navigation.RouteConditionFactory');
     });
 
-    routeCondition = factory.create(CONDITION_NAME);
+    routeCondition = factory.create(CONDITION_NAME, Mock.rule);
   });
 
   describe('create method', function() {
@@ -30,9 +31,14 @@ describe('RuleFactory', function() {
       expect(routeCondition.name).toEqual(CONDITION_NAME);
     });
 
-    it('should return a RouteCondition object with a empty list of rules', function() {
+    it('should return a RouteCondition object with list of rules with at least one rule', function() {
       expect(routeCondition.listRules()).toEqual(jasmine.any(Array));
-      expect(routeCondition.listRules().length).toBe(0);
+      expect(routeCondition.listRules().length).toBe(1);
+    });
+
+    it('should return a null object when no rule is passed as parameter', function() {
+      routeCondition = factory.create(CONDITION_NAME);
+      expect(routeCondition).toBe(null);
     });
 
   });
@@ -80,6 +86,11 @@ describe('RuleFactory', function() {
         answer: 1
       }]
     });
+  }
+
+  function mockRule($injector) {
+    var RuleFactory = $injector.get('otusjs.model.navigation.RuleFactory');
+    Mock.rule = RuleFactory.create('QID1', 'equal', 1);
   }
 
 });

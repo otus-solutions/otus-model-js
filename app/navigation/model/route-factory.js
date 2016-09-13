@@ -13,16 +13,12 @@
     var self = this;
 
     /* Public interface */
-    self.create = create;
+    self.createAlternative = createAlternative;
     self.createDefault = createDefault;
     self.fromJson = fromJson;
 
-    function create(origin, destination) {
-      return new Route(origin, destination);
-    }
-
     function createDefault(origin, destination) {
-      var route = create(origin, destination);
+      var route = new Route(origin, destination, null);
 
       if (route) {
         route.isDefault = true;
@@ -31,9 +27,22 @@
       return route;
     }
 
+    function createAlternative(origin, destination, condition) {
+      if (condition) {
+        return new Route(origin, destination, condition);
+      } else {
+        return null;
+      }
+    }
+
     function fromJson(json) {
       var jsonObj = JSON.parse(json);
-      var route = create(jsonObj.origin, jsonObj.destination);
+      var route = null;
+      if (jsonObj.isDefault) {
+        route = createDefault(jsonObj.origin, jsonObj.destination);
+      } else {
+        route = createAlternative(jsonObj.origin, jsonObj.destination);
+      }
       route.conditions = jsonObj.conditions.map(_mapConditions);
       route.isDefault = jsonObj.isDefault;
       return route;
@@ -47,7 +56,7 @@
     return self;
   }
 
-  function Route(routeOrigin, routeDestination) {
+  function Route(routeOrigin, routeDestination, condition) {
     var self = this;
 
     self.extents = 'SurveyTemplateObject';
@@ -56,7 +65,7 @@
     self.destination = routeDestination;
     self.name = routeOrigin + '_' + routeDestination;
     self.isDefault = false;
-    self.conditions = [];
+    self.conditions = condition ? [condition] : [];
 
     /* Public interface */
     self.listConditions = listConditions;
@@ -78,15 +87,17 @@
     }
 
     function addCondition(condition) {
-      if (!_conditionExists(condition)) {
+      if (!self.isDefault && !_conditionExists(condition)) {
         self.conditions.push(condition);
       }
     }
 
     function removeCondition(condition) {
-      var index = self.conditions.indexOf(condition);
-      if (index > -1) {
-        self.conditions.splice(index, 1);
+      if (self.conditions.length > 1) {
+        var index = self.conditions.indexOf(condition);
+        if (index > -1) {
+          self.conditions.splice(index, 1);
+        }
       }
     }
 

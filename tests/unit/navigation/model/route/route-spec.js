@@ -1,7 +1,7 @@
 describe('Route', function() {
 
   var Mock = {};
-  var route;
+  var route = null;
   var DIFF_OBJECT_TYPE = 'DIFF_OBJECT_TYPE';
   var ORIGIN = 'ORIGIN';
   var DIFF_ORIGIN = 'DIFF_ORIGIN';
@@ -18,26 +18,49 @@ describe('Route', function() {
       factory = _$injector_.get('otusjs.model.navigation.RouteFactory');
     });
 
-    route = factory.create(ORIGIN, DESTINATION);
+    route = factory.createDefault(ORIGIN, DESTINATION);
   });
 
   describe('addCondition method', function() {
 
-    it('should put a new condition in route object', function() {
-      route.addCondition(Mock.conditionA);
+    describe('when route is default', function() {
 
-      expect(route.listConditions()).toBeDefined();
-      expect(route.listConditions().length).toBe(1);
+      beforeEach(function() {
+        route = factory.createDefault(ORIGIN, DESTINATION);
+      });
+
+      it('should  not put a new condition in route object', function() {
+        route.addCondition(Mock.conditionA);
+
+        expect(route.listConditions()).toBeDefined();
+        expect(route.listConditions().length).toBe(0);
+      });
+
     });
 
-    it('should not put a condition twice', function() {
-      route.addCondition(Mock.conditionA);
-      route.addCondition(Mock.conditionB);
+    describe('when route is not default', function() {
 
-      route.addCondition(Mock.conditionA);
-      route.addCondition(Mock.conditionB);
+      beforeEach(function() {
+        route = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
+      });
 
-      expect(route.listConditions().length).toBe(2);
+      it('should put a new condition in route object', function() {
+        route.addCondition(Mock.conditionB);
+
+        expect(route.listConditions()).toBeDefined();
+        expect(route.listConditions().length).toBe(2);
+      });
+
+      it('should not put a condition twice', function() {
+        route.addCondition(Mock.conditionA);
+        route.addCondition(Mock.conditionB);
+
+        route.addCondition(Mock.conditionA);
+        route.addCondition(Mock.conditionB);
+
+        expect(route.listConditions().length).toBe(2);
+      });
+
     });
 
   });
@@ -45,21 +68,21 @@ describe('Route', function() {
   describe('removeCondition method', function() {
 
     beforeEach(function() {
-      route.addCondition(Mock.conditionA);
+      route = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
       route.addCondition(Mock.conditionB);
     });
 
-    it('should remove the condition from route object', function() {
+    it('should remove the condition from route object if conditions list size is greater than one', function() {
       route.removeCondition(Mock.conditionA);
 
       expect(route.listConditions().length).toBe(1);
     });
 
-    it('should delete condition attribute from route if the size of these set is zero', function() {
+    it('should not remove the condition from route object if conditions list size is equa to one', function() {
       route.removeCondition(Mock.conditionA);
       route.removeCondition(Mock.conditionB);
 
-      expect(route.listConditions()).toEqual([]);
+      expect(route.listConditions().length).toBe(1);
     });
 
   });
@@ -87,8 +110,8 @@ describe('Route', function() {
   describe('equals method', function() {
 
     it('should return true when two objects have the same properties and equal values', function() {
-      var routeA = factory.create(ORIGIN, DESTINATION);
-      var routeB = factory.create(ORIGIN, DESTINATION);
+      var routeA = factory.createDefault(ORIGIN, DESTINATION);
+      var routeB = factory.createDefault(ORIGIN, DESTINATION);
       expect(routeA.equals(routeB)).toBe(true);
 
       routeA.addCondition(Mock.conditionA);
@@ -97,11 +120,11 @@ describe('Route', function() {
     });
 
     it('should return true when two objects have same rules in the list but in different order', function() {
-      var routeA = factory.create(ORIGIN, DESTINATION);
+      var routeA = factory.createDefault(ORIGIN, DESTINATION);
       routeA.addCondition(Mock.conditionA);
       routeA.addCondition(Mock.conditionB);
 
-      var routeB = factory.create(ORIGIN, DESTINATION);
+      var routeB = factory.createDefault(ORIGIN, DESTINATION);
       routeB.addCondition(Mock.conditionA);
       routeB.addCondition(Mock.conditionB);
 
@@ -109,11 +132,11 @@ describe('Route', function() {
     });
 
     it('should return true when two objects have same rules in the list but in different order', function() {
-      var routeA = factory.create(ORIGIN, DESTINATION);
+      var routeA = factory.createDefault(ORIGIN, DESTINATION);
       routeA.addCondition(Mock.conditionA);
       routeA.addCondition(Mock.conditionB);
 
-      var routeB = factory.create(ORIGIN, DESTINATION);
+      var routeB = factory.createDefault(ORIGIN, DESTINATION);
       routeB.addCondition(Mock.conditionB);
       routeB.addCondition(Mock.conditionA);
 
@@ -121,49 +144,44 @@ describe('Route', function() {
     });
 
     it('should return false when two objects have different objectType value', function() {
-      var routeA = factory.create(ORIGIN, DESTINATION);
-      var routeB = factory.create(ORIGIN, DESTINATION);
+      var routeA = factory.createDefault(ORIGIN, DESTINATION);
+      var routeB = factory.createDefault(ORIGIN, DESTINATION);
       routeB.objectType = DIFF_OBJECT_TYPE;
 
       expect(routeA.equals(routeB)).toBe(false);
     });
 
     it('should return false when two objects have different origins', function() {
-      var routeA = factory.create(ORIGIN, DESTINATION);
-      var routeB = factory.create(DIFF_ORIGIN, DESTINATION);
+      var routeA = factory.createDefault(ORIGIN, DESTINATION);
+      var routeB = factory.createDefault(DIFF_ORIGIN, DESTINATION);
 
       expect(routeA.equals(routeB)).toBe(false);
     });
 
     it('should return false when two objects have different destinations', function() {
-      var routeA = factory.create(ORIGIN, DESTINATION);
-      var routeB = factory.create(ORIGIN, DIFF_DESTINATION);
+      var routeA = factory.createDefault(ORIGIN, DESTINATION);
+      var routeB = factory.createDefault(ORIGIN, DIFF_DESTINATION);
 
       expect(routeA.equals(routeB)).toBe(false);
     });
 
     it('should return false when two objects have different names', function() {
-      var routeA = factory.create(ORIGIN, DESTINATION);
-      var routeB = factory.create(DIFF_ORIGIN, DIFF_DESTINATION);
+      var routeA = factory.createDefault(ORIGIN, DESTINATION);
+      var routeB = factory.createDefault(DIFF_ORIGIN, DIFF_DESTINATION);
 
       expect(routeA.equals(routeB)).toBe(false);
     });
 
     it('should return false when two objects have different size of condition list', function() {
-      var routeA = factory.create(ORIGIN, DESTINATION);
-      routeA.addCondition(Mock.conditionA);
-
-      var routeB = factory.create(ORIGIN, DESTINATION);
+      var routeA = factory.createDefault(ORIGIN, DESTINATION);
+      var routeB = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
 
       expect(routeA.equals(routeB)).toBe(false);
     });
 
-    it('should return false when two objects have different size of condition list', function() {
-      var routeA = factory.create(ORIGIN, DESTINATION);
-      routeA.addCondition(Mock.conditionA);
-
-      var routeB = factory.create(ORIGIN, DESTINATION);
-      routeB.addCondition(Mock.conditionB);
+    it('should return false when two objects have same size of condition list but with different conditions', function() {
+      var routeA = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
+      var routeB = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionB);
 
       expect(routeA.equals(routeB)).toBe(false);
     });
@@ -175,10 +193,10 @@ describe('Route', function() {
     it('should call Object.is', function() {
       spyOn(Object, 'is').and.callThrough();
 
-      var routeA = factory.create(ORIGIN, DESTINATION);
+      var routeA = factory.createDefault(ORIGIN, DESTINATION);
       routeA.addCondition(Mock.conditionA);
 
-      var routeB = factory.create(ORIGIN, DESTINATION);
+      var routeB = factory.createDefault(ORIGIN, DESTINATION);
       routeB.addCondition(Mock.conditionA);
 
       var resultA = routeA.selfsame(routeA);
@@ -196,7 +214,7 @@ describe('Route', function() {
     it('should call Object.assign', function() {
       spyOn(Object, 'assign').and.callThrough();
 
-      var routeA = factory.create(ORIGIN, DESTINATION);
+      var routeA = factory.createDefault(ORIGIN, DESTINATION);
       routeA.addCondition(Mock.conditionA);
       var clone = routeA.clone();
 
@@ -210,8 +228,8 @@ describe('Route', function() {
   describe('toJson method', function() {
 
     beforeEach(function() {
-      route.addCondition(Mock.conditionA);
       mockJson();
+      route = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
     });
 
     it('should return a well formatted json based on Route', function() {
@@ -221,9 +239,11 @@ describe('Route', function() {
   });
 
   function mockCondition($injector) {
+    var RuleFactory = $injector.get('otusjs.model.navigation.RuleFactory');
+    var rule = RuleFactory.create('QID1', 'equal', 1);
     var conditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
-    Mock.conditionA = conditionFactory.create('CONDITION A');
-    Mock.conditionB = conditionFactory.create('CONDITION B');
+    Mock.conditionA = conditionFactory.create('CONDITION_A', rule);
+    Mock.conditionB = conditionFactory.create('CONDITION_B', rule);
   }
 
   function mockJson() {
