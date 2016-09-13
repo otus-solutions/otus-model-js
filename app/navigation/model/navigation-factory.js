@@ -271,10 +271,10 @@
     }
 
     function setupDefaultRoute(route) {
-      self.routes[0].isDefault = false;
+      route.conditions = [];
       _defaultRoute = route;
-      _defaultRoute.conditions = [];
-      self.routes.unshift(_defaultRoute);
+      self.routes[0] = _defaultRoute;
+      // self.routes.unshift(_defaultRoute);
     }
 
     function _removeDefaultRoute() {
