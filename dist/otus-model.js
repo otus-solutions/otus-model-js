@@ -2997,7 +2997,7 @@
 
     function execute(routeData, navigation) {
       var route = RouteFactory.create(routeData.origin, routeData.destination);
-      if (routeData.isDefalut) {
+      if (routeData.isDefault) {
         navigation.setupDefaultRoute(route);
       } else {
         _setupConditions(route, routeData);
