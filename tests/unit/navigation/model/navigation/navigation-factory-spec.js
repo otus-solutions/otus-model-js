@@ -113,12 +113,14 @@ describe('NavigationFactory', function() {
       objectType: OBJECT_TYPE,
       origin: ORIGIN,
       index: INDEX,
+      isDefault: true,
       routes: [{
         extents: EXTENTS,
         objectType: 'Route',
         origin: ORIGIN,
         destination: 'CAD2',
         name: ORIGIN + '_' + DESTINATION,
+        isDefault: true,
         conditions: []
       }]
     });
@@ -127,12 +129,14 @@ describe('NavigationFactory', function() {
       extents: EXTENTS,
       objectType: OBJECT_TYPE,
       index: INDEX,
+      isDefault: true,
       routes: [{
         extents: EXTENTS,
         objectType: 'Route',
         origin: ORIGIN,
         destination: 'CAD2',
         name: ORIGIN + '_' + DESTINATION,
+        isDefault: true,
         conditions: []
       }]
     });
@@ -142,11 +146,13 @@ describe('NavigationFactory', function() {
       objectType: OBJECT_TYPE,
       origin: ORIGIN,
       index: INDEX,
+      isDefault: true,
       routes: [{
         extents: EXTENTS,
         objectType: 'Route',
         origin: ORIGIN,
         name: ORIGIN + '_' + DESTINATION,
+        isDefault: true,
         conditions: []
       }]
     });
@@ -156,6 +162,7 @@ describe('NavigationFactory', function() {
       objectType: OBJECT_TYPE,
       origin: ORIGIN,
       index: INDEX,
+      isDefault: true,
       routes: []
     });
   }

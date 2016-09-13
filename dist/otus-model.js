@@ -10,7 +10,7 @@
     'use strict';
 
     angular
-        .module('otusjs.misc', []);
+        .module('otusjs.metadata', []);
 
 }());
 
@@ -18,7 +18,7 @@
     'use strict';
 
     angular
-        .module('otusjs.metadata', []);
+        .module('otusjs.misc', []);
 
 }());
 
@@ -964,6 +964,112 @@
     'use strict';
 
     angular
+        .module('otusjs.metadata')
+        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
+
+    MetadataAnswerFactory.$inject = ['LabelFactory'];
+
+    function MetadataAnswerFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MetadataAnswer(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MetadataAnswer(value, LabelFactory) {
+        var self = this;
+
+        self.extends = 'StudioObject';
+        self.objectType = 'MetadataAnswer';
+        self.dataType = 'Integer';
+        self.value = value;
+        self.label = {
+            'ptBR': LabelFactory.create(),
+            'enUS': LabelFactory.create(),
+            'esES': LabelFactory.create()
+        };
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .factory('MetadataGroupFactory', MetadataGroupFactory);
+
+    MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
+
+    function MetadataGroupFactory(MetadataAnswerFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MetadataGroup(MetadataAnswerFactory);
+        }
+
+        return self;
+    }
+
+    function MetadataGroup(MetadataAnswerFactory) {
+        var self = this;
+
+        self.extents = 'StudioObject';
+        self.objectType = 'MetadataGroup';
+        self.options = [];
+
+        /* Public methods */
+        self.getOptionListSize = getOptionListSize;
+        self.getOptionByValue = getOptionByValue;
+        self.createOption = createOption;
+        self.removeOption = removeOption;
+        self.removeLastOption = removeLastOption;
+
+        function getOptionListSize() {
+            return self.options.length;
+        }
+
+        function getOptionByValue(value) {
+            return self.options[value - 1];
+        }
+
+        function createOption() {
+            var option = MetadataAnswerFactory.create(self.options.length + 1);
+            self.options.push(option);
+            return option;
+        }
+
+        function removeOption(value) {
+            self.options.splice((value - 1), 1);
+            reorderOptionValues();
+        }
+
+        function removeLastOption() {
+            self.options.splice(-1, 1);
+        }
+
+        function reorderOptionValues() {
+            self.options.forEach(function(option, index) {
+                option.value = ++index;
+            });
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.misc')
         .factory('LabelFactory', LabelFactory);
 
@@ -1069,109 +1175,27 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.metadata')
-        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.ExceptionService', service);
 
-    MetadataAnswerFactory.$inject = ['LabelFactory'];
+  function service() {
+    var self = this;
 
-    function MetadataAnswerFactory(LabelFactory) {
-        var self = this;
+    self.InvalidStateError = createErrorType('InvalidStateError');
 
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MetadataAnswer(value, LabelFactory);
-        }
-
-        return self;
+    function createErrorType(name) {
+      function E(message) {
+        this.message = message;
+      }
+      E.prototype = Object.create(Error.prototype);
+      E.prototype.name = name;
+      E.prototype.constructor = E;
+      return E;
     }
-
-    function MetadataAnswer(value, LabelFactory) {
-        var self = this;
-
-        self.extends = 'StudioObject';
-        self.objectType = 'MetadataAnswer';
-        self.dataType = 'Integer';
-        self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .factory('MetadataGroupFactory', MetadataGroupFactory);
-
-    MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
-
-    function MetadataGroupFactory(MetadataAnswerFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new MetadataGroup(MetadataAnswerFactory);
-        }
-
-        return self;
-    }
-
-    function MetadataGroup(MetadataAnswerFactory) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'MetadataGroup';
-        self.options = [];
-
-        /* Public methods */
-        self.getOptionListSize = getOptionListSize;
-        self.getOptionByValue = getOptionByValue;
-        self.createOption = createOption;
-        self.removeOption = removeOption;
-        self.removeLastOption = removeLastOption;
-
-        function getOptionListSize() {
-            return self.options.length;
-        }
-
-        function getOptionByValue(value) {
-            return self.options[value - 1];
-        }
-
-        function createOption() {
-            var option = MetadataAnswerFactory.create(self.options.length + 1);
-            self.options.push(option);
-            return option;
-        }
-
-        function removeOption(value) {
-            self.options.splice((value - 1), 1);
-            reorderOptionValues();
-        }
-
-        function removeLastOption() {
-            self.options.splice(-1, 1);
-        }
-
-        function reorderOptionValues() {
-            self.options.forEach(function(option, index) {
-                option.value = ++index;
-            });
-        }
-    }
-
+  }
 }());
 
 (function() {
@@ -1234,38 +1258,20 @@
 
   angular
     .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.ExceptionService', service);
-
-  function service() {
-    var self = this;
-
-    self.InvalidStateError = createErrorType('InvalidStateError');
-
-    function createErrorType(name) {
-      function E(message) {
-        this.message = message;
-      }
-      E.prototype = Object.create(Error.prototype);
-      E.prototype.name = name;
-      E.prototype.constructor = E;
-      return E;
-    }
-  }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
     .factory('otusjs.model.navigation.NavigationFactory', factory);
 
   factory.$inject = [
     'otusjs.model.navigation.RouteFactory'
   ];
 
+  var Inject = {
+    RouteFactory: null
+  };
+
   function factory(RouteFactory) {
     var self = this;
+
+    Inject.RouteFactory = RouteFactory;
 
     self.create = create;
     self.fromJson = fromJson;
@@ -1333,7 +1339,7 @@
     self.getRoute = getRoute;
     self.getDefaultRoute = getDefaultRoute;
     self.setupDefaultRoute = setupDefaultRoute;
-    self.addAlternativeRoute = addAlternativeRoute;
+    self.createAlternativeRoute = createAlternativeRoute;
     self.removeRouteByName = removeRouteByName;
     self.updateRoute = updateRoute;
     self.hasRoute = hasRoute;
@@ -1381,7 +1387,15 @@
       }
     }
 
-    function addAlternativeRoute(route) {
+    function createAlternativeRoute(routeData) {
+      console.log(routeData);
+      var origin = routeData.origin;
+      var destination = routeData.destination;
+      var conditions = routeData.conditions;
+      var route = Inject.RouteFactory.createAlternative(origin, destination, conditions[0]);
+
+      routeData.conditions.map(route.addCondition);
+
       if (!_routeExists(route) && route.conditions.length) {
         route.isDefault = false;
         self.routes.push(route);
@@ -1412,7 +1426,7 @@
             if (!route.conditions.length) {
               route.conditions = [];
             }
-            addAlternativeRoute(route);
+            createAlternativeRoute(route);
           }
           return true;
         } else {
@@ -1758,7 +1772,7 @@
       if (jsonObj.isDefault) {
         route = createDefault(jsonObj.origin, jsonObj.destination);
       } else {
-        route = createAlternative(jsonObj.origin, jsonObj.destination);
+        route = createAlternative(jsonObj.origin, jsonObj.destination, jsonObj.conditions.splice(0, 1));
       }
       route.conditions = jsonObj.conditions.map(_mapConditions);
       route.isDefault = jsonObj.isDefault;

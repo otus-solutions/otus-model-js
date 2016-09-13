@@ -41,7 +41,7 @@
       if (jsonObj.isDefault) {
         route = createDefault(jsonObj.origin, jsonObj.destination);
       } else {
-        route = createAlternative(jsonObj.origin, jsonObj.destination);
+        route = createAlternative(jsonObj.origin, jsonObj.destination, jsonObj.conditions.splice(0, 1));
       }
       route.conditions = jsonObj.conditions.map(_mapConditions);
       route.isDefault = jsonObj.isDefault;

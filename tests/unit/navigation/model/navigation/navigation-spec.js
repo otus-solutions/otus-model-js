@@ -1,6 +1,7 @@
 describe('Navigation', function() {
 
   var Mock = {};
+  var injections = {};
   var navigation;
   var EXTENTS = 'SurveyTemplateObject';
   var OBJECT_TYPE = 'Navigation';
@@ -15,6 +16,7 @@ describe('Navigation', function() {
     module('otusjs');
 
     inject(function(_$injector_) {
+      mockRouteFactory(_$injector_);
       mockRoute(_$injector_);
 
       factory = _$injector_.get('otusjs.model.navigation.NavigationFactory');
@@ -24,26 +26,26 @@ describe('Navigation', function() {
     navigation = factory.create(ORIGIN, DESTINATION1);
   });
 
-  describe('addAlternativeRoute method', function() {
+  describe('createAlternativeRoute method', function() {
 
-    it('should put a new route in route list', function() {
-      navigation.addAlternativeRoute(Mock.routeA);
+    fit('should put a new route in route list', function() {
+      navigation.createAlternativeRoute(Mock.routeA);
 
       expect(navigation.listRoutes().length).toBe(2);
     });
 
     it('should not put a route twice', function() {
-      navigation.addAlternativeRoute(Mock.defaultRoute);
-      navigation.addAlternativeRoute(Mock.defaultRoute);
-      navigation.addAlternativeRoute(Mock.defaultRoute);
-      navigation.addAlternativeRoute(Mock.defaultRoute);
-      navigation.addAlternativeRoute(Mock.defaultRoute);
+      navigation.createAlternativeRoute(Mock.defaultRoute);
+      navigation.createAlternativeRoute(Mock.defaultRoute);
+      navigation.createAlternativeRoute(Mock.defaultRoute);
+      navigation.createAlternativeRoute(Mock.defaultRoute);
+      navigation.createAlternativeRoute(Mock.defaultRoute);
 
       expect(navigation.listRoutes().length).toBe(1);
     });
 
     it('should not put a new route without conditions', function() {
-      navigation.addAlternativeRoute(Mock.routeB);
+      navigation.createAlternativeRoute(Mock.routeB);
 
       expect(navigation.listRoutes().length).toBe(1);
     });
@@ -53,7 +55,7 @@ describe('Navigation', function() {
   describe('removeRouteByName method', function() {
 
     beforeEach(function() {
-      navigation.addAlternativeRoute(Mock.routeA);
+      navigation.createAlternativeRoute(Mock.routeA);
     });
 
     it('should remove the route from route list by the name', function() {
@@ -108,7 +110,7 @@ describe('Navigation', function() {
       });
 
       it('should remove updated route as alternative when it is default', function() {
-        navigation.addAlternativeRoute(Mock.routeA);
+        navigation.createAlternativeRoute(Mock.routeA);
         expect(navigation.listRoutes().length).toBe(2);
 
         Mock.routeA.isDefault = true;
@@ -120,7 +122,7 @@ describe('Navigation', function() {
       });
 
       it('should change route to alternative is not default', function() {
-        navigation.addAlternativeRoute(Mock.routeA);
+        navigation.createAlternativeRoute(Mock.routeA);
         expect(navigation.listRoutes().length).toBe(2);
 
         Mock.routeA.destination = DESTINATION2;
@@ -168,31 +170,31 @@ describe('Navigation', function() {
       var navigationB = factory.create(ORIGIN, DESTINATION1);
       expect(navigationA.equals(navigationB)).toBe(true);
 
-      navigationA.addAlternativeRoute(Mock.routeA);
-      navigationB.addAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeA);
+      navigationB.createAlternativeRoute(Mock.routeA);
       expect(navigationA.equals(navigationB)).toBe(true);
     });
 
     it('should return true when two objects have same rules in the list but in different order', function() {
       var navigationA = factory.create(ORIGIN, DESTINATION1);
-      navigationA.addAlternativeRoute(Mock.routeA);
-      navigationA.addAlternativeRoute(Mock.routeB);
+      navigationA.createAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeB);
 
       var navigationB = factory.create(ORIGIN, DESTINATION1);
-      navigationB.addAlternativeRoute(Mock.routeA);
-      navigationB.addAlternativeRoute(Mock.routeB);
+      navigationB.createAlternativeRoute(Mock.routeA);
+      navigationB.createAlternativeRoute(Mock.routeB);
 
       expect(navigationA.equals(navigationB)).toBe(true);
     });
 
     it('should return true when two objects have same rules in the list but in different order', function() {
       var navigationA = factory.create(ORIGIN, DESTINATION1);
-      navigationA.addAlternativeRoute(Mock.routeA);
-      navigationA.addAlternativeRoute(Mock.routeB);
+      navigationA.createAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeB);
 
       var navigationB = factory.create(ORIGIN, DESTINATION1);
-      navigationB.addAlternativeRoute(Mock.routeB);
-      navigationB.addAlternativeRoute(Mock.routeA);
+      navigationB.createAlternativeRoute(Mock.routeB);
+      navigationB.createAlternativeRoute(Mock.routeA);
 
       expect(navigationA.equals(navigationB)).toBe(true);
     });
@@ -230,7 +232,7 @@ describe('Navigation', function() {
 
     it('should return false when two objects have different size of condition list', function() {
       var navigationA = factory.create(ORIGIN, DESTINATION1);
-      navigationA.addAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeA);
 
       var navigationB = factory.create(ORIGIN, DESTINATION1);
 
@@ -239,10 +241,10 @@ describe('Navigation', function() {
 
     xit('should return false when two objects have different size of condition list', function() {
       var navigationA = factory.create(ORIGIN, DESTINATION);
-      navigationA.addAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeA);
 
       var navigationB = factory.create(ORIGIN, DESTINATION);
-      navigationB.addAlternativeRoute(Mock.routeB);
+      navigationB.createAlternativeRoute(Mock.routeB);
 
       expect(navigationA.equals(navigationB)).toBe(false);
     });
@@ -255,10 +257,10 @@ describe('Navigation', function() {
       spyOn(Object, 'is').and.callThrough();
 
       var navigationA = factory.create(ORIGIN, DESTINATION1);
-      navigationA.addAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeA);
 
       var navigationB = factory.create(ORIGIN, DESTINATION1);
-      navigationB.addAlternativeRoute(Mock.routeA);
+      navigationB.createAlternativeRoute(Mock.routeA);
 
       var resultA = navigationA.selfsame(navigationA);
       var resultB = navigationA.selfsame(navigationB);
@@ -276,7 +278,7 @@ describe('Navigation', function() {
       spyOn(Object, 'assign').and.callThrough();
 
       var navigationA = factory.create(ORIGIN, DESTINATION1);
-      navigationA.addAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeA);
       var clone = navigationA.clone();
 
       expect(Object.assign).toHaveBeenCalled();
@@ -298,12 +300,20 @@ describe('Navigation', function() {
 
   });
 
+  function mockRouteFactory($injector) {
+    Mock.RouteFactory = $injector.get('otusjs.model.navigation.RouteFactory');
+    injections.RouteFactory = Mock.RouteFactory;
+  }
+
   function mockRoute($injector) {
-    Mock.condition = $injector.get('otusjs.model.navigation.RouteConditionFactory').create(ORIGIN);
-    Mock.defaultRoute = $injector.get('otusjs.model.navigation.RouteFactory').createDefault(ORIGIN, DESTINATION1);
-    Mock.routeA = $injector.get('otusjs.model.navigation.RouteFactory').create(ORIGIN, DESTINATION3);
-    Mock.routeA.addCondition(Mock.condition);
-    Mock.routeB = $injector.get('otusjs.model.navigation.RouteFactory').create(ORIGIN, DESTINATION2);
+    var rule = $injector.get('otusjs.model.navigation.RouteConditionFactory').create(ORIGIN, 'equal', 1)
+
+    var conditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
+    Mock.condition = conditionFactory.create(ORIGIN, rule);
+
+    Mock.defaultRoute = Mock.RouteFactory.createDefault(ORIGIN, DESTINATION1);
+    Mock.routeA = Mock.RouteFactory.createAlternative(ORIGIN, DESTINATION3, Mock.condition);
+    Mock.routeB = Mock.RouteFactory.createDefault(ORIGIN, DESTINATION2);
   }
 
   function mockJson() {

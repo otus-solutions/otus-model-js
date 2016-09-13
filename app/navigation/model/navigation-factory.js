@@ -9,8 +9,14 @@
     'otusjs.model.navigation.RouteFactory'
   ];
 
+  var Inject = {
+    RouteFactory: null
+  };
+
   function factory(RouteFactory) {
     var self = this;
+
+    Inject.RouteFactory = RouteFactory;
 
     self.create = create;
     self.fromJson = fromJson;
@@ -78,7 +84,7 @@
     self.getRoute = getRoute;
     self.getDefaultRoute = getDefaultRoute;
     self.setupDefaultRoute = setupDefaultRoute;
-    self.addAlternativeRoute = addAlternativeRoute;
+    self.createAlternativeRoute = createAlternativeRoute;
     self.removeRouteByName = removeRouteByName;
     self.updateRoute = updateRoute;
     self.hasRoute = hasRoute;
@@ -126,7 +132,15 @@
       }
     }
 
-    function addAlternativeRoute(route) {
+    function createAlternativeRoute(routeData) {
+      console.log(routeData);
+      var origin = routeData.origin;
+      var destination = routeData.destination;
+      var conditions = routeData.conditions;
+      var route = Inject.RouteFactory.createAlternative(origin, destination, conditions[0]);
+
+      routeData.conditions.map(route.addCondition);
+
       if (!_routeExists(route) && route.conditions.length) {
         route.isDefault = false;
         self.routes.push(route);
@@ -157,7 +171,7 @@
             if (!route.conditions.length) {
               route.conditions = [];
             }
-            addAlternativeRoute(route);
+            createAlternativeRoute(route);
           }
           return true;
         } else {
