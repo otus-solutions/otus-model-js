@@ -6,43 +6,43 @@
     .service('otusjs.model.navigation.UpdateRouteTaskService', service);
 
   service.$inject = [
-    'otusjs.model.navigation.RouteFactory',
+    'otusjs.model.navigation.RuleFactory',
     'otusjs.model.navigation.RouteConditionFactory',
-    'otusjs.model.navigation.RuleFactory'
+    'otusjs.model.navigation.RouteFactory'
   ];
 
-  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
+  function service(RuleFactory, RouteConditionFactory, RouteFactory) {
     var self = this;
 
     /* Public methods */
     self.execute = execute;
 
     function execute(routeData, navigation) {
-      var route = RouteFactory.create(routeData.origin, routeData.destination);
-      route.isDefault = routeData.isDefault;
-      if (!route.isDefault) {
-        _setupConditions(route, routeData);
+      var origin = routeData.origin;
+      var destination = routeData.destination;
+      var route = null;
+
+      if (routeData.isDefault) {
+        route = RouteFactory.createDefault(origin, destination);
+        navigation.setupDefaultRoute(route);
+      } else {
+        var conditions = routeData.conditions.map(_setupConditions);
+        route = RouteFactory.createAlternative(origin, destination, conditions);
       }
-      navigation.updateRoute(route);
-      return route;
+
+      return navigation.updateRoute(route);
     }
 
-    function _setupConditions(route, routeData) {
-      routeData.conditions.forEach(function(conditionData) {
-        var condition = RouteConditionFactory.create(conditionData.name);
-        _setupRules(condition, conditionData);
-        route.addCondition(condition);
-      });
+    function _setupConditions(conditionData) {
+      var rules = conditionData.rules.map(_setupRules);
+      return RouteConditionFactory.create(conditionData.name, rules);
     }
 
-    function _setupRules(condition, conditionData) {
-      conditionData.rules.forEach(function(ruleData) {
-        var when = ruleData.when.customID || ruleData.when;
-        var operator = ruleData.operator.type || ruleData.operator;
-        var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
-        var rule = RuleFactory.create(when, operator, answer);
-        condition.addRule(rule);
-      });
+    function _setupRules(ruleData) {
+      var when = ruleData.when.customID || ruleData.when;
+      var operator = ruleData.operator.type || ruleData.operator;
+      var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
+      return RuleFactory.create(when, operator, answer);
     }
   }
 }());

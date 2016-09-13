@@ -14,7 +14,7 @@ describe('RouteConditionFactory', function() {
       factory = _$injector_.get('otusjs.model.navigation.RouteConditionFactory');
     });
 
-    routeCondition = factory.create(CONDITION_NAME, Mock.rule);
+    routeCondition = factory.create(CONDITION_NAME, [Mock.rule]);
   });
 
   describe('create method', function() {

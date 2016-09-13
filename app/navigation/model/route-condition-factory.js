@@ -16,43 +16,35 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(name, rule) {
-      var condition = null;
-
-      if (rule) {
-        condition = new RouteCondition(name, rule);
-      }
-
-      return condition;
-    }
-
-    function fromJson(json) {
-      var jsonObj = JSON.parse(json);
-      var condition = new RouteCondition(jsonObj.name);
-      condition.rules = jsonObj.rules.map(_mapRules);
-
-      if (condition.rules) {
-        return condition;
+    function create(name, rules) {
+      if (rules && rules.length) {
+        return new RouteCondition(name, rules);
       } else {
         return null;
       }
     }
 
-    function _mapRules(ruleJson) {
-      return RuleFactory.fromJson(JSON.stringify(ruleJson))
+    function fromJson(json) {
+      var jsonObj = JSON.parse(json);
+      var rules = jsonObj.rules.map(_rebuildRules);
+      return create(jsonObj.name, rules);
+    }
+
+    function _rebuildRules(ruleJson) {
+      return RuleFactory.fromJson(JSON.stringify(ruleJson));
     }
 
     return self;
   }
 
-  function RouteCondition(name, rule) {
+  function RouteCondition(name, rules) {
     var self = this;
 
     self.extents = 'SurveyTemplateObject';
     self.objectType = 'RouteCondition';
     self.name = name || 'ROUTE_CONDITION';
     self.index = null;
-    self.rules = [rule];
+    self.rules = [];
 
     /* Public methods */
     self.addRule = addRule;
@@ -65,6 +57,8 @@
     self.selfsame = selfsame;
     self.clone = clone;
     self.toJson = toJson;
+
+    _init();
 
     function addRule(newRule) {
       if (!_ruleExists(newRule)) {
@@ -137,7 +131,7 @@
     }
 
     function clone() {
-      return Object.assign(new RouteCondition(), self);
+      return Object.assign(new RouteCondition(self.name, self.rules), self);
     }
 
     function toJson() {
@@ -151,6 +145,10 @@
       });
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+
+    function _init() {
+      rules.map(self.addRule);
     }
 
     function _ruleExists(newRule) {

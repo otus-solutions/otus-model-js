@@ -41,7 +41,7 @@ describe('Route', function() {
     describe('when route is not default', function() {
 
       beforeEach(function() {
-        route = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
+        route = factory.createAlternative(ORIGIN, DESTINATION, [Mock.conditionA]);
       });
 
       it('should put a new condition in route object', function() {
@@ -68,7 +68,7 @@ describe('Route', function() {
   describe('removeCondition method', function() {
 
     beforeEach(function() {
-      route = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
+      route = factory.createAlternative(ORIGIN, DESTINATION, [Mock.conditionA]);
       route.addCondition(Mock.conditionB);
     });
 
@@ -174,14 +174,14 @@ describe('Route', function() {
 
     it('should return false when two objects have different size of condition list', function() {
       var routeA = factory.createDefault(ORIGIN, DESTINATION);
-      var routeB = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
+      var routeB = factory.createAlternative(ORIGIN, DESTINATION, [Mock.conditionA]);
 
       expect(routeA.equals(routeB)).toBe(false);
     });
 
     it('should return false when two objects have same size of condition list but with different conditions', function() {
-      var routeA = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
-      var routeB = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionB);
+      var routeA = factory.createAlternative(ORIGIN, DESTINATION, [Mock.conditionA]);
+      var routeB = factory.createAlternative(ORIGIN, DESTINATION, [Mock.conditionB]);
 
       expect(routeA.equals(routeB)).toBe(false);
     });
@@ -229,7 +229,7 @@ describe('Route', function() {
 
     beforeEach(function() {
       mockJson();
-      route = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
+      route = factory.createAlternative(ORIGIN, DESTINATION, [Mock.conditionA]);
     });
 
     it('should return a well formatted json based on Route', function() {
@@ -242,8 +242,8 @@ describe('Route', function() {
     var RuleFactory = $injector.get('otusjs.model.navigation.RuleFactory');
     var rule = RuleFactory.create('QID1', 'equal', 1);
     var conditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
-    Mock.conditionA = conditionFactory.create('CONDITION_A', rule);
-    Mock.conditionB = conditionFactory.create('CONDITION_B', rule);
+    Mock.conditionA = conditionFactory.create('CONDITION_A', [rule]);
+    Mock.conditionB = conditionFactory.create('CONDITION_B', [rule]);
   }
 
   function mockJson() {

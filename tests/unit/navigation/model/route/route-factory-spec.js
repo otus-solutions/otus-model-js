@@ -18,7 +18,7 @@ describe('RouteFactory', function() {
   describe('createAlternative method', function() {
 
     beforeEach(function() {
-      route = factory.createAlternative(ORIGIN, DESTINATION, Mock.conditionA);
+      route = factory.createAlternative(ORIGIN, DESTINATION, [Mock.conditionA]);
     })
 
     it('should return a Route object with extends value equal to "SurveyTemplateObject"', function() {
@@ -131,8 +131,8 @@ describe('RouteFactory', function() {
     var RuleFactory = $injector.get('otusjs.model.navigation.RuleFactory');
     var rule = RuleFactory.create('QID1', 'equal', 1);
     var conditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
-    Mock.conditionA = conditionFactory.create('CONDITION_A', rule);
-    Mock.conditionB = conditionFactory.create('CONDITION_A', rule);
+    Mock.conditionA = conditionFactory.create('CONDITION_A', [rule]);
+    Mock.conditionB = conditionFactory.create('CONDITION_A', [rule]);
   }
 
   function mockJson() {

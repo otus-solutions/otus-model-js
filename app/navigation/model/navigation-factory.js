@@ -31,27 +31,28 @@
         return null;
       }
 
+      defaultRoute.index = 0;
       return new Navigation(origin, defaultRoute);
     }
 
     function fromJson(json) {
       var jsonObj = _parse(json);
 
-      if (!jsonObj.origin || (!jsonObj.routes.length || !jsonObj.routes[0].destination)) {
+      if (!jsonObj.routes || !jsonObj.routes.length) {
         return null;
       }
 
-      return _rebuildNavigation(jsonObj);
-    }
+      var navigation = create(jsonObj.origin, jsonObj.routes[0].destination);
 
-    function _rebuildNavigation(json) {
-      var navigation = create(json.origin, json.routes[0].destination);
-      navigation.index = json.index;
-      navigation.inNavigations = json.inNavigations;
-      navigation.isDefault = json.isDefault;
-      navigation.routes = json.routes.map(function(route) {
-        return RouteFactory.fromJson(JSON.stringify(route));
-      });
+      if (navigation) {
+        navigation.index = jsonObj.index;
+        navigation.inNavigations = jsonObj.inNavigations;
+        navigation.isDefault = jsonObj.isDefault;
+        navigation.routes = jsonObj.routes.map(function(route) {
+          return RouteFactory.fromJson(JSON.stringify(route));
+        });
+      }
+
       return navigation;
     }
 
@@ -133,15 +134,13 @@
     }
 
     function createAlternativeRoute(routeData) {
-      console.log(routeData);
       var origin = routeData.origin;
       var destination = routeData.destination;
       var conditions = routeData.conditions;
-      var route = Inject.RouteFactory.createAlternative(origin, destination, conditions[0]);
+      var route = Inject.RouteFactory.createAlternative(origin, destination, conditions);
 
-      routeData.conditions.map(route.addCondition);
-
-      if (!_routeExists(route) && route.conditions.length) {
+      if (route && route.conditions.length && !_routeExists(route)) {
+        routeData.conditions.map(route.addCondition);
         route.isDefault = false;
         self.routes.push(route);
       }
@@ -166,11 +165,6 @@
             _updateDefaultRoute(route);
           } else {
             _removeDefaultRoute();
-            // TODO: Make the RouteFactory capable to construct alterantive
-            // routes and remove the below 'conditions' array initialization
-            if (!route.conditions.length) {
-              route.conditions = [];
-            }
             createAlternativeRoute(route);
           }
           return true;
@@ -183,6 +177,13 @@
           }
         }
       });
+    }
+
+    function setupDefaultRoute(route) {
+      route.conditions = [];
+      _defaultRoute = route;
+      self.routes[0] = _defaultRoute;
+      // self.routes.unshift(_defaultRoute);
     }
 
     function hasRoute(routeData) {
@@ -282,13 +283,6 @@
       _defaultRoute = route;
       _defaultRoute.conditions = [];
       self.routes[0] = _defaultRoute;
-    }
-
-    function setupDefaultRoute(route) {
-      route.conditions = [];
-      _defaultRoute = route;
-      self.routes[0] = _defaultRoute;
-      // self.routes.unshift(_defaultRoute);
     }
 
     function _removeDefaultRoute() {

@@ -18,30 +18,30 @@ describe('Navigation', function() {
     inject(function(_$injector_) {
       mockRouteFactory(_$injector_);
       mockRoute(_$injector_);
+      mockJson();
 
       factory = _$injector_.get('otusjs.model.navigation.NavigationFactory');
     });
 
-    mockJson();
     navigation = factory.create(ORIGIN, DESTINATION1);
   });
 
   describe('createAlternativeRoute method', function() {
 
-    fit('should put a new route in route list', function() {
+    it('should put a new route in route list', function() {
       navigation.createAlternativeRoute(Mock.routeA);
 
       expect(navigation.listRoutes().length).toBe(2);
     });
 
     it('should not put a route twice', function() {
-      navigation.createAlternativeRoute(Mock.defaultRoute);
-      navigation.createAlternativeRoute(Mock.defaultRoute);
-      navigation.createAlternativeRoute(Mock.defaultRoute);
-      navigation.createAlternativeRoute(Mock.defaultRoute);
-      navigation.createAlternativeRoute(Mock.defaultRoute);
+      navigation.createAlternativeRoute(Mock.routeA);
+      navigation.createAlternativeRoute(Mock.routeA);
+      navigation.createAlternativeRoute(Mock.routeA);
+      navigation.createAlternativeRoute(Mock.routeA);
+      navigation.createAlternativeRoute(Mock.routeA);
 
-      expect(navigation.listRoutes().length).toBe(1);
+      expect(navigation.listRoutes().length).toBe(2);
     });
 
     it('should not put a new route without conditions', function() {
@@ -71,7 +71,7 @@ describe('Navigation', function() {
 
     describe('when updated route is the current default', function() {
 
-      it('should update default route when still is default', function() {
+      it('should update default route when still default', function() {
         Mock.defaultRoute.destination = DESTINATION2;
         navigation.updateRoute(Mock.defaultRoute);
 
@@ -83,18 +83,18 @@ describe('Navigation', function() {
         Mock.defaultRoute.isDefault = false;
         navigation.updateRoute(Mock.defaultRoute);
 
-        expect(navigation.listRoutes().length).toBe(1);
+        expect(navigation.listRoutes().length).toBe(0);
         expect(navigation.getDefaultRoute()).toBe(null);
       });
 
-      it('should change default route to alternative is not default', function() {
+      it('should change default route to alternative when updated data is not default', function() {
         Mock.defaultRoute.isDefault = false;
         Mock.defaultRoute.addCondition(Mock.condition);
+
         navigation.updateRoute(Mock.defaultRoute);
 
-        expect(navigation.listRoutes().length).toBe(2);
-        expect(navigation.listRoutes()[0]).toBe(null);
-        expect(navigation.listRoutes()[1]).toEqual(Mock.defaultRoute);
+        expect(navigation.listRoutes().length).toBe(1);
+        expect(navigation.listRoutes()[0].equals(Mock.defaultRoute)).toBe(true);
       });
 
     });
@@ -306,13 +306,12 @@ describe('Navigation', function() {
   }
 
   function mockRoute($injector) {
-    var rule = $injector.get('otusjs.model.navigation.RouteConditionFactory').create(ORIGIN, 'equal', 1)
-
+    var rule = $injector.get('otusjs.model.navigation.RuleFactory').create(ORIGIN, 'equal', 1);
     var conditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
-    Mock.condition = conditionFactory.create(ORIGIN, rule);
 
+    Mock.condition = conditionFactory.create(ORIGIN, [rule]);
     Mock.defaultRoute = Mock.RouteFactory.createDefault(ORIGIN, DESTINATION1);
-    Mock.routeA = Mock.RouteFactory.createAlternative(ORIGIN, DESTINATION3, Mock.condition);
+    Mock.routeA = Mock.RouteFactory.createAlternative(ORIGIN, DESTINATION3, [Mock.condition]);
     Mock.routeB = Mock.RouteFactory.createDefault(ORIGIN, DESTINATION2);
   }
 

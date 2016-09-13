@@ -27,9 +27,9 @@
       return route;
     }
 
-    function createAlternative(origin, destination, condition) {
-      if (condition) {
-        return new Route(origin, destination, condition);
+    function createAlternative(origin, destination, conditions) {
+      if (conditions && conditions.length) {
+        return new Route(origin, destination, conditions);
       } else {
         return null;
       }
@@ -41,14 +41,14 @@
       if (jsonObj.isDefault) {
         route = createDefault(jsonObj.origin, jsonObj.destination);
       } else {
-        route = createAlternative(jsonObj.origin, jsonObj.destination, jsonObj.conditions.splice(0, 1));
+        route = createAlternative(jsonObj.origin, jsonObj.destination, jsonObj.conditions);
       }
-      route.conditions = jsonObj.conditions.map(_mapConditions);
+      route.conditions = jsonObj.conditions.map(_rebuildConditions);
       route.isDefault = jsonObj.isDefault;
       return route;
     }
 
-    function _mapConditions(condition) {
+    function _rebuildConditions(condition) {
       condition = (condition instanceof Object) ? JSON.stringify(condition) : condition;
       return RouteConditionFactory.fromJson(condition);
     }
@@ -56,7 +56,7 @@
     return self;
   }
 
-  function Route(routeOrigin, routeDestination, condition) {
+  function Route(routeOrigin, routeDestination, conditions) {
     var self = this;
 
     self.extents = 'SurveyTemplateObject';
@@ -65,7 +65,7 @@
     self.destination = routeDestination;
     self.name = routeOrigin + '_' + routeDestination;
     self.isDefault = false;
-    self.conditions = condition ? [condition] : [];
+    self.conditions = [];
 
     /* Public interface */
     self.listConditions = listConditions;
@@ -75,6 +75,8 @@
     self.selfsame = selfsame;
     self.clone = clone;
     self.toJson = toJson;
+
+    _init();
 
     function listConditions() {
       var clone = [];
@@ -161,6 +163,12 @@
       });
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+
+    function _init() {
+      if (conditions) {
+        conditions.map(self.addCondition);
+      }
     }
 
     function _conditionExists(newCondition) {
