@@ -20,8 +20,13 @@
 
     function execute(routeData, navigation) {
       var route = RouteFactory.create(routeData.origin, routeData.destination);
-      _setupConditions(route, routeData);
-      navigation.addAlternativeRoute(route);
+      if (routeData.isDefalut) {
+        navigation.setupDefaultRoute(route);
+      } else {
+        _setupConditions(route, routeData);
+        navigation.addAlternativeRoute(route);
+      }
+
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
       nextNavigation.inNavigations.push(routeData.origin);
       return route;

@@ -77,6 +77,7 @@
     self.listRoutes = listRoutes;
     self.getRoute = getRoute;
     self.getDefaultRoute = getDefaultRoute;
+    self.setupDefaultRoute = setupDefaultRoute;
     self.addAlternativeRoute = addAlternativeRoute;
     self.removeRouteByName = removeRouteByName;
     self.updateRoute = updateRoute;
@@ -162,7 +163,7 @@
         } else {
           if (route.isDefault) {
             self.routes.splice(index, 1);
-            _setupDefaultRoute(route);
+            setupDefaultRoute(route);
           } else {
             self.routes[index] = route;
           }
@@ -269,7 +270,8 @@
       self.routes[0] = _defaultRoute;
     }
 
-    function _setupDefaultRoute(route) {
+    function setupDefaultRoute(route) {
+      self.routes[0].isDefault = false;
       _defaultRoute = route;
       _defaultRoute.conditions = [];
       self.routes.unshift(_defaultRoute);
