@@ -31,12 +31,14 @@
         route = RouteFactory.createAlternative(origin, destination, conditions);
       }
 
+      navigation.updateRoute(route);
+
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
       if (nextNavigation) {
         nextNavigation.updateInNavigation(navigation);
       }
 
-      return navigation.updateRoute(route);
+      return route;
     }
 
     function _setupConditions(conditionData) {
