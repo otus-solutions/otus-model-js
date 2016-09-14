@@ -186,7 +186,7 @@
         if (!self.routes[0].isDefault) {
           self.routes.unshift(route);
         } else {
-          updateRoute(route);          
+          updateRoute(route);
         }
       } else {
         _defaultRoute = route;
@@ -218,7 +218,7 @@
 
     function removeInNavigation(origin) {
       self.inNavigations.some(function(navigation, index) {
-        if (navigation === origin) {
+        if (navigation.origin === origin) {
           self.inNavigations.splice(index, 1);
           return true;
         }
