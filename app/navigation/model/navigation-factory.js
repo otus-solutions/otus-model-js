@@ -184,7 +184,7 @@
     function setupDefaultRoute(route) {
       route.conditions = [];
       _defaultRoute = route;
-      self.routes.unshift(_defaultRoute);
+      self.routes[0] = _defaultRoute;
     }
 
     function hasRoute(routeData) {
