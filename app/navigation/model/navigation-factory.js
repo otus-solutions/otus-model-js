@@ -89,6 +89,7 @@
     self.removeRouteByName = removeRouteByName;
     self.updateRoute = updateRoute;
     self.hasRoute = hasRoute;
+    self.addInNavigation = addInNavigation;
     self.removeInNavigation = removeInNavigation;
     self.isOrphan = isOrphan;
     self.equals = equals;
@@ -199,6 +200,13 @@
         // TODO Lançar uma exceção aqui porque ficou impossível de determinar
         return undefined;
       }
+    }
+
+    function addInNavigation(navigation) {
+      self.inNavigations.push(navigation);
+      self.isDefault = self.inNavigations.some(function(inNavigation) {
+        return inNavigation.isDefaultPath && inNavigation.isDefaultRoute;
+      });
     }
 
     function removeInNavigation(origin) {
