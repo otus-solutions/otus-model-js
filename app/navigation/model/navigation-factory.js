@@ -318,7 +318,7 @@
 
     function _calculateNavigationType() {
       self.isDefault = self.inNavigations.some(function(inNavigation) {
-        return inNavigation.isDefault && inNavigation.getDefaultRoute().isDefault;
+        return inNavigation.isDefault && (inNavigation.getDefaultRoute() && inNavigation.getDefaultRoute().isDefault);
       });
     }
   }
