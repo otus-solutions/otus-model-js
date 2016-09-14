@@ -8,10 +8,11 @@
   service.$inject = [
     'otusjs.model.navigation.RuleFactory',
     'otusjs.model.navigation.RouteConditionFactory',
-    'otusjs.model.navigation.RouteFactory'
+    'otusjs.model.navigation.RouteFactory',
+    'otusjs.model.navigation.NavigationContainerService'
   ];
 
-  function service(RuleFactory, RouteConditionFactory, RouteFactory) {
+  function service(RuleFactory, RouteConditionFactory, RouteFactory, NavigationContainerService) {
     var self = this;
 
     /* Public methods */
