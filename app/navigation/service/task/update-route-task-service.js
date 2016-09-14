@@ -30,6 +30,11 @@
         route = RouteFactory.createAlternative(origin, destination, conditions);
       }
 
+      var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
+      if (nextNavigation) {
+        nextNavigation.updateInNavigation({ origin: routeData.origin, isDefaultPath: navigtion.isDefault, isDefaultRoute: route.isDefault });
+      }
+
       return navigation.updateRoute(route);
     }
 

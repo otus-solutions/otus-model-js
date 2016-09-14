@@ -218,6 +218,19 @@
       });
     }
 
+    function updateInNavigation(navigation) {
+      self.inNavigations.some(function(inNavigation, index) {
+        if (inNavigation.origin === navigation.origin) {
+          self.inNavigations[index] = navigation;
+          return true;          
+        }
+      });
+
+      self.isDefault = self.inNavigations.some(function(inNavigation) {
+        return inNavigation.isDefaultPath && inNavigation.isDefaultRoute;
+      });
+    }
+
     function isOrphan() {
       return !self.inNavigations.length && self.index > 0;
     }
