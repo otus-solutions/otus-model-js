@@ -182,6 +182,12 @@
     }
 
     function setupDefaultRoute(route) {
+      if (self.routes[0]) {
+        if (!self.routes[0].isDefault) {
+          createAlternativeRoute(self.routes[0]);
+        }
+      }
+
       route.conditions = [];
       _defaultRoute = route;
       self.routes[0] = _defaultRoute;

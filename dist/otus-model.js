@@ -580,44 +580,6 @@
     'use strict';
 
     angular
-        .module('otusjs.metadata')
-        .service('AddMetadataAnswerService', AddMetadataAnswerService);
-
-    function AddMetadataAnswerService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            return item.metadata.createOption();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .service('RemoveMetadataOptionService', RemoveMetadataOptionService);
-
-    function RemoveMetadataOptionService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            item.metadata.removeLastOption();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.activity')
         .service('ActivityFacadeService', ActivityFacadeService);
 
@@ -824,6 +786,44 @@
     }
 
 })();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .service('AddMetadataAnswerService', AddMetadataAnswerService);
+
+    function AddMetadataAnswerService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            return item.metadata.createOption();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .service('RemoveMetadataOptionService', RemoveMetadataOptionService);
+
+    function RemoveMetadataOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            item.metadata.removeLastOption();
+        }
+    }
+
+}());
 
 (function() {
     'use strict';
@@ -1437,6 +1437,12 @@
     }
 
     function setupDefaultRoute(route) {
+      if (self.routes[0]) {
+        if (!self.routes[0].isDefault) {
+          createAlternativeRoute(self.routes[0]);
+        }
+      }
+
       route.conditions = [];
       _defaultRoute = route;
       self.routes[0] = _defaultRoute;
