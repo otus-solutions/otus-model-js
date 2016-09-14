@@ -91,6 +91,7 @@
     self.hasRoute = hasRoute;
     self.addInNavigation = addInNavigation;
     self.removeInNavigation = removeInNavigation;
+    self.updateInNavigation = updateInNavigation;
     self.isOrphan = isOrphan;
     self.equals = equals;
     self.selfsame = selfsame;
@@ -222,7 +223,7 @@
       self.inNavigations.some(function(inNavigation, index) {
         if (inNavigation.origin === navigation.origin) {
           self.inNavigations[index] = navigation;
-          return true;          
+          return true;
         }
       });
 
