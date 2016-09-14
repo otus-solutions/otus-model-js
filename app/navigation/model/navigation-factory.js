@@ -184,14 +184,15 @@
     function setupDefaultRoute(route) {
       if (self.routes[0]) {
         if (!self.routes[0].isDefault) {
-          _removeDefaultRoute();
-          createAlternativeRoute(self.routes[0]);
+          self.routes.unshift(route);
+        } else {
+          _defaultRoute = route;
+          self.routes.push(_defaultRoute);
         }
+      } else {
+        _defaultRoute = route;
+        self.routes.push(_defaultRoute);
       }
-
-      route.conditions = [];
-      _defaultRoute = route;
-      self.routes[0] = _defaultRoute;
     }
 
     function hasRoute(routeData) {
