@@ -184,6 +184,7 @@
     function setupDefaultRoute(route) {
       if (self.routes[0]) {
         if (!self.routes[0].isDefault) {
+          _removeDefaultRoute();
           createAlternativeRoute(self.routes[0]);
         }
       }
