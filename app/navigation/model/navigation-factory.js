@@ -186,12 +186,7 @@
         if (!self.routes[0].isDefault) {
           self.routes.unshift(route);
         } else {
-          if (hasRoute(route)) {
-            updateRoute(route);
-          } else {            
-            _defaultRoute = route;
-            self.routes[0] = _defaultRoute;
-          }
+          updateRoute(route);          
         }
       } else {
         _defaultRoute = route;
