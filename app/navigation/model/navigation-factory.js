@@ -211,9 +211,7 @@
 
     function addInNavigation(navigation) {
       self.inNavigations.push(navigation);
-      self.isDefault = self.inNavigations.some(function(inNavigation) {
-        return inNavigation.isDefaultPath && inNavigation.isDefaultRoute;
-      });
+      _calculateNavigationType();
     }
 
     function removeInNavigation(origin) {
@@ -223,6 +221,8 @@
           return true;
         }
       });
+
+      _calculateNavigationType();
     }
 
     function updateInNavigation(navigation) {
@@ -233,9 +233,7 @@
         }
       });
 
-      self.isDefault = self.inNavigations.some(function(inNavigation) {
-        return inNavigation.isDefaultPath && inNavigation.isDefaultRoute;
-      });
+      _calculateNavigationType();
     }
 
     function isOrphan() {
@@ -316,6 +314,12 @@
     function _removeDefaultRoute() {
       _defaultRoute = null;
       self.routes.shift();
+    }
+
+    function _calculateNavigationType() {
+      self.isDefault = self.inNavigations.some(function(inNavigation) {
+        return inNavigation.isDefaultPath && inNavigation.isDefaultRoute;
+      });
     }
   }
 }());

@@ -829,45 +829,6 @@
     'use strict';
 
     angular
-        .module('otusjs.validation')
-        .service('AddFillingRulesService', AddFillingRulesService);
-
-
-    function AddFillingRulesService(){
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, validatorType) {
-            return item.fillingRules.createOption(validatorType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
-
-    function RemoveFillingRulesWorkService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, fillingRuleType) {
-            item.fillingRules.removeFillingRules(fillingRuleType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.surveyItem')
         .service('AddAnswerOptionService', AddAnswerOptionService);
 
@@ -955,6 +916,45 @@
         function execute(item, id) {
             // it needs a service to validate if is a valid or available id
             item.customID = id;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .service('AddFillingRulesService', AddFillingRulesService);
+
+
+    function AddFillingRulesService(){
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, validatorType) {
+            return item.fillingRules.createOption(validatorType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
+
+    function RemoveFillingRulesWorkService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, fillingRuleType) {
+            item.fillingRules.removeFillingRules(fillingRuleType);
         }
     }
 
@@ -1466,9 +1466,7 @@
 
     function addInNavigation(navigation) {
       self.inNavigations.push(navigation);
-      self.isDefault = self.inNavigations.some(function(inNavigation) {
-        return inNavigation.isDefaultPath && inNavigation.isDefaultRoute;
-      });
+      _calculateNavigationType();
     }
 
     function removeInNavigation(origin) {
@@ -1478,6 +1476,8 @@
           return true;
         }
       });
+
+      _calculateNavigationType();
     }
 
     function updateInNavigation(navigation) {
@@ -1488,9 +1488,7 @@
         }
       });
 
-      self.isDefault = self.inNavigations.some(function(inNavigation) {
-        return inNavigation.isDefaultPath && inNavigation.isDefaultRoute;
-      });
+      _calculateNavigationType();
     }
 
     function isOrphan() {
@@ -1571,6 +1569,12 @@
     function _removeDefaultRoute() {
       _defaultRoute = null;
       self.routes.shift();
+    }
+
+    function _calculateNavigationType() {
+      self.isDefault = self.inNavigations.some(function(inNavigation) {
+        return inNavigation.isDefaultPath && inNavigation.isDefaultRoute;
+      });
     }
   }
 }());
