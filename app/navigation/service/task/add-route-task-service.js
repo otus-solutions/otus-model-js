@@ -35,7 +35,7 @@
 
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
       if (nextNavigation) {
-        nextNavigation.addInNavigation({ origin: routeData.origin, isDefaultPath: navigtion.isDefault, isDefaultRoute: route.isDefault });
+        nextNavigation.addInNavigation({ origin: routeData.origin, isDefaultPath: navigation.isDefault, isDefaultRoute: route.isDefault });
       }
 
       return route;
