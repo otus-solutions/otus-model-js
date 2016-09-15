@@ -212,14 +212,16 @@ describe('Route', function() {
   describe('clone method', function() {
 
     it('should call Object.assign', function() {
-      spyOn(Object, 'assign').and.callThrough();
-
       var routeA = factory.createDefault(ORIGIN, DESTINATION);
-      routeA.addCondition(Mock.conditionA);
       var clone = routeA.clone();
 
-      expect(Object.assign).toHaveBeenCalled();
       expect(routeA.equals(clone)).toBe(true);
+      expect(routeA.selfsame(clone)).toBe(false);
+
+      clone.isDefault = false;
+      clone.addCondition(Mock.conditionA);
+
+      expect(routeA.equals(clone)).toBe(false);
       expect(routeA.selfsame(clone)).toBe(false);
     });
 

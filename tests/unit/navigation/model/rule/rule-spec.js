@@ -78,13 +78,15 @@ describe('Rule', function() {
 
     it('should call Object.assign', function() {
       var ruleA = factory.create(WHEN, OPERATOR, ANSWER);
-      spyOn(Object, 'assign').and.callThrough();
-
       var clone = ruleA.clone();
 
-      expect(Object.assign).toHaveBeenCalled();
       expect(ruleA.equals(clone)).toBe(true);
       expect(ruleA.selfsame(clone)).toBe(false);
+
+      clone.when = DIFF_WHEN;
+
+      expect(clone.equals(ruleA)).toBe(false);
+      expect(clone.selfsame(ruleA)).toBe(false);
     });
 
   });

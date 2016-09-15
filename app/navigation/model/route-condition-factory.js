@@ -131,7 +131,7 @@
     }
 
     function clone() {
-      return Object.assign(new RouteCondition(self.name, self.rules), self);
+      return new self.constructor(self.name, self.rules);
     }
 
     function toJson() {
