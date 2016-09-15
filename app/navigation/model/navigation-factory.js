@@ -240,6 +240,8 @@
     }
 
     function setupDefaultRoute(route) {
+      removeRouteByName(route.name);
+
       if (_existsRouteAtIndex(0)) {
         if (self.routes[0].isDefault) {
           self.routes[0] = route;
