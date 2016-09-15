@@ -35,7 +35,7 @@
       return new Navigation(origin, defaultRoute);
     }
 
-    function fromJson(json) {
+    function fromJson(json, inNavigations) {
       var jsonObj = _parse(json);
 
       if (!jsonObj.routes || !jsonObj.routes.length) {
@@ -46,7 +46,7 @@
 
       if (navigation) {
         navigation.index = jsonObj.index;
-        navigation.inNavigations = jsonObj.inNavigations;
+        navigation.inNavigations = inNavigations;
         navigation.isDefault = jsonObj.isDefault;
         navigation.routes = jsonObj.routes.map(function(route) {
           return RouteFactory.fromJson(JSON.stringify(route));

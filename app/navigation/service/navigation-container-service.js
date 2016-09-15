@@ -36,7 +36,10 @@
     function loadJsonData(data) {
       init();
       data.forEach(function(navigationData) {
-        _navigationList.push(NavigationFactory.fromJson(navigationData));
+        var inNavigations = navigationData.inNavigations.map(function(inNavigation) {
+          return getNavigationByOrigin(inNavigation.origin);
+        });
+        _navigationList.push(NavigationFactory.fromJson(navigationData, inNavigations));
       });
     }
 
