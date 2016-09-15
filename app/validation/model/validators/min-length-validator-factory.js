@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('MinLengthValidatorFactory', MinLengthValidatorFactory);
 
-    MinLengthValidatorFactory.$inject = ['LabelFactory'];
-
-    function MinLengthValidatorFactory(LabelFactory) {
+    function MinLengthValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MinLengthValidator(value, LabelFactory);
+            return new MinLengthValidator(value);
         }
 
         return self;
     }
 
-    function MinLengthValidator(value, LabelFactory) {
+    function MinLengthValidator(value) {
         var self = this;
 
         self.size = null;

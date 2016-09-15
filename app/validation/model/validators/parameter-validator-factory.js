@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('ParameterValidatorFactory', ParameterValidatorFactory);
 
-    ParameterValidatorFactory.$inject = ['LabelFactory'];
-
-    function ParameterValidatorFactory(LabelFactory) {
+    function ParameterValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new ParameterValidator(value, LabelFactory);
+            return new ParameterValidator(value);
         }
 
         return self;
     }
 
-    function ParameterValidator(value, LabelFactory) {
+    function ParameterValidator(value) {
         var self = this;
 
         self.reference = '';

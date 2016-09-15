@@ -5,25 +5,23 @@
         .module('otusjs.validation')
         .factory('PastDateValidatorFactory', PastDateValidatorFactory);
 
-    PastDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function PastDateValidatorFactory(LabelFactory) {
+    function PastDateValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new PastDateValidator(value, LabelFactory);
+            return new PastDateValidator(value);
         }
 
         return self;
     }
 
-    function PastDateValidator(value, LabelFactory) {
+    function PastDateValidator(value) {
         var self = this;
 
-        self.reference = false;         
+        self.reference = false;
     }
 
 }());
