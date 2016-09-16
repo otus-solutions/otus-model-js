@@ -10,7 +10,7 @@
     'use strict';
 
     angular
-        .module('otusjs.misc', []);
+        .module('otusjs.metadata', []);
 
 }());
 
@@ -18,7 +18,7 @@
     'use strict';
 
     angular
-        .module('otusjs.metadata', []);
+        .module('otusjs.misc', []);
 
 }());
 
@@ -964,6 +964,112 @@
     'use strict';
 
     angular
+        .module('otusjs.metadata')
+        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
+
+    MetadataAnswerFactory.$inject = ['LabelFactory'];
+
+    function MetadataAnswerFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MetadataAnswer(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MetadataAnswer(value, LabelFactory) {
+        var self = this;
+
+        self.extends = 'StudioObject';
+        self.objectType = 'MetadataAnswer';
+        self.dataType = 'Integer';
+        self.value = value;
+        self.label = {
+            'ptBR': LabelFactory.create(),
+            'enUS': LabelFactory.create(),
+            'esES': LabelFactory.create()
+        };
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .factory('MetadataGroupFactory', MetadataGroupFactory);
+
+    MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
+
+    function MetadataGroupFactory(MetadataAnswerFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MetadataGroup(MetadataAnswerFactory);
+        }
+
+        return self;
+    }
+
+    function MetadataGroup(MetadataAnswerFactory) {
+        var self = this;
+
+        self.extents = 'StudioObject';
+        self.objectType = 'MetadataGroup';
+        self.options = [];
+
+        /* Public methods */
+        self.getOptionListSize = getOptionListSize;
+        self.getOptionByValue = getOptionByValue;
+        self.createOption = createOption;
+        self.removeOption = removeOption;
+        self.removeLastOption = removeLastOption;
+
+        function getOptionListSize() {
+            return self.options.length;
+        }
+
+        function getOptionByValue(value) {
+            return self.options[value - 1];
+        }
+
+        function createOption() {
+            var option = MetadataAnswerFactory.create(self.options.length + 1);
+            self.options.push(option);
+            return option;
+        }
+
+        function removeOption(value) {
+            self.options.splice((value - 1), 1);
+            reorderOptionValues();
+        }
+
+        function removeLastOption() {
+            self.options.splice(-1, 1);
+        }
+
+        function reorderOptionValues() {
+            self.options.forEach(function(option, index) {
+                option.value = ++index;
+            });
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.misc')
         .factory('LabelFactory', LabelFactory);
 
@@ -1069,112 +1175,6 @@
 }());
 
 (function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
-
-    MetadataAnswerFactory.$inject = ['LabelFactory'];
-
-    function MetadataAnswerFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MetadataAnswer(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function MetadataAnswer(value, LabelFactory) {
-        var self = this;
-
-        self.extends = 'StudioObject';
-        self.objectType = 'MetadataAnswer';
-        self.dataType = 'Integer';
-        self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .factory('MetadataGroupFactory', MetadataGroupFactory);
-
-    MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
-
-    function MetadataGroupFactory(MetadataAnswerFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new MetadataGroup(MetadataAnswerFactory);
-        }
-
-        return self;
-    }
-
-    function MetadataGroup(MetadataAnswerFactory) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'MetadataGroup';
-        self.options = [];
-
-        /* Public methods */
-        self.getOptionListSize = getOptionListSize;
-        self.getOptionByValue = getOptionByValue;
-        self.createOption = createOption;
-        self.removeOption = removeOption;
-        self.removeLastOption = removeLastOption;
-
-        function getOptionListSize() {
-            return self.options.length;
-        }
-
-        function getOptionByValue(value) {
-            return self.options[value - 1];
-        }
-
-        function createOption() {
-            var option = MetadataAnswerFactory.create(self.options.length + 1);
-            self.options.push(option);
-            return option;
-        }
-
-        function removeOption(value) {
-            self.options.splice((value - 1), 1);
-            reorderOptionValues();
-        }
-
-        function removeLastOption() {
-            self.options.splice(-1, 1);
-        }
-
-        function reorderOptionValues() {
-            self.options.forEach(function(option, index) {
-                option.value = ++index;
-            });
-        }
-    }
-
-}());
-
-(function() {
 
   angular
     .module('otusjs.model.navigation')
@@ -1228,30 +1228,6 @@
     }
   }
 })();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.ExceptionService', service);
-
-  function service() {
-    var self = this;
-
-    self.InvalidStateError = createErrorType('InvalidStateError');
-
-    function createErrorType(name) {
-      function E(message) {
-        this.message = message;
-      }
-      E.prototype = Object.create(Error.prototype);
-      E.prototype.name = name;
-      E.prototype.constructor = E;
-      return E;
-    }
-  }
-}());
 
 (function() {
   'use strict';
@@ -1325,6 +1301,7 @@
   function Navigation(origin, defaultRoute) {
     var self = this;
     var _defaultRoute = defaultRoute;
+    var _outNavigations = [];
 
     /* Object properties */
     self.extents = 'SurveyTemplateObject';
@@ -1337,6 +1314,7 @@
 
     /* Public methods */
     self.addInNavigation = addInNavigation;
+    self.addOutNavigation = addOutNavigation;
     self.clone = clone;
     self.createAlternativeRoute = createAlternativeRoute;
     self.equals = equals;
@@ -1345,6 +1323,7 @@
     self.hasRoute = hasRoute;
     self.isOrphan = isOrphan;
     self.isChildOfOrphan = isChildOfOrphan;
+    self.isDefaultPathNavigation = isDefaultPathNavigation;
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
     self.removeRouteByName = removeRouteByName;
@@ -1355,8 +1334,26 @@
     self.updateRoute = updateRoute;
 
     function addInNavigation(navigation) {
+      navigation.addOutNavigation(self);
       self.inNavigations.push(navigation);
-      _calculateNavigationType();
+    }
+
+    function addOutNavigation(navigation) {
+      _outNavigations.push(navigation);
+    }
+
+    function isDefaultPathNavigation() {
+      var currentState = self.isDefault;
+      var newState = self.inNavigations.some(function(inNavigation) {
+        return inNavigation.isDefault && (inNavigation.getDefaultRoute().destination === self.origin);
+      });
+
+      if (newState !== currentState) {
+        self.isDefault = newState;
+        notifyOutNavigations();
+      }
+
+      return self.isDefault;
     }
 
     function clone() {
@@ -1451,16 +1448,31 @@
     }
 
     function isOrphan() {
-      return !self.inNavigations.length && self.index > 0;
+      if (!self.inNavigations.length && self.index > 0) {
+        self.isDefault = false;
+        return true;
+      } else {
+        return false;
+      }
     }
 
     function isChildOfOrphan() {
       if (self.index === 0) {
         return false;
       } else {
-        return self.inNavigations.some(function(navigation) {
-          return !navigation.isOrphan();
+        var isSomeParentDefault = false;
+        var isOrphan = self.inNavigations.every(function(navigation) {
+          if (!isSomeParentDefault && navigation.isDefault) {
+            self.isDefault = (navigation.getDefaultRoute().destination === self.origin);
+          }
+          if (navigation.isOrphan() || navigation.isChildOfOrphan()) {
+            return true;
+          } else {
+            return false;
+          }
         });
+
+        return isOrphan;
       }
     }
 
@@ -1478,6 +1490,12 @@
       return clones;
     }
 
+    function notifyOutNavigations(newState) {
+      _outNavigations.forEach(function(child) {
+        child.updateState(newState);
+      });
+    }
+
     function removeInNavigation(navigationToRemove) {
       self.inNavigations.some(function(navigation, index) {
         if (navigation.origin === navigationToRemove.origin) {
@@ -1486,7 +1504,7 @@
         }
       });
 
-      _calculateNavigationType();
+      isDefaultPathNavigation();
     }
 
     function removeRouteByName(name) {
@@ -1507,17 +1525,7 @@
 
     function setupDefaultRoute(route) {
       removeRouteByName(route.name);
-
-      if (_existsRouteAtIndex(0)) {
-        if (self.routes[0].isDefault) {
-          self.routes[0] = route;
-        } else {
-          self.routes.unshift(route);
-        }
-      } else {
-        self.routes.push(route);
-      }
-
+      self.routes[0] = route;
       _defaultRoute = route;
     }
 
@@ -1545,25 +1553,21 @@
         }
       });
 
-      _calculateNavigationType();
+      isDefaultPathNavigation();
     }
 
     function updateRoute(routeToUpdate) {
-      var existentRoute = getRouteByName(routeToUpdate.name);
-
-      if (existentRoute.isDefault) {
-        if (!routeToUpdate.isDefault) {
-          _removeDefaultRoute();
-          createAlternativeRoute(routeToUpdate);
-        }
-      } else {
+      if (_defaultRoute.name !== routeToUpdate.name) {
         if (routeToUpdate.isDefault) {
-          removeRouteByName(existentRoute.name);
           setupDefaultRoute(routeToUpdate);
         } else {
           _applyRouteUpdate(routeToUpdate);
         }
       }
+    }
+
+    function updateState(parentState) {
+
     }
 
     function _routeExists(newRoute) {
@@ -1594,12 +1598,6 @@
     function _removeDefaultRoute() {
       _defaultRoute = null;
       self.routes.shift();
-    }
-
-    function _calculateNavigationType() {
-      self.isDefault = self.inNavigations.some(function(inNavigation) {
-        return inNavigation.isDefault && (inNavigation.getDefaultRoute() && inNavigation.getDefaultRoute().destination === self.origin);
-      });
     }
 
     function _existsRouteAtIndex(index) {
@@ -2104,6 +2102,30 @@
       json.answer = self.answer;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.ExceptionService', service);
+
+  function service() {
+    var self = this;
+
+    self.InvalidStateError = createErrorType('InvalidStateError');
+
+    function createErrorType(name) {
+      function E(message) {
+        this.message = message;
+      }
+      E.prototype = Object.create(Error.prototype);
+      E.prototype.name = name;
+      E.prototype.constructor = E;
+      return E;
     }
   }
 }());
@@ -3282,31 +3304,21 @@
     function execute(routeData, navigation) {
       var origin = routeData.origin;
       var destination = routeData.destination;
-      var route = null;
+      var currentDefaultRoute = navigation.getDefaultRoute();
+      var route = RouteFactory.createDefault(origin, destination);
 
-      if (routeData.isDefault) {
-        var currentDefaultRoute = navigation.getDefaultRoute();
-
-        route = RouteFactory.createDefault(origin, destination);
-        navigation.setupDefaultRoute(route);
-
-        var nextNavigation = NavigationContainerService.getNavigationByOrigin(currentDefaultRoute.destination);
-        if (nextNavigation) {
-          nextNavigation.removeInNavigation(navigation);
-        }
-      } else {
+      if (!currentDefaultRoute.equals(route)) {
         var conditions = routeData.conditions.map(_setupConditions);
-        route = RouteFactory.createAlternative(origin, destination, conditions);
+        navigation.updateRoute(route);
+
+        var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
+        if (nextNavigation) {
+          nextNavigation.updateInNavigation(navigation);
+        }
+        return route;
+      } else {
+        return currentDefaultRoute;
       }
-
-      navigation.updateRoute(route);
-
-      var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
-      if (nextNavigation) {
-        nextNavigation.updateInNavigation(navigation);
-      }
-
-      return route;
     }
 
     function _setupConditions(conditionData) {

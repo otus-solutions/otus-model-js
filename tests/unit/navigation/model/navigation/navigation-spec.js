@@ -16,6 +16,7 @@ describe('Navigation:', function() {
     module('otusjs');
 
     inject(function(_$injector_) {
+      mockNavigations(_$injector_);
       mockRouteFactory(_$injector_);
       mockRoute(_$injector_);
       mockJson();
@@ -23,51 +24,24 @@ describe('Navigation:', function() {
       factory = _$injector_.get('otusjs.model.navigation.NavigationFactory');
     });
 
-    navigation = factory.create(CAD1, CAD2);
+    navigation = factory.create(CAD3, CAD4);
   });
 
   describe('addInNavigation method', function() {
+
+    it('should add the navigation as out navigation of parent navigation', function() {
+      spyOn(Mock.parentNavigation, 'addOutNavigation');
+
+      navigation.addInNavigation(Mock.parentNavigation);
+
+      expect(Mock.parentNavigation.addOutNavigation).toHaveBeenCalledWith(navigation);
+    });
 
     it('should put a navigation in inNavigations list', function() {
       navigation2 = factory.create(CAD2, CAD3);
       navigation2.addInNavigation(navigation);
 
       expect(navigation2.inNavigations[0].equals(navigation)).toBe(true);
-    });
-
-    describe('is default path calculation', function() {
-
-      describe('when the in navigation is default path and route is default', function() {
-
-        describe('and route from in navigation is default', function() {
-
-          it('navigation should be default path too', function() {
-            var navigation2 = factory.create(CAD2, CAD3);
-            navigation2.addInNavigation(navigation);
-
-            expect(navigation2.isDefault).toBe(true);
-          });
-
-        });
-
-        describe('and route from in navigation is not default', function() {
-
-          it('navigation should be alternative path', function() {
-            var routeToNav2 = navigation.getDefaultRoute();
-            routeToNav2.isDefault = false;
-            navigation.updateRoute(routeToNav2);
-
-            var navigation2 = factory.create(CAD2, CAD3);
-            navigation2.addInNavigation(navigation);
-
-            expect(navigation2.isDefault).toBe(false);
-          });
-
-        });
-
-
-      });
-
     });
 
   });
@@ -220,6 +194,23 @@ describe('Navigation:', function() {
 
   });
 
+  describe('isDefaultPathNavigation method', function() {
+
+    describe('should return true when', function() {
+
+      beforeEach(function() {
+        Mock.parentNavigation.isDefault = true;
+        navigation.addInNavigation(Mock.parentNavigation);
+      });
+
+      it('navigation parent is from default path and navigation is the default route of parent', function() {
+        expect(navigation.isDefaultPathNavigation()).toBe(true);
+      });
+
+    });
+
+  });
+
   describe('listRoutes method', function() {
 
     it('should return a list of cloned routes', function() {
@@ -227,7 +218,7 @@ describe('Navigation:', function() {
       cloneZero.name = 'AN_INVALID_NAME';
 
       expect(navigation.getRouteByName(cloneZero.name)).toBe(null);
-      expect(navigation.getRouteByName(Mock.defaultRoute.name).name).toBe('CAD1_CAD2');
+      expect(navigation.getRouteByName(Mock.defaultRoute.name).name).toBe('CAD3_CAD4');
     });
 
   });
@@ -369,42 +360,10 @@ describe('Navigation:', function() {
 
     describe('when updated route is the current default', function() {
 
-      describe('and updated route is configured to not be default', function() {
+      it('should do nothing', function() {
+        navigation.updateRoute(Mock.defaultRoute);
 
-        beforeEach(function() {
-          Mock.defaultRoute.isDefault = false;
-          Mock.defaultRoute.addCondition(Mock.condition);
-        });
-
-        it('should set remove default route', function() {
-          navigation.updateRoute(Mock.defaultRoute);
-
-          expect(navigation.getDefaultRoute()).toBe(null);
-        });
-
-        it('should replace default route with an alterantive route based on updated route data in the list', function() {
-          navigation.updateRoute(Mock.defaultRoute);
-
-          expect(navigation.listRoutes().length).toBe(1);
-          expect(navigation.listRoutes()[0].equals(Mock.defaultRoute)).toBe(true);
-        });
-
-      });
-
-      describe('and updated route is configured to be default', function() {
-
-        it('should not touch the default route', function() {
-          navigation.updateRoute(Mock.defaultRoute);
-
-          expect(navigation.getDefaultRoute().destination).toEqual(CAD2);
-        });
-
-        it('should not touch the route list', function() {
-          navigation.updateRoute(Mock.defaultRoute);
-
-          expect(navigation.listRoutes().length).toBe(1);
-        });
-
+        expect(navigation.getDefaultRoute().equals(Mock.defaultRoute)).toBe(true);
       });
 
     });
@@ -458,20 +417,26 @@ describe('Navigation:', function() {
   }
 
   function mockRoute($injector) {
-    var rule = $injector.get('otusjs.model.navigation.RuleFactory').create(CAD1, 'equal', 1);
+    var rule = $injector.get('otusjs.model.navigation.RuleFactory').create(CAD3, 'equal', 1);
     var conditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
 
-    Mock.condition = conditionFactory.create(CAD1, [rule]);
-    Mock.defaultRoute = Mock.RouteFactory.createDefault(CAD1, CAD2);
+    Mock.condition = conditionFactory.create(CAD3, [rule]);
+    Mock.defaultRoute = Mock.RouteFactory.createDefault(CAD3, CAD4);
     Mock.routeA = Mock.RouteFactory.createAlternative(CAD1, CAD4, [Mock.condition]);
     Mock.routeB = Mock.RouteFactory.createDefault(CAD1, CAD3);
+  }
+
+  function mockNavigations($injector) {
+    var NavigationFactory = $injector.get('otusjs.model.navigation.NavigationFactory');
+
+    Mock.parentNavigation = NavigationFactory.create(CAD1, CAD3);
   }
 
   function mockJson() {
     Mock.json = JSON.stringify({
       extents: EXTENTS,
       objectType: OBJECT_TYPE,
-      origin: CAD1,
+      origin: CAD3,
       index: 1,
       isDefault: true,
       inNavigations: [],

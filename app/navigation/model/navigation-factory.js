@@ -70,6 +70,7 @@
   function Navigation(origin, defaultRoute) {
     var self = this;
     var _defaultRoute = defaultRoute;
+    var _outNavigations = [];
 
     /* Object properties */
     self.extents = 'SurveyTemplateObject';
@@ -82,6 +83,7 @@
 
     /* Public methods */
     self.addInNavigation = addInNavigation;
+    self.addOutNavigation = addOutNavigation;
     self.clone = clone;
     self.createAlternativeRoute = createAlternativeRoute;
     self.equals = equals;
@@ -90,6 +92,7 @@
     self.hasRoute = hasRoute;
     self.isOrphan = isOrphan;
     self.isChildOfOrphan = isChildOfOrphan;
+    self.isDefaultPathNavigation = isDefaultPathNavigation;
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
     self.removeRouteByName = removeRouteByName;
@@ -100,8 +103,26 @@
     self.updateRoute = updateRoute;
 
     function addInNavigation(navigation) {
+      navigation.addOutNavigation(self);
       self.inNavigations.push(navigation);
-      _calculateNavigationType();
+    }
+
+    function addOutNavigation(navigation) {
+      _outNavigations.push(navigation);
+    }
+
+    function isDefaultPathNavigation() {
+      var currentState = self.isDefault;
+      var newState = self.inNavigations.some(function(inNavigation) {
+        return inNavigation.isDefault && (inNavigation.getDefaultRoute().destination === self.origin);
+      });
+
+      if (newState !== currentState) {
+        self.isDefault = newState;
+        notifyOutNavigations();
+      }
+
+      return self.isDefault;
     }
 
     function clone() {
@@ -196,16 +217,31 @@
     }
 
     function isOrphan() {
-      return !self.inNavigations.length && self.index > 0;
+      if (!self.inNavigations.length && self.index > 0) {
+        self.isDefault = false;
+        return true;
+      } else {
+        return false;
+      }
     }
 
     function isChildOfOrphan() {
       if (self.index === 0) {
         return false;
       } else {
-        return self.inNavigations.some(function(navigation) {
-          return !navigation.isOrphan();
+        var isSomeParentDefault = false;
+        var isOrphan = self.inNavigations.every(function(navigation) {
+          if (!isSomeParentDefault && navigation.isDefault) {
+            self.isDefault = (navigation.getDefaultRoute().destination === self.origin);
+          }
+          if (navigation.isOrphan() || navigation.isChildOfOrphan()) {
+            return true;
+          } else {
+            return false;
+          }
         });
+
+        return isOrphan;
       }
     }
 
@@ -223,6 +259,12 @@
       return clones;
     }
 
+    function notifyOutNavigations(newState) {
+      _outNavigations.forEach(function(child) {
+        child.updateState(newState);
+      });
+    }
+
     function removeInNavigation(navigationToRemove) {
       self.inNavigations.some(function(navigation, index) {
         if (navigation.origin === navigationToRemove.origin) {
@@ -231,7 +273,7 @@
         }
       });
 
-      _calculateNavigationType();
+      isDefaultPathNavigation();
     }
 
     function removeRouteByName(name) {
@@ -252,17 +294,7 @@
 
     function setupDefaultRoute(route) {
       removeRouteByName(route.name);
-
-      if (_existsRouteAtIndex(0)) {
-        if (self.routes[0].isDefault) {
-          self.routes[0] = route;
-        } else {
-          self.routes.unshift(route);
-        }
-      } else {
-        self.routes.push(route);
-      }
-
+      self.routes[0] = route;
       _defaultRoute = route;
     }
 
@@ -290,25 +322,21 @@
         }
       });
 
-      _calculateNavigationType();
+      isDefaultPathNavigation();
     }
 
     function updateRoute(routeToUpdate) {
-      var existentRoute = getRouteByName(routeToUpdate.name);
-
-      if (existentRoute.isDefault) {
-        if (!routeToUpdate.isDefault) {
-          _removeDefaultRoute();
-          createAlternativeRoute(routeToUpdate);
-        }
-      } else {
+      if (_defaultRoute.name !== routeToUpdate.name) {
         if (routeToUpdate.isDefault) {
-          removeRouteByName(existentRoute.name);
           setupDefaultRoute(routeToUpdate);
         } else {
           _applyRouteUpdate(routeToUpdate);
         }
       }
+    }
+
+    function updateState(parentState) {
+
     }
 
     function _routeExists(newRoute) {
@@ -339,12 +367,6 @@
     function _removeDefaultRoute() {
       _defaultRoute = null;
       self.routes.shift();
-    }
-
-    function _calculateNavigationType() {
-      self.isDefault = self.inNavigations.some(function(inNavigation) {
-        return inNavigation.isDefault && (inNavigation.getDefaultRoute() && inNavigation.getDefaultRoute().destination === self.origin);
-      });
     }
 
     function _existsRouteAtIndex(index) {
