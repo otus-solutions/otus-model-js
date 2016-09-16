@@ -22,7 +22,7 @@
     self.fromJson = fromJson;
 
     function create(origin, destination) {
-      if (!origin) {
+      if (!origin || !destination) {
         return null;
       }
 
@@ -89,6 +89,7 @@
     self.getRouteByName = getRouteByName;
     self.hasRoute = hasRoute;
     self.isOrphan = isOrphan;
+    self.isChildOfOrphan = isChildOfOrphan;
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
     self.removeRouteByName = removeRouteByName;
@@ -198,6 +199,16 @@
       return !self.inNavigations.length && self.index > 0;
     }
 
+    function isChildOfOrphan() {
+      if (self.index === 0) {
+        return false;
+      } else {
+        return self.inNavigations.some(function(navigation) {
+          return !navigation.isOrphan();
+        });
+      }
+    }
+
     function listRoutes() {
       var clones = [];
 
@@ -212,9 +223,9 @@
       return clones;
     }
 
-    function removeInNavigation(origin) {
+    function removeInNavigation(navigationToRemove) {
       self.inNavigations.some(function(navigation, index) {
-        if (navigation.origin === origin) {
+        if (navigation.origin === navigationToRemove.origin) {
           self.inNavigations.splice(index, 1);
           return true;
         }

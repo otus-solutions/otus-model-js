@@ -24,8 +24,15 @@
       var route = null;
 
       if (routeData.isDefault) {
+        var currentDefaultRoute = navigation.getDefaultRoute();
+
         route = RouteFactory.createDefault(origin, destination);
         navigation.setupDefaultRoute(route);
+
+        var nextNavigation = NavigationContainerService.getNavigationByOrigin(currentDefaultRoute.destination);
+        if (nextNavigation) {
+          nextNavigation.removeInNavigation(navigation);
+        }
       } else {
         var conditions = routeData.conditions.map(_setupConditions);
         route = RouteFactory.createAlternative(origin, destination, conditions);

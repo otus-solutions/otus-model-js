@@ -58,7 +58,13 @@
 
     function getNavigationByOrigin(origin) {
       var filter = _navigationList.filter(function(navigation) {
+<<<<<<< HEAD
+        if (navigation) {
+          return findByOrigin(navigation, origin);
+        }
+=======
         return findByOrigin(navigation, origin);          
+>>>>>>> d480bc02ca96c91d75abe953abdd99370cd6ef55
       });
 
       return filter[0];
@@ -96,7 +102,7 @@
       _navigationList.push(newNavigation);
     }
 
- 	function _addElementsPreviousTheNavigation(navigation) {
+    function _addElementsPreviousTheNavigation(navigation) {
       if (_navigationList.length) {
         var previous = _navigationList[_navigationList.length - 1];
         navigation.addInNavigation(previous);
