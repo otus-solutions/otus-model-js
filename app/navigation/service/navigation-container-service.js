@@ -57,9 +57,7 @@
 
     function getNavigationByOrigin(origin) {
       var filter = _navigationList.filter(function(navigation) {
-        if (navigation) {
-          return findByOrigin(navigation, origin);          
-        }
+        return findByOrigin(navigation, origin);          
       });
 
       return filter[0];

@@ -22,7 +22,7 @@
     self.fromJson = fromJson;
 
     function create(origin, destination) {
-      if (!origin) {
+      if (!origin || !destination) {
         return null;
       }
 
@@ -212,9 +212,9 @@
       return clones;
     }
 
-    function removeInNavigation(origin) {
+    function removeInNavigation(navigationToRemove) {
       self.inNavigations.some(function(navigation, index) {
-        if (navigation.origin === origin) {
+        if (navigation.origin === navigationToRemove.origin) {
           self.inNavigations.splice(index, 1);
           return true;
         }

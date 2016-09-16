@@ -49,7 +49,7 @@ describe('NavigationFactory', function() {
       expect(navigation).toBe(null);
     });
 
-    xit('should return null when destination is not set', function() {
+    it('should return null when destination is not set', function() {
       navigation = factory.create(ORIGIN, null);
 
       expect(navigation).toBe(null);
