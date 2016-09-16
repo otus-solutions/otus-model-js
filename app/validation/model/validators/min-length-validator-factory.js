@@ -21,7 +21,7 @@
     function MinLengthValidator(value) {
         var self = this;
 
-        self.size = null;
+        self.reference = null;
     }
 
 }());
