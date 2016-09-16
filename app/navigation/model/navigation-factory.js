@@ -89,6 +89,7 @@
     self.getRouteByName = getRouteByName;
     self.hasRoute = hasRoute;
     self.isOrphan = isOrphan;
+    self.isChildOfOrphan = isChildOfOrphan;
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
     self.removeRouteByName = removeRouteByName;
@@ -196,6 +197,12 @@
 
     function isOrphan() {
       return !self.inNavigations.length && self.index > 0;
+    }
+
+    function isChildOfOrphan() {
+      return self.inNavigations.every(function(navigation) {
+        return navigation.isOrphan();
+      });
     }
 
     function listRoutes() {
