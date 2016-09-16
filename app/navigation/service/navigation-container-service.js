@@ -28,6 +28,7 @@
     self.removeNavigationOf = removeNavigationOf;
     self.removeNavigationByIndex = removeNavigationByIndex;
     self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+    self._addElementsPreviousTheNavigation = _addElementsPreviousTheNavigation;
 
     function init() {
       _navigationList = [];
@@ -58,7 +59,7 @@
     function getNavigationByOrigin(origin) {
       var filter = _navigationList.filter(function(navigation) {
         if (navigation) {
-          return findByOrigin(navigation, origin);          
+          return findByOrigin(navigation, origin);
         }
       });
 
@@ -93,11 +94,15 @@
     function createNavigationTo(origin, destination) {
       var newNavigation = NavigationFactory.create(origin, destination);
       newNavigation.index = _navigationList.length;
-      if (_navigationList.length) { // existe navegações anteriores a minha?
-        var previous = _navigationList[_navigationList.length - 1]; // pega a navegação anterior
-        newNavigation.addInNavigation(previous); // adiciona navegação como uma navegação anterior a minha
-      }
+      _addElementsPreviousTheNavigation(newNavigation);
       _navigationList.push(newNavigation);
+    }
+
+    function _addElementsPreviousTheNavigation(navigation) {
+      if (_navigationList.length) {
+        var previous = _navigationList[_navigationList.length - 1];
+        navigation.addInNavigation(previous);
+      }
     }
 
     function removeNavigationOf(questionID) {
