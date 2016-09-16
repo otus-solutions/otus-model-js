@@ -22,7 +22,7 @@
     self.fromJson = fromJson;
 
     function create(origin, destination) {
-      if (!origin || !destination) {
+      if (!origin) {
         return null;
       }
 
