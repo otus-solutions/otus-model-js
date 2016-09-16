@@ -200,9 +200,13 @@
     }
 
     function isChildOfOrphan() {
-      return self.inNavigations.every(function(navigation) {
-        return navigation.isOrphan();
-      });
+      if (self.index === 0) {
+        return false;
+      } else {
+        return self.inNavigations.some(function(navigation) {
+          return !navigation.isOrphan();
+        });
+      }
     }
 
     function listRoutes() {
