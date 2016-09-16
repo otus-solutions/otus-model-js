@@ -88,6 +88,10 @@
     function createNavigationTo(origin, destination) {
       var newNavigation = NavigationFactory.create(origin, destination);
       newNavigation.index = _navigationList.length;
+      if (_navigationList.length) { // existe navegações anteriores a minha?
+        var previous = _navigationList[_navigationList.length - 1]; // pega a navegação anterior
+        newNavigation.addInNavigation(previous); // adiciona navegação como uma navegação anterior a minha
+      }
       _navigationList.push(newNavigation);
     }
 
