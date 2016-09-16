@@ -120,8 +120,7 @@
     }
 
     function clone() {
-      var clone = new Rule();
-      return Object.assign(clone, self);
+      return new self.constructor(self.when, self.operator, self.answer);
     }
 
     function toJson() {

@@ -108,6 +108,10 @@
         return false;
       }
 
+      if (other.isDefault !== self.isDefault) {
+        return false;
+      }
+
       if (other.origin !== self.origin) {
         return false;
       }
@@ -146,7 +150,9 @@
     }
 
     function clone() {
-      return Object.assign(new Route(), self);
+      var clone = new self.constructor(self.origin, self.destination, self.conditions);
+      clone.isDefault = self.isDefault;
+      return clone;
     }
 
     function toJson() {

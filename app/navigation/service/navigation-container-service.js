@@ -36,7 +36,10 @@
     function loadJsonData(data) {
       init();
       data.forEach(function(navigationData) {
-        _navigationList.push(NavigationFactory.fromJson(navigationData));
+        var inNavigations = navigationData.inNavigations.map(function(inNavigation) {
+          return getNavigationByOrigin(inNavigation.origin);
+        });
+        _navigationList.push(NavigationFactory.fromJson(navigationData, inNavigations));
       });
     }
 
@@ -54,7 +57,9 @@
 
     function getNavigationByOrigin(origin) {
       var filter = _navigationList.filter(function(navigation) {
-        return findByOrigin(navigation, origin);
+        if (navigation) {
+          return findByOrigin(navigation, origin);          
+        }
       });
 
       return filter[0];

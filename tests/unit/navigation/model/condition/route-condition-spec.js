@@ -167,13 +167,15 @@ describe('RouteCondition', function() {
   describe('clone method', function() {
 
     it('should call Object.assign', function() {
-      spyOn(Object, 'assign').and.callThrough();
-
       var conditionA = factory.create(CONDITION_NAME, [Mock.ruleA]);
       var clone = conditionA.clone();
 
-      expect(Object.assign).toHaveBeenCalled();
       expect(conditionA.equals(clone)).toBe(true);
+      expect(conditionA.selfsame(clone)).toBe(false);
+
+      clone.addRule(Mock.ruleB);
+
+      expect(conditionA.equals(clone)).toBe(false);
       expect(conditionA.selfsame(clone)).toBe(false);
     });
 
