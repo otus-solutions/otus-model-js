@@ -170,7 +170,6 @@ describe('NavigationContainerService', function() {
     beforeEach(function() {
       Mock.navigation = Mock.NavigationFactory.create(Mock.questionOne.templateID, Mock.questionTwo.templateID);
 
-      spyOn(service, '_addElementsPreviousTheNavigation');
       spyOn(Mock.NavigationFactory, 'create').and.returnValue(Mock.navigation);
       spyOn(Mock.navigation, 'addInNavigation').and.callThrough();
 
@@ -186,12 +185,15 @@ describe('NavigationContainerService', function() {
     });
 
     xit('should called method _addElementsPreviousTheNavigation', function() {
-      expect(service._addElementsPreviousTheNavigation).toHaveBeenCalled();
+      spyOn(service, '_addElementsPreviousTheNavigation');
+      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+
+      expect(service._addElementsPreviousTheNavigation).toHaveBeenCalledWith(Mock.navigation);
     });
 
   });
 
-  describe('_addElementsPreviousTheNavigation', function() {
+  xdescribe('_addElementsPreviousTheNavigation', function() {
 
     beforeEach(function() {
       Mock.navigationOne = Mock.NavigationFactory.create(Mock.questionOne.templateID, Mock.questionTwo.templateID);
@@ -199,16 +201,16 @@ describe('NavigationContainerService', function() {
       spyOn(Mock.NavigationFactory, 'create').and.returnValue(Mock.navigationOne);
       spyOn(Mock.navigation, 'addInNavigation').and.callThrough();
 
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
     });
 
     it('should called method addInNavigation when length of list is bigger than zero', function() {
+      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
 
-      //expect(Mock.navigation.addInNavigation).toHaveBeenCalled();
+      expect(Mock.navigation.addInNavigation).toHaveBeenCalledWith(jasmine.any(Array));
     });
 
     it('not should called method addInNavigation when length of list is equals than zero', function() {
-
+      expect(Mock.navigation.addInNavigation).not.toHaveBeenCalledWith(jasmine.any(Array));
     });
   });
 
