@@ -21,31 +21,21 @@
     function execute(routeData, navigation) {
       var origin = routeData.origin;
       var destination = routeData.destination;
-      var route = null;
+      var currentDefaultRoute = navigation.getDefaultRoute();
+      var route = RouteFactory.createDefault(origin, destination);
 
-      if (routeData.isDefault) {
-        var currentDefaultRoute = navigation.getDefaultRoute();
-
-        route = RouteFactory.createDefault(origin, destination);
-        navigation.setupDefaultRoute(route);
-
-        var nextNavigation = NavigationContainerService.getNavigationByOrigin(currentDefaultRoute.destination);
-        if (nextNavigation) {
-          nextNavigation.removeInNavigation(navigation);
-        }
-      } else {
+      if (!currentDefaultRoute.equals(route)) {
         var conditions = routeData.conditions.map(_setupConditions);
-        route = RouteFactory.createAlternative(origin, destination, conditions);
+        navigation.updateRoute(route);
+
+        var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
+        if (nextNavigation) {
+          nextNavigation.updateInNavigation(navigation);
+        }
+        return route;
+      } else {
+        return currentDefaultRoute;
       }
-
-      navigation.updateRoute(route);
-
-      var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
-      if (nextNavigation) {
-        nextNavigation.updateInNavigation(navigation);
-      }
-
-      return route;
     }
 
     function _setupConditions(conditionData) {

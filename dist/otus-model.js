@@ -10,7 +10,7 @@
     'use strict';
 
     angular
-        .module('otusjs.misc', []);
+        .module('otusjs.metadata', []);
 
 }());
 
@@ -18,7 +18,7 @@
     'use strict';
 
     angular
-        .module('otusjs.metadata', []);
+        .module('otusjs.misc', []);
 
 }());
 
@@ -964,6 +964,112 @@
     'use strict';
 
     angular
+        .module('otusjs.metadata')
+        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
+
+    MetadataAnswerFactory.$inject = ['LabelFactory'];
+
+    function MetadataAnswerFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MetadataAnswer(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MetadataAnswer(value, LabelFactory) {
+        var self = this;
+
+        self.extends = 'StudioObject';
+        self.objectType = 'MetadataAnswer';
+        self.dataType = 'Integer';
+        self.value = value;
+        self.label = {
+            'ptBR': LabelFactory.create(),
+            'enUS': LabelFactory.create(),
+            'esES': LabelFactory.create()
+        };
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .factory('MetadataGroupFactory', MetadataGroupFactory);
+
+    MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
+
+    function MetadataGroupFactory(MetadataAnswerFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MetadataGroup(MetadataAnswerFactory);
+        }
+
+        return self;
+    }
+
+    function MetadataGroup(MetadataAnswerFactory) {
+        var self = this;
+
+        self.extents = 'StudioObject';
+        self.objectType = 'MetadataGroup';
+        self.options = [];
+
+        /* Public methods */
+        self.getOptionListSize = getOptionListSize;
+        self.getOptionByValue = getOptionByValue;
+        self.createOption = createOption;
+        self.removeOption = removeOption;
+        self.removeLastOption = removeLastOption;
+
+        function getOptionListSize() {
+            return self.options.length;
+        }
+
+        function getOptionByValue(value) {
+            return self.options[value - 1];
+        }
+
+        function createOption() {
+            var option = MetadataAnswerFactory.create(self.options.length + 1);
+            self.options.push(option);
+            return option;
+        }
+
+        function removeOption(value) {
+            self.options.splice((value - 1), 1);
+            reorderOptionValues();
+        }
+
+        function removeLastOption() {
+            self.options.splice(-1, 1);
+        }
+
+        function reorderOptionValues() {
+            self.options.forEach(function(option, index) {
+                option.value = ++index;
+            });
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('otusjs.misc')
         .factory('LabelFactory', LabelFactory);
 
@@ -1064,112 +1170,6 @@
             writable: true,
             enumerable: true
         });
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
-
-    MetadataAnswerFactory.$inject = ['LabelFactory'];
-
-    function MetadataAnswerFactory(LabelFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(value) {
-            return new MetadataAnswer(value, LabelFactory);
-        }
-
-        return self;
-    }
-
-    function MetadataAnswer(value, LabelFactory) {
-        var self = this;
-
-        self.extends = 'StudioObject';
-        self.objectType = 'MetadataAnswer';
-        self.dataType = 'Integer';
-        self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .factory('MetadataGroupFactory', MetadataGroupFactory);
-
-    MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
-
-    function MetadataGroupFactory(MetadataAnswerFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new MetadataGroup(MetadataAnswerFactory);
-        }
-
-        return self;
-    }
-
-    function MetadataGroup(MetadataAnswerFactory) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'MetadataGroup';
-        self.options = [];
-
-        /* Public methods */
-        self.getOptionListSize = getOptionListSize;
-        self.getOptionByValue = getOptionByValue;
-        self.createOption = createOption;
-        self.removeOption = removeOption;
-        self.removeLastOption = removeLastOption;
-
-        function getOptionListSize() {
-            return self.options.length;
-        }
-
-        function getOptionByValue(value) {
-            return self.options[value - 1];
-        }
-
-        function createOption() {
-            var option = MetadataAnswerFactory.create(self.options.length + 1);
-            self.options.push(option);
-            return option;
-        }
-
-        function removeOption(value) {
-            self.options.splice((value - 1), 1);
-            reorderOptionValues();
-        }
-
-        function removeLastOption() {
-            self.options.splice(-1, 1);
-        }
-
-        function reorderOptionValues() {
-            self.options.forEach(function(option, index) {
-                option.value = ++index;
-            });
-        }
     }
 
 }());
@@ -1333,10 +1333,12 @@
     self.index = null;
     self.isDefault = true;
     self.inNavigations = [];
+    self.outNavigations = [];
     self.routes = [defaultRoute];
 
     /* Public methods */
     self.addInNavigation = addInNavigation;
+    self.addOutNavigation = addOutNavigation;
     self.clone = clone;
     self.createAlternativeRoute = createAlternativeRoute;
     self.equals = equals;
@@ -1344,7 +1346,7 @@
     self.getRouteByName = getRouteByName;
     self.hasRoute = hasRoute;
     self.isOrphan = isOrphan;
-    self.isChildOfOrphan = isChildOfOrphan;
+    self.hasOrphanRoot = hasOrphanRoot;
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
     self.removeRouteByName = removeRouteByName;
@@ -1355,28 +1357,41 @@
     self.updateRoute = updateRoute;
 
     function addInNavigation(navigation) {
+      navigation.addOutNavigation(self);
       self.inNavigations.push(navigation);
-      _calculateNavigationType();
+    }
+
+    function addOutNavigation(navigation) {
+      self.outNavigations.push(navigation);
     }
 
     function clone() {
       var clone = new self.constructor(self.origin, _defaultRoute);
       self.inNavigations.map(clone.addInNavigation);
-      self.routes.map(clone.createAlternativeRoute);
+      self.outNavigations.map(clone.addOutNavigation);
+      var routes = self.listRoutes();
+      routes.shift();
+      routes.map(clone.createAlternativeRoute);
       return clone;
     }
 
     function createAlternativeRoute(routeData) {
-      var origin = routeData.origin;
-      var destination = routeData.destination;
-      var conditions = routeData.conditions;
-      var route = Inject.RouteFactory.createAlternative(origin, destination, conditions);
-
-      if (route && route.conditions.length && !_routeExists(route)) {
-        routeData.conditions.map(route.addCondition);
-        route.isDefault = false;
-        self.routes.push(route);
+      if (!routeData.conditions || !routeData.conditions.length) {
+        throw new Error('There are no conditions for this route.', 'navigation-factory.js', 123);
       }
+
+      if (getRouteByName(routeData.origin + '_' + routeData.destination)) {
+        throw new Error('Route already exists.', 'navigation-factory.js', 127);
+      }
+
+      _createAlternativeRoute(routeData);
+    }
+
+    function _createAlternativeRoute(routeData) {
+      var route = Inject.RouteFactory.createAlternative(self.origin, routeData.destination, routeData.conditions);
+      routeData.conditions.map(route.addCondition);
+      route.isDefault = false;
+      self.routes.push(route);
     }
 
     function equals(other) {
@@ -1395,7 +1410,7 @@
       if (other.routes.length === self.routes.length) {
 
         if (self.routes.length > 0) {
-          var hasEqualRoutes = other.routes.some(function(otherRoute) {
+          var hasEqualRoutes = other.routes.every(function(otherRoute) {
             return self.routes.some(function(selfRoute) {
               return selfRoute.equals(otherRoute);
             });
@@ -1414,12 +1429,12 @@
       return true;
     }
 
+    function _existsRouteAtIndex(index) {
+      return (self.routes[index]) ? true : false;
+    }
+
     function getDefaultRoute() {
-      if (!_defaultRoute) {
-        return null;
-      } else {
-        return _defaultRoute.clone();
-      }
+      return _defaultRoute.clone();
     }
 
     function getRouteByName(name) {
@@ -1436,31 +1451,34 @@
     }
 
     function hasRoute(routeData) {
-      if (routeData.name) {
-        return self.routes.some(function(route) {
-          return route.name === routeData.name;
-        });
-      } else if (routeData.origin && routeData.destination) {
-        return self.routes.some(function(route) {
-          return (route.origin === routeData.origin && route.destination === routeData.destination);
-        });
-      } else {
-        // TODO Lançar uma exceção aqui porque ficou impossível de determinar
-        return undefined;
+      return self.routes.some(function(route) {
+        return (getRouteByName(routeData.name) || route.origin === routeData.origin && route.destination === routeData.destination);
+      });
+    }
+
+    function _isCurrentDefaultRoute(route) {
+      return (_defaultRoute && route.name === _defaultRoute.name);
+    }
+
+    function hasOrphanRoot() {
+      var result = false;
+
+      if (self.index === 0) {
+        return result;
       }
+
+      result = self.inNavigations.every(function(navigation) {
+        return navigation.isOrphan() || navigation.hasOrphanRoot();
+      });
+
+      return result;
     }
 
     function isOrphan() {
-      return !self.inNavigations.length && self.index > 0;
-    }
-
-    function isChildOfOrphan() {
-      if (self.index === 0) {
-        return false;
+      if (self.index !== 0 && !self.inNavigations.length) {
+        return true;
       } else {
-        return self.inNavigations.some(function(navigation) {
-          return !navigation.isOrphan();
-        });
+        return false;
       }
     }
 
@@ -1468,14 +1486,15 @@
       var clones = [];
 
       clones = self.routes.map(function(route) {
-        if (route) {
-          return route.clone();
-        } else {
-          return null;
-        }
+        return route.clone();
       });
 
       return clones;
+    }
+
+    function _removeDefaultRoute() {
+      _defaultRoute = null;
+      self.routes.shift();
     }
 
     function removeInNavigation(navigationToRemove) {
@@ -1485,8 +1504,6 @@
           return true;
         }
       });
-
-      _calculateNavigationType();
     }
 
     function removeRouteByName(name) {
@@ -1506,18 +1523,13 @@
     }
 
     function setupDefaultRoute(route) {
-      removeRouteByName(route.name);
-
-      if (_existsRouteAtIndex(0)) {
-        if (self.routes[0].isDefault) {
-          self.routes[0] = route;
-        } else {
-          self.routes.unshift(route);
-        }
-      } else {
-        self.routes.push(route);
+      if (!route) {
+        throw new TypeError('Default route should not be undefined or null.', 'navigation-factory.js', 285);
       }
 
+      removeRouteByName(route.name);
+      route.conditions = [];
+      self.routes[0] = route;
       _defaultRoute = route;
     }
 
@@ -1537,6 +1549,12 @@
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
 
+    function _updateDefaultRoute(route) {
+      _defaultRoute = route;
+      _defaultRoute.conditions = [];
+      self.routes[0] = _defaultRoute;
+    }
+
     function updateInNavigation(navigation) {
       self.inNavigations.some(function(inNavigation, index) {
         if (inNavigation.origin === navigation.origin) {
@@ -1545,65 +1563,26 @@
         }
       });
 
-      _calculateNavigationType();
+      isDefaultPathNavigation();
     }
 
     function updateRoute(routeToUpdate) {
-      var existentRoute = getRouteByName(routeToUpdate.name);
-
-      if (existentRoute.isDefault) {
-        if (!routeToUpdate.isDefault) {
-          _removeDefaultRoute();
-          createAlternativeRoute(routeToUpdate);
-        }
-      } else {
+      if (!_isCurrentDefaultRoute(routeToUpdate)) {
         if (routeToUpdate.isDefault) {
-          removeRouteByName(existentRoute.name);
           setupDefaultRoute(routeToUpdate);
         } else {
-          _applyRouteUpdate(routeToUpdate);
+          _updateRoute(routeToUpdate);
         }
       }
     }
 
-    function _routeExists(newRoute) {
-      return self.routes.some(function(route) {
-        return route && newRoute.equals(route);
-      });
-    }
-
-    function _isCurrentDefaultRoute(route) {
-      return (_defaultRoute && route.name === _defaultRoute.name);
-    }
-
-    function _applyRouteUpdate(routeToUpdate) {
+    function _updateRoute(routeToUpdate) {
       self.routes.some(function(route, index) {
         if (route.name === routeToUpdate.name) {
           self.routes[index] = routeToUpdate;
           return true;
         }
       });
-    }
-
-    function _updateDefaultRoute(route) {
-      _defaultRoute = route;
-      _defaultRoute.conditions = [];
-      self.routes[0] = _defaultRoute;
-    }
-
-    function _removeDefaultRoute() {
-      _defaultRoute = null;
-      self.routes.shift();
-    }
-
-    function _calculateNavigationType() {
-      self.isDefault = self.inNavigations.some(function(inNavigation) {
-        return inNavigation.isDefault && (inNavigation.getDefaultRoute() && inNavigation.getDefaultRoute().destination === self.origin);
-      });
-    }
-
-    function _existsRouteAtIndex(index) {
-      return (self.routes[index]) ? true : false;
     }
   }
 }());
@@ -1717,7 +1696,7 @@
 
       if (other.rules.length === self.rules.length) {
         if (self.rules.length > 0) {
-          var hasEqualRules = other.rules.some(function(otherRule) {
+          var hasEqualRules = other.rules.every(function(otherRule) {
             return self.rules.some(function(selfRule) {
               return selfRule.equals(otherRule);
             });
@@ -1852,8 +1831,9 @@
     self.conditions = [];
 
     /* Public interface */
-    self.listConditions = listConditions;
     self.addCondition = addCondition;
+    self.instanceOf = instanceOf;
+    self.listConditions = listConditions;
     self.removeCondition = removeCondition;
     self.equals = equals;
     self.selfsame = selfsame;
@@ -1861,6 +1841,16 @@
     self.toJson = toJson;
 
     _init();
+
+    function addCondition(condition) {
+      if (!self.isDefault && !_conditionExists(condition)) {
+        self.conditions.push(condition);
+      }
+    }
+
+    function instanceOf() {
+      return 'Route';
+    }
 
     function listConditions() {
       var clone = [];
@@ -1870,12 +1860,6 @@
       });
 
       return clone;
-    }
-
-    function addCondition(condition) {
-      if (!self.isDefault && !_conditionExists(condition)) {
-        self.conditions.push(condition);
-      }
     }
 
     function removeCondition(condition) {
@@ -1910,7 +1894,7 @@
 
       if (other.conditions.length === self.conditions.length) {
         if (self.conditions.length > 0) {
-          var hasEqualConditions = other.conditions.some(function(otherCondition) {
+          var hasEqualConditions = other.conditions.every(function(otherCondition) {
             return self.conditions.some(function(selfCondition) {
               return selfCondition.equals(otherCondition);
             });
@@ -2167,7 +2151,7 @@
 
     function getNavigationByOrigin(origin) {
       var filter = _navigationList.filter(function(navigation) {
-        return findByOrigin(navigation, origin);          
+        return findByOrigin(navigation, origin);
       });
 
       return filter[0];
@@ -2201,7 +2185,15 @@
     function createNavigationTo(origin, destination) {
       var newNavigation = NavigationFactory.create(origin, destination);
       newNavigation.index = _navigationList.length;
+      _addElementsPreviousTheNavigation(newNavigation);
       _navigationList.push(newNavigation);
+    }
+
+ 	function _addElementsPreviousTheNavigation(navigation) {
+      if (_navigationList.length) {
+        var previous = _navigationList[_navigationList.length - 1];
+        navigation.addInNavigation(previous);
+      }
     }
 
     function removeNavigationOf(questionID) {
@@ -3282,31 +3274,21 @@
     function execute(routeData, navigation) {
       var origin = routeData.origin;
       var destination = routeData.destination;
-      var route = null;
+      var currentDefaultRoute = navigation.getDefaultRoute();
+      var route = RouteFactory.createDefault(origin, destination);
 
-      if (routeData.isDefault) {
-        var currentDefaultRoute = navigation.getDefaultRoute();
-
-        route = RouteFactory.createDefault(origin, destination);
-        navigation.setupDefaultRoute(route);
-
-        var nextNavigation = NavigationContainerService.getNavigationByOrigin(currentDefaultRoute.destination);
-        if (nextNavigation) {
-          nextNavigation.removeInNavigation(navigation);
-        }
-      } else {
+      if (!currentDefaultRoute.equals(route)) {
         var conditions = routeData.conditions.map(_setupConditions);
-        route = RouteFactory.createAlternative(origin, destination, conditions);
+        navigation.updateRoute(route);
+
+        var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
+        if (nextNavigation) {
+          nextNavigation.updateInNavigation(navigation);
+        }
+        return route;
+      } else {
+        return currentDefaultRoute;
       }
-
-      navigation.updateRoute(route);
-
-      var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
-      if (nextNavigation) {
-        nextNavigation.updateInNavigation(navigation);
-      }
-
-      return route;
     }
 
     function _setupConditions(conditionData) {

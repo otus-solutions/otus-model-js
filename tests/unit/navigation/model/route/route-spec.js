@@ -65,6 +65,14 @@ describe('Route', function() {
 
   });
 
+  describe('instanceOf method', function() {
+
+    it('should return Route', function() {
+      expect(route.instanceOf()).toEqual('Route');
+    });
+
+  });
+
   describe('removeCondition method', function() {
 
     beforeEach(function() {

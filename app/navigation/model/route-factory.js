@@ -68,8 +68,9 @@
     self.conditions = [];
 
     /* Public interface */
-    self.listConditions = listConditions;
     self.addCondition = addCondition;
+    self.instanceOf = instanceOf;
+    self.listConditions = listConditions;
     self.removeCondition = removeCondition;
     self.equals = equals;
     self.selfsame = selfsame;
@@ -77,6 +78,16 @@
     self.toJson = toJson;
 
     _init();
+
+    function addCondition(condition) {
+      if (!self.isDefault && !_conditionExists(condition)) {
+        self.conditions.push(condition);
+      }
+    }
+
+    function instanceOf() {
+      return 'Route';
+    }
 
     function listConditions() {
       var clone = [];
@@ -86,12 +97,6 @@
       });
 
       return clone;
-    }
-
-    function addCondition(condition) {
-      if (!self.isDefault && !_conditionExists(condition)) {
-        self.conditions.push(condition);
-      }
     }
 
     function removeCondition(condition) {
@@ -126,7 +131,7 @@
 
       if (other.conditions.length === self.conditions.length) {
         if (self.conditions.length > 0) {
-          var hasEqualConditions = other.conditions.some(function(otherCondition) {
+          var hasEqualConditions = other.conditions.every(function(otherCondition) {
             return self.conditions.some(function(selfCondition) {
               return selfCondition.equals(otherCondition);
             });
