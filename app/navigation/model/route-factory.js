@@ -131,7 +131,7 @@
 
       if (other.conditions.length === self.conditions.length) {
         if (self.conditions.length > 0) {
-          var hasEqualConditions = other.conditions.some(function(otherCondition) {
+          var hasEqualConditions = other.conditions.every(function(otherCondition) {
             return self.conditions.some(function(selfCondition) {
               return selfCondition.equals(otherCondition);
             });

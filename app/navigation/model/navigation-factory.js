@@ -91,7 +91,7 @@
     self.getRouteByName = getRouteByName;
     self.hasRoute = hasRoute;
     self.isOrphan = isOrphan;
-    self.isChildOfOrphan = isChildOfOrphan;
+    self.hasOrphanRoot = hasOrphanRoot;
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
     self.removeRouteByName = removeRouteByName;
@@ -100,7 +100,6 @@
     self.toJson = toJson;
     self.updateInNavigation = updateInNavigation;
     self.updateRoute = updateRoute;
-    self.updateState = updateState;
 
     function addInNavigation(navigation) {
       navigation.addOutNavigation(self);
@@ -114,28 +113,30 @@
     function clone() {
       var clone = new self.constructor(self.origin, _defaultRoute);
       self.inNavigations.map(clone.addInNavigation);
-      self.routes.map(clone.createAlternativeRoute);
+      self.outNavigations.map(clone.addOutNavigation);
+      var routes = self.listRoutes();
+      routes.shift();
+      routes.map(clone.createAlternativeRoute);
       return clone;
     }
 
     function createAlternativeRoute(routeData) {
-      if (!routeData.instanceOf || routeData.instanceOf() !== 'Route') {
-        throw new TypeError('routeData paramenter is not an instance of Route', 'navigation-factory.js', 122);
-      }
-
       if (!routeData.conditions || !routeData.conditions.length) {
-        throw new Error('No conditions created for alternative route.', 'navigation-factory.js', 126);
+        throw new Error('There are no conditions for this route.', 'navigation-factory.js', 123);
       }
 
-      var destination = routeData.destination;
-      var conditions = routeData.conditions;
-      var route = Inject.RouteFactory.createAlternative(self.origin, destination, conditions);
-
-      if (route && route.conditions.length && !_routeExists(route)) {
-        routeData.conditions.map(route.addCondition);
-        route.isDefault = false;
-        self.routes.push(route);
+      if (getRouteByName(routeData.origin + '_' + routeData.destination)) {
+        throw new Error('Route already exists.', 'navigation-factory.js', 127);
       }
+
+      _createAlternativeRoute(routeData);
+    }
+
+    function _createAlternativeRoute(routeData) {
+      var route = Inject.RouteFactory.createAlternative(self.origin, routeData.destination, routeData.conditions);
+      routeData.conditions.map(route.addCondition);
+      route.isDefault = false;
+      self.routes.push(route);
     }
 
     function equals(other) {
@@ -173,12 +174,12 @@
       return true;
     }
 
+    function _existsRouteAtIndex(index) {
+      return (self.routes[index]) ? true : false;
+    }
+
     function getDefaultRoute() {
-      if (!_defaultRoute) {
-        return null;
-      } else {
-        return _defaultRoute.clone();
-      }
+      return _defaultRoute.clone();
     }
 
     function getRouteByName(name) {
@@ -195,46 +196,34 @@
     }
 
     function hasRoute(routeData) {
-      if (routeData.name) {
-        return self.routes.some(function(route) {
-          return route.name === routeData.name;
-        });
-      } else if (routeData.origin && routeData.destination) {
-        return self.routes.some(function(route) {
-          return (route.origin === routeData.origin && route.destination === routeData.destination);
-        });
-      } else {
-        // TODO Lançar uma exceção aqui porque ficou impossível de determinar
-        return undefined;
+      return self.routes.some(function(route) {
+        return (getRouteByName(routeData.name) || route.origin === routeData.origin && route.destination === routeData.destination);
+      });
+    }
+
+    function _isCurrentDefaultRoute(route) {
+      return (_defaultRoute && route.name === _defaultRoute.name);
+    }
+
+    function hasOrphanRoot() {
+      var result = false;
+
+      if (self.index === 0) {
+        return result;
       }
+
+      result = self.inNavigations.every(function(navigation) {
+        return navigation.isOrphan() || navigation.hasOrphanRoot();
+      });
+
+      return result;
     }
 
     function isOrphan() {
-      if (!self.inNavigations.length && self.index > 0) {
-        self.isDefault = false;
+      if (self.index !== 0 && !self.inNavigations.length) {
         return true;
       } else {
         return false;
-      }
-    }
-
-    function isChildOfOrphan() {
-      if (self.index === 0) {
-        return false;
-      } else {
-        var isSomeParentDefault = false;
-        var isOrphan = self.inNavigations.every(function(navigation) {
-          if (!isSomeParentDefault && navigation.isDefault) {
-            self.isDefault = (navigation.getDefaultRoute().destination === self.origin);
-          }
-          if (navigation.isOrphan() || navigation.isChildOfOrphan()) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-
-        return isOrphan;
       }
     }
 
@@ -242,20 +231,15 @@
       var clones = [];
 
       clones = self.routes.map(function(route) {
-        if (route) {
-          return route.clone();
-        } else {
-          return null;
-        }
+        return route.clone();
       });
 
       return clones;
     }
 
-    function notifyOutNavigations(newState) {
-      self.outNavigations.forEach(function(child) {
-        child.updateState(newState);
-      });
+    function _removeDefaultRoute() {
+      _defaultRoute = null;
+      self.routes.shift();
     }
 
     function removeInNavigation(navigationToRemove) {
@@ -265,8 +249,6 @@
           return true;
         }
       });
-
-      isDefaultPathNavigation();
     }
 
     function removeRouteByName(name) {
@@ -286,6 +268,10 @@
     }
 
     function setupDefaultRoute(route) {
+      if (!route) {
+        throw new TypeError('Default route should not be undefined or null.', 'navigation-factory.js', 285);
+      }
+
       removeRouteByName(route.name);
       route.conditions = [];
       self.routes[0] = route;
@@ -308,6 +294,12 @@
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
 
+    function _updateDefaultRoute(route) {
+      _defaultRoute = route;
+      _defaultRoute.conditions = [];
+      self.routes[0] = _defaultRoute;
+    }
+
     function updateInNavigation(navigation) {
       self.inNavigations.some(function(inNavigation, index) {
         if (inNavigation.origin === navigation.origin) {
@@ -324,47 +316,18 @@
         if (routeToUpdate.isDefault) {
           setupDefaultRoute(routeToUpdate);
         } else {
-          _applyRouteUpdate(routeToUpdate);
+          _updateRoute(routeToUpdate);
         }
       }
     }
 
-    function updateState(parentState) {
-
-    }
-
-    function _routeExists(newRoute) {
-      return self.routes.some(function(route) {
-        return route && newRoute.equals(route);
-      });
-    }
-
-    function _isCurrentDefaultRoute(route) {
-      return (_defaultRoute && route.name === _defaultRoute.name);
-    }
-
-    function _applyRouteUpdate(routeToUpdate) {
+    function _updateRoute(routeToUpdate) {
       self.routes.some(function(route, index) {
         if (route.name === routeToUpdate.name) {
           self.routes[index] = routeToUpdate;
           return true;
         }
       });
-    }
-
-    function _updateDefaultRoute(route) {
-      _defaultRoute = route;
-      _defaultRoute.conditions = [];
-      self.routes[0] = _defaultRoute;
-    }
-
-    function _removeDefaultRoute() {
-      _defaultRoute = null;
-      self.routes.shift();
-    }
-
-    function _existsRouteAtIndex(index) {
-      return (self.routes[index]) ? true : false;
     }
   }
 }());

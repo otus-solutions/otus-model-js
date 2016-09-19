@@ -1,4 +1,4 @@
-xdescribe('Navigation:', function() {
+describe('Navigation:', function() {
 
   var Mock = {};
   var injections = {};
@@ -51,17 +51,12 @@ xdescribe('Navigation:', function() {
 
   });
 
-  xdescribe('clone method', function() {
+  describe('clone method', function() {
 
-    it('should call Object.assign', function() {
+    it('should return a clone of object', function() {
       var clone = navigationA.clone();
 
       expect(navigationA.equals(clone)).toBe(true);
-      expect(navigationA.selfsame(clone)).toBe(false);
-
-      clone.createAlternativeRoute(Mock.routeCAD3_CAD4);
-
-      expect(navigationA.equals(clone)).toBe(false);
       expect(navigationA.selfsame(clone)).toBe(false);
     });
 
@@ -77,19 +72,23 @@ xdescribe('Navigation:', function() {
 
     it('should not put a route twice', function() {
       navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
-      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
-      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
-      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
-      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
 
-      expect(navigationA.listRoutes().length).toBe(2);
+      expect(function() {
+        navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+      }).toThrow(new Error('Route already exists.'));
     });
 
     it('should not put a new route without conditions', function() {
       expect(function() {
         navigationA.createAlternativeRoute(Mock.routeCAD3_CAD4);
-      })
-      .toThrow(new Error('No conditions created for alternative route.'));
+      }).toThrow(new Error('There are no conditions for this route.'));
+    });
+
+    it('should force the route to not be default', function() {
+      Mock.routeCAD1_CAD3.isDefault = true;
+      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+
+      expect(navigationA.listRoutes()[1].isDefault).toBe(false);
     });
 
   });
@@ -165,17 +164,170 @@ xdescribe('Navigation:', function() {
 
   describe('getRouteByName method', function() {
 
-    it('should return a cloned route', function() {
-      var clone1 = navigationA.getRouteByName(Mock.routeCAD1_CAD2.name);
-      var clone2 = navigationA.getRouteByName(Mock.routeCAD1_CAD2.name);
+    describe('when route exists', function() {
 
-      expect(clone1.equals(clone2)).toBe(true);
-      expect(clone1.selfsame(clone2)).toBe(false);
+      it('should return a cloned route', function() {
+        var clone1 = navigationA.getRouteByName(Mock.routeCAD1_CAD2.name);
+        var clone2 = navigationA.getRouteByName(Mock.routeCAD1_CAD2.name);
 
-      clone1.isDefault = false;
+        expect(clone1.equals(clone2)).toBe(true);
+        expect(clone1.selfsame(clone2)).toBe(false);
 
-      expect(clone1.equals(clone2)).toBe(false);
-      expect(clone1.selfsame(clone2)).toBe(false);
+        clone1.isDefault = false;
+
+        expect(clone1.equals(clone2)).toBe(false);
+        expect(clone1.selfsame(clone2)).toBe(false);
+      });
+
+    });
+
+    describe('when route does not exists', function() {
+
+      it('should return a null', function() {
+        expect(navigationA.getRouteByName('INVALID_NAME')).toBe(null);
+      });
+
+    });
+
+  });
+
+  describe('hasRoute method', function() {
+
+    describe('when route exists', function() {
+
+      it('should return true', function() {
+        expect(navigationA.hasRoute(Mock.routeCAD1_CAD2)).toBe(true);
+      });
+
+    });
+
+    describe('when route does not exists', function() {
+
+      it('should return false', function() {
+        expect(navigationA.hasRoute(Mock.routeCAD1_CAD3)).toBe(false);
+      });
+
+    });
+
+  });
+
+  describe('hasOrphanRoot method', function() {
+
+    describe('true cases', function() {
+
+      describe('when all parents are orphans', function() {
+
+        it('should return true', function() {
+          spyOn(navigationA, 'isOrphan').and.returnValue(true);
+
+          navigationB.addInNavigation(navigationA);
+
+          expect(navigationB.hasOrphanRoot()).toBe(true);
+        });
+
+      });
+
+      describe('when all parents have orphan roots', function() {
+
+        it('should return true', function() {
+          spyOn(navigationA, 'hasOrphanRoot').and.returnValue(true);
+
+          navigationB.addInNavigation(navigationA);
+
+          expect(navigationB.hasOrphanRoot()).toBe(true);
+        });
+
+      });
+
+    });
+
+    describe('false cases', function() {
+
+      describe('when navigation index is 0', function() {
+
+        it('should return false', function() {
+          navigationA.index = 0;
+
+          expect(navigationA.hasOrphanRoot()).toBe(false);
+        });
+
+      });
+
+      describe('when any parent is not orphan', function() {
+
+        it('should return false', function() {
+          navigationA.index = 0;
+          spyOn(navigationA, 'isOrphan').and.returnValue(false);
+          spyOn(navigationB, 'isOrphan').and.returnValue(true);
+
+          navigationC.addInNavigation(navigationA);
+          navigationC.addInNavigation(navigationB);
+
+          expect(navigationC.hasOrphanRoot()).toBe(false);
+        });
+
+      });
+
+      describe('when any parent does not have orphan root', function() {
+
+        it('should return false', function() {
+          spyOn(navigationB, 'isOrphan').and.returnValue(false);
+          spyOn(navigationB, 'hasOrphanRoot').and.returnValue(false);
+
+          navigationC.index = 2;
+          spyOn(navigationC, 'isOrphan').and.returnValue(false);
+          spyOn(navigationC, 'hasOrphanRoot').and.returnValue(true);
+
+          navigationD.addInNavigation(navigationB);
+          navigationD.addInNavigation(navigationC);
+
+          expect(navigationD.hasOrphanRoot()).toBe(false);
+        });
+
+      });
+
+    });
+
+  });
+
+  describe('isOrphan method', function() {
+
+    describe('true cases', function() {
+
+      describe('when navigation does not have parents', function() {
+
+        it('should return true', function() {
+          navigationB.index = 1;
+
+          expect(navigationB.isOrphan()).toBe(true);
+        });
+
+      });
+
+    });
+
+    describe('false cases', function() {
+
+      describe('when navigation is index zero', function() {
+
+        it('should return true', function() {
+          navigationA.index = 0;
+
+          expect(navigationA.isOrphan()).toBe(false);
+        });
+
+      });
+
+      describe('when navigation have parent', function() {
+
+        it('should return true', function() {
+          navigationB.addInNavigation(navigationA);
+
+          expect(navigationB.isOrphan()).toBe(false);
+        });
+
+      });
+
     });
 
   });
@@ -188,6 +340,18 @@ xdescribe('Navigation:', function() {
 
       expect(navigationA.getRouteByName(cloneZero.name)).toBe(null);
       expect(navigationA.getRouteByName(Mock.routeCAD1_CAD2.name).name).toBe('CAD1_CAD2');
+    });
+
+  });
+
+  describe('removeInNavigation method', function() {
+
+    it('should remove the navigation from inNavigation list', function() {
+      navigationB.addInNavigation(navigationA);
+      expect(navigationB.inNavigations.length).toBe(1);
+
+      navigationB.removeInNavigation(navigationA);
+      expect(navigationB.inNavigations.length).toBe(0);
     });
 
   });
@@ -230,29 +394,49 @@ xdescribe('Navigation:', function() {
 
   describe('setupDefaultRoute method', function() {
 
-    it('should put the route at the index zero of route list', function() {
-      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
+    describe('when is possible setup de route', function() {
 
-      expect(navigationA.listRoutes()[0].equals(Mock.routeCAD1_CAD4)).toBe(true);
+      it('should put the route at the index zero of route list', function() {
+        navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
+
+        expect(navigationA.listRoutes()[0].equals(Mock.routeCAD1_CAD4)).toBe(true);
+      });
+
+      it('should set default route with value of new route', function() {
+        navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
+
+        expect(navigationA.getDefaultRoute().equals(Mock.routeCAD1_CAD4)).toBe(true);
+      });
+
+      it('should not preserve the previous default route', function() {
+        navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
+
+        expect(navigationA.listRoutes().length).toBe(1);
+        expect(navigationA.getRouteByName(Mock.routeCAD1_CAD4)).toBe(null);
+      });
+
+      it('should force the route to not have conditions', function() {
+        navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
+
+        expect(navigationA.listRoutes()[0].conditions.length).toBe(0);
+      });
+
     });
 
-    it('should set default route with value of new route', function() {
-      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
+    describe('when is not possible setup de route', function() {
 
-      expect(navigationA.getDefaultRoute().equals(Mock.routeCAD1_CAD4)).toBe(true);
-    });
+      it('should throw a TypeError if route parameter is undefined', function() {
+        expect(function() {
+          navigationA.setupDefaultRoute(undefined);
+        }).toThrow(new TypeError('Default route should not be undefined or null.'));
+      });
 
-    it('should not preserve the previous default route', function() {
-      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
+      it('should throw a TypeError if route parameter is null', function() {
+        expect(function() {
+          navigationA.setupDefaultRoute(null);
+        }).toThrow(new TypeError('Default route should not be undefined or null.'));
+      });
 
-      expect(navigationA.listRoutes().length).toBe(1);
-      expect(navigationA.getRouteByName(Mock.routeCAD1_CAD4)).toBe(null);
-    });
-
-    it('should force the route to not have conditions', function() {
-      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
-
-      expect(navigationA.listRoutes()[0].conditions.length).toBe(0);
     });
 
   });
@@ -278,7 +462,8 @@ xdescribe('Navigation:', function() {
         Mock.routeCAD1_CAD2.isDefault = false;
         navigationA.updateRoute(Mock.routeCAD1_CAD2);
 
-        expect(navigationA.getDefaultRoute().equals(Mock.routeCAD1_CAD2)).toBe(true);
+        expect(navigationA.getDefaultRoute().name).toBe(Mock.routeCAD1_CAD2.name);
+        expect(navigationA.getDefaultRoute().isDefault).toBe(true);
       });
 
     });
@@ -289,7 +474,7 @@ xdescribe('Navigation:', function() {
 
         beforeEach(function() {
           navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
-          Mock.routeCAD2_CAD3.isDefault = true;
+          Mock.routeCAD1_CAD3.isDefault = true;
         });
 
         it('should remove the current default route', function() {
@@ -302,8 +487,8 @@ xdescribe('Navigation:', function() {
           navigationA.updateRoute(Mock.routeCAD1_CAD3);
 
           expect(navigationA.listRoutes().length).toBe(1);
-          expect(navigationA.listRoutes()[0].equals(Mock.routeCAD2_CAD3)).toBe(true);
-          expect(navigationA.getDefaultRoute().destination).toEqual(Mock.routeCAD2_CAD3.destination);
+          expect(navigationA.listRoutes()[0].equals(Mock.routeCAD1_CAD3)).toBe(true);
+          expect(navigationA.getDefaultRoute().destination).toEqual(Mock.routeCAD1_CAD3.destination);
         });
 
       });
@@ -311,13 +496,15 @@ xdescribe('Navigation:', function() {
       describe('and updated route is configured to not be default', function() {
 
         beforeEach(function() {
-          navigationA.createAlternativeRoute(Mock.routeCAD2_CAD3);
+          navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
         });
 
         it('should just replace the current route with updated route data', function() {
-          navigationA.updateRoute(Mock.routeCAD2_CAD3);
+          Mock.routeCAD1_CAD3.conditions = [];
 
-          expect(navigationA.listRoutes()[1].equals(Mock.routeCAD2_CAD3)).toBe(true);
+          navigationA.updateRoute(Mock.routeCAD1_CAD3);
+
+          expect(navigationA.listRoutes()[1].equals(Mock.routeCAD1_CAD3)).toBe(true);
         })
 
       });

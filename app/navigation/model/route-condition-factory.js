@@ -107,7 +107,7 @@
 
       if (other.rules.length === self.rules.length) {
         if (self.rules.length > 0) {
-          var hasEqualRules = other.rules.some(function(otherRule) {
+          var hasEqualRules = other.rules.every(function(otherRule) {
             return self.rules.some(function(selfRule) {
               return selfRule.equals(otherRule);
             });
