@@ -1,16 +1,16 @@
-describe('Navigation:', function() {
+xdescribe('Navigation:', function() {
 
   var Mock = {};
   var injections = {};
-  var navigation;
+  var navigationA, navigationB, navigationC;
   var EXTENTS = 'SurveyTemplateObject';
   var OBJECT_TYPE = 'Navigation';
   var DIFF_OBJECT_TYPE = 'DIFF_OBJECT_TYPE';
-  var CAD7 = 'CAD7';
   var CAD1 = 'CAD1';
   var CAD2 = 'CAD2';
   var CAD3 = 'CAD3';
   var CAD4 = 'CAD4';
+  var CAD5 = 'CAD5';
 
   beforeEach(function() {
     module('otusjs');
@@ -18,44 +18,48 @@ describe('Navigation:', function() {
     inject(function(_$injector_) {
       mockNavigations(_$injector_);
       mockRouteFactory(_$injector_);
-      mockRoute(_$injector_);
+      mockRoutes(_$injector_);
       mockJson();
-
-      factory = _$injector_.get('otusjs.model.navigation.NavigationFactory');
     });
-
-    navigation = factory.create(CAD3, CAD4);
   });
 
   describe('addInNavigation method', function() {
 
-    it('should add the navigation as out navigation of parent navigation', function() {
-      spyOn(Mock.parentNavigation, 'addOutNavigation');
+    it('should add the "self" navigation as out navigation of parent navigation', function() {
+      spyOn(navigationA, 'addOutNavigation');
 
-      navigation.addInNavigation(Mock.parentNavigation);
+      navigationB.addInNavigation(navigationA);
 
-      expect(Mock.parentNavigation.addOutNavigation).toHaveBeenCalledWith(navigation);
+      expect(navigationA.addOutNavigation).toHaveBeenCalledWith(navigationB);
     });
 
     it('should put a navigation in inNavigations list', function() {
-      navigation2 = factory.create(CAD2, CAD3);
-      navigation2.addInNavigation(navigation);
+      navigationB.addInNavigation(navigationA);
 
-      expect(navigation2.inNavigations[0].equals(navigation)).toBe(true);
+      expect(navigationB.inNavigations[0].equals(navigationA)).toBe(true);
     });
 
   });
 
-  describe('clone method', function() {
+  describe('addOutNavigation method', function() {
+
+    it('should put a navigation in inNavigations list', function() {
+      navigationA.addOutNavigation(navigationB);
+
+      expect(navigationA.outNavigations[0].equals(navigationB)).toBe(true);
+    });
+
+  });
+
+  xdescribe('clone method', function() {
 
     it('should call Object.assign', function() {
-      var navigationA = factory.create(CAD1, CAD2);
       var clone = navigationA.clone();
 
       expect(navigationA.equals(clone)).toBe(true);
       expect(navigationA.selfsame(clone)).toBe(false);
 
-      clone.createAlternativeRoute(Mock.routeA);
+      clone.createAlternativeRoute(Mock.routeCAD3_CAD4);
 
       expect(navigationA.equals(clone)).toBe(false);
       expect(navigationA.selfsame(clone)).toBe(false);
@@ -66,113 +70,95 @@ describe('Navigation:', function() {
   describe('createAlternativeRoute method', function() {
 
     it('should put a new route in route list', function() {
-      navigation.createAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
 
-      expect(navigation.listRoutes().length).toBe(2);
+      expect(navigationA.listRoutes().length).toBe(2);
     });
 
     it('should not put a route twice', function() {
-      navigation.createAlternativeRoute(Mock.routeA);
-      navigation.createAlternativeRoute(Mock.routeA);
-      navigation.createAlternativeRoute(Mock.routeA);
-      navigation.createAlternativeRoute(Mock.routeA);
-      navigation.createAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
 
-      expect(navigation.listRoutes().length).toBe(2);
+      expect(navigationA.listRoutes().length).toBe(2);
     });
 
     it('should not put a new route without conditions', function() {
-      navigation.createAlternativeRoute(Mock.routeB);
-
-      expect(navigation.listRoutes().length).toBe(1);
+      expect(function() {
+        navigationA.createAlternativeRoute(Mock.routeCAD3_CAD4);
+      })
+      .toThrow(new Error('No conditions created for alternative route.'));
     });
 
   });
 
   describe('equals method', function() {
 
-    it('should return true when two objects have the same properties and equal values', function() {
-      var navigationA = factory.create(CAD1, CAD2);
-      var navigationB = factory.create(CAD1, CAD2);
-      expect(navigationA.equals(navigationB)).toBe(true);
+    describe('true cases', function() {
 
-      navigationA.createAlternativeRoute(Mock.routeA);
-      navigationB.createAlternativeRoute(Mock.routeA);
-      expect(navigationA.equals(navigationB)).toBe(true);
+      it('should return true when two objects have the same properties and equal values', function() {
+        var navigationB = Mock.NavigationFactory.create(CAD1, CAD2);
+        expect(navigationA.equals(navigationB)).toBe(true);
+
+        navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+        navigationB.createAlternativeRoute(Mock.routeCAD1_CAD3);
+        expect(navigationA.equals(navigationB)).toBe(true);
+      });
+
+      it('should return true when two objects have same routes in the list but in different order', function() {
+        navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+        navigationA.createAlternativeRoute(Mock.routeCAD1_CAD4);
+
+        var navigationB = Mock.NavigationFactory.create(CAD1, CAD2)
+        navigationB.createAlternativeRoute(Mock.routeCAD1_CAD4);
+        navigationB.createAlternativeRoute(Mock.routeCAD1_CAD3);
+
+        expect(navigationA.equals(navigationB)).toBe(true);
+      });
+
     });
 
-    it('should return true when two objects have same rules in the list but in different order', function() {
-      var navigationA = factory.create(CAD1, CAD2);
-      navigationA.createAlternativeRoute(Mock.routeA);
-      navigationA.createAlternativeRoute(Mock.routeB);
+    describe('false cases', function() {
 
-      var navigationB = factory.create(CAD1, CAD2);
-      navigationB.createAlternativeRoute(Mock.routeA);
-      navigationB.createAlternativeRoute(Mock.routeB);
+      it('should return false when two objects have different objectType value', function() {
+        navigationB.objectType = DIFF_OBJECT_TYPE;
 
-      expect(navigationA.equals(navigationB)).toBe(true);
-    });
+        expect(navigationA.equals(navigationB)).toBe(false);
+      });
 
-    it('should return true when two objects have same rules in the list but in different order', function() {
-      var navigationA = factory.create(CAD1, CAD2);
-      navigationA.createAlternativeRoute(Mock.routeA);
-      navigationA.createAlternativeRoute(Mock.routeB);
+      it('should return false when two objects have different origins', function() {
+        var navigationB = Mock.NavigationFactory.create(CAD5, CAD2);
 
-      var navigationB = factory.create(CAD1, CAD2);
-      navigationB.createAlternativeRoute(Mock.routeB);
-      navigationB.createAlternativeRoute(Mock.routeA);
+        expect(navigationA.equals(navigationB)).toBe(false);
+      });
 
-      expect(navigationA.equals(navigationB)).toBe(true);
-    });
+      it('should return false when two objects have different indexes', function() {
+        navigationA.index = 0;
+        var navigationB = Mock.NavigationFactory.create(CAD1, CAD2);
+        navigationB.index = 1;
 
-    it('should return false when two objects have different objectType value', function() {
-      var navigationA = factory.create(CAD1, CAD2);
-      var navigationB = factory.create(CAD1, CAD2);
-      navigationB.objectType = DIFF_OBJECT_TYPE;
+        expect(navigationA.equals(navigationB)).toBe(false);
+      });
 
-      expect(navigationA.equals(navigationB)).toBe(false);
-    });
+      it('should return false when two objects have different size of condition list', function() {
+        navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
 
-    it('should return false when two objects have different origins', function() {
-      var navigationA = factory.create(CAD1, CAD2);
-      var navigationB = factory.create(CAD7, CAD2);
+        var navigationB = Mock.NavigationFactory.create(CAD1, CAD2);
 
-      expect(navigationA.equals(navigationB)).toBe(false);
-    });
+        expect(navigationA.equals(navigationB)).toBe(false);
+      });
 
-    it('should return false when two objects have different destinations', function() {
-      var navigationA = factory.create(CAD1, CAD2);
-      var navigationB = factory.create(CAD1, CAD3);
+      it('should return false when two objects have equal size of condition list but with different conditions', function() {
+        navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
 
-      expect(navigationA.equals(navigationB)).toBe(false);
-    });
+        var navigationB = Mock.NavigationFactory.create(CAD1, CAD2);
+        navigationB.createAlternativeRoute(Mock.routeCAD1_CAD4);
 
-    it('should return false when two objects have different indexes', function() {
-      var navigationA = factory.create(CAD1, CAD2);
-      navigationA.index = 1;
-      var navigationB = factory.create(CAD1, CAD2);
-      navigationB.index = 2;
+        expect(navigationA.equals(navigationB)).toBe(false);
+      });
 
-      expect(navigationA.equals(navigationB)).toBe(false);
-    });
-
-    it('should return false when two objects have different size of condition list', function() {
-      var navigationA = factory.create(CAD1, CAD2);
-      navigationA.createAlternativeRoute(Mock.routeA);
-
-      var navigationB = factory.create(CAD1, CAD2);
-
-      expect(navigationA.equals(navigationB)).toBe(false);
-    });
-
-    it('should return false when two objects have equal size of condition list but with different conditions', function() {
-      var navigationA = factory.create(CAD1, CAD1);
-      navigationA.createAlternativeRoute(Mock.routeA);
-
-      var navigationB = factory.create(CAD1, CAD1);
-      navigationB.createAlternativeRoute(Mock.routeB);
-
-      expect(navigationA.equals(navigationB)).toBe(false);
     });
 
   });
@@ -180,8 +166,8 @@ describe('Navigation:', function() {
   describe('getRouteByName method', function() {
 
     it('should return a cloned route', function() {
-      var clone1 = navigation.getRouteByName(Mock.defaultRoute.name);
-      var clone2 = navigation.getRouteByName(Mock.defaultRoute.name);
+      var clone1 = navigationA.getRouteByName(Mock.routeCAD1_CAD2.name);
+      var clone2 = navigationA.getRouteByName(Mock.routeCAD1_CAD2.name);
 
       expect(clone1.equals(clone2)).toBe(true);
       expect(clone1.selfsame(clone2)).toBe(false);
@@ -194,31 +180,14 @@ describe('Navigation:', function() {
 
   });
 
-  describe('isDefaultPathNavigation method', function() {
-
-    describe('should return true when', function() {
-
-      beforeEach(function() {
-        Mock.parentNavigation.isDefault = true;
-        navigation.addInNavigation(Mock.parentNavigation);
-      });
-
-      it('navigation parent is from default path and navigation is the default route of parent', function() {
-        expect(navigation.isDefaultPathNavigation()).toBe(true);
-      });
-
-    });
-
-  });
-
   describe('listRoutes method', function() {
 
     it('should return a list of cloned routes', function() {
-      var cloneZero = navigation.listRoutes()[0];
+      var cloneZero = navigationA.listRoutes()[0];
       cloneZero.name = 'AN_INVALID_NAME';
 
-      expect(navigation.getRouteByName(cloneZero.name)).toBe(null);
-      expect(navigation.getRouteByName(Mock.defaultRoute.name).name).toBe('CAD3_CAD4');
+      expect(navigationA.getRouteByName(cloneZero.name)).toBe(null);
+      expect(navigationA.getRouteByName(Mock.routeCAD1_CAD2.name).name).toBe('CAD1_CAD2');
     });
 
   });
@@ -226,14 +195,14 @@ describe('Navigation:', function() {
   describe('removeRouteByName method', function() {
 
     beforeEach(function() {
-      navigation.createAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
     });
 
     it('should remove the route from route list by the name', function() {
-      navigation.removeRouteByName(Mock.defaultRoute.name);
-      navigation.removeRouteByName(Mock.routeA.name);
+      navigationA.removeRouteByName(Mock.routeCAD1_CAD2.name);
+      navigationA.removeRouteByName(Mock.routeCAD1_CAD3.name);
 
-      expect(navigation.listRoutes().length).toBe(0);
+      expect(navigationA.listRoutes().length).toBe(0);
     });
 
   });
@@ -244,10 +213,10 @@ describe('Navigation:', function() {
       spyOn(Object, 'is').and.callThrough();
 
       var navigationA = factory.create(CAD1, CAD2);
-      navigationA.createAlternativeRoute(Mock.routeA);
+      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
 
       var navigationB = factory.create(CAD1, CAD2);
-      navigationB.createAlternativeRoute(Mock.routeA);
+      navigationB.createAlternativeRoute(Mock.routeCAD1_CAD3);
 
       var resultA = navigationA.selfsame(navigationA);
       var resultB = navigationA.selfsame(navigationB);
@@ -261,97 +230,42 @@ describe('Navigation:', function() {
 
   describe('setupDefaultRoute method', function() {
 
-    describe('when does not exist route at the first index of route list', function() {
+    it('should put the route at the index zero of route list', function() {
+      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
 
-      beforeEach(function() {
-        navigation.removeRouteByName(Mock.defaultRoute.name);
-      })
-
-      it('should put the route at the index zero of route list', function() {
-        navigation.setupDefaultRoute(Mock.defaultRoute);
-
-        expect(navigation.listRoutes().length).toBe(1);
-        expect(navigation.listRoutes()[0].equals(Mock.defaultRoute)).toBe(true);
-      });
-
-      it('should set default route with value of new route', function() {
-        navigation.setupDefaultRoute(Mock.defaultRoute);
-
-        expect(navigation.getDefaultRoute().equals(Mock.defaultRoute)).toBe(true);
-      });
-
+      expect(navigationA.listRoutes()[0].equals(Mock.routeCAD1_CAD4)).toBe(true);
     });
 
-    describe('when exists route at the first index of route list', function() {
+    it('should set default route with value of new route', function() {
+      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
 
-      describe('and the route is not default', function() {
+      expect(navigationA.getDefaultRoute().equals(Mock.routeCAD1_CAD4)).toBe(true);
+    });
 
-        beforeEach(function() {
-          Mock.defaultRoute.isDefault = false;
-          navigation.updateRoute(Mock.defaultRoute);
-          navigation.createAlternativeRoute(Mock.routeA);
-        })
+    it('should not preserve the previous default route', function() {
+      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
 
-        it('should put the route at the index zero of route list', function() {
-          Mock.routeB.isDefault = true;
-          navigation.setupDefaultRoute(Mock.routeB);
+      expect(navigationA.listRoutes().length).toBe(1);
+      expect(navigationA.getRouteByName(Mock.routeCAD1_CAD4)).toBe(null);
+    });
 
-          expect(navigation.listRoutes()[0].equals(Mock.routeB)).toBe(true);
-        });
+    it('should force the route to not have conditions', function() {
+      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD4);
 
-        it('should move the previous route from the index zero to index one', function() {
-          Mock.routeB.isDefault = true;
-          navigation.setupDefaultRoute(Mock.routeB);
-
-          expect(navigation.listRoutes()[1].equals(Mock.routeA)).toBe(true);
-        });
-
-        it('should set default route with value of new route', function() {
-          Mock.routeB.isDefault = true;
-          navigation.setupDefaultRoute(Mock.routeB);
-
-          expect(navigation.getDefaultRoute().equals(Mock.routeB)).toBe(true);
-        });
-
-      });
-
-      describe('and the route is default', function() {
-
-        it('should put the route at the index zero of route list', function() {
-          Mock.routeB.isDefault = true;
-          navigation.setupDefaultRoute(Mock.routeB);
-          expect(navigation.listRoutes()[0].equals(Mock.routeB)).toBe(true);
-        });
-
-        it('should not preserve the previous default route', function() {
-          Mock.routeB.isDefault = true;
-          navigation.setupDefaultRoute(Mock.routeB);
-
-          expect(navigation.listRoutes().length).toBe(1);
-          expect(navigation.getRouteByName(Mock.defaultRoute)).toBe(null);
-        });
-
-        it('should set default route with value of new route', function() {
-          Mock.routeB.isDefault = true;
-          navigation.setupDefaultRoute(Mock.routeB);
-
-          expect(navigation.getDefaultRoute().equals(Mock.routeB)).toBe(true);
-        });
-
-      });
-
+      expect(navigationA.listRoutes()[0].conditions.length).toBe(0);
     });
 
   });
 
-  describe('toJson method', function() {
+  xdescribe('toJson method', function() {
 
     beforeEach(function() {
-      navigation.index = 1;
+      navigationA.index = 1;
     });
 
     it('should return a well formatted json based on Navigation', function() {
-      expect(navigation.toJson()).toEqual(Mock.json);
+      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
+      expect(navigationA.toJson()).toEqual(Mock.json);
     });
 
   });
@@ -361,9 +275,10 @@ describe('Navigation:', function() {
     describe('when updated route is the current default', function() {
 
       it('should do nothing', function() {
-        navigation.updateRoute(Mock.defaultRoute);
+        Mock.routeCAD1_CAD2.isDefault = false;
+        navigationA.updateRoute(Mock.routeCAD1_CAD2);
 
-        expect(navigation.getDefaultRoute().equals(Mock.defaultRoute)).toBe(true);
+        expect(navigationA.getDefaultRoute().equals(Mock.routeCAD1_CAD2)).toBe(true);
       });
 
     });
@@ -373,22 +288,22 @@ describe('Navigation:', function() {
       describe('and updated route is configured to be default', function() {
 
         beforeEach(function() {
-          navigation.createAlternativeRoute(Mock.routeA);
-          Mock.routeA.isDefault = true;
+          navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+          Mock.routeCAD2_CAD3.isDefault = true;
         });
 
         it('should remove the current default route', function() {
-          navigation.updateRoute(Mock.routeA);
+          navigationA.updateRoute(Mock.routeCAD1_CAD3);
 
-          expect(navigation.getRouteByName(Mock.defaultRoute.name)).toBe(null);
+          expect(navigationA.getRouteByName(Mock.routeCAD1_CAD2.name)).toBe(null);
         });
 
         it('should replace current default route with updated route data', function() {
-          navigation.updateRoute(Mock.routeA);
+          navigationA.updateRoute(Mock.routeCAD1_CAD3);
 
-          expect(navigation.listRoutes().length).toBe(1);
-          expect(navigation.listRoutes()[0].equals(Mock.routeA)).toBe(true);
-          expect(navigation.getDefaultRoute().destination).toEqual(Mock.routeA.destination);
+          expect(navigationA.listRoutes().length).toBe(1);
+          expect(navigationA.listRoutes()[0].equals(Mock.routeCAD2_CAD3)).toBe(true);
+          expect(navigationA.getDefaultRoute().destination).toEqual(Mock.routeCAD2_CAD3.destination);
         });
 
       });
@@ -396,13 +311,13 @@ describe('Navigation:', function() {
       describe('and updated route is configured to not be default', function() {
 
         beforeEach(function() {
-          navigation.createAlternativeRoute(Mock.routeA);
+          navigationA.createAlternativeRoute(Mock.routeCAD2_CAD3);
         });
 
         it('should just replace the current route with updated route data', function() {
-          navigation.updateRoute(Mock.routeA);
+          navigationA.updateRoute(Mock.routeCAD2_CAD3);
 
-          expect(navigation.listRoutes()[1].equals(Mock.routeA)).toBe(true);
+          expect(navigationA.listRoutes()[1].equals(Mock.routeCAD2_CAD3)).toBe(true);
         })
 
       });
@@ -416,31 +331,45 @@ describe('Navigation:', function() {
     injections.RouteFactory = Mock.RouteFactory;
   }
 
-  function mockRoute($injector) {
-    var rule = $injector.get('otusjs.model.navigation.RuleFactory').create(CAD3, 'equal', 1);
+  function mockRoutes($injector) {
+    var RuleFactory = $injector.get('otusjs.model.navigation.RuleFactory');
     var conditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
 
-    Mock.condition = conditionFactory.create(CAD3, [rule]);
-    Mock.defaultRoute = Mock.RouteFactory.createDefault(CAD3, CAD4);
-    Mock.routeA = Mock.RouteFactory.createAlternative(CAD1, CAD4, [Mock.condition]);
-    Mock.routeB = Mock.RouteFactory.createDefault(CAD1, CAD3);
+    Mock.condition = conditionFactory.create(CAD1, [RuleFactory.create(CAD1, 'equal', 1)]);
+
+    Mock.routeCAD1_CAD2 = Mock.RouteFactory.createDefault(CAD1, CAD2);
+    Mock.routeCAD1_CAD3 = Mock.RouteFactory.createAlternative(CAD1, CAD3, [Mock.condition]);
+    Mock.routeCAD1_CAD4 = Mock.RouteFactory.createAlternative(CAD1, CAD4, [Mock.condition]);
+    Mock.routeCAD1_CAD5 = Mock.RouteFactory.createAlternative(CAD1, CAD5, [Mock.condition]);
+
+    Mock.routeCAD2_CAD3 = Mock.RouteFactory.createDefault(CAD2, CAD3);
+    Mock.routeCAD2_CAD4 = Mock.RouteFactory.createAlternative(CAD2, CAD4, [Mock.condition]);
+    Mock.routeCAD2_CAD5 = Mock.RouteFactory.createAlternative(CAD2, CAD5, [Mock.condition]);
+
+    Mock.routeCAD3_CAD4 = Mock.RouteFactory.createDefault(CAD3, CAD4);
+    Mock.routeCAD3_CAD5 = Mock.RouteFactory.createAlternative(CAD3, CAD5, [Mock.condition]);
+
+    Mock.routeCAD4_CAD5 = Mock.RouteFactory.createDefault(CAD4, CAD5);
   }
 
   function mockNavigations($injector) {
-    var NavigationFactory = $injector.get('otusjs.model.navigation.NavigationFactory');
+    Mock.NavigationFactory = $injector.get('otusjs.model.navigation.NavigationFactory');
 
-    Mock.parentNavigation = NavigationFactory.create(CAD1, CAD3);
+    navigationA = Mock.NavigationFactory.create(CAD1, CAD2);
+    navigationB = Mock.NavigationFactory.create(CAD2, CAD3);
+    navigationC = Mock.NavigationFactory.create(CAD3, CAD4);
+    navigationD = Mock.NavigationFactory.create(CAD4, CAD5);
   }
 
   function mockJson() {
     Mock.json = JSON.stringify({
       extents: EXTENTS,
       objectType: OBJECT_TYPE,
-      origin: CAD3,
-      index: 1,
+      origin: CAD1,
+      index: 0,
       isDefault: true,
       inNavigations: [],
-      routes: [Mock.defaultRoute.toJson()]
+      routes: [Mock.routeCAD1_CAD2.toJson()]
     }).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
   }
 });

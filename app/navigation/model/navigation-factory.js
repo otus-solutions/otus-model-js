@@ -70,7 +70,6 @@
   function Navigation(origin, defaultRoute) {
     var self = this;
     var _defaultRoute = defaultRoute;
-    var _outNavigations = [];
 
     /* Object properties */
     self.extents = 'SurveyTemplateObject';
@@ -79,6 +78,7 @@
     self.index = null;
     self.isDefault = true;
     self.inNavigations = [];
+    self.outNavigations = [];
     self.routes = [defaultRoute];
 
     /* Public methods */
@@ -92,7 +92,6 @@
     self.hasRoute = hasRoute;
     self.isOrphan = isOrphan;
     self.isChildOfOrphan = isChildOfOrphan;
-    self.isDefaultPathNavigation = isDefaultPathNavigation;
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
     self.removeRouteByName = removeRouteByName;
@@ -101,6 +100,7 @@
     self.toJson = toJson;
     self.updateInNavigation = updateInNavigation;
     self.updateRoute = updateRoute;
+    self.updateState = updateState;
 
     function addInNavigation(navigation) {
       navigation.addOutNavigation(self);
@@ -108,21 +108,7 @@
     }
 
     function addOutNavigation(navigation) {
-      _outNavigations.push(navigation);
-    }
-
-    function isDefaultPathNavigation() {
-      var currentState = self.isDefault;
-      var newState = self.inNavigations.some(function(inNavigation) {
-        return inNavigation.isDefault && (inNavigation.getDefaultRoute().destination === self.origin);
-      });
-
-      if (newState !== currentState) {
-        self.isDefault = newState;
-        notifyOutNavigations();
-      }
-
-      return self.isDefault;
+      self.outNavigations.push(navigation);
     }
 
     function clone() {
@@ -133,10 +119,17 @@
     }
 
     function createAlternativeRoute(routeData) {
-      var origin = routeData.origin;
+      if (!routeData.instanceOf || routeData.instanceOf() !== 'Route') {
+        throw new TypeError('routeData paramenter is not an instance of Route', 'navigation-factory.js', 122);
+      }
+
+      if (!routeData.conditions || !routeData.conditions.length) {
+        throw new Error('No conditions created for alternative route.', 'navigation-factory.js', 126);
+      }
+
       var destination = routeData.destination;
       var conditions = routeData.conditions;
-      var route = Inject.RouteFactory.createAlternative(origin, destination, conditions);
+      var route = Inject.RouteFactory.createAlternative(self.origin, destination, conditions);
 
       if (route && route.conditions.length && !_routeExists(route)) {
         routeData.conditions.map(route.addCondition);
@@ -161,7 +154,7 @@
       if (other.routes.length === self.routes.length) {
 
         if (self.routes.length > 0) {
-          var hasEqualRoutes = other.routes.some(function(otherRoute) {
+          var hasEqualRoutes = other.routes.every(function(otherRoute) {
             return self.routes.some(function(selfRoute) {
               return selfRoute.equals(otherRoute);
             });
@@ -260,7 +253,7 @@
     }
 
     function notifyOutNavigations(newState) {
-      _outNavigations.forEach(function(child) {
+      self.outNavigations.forEach(function(child) {
         child.updateState(newState);
       });
     }
@@ -294,6 +287,7 @@
 
     function setupDefaultRoute(route) {
       removeRouteByName(route.name);
+      route.conditions = [];
       self.routes[0] = route;
       _defaultRoute = route;
     }
@@ -326,7 +320,7 @@
     }
 
     function updateRoute(routeToUpdate) {
-      if (_defaultRoute.name !== routeToUpdate.name) {
+      if (!_isCurrentDefaultRoute(routeToUpdate)) {
         if (routeToUpdate.isDefault) {
           setupDefaultRoute(routeToUpdate);
         } else {
