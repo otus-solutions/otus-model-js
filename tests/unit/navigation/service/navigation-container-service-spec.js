@@ -168,19 +168,50 @@ describe('NavigationContainerService', function() {
   describe('createNavigationTo method', function() {
 
     beforeEach(function() {
-      spyOn(Mock.NavigationFactory, 'create').and.callThrough();
+      Mock.navigation = Mock.NavigationFactory.create(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+
+      spyOn(Mock.NavigationFactory, 'create').and.returnValue(Mock.navigation);
+      spyOn(Mock.navigation, 'addInNavigation').and.callThrough();
 
       service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
     });
 
-    xit('should call NavigationFactory.create', function() {
+    it('should call NavigationFactory.create', function() {
       expect(Mock.NavigationFactory.create).toHaveBeenCalledWith(Mock.questionOne.templateID, Mock.questionTwo.templateID);
     });
 
-    xit('should add a new Navigation in the navigationList', function() {
+    it('should add a new Navigation in the navigationList', function() {
       expect(service.getNavigationListSize()).toBeGreaterThan(0);
     });
 
+    xit('should called method _addElementsPreviousTheNavigation', function() {
+      spyOn(service, '_addElementsPreviousTheNavigation');
+      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+
+      expect(service._addElementsPreviousTheNavigation).toHaveBeenCalledWith(Mock.navigation);
+    });
+
+  });
+
+  xdescribe('_addElementsPreviousTheNavigation', function() {
+
+    beforeEach(function() {
+      Mock.navigationOne = Mock.NavigationFactory.create(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+
+      spyOn(Mock.NavigationFactory, 'create').and.returnValue(Mock.navigationOne);
+      spyOn(Mock.navigation, 'addInNavigation').and.callThrough();
+
+    });
+
+    it('should called method addInNavigation when length of list is bigger than zero', function() {
+      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+
+      expect(Mock.navigation.addInNavigation).toHaveBeenCalledWith(jasmine.any(Array));
+    });
+
+    it('not should called method addInNavigation when length of list is equals than zero', function() {
+      expect(Mock.navigation.addInNavigation).not.toHaveBeenCalledWith(jasmine.any(Array));
+    });
   });
 
   describe('removeNavigationOf method', function() {
@@ -266,101 +297,101 @@ describe('NavigationContainerService', function() {
 
   function mockJson() {
     Mock.json = JSON.parse(JSON.stringify([{
+      "extents": "StudioObject",
+      "objectType": "Navigation",
+      "origin": "CAD1",
+      "index": 0,
+      "inNavigations": [],
+      "isDefault": true,
+      "routes": [{
         "extents": "StudioObject",
-        "objectType": "Navigation",
+        "objectType": "Route",
+        "name": "CAD1_CAD2",
         "origin": "CAD1",
-        "index": 0,
-        "inNavigations": [],
+        "destination": "CAD2",
         "isDefault": true,
-        "routes": [{
-            "extents": "StudioObject",
-            "objectType": "Route",
-            "name": "CAD1_CAD2",
-            "origin": "CAD1",
-            "destination": "CAD2",
-            "isDefault": true,
-            "conditions": []
-        }]
+        "conditions": []
+      }]
     }, {
+      "extents": "StudioObject",
+      "objectType": "Navigation",
+      "origin": "CAD2",
+      "index": 1,
+      "inNavigations": [{
+        "origin": "CAD1",
+        "isDefaultPath": true,
+        "isDefaultRoute": true
+      }],
+      "isDefault": true,
+      "routes": [{
         "extents": "StudioObject",
-        "objectType": "Navigation",
+        "objectType": "Route",
+        "name": "CAD2_CAD3",
         "origin": "CAD2",
-        "index": 1,
-        "inNavigations": [{
-          "origin": "CAD1",
-          "isDefaultPath": true,
-          "isDefaultRoute": true
-        }],
+        "destination": "CAD3",
         "isDefault": true,
-        "routes": [{
-            "extents": "StudioObject",
-            "objectType": "Route",
-            "name": "CAD2_CAD3",
-            "origin": "CAD2",
-            "destination": "CAD3",
-            "isDefault": true,
-            "conditions": []
-        }]
+        "conditions": []
+      }]
     }, {
+      "extents": "StudioObject",
+      "objectType": "Navigation",
+      "origin": "CAD3",
+      "index": 2,
+      "inNavigations": [{
+        "origin": "CAD2",
+        "isDefaultPath": true,
+        "isDefaultRoute": true
+      }],
+      "isDefault": true,
+      "routes": [{
         "extents": "StudioObject",
-        "objectType": "Navigation",
+        "objectType": "Route",
+        "name": "CAD3_CAD4",
         "origin": "CAD3",
-        "index": 2,
-        "inNavigations": [{
-          "origin": "CAD2",
-          "isDefaultPath": true,
-          "isDefaultRoute": true
-        }],
+        "destination": "CAD4",
         "isDefault": true,
-        "routes": [{
-            "extents": "StudioObject",
-            "objectType": "Route",
-            "name": "CAD3_CAD4",
-            "origin": "CAD3",
-            "destination": "CAD4",
-            "isDefault": true,
-            "conditions": []
-        }]
+        "conditions": []
+      }]
     }, {
+      "extents": "StudioObject",
+      "objectType": "Navigation",
+      "origin": "CAD4",
+      "index": 3,
+      "inNavigations": [{
+        "origin": "CAD3",
+        "isDefaultPath": true,
+        "isDefaultRoute": true
+      }],
+      "isDefault": true,
+      "routes": [{
         "extents": "StudioObject",
-        "objectType": "Navigation",
+        "objectType": "Route",
+        "name": "CAD4_CAD5",
         "origin": "CAD4",
-        "index": 3,
-        "inNavigations": [{
-          "origin": "CAD3",
-          "isDefaultPath": true,
-          "isDefaultRoute": true
-        }],
+        "destination": "CAD5",
         "isDefault": true,
-        "routes": [{
-            "extents": "StudioObject",
-            "objectType": "Route",
-            "name": "CAD4_CAD5",
-            "origin": "CAD4",
-            "destination": "CAD5",
-            "isDefault": true,
-            "conditions": []
-        }]
+        "conditions": []
+      }]
     }, {
+      "extents": "StudioObject",
+      "objectType": "Navigation",
+      "origin": "CAD5",
+      "index": 4,
+      "inNavigations": [{
+        "origin": "CAD4",
+        "isDefaultPath": true,
+        "isDefaultRoute": true
+      }],
+      "isDefault": true,
+      "routes": [{
         "extents": "StudioObject",
-        "objectType": "Navigation",
+        "objectType": "Route",
+        "name": "CAD5_CAD6",
         "origin": "CAD5",
-        "index": 4,
-        "inNavigations": [{
-          "origin": "CAD4",
-          "isDefaultPath": true,
-          "isDefaultRoute": true
-        }],
+        "destination": "CAD6",
         "isDefault": true,
-        "routes": [{
-            "extents": "StudioObject",
-            "objectType": "Route",
-            "name": "CAD5_CAD6",
-            "origin": "CAD5",
-            "destination": "CAD6",
-            "isDefault": true,
-            "conditions": []
-        }]
+        "conditions": []
+      }]
     }]));
   }
 
