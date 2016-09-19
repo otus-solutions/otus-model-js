@@ -40,7 +40,7 @@ describe('CreateDefaultRouteTaskService', function() {
       expect(Mock.navigationA.createAlternativeRoute).toHaveBeenCalled();
     });
 
-    it('should notify new default navigation', function() {
+    it('should notify new alternative navigation', function() {
       spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
       spyOn(Mock.navigationB, 'addInNavigation');
 

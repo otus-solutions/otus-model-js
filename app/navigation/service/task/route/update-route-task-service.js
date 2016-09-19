@@ -19,23 +19,21 @@
     self.execute = execute;
 
     function execute(routeData, navigation) {
-      var origin = routeData.origin;
-      var destination = routeData.destination;
-      var currentDefaultRoute = navigation.getDefaultRoute();
-      var route = RouteFactory.createDefault(origin, destination);
-
-      if (!currentDefaultRoute.equals(route)) {
-        var conditions = routeData.conditions.map(_setupConditions);
-        navigation.updateRoute(route);
-
-        var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
-        if (nextNavigation) {
-          nextNavigation.updateInNavigation(navigation);
-        }
-        return route;
-      } else {
-        return currentDefaultRoute;
+      if (_isCurrentDefaultRoute(routeData, navigation.getDefaultRoute())) {
+        throw new Error('Is not possible update a default route.', 'update-route-task-service.js', 23);
       }
+
+      var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, routeData.conditions);
+      var conditions = routeData.conditions.map(_setupConditions);
+
+      navigation.updateRoute(route);
+      _notifyNextNavigation(route);
+    }
+
+    function _isCurrentDefaultRoute(routeToUpdate, currentDefaultRoute) {
+      var isSameOrigin = currentDefaultRoute.origin === routeToUpdate.origin;
+      var isSameDestination = currentDefaultRoute.destination === routeToUpdate.destination;
+      return (isSameOrigin && isSameDestination);
     }
 
     function _setupConditions(conditionData) {
@@ -48,6 +46,13 @@
       var operator = ruleData.operator.type || ruleData.operator;
       var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
       return RuleFactory.create(when, operator, answer);
+    }
+
+    function _notifyNextNavigation(routeData) {
+      var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
+      if (nextNavigation) {
+        nextNavigation.updateInNavigation(navigation);
+      }
     }
   }
 }());

@@ -1,18 +1,20 @@
-xdescribe('UpdateRouteTaskService', function() {
+describe('UpdateRouteTaskService', function() {
 
   var Mock = {};
   var service = {};
   var injections = {};
+  var CAD1 = 'CAD1';
+  var CAD2 = 'CAD2';
+  var CAD3 = 'CAD3';
+  var CAD4 = 'CAD4';
 
   beforeEach(function() {
     module('otusjs.model.navigation');
 
     inject(function(_$injector_) {
-      mockRouteData();
-      mockNavigation();
-      mockRule(_$injector_);
-      mockRouteCondition(_$injector_);
+      mockNavigation(_$injector_);
       mockRoute(_$injector_);
+      mockNavigationContainerService(_$injector_);
 
       service = _$injector_.get('otusjs.model.navigation.UpdateRouteTaskService', injections);
     });
@@ -20,102 +22,88 @@ xdescribe('UpdateRouteTaskService', function() {
 
   describe('execute method', function() {
 
-    describe('when is a default route', function() {
+    describe('when route to update is the default route of navigation', function() {
 
-      beforeEach(function() {
-        Mock.routeData.isDefault = true;
-        service.execute(Mock.routeData, Mock.navigation);
-      });
-
-      it('should instance a Route', function() {
-        expect(Mock.RouteFactory.createDefault).toHaveBeenCalledWith(Mock.routeData.origin, Mock.routeData.destination);
-      });
-
-      it('should update route', function() {
-        expect(Mock.navigation.updateRoute).toHaveBeenCalledWith(Mock.route);
-      });
-
-      it('should call setupDefaultRoute from Navigation', function() {
-        expect(Mock.navigation.setupDefaultRoute).toHaveBeenCalledWith(Mock.route);
+      it('should throw an Error', function() {
+        expect(function() {
+          service.execute(Mock.routeCAD1_CAD2, Mock.navigationA);
+        }).toThrow(new Error('Is not possible update a default route.'));
       });
 
     });
 
     describe('when is not a default route', function() {
 
-      beforeEach(function() {
-        Mock.routeData.isDefault = false;
-        service.execute(Mock.routeData, Mock.navigation);
+      it('should create an alternative route based on route data', function() {
+        spyOn(Mock.RouteFactory, 'createAlternative').and.callThrough();
+
+        service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
+
+        expect(Mock.RouteFactory.createAlternative).toHaveBeenCalled();
       });
 
       it('should instance a RouteCondition for each condition in routeData', function() {
-        expect(Mock.RouteConditionFactory.create).toHaveBeenCalledWith(Mock.conditionData.name, Mock.rules);
+        spyOn(Mock.RouteConditionFactory, 'create');
+
+        service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
+
+        expect(Mock.RouteConditionFactory.create).toHaveBeenCalled();
       });
 
-      it('should instance a RouteCondition for each condition in routeData', function() {
+      it('should instance a Rule for each rule in routeData', function() {
+        spyOn(Mock.RuleFactory, 'create');
+
+        service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
+
         expect(Mock.RuleFactory.create).toHaveBeenCalled();
       });
+
+      it('should update the route with updated route data', function() {
+        spyOn(Mock.navigationA, 'updateRoute');
+
+        service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
+
+        expect(Mock.navigationA.updateRoute).toHaveBeenCalled();
+      });
+
+      it('should notify the alternative navigation', function() {
+        spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
+        spyOn(Mock.navigationB, 'updateInNavigation');
+
+        service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
+
+        expect(Mock.navigationB.updateInNavigation).toHaveBeenCalled();
+      });
+
     });
 
   });
 
-  function mockRule($injector) {
-    Mock.RuleFactory = $injector.get('otusjs.model.navigation.RuleFactory');
-    Mock.rule = Mock.RuleFactory.create(Mock.ruleData.when.customID, Mock.ruleData.operator.type);
-    Mock.rules = [Mock.rule];
-
-    spyOn(Mock.RuleFactory, 'create').and.returnValue(Mock.rule);
-
-    injections.RuleFactory = Mock.RuleFactory;
-  }
-
-  function mockRouteCondition($injector) {
-    Mock.RouteConditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
-    Mock.RouteCondition = Mock.RouteConditionFactory.create(Mock.conditionData.name, [Mock.rule]);
-
-    spyOn(Mock.RouteConditionFactory, 'create').and.returnValue(Mock.RouteCondition);
-    spyOn(Mock.RouteCondition, 'addRule');
-
-    injections.RouteConditionFactory = Mock.RouteConditionFactory;
+  function mockNavigation($injector) {
+    Mock.NavigationFactory = $injector.get('otusjs.model.navigation.NavigationFactory');
+    Mock.navigationA = Mock.NavigationFactory.create(CAD1, CAD2);
+    Mock.navigationB = Mock.NavigationFactory.create(CAD2, CAD3);
+    Mock.navigationC = Mock.NavigationFactory.create(CAD3, CAD4);
   }
 
   function mockRoute($injector) {
     Mock.RouteFactory = $injector.get('otusjs.model.navigation.RouteFactory');
-    Mock.route = Mock.RouteFactory.createDefault(Mock.routeData.origin, Mock.routeData.destination);
+    Mock.RuleFactory = $injector.get('otusjs.model.navigation.RuleFactory');
+    Mock.RouteConditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
 
-    spyOn(Mock.RouteFactory, 'createDefault').and.returnValue(Mock.route);
-    spyOn(Mock.route, 'addCondition');
+    Mock.condition = Mock.RouteConditionFactory.create(CAD1 + '_' + CAD3 + '_CONDITION', [Mock.RuleFactory.create(CAD1, 'equal', 1)]);
 
-    injections.RouteFactory = Mock.RouteFactory;
+    Mock.routeCAD1_CAD2 = Mock.RouteFactory.createDefault(CAD1, CAD2);
+    Mock.routeCAD1_CAD3 = Mock.RouteFactory.createAlternative(CAD1, CAD3, [Mock.condition]);
+    Mock.routeCAD1_CAD4 = Mock.RouteFactory.createAlternative(CAD1, CAD4, [Mock.condition]);
+
+    Mock.routeCAD2_CAD3 = Mock.RouteFactory.createDefault(CAD2, CAD3);
+    Mock.routeCAD2_CAD4 = Mock.RouteFactory.createAlternative(CAD2, CAD4, [Mock.condition]);
+
+    Mock.routeCAD3_CAD4 = Mock.RouteFactory.createDefault(CAD3, CAD4);
   }
 
-  function mockRouteData() {
-    Mock.routeData = {}
-    Mock.routeData.origin = 'Q2';
-    Mock.routeData.destination = 'Q4';
-    Mock.routeData.conditions = [];
-
-    Mock.conditionData = {};
-    Mock.conditionData.name = 'CONDITION_NAME';
-    Mock.conditionData.rules = [];
-
-    Mock.ruleData = {};
-    Mock.ruleData.when = {};
-    Mock.ruleData.when.customID = 'Q1';
-    Mock.ruleData.operator = {};
-    Mock.ruleData.operator.type = 'equal';
-    Mock.ruleData.answer = {};
-    Mock.ruleData.answer.option = {};
-    Mock.ruleData.answer.option.value = 1;
-
-    Mock.routeData.conditions.push(Mock.conditionData);
-    Mock.conditionData.rules.push(Mock.ruleData);
+  function mockNavigationContainerService($injector) {
+    Mock.NavigationContainerService = $injector.get('otusjs.model.navigation.NavigationContainerService');
   }
-
-  function mockNavigation() {
-    Mock.navigation = {};
-    Mock.navigation.updateRoute = jasmine.createSpy('updateRoute');
-    Mock.navigation.setupDefaultRoute = jasmine.createSpy('setupDefaultRoute');
-  }
-
 });

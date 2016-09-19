@@ -95,7 +95,7 @@
       _navigationList.push(newNavigation);
     }
 
- 	function _addElementsPreviousTheNavigation(navigation) {
+    function _addElementsPreviousTheNavigation(navigation) {
       if (_navigationList.length) {
         var previous = _navigationList[_navigationList.length - 1];
         navigation.addInNavigation(previous);

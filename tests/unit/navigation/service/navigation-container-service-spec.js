@@ -17,9 +17,9 @@ describe('NavigationContainerService', function() {
     });
   });
 
-  describe('init method', function() {
+  xdescribe('init method', function() {
 
-    xit('should clear the array of navigations', function() {
+    it('should clear the array of navigations', function() {
       service.createNavigationTo(Mock.questionOne.templateID);
       service.createNavigationTo(Mock.questionTwo.templateID);
       service.createNavigationTo(Mock.questionThree.templateID);
@@ -32,7 +32,7 @@ describe('NavigationContainerService', function() {
 
   });
 
-  describe('loadJsonData method', function() {
+  xdescribe('loadJsonData method', function() {
 
     it('should', function() {
       service.loadJsonData(Mock.json);
@@ -40,9 +40,9 @@ describe('NavigationContainerService', function() {
 
   });
 
-  describe('manage method', function() {
+  xdescribe('manage method', function() {
 
-    xit('should initialize the array of navigations', function() {
+    it('should initialize the array of navigations', function() {
       service.init();
       expect(service.getNavigationListSize()).toBe(0);
 
@@ -52,9 +52,9 @@ describe('NavigationContainerService', function() {
 
   });
 
-  describe('getNavigationList method', function() {
+  xdescribe('getNavigationList method', function() {
 
-    xit('should return an array', function() {
+    it('should return an array', function() {
       var returnedValue = service.getNavigationList();
 
       expect(Array.isArray(returnedValue)).toBe(true);
@@ -62,13 +62,13 @@ describe('NavigationContainerService', function() {
 
   });
 
-  describe('getNavigationListSize method', function() {
+  xdescribe('getNavigationListSize method', function() {
 
-    xit('should return zero when navigation Array is empty', function() {
+    it('should return zero when navigation Array is empty', function() {
       expect(service.getNavigationListSize()).toBe(0);
     });
 
-    xit('should return the number of added navigations', function() {
+    it('should return the number of added navigations', function() {
       service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
       service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
       service.createNavigationTo(Mock.questionThree.templateID, Mock.questionFour.templateID);
@@ -81,20 +81,20 @@ describe('NavigationContainerService', function() {
 
   });
 
-  describe('getNavigationByOrigin method', function() {
+  xdescribe('getNavigationByOrigin method', function() {
 
     beforeEach(function() {
       service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
       service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
     });
 
-    xit('should return the navigation when exists', function() {
+    it('should return the navigation when exists', function() {
       var returnedNavigation = service.getNavigationByOrigin(Mock.questionOne.templateID);
 
       expect(returnedNavigation.origin).toEqual(Mock.questionOne.templateID);
     });
 
-    xit('should return undefined when navigation not exists', function() {
+    it('should return undefined when navigation not exists', function() {
       var returnedNavigation = service.getNavigationByOrigin('Q4');
 
       expect(returnedNavigation).toBeUndefined();
@@ -102,20 +102,20 @@ describe('NavigationContainerService', function() {
 
   });
 
-  describe('getNavigationByPosition method', function() {
+  xdescribe('getNavigationByPosition method', function() {
 
     beforeEach(function() {
       service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
       service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
     });
 
-    xit('should return the navigation when exists', function() {
+    it('should return the navigation when exists', function() {
       var returnedNavigation = service.getNavigationByPosition(0);
 
       expect(returnedNavigation.origin).toEqual(Mock.questionOne.templateID);
     });
 
-    xit('should return undefined when navigation not exists', function() {
+    it('should return undefined when navigation not exists', function() {
       var returnedNavigation = service.getNavigationByPosition(10);
 
       expect(returnedNavigation).toBeUndefined();
@@ -123,7 +123,7 @@ describe('NavigationContainerService', function() {
 
   });
 
-  describe('getNavigationPosition method', function() {
+  xdescribe('getNavigationPosition method', function() {
 
     beforeEach(function() {
       service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
@@ -131,7 +131,7 @@ describe('NavigationContainerService', function() {
       service.createNavigationTo(Mock.questionThree.templateID, Mock.questionFour.templateID);
     });
 
-    xit('should return an integer that represents the index of navigation', function() {
+    it('should return an integer that represents the index of navigation', function() {
       var returnedValue = service.getNavigationPosition(Mock.questionOne.templateID);
       expect(returnedValue).toBe(0);
 
@@ -142,22 +142,22 @@ describe('NavigationContainerService', function() {
       expect(returnedValue).toBe(2);
     });
 
-    xit('should return null when navigation does not exists', function() {
+    it('should return null when navigation does not exists', function() {
       var returnedValue = service.getNavigationPosition(Mock.questionFour.templateID);
       expect(returnedValue).toBe(null);
     });
 
   });
 
-  describe('existsNavigationTo method', function() {
+  xdescribe('existsNavigationTo method', function() {
 
-    xit('should return true when navigation exists', function() {
+    it('should return true when navigation exists', function() {
       service.createNavigationTo(Mock.questionOne.templateID);
 
       expect(service.existsNavigationTo(Mock.questionOne.templateID)).toBe(true);
     });
 
-    xit('should return false when navigation not exists', function() {
+    it('should return false when navigation not exists', function() {
       service.createNavigationTo(Mock.questionOne.templateID);
 
       expect(service.existsNavigationTo(Mock.questionTwo.templateID)).toBe(false);
@@ -212,22 +212,23 @@ describe('NavigationContainerService', function() {
     it('not should called method addInNavigation when length of list is equals than zero', function() {
       expect(Mock.navigation.addInNavigation).not.toHaveBeenCalledWith(jasmine.any(Array));
     });
+
   });
 
-  describe('removeNavigationOf method', function() {
+  xdescribe('removeNavigationOf method', function() {
 
     beforeEach(function() {
       service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
       service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
     });
 
-    xit('should remove a navigation of navigationList', function() {
+    it('should remove a navigation of navigationList', function() {
       service.removeNavigationOf(Mock.questionOne.templateID);
 
       expect(service.getNavigationListSize()).toBe(1);
     });
 
-    xit('should remove the correct navigation of navigationList', function() {
+    it('should remove the correct navigation of navigationList', function() {
       service.removeNavigationOf(Mock.questionOne.templateID);
 
       expect(service.getNavigationListSize()).toBe(1);
@@ -236,14 +237,14 @@ describe('NavigationContainerService', function() {
 
   });
 
-  describe('removeNavigationByIndex method', function() {
+  xdescribe('removeNavigationByIndex method', function() {
 
     beforeEach(function() {
       service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
       service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
     });
 
-    xit('should remove a navigation of index', function() {
+    it('should remove a navigation of index', function() {
       service.removeNavigationByIndex(0);
 
       expect(service.getNavigationListSize()).toBe(1);
@@ -253,14 +254,14 @@ describe('NavigationContainerService', function() {
 
   });
 
-  describe('removeCurrentLastNavigation method', function() {
+  xdescribe('removeCurrentLastNavigation method', function() {
 
     beforeEach(function() {
       service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
       service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
     });
 
-    xit('should remove the last navigation present in navigation list', function() {
+    it('should remove the last navigation present in navigation list', function() {
       service.removeCurrentLastNavigation();
 
       expect(service.getNavigationListSize()).toBe(1);

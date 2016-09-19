@@ -10,13 +10,14 @@
     'otusjs.model.navigation.NavigationContainerService',
     'otusjs.model.navigation.NavigationAddService',
     'otusjs.model.navigation.NavigationRemoveService',
-    'otusjs.model.navigation.AddRouteTaskService',
+    'otusjs.model.navigation.CreateDefaultRouteTaskService',
+    'otusjs.model.navigation.AddAlternativeRouteTaskService',
     'otusjs.model.navigation.RemoveRouteTaskService',
     'otusjs.model.navigation.UpdateRouteTaskService',
     'otusjs.model.navigation.NavigationValidatorService'
   ];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, AddRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService, AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
     var self = this;
     var _selectedNavigation = null;
 
@@ -75,13 +76,13 @@
     }
 
     function applyRoute(routeData) {
-      // if (NavigationValidatorService.isRouteValid(routeData.origin, routeData.destination)) {
-        if (_selectedNavigation.hasRoute(routeData)) {
-          return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
-        } else {
-          return AddRouteTaskService.execute(routeData, _selectedNavigation);
-        }
-      // }
+      if (_selectedNavigation.hasRoute(routeData)) {
+        return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
+      } else if (routeData.isDefault) {
+        CreateDefaultRouteTaskService.execute(routeData, _selectedNavigation);
+      } else {
+        AddAlternativeRouteTaskService.execute(routeData, _selectedNavigation);
+      }
     }
 
     function deleteRoute(routeData) {
