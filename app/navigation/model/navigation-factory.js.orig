@@ -121,7 +121,6 @@
     }
 
     function createAlternativeRoute(routeData) {
-
       if (!routeData.conditions || !routeData.conditions.length) {
         throw new Error('There are no conditions for this route.', 'navigation-factory.js', 123);
       }
@@ -295,6 +294,7 @@
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
 
+<<<<<<< HEAD
     function _buildJsonInNavigations() {
       return self.inNavigations.map(function(element) {
         return {
@@ -302,12 +302,12 @@
           isDefaultPath: element.isDefault
         };
       });
-    }
-
+=======
     function _updateDefaultRoute(route) {
       _defaultRoute = route;
       _defaultRoute.conditions = [];
       self.routes[0] = _defaultRoute;
+>>>>>>> 90b09f6803a5490286c7605404c5a33e395e1442
     }
 
     function updateInNavigation(navigation) {
