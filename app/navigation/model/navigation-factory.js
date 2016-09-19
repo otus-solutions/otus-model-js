@@ -274,12 +274,21 @@
       json.origin = self.origin;
       json.index = self.index;
       json.isDefault = self.isDefault;
-      json.inNavigations = self.inNavigations;
+      json.inNavigations = _buildJsonInNavigations();
       json.routes = self.routes.map(function(route) {
         return route.toJson();
       });
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+
+    function _buildJsonInNavigations() {
+      return self.inNavigations.map(function(element) {
+        return {
+          origin: element.origin,
+          isDefaultPath: element.isDefault
+        };
+      });
     }
 
     function updateInNavigation(navigation) {
