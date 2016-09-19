@@ -121,6 +121,7 @@
     }
 
     function createAlternativeRoute(routeData) {
+
       if (!routeData.conditions || !routeData.conditions.length) {
         throw new Error('There are no conditions for this route.', 'navigation-factory.js', 123);
       }

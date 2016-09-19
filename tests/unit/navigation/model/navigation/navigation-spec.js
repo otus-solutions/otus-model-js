@@ -376,10 +376,7 @@ describe('Navigation:', function() {
     it('should call Object.is', function() {
       spyOn(Object, 'is').and.callThrough();
 
-      var navigationA = factory.create(CAD1, CAD2);
       navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
-
-      var navigationB = factory.create(CAD1, CAD2);
       navigationB.createAlternativeRoute(Mock.routeCAD1_CAD3);
 
       var resultA = navigationA.selfsame(navigationA);

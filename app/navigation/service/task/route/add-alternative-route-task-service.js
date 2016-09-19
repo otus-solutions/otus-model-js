@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.AddRouteTaskService', service);
+    .service('otusjs.model.navigation.AddAlternativeRouteTaskService', service);
 
   service.$inject = [
     'otusjs.model.navigation.RouteFactory',
@@ -19,31 +19,11 @@
     self.execute = execute;
 
     function execute(routeData, navigation) {
+      var conditions = routeData.conditions.map(_setupConditions);
+      var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, conditions);
 
-      var origin = routeData.origin;
-      var destination = routeData.destination;
-      var route = null;
-
-      if (routeData.isDefault) {
-        var currentDefaultRoute = navigation.getDefaultRoute();
-
-        route = RouteFactory.createDefault(origin, destination);
-        navigation.setupDefaultRoute(route);
-
-        var nextNavigation = NavigationContainerService.getNavigationByOrigin(currentDefaultRoute.destination);
-        if (nextNavigation) {
-          nextNavigation.removeInNavigation(navigation);
-        }
-      } else {
-        var conditions = routeData.conditions.map(_setupConditions);
-        route = RouteFactory.createAlternative(origin, destination, conditions);
-        navigation.createAlternativeRoute(route);
-      }
-
-      var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
-      if (nextNavigation) {
-        nextNavigation.addInNavigation(navigation);
-      }
+      navigation.createAlternativeRoute(route);
+      _notifyNewDefaultNavigation(route, navigation);
 
       return route;
     }
@@ -58,6 +38,11 @@
       var operator = ruleData.operator.type || ruleData.operator;
       var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
       return RuleFactory.create(when, operator, answer);
+    }
+
+    function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
+      var nextNavigation = NavigationContainerService.getNavigationByOrigin(newDefaultRoute.destination);
+      nextNavigation.addInNavigation(navigation);
     }
   }
 }());
