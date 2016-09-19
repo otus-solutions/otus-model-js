@@ -12,7 +12,7 @@
         self.create = create;
 
         function create(value) {
-            return new DistinctValidatorFactory(value, LabelFactory);
+            return new DistinctValidatorFactory(value);
         }
 
         return self;
