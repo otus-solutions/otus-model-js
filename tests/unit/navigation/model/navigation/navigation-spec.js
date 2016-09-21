@@ -451,6 +451,38 @@ describe('Navigation:', function() {
 
   });
 
+  describe('updateInNavigation method', function() {
+
+    describe('when navigation is not present in the list yet', function() {
+
+      it('should add the navigation in the list', function() {
+        navigationB.updateInNavigation(navigationA);
+
+        expect(navigationB.inNavigations.length).toBe(1);
+        expect(navigationB.inNavigations[0].equals(navigationA)).toBe(true);
+      });
+
+    });
+
+    describe('when navigation is present in the list', function() {
+
+      it('should replace the navigation in the list', function() {
+        navigationB.updateInNavigation(navigationA);
+        var inNavigationBeforeUpdate = navigationB.inNavigations[0];
+        expect(inNavigationBeforeUpdate.anyChange).toBeUndefined();
+
+        navigationA.anyChange = true;
+        navigationB.updateInNavigation(navigationA);
+
+        expect(navigationB.inNavigations.length).toBe(1);
+        expect(navigationB.inNavigations[0].equals(navigationA)).toBe(true);
+        expect(inNavigationBeforeUpdate.anyChange).toBeDefined();
+      });
+
+    });
+
+  });
+
   describe('updateRoute method', function() {
 
     describe('when updated route is the current default', function() {

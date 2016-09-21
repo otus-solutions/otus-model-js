@@ -65,12 +65,12 @@ describe('CreateDefaultRouteTaskService', function() {
       spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationC);
       spyOn(Mock.RouteFactory, 'createDefault').and.returnValue(Mock.routeCAD1_CAD3);
       spyOn(Mock.navigationA, 'setupDefaultRoute');
-      spyOn(Mock.navigationC, 'addInNavigation');
+      spyOn(Mock.navigationC, 'updateInNavigation');
       spyOn(Mock.navigationC, 'removeInNavigation');
 
       service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
 
-      expect(Mock.navigationC.addInNavigation).toHaveBeenCalledWith(Mock.navigationA);
+      expect(Mock.navigationC.updateInNavigation).toHaveBeenCalledWith(Mock.navigationA);
     });
 
   });

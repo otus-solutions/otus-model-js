@@ -580,44 +580,6 @@
     'use strict';
 
     angular
-        .module('otusjs.metadata')
-        .service('AddMetadataAnswerService', AddMetadataAnswerService);
-
-    function AddMetadataAnswerService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            return item.metadata.createOption();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.metadata')
-        .service('RemoveMetadataOptionService', RemoveMetadataOptionService);
-
-    function RemoveMetadataOptionService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            item.metadata.removeLastOption();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.activity')
         .service('ActivityFacadeService', ActivityFacadeService);
 
@@ -824,6 +786,44 @@
     }
 
 })();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .service('AddMetadataAnswerService', AddMetadataAnswerService);
+
+    function AddMetadataAnswerService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            return item.metadata.createOption();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .service('RemoveMetadataOptionService', RemoveMetadataOptionService);
+
+    function RemoveMetadataOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            item.metadata.removeLastOption();
+        }
+    }
+
+}());
 
 (function() {
     'use strict';
@@ -1302,7 +1302,6 @@
       if (navigation) {
         navigation.index = jsonObj.index;
         navigation.inNavigations = inNavigations;
-        navigation.isDefault = jsonObj.isDefault;
         navigation.routes = jsonObj.routes.map(function(route) {
           return RouteFactory.fromJson(JSON.stringify(route));
         });
@@ -1331,7 +1330,6 @@
     self.objectType = 'Navigation';
     self.origin = origin;
     self.index = null;
-    self.isDefault = true;
     self.inNavigations = [];
     self.outNavigations = [];
     self.routes = [defaultRoute];
@@ -1540,7 +1538,6 @@
       json.objectType = self.objectType;
       json.origin = self.origin;
       json.index = self.index;
-      json.isDefault = self.isDefault;
       json.inNavigations = _buildJsonInNavigations();
       json.routes = self.routes.map(function(route) {
         return route.toJson();
@@ -1565,14 +1562,16 @@
     }
 
     function updateInNavigation(navigation) {
-      self.inNavigations.some(function(inNavigation, index) {
+      var wasUpdated = self.inNavigations.some(function(inNavigation, index) {
         if (inNavigation.origin === navigation.origin) {
           self.inNavigations[index] = navigation;
           return true;
         }
       });
 
-      isDefaultPathNavigation();
+      if (!wasUpdated) {
+        self.inNavigations.push(navigation);
+      }
     }
 
     function updateRoute(routeToUpdate) {
@@ -4943,7 +4942,7 @@
 
     function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(newDefaultRoute.destination);
-      nextNavigation.addInNavigation(navigation);
+      nextNavigation.updateInNavigation(navigation);
     }
   }
 }());
@@ -4983,7 +4982,7 @@
 
     function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(newDefaultRoute.destination);
-      nextNavigation.addInNavigation(navigation);
+      nextNavigation.updateInNavigation(navigation);
     }
   }
 }());
@@ -5008,7 +5007,7 @@
     function execute(routeData, navigation) {
       navigation.removeRouteByName(routeData.name);
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
-      nextNavigation.removeInNavigation(routeData.origin);
+      nextNavigation.removeInNavigation(navigation);
     }
   }
 }());
@@ -5024,10 +5023,11 @@
     'otusjs.model.navigation.RuleFactory',
     'otusjs.model.navigation.RouteConditionFactory',
     'otusjs.model.navigation.RouteFactory',
-    'otusjs.model.navigation.NavigationContainerService'
+    'otusjs.model.navigation.NavigationContainerService',
+    'otusjs.model.navigation.CreateDefaultRouteTaskService'
   ];
 
-  function service(RuleFactory, RouteConditionFactory, RouteFactory, NavigationContainerService) {
+  function service(RuleFactory, RouteConditionFactory, RouteFactory, NavigationContainerService, CreateDefaultRouteTaskService) {
     var self = this;
 
     /* Public methods */
@@ -5036,13 +5036,14 @@
     function execute(routeData, navigation) {
       if (_isCurrentDefaultRoute(routeData, navigation.getDefaultRoute())) {
         throw new Error('Is not possible update a default route.', 'update-route-task-service.js', 23);
+      } else if (routeData.isDefault) {
+        CreateDefaultRouteTaskService.execute(routeData, navigation);
+      } else {
+        var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, routeData.conditions);
+        var conditions = routeData.conditions.map(_setupConditions);
+        navigation.updateRoute(route);
+        _notifyNextNavigation(route, navigation);
       }
-
-      var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, routeData.conditions);
-      var conditions = routeData.conditions.map(_setupConditions);
-
-      navigation.updateRoute(route);
-      _notifyNextNavigation(route);
     }
 
     function _isCurrentDefaultRoute(routeToUpdate, currentDefaultRoute) {
@@ -5063,7 +5064,7 @@
       return RuleFactory.create(when, operator, answer);
     }
 
-    function _notifyNextNavigation(routeData) {
+    function _notifyNextNavigation(routeData, navigation) {
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
       if (nextNavigation) {
         nextNavigation.updateInNavigation(navigation);

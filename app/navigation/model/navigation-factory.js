@@ -47,7 +47,6 @@
       if (navigation) {
         navigation.index = jsonObj.index;
         navigation.inNavigations = inNavigations;
-        navigation.isDefault = jsonObj.isDefault;
         navigation.routes = jsonObj.routes.map(function(route) {
           return RouteFactory.fromJson(JSON.stringify(route));
         });
@@ -76,7 +75,6 @@
     self.objectType = 'Navigation';
     self.origin = origin;
     self.index = null;
-    self.isDefault = true;
     self.inNavigations = [];
     self.outNavigations = [];
     self.routes = [defaultRoute];
@@ -285,7 +283,6 @@
       json.objectType = self.objectType;
       json.origin = self.origin;
       json.index = self.index;
-      json.isDefault = self.isDefault;
       json.inNavigations = _buildJsonInNavigations();
       json.routes = self.routes.map(function(route) {
         return route.toJson();
@@ -310,14 +307,16 @@
     }
 
     function updateInNavigation(navigation) {
-      self.inNavigations.some(function(inNavigation, index) {
+      var wasUpdated = self.inNavigations.some(function(inNavigation, index) {
         if (inNavigation.origin === navigation.origin) {
           self.inNavigations[index] = navigation;
           return true;
         }
       });
 
-      isDefaultPathNavigation();
+      if (!wasUpdated) {
+        self.inNavigations.push(navigation);
+      }
     }
 
     function updateRoute(routeToUpdate) {

@@ -18,7 +18,7 @@
     function execute(routeData, navigation) {
       navigation.removeRouteByName(routeData.name);
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
-      nextNavigation.removeInNavigation(routeData.origin);
+      nextNavigation.removeInNavigation(navigation);
     }
   }
 }());

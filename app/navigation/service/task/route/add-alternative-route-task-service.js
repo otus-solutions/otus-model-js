@@ -42,7 +42,7 @@
 
     function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(newDefaultRoute.destination);
-      nextNavigation.addInNavigation(navigation);
+      nextNavigation.updateInNavigation(navigation);
     }
   }
 }());

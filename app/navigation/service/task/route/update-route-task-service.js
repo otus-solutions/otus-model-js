@@ -9,10 +9,11 @@
     'otusjs.model.navigation.RuleFactory',
     'otusjs.model.navigation.RouteConditionFactory',
     'otusjs.model.navigation.RouteFactory',
-    'otusjs.model.navigation.NavigationContainerService'
+    'otusjs.model.navigation.NavigationContainerService',
+    'otusjs.model.navigation.CreateDefaultRouteTaskService'
   ];
 
-  function service(RuleFactory, RouteConditionFactory, RouteFactory, NavigationContainerService) {
+  function service(RuleFactory, RouteConditionFactory, RouteFactory, NavigationContainerService, CreateDefaultRouteTaskService) {
     var self = this;
 
     /* Public methods */
@@ -21,13 +22,14 @@
     function execute(routeData, navigation) {
       if (_isCurrentDefaultRoute(routeData, navigation.getDefaultRoute())) {
         throw new Error('Is not possible update a default route.', 'update-route-task-service.js', 23);
+      } else if (routeData.isDefault) {
+        CreateDefaultRouteTaskService.execute(routeData, navigation);
+      } else {
+        var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, routeData.conditions);
+        var conditions = routeData.conditions.map(_setupConditions);
+        navigation.updateRoute(route);
+        _notifyNextNavigation(route, navigation);
       }
-
-      var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, routeData.conditions);
-      var conditions = routeData.conditions.map(_setupConditions);
-
-      navigation.updateRoute(route);
-      _notifyNextNavigation(route);
     }
 
     function _isCurrentDefaultRoute(routeToUpdate, currentDefaultRoute) {
@@ -48,7 +50,7 @@
       return RuleFactory.create(when, operator, answer);
     }
 
-    function _notifyNextNavigation(routeData) {
+    function _notifyNextNavigation(routeData, navigation) {
       var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
       if (nextNavigation) {
         nextNavigation.updateInNavigation(navigation);

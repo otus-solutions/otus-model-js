@@ -15,6 +15,7 @@ describe('UpdateRouteTaskService', function() {
       mockNavigation(_$injector_);
       mockRoute(_$injector_);
       mockNavigationContainerService(_$injector_);
+      mockCreateDefaultRouteTaskService(_$injector_);
 
       service = _$injector_.get('otusjs.model.navigation.UpdateRouteTaskService', injections);
     });
@@ -22,7 +23,7 @@ describe('UpdateRouteTaskService', function() {
 
   describe('execute method', function() {
 
-    describe('when route to update is the default route of navigation', function() {
+    describe('when route to update is the current default route of navigation', function() {
 
       it('should throw an Error', function() {
         expect(function() {
@@ -32,7 +33,27 @@ describe('UpdateRouteTaskService', function() {
 
     });
 
-    describe('when is not a default route', function() {
+    describe('when route to update is the new default route of navigation', function() {
+
+      beforeEach(function() {
+        Mock.navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+        Mock.routeCAD1_CAD3.isDefault = true;
+        Mock.routeCAD1_CAD3.conditions = [];
+      });
+
+      it('should throw an Error', function() {
+        spyOn(Mock.CreateDefaultRouteTaskService, 'execute');
+
+        service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
+
+        expect(Mock.CreateDefaultRouteTaskService.execute).toHaveBeenCalledWith(Mock.routeCAD1_CAD3, Mock.navigationA);
+      });
+
+
+    });
+
+
+    describe('when is an alternative route', function() {
 
       it('should create an alternative route based on route data', function() {
         spyOn(Mock.RouteFactory, 'createAlternative').and.callThrough();
@@ -105,5 +126,9 @@ describe('UpdateRouteTaskService', function() {
 
   function mockNavigationContainerService($injector) {
     Mock.NavigationContainerService = $injector.get('otusjs.model.navigation.NavigationContainerService');
+  }
+
+  function mockCreateDefaultRouteTaskService($injector) {
+    Mock.CreateDefaultRouteTaskService = $injector.get('otusjs.model.navigation.CreateDefaultRouteTaskService');
   }
 });

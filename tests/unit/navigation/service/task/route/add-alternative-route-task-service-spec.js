@@ -42,11 +42,11 @@ describe('CreateDefaultRouteTaskService', function() {
 
     it('should notify new alternative navigation', function() {
       spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
-      spyOn(Mock.navigationB, 'addInNavigation');
+      spyOn(Mock.navigationB, 'updateInNavigation');
 
       service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
 
-      expect(Mock.navigationB.addInNavigation).toHaveBeenCalledWith(Mock.navigationA);
+      expect(Mock.navigationB.updateInNavigation).toHaveBeenCalledWith(Mock.navigationA);
     });
 
   });
