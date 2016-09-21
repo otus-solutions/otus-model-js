@@ -98,6 +98,7 @@
     self.toJson = toJson;
     self.updateInNavigation = updateInNavigation;
     self.updateRoute = updateRoute;
+    self._buildJsonInNavigations = _buildJsonInNavigations;
 
     function addInNavigation(navigation) {
       navigation.addOutNavigation(self);
@@ -294,8 +295,7 @@
     function _buildJsonInNavigations() {
       return self.inNavigations.map(function(element) {
         return {
-          origin: element.origin,
-          isDefaultPath: element.isDefault
+          origin: element.origin
         };
       });
     }

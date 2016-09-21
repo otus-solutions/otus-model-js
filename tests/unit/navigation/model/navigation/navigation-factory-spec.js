@@ -107,6 +107,23 @@ describe('NavigationFactory', function() {
 
   });
 
+  xdescribe('toJson', function() {
+    it('should called method _buildJsonInNavigations', function() {
+      navigation = factory.create(ORIGIN, DESTINATION);
+
+      navigation.toJson()
+    });
+  });
+
+  describe('_buildJsonInNavigations', function() {
+    it('method should return list', function() {
+      navigation = factory.create(ORIGIN, DESTINATION);
+      var result = navigation._buildJsonInNavigations();
+
+      expect(result instanceof Array).toBeTruthy();
+    });
+  });
+
   function mockJson() {
     Mock.json = JSON.stringify({
       extents: EXTENTS,
