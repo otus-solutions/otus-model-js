@@ -12,20 +12,20 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(when, operator, answer) {
-      return new Rule(when, operator, answer);
+    function create(when, operator, answer, isMetadata) {
+      return new Rule(when, operator, answer, isMetadata);
     }
 
     function fromJson(json) {
       var jsonObj = JSON.parse(json);
-      var rule = new Rule(jsonObj.when, jsonObj.operator, jsonObj.answer);
+      var rule = new Rule(jsonObj.when, jsonObj.operator, jsonObj.answer, jsonObj.isMetadata);
       return rule;
     }
 
     return self;
   }
 
-  function Rule(when, operator, answer) {
+  function Rule(when, operator, answer, isMetadata) {
     var self = this;
 
     self.extents = 'SurveyTemplateObject';
@@ -33,6 +33,7 @@
     self.when = when;
     self.operator = operator;
     self.answer = answer;
+    self.isMetadata = isMetadata;
 
     /* Public methods */
     self.within = within;
@@ -131,6 +132,7 @@
       json.when = self.when;
       json.operator = self.operator;
       json.answer = self.answer;
+      json.isMetadata = self.isMetadata;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
