@@ -438,19 +438,6 @@ describe('Navigation:', function() {
 
   });
 
-  xdescribe('toJson method', function() {
-
-    beforeEach(function() {
-      navigationA.index = 1;
-    });
-
-    it('should return a well formatted json based on Navigation', function() {
-      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
-      expect(navigationA.toJson()).toEqual(Mock.json);
-    });
-
-  });
-
   describe('updateInNavigation method', function() {
 
     describe('when navigation is not present in the list yet', function() {
@@ -542,6 +529,37 @@ describe('Navigation:', function() {
 
   });
 
+  describe('toJson method', function() {
+
+    beforeEach(function() {
+      navigationA.index = 1;
+    });
+
+    it('should return a well formatted json based on Navigation', function() {
+      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
+      expect(navigationA.toJson()).toEqual(Mock.json);
+    });
+
+    it('should return object well defined', function() {
+      expect(navigationA.toJson).toBeDefined();
+    });
+
+    xit('method toJson should called method _buildJsonInNavigations', function() {
+      spyOn(navigationA, '_buildJsonInNavigations').and.callThrough();
+      navigationA.toJson();
+
+      expect(navigationA._buildJsonInNavigations).toHaveBeenCalled();
+    });
+
+  });
+
+  xdescribe('_buildJsonInNavigations', function() {
+    it('should return the list', function() {
+
+      expect(navigationA._buildJsonInNavigations() instanceof Array).toBeTruthy();
+    });
+  });
+
   function mockRouteFactory($injector) {
     Mock.RouteFactory = $injector.get('otusjs.model.navigation.RouteFactory');
     injections.RouteFactory = Mock.RouteFactory;
@@ -582,8 +600,7 @@ describe('Navigation:', function() {
       extents: EXTENTS,
       objectType: OBJECT_TYPE,
       origin: CAD1,
-      index: 0,
-      isDefault: true,
+      index: 1,
       inNavigations: [],
       routes: [Mock.routeCAD1_CAD2.toJson()]
     }).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');

@@ -1,4 +1,4 @@
-describe('NavigationFactory', function() {
+xdescribe('NavigationFactory', function() {
 
   var Mock = {};
   var EXTENTS = 'SurveyTemplateObject';
@@ -105,23 +105,6 @@ describe('NavigationFactory', function() {
       expect(navigation).toBe(null);
     });
 
-  });
-
-  xdescribe('toJson', function() {
-    it('should called method _buildJsonInNavigations', function() {
-      navigation = factory.create(ORIGIN, DESTINATION);
-
-      navigation.toJson()
-    });
-  });
-
-  describe('_buildJsonInNavigations', function() {
-    it('method should return list', function() {
-      navigation = factory.create(ORIGIN, DESTINATION);
-      var result = navigation._buildJsonInNavigations();
-
-      expect(result instanceof Array).toBeTruthy();
-    });
   });
 
   function mockJson() {
