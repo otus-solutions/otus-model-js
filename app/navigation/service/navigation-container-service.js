@@ -126,5 +126,4 @@
       return navigation.origin === questionID;
     }
   }
-
 }());
