@@ -10,7 +10,7 @@
     /* Public methods */
     self.resolveNavigation = resolveNavigation;
 
-    function resolveNavigation(currentQuestion, navigation) {
+    function resolveNavigation(CurrentItemService, navigation) {
       var totalRoutes = navigation.routes.length;
 
       if (totalRoutes === 1) {
@@ -21,7 +21,7 @@
 
         for (index; index < totalRoutes; index++) {
           route = navigation.routes[index];
-          _checkConditions(route.conditions, currentQuestion.filling);
+          _checkConditions(route.conditions, CurrentItemService.filling);
         }
       }
     }

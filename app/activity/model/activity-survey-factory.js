@@ -15,15 +15,15 @@
 
         self.create = create;
 
-        function create(category, group, templateOID, user) {
+        function create(category, group, template, user) {
             StatusHistoryManagerService.newCreatedRegistry(user);
-            return new ActivitySurvey(category, group, templateOID, FillingManagerService, StatusHistoryManagerService);
+            return new ActivitySurvey(category, group, template, FillingManagerService, StatusHistoryManagerService);
         }
 
         return self;
     }
 
-    function ActivitySurvey(category, group, templateOID, FillingManagerService, StatusHistoryManagerService) {
+    function ActivitySurvey(category, group, template, FillingManagerService, StatusHistoryManagerService) {
         var self = this;
 
         self.objectType = 'Activity';
@@ -31,7 +31,7 @@
         self.activityID = 1;
         self.category = category;
         self.group = group;
-        self.templateOID = templateOID;
+        self.template = template;
         self.fillContainer = FillingManagerService;
         self.statusHistory = StatusHistoryManagerService;
 
@@ -45,7 +45,7 @@
             json.activityID = self.activityID;
             json.category = self.category;
             json.group = self.group;
-            json.templateOID = self.templateOID;
+            json.template = self.template.toJson();
             json.fillContainer = self.fillContainer;
             json.statusHistory = self.statusHistory;
 
