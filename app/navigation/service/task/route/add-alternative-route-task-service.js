@@ -36,7 +36,7 @@
     function _setupRules(ruleData) {
       var when = ruleData.when.customID || ruleData.when;
       var operator = ruleData.operator.type || ruleData.operator;
-      var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
+      var answer = ruleData.getCorrectAnswer();
       return RuleFactory.create(when, operator, answer, ruleData.isMetadata);
     }
 
