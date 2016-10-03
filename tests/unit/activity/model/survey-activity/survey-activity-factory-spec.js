@@ -66,7 +66,7 @@ describe('ActivitySurveyFactory', function() {
 
   function mockSurveyTemplate() {
     Mock.surveyTemplate = {};
-    Mock.surveyTemplate.toJson = () => {};
+    Mock.surveyTemplate.toJson = function () {};
   }
 
   function mockStatusHistoryManagerService($injector) {

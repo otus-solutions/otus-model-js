@@ -6,10 +6,12 @@
     .service('otusjs.activity.AnswerEvaluationService', Service);
 
   Service.$inject = [
-    'otusjs.activity.NumericRuleTestService'
+    'otusjs.activity.NumericRuleTestService',
+    'otusjs.activity.TextRuleTestService',
+    'otusjs.activity.DateTimeRuleTestService'
   ];
 
-  function Service(NumericRuleTestService) {
+  function Service(NumericRuleTestService, TextRuleTestService, DateTimeRuleTestService) {
     let self = this;
     let _evaluators = new Map();
 
@@ -23,7 +25,11 @@
     }
 
     function _setupEvaluators() {
+      _evaluators.set('CalendarQuestion', DateTimeRuleTestService);
       _evaluators.set('IntegerQuestion', NumericRuleTestService);
+      _evaluators.set('SingleSelectionQuestion', NumericRuleTestService);
+      _evaluators.set('TextQuestion', TextRuleTestService);
+      _evaluators.set('TimeQuestion', DateTimeRuleTestService);
     }
   }
 }());

@@ -1,4 +1,4 @@
-describe('NumericRuleTestService', function() {
+xdescribe('TextRuleTestService', function() {
 
   let Mock = {};
   let Injections = {};
@@ -8,7 +8,7 @@ describe('NumericRuleTestService', function() {
     module('otusjs.activity');
 
     inject(function(_$injector_) {
-      service = _$injector_.get('otusjs.activity.NumericRuleTestService', Injections);
+      service = _$injector_.get('otusjs.activity.TextRuleTestService', Injections);
     });
   });
 

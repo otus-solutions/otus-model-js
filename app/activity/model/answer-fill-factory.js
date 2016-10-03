@@ -5,8 +5,11 @@
     .module('otusjs.activity')
     .factory('AnswerFillFactory', AnswerFillFactory);
 
+  AnswerFillFactory.$inject = [
+    'otusjs.activity.AnswerEvaluationService'
+  ]
 
-  function AnswerFillFactory() {
+  function AnswerFillFactory(AnswerEvaluationService) {
     let self = this;
 
     /* Public interface */

@@ -3,63 +3,52 @@
 
   angular
     .module('otusjs.activity')
-    .service('otusjs.activity.NumericRuleTestService', Service);
+    .service('otusjs.activity.DateTimeRuleTestService', Service);
 
   function Service() {
     let self = this;
     let _runner = {};
-    self.name = 'NumericRuleTestService';
+    self.name = 'DateTimeRuleTestService';
 
     /* Public Methods */
     self.run = run;
 
     function run(rule, answer) {
-      if (!!answer['replace']) {
-        answer = answer.replace(/,/, '.');
-      }
-
-      if (!Number.isInteger(Number(answer)) && !_isFloat(answer)) {
+      if ( Number.isNaN( Date.parse(answer) ) ) {
         return false;
       }
 
-      return _runner[rule.operator](rule.answer, Number(answer));
-    }
-
-    function _isFloat(value) {
-      return (!Number.isNaN(Number(value)) && !Number.isInteger(Number(value)));
+      return _runner[rule.operator](Date.parse(rule.answer), answer.getTime());
     }
 
     _runner.equal = function(reference, answer) {
-      return answer === Number(reference);
+      return answer ===  reference;
     }
 
     _runner.notEqual = function(reference, answer) {
-      return answer !== Number(reference);
+      return answer !==  reference;
     }
 
     _runner.within = function(reference, answer) {
       return reference.some(function(value) {
-        if (!!value['replace']) {
-          value = value.replace(/,/, '.');
-        }
-        return _runner.equal(value, answer);
+        return _runner.contains(value, answer);
       });
     }
 
     _runner.greater = function(reference, answer) {
-      return answer > Number(reference);
+      return answer > reference;
     }
 
     _runner.greaterEqual = function(reference, answer) {
-      return answer >= Number(reference);
+      return answer >= reference;
     }
 
     _runner.lower = function(reference, answer) {
-      return answer < Number(reference);
+      return answer < reference;
     }
 
     _runner.lowerEqual = function(reference, answer) {
-      return answer <= Number(reference);
+      return answer <= reference;
     }
 
     _runner.between = function(reference, answer) {
