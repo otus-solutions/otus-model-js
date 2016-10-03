@@ -9,7 +9,7 @@
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
         'SurveyUUIDGenerator',
-        'NavigationManagerService',
+        'otusjs.model.navigation.NavigationManagerService',
         'SurveyItemManagerService'
     ];
 
@@ -115,7 +115,11 @@
 
             json.navigationList = [];
             NavigationManagerService.getNavigationList().forEach(function(navigation) {
-                json.navigationList.push(navigation.toJson());
+                if (navigation) {
+                  json.navigationList.push(navigation.toJson());
+                } else {
+                  json.navigationList.push({});                  
+                }
             });
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');

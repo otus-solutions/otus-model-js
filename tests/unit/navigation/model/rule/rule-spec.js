@@ -1,193 +1,117 @@
 describe('Rule', function() {
-    var Mock = {};
+
+  var Mock = {};
+  var DIFF_OBJECT_TYPE = 'DiffRule';
+  var WHEN = 'QID';
+  var DIFF_WHEN = 'QID13';
+  var OPERATOR = 'equal';
+  var DIFF_OPERATOR = 'greater';
+  var ANSWER = 1;
+  var DIFF_ANSWER = 2;
+
+  beforeEach(function() {
+    module('otusjs');
+
+    inject(function(_$injector_) {
+      factory = _$injector_.get('otusjs.model.navigation.RuleFactory');
+    });
+  });
+
+  describe('equals method', function() {
+
+    it('should return true when two objects have the same properties and equal values', function() {
+      var ruleA = factory.create(WHEN, OPERATOR, ANSWER);
+      var ruleB = factory.create(WHEN, OPERATOR, ANSWER);
+
+      expect(ruleA.equals(ruleB)).toBe(true);
+    });
+
+    it('should return false when two objects have different objectType value', function() {
+      var ruleA = factory.create(WHEN, OPERATOR, ANSWER);
+      var ruleB = factory.create(DIFF_WHEN, OPERATOR, ANSWER);
+      ruleB.objectType = DIFF_OBJECT_TYPE;
+
+      expect(ruleA.equals(ruleB)).toBe(false);
+    });
+
+    it('should return false when two objects have different when value', function() {
+      var ruleA = factory.create(WHEN, OPERATOR, ANSWER);
+      var ruleB = factory.create(DIFF_WHEN, OPERATOR, ANSWER);
+
+      expect(ruleA.equals(ruleB)).toBe(false);
+    });
+
+    it('should return false when two objects have different operator value', function() {
+      var ruleA = factory.create(WHEN, OPERATOR, ANSWER);
+      var ruleB = factory.create(WHEN, DIFF_OPERATOR, ANSWER);
+
+      expect(ruleA.equals(ruleB)).toBe(false);
+    });
+
+    it('should return false when two objects have different answer value', function() {
+      var ruleA = factory.create(WHEN, OPERATOR, ANSWER);
+      var ruleB = factory.create(WHEN, OPERATOR, DIFF_ANSWER);
+
+      expect(ruleA.equals(ruleB)).toBe(false);
+    });
+
+  });
+
+  describe('selfsame method', function() {
+
+    it('should call Object.is', function() {
+      var ruleA = factory.create(WHEN, OPERATOR, ANSWER);
+      var ruleB = factory.create(WHEN, OPERATOR, ANSWER);
+      spyOn(Object, 'is').and.callThrough();
+
+      var resultA = ruleA.selfsame(ruleA);
+      var resultB = ruleA.selfsame(ruleB);
+
+      expect(Object.is).toHaveBeenCalled();
+      expect(resultA).toBe(true);
+      expect(resultB).toBe(false);
+    });
+
+  });
+
+  describe('clone method', function() {
+
+    it('should call Object.assign', function() {
+      var ruleA = factory.create(WHEN, OPERATOR, ANSWER);
+      var clone = ruleA.clone();
+
+      expect(ruleA.equals(clone)).toBe(true);
+      expect(ruleA.selfsame(clone)).toBe(false);
+
+      clone.when = DIFF_WHEN;
+
+      expect(clone.equals(ruleA)).toBe(false);
+      expect(clone.selfsame(ruleA)).toBe(false);
+    });
+
+  });
+
+  describe('toJson method', function() {
+
+    var json;
 
     beforeEach(function() {
-        module('otusjs');
-
-        mockWhen();
-        mockAnswer();
-
-        inject(function(_$injector_) {
-            factory = _$injector_.get('RuleFactory');
-        });
-
-        rule = factory.create(Mock.WHEN);
+      var ruleA = factory.create(WHEN, OPERATOR, ANSWER);
+      json = JSON.parse(ruleA.toJson());
     });
 
-    describe('within method', function() {
-
-        var POSSIBLE_VALUES = [1, 2, 3];
-
-        beforeEach(function() {
-            rule.within(POSSIBLE_VALUES);
-        });
-
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
-        });
-
-        xit('should set the array values to "within" property', function() {
-            expect(rule.getAnswer().within).toBe(POSSIBLE_VALUES);
-        });
-
+    it('result a json version with when attribute', function() {
+      expect(json.when).toEqual(WHEN);
     });
 
-    describe('equal method', function() {
-
-        var POSSIBLE_VALUE = 'POSSIBLE_VALUE';
-
-        beforeEach(function() {
-            rule.equal(POSSIBLE_VALUE);
-        });
-
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
-        });
-
-        xit('should set the array values to "equal" property', function() {
-            expect(rule.getAnswer().equal).toBe(POSSIBLE_VALUE);
-        });
-
+    it('result a json version with operator attribute', function() {
+      expect(json.operator).toEqual(OPERATOR);
     });
 
-    describe('greater method', function() {
-
-        var POSSIBLE_VALUE = 'POSSIBLE_VALUE';
-
-        beforeEach(function() {
-            rule.greater(POSSIBLE_VALUE);
-        });
-
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
-        });
-
-        xit('should set the array values to "greater" property', function() {
-            expect(rule.getAnswer().greater).toBe(POSSIBLE_VALUE);
-        });
-
+    it('result a json version with answer attribute', function() {
+      expect(json.answer).toEqual(ANSWER);
     });
 
-    describe('greaterEqual method', function() {
-
-        var POSSIBLE_VALUE = 2;
-
-        beforeEach(function() {
-            rule.greaterEqual(POSSIBLE_VALUE);
-        });
-
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
-        });
-
-        xit('should set the array values to "greaterEqual" property', function() {
-            expect(rule.getAnswer().greaterEqual).toBe(POSSIBLE_VALUE);
-        });
-
-    });
-
-    describe('lower method', function() {
-
-        var POSSIBLE_VALUE = 2;
-
-        beforeEach(function() {
-            rule.lower(POSSIBLE_VALUE);
-        });
-
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
-        });
-
-        xit('should set the array values to "lower" property', function() {
-            expect(rule.getAnswer().lower).toBe(POSSIBLE_VALUE);
-        });
-
-    });
-
-    describe('lowerEqual method', function() {
-
-        var POSSIBLE_VALUE = 2;
-
-        beforeEach(function() {
-            rule.lowerEqual(POSSIBLE_VALUE);
-        });
-
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
-        });
-
-        xit('should set the array values to "lowerEqual" property', function() {
-            expect(rule.getAnswer().lowerEqual).toBe(POSSIBLE_VALUE);
-        });
-
-    });
-
-    describe('between method', function() {
-
-        var POSSIBLE_RANGE = [1, 10];
-
-        xit('should attach the condition to rule.getAnswer()', function() {
-            rule.between(1, 10);
-            expect(rule.getAnswer()).toBeDefined();
-        });
-
-        xit('should set the array values to "between" property', function() {
-            rule.between([1, 10]);
-
-            expect(rule.getAnswer().between).toEqual(POSSIBLE_RANGE);
-        });
-
-        xit('should set the array values to "between" property', function() {
-            rule.between(1, 10);
-
-            expect(rule.getAnswer().between).toEqual(POSSIBLE_RANGE);
-        });
-
-    });
-
-    describe('contains method', function() {
-
-        beforeEach(function() {
-            rule.contains(Mock.ANSWER);
-        });
-
-        xit('should attach the condition to rule.getAnswer()', function() {
-            expect(rule.getAnswer()).toBeDefined();
-        });
-
-        xit('should set the array values to "contains" property', function() {
-            expect(rule.getAnswer().contains).toBe(Mock.ANSWER);
-        });
-
-    });
-
-    describe('toJson method', function() {
-        var json;
-
-        beforeEach(function() {
-            rule.contains(Mock.ANSWER);
-            json = rule.toJson();
-        });
-
-        xit('result a json version with when attribute', function() {
-            expect(json.when).toBeDefined();
-            expect(json.when).toEqual(Mock.WHEN);
-        });
-
-        xit('result a json version with answer attribute', function() {
-            expect(json.when).toBeDefined();
-            expect(json.answer.contains).toBeDefined();
-            expect(json.answer.contains).toEqual(Mock.ANSWER);
-        });
-
-    });
-
-    function mockWhen() {
-        Mock.WHEN = 'QUESTION_ID';
-    }
-
-    function mockAnswer() {
-        Mock.ANSWER = 'ANSWER';
-    }
+  });
 
 });

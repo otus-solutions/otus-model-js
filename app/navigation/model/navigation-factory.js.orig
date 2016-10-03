@@ -47,6 +47,7 @@
       if (navigation) {
         navigation.index = jsonObj.index;
         navigation.inNavigations = inNavigations;
+        navigation.isDefault = jsonObj.isDefault;
         navigation.routes = jsonObj.routes.map(function(route) {
           return RouteFactory.fromJson(JSON.stringify(route));
         });
@@ -75,6 +76,7 @@
     self.objectType = 'Navigation';
     self.origin = origin;
     self.index = null;
+    self.isDefault = true;
     self.inNavigations = [];
     self.outNavigations = [];
     self.routes = [defaultRoute];
@@ -283,6 +285,7 @@
       json.objectType = self.objectType;
       json.origin = self.origin;
       json.index = self.index;
+      json.isDefault = self.isDefault;
       json.inNavigations = _buildJsonInNavigations();
       json.routes = self.routes.map(function(route) {
         return route.toJson();
@@ -291,31 +294,31 @@
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
 
+<<<<<<< HEAD
     function _buildJsonInNavigations() {
       return self.inNavigations.map(function(element) {
         return {
-          origin: element.origin
+          origin: element.origin,
+          isDefaultPath: element.isDefault
         };
       });
-    }
-
+=======
     function _updateDefaultRoute(route) {
       _defaultRoute = route;
       _defaultRoute.conditions = [];
       self.routes[0] = _defaultRoute;
+>>>>>>> 90b09f6803a5490286c7605404c5a33e395e1442
     }
 
     function updateInNavigation(navigation) {
-      var wasUpdated = self.inNavigations.some(function(inNavigation, index) {
+      self.inNavigations.some(function(inNavigation, index) {
         if (inNavigation.origin === navigation.origin) {
           self.inNavigations[index] = navigation;
           return true;
         }
       });
 
-      if (!wasUpdated) {
-        self.inNavigations.push(navigation);
-      }
+      isDefaultPathNavigation();
     }
 
     function updateRoute(routeToUpdate) {
