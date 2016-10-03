@@ -22,9 +22,10 @@
     self.fillQuestion = fillQuestion;
     self.openActivitySurvey = openActivitySurvey;
     self.initializeActivitySurvey = initializeActivitySurvey;
+    self.getFillingByQuestionID = getFillingByQuestionID;
 
-    function createActivity(category, group, template, user) {
-      self.surveyActivity = ActivitySurveyFactory.create(category, group, template, user);
+    function createActivity(template) {
+      self.surveyActivity = ActivitySurveyFactory.create(template);
     }
 
     function openActivitySurvey() {
@@ -35,12 +36,16 @@
       self.surveyActivity.statusHistory.newInitializedOnlineRegistry();
     }
 
-    function createQuestionFill(questionID, answer, metadata, comment) {
-      return QuestionFillFactory.create(questionID, answer, metadata, comment);
+    function createQuestionFill(question, answer, metadata, comment) {
+      return QuestionFillFactory.create(question, answer, metadata, comment);
     }
 
     function fillQuestion(filling) {
       self.surveyActivity.fillContainer.updateFilling(filling);
+    }
+
+    function getFillingByQuestionID(questionID) {
+      return self.surveyActivity.fillContainer.searchFillingByID(questionID);
     }
   }
 }());

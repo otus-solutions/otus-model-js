@@ -1,45 +1,45 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .factory('MetadataFillFactory', MetadataFillFactory);
+  angular
+    .module('otusjs.activity')
+    .factory('MetadataFillFactory', MetadataFillFactory);
 
-    function MetadataFillFactory() {
-        var self = this;
+  function MetadataFillFactory() {
+    let self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
 
-        function create(value) {
-            return new MetadataFill(value);
-        }
-
-        return self;
+    function create(value) {
+      return new MetadataFill(value);
     }
 
-    function MetadataFill(value) {
-        var self = this;
+    return self;
+  }
 
-        self.objectType = 'MetadataFill';
-        self.value = (value === undefined) ? null : value;
+  function MetadataFill(value) {
+    let self = this;
 
-        /* Public methods */
-        self.isFilled = isFilled;
-        self.toJson = toJson;
+    self.objectType = 'MetadataFill';
+    self.value = (value === undefined) ? null : value;
 
-        function isFilled() {
-            return (self.value) ? true : false;
-        }
+    /* Public methods */
+    self.isFilled = isFilled;
+    self.toJson = toJson;
 
-        function toJson() {
-            var json = {};
-
-            json.objectType = self.objectType;
-            json.value = self.value;
-
-            return JSON.stringify(json);
-        }
+    function isFilled() {
+      return (self.value) ? true : false;
     }
+
+    function toJson() {
+      let json = {};
+
+      json.objectType = self.objectType;
+      json.value = self.value;
+
+      return JSON.stringify(json);
+    }
+  }
 
 }());
