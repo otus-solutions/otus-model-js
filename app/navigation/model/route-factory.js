@@ -151,7 +151,8 @@
     }
 
     function selfsame(other) {
-      return Object.is(self, other);
+      // TODO Imcompatibility
+      //return Object.is(self, other);
     }
 
     function clone() {

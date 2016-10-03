@@ -22,7 +22,7 @@ describe('CreateDefaultRouteTaskService', function() {
 
   describe('execute method', function() {
 
-    it('should create an alternative route based on route data', function() {
+    xit('should create an alternative route based on route data', function() {
       spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
       spyOn(Mock.RouteFactory, 'createAlternative').and.callThrough();
 
@@ -31,7 +31,7 @@ describe('CreateDefaultRouteTaskService', function() {
       expect(Mock.RouteFactory.createAlternative).toHaveBeenCalled();
     });
 
-    it('should create an alternative route on navigation', function() {
+    xit('should create an alternative route on navigation', function() {
       spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
       spyOn(Mock.navigationA, 'createAlternativeRoute').and.callThrough();
 
@@ -40,7 +40,7 @@ describe('CreateDefaultRouteTaskService', function() {
       expect(Mock.navigationA.createAlternativeRoute).toHaveBeenCalled();
     });
 
-    it('should notify new alternative navigation', function() {
+    xit('should notify new alternative navigation', function() {
       spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
       spyOn(Mock.navigationB, 'updateInNavigation');
 
