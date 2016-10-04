@@ -5,10 +5,10 @@ xdescribe('TextRuleTestService', function() {
   let service = {};
 
   beforeEach(function() {
-    module('otusjs.activity');
+    module('otusjs');
 
     inject(function(_$injector_) {
-      service = _$injector_.get('otusjs.activity.TextRuleTestService', Injections);
+      service = _$injector_.get('otusjs.model.activity.TextRuleTestService', Injections);
     });
   });
 

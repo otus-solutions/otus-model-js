@@ -2,13 +2,13 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('otusjs.activity.AnswerEvaluationService', Service);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.AnswerEvaluationService', Service);
 
   Service.$inject = [
-    'otusjs.activity.NumericRuleTestService',
-    'otusjs.activity.TextRuleTestService',
-    'otusjs.activity.DateTimeRuleTestService'
+    'otusjs.model.activity.NumericRuleTestService',
+    'otusjs.model.activity.TextRuleTestService',
+    'otusjs.model.activity.DateTimeRuleTestService'
   ];
 
   function Service(NumericRuleTestService, TextRuleTestService, DateTimeRuleTestService) {

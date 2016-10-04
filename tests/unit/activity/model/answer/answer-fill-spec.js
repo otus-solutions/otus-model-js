@@ -10,7 +10,7 @@ describe('AnswerFill', function() {
     mockJson();
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('AnswerFillFactory');
+      factory = _$injector_.get('otusjs.model.activity.AnswerFillFactory');
     });
   });
 

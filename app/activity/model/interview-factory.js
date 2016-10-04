@@ -2,10 +2,12 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('InterviewFactory', InterviewFactory);
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.InterviewFactory', InterviewFactory);
 
-    InterviewFactory.$inject = ['InterviewerFactory'];
+    InterviewFactory.$inject = [
+      'otusjs.model.activity.InterviewerFactory'
+    ];
 
     function InterviewFactory(InterviewerFactory) {
         var self = this;

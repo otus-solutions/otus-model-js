@@ -18,7 +18,7 @@ describe('QuestionFill', function() {
 
       mockJson();
 
-      factory = _$injector_.get('QuestionFillFactory');
+      factory = _$injector_.get('otusjs.model.activity.QuestionFillFactory');
     });
   });
 
@@ -71,11 +71,11 @@ describe('QuestionFill', function() {
   }
 
   function mockAnswerFill($injector) {
-    Mock.answer = $injector.get('AnswerFillFactory').create(Mock.item, 'Yes');
+    Mock.answer = $injector.get('otusjs.model.activity.AnswerFillFactory').create(Mock.item, 'Yes');
   }
 
   function mockMetadataFill($injector) {
-    Mock.metadata = $injector.get('MetadataFillFactory').create(1);
+    Mock.metadata = $injector.get('otusjs.model.activity.MetadataFillFactory').create(1);
   }
 
   function mockJson() {

@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .factory('QuestionFillFactory', QuestionFillFactory);
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.QuestionFillFactory', QuestionFillFactory);
 
   QuestionFillFactory.$inject = [
-    'AnswerFillFactory',
-    'MetadataFillFactory'
+    'otusjs.model.activity.AnswerFillFactory',
+    'otusjs.model.activity.MetadataFillFactory'
   ];
 
   function QuestionFillFactory(AnswerFillFactory, MetadataFillFactory) {

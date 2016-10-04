@@ -17,7 +17,7 @@ describe('ActivitySurveyFactory', function() {
       mockJson();
       mockStatusHistoryManagerService(_$injector_);
       mockFillingManagerService(_$injector_);
-      factory = _$injector_.get('ActivitySurveyFactory', Injections);
+      factory = _$injector_.get('otusjs.model.activity.ActivitySurveyFactory', Injections);
       activity = factory.create(Mock.surveyTemplate);
     });
   });
@@ -70,12 +70,12 @@ describe('ActivitySurveyFactory', function() {
   }
 
   function mockStatusHistoryManagerService($injector) {
-    Mock.StatusHistoryManagerService = $injector.get('StatusHistoryManagerService');
+    Mock.StatusHistoryManagerService = $injector.get('otusjs.model.activity.StatusHistoryManagerService');
     return Mock.StatusHistoryManagerService;
   }
 
   function mockFillingManagerService($injector) {
-    Mock.FillingManagerService = $injector.get('FillingManagerService');
+    Mock.FillingManagerService = $injector.get('otusjs.model.activity.FillingManagerService');
     return Mock.FillingManagerService;
   }
 });

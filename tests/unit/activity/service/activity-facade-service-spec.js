@@ -23,7 +23,7 @@ describe('ActivityFacadeService', function() {
       mockQuestionFillFactory(_$injector_);
       mockActivitySurveyFactory(_$injector_);
 
-      service = _$injector_.get('ActivityFacadeService', Injections);
+      service = _$injector_.get('otusjs.model.activity.ActivityFacadeService', Injections);
     });
   });
 
@@ -175,7 +175,7 @@ describe('ActivityFacadeService', function() {
   }
 
   function mockAnswerFillFactory($injector) {
-    Mock.AnswerFillFactory = $injector.get('AnswerFillFactory');
+    Mock.AnswerFillFactory = $injector.get('otusjs.model.activity.AnswerFillFactory');
 
     spyOn(Mock.AnswerFillFactory, 'create').and.callThrough();
 
@@ -183,7 +183,7 @@ describe('ActivityFacadeService', function() {
   }
 
   function mockMetadataFillFactory($injector) {
-    Mock.MetadataFillFactory = $injector.get('MetadataFillFactory');
+    Mock.MetadataFillFactory = $injector.get('otusjs.model.activity.MetadataFillFactory');
 
     spyOn(Mock.MetadataFillFactory, 'create').and.callThrough();
 
@@ -191,7 +191,7 @@ describe('ActivityFacadeService', function() {
   }
 
   function mockQuestionFillFactory($injector) {
-    Mock.QuestionFillFactory = $injector.get('QuestionFillFactory');
+    Mock.QuestionFillFactory = $injector.get('otusjs.model.activity.QuestionFillFactory');
 
     spyOn(Mock.QuestionFillFactory, 'create').and.callThrough();
 
@@ -199,7 +199,7 @@ describe('ActivityFacadeService', function() {
   }
 
   function mockActivitySurveyFactory($injector) {
-    Mock.ActivitySurveyFactory = $injector.get('ActivitySurveyFactory');
+    Mock.ActivitySurveyFactory = $injector.get('otusjs.model.activity.ActivitySurveyFactory');
 
     spyOn(Mock.ActivitySurveyFactory, 'create').and.callThrough();
 

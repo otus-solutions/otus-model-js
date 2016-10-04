@@ -4,7 +4,7 @@
   angular
     .module('otusjs', [
       'otusjs.survey',
-      'otusjs.activity',
+      'otusjs.model.activity',
       'otusjs.surveyItem',
       'otusjs.metadata',
       'otusjs.misc',

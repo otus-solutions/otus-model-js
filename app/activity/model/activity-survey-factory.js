@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .factory('ActivitySurveyFactory', ActivitySurveyFactory);
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.ActivitySurveyFactory', ActivitySurveyFactory);
 
   ActivitySurveyFactory.$inject = [
-    'StatusHistoryManagerService',
-    'FillingManagerService'
+    'otusjs.model.activity.StatusHistoryManagerService',
+    'otusjs.model.activity.FillingManagerService'
   ];
 
   function ActivitySurveyFactory(StatusHistoryManagerService, FillingManagerService) {

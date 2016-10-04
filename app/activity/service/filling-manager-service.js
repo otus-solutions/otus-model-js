@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('FillingManagerService', FillingManagerService);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.FillingManagerService', FillingManagerService);
 
   function FillingManagerService() {
     var self = this;

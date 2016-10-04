@@ -22,7 +22,7 @@ describe('ActivityStatus', function() {
             mockUser(_$injector_);
             mockJson();
 
-            factory = _$injector_.get('ActivityStatusFactory');
+            factory = _$injector_.get('otusjs.model.activity.ActivityStatusFactory');
         });
 
     });
@@ -47,7 +47,7 @@ describe('ActivityStatus', function() {
     }
 
     function mockUser($injector) {
-        Mock.user = $injector.get('ActivityUserFactory').create('User Name', 'user@email.com');
+        Mock.user = $injector.get('otusjs.model.activity.ActivityUserFactory').create('User Name', 'user@email.com');
     }
 
 });

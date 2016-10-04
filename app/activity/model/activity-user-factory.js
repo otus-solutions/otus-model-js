@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('ActivityUserFactory', ActivityUserFactory);
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.ActivityUserFactory', ActivityUserFactory);
 
     function ActivityUserFactory() {
         var self = this;

@@ -5,10 +5,10 @@ describe('NumericRuleTestService', function() {
   let service = {};
 
   beforeEach(function() {
-    module('otusjs.activity');
+    module('otusjs');
 
     inject(function(_$injector_) {
-      service = _$injector_.get('otusjs.activity.NumericRuleTestService', Injections);
+      service = _$injector_.get('otusjs.model.activity.NumericRuleTestService', Injections);
     });
   });
 

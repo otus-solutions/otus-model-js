@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .factory('MetadataFillFactory', MetadataFillFactory);
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.MetadataFillFactory', MetadataFillFactory);
 
   function MetadataFillFactory() {
     let self = this;

@@ -11,7 +11,7 @@ describe('AnswerFillFactory', function() {
 
     inject(function(_$injector_) {
       mockAnswerEvaluationService(_$injector_);
-      factory = _$injector_.get('AnswerFillFactory', Injections);
+      factory = _$injector_.get('otusjs.model.activity.AnswerFillFactory', Injections);
     });
   });
 
@@ -62,7 +62,7 @@ describe('AnswerFillFactory', function() {
   });
 
   function mockAnswerEvaluationService($injector) {
-    Mock.AnswerEvaluationService = $injector.get('otusjs.activity.AnswerEvaluationService');
+    Mock.AnswerEvaluationService = $injector.get('otusjs.model.activity.AnswerEvaluationService');
     Injections.AnswerEvaluationService = Mock.AnswerEvaluationService;
   }
 

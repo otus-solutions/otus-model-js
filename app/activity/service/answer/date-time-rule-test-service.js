@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('otusjs.activity.DateTimeRuleTestService', Service);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.DateTimeRuleTestService', Service);
 
   function Service() {
     let self = this;

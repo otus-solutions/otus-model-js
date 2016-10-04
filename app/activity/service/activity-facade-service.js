@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('ActivityFacadeService', ActivityFacadeService);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.ActivityFacadeService', ActivityFacadeService);
 
   ActivityFacadeService.$inject = [
-    'AnswerFillFactory',
-    'MetadataFillFactory',
-    'QuestionFillFactory',
-    'ActivitySurveyFactory'
+    'otusjs.model.activity.AnswerFillFactory',
+    'otusjs.model.activity.MetadataFillFactory',
+    'otusjs.model.activity.QuestionFillFactory',
+    'otusjs.model.activity.ActivitySurveyFactory'
   ];
 
   function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {

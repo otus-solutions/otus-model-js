@@ -8,7 +8,7 @@ describe('AnswerEvaluationService', function() {
     module('otusjs');
 
     inject(function(_$injector_) {
-      service = _$injector_.get('otusjs.activity.AnswerEvaluationService');
+      service = _$injector_.get('otusjs.model.activity.AnswerEvaluationService');
     });
   });
 

@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('otusjs.activity.TextRuleTestService', Service);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.TextRuleTestService', Service);
 
   function Service() {
     let self = this;

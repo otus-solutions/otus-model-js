@@ -2,6 +2,6 @@
     'use strict';
 
     angular
-        .module('otusjs.activity', []);
+        .module('otusjs.model.activity', []);
 
 }());

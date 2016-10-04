@@ -22,7 +22,7 @@ describe('FillingManagerService', function() {
       /* Helper mocks */
       mockQuestionFillFactory(_$injector_);
 
-      service = _$injector_.get('FillingManagerService');
+      service = _$injector_.get('otusjs.model.activity.FillingManagerService');
     });
   });
 
@@ -224,7 +224,7 @@ describe('FillingManagerService', function() {
   }
 
   function mockQuestionFillFactory($injector) {
-    Mock.QuestionFillFactory = $injector.get('QuestionFillFactory');
+    Mock.QuestionFillFactory = $injector.get('otusjs.model.activity.QuestionFillFactory');
   }
 
 });

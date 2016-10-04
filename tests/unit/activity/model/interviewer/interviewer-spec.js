@@ -12,7 +12,7 @@ describe('InterviewerFactory', function() {
         mockJson();
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('InterviewerFactory');
+            factory = _$injector_.get('otusjs.model.activity.InterviewerFactory');
         });
 
         interviewer = factory.create(Mock.user);
