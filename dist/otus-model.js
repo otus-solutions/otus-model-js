@@ -133,6 +133,217 @@
 
     angular
         .module('otusjs.activity')
+        .service('ActivityFacadeService', ActivityFacadeService);
+
+    ActivityFacadeService.$inject = [
+        'AnswerFillFactory',
+        'MetadataFillFactory',
+        'QuestionFillFactory',
+        'ActivitySurveyFactory'
+    ];
+
+    function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
+        var self = this;
+        self.activitySurvey = null;
+
+        /* Public interface */
+        self.createActivity = createActivity;
+        self.createQuestionFill = createQuestionFill;
+        self.openActivitySurvey = openActivitySurvey;
+        self.initializeActivitySurvey = initializeActivitySurvey;
+
+
+        function createActivity(category, group, templateOID, user) {
+            self.activitySurvey = ActivitySurveyFactory.create(category, group, templateOID, user);
+        }
+
+        function openActivitySurvey() {
+            self.activitySurvey.statusHistory.newOpenedRegistry();
+        }
+
+        function initializeActivitySurvey() {
+            self.activitySurvey.statusHistory.newInitializedOnlineRegistry();
+        }
+
+        function createQuestionFill(questionID, answer, metadata, comment) {
+            var question = QuestionFillFactory.create(questionID, answer, metadata, comment);
+            self.activitySurvey.fillContainer.updateFilling(question);
+            //console.log(self.activitySurvey);
+            return question;
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.activity')
+        .service('FillingManagerService', FillingManagerService);
+
+    function FillingManagerService() {
+        var self = this;
+        var fillingList = [];
+
+        /* Public methods */
+        self.init = init;
+        self.listSize = listSize;
+        self.getFillingIndex = getFillingIndex;
+        self.existsFillingTo = existsFillingTo;
+        self.searchFillingByID = searchFillingByID;
+        self.updateFilling = updateFilling;
+
+        init();
+
+        function init() {
+            fillingList = [];
+        }
+
+        function listSize() {
+            return fillingList.length;
+        }
+
+        function getFillingIndex(questionID) {
+            var result = _searchByID(questionID);
+            return (result) ? result.index : null;
+        }
+
+        function existsFillingTo(questionID) {
+            return (_searchByID(questionID)) ? true : false;
+        }
+
+        function searchFillingByID(questionID) {
+            var result = _searchByID(questionID);
+            return (result) ? result.filling : null;
+        }
+
+        function updateFilling(filling) {
+            if (filling.isFilled()) {
+                if (!existsFillingTo(filling.questionID)) {
+                    _add(filling);
+                } else {
+                    return _replaceFilling(filling);
+                }
+            } else {
+                return _removeFilling(filling.questionID);
+            }
+        }
+
+        function _searchByID(questionID) {
+            var result;
+
+            fillingList.forEach(function(filling, index) {
+                if (filling.questionID === questionID) {
+                    result = {};
+                    result.filling = filling;
+                    result.index = index;
+                }
+            });
+
+            return result;
+        }
+
+        function _add(filling) {
+            fillingList.push(filling);
+        }
+
+        function _replaceFilling(filling) {
+            var result = _searchByID(filling.questionID);
+            if (result !== undefined) {
+                return fillingList.splice(result.index, 1, filling)[0];
+            } else {
+                return null;
+            }
+        }
+
+        function _removeFilling(questionID) {
+            var result = _searchByID(questionID);
+            if (result !== undefined) {
+                return fillingList.splice(result.index, 1)[0];
+            } else {
+                return null;
+            }
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.activity')
+        .service('StatusHistoryManagerService', StatusHistoryManagerService);
+
+    StatusHistoryManagerService.$inject = ['ActivityStatusFactory'];
+
+    function StatusHistoryManagerService(ActivityStatusFactory) {
+        var self = this;
+        var history;
+
+        self.init = init;
+        self.historySize = historySize;
+        self.getHistory = getHistory;
+        self.newCreatedRegistry = newCreatedRegistry;
+        self.newInitializedOfflineRegistry = newInitializedOfflineRegistry;
+        self.newInitializedOnlineRegistry = newInitializedOnlineRegistry;
+        self.newOpenedRegistry = newOpenedRegistry;
+        self.newSavedRegistry = newSavedRegistry;
+        self.newFinalizedRegistry = newFinalizedRegistry;
+        self.toJson = toJson;
+
+        init();
+
+        function init() {
+            history = [];
+        }
+
+        function getHistory() {
+            return history;
+        }
+
+        function newCreatedRegistry(user) {
+            history.push(ActivityStatusFactory.createCreatedStatus(user));
+        }
+
+        function newInitializedOfflineRegistry(user) {
+            history.push(ActivityStatusFactory.createInitializedOfflineStatus(user));
+        }
+
+        function newInitializedOnlineRegistry(user) {
+            history.push(ActivityStatusFactory.createInitializedOnlineStatus(user));
+        }
+
+        function newOpenedRegistry(user) {
+            history.push(ActivityStatusFactory.createOpenedStatus(user));
+        }
+
+        function newSavedRegistry(user) {
+            history.push(ActivityStatusFactory.createSavedStatus(user));
+        }
+
+        function newFinalizedRegistry(user) {
+            history.push(ActivityStatusFactory.createFinalizedStatus(user));
+        }
+
+        function historySize() {
+            return history.length;
+        }
+
+        function toJson() {
+            return JSON.stringify(history);
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.activity')
         .factory('ActivityParticipantDataFactory', ActivityParticipantDataFactory);
 
 
@@ -580,217 +791,6 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .service('ActivityFacadeService', ActivityFacadeService);
-
-    ActivityFacadeService.$inject = [
-        'AnswerFillFactory',
-        'MetadataFillFactory',
-        'QuestionFillFactory',
-        'ActivitySurveyFactory'
-    ];
-
-    function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
-        var self = this;
-        self.activitySurvey = null;
-
-        /* Public interface */
-        self.createActivity = createActivity;
-        self.createQuestionFill = createQuestionFill;
-        self.openActivitySurvey = openActivitySurvey;
-        self.initializeActivitySurvey = initializeActivitySurvey;
-
-
-        function createActivity(category, group, templateOID, user) {
-            self.activitySurvey = ActivitySurveyFactory.create(category, group, templateOID, user);
-        }
-
-        function openActivitySurvey() {
-            self.activitySurvey.statusHistory.newOpenedRegistry();
-        }
-
-        function initializeActivitySurvey() {
-            self.activitySurvey.statusHistory.newInitializedOnlineRegistry();
-        }
-
-        function createQuestionFill(questionID, answer, metadata, comment) {
-            var question = QuestionFillFactory.create(questionID, answer, metadata, comment);
-            self.activitySurvey.fillContainer.updateFilling(question);
-            //console.log(self.activitySurvey);
-            return question;
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.activity')
-        .service('FillingManagerService', FillingManagerService);
-
-    function FillingManagerService() {
-        var self = this;
-        var fillingList = [];
-
-        /* Public methods */
-        self.init = init;
-        self.listSize = listSize;
-        self.getFillingIndex = getFillingIndex;
-        self.existsFillingTo = existsFillingTo;
-        self.searchFillingByID = searchFillingByID;
-        self.updateFilling = updateFilling;
-
-        init();
-
-        function init() {
-            fillingList = [];
-        }
-
-        function listSize() {
-            return fillingList.length;
-        }
-
-        function getFillingIndex(questionID) {
-            var result = _searchByID(questionID);
-            return (result) ? result.index : null;
-        }
-
-        function existsFillingTo(questionID) {
-            return (_searchByID(questionID)) ? true : false;
-        }
-
-        function searchFillingByID(questionID) {
-            var result = _searchByID(questionID);
-            return (result) ? result.filling : null;
-        }
-
-        function updateFilling(filling) {
-            if (filling.isFilled()) {
-                if (!existsFillingTo(filling.questionID)) {
-                    _add(filling);
-                } else {
-                    return _replaceFilling(filling);
-                }
-            } else {
-                return _removeFilling(filling.questionID);
-            }
-        }
-
-        function _searchByID(questionID) {
-            var result;
-
-            fillingList.forEach(function(filling, index) {
-                if (filling.questionID === questionID) {
-                    result = {};
-                    result.filling = filling;
-                    result.index = index;
-                }
-            });
-
-            return result;
-        }
-
-        function _add(filling) {
-            fillingList.push(filling);
-        }
-
-        function _replaceFilling(filling) {
-            var result = _searchByID(filling.questionID);
-            if (result !== undefined) {
-                return fillingList.splice(result.index, 1, filling)[0];
-            } else {
-                return null;
-            }
-        }
-
-        function _removeFilling(questionID) {
-            var result = _searchByID(questionID);
-            if (result !== undefined) {
-                return fillingList.splice(result.index, 1)[0];
-            } else {
-                return null;
-            }
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.activity')
-        .service('StatusHistoryManagerService', StatusHistoryManagerService);
-
-    StatusHistoryManagerService.$inject = ['ActivityStatusFactory'];
-
-    function StatusHistoryManagerService(ActivityStatusFactory) {
-        var self = this;
-        var history;
-
-        self.init = init;
-        self.historySize = historySize;
-        self.getHistory = getHistory;
-        self.newCreatedRegistry = newCreatedRegistry;
-        self.newInitializedOfflineRegistry = newInitializedOfflineRegistry;
-        self.newInitializedOnlineRegistry = newInitializedOnlineRegistry;
-        self.newOpenedRegistry = newOpenedRegistry;
-        self.newSavedRegistry = newSavedRegistry;
-        self.newFinalizedRegistry = newFinalizedRegistry;
-        self.toJson = toJson;
-
-        init();
-
-        function init() {
-            history = [];
-        }
-
-        function getHistory() {
-            return history;
-        }
-
-        function newCreatedRegistry(user) {
-            history.push(ActivityStatusFactory.createCreatedStatus(user));
-        }
-
-        function newInitializedOfflineRegistry(user) {
-            history.push(ActivityStatusFactory.createInitializedOfflineStatus(user));
-        }
-
-        function newInitializedOnlineRegistry(user) {
-            history.push(ActivityStatusFactory.createInitializedOnlineStatus(user));
-        }
-
-        function newOpenedRegistry(user) {
-            history.push(ActivityStatusFactory.createOpenedStatus(user));
-        }
-
-        function newSavedRegistry(user) {
-            history.push(ActivityStatusFactory.createSavedStatus(user));
-        }
-
-        function newFinalizedRegistry(user) {
-            history.push(ActivityStatusFactory.createFinalizedStatus(user));
-        }
-
-        function historySize() {
-            return history.length;
-        }
-
-        function toJson() {
-            return JSON.stringify(history);
-        }
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.metadata')
         .service('AddMetadataAnswerService', AddMetadataAnswerService);
 
@@ -820,6 +820,45 @@
 
         function execute(item) {
             item.metadata.removeLastOption();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .service('AddFillingRulesService', AddFillingRulesService);
+
+
+    function AddFillingRulesService(){
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, validatorType) {
+            return item.fillingRules.createOption(validatorType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
+
+    function RemoveFillingRulesWorkService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, fillingRuleType) {
+            item.fillingRules.removeFillingRules(fillingRuleType);
         }
     }
 
@@ -916,45 +955,6 @@
         function execute(item, id) {
             // it needs a service to validate if is a valid or available id
             item.customID = id;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .service('AddFillingRulesService', AddFillingRulesService);
-
-
-    function AddFillingRulesService(){
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, validatorType) {
-            return item.fillingRules.createOption(validatorType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
-
-    function RemoveFillingRulesWorkService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, fillingRuleType) {
-            item.fillingRules.removeFillingRules(fillingRuleType);
         }
     }
 
@@ -2084,7 +2084,7 @@
     }
 
     function clone() {
-      return new self.constructor(self.when, self.operator, self.answer);
+      return new self.constructor(self.when, self.operator, self.answer, self.isMetadata, self.isCustom);
     }
 
     function toJson() {
@@ -2096,7 +2096,7 @@
       json.operator = self.operator;
       json.answer = self.answer;
       json.isMetadata = self.isMetadata;
-      json.isCustom = self.isCustom;  
+      json.isCustom = self.isCustom;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
@@ -4939,7 +4939,7 @@
     function _setupRules(ruleData) {
       var when = ruleData.when.customID || ruleData.when;
       var operator = ruleData.operator.type || ruleData.operator;
-      var answer = ruleData.getCorrectAnswer();
+      var answer = ruleData.answer;
       return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
     }
 
@@ -5063,7 +5063,7 @@
     function _setupRules(ruleData) {
       var when = ruleData.when.customID || ruleData.when;
       var operator = ruleData.operator.type || ruleData.operator;
-      var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
+      var answer = ruleData.answer;
       return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
     }
 
