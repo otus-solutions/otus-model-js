@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusjs.activity', []);
+        .module('otusjs.model.activity', []);
 
 }());
 
@@ -60,7 +60,7 @@
   angular
     .module('otusjs', [
       'otusjs.survey',
-      'otusjs.activity',
+      'otusjs.model.activity',
       'otusjs.surveyItem',
       'otusjs.metadata',
       'otusjs.misc',
@@ -132,9 +132,8 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('ActivityParticipantDataFactory', ActivityParticipantDataFactory);
-
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.ActivityParticipantDataFactory', ActivityParticipantDataFactory);
 
     function ActivityParticipantDataFactory() {
         var self = this;
@@ -177,8 +176,8 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('ActivityStatusFactory', ActivityStatusFactory);
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.ActivityStatusFactory', ActivityStatusFactory);
 
     function ActivityStatusFactory() {
         var self = this;
@@ -246,28 +245,29 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .factory('ActivitySurveyFactory', ActivitySurveyFactory);
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.ActivitySurveyFactory', ActivitySurveyFactory);
 
   ActivitySurveyFactory.$inject = [
-    'StatusHistoryManagerService',
-    'FillingManagerService'
+    'otusjs.model.activity.StatusHistoryManagerService',
+    'otusjs.model.activity.FillingManagerService',
+    'otusjs.model.navigation.NavigationStackFactory'
   ];
 
-  function ActivitySurveyFactory(StatusHistoryManagerService, FillingManagerService) {
+  function ActivitySurveyFactory(StatusHistoryManagerService, FillingManagerService, NavigationStackFactory) {
     var self = this;
 
     self.create = create;
 
     function create(template) {
       StatusHistoryManagerService.newCreatedRegistry({});
-      return new ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService);
+      return new ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService, NavigationStackFactory);
     }
 
     return self;
   }
 
-  function ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService) {
+  function ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService, NavigationStackFactory) {
     var self = this;
 
     self.objectType = 'Activity';
@@ -276,9 +276,19 @@
     self.template = template;
     self.fillContainer = FillingManagerService;
     self.statusHistory = StatusHistoryManagerService;
+    self.navigationStack = NavigationStackFactory.create();
 
     /* Public methods */
+    self.getNavigationStack = getNavigationStack;
     self.toJson = toJson;
+
+    function getNavigationStack() {
+      return self.navigationStack;
+    }
+
+    function setNavigationStack(stack) {
+      return self.navigationStack = stack;
+    }
 
     function toJson() {
       var json = {};
@@ -299,8 +309,8 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('ActivityUserFactory', ActivityUserFactory);
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.ActivityUserFactory', ActivityUserFactory);
 
     function ActivityUserFactory() {
         var self = this;
@@ -342,12 +352,12 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .factory('AnswerFillFactory', AnswerFillFactory);
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.AnswerFillFactory', AnswerFillFactory);
 
   AnswerFillFactory.$inject = [
-    'otusjs.activity.AnswerEvaluationService'
-  ]
+    'otusjs.model.activity.AnswerEvaluationService'
+  ];
 
   function AnswerFillFactory(AnswerEvaluationService) {
     let self = this;
@@ -392,10 +402,12 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('InterviewFactory', InterviewFactory);
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.InterviewFactory', InterviewFactory);
 
-    InterviewFactory.$inject = ['InterviewerFactory'];
+    InterviewFactory.$inject = [
+      'otusjs.model.activity.InterviewerFactory'
+    ];
 
     function InterviewFactory(InterviewerFactory) {
         var self = this;
@@ -437,8 +449,8 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('InterviewerFactory', InterviewerFactory);
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.InterviewerFactory', InterviewerFactory);
 
     function InterviewerFactory() {
         var self = this;
@@ -479,8 +491,8 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .factory('MetadataFillFactory', MetadataFillFactory);
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.MetadataFillFactory', MetadataFillFactory);
 
   function MetadataFillFactory() {
     let self = this;
@@ -525,12 +537,12 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .factory('QuestionFillFactory', QuestionFillFactory);
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.QuestionFillFactory', QuestionFillFactory);
 
   QuestionFillFactory.$inject = [
-    'AnswerFillFactory',
-    'MetadataFillFactory'
+    'otusjs.model.activity.AnswerFillFactory',
+    'otusjs.model.activity.MetadataFillFactory'
   ];
 
   function QuestionFillFactory(AnswerFillFactory, MetadataFillFactory) {
@@ -582,14 +594,14 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('ActivityFacadeService', ActivityFacadeService);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.ActivityFacadeService', ActivityFacadeService);
 
   ActivityFacadeService.$inject = [
-    'AnswerFillFactory',
-    'MetadataFillFactory',
-    'QuestionFillFactory',
-    'ActivitySurveyFactory'
+    'otusjs.model.activity.AnswerFillFactory',
+    'otusjs.model.activity.MetadataFillFactory',
+    'otusjs.model.activity.QuestionFillFactory',
+    'otusjs.model.activity.ActivitySurveyFactory'
   ];
 
   function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
@@ -634,8 +646,8 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('FillingManagerService', FillingManagerService);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.FillingManagerService', FillingManagerService);
 
   function FillingManagerService() {
     var self = this;
@@ -724,71 +736,73 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .service('StatusHistoryManagerService', StatusHistoryManagerService);
+  angular
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.StatusHistoryManagerService', StatusHistoryManagerService);
 
-    StatusHistoryManagerService.$inject = ['ActivityStatusFactory'];
+  StatusHistoryManagerService.$inject = [
+    'otusjs.model.activity.ActivityStatusFactory'
+  ];
 
-    function StatusHistoryManagerService(ActivityStatusFactory) {
-        var self = this;
-        var history;
+  function StatusHistoryManagerService(ActivityStatusFactory) {
+    var self = this;
+    var history;
 
-        self.init = init;
-        self.historySize = historySize;
-        self.getHistory = getHistory;
-        self.newCreatedRegistry = newCreatedRegistry;
-        self.newInitializedOfflineRegistry = newInitializedOfflineRegistry;
-        self.newInitializedOnlineRegistry = newInitializedOnlineRegistry;
-        self.newOpenedRegistry = newOpenedRegistry;
-        self.newSavedRegistry = newSavedRegistry;
-        self.newFinalizedRegistry = newFinalizedRegistry;
-        self.toJson = toJson;
+    self.init = init;
+    self.historySize = historySize;
+    self.getHistory = getHistory;
+    self.newCreatedRegistry = newCreatedRegistry;
+    self.newInitializedOfflineRegistry = newInitializedOfflineRegistry;
+    self.newInitializedOnlineRegistry = newInitializedOnlineRegistry;
+    self.newOpenedRegistry = newOpenedRegistry;
+    self.newSavedRegistry = newSavedRegistry;
+    self.newFinalizedRegistry = newFinalizedRegistry;
+    self.toJson = toJson;
 
-        init();
+    init();
 
-        function init() {
-            history = [];
-        }
-
-        function getHistory() {
-            return history;
-        }
-
-        function newCreatedRegistry(user) {
-            history.push(ActivityStatusFactory.createCreatedStatus(user));
-        }
-
-        function newInitializedOfflineRegistry(user) {
-            history.push(ActivityStatusFactory.createInitializedOfflineStatus(user));
-        }
-
-        function newInitializedOnlineRegistry(user) {
-            history.push(ActivityStatusFactory.createInitializedOnlineStatus(user));
-        }
-
-        function newOpenedRegistry(user) {
-            history.push(ActivityStatusFactory.createOpenedStatus(user));
-        }
-
-        function newSavedRegistry(user) {
-            history.push(ActivityStatusFactory.createSavedStatus(user));
-        }
-
-        function newFinalizedRegistry(user) {
-            history.push(ActivityStatusFactory.createFinalizedStatus(user));
-        }
-
-        function historySize() {
-            return history.length;
-        }
-
-        function toJson() {
-            return JSON.stringify(history);
-        }
+    function init() {
+      history = [];
     }
+
+    function getHistory() {
+      return history;
+    }
+
+    function newCreatedRegistry(user) {
+      history.push(ActivityStatusFactory.createCreatedStatus(user));
+    }
+
+    function newInitializedOfflineRegistry(user) {
+      history.push(ActivityStatusFactory.createInitializedOfflineStatus(user));
+    }
+
+    function newInitializedOnlineRegistry(user) {
+      history.push(ActivityStatusFactory.createInitializedOnlineStatus(user));
+    }
+
+    function newOpenedRegistry(user) {
+      history.push(ActivityStatusFactory.createOpenedStatus(user));
+    }
+
+    function newSavedRegistry(user) {
+      history.push(ActivityStatusFactory.createSavedStatus(user));
+    }
+
+    function newFinalizedRegistry(user) {
+      history.push(ActivityStatusFactory.createFinalizedStatus(user));
+    }
+
+    function historySize() {
+      return history.length;
+    }
+
+    function toJson() {
+      return JSON.stringify(history);
+    }
+  }
 
 })();
 
@@ -1602,6 +1616,164 @@
           return true;
         }
       });
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .factory('otusjs.model.navigation.NavigationStackFactory', Factory);
+
+  function Factory() {
+    let self = this;
+
+    /* Public methods */
+    self.create = create;
+
+    function create() {
+      return new NavigationStack();
+    }
+
+    return self;
+  }
+
+  function NavigationStack() {
+    let self = this;
+    let _size = 0;
+    let _head = null;
+    let _tail = null;
+    let _current = null;
+    let _currentIndex = null;
+
+    /* Public methods */
+    self.add = add;
+    self.ahead = ahead;
+    self.back = back;
+    self.getCurrentItem = getCurrentItem;
+    self.getSize = getSize;
+
+    function add(item) {
+      if (!_head) {
+        _head = item;
+      } else {
+        item.setPrevious(_current);
+        _current.setNext(item);
+      }
+
+      if ( (_currentIndex < (_size - 1)) ){
+        _size = _currentIndex + 2;
+        ++_currentIndex;
+      } else {
+        ++_size;
+        _currentIndex = _size - 1;
+      }
+      _current = item;
+    }
+
+    function ahead() {
+      if (_current.getNext()) {
+        _current = _current.getNext();
+        ++_currentIndex;
+      }
+    }
+
+    function back() {
+      if (_current.getPrevious()) {
+        _current = _current.getPrevious();
+        --_currentIndex;
+      }
+    }
+
+    function getCurrentItem() {
+      return _current;
+    }
+
+    function getSize() {
+      return _size;
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .factory('otusjs.model.navigation.NavigationStackItemFactory', Factory);
+
+  function Factory() {
+    let self = this;
+
+    /* Public methods */
+    self.create = create;
+
+    function create(options) {
+      return new NavigationStackItem(options);
+    }
+
+    return self;
+  }
+
+  function NavigationStackItem(options) {
+    let self = this;
+
+    let _id = options.id;
+    let _label = options.label || '';
+    let _type = options.type;
+    let _answer = options.answer;
+    let _metadata = options.metadata;
+
+    let _previous = null;
+    let _next = null;
+
+    /* Public methods */
+    self.getID = getID;
+    self.getLabel = getLabel;
+    self.getType = getType;
+    self.getAnswer = getAnswer;
+    self.getMetadata = getMetadata;
+    self.getNext = getNext;
+    self.setNext = setNext;
+    self.getPrevious = getPrevious;
+    self.setPrevious = setPrevious;
+
+    function getID() {
+      return _id;
+    }
+
+    function getLabel() {
+      return _label;
+    }
+
+    function getType() {
+      return _type;
+    }
+
+    function getAnswer() {
+      return _answer;
+    }
+
+    function getMetadata() {
+      return _metadata;
+    }
+
+    function getNext() {
+      return _next;
+    }
+
+    function setNext(item) {
+      return _next = item;
+    }
+
+    function getPrevious() {
+      return _previous;
+    }
+
+    function setPrevious(item) {
+      return _previous = item;
     }
   }
 }());
@@ -3118,13 +3290,13 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('otusjs.activity.AnswerEvaluationService', Service);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.AnswerEvaluationService', Service);
 
   Service.$inject = [
-    'otusjs.activity.NumericRuleTestService',
-    'otusjs.activity.TextRuleTestService',
-    'otusjs.activity.DateTimeRuleTestService'
+    'otusjs.model.activity.NumericRuleTestService',
+    'otusjs.model.activity.TextRuleTestService',
+    'otusjs.model.activity.DateTimeRuleTestService'
   ];
 
   function Service(NumericRuleTestService, TextRuleTestService, DateTimeRuleTestService) {
@@ -3154,8 +3326,8 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('otusjs.activity.DateTimeRuleTestService', Service);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.DateTimeRuleTestService', Service);
 
   function Service() {
     let self = this;
@@ -3213,8 +3385,8 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('otusjs.activity.NumericRuleTestService', Service);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.NumericRuleTestService', Service);
 
   function Service() {
     let self = this;
@@ -3283,8 +3455,8 @@
   'use strict';
 
   angular
-    .module('otusjs.activity')
-    .service('otusjs.activity.TextRuleTestService', Service);
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.TextRuleTestService', Service);
 
   function Service() {
     let self = this;

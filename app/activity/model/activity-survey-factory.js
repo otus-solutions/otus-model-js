@@ -7,23 +7,24 @@
 
   ActivitySurveyFactory.$inject = [
     'otusjs.model.activity.StatusHistoryManagerService',
-    'otusjs.model.activity.FillingManagerService'
+    'otusjs.model.activity.FillingManagerService',
+    'otusjs.model.navigation.NavigationStackFactory'
   ];
 
-  function ActivitySurveyFactory(StatusHistoryManagerService, FillingManagerService) {
+  function ActivitySurveyFactory(StatusHistoryManagerService, FillingManagerService, NavigationStackFactory) {
     var self = this;
 
     self.create = create;
 
     function create(template) {
       StatusHistoryManagerService.newCreatedRegistry({});
-      return new ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService);
+      return new ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService, NavigationStackFactory);
     }
 
     return self;
   }
 
-  function ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService) {
+  function ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService, NavigationStackFactory) {
     var self = this;
 
     self.objectType = 'Activity';
@@ -32,9 +33,19 @@
     self.template = template;
     self.fillContainer = FillingManagerService;
     self.statusHistory = StatusHistoryManagerService;
+    self.navigationStack = NavigationStackFactory.create();
 
     /* Public methods */
+    self.getNavigationStack = getNavigationStack;
     self.toJson = toJson;
+
+    function getNavigationStack() {
+      return self.navigationStack;
+    }
+
+    function setNavigationStack(stack) {
+      return self.navigationStack = stack;
+    }
 
     function toJson() {
       var json = {};

@@ -13,10 +13,14 @@ describe('ActivitySurveyFactory', function() {
     module('otusjs');
 
     inject(function(_$injector_) {
+      /* Test data */
       mockSurveyTemplate();
       mockJson();
+
+      /* Injectable mocks */
       mockStatusHistoryManagerService(_$injector_);
       mockFillingManagerService(_$injector_);
+      mockNavigationStackFactory(_$injector_);
       factory = _$injector_.get('otusjs.model.activity.ActivitySurveyFactory', Injections);
       activity = factory.create(Mock.surveyTemplate);
     });
@@ -36,12 +40,16 @@ describe('ActivitySurveyFactory', function() {
       expect(activity.template).toEqual(Mock.surveyTemplate);
     });
 
-    it('should return attribute fillContainer equal of FillingManagerService', function() {
+    it('should return attribute fillContainer equal to FillingManagerService', function() {
       expect(activity.fillContainer).toEqual(Mock.FillingManagerService);
     });
 
-    it('should return attribute statusHistory equal of StatusHistoryManagerService', function() {
+    it('should return attribute statusHistory equal to StatusHistoryManagerService', function() {
       expect(activity.statusHistory).toEqual(Mock.StatusHistoryManagerService);
+    });
+
+    it('should return attribute navigationStack equal to navigationStack', function() {
+      expect(activity.navigationStack).toEqual(Mock.navigationStack);
     });
 
   });
@@ -71,11 +79,18 @@ describe('ActivitySurveyFactory', function() {
 
   function mockStatusHistoryManagerService($injector) {
     Mock.StatusHistoryManagerService = $injector.get('otusjs.model.activity.StatusHistoryManagerService');
-    return Mock.StatusHistoryManagerService;
+    Injections.StatusHistoryManagerService = Mock.StatusHistoryManagerService;
   }
 
   function mockFillingManagerService($injector) {
     Mock.FillingManagerService = $injector.get('otusjs.model.activity.FillingManagerService');
-    return Mock.FillingManagerService;
+    Injections.FillingManagerService = Mock.FillingManagerService;
+  }
+
+  function mockNavigationStackFactory($injector) {
+    Mock.NavigationStackFactory = $injector.get('otusjs.model.navigation.NavigationStackFactory');
+    Mock.navigationStack = Mock.NavigationStackFactory.create();
+    spyOn(Mock.NavigationStackFactory, 'create').and.returnValue(Mock.navigationStack);
+    Injections.NavigationStackFactory = Mock.NavigationStackFactory;
   }
 });
