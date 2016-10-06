@@ -21,7 +21,7 @@
     function FutureDateValidator(value) {
         var self = this;
 
-        self.reference = new Date();
+        self.reference = false;
     }
 
 }());

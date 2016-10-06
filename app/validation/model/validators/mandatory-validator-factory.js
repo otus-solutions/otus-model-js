@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('MandatoryValidatorFactory', MandatoryValidatorFactory);
 
-    MandatoryValidatorFactory.$inject = ['LabelFactory'];
-
-    function MandatoryValidatorFactory(LabelFactory) {
+    function MandatoryValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MandatoryValidator(value, LabelFactory);
+            return new MandatoryValidator(value);
         }
 
         return self;
     }
 
-    function MandatoryValidator(value, LabelFactory) {
+    function MandatoryValidator(value) {
         var self = this;
 
         self.reference = false;

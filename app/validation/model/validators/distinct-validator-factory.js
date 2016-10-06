@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('DistinctValidatorFactory', DistinctValidatorFactory);
 
-    DistinctValidatorFactory.$inject = ['LabelFactory'];
-
-    function DistinctValidatorFactory(LabelFactory) {
+    function DistinctValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new DistinctValidatorFactory(value, LabelFactory);
+            return new DistinctValidatorFactory(value);
         }
 
         return self;
     }
 
-    function DistinctValidator(value, LabelFactory) {
+    function DistinctValidator(value) {
         var self = this;
 
         self.reference = null;
