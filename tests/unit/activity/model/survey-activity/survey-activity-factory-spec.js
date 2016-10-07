@@ -88,7 +88,7 @@ describe('ActivitySurveyFactory', function() {
   }
 
   function mockNavigationStackFactory($injector) {
-    Mock.NavigationStackFactory = $injector.get('otusjs.model.navigation.NavigationStackFactory');
+    Mock.NavigationStackFactory = $injector.get('otusjs.model.navigation.NavigationPathFactory');
     Mock.navigationStack = Mock.NavigationStackFactory.create();
     spyOn(Mock.NavigationStackFactory, 'create').and.returnValue(Mock.navigationStack);
     Injections.NavigationStackFactory = Mock.NavigationStackFactory;

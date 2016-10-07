@@ -8,7 +8,7 @@
   ActivitySurveyFactory.$inject = [
     'otusjs.model.activity.StatusHistoryManagerService',
     'otusjs.model.activity.FillingManagerService',
-    'otusjs.model.navigation.NavigationStackFactory'
+    'otusjs.model.navigation.NavigationPathFactory'
   ];
 
   function ActivitySurveyFactory(StatusHistoryManagerService, FillingManagerService, NavigationStackFactory) {

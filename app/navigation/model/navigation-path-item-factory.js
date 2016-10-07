@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.model.navigation')
-    .factory('otusjs.model.navigation.NavigationStackItemFactory', Factory);
+    .factory('otusjs.model.navigation.NavigationPathItemFactory', Factory);
 
   function Factory() {
     let self = this;
