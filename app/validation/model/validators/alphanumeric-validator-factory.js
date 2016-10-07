@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
 
-    AlphanumericValidatorFactory.$inject = ['LabelFactory'];
-
-    function AlphanumericValidatorFactory(LabelFactory) {
+    function AlphanumericValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new AlphanumericValidator(value, LabelFactory);
+            return new AlphanumericValidator(value);
         }
 
         return self;
     }
 
-    function AlphanumericValidator(value, LabelFactory) {
+    function AlphanumericValidator(value) {
         var self = this;
 
         self.reference = true;

@@ -947,6 +947,115 @@
     angular
         .module('otusjs.metadata')
         .factory('MetadataAnswerFactory', MetadataAnswerFactory);
+<<<<<<< HEAD
+=======
+
+    MetadataAnswerFactory.$inject = ['LabelFactory'];
+
+    function MetadataAnswerFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(value) {
+            return new MetadataAnswer(value, LabelFactory);
+        }
+
+        return self;
+    }
+
+    function MetadataAnswer(value, LabelFactory) {
+        var self = this;
+
+        self.extends = 'StudioObject';
+        self.objectType = 'MetadataAnswer';
+        self.dataType = 'Integer';
+        self.value = value;
+        self.label = {
+            'ptBR': LabelFactory.create(),
+            'enUS': LabelFactory.create(),
+            'esES': LabelFactory.create()
+        };
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.metadata')
+        .factory('MetadataGroupFactory', MetadataGroupFactory);
+
+    MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
+
+    function MetadataGroupFactory(MetadataAnswerFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MetadataGroup(MetadataAnswerFactory);
+        }
+
+        return self;
+    }
+
+    function MetadataGroup(MetadataAnswerFactory) {
+        var self = this;
+
+        self.extents = 'StudioObject';
+        self.objectType = 'MetadataGroup';
+        self.options = [];
+
+        /* Public methods */
+        self.getOptionListSize = getOptionListSize;
+        self.getOptionByValue = getOptionByValue;
+        self.createOption = createOption;
+        self.removeOption = removeOption;
+        self.removeLastOption = removeLastOption;
+
+        function getOptionListSize() {
+            return self.options.length;
+        }
+
+        function getOptionByValue(value) {
+            return self.options[value - 1];
+        }
+
+        function createOption() {
+            var option = MetadataAnswerFactory.create(self.options.length + 1);
+            self.options.push(option);
+            return option;
+        }
+
+        function removeOption(value) {
+            self.options.splice((value - 1), 1);
+            reorderOptionValues();
+        }
+
+        function removeLastOption() {
+            self.options.splice(-1, 1);
+        }
+
+        function reorderOptionValues() {
+            self.options.forEach(function(option, index) {
+                option.value = ++index;
+            });
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.misc')
+        .factory('LabelFactory', LabelFactory);
+>>>>>>> d40e77efcd5752290ca96f58401d43fb18c0904e
 
     MetadataAnswerFactory.$inject = ['LabelFactory'];
 
@@ -1141,6 +1250,7 @@
 }());
 
 (function() {
+<<<<<<< HEAD
     'use strict';
 
     angular
@@ -1195,6 +1305,8 @@
 }());
 
 (function() {
+=======
+>>>>>>> d40e77efcd5752290ca96f58401d43fb18c0904e
 
   angular
     .module('otusjs.model.navigation')
@@ -1532,9 +1644,28 @@
     'SurveyItemContainerService'
   ];
 
+<<<<<<< HEAD
   function service(SurveyItemContainerService) {
     var self = this;
     var itemList = [];
+||||||| merged common ancestors
+    function _buildJsonInNavigations() {
+      return self.inNavigations.map(function(element) {
+        return {
+          origin: element.origin,
+          isDefaultPath: element.isDefault
+        };
+      });
+    }
+=======
+    function _buildJsonInNavigations() {
+      return self.inNavigations.map(function(element) {
+        return {
+          origin: element.origin
+        };
+      });
+    }
+>>>>>>> 428b69119ecb043a7ed74257d1adadb4ddf54236
 
     /* Public methods */
     self.init = init;
@@ -2076,8 +2207,17 @@
       return _id;
     }
 
+<<<<<<< HEAD
     function getLabel() {
       return _label;
+||||||| merged common ancestors
+    function selfsame(other) {
+      return Object.is(self, other);
+=======
+    function selfsame(other) {
+      // TODO Imcompatibility
+      //return Object.is(self, other);
+>>>>>>> 428b69119ecb043a7ed74257d1adadb4ddf54236
     }
 
     function getType() {
@@ -2128,35 +2268,71 @@
     self.create = create;
     self.fromJson = fromJson;
 
+<<<<<<< HEAD
     function create(name, rules) {
       if (rules && rules.length) {
         return new RouteCondition(name, rules);
       } else {
         return null;
       }
+||||||| merged common ancestors
+    function create(when, operator, answer) {
+      return new Rule(when, operator, answer);
+=======
+    function create(when, operator, answer, isMetadata, isCustom) {
+      return new Rule(when, operator, answer, isMetadata, isCustom);
+>>>>>>> 428b69119ecb043a7ed74257d1adadb4ddf54236
     }
 
     function fromJson(json) {
       var jsonObj = JSON.parse(json);
+<<<<<<< HEAD
       var rules = jsonObj.rules.map(_rebuildRules);
       return create(jsonObj.name, rules);
     }
 
     function _rebuildRules(ruleJson) {
       return RuleFactory.fromJson(JSON.stringify(ruleJson));
+||||||| merged common ancestors
+      var rule = new Rule(jsonObj.when, jsonObj.operator, jsonObj.answer);
+      return rule;
+=======
+      var rule = new Rule(jsonObj.when, jsonObj.operator, jsonObj.answer, jsonObj.isMetadata, jsonObj.isCustom);
+      return rule;
+>>>>>>> 428b69119ecb043a7ed74257d1adadb4ddf54236
     }
 
     return self;
   }
 
+<<<<<<< HEAD
   function RouteCondition(name, rules) {
+||||||| merged common ancestors
+  function Rule(when, operator, answer) {
+=======
+  function Rule(when, operator, answer, isMetadata, isCustom) {
+>>>>>>> 428b69119ecb043a7ed74257d1adadb4ddf54236
     var self = this;
 
     self.extents = 'SurveyTemplateObject';
+<<<<<<< HEAD
     self.objectType = 'RouteCondition';
     self.name = name || 'ROUTE_CONDITION';
     self.index = null;
     self.rules = [];
+||||||| merged common ancestors
+    self.objectType = 'Rule';
+    self.when = when;
+    self.operator = operator;
+    self.answer = answer;
+=======
+    self.objectType = 'Rule';
+    self.when = when;
+    self.operator = operator;
+    self.answer = answer;
+    self.isMetadata = isMetadata;
+    self.isCustom = isCustom;
+>>>>>>> 428b69119ecb043a7ed74257d1adadb4ddf54236
 
     /* Public methods */
     self.addRule = addRule;
@@ -2239,22 +2415,45 @@
     }
 
     function selfsame(other) {
-      return Object.is(self, other);
+      //TODO Imcompatibility
+      //return Object.is(self, other);
     }
 
     function clone() {
+<<<<<<< HEAD
       return new self.constructor(self.name, self.rules);
+||||||| merged common ancestors
+      return new self.constructor(self.when, self.operator, self.answer);
+=======
+      return new self.constructor(self.when, self.operator, self.answer, self.isMetadata, self.isCustom);
+>>>>>>> 428b69119ecb043a7ed74257d1adadb4ddf54236
     }
 
     function toJson() {
       var json = {};
 
+<<<<<<< HEAD
       json.extents = 'StudioObject';
       json.objectType = 'RouteCondition';
       json.name = self.name;
       json.rules = self.rules.map(function(rule) {
         return rule.toJson();
       });
+||||||| merged common ancestors
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.when = self.when;
+      json.operator = self.operator;
+      json.answer = self.answer;
+=======
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.when = self.when;
+      json.operator = self.operator;
+      json.answer = self.answer;
+      json.isMetadata = self.isMetadata;
+      json.isCustom = self.isCustom;
+>>>>>>> 428b69119ecb043a7ed74257d1adadb4ddf54236
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
@@ -3316,7 +3515,7 @@
         self.extends = 'StudioObject';
         self.objectType = 'Rule';
         self.validatorType = validatorType;
-        self.data = FillingRulesDataFactory.create(validatorType)
+        self.data = FillingRulesDataFactory.create(validatorType);
     }
 
 }());
@@ -4633,22 +4832,20 @@
         .module('otusjs.validation')
         .factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
 
-    AlphanumericValidatorFactory.$inject = ['LabelFactory'];
-
-    function AlphanumericValidatorFactory(LabelFactory) {
+    function AlphanumericValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new AlphanumericValidator(value, LabelFactory);
+            return new AlphanumericValidator(value);
         }
 
         return self;
     }
 
-    function AlphanumericValidator(value, LabelFactory) {
+    function AlphanumericValidator(value) {
         var self = this;
 
         self.reference = true;
@@ -4663,22 +4860,20 @@
         .module('otusjs.validation')
         .factory('DistinctValidatorFactory', DistinctValidatorFactory);
 
-    DistinctValidatorFactory.$inject = ['LabelFactory'];
-
-    function DistinctValidatorFactory(LabelFactory) {
+    function DistinctValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new DistinctValidatorFactory(value, LabelFactory);
+            return new DistinctValidatorFactory(value);
         }
 
         return self;
     }
 
-    function DistinctValidator(value, LabelFactory) {
+    function DistinctValidator(value) {
         var self = this;
 
         self.reference = null;
@@ -4709,7 +4904,7 @@
     function FutureDateValidator(value) {
         var self = this;
 
-        self.reference = new Date();
+        self.reference = false;
     }
 
 }());
@@ -4721,22 +4916,20 @@
         .module('otusjs.validation')
         .factory('InValidatorFactory', InValidatorFactory);
 
-    InValidatorFactory.$inject = ['LabelFactory'];
-
-    function InValidatorFactory(LabelFactory) {
+    function InValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new InValidator(value, LabelFactory);
+            return new InValidator(value);
         }
 
         return self;
     }
 
-    function InValidator(value, LabelFactory) {
+    function InValidator(value) {
         var self = this;
 
         self.reference = {'initial':null, 'end': null};
@@ -4751,22 +4944,20 @@
         .module('otusjs.validation')
         .factory('LowerCaseValidatorFactory', LowerCaseValidatorFactory);
 
-    LowerCaseValidatorFactory.$inject = ['LabelFactory'];
-
-    function LowerCaseValidatorFactory(LabelFactory) {
+    function LowerCaseValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new LowerCaseValidator(value, LabelFactory);
+            return new LowerCaseValidator(value);
         }
 
         return self;
     }
 
-    function LowerCaseValidator(value, LabelFactory) {
+    function LowerCaseValidator(value) {
         var self = this;
 
         self.reference = true;
@@ -4781,22 +4972,20 @@
         .module('otusjs.validation')
         .factory('LowerLimitValidatorFactory', LowerLimitValidatorFactory);
 
-    LowerLimitValidatorFactory.$inject = ['LabelFactory'];
-
-    function LowerLimitValidatorFactory(LabelFactory) {
+    function LowerLimitValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new LowerLimitValidator(value, LabelFactory);
+            return new LowerLimitValidator(value);
         }
 
         return self;
     }
 
-    function LowerLimitValidator(value, LabelFactory) {
+    function LowerLimitValidator(value) {
         var self = this;
 
         self.reference = null;
@@ -4811,22 +5000,20 @@
         .module('otusjs.validation')
         .factory('MandatoryValidatorFactory', MandatoryValidatorFactory);
 
-    MandatoryValidatorFactory.$inject = ['LabelFactory'];
-
-    function MandatoryValidatorFactory(LabelFactory) {
+    function MandatoryValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MandatoryValidator(value, LabelFactory);
+            return new MandatoryValidator(value);
         }
 
         return self;
     }
 
-    function MandatoryValidator(value, LabelFactory) {
+    function MandatoryValidator(value) {
         var self = this;
 
         self.reference = false;
@@ -4841,22 +5028,20 @@
         .module('otusjs.validation')
         .factory('MaxDateValidatorFactory', MaxDateValidatorFactory);
 
-    MaxDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function MaxDateValidatorFactory(LabelFactory) {
+    function MaxDateValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MaxDateValidator(value, LabelFactory);
+            return new MaxDateValidator(value);
         }
 
         return self;
     }
 
-    function MaxDateValidator(value, LabelFactory) {
+    function MaxDateValidator(value) {
         var self = this;
 
         self.reference = new Date();
@@ -4871,25 +5056,23 @@
         .module('otusjs.validation')
         .factory('MaxLengthValidatorFactory', MaxLengthValidatorFactory);
 
-    MaxLengthValidatorFactory.$inject = ['LabelFactory'];
-
-    function MaxLengthValidatorFactory(LabelFactory) {
+    function MaxLengthValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MaxLengthValidator(value, LabelFactory);
+            return new MaxLengthValidator(value);
         }
 
         return self;
     }
 
-    function MaxLengthValidator(value, LabelFactory) {
+    function MaxLengthValidator(value) {
         var self = this;
 
-        self.size = null;
+        self.reference = null;
     }
 
 }());
@@ -4901,22 +5084,20 @@
         .module('otusjs.validation')
         .factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
 
-    MaxTimeValidatorFactory.$inject = ['LabelFactory'];
-
-    function MaxTimeValidatorFactory(LabelFactory) {
+    function MaxTimeValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MaxTimeValidator(value, LabelFactory);
+            return new MaxTimeValidator(value);
         }
 
         return self;
     }
 
-    function MaxTimeValidator(value, LabelFactory) {
+    function MaxTimeValidator(value) {
         var self = this;
 
         self.reference = '';
@@ -4931,22 +5112,20 @@
         .module('otusjs.validation')
         .factory('MinDateValidatorFactory', MinDateValidatorFactory);
 
-    MinDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function MinDateValidatorFactory(LabelFactory) {
+    function MinDateValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MinDateValidator(value, LabelFactory);
+            return new MinDateValidator(value);
         }
 
         return self;
     }
 
-    function MinDateValidator(value, LabelFactory) {
+    function MinDateValidator(value) {
         var self = this;
 
         self.reference = new Date();
@@ -4961,25 +5140,23 @@
         .module('otusjs.validation')
         .factory('MinLengthValidatorFactory', MinLengthValidatorFactory);
 
-    MinLengthValidatorFactory.$inject = ['LabelFactory'];
-
-    function MinLengthValidatorFactory(LabelFactory) {
+    function MinLengthValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MinLengthValidator(value, LabelFactory);
+            return new MinLengthValidator(value);
         }
 
         return self;
     }
 
-    function MinLengthValidator(value, LabelFactory) {
+    function MinLengthValidator(value) {
         var self = this;
 
-        self.size = null;
+        self.reference = null;
     }
 
 }());
@@ -4991,22 +5168,20 @@
         .module('otusjs.validation')
         .factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
 
-    MinTimeValidatorFactory.$inject = ['LabelFactory'];
-
-    function MinTimeValidatorFactory(LabelFactory) {
+    function MinTimeValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MinTimeValidator(value, LabelFactory);
+            return new MinTimeValidator(value);
         }
 
         return self;
     }
 
-    function MinTimeValidator(value, LabelFactory) {
+    function MinTimeValidator(value) {
         var self = this;
 
         self.reference = '';
@@ -5021,22 +5196,20 @@
         .module('otusjs.validation')
         .factory('ParameterValidatorFactory', ParameterValidatorFactory);
 
-    ParameterValidatorFactory.$inject = ['LabelFactory'];
-
-    function ParameterValidatorFactory(LabelFactory) {
+    function ParameterValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new ParameterValidator(value, LabelFactory);
+            return new ParameterValidator(value);
         }
 
         return self;
     }
 
-    function ParameterValidator(value, LabelFactory) {
+    function ParameterValidator(value) {
         var self = this;
 
         self.reference = '';
@@ -5051,25 +5224,23 @@
         .module('otusjs.validation')
         .factory('PastDateValidatorFactory', PastDateValidatorFactory);
 
-    PastDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function PastDateValidatorFactory(LabelFactory) {
+    function PastDateValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new PastDateValidator(value, LabelFactory);
+            return new PastDateValidator(value);
         }
 
         return self;
     }
 
-    function PastDateValidator(value, LabelFactory) {
+    function PastDateValidator(value) {
         var self = this;
 
-        self.reference = new Date();
+        self.reference = false;
     }
 
 }());
@@ -5081,22 +5252,20 @@
         .module('otusjs.validation')
         .factory('PrecisionValidatorFactory', PrecisionValidatorFactory);
 
-    PrecisionValidatorFactory.$inject = ['LabelFactory'];
-
-    function PrecisionValidatorFactory(LabelFactory) {
+    function PrecisionValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new PrecisionValidator(value, LabelFactory);
+            return new PrecisionValidator(value);
         }
 
         return self;
     }
 
-    function PrecisionValidator(value, LabelFactory) {
+    function PrecisionValidator(value) {
         var self = this;
 
         self.reference = null;
@@ -5111,22 +5280,20 @@
         .module('otusjs.validation')
         .factory('RangeDateValidatorFactory', RangeDateValidatorFactory);
 
-    RangeDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function RangeDateValidatorFactory(LabelFactory) {
+    function RangeDateValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new RangeDateValidator(value, LabelFactory);
+            return new RangeDateValidator(value);
         }
 
         return self;
     }
 
-    function RangeDateValidator(value, LabelFactory) {
+    function RangeDateValidator(value) {
         var self = this;
 
         self.reference = {'initial': new Date(), 'end': new Date()};
@@ -5141,22 +5308,20 @@
         .module('otusjs.validation')
         .factory('ScaleValidatorFactory', ScaleValidatorFactory);
 
-    ScaleValidatorFactory.$inject = ['LabelFactory'];
-
-    function ScaleValidatorFactory(LabelFactory) {
+    function ScaleValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new ScaleValidator(value, LabelFactory);
+            return new ScaleValidator(value);
         }
 
         return self;
     }
 
-    function ScaleValidator(value, LabelFactory) {
+    function ScaleValidator(value) {
         var self = this;
 
         self.reference = null;
@@ -5171,22 +5336,20 @@
         .module('otusjs.validation')
         .factory('SpecialsValidatorFactory', SpecialsValidatorFactory);
 
-    SpecialsValidatorFactory.$inject = ['LabelFactory'];
-
-    function SpecialsValidatorFactory(LabelFactory) {
+    function SpecialsValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new SpecialsValidator(value, LabelFactory);
+            return new SpecialsValidator(value);
         }
 
         return self;
     }
 
-    function SpecialsValidator(value, LabelFactory) {
+    function SpecialsValidator(value) {
         var self = this;
 
         self.reference = true;
@@ -5202,22 +5365,20 @@
         .module('otusjs.validation')
         .factory('UpperCaseValidatorFactory', UpperCaseValidatorFactory);
 
-    UpperCaseValidatorFactory.$inject = ['LabelFactory'];
-
-    function UpperCaseValidatorFactory(LabelFactory) {
+    function UpperCaseValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new UpperCaseValidator(value, LabelFactory);
+            return new UpperCaseValidator(value);
         }
 
         return self;
     }
 
-    function UpperCaseValidator(value, LabelFactory) {
+    function UpperCaseValidator(value) {
         var self = this;
 
         self.reference = true;
@@ -5232,22 +5393,20 @@
         .module('otusjs.validation')
         .factory('UpperLimitValidatorFactory', UpperLimitValidatorFactory);
 
-    UpperLimitValidatorFactory.$inject = ['LabelFactory'];
-
-    function UpperLimitValidatorFactory(LabelFactory) {
+    function UpperLimitValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new UpperLimitValidator(value, LabelFactory);
+            return new UpperLimitValidator(value);
         }
 
         return self;
     }
 
-    function UpperLimitValidator(value, LabelFactory) {
+    function UpperLimitValidator(value) {
         var self = this;
 
         self.reference = null;
@@ -5360,8 +5519,8 @@
     function _setupRules(ruleData) {
       var when = ruleData.when.customID || ruleData.when;
       var operator = ruleData.operator.type || ruleData.operator;
-      var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
-      return RuleFactory.create(when, operator, answer);
+      var answer = ruleData.getAnswer();
+      return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
     }
 
     function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
@@ -5463,8 +5622,8 @@
       } else if (routeData.isDefault) {
         CreateDefaultRouteTaskService.execute(routeData, navigation);
       } else {
-        var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, routeData.conditions);
         var conditions = routeData.conditions.map(_setupConditions);
+        var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, conditions);
         navigation.updateRoute(route);
         _notifyNextNavigation(route, navigation);
       }
@@ -5485,7 +5644,7 @@
       var when = ruleData.when.customID || ruleData.when;
       var operator = ruleData.operator.type || ruleData.operator;
       var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
-      return RuleFactory.create(when, operator, answer);
+      return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
     }
 
     function _notifyNextNavigation(routeData, navigation) {

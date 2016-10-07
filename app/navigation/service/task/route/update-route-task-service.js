@@ -25,8 +25,8 @@
       } else if (routeData.isDefault) {
         CreateDefaultRouteTaskService.execute(routeData, navigation);
       } else {
-        var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, routeData.conditions);
         var conditions = routeData.conditions.map(_setupConditions);
+        var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, conditions);
         navigation.updateRoute(route);
         _notifyNextNavigation(route, navigation);
       }
@@ -47,7 +47,7 @@
       var when = ruleData.when.customID || ruleData.when;
       var operator = ruleData.operator.type || ruleData.operator;
       var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
-      return RuleFactory.create(when, operator, answer);
+      return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
     }
 
     function _notifyNextNavigation(routeData, navigation) {

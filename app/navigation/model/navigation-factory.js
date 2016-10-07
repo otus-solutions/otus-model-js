@@ -294,8 +294,7 @@
     function _buildJsonInNavigations() {
       return self.inNavigations.map(function(element) {
         return {
-          origin: element.origin,
-          isDefaultPath: element.isDefault
+          origin: element.origin
         };
       });
     }

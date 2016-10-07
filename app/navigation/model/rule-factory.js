@@ -12,20 +12,20 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(when, operator, answer) {
-      return new Rule(when, operator, answer);
+    function create(when, operator, answer, isMetadata, isCustom) {
+      return new Rule(when, operator, answer, isMetadata, isCustom);
     }
 
     function fromJson(json) {
       var jsonObj = JSON.parse(json);
-      var rule = new Rule(jsonObj.when, jsonObj.operator, jsonObj.answer);
+      var rule = new Rule(jsonObj.when, jsonObj.operator, jsonObj.answer, jsonObj.isMetadata, jsonObj.isCustom);
       return rule;
     }
 
     return self;
   }
 
-  function Rule(when, operator, answer) {
+  function Rule(when, operator, answer, isMetadata, isCustom) {
     var self = this;
 
     self.extents = 'SurveyTemplateObject';
@@ -33,6 +33,8 @@
     self.when = when;
     self.operator = operator;
     self.answer = answer;
+    self.isMetadata = isMetadata;
+    self.isCustom = isCustom;
 
     /* Public methods */
     self.within = within;
@@ -116,11 +118,12 @@
     }
 
     function selfsame(other) {
-      return Object.is(self, other);
+      //TODO Imcompatibility
+      //return Object.is(self, other);
     }
 
     function clone() {
-      return new self.constructor(self.when, self.operator, self.answer);
+      return new self.constructor(self.when, self.operator, self.answer, self.isMetadata, self.isCustom);
     }
 
     function toJson() {
@@ -131,6 +134,8 @@
       json.when = self.when;
       json.operator = self.operator;
       json.answer = self.answer;
+      json.isMetadata = self.isMetadata;
+      json.isCustom = self.isCustom;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }

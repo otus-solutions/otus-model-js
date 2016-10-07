@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('UpperCaseValidatorFactory', UpperCaseValidatorFactory);
 
-    UpperCaseValidatorFactory.$inject = ['LabelFactory'];
-
-    function UpperCaseValidatorFactory(LabelFactory) {
+    function UpperCaseValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new UpperCaseValidator(value, LabelFactory);
+            return new UpperCaseValidator(value);
         }
 
         return self;
     }
 
-    function UpperCaseValidator(value, LabelFactory) {
+    function UpperCaseValidator(value) {
         var self = this;
 
         self.reference = true;

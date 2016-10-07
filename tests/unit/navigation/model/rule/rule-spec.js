@@ -1,4 +1,4 @@
-describe('Rule', function() {
+xdescribe('Rule', function() {
 
   var Mock = {};
   var DIFF_OBJECT_TYPE = 'DiffRule';

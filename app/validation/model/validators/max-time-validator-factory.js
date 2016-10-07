@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
 
-    MaxTimeValidatorFactory.$inject = ['LabelFactory'];
-
-    function MaxTimeValidatorFactory(LabelFactory) {
+    function MaxTimeValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MaxTimeValidator(value, LabelFactory);
+            return new MaxTimeValidator(value);
         }
 
         return self;
     }
 
-    function MaxTimeValidator(value, LabelFactory) {
+    function MaxTimeValidator(value) {
         var self = this;
 
         self.reference = '';
