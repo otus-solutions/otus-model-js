@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('PrecisionValidatorFactory', PrecisionValidatorFactory);
 
-    PrecisionValidatorFactory.$inject = ['LabelFactory'];
-
-    function PrecisionValidatorFactory(LabelFactory) {
+    function PrecisionValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new PrecisionValidator(value, LabelFactory);
+            return new PrecisionValidator(value);
         }
 
         return self;
     }
 
-    function PrecisionValidator(value, LabelFactory) {
+    function PrecisionValidator(value) {
         var self = this;
 
         self.reference = null;

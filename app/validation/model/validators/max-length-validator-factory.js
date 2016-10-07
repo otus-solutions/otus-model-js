@@ -5,25 +5,23 @@
         .module('otusjs.validation')
         .factory('MaxLengthValidatorFactory', MaxLengthValidatorFactory);
 
-    MaxLengthValidatorFactory.$inject = ['LabelFactory'];
-
-    function MaxLengthValidatorFactory(LabelFactory) {
+    function MaxLengthValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new MaxLengthValidator(value, LabelFactory);
+            return new MaxLengthValidator(value);
         }
 
         return self;
     }
 
-    function MaxLengthValidator(value, LabelFactory) {
+    function MaxLengthValidator(value) {
         var self = this;
 
-        self.size = null;
+        self.reference = null;
     }
 
 }());

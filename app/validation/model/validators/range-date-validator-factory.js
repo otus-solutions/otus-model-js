@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('RangeDateValidatorFactory', RangeDateValidatorFactory);
 
-    RangeDateValidatorFactory.$inject = ['LabelFactory'];
-
-    function RangeDateValidatorFactory(LabelFactory) {
+    function RangeDateValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new RangeDateValidator(value, LabelFactory);
+            return new RangeDateValidator(value);
         }
 
         return self;
     }
 
-    function RangeDateValidator(value, LabelFactory) {
+    function RangeDateValidator(value) {
         var self = this;
 
         self.reference = {'initial': new Date(), 'end': new Date()};

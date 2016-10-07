@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('LowerCaseValidatorFactory', LowerCaseValidatorFactory);
 
-    LowerCaseValidatorFactory.$inject = ['LabelFactory'];
-
-    function LowerCaseValidatorFactory(LabelFactory) {
+    function LowerCaseValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new LowerCaseValidator(value, LabelFactory);
+            return new LowerCaseValidator(value);
         }
 
         return self;
     }
 
-    function LowerCaseValidator(value, LabelFactory) {
+    function LowerCaseValidator(value) {
         var self = this;
 
         self.reference = true;

@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('UpperLimitValidatorFactory', UpperLimitValidatorFactory);
 
-    UpperLimitValidatorFactory.$inject = ['LabelFactory'];
-
-    function UpperLimitValidatorFactory(LabelFactory) {
+    function UpperLimitValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new UpperLimitValidator(value, LabelFactory);
+            return new UpperLimitValidator(value);
         }
 
         return self;
     }
 
-    function UpperLimitValidator(value, LabelFactory) {
+    function UpperLimitValidator(value) {
         var self = this;
 
         self.reference = null;

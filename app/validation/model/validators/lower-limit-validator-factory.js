@@ -5,22 +5,20 @@
         .module('otusjs.validation')
         .factory('LowerLimitValidatorFactory', LowerLimitValidatorFactory);
 
-    LowerLimitValidatorFactory.$inject = ['LabelFactory'];
-
-    function LowerLimitValidatorFactory(LabelFactory) {
+    function LowerLimitValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value) {
-            return new LowerLimitValidator(value, LabelFactory);
+            return new LowerLimitValidator(value);
         }
 
         return self;
     }
 
-    function LowerLimitValidator(value, LabelFactory) {
+    function LowerLimitValidator(value) {
         var self = this;
 
         self.reference = null;
