@@ -32,6 +32,7 @@
     self.back = back;
     self.getCurrentItem = getCurrentItem;
     self.getSize = getSize;
+    self.goToBeginning = goToBeginning;
 
     function add(item) {
       if (_notExistsHead()) {
@@ -63,6 +64,11 @@
 
     function getSize() {
       return _size;
+    }
+
+    function goToBeginning() {
+      _current = _head;
+      _currentIndex = 0;
     }
 
     function _ensureCurrentValue() {

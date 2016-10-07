@@ -283,6 +283,7 @@
     self.toJson = toJson;
 
     function getNavigationStack() {
+      self.navigationStack.goToBeginning();
       return self.navigationStack;
     }
 
@@ -944,45 +945,6 @@
     'use strict';
 
     angular
-        .module('otusjs.validation')
-        .service('AddFillingRulesService', AddFillingRulesService);
-
-
-    function AddFillingRulesService(){
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, validatorType) {
-            return item.fillingRules.createOption(validatorType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
-
-    function RemoveFillingRulesWorkService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, fillingRuleType) {
-            item.fillingRules.removeFillingRules(fillingRuleType);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('otusjs.metadata')
         .factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
@@ -1080,6 +1042,45 @@
             self.options.forEach(function(option, index) {
                 option.value = ++index;
             });
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .service('AddFillingRulesService', AddFillingRulesService);
+
+
+    function AddFillingRulesService(){
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, validatorType) {
+            return item.fillingRules.createOption(validatorType);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otusjs.validation')
+        .service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
+
+    function RemoveFillingRulesWorkService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, fillingRuleType) {
+            item.fillingRules.removeFillingRules(fillingRuleType);
         }
     }
 
@@ -1276,6 +1277,303 @@
       return E;
     }
   }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationContainerService', service);
+
+  service.$inject = [
+    'otusjs.model.navigation.NavigationFactory'
+  ];
+
+  function service(NavigationFactory) {
+    var self = this;
+    var _navigationList = []; // TODO: To implement Immutable collection
+
+    /* Public methods */
+    self.init = init;
+    self.loadJsonData = loadJsonData;
+    self.manageNavigation = manageNavigation;
+    self.getNavigationByOrigin = getNavigationByOrigin;
+    self.getNavigationByPosition = getNavigationByPosition;
+    self.getNavigationPosition = getNavigationPosition;
+    self.getNavigationList = getNavigationList;
+    self.getNavigationListSize = getNavigationListSize;
+    self.getOrphanNavigations = getOrphanNavigations;
+    self.existsNavigationTo = existsNavigationTo;
+    self.createNavigationTo = createNavigationTo;
+    self.removeNavigationOf = removeNavigationOf;
+    self.removeNavigationByIndex = removeNavigationByIndex;
+    self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+
+    function init() {
+      _navigationList = [];
+    }
+
+    function loadJsonData(data) {
+      init();
+      data.forEach(function(navigationData) {
+        var inNavigations = navigationData.inNavigations.map(function(inNavigation) {
+          return getNavigationByOrigin(inNavigation.origin);
+        });
+        _navigationList.push(NavigationFactory.fromJson(navigationData, inNavigations));
+      });
+    }
+
+    function manageNavigation(navigationToManage) {
+      _navigationList = navigationToManage;
+    }
+
+    function getNavigationList() {
+      return _navigationList;
+    }
+
+    function getNavigationListSize() {
+      return _navigationList.length;
+    }
+
+    function getNavigationByOrigin(origin) {
+      var filter = _navigationList.filter(function(navigation) {
+        return findByOrigin(navigation, origin);
+      });
+
+      return filter[0];
+    }
+
+    function getNavigationByPosition(position) {
+      return _navigationList[position];
+    }
+
+    function getNavigationPosition(origin) {
+      var navigation = getNavigationByOrigin(origin);
+      if (navigation) {
+        return _navigationList.indexOf(navigation);
+      } else {
+        return null;
+      }
+    }
+
+    function getOrphanNavigations() {
+      var orphans = _navigationList.filter(function(navigation) {
+        return navigation.isOrphan();
+      });
+
+      return orphans;
+    }
+
+    function existsNavigationTo(origin) {
+      return (getNavigationByOrigin(origin)) ? true : false;
+    }
+
+    function createNavigationTo(origin, destination) {
+      var newNavigation = NavigationFactory.create(origin, destination);
+      newNavigation.index = _navigationList.length;
+      _addElementsPreviousTheNavigation(newNavigation);
+      _navigationList.push(newNavigation);
+    }
+
+    function _addElementsPreviousTheNavigation(navigation) {
+      if (_navigationList.length) {
+        var previous = _navigationList[_navigationList.length - 1];
+        navigation.addInNavigation(previous);
+      }
+    }
+
+    function removeNavigationOf(questionID) {
+      var navigationToRemove = _navigationList.filter(function(navigation) {
+        return findByOrigin(navigation, questionID);
+      });
+
+      var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
+      if (indexToRemove > -1) {
+        _navigationList.splice(indexToRemove, 1);
+      }
+    }
+
+    function removeNavigationByIndex(indexToRemove) {
+      _navigationList.splice(indexToRemove, 1);
+    }
+
+    function removeCurrentLastNavigation() {
+      _navigationList.splice(-1, 1);
+    }
+
+    /* Private methods */
+    function findByOrigin(navigation, questionID) {
+      return navigation.origin === questionID;
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationManagerService', service);
+
+  service.$inject = [
+    'SurveyItemManagerService',
+    'otusjs.model.navigation.NavigationContainerService',
+    'otusjs.model.navigation.NavigationAddService',
+    'otusjs.model.navigation.NavigationRemoveService',
+    'otusjs.model.navigation.CreateDefaultRouteTaskService',
+    'otusjs.model.navigation.AddAlternativeRouteTaskService',
+    'otusjs.model.navigation.RemoveRouteTaskService',
+    'otusjs.model.navigation.UpdateRouteTaskService',
+    'otusjs.model.navigation.NavigationValidatorService'
+  ];
+
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService, AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
+    var self = this;
+    var _selectedNavigation = null;
+
+    /* Public interface */
+    self.init = init;
+    self.loadJsonData = loadJsonData;
+    self.getNavigationList = getNavigationList;
+    self.getDefaultNavigationPath = getDefaultNavigationPath;
+    self.selectNavigationByOrigin = selectNavigationByOrigin;
+    self.selectedNavigation = selectedNavigation;
+    self.addNavigation = addNavigation;
+    self.applyRoute = applyRoute;
+    self.deleteRoute = deleteRoute;
+    self.removeNavigation = removeNavigation;
+    self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
+    self.listOrphanNavigations = listOrphanNavigations;
+
+    function init() {
+      NavigationContainerService.init();
+    }
+
+    function loadJsonData(data) {
+      NavigationContainerService.loadJsonData(data);
+    }
+
+    function getNavigationList() {
+      return NavigationContainerService.getNavigationList();
+    }
+
+    function getDefaultNavigationPath() {
+      var navigations = getNavigationList();
+      var currentPathState = navigations[0];
+      var defaultPath = [currentPathState];
+
+      navigations.forEach(function(navigation) {
+        if (navigation.origin === currentPathState.getDefaultRoute().destination) {
+          defaultPath.push(navigation);
+          currentPathState = navigation;
+        }
+      });
+
+      return defaultPath;
+    }
+
+    function selectNavigationByOrigin(origin) {
+      _selectedNavigation = NavigationContainerService.getNavigationByOrigin(origin);
+      return _selectedNavigation;
+    }
+
+    function selectedNavigation() {
+      return _selectedNavigation;
+    }
+
+    function addNavigation() {
+      NavigationAddService.execute();
+    }
+
+    function applyRoute(routeData) {
+      if (_selectedNavigation.hasRoute(routeData)) {
+        return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
+      } else if (routeData.isDefault) {
+        CreateDefaultRouteTaskService.execute(routeData, _selectedNavigation);
+      } else {
+        AddAlternativeRouteTaskService.execute(routeData, _selectedNavigation);
+      }
+    }
+
+    function deleteRoute(routeData) {
+      RemoveRouteTaskService.execute(routeData, _selectedNavigation);
+    }
+
+    function removeNavigation(templateID) {
+      NavigationRemoveService.execute(templateID);
+    }
+
+    function getAvaiableRuleCriterionTargets(referenceItemID) {
+      var referenceItemIndex = SurveyItemManagerService.getItemPosition(referenceItemID);
+      var allItems = SurveyItemManagerService.getItemList();
+
+      var avaiableItems = allItems.filter(function(item, index) {
+        return index <= referenceItemIndex;
+      });
+
+      return avaiableItems;
+    }
+
+    function listOrphanNavigations() {
+      return NavigationContainerService.getOrphanNavigations();
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationValidatorService', service);
+
+  service.$inject = [
+    'SurveyItemContainerService'
+  ];
+
+  function service(SurveyItemContainerService) {
+    var self = this;
+    var itemList = [];
+
+    /* Public methods */
+    self.init = init;
+    self.isRouteValid = isRouteValid;
+
+    init();
+
+    function init() {
+      itemList = SurveyItemContainerService.getItemList();
+    }
+
+    function isRouteValid(origin, destination) {
+      if (origin === destination) {
+        return false;
+      } else {
+        var origenInList = _searchByID(origin);
+        var destinationInList = _searchByID(destination);
+        if (origenInList.index < destinationInList.index) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    function _searchByID(questionID) {
+      var result = null;
+
+      itemList.forEach(function(question, index) {
+        if (question.customID === questionID) {
+          result = {};
+          result.question = question;
+          result.index = index;
+        }
+      });
+      return result;
+    }
+  }
+
 }());
 
 (function() {
@@ -1654,6 +1952,7 @@
     self.back = back;
     self.getCurrentItem = getCurrentItem;
     self.getSize = getSize;
+    self.goToBeginning = goToBeginning;
 
     function add(item) {
       if (_notExistsHead()) {
@@ -1685,6 +1984,11 @@
 
     function getSize() {
       return _size;
+    }
+
+    function goToBeginning() {
+      _current = _head;
+      _currentIndex = 0;
     }
 
     function _ensureCurrentValue() {
@@ -2309,303 +2613,6 @@
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
   }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationContainerService', service);
-
-  service.$inject = [
-    'otusjs.model.navigation.NavigationFactory'
-  ];
-
-  function service(NavigationFactory) {
-    var self = this;
-    var _navigationList = []; // TODO: To implement Immutable collection
-
-    /* Public methods */
-    self.init = init;
-    self.loadJsonData = loadJsonData;
-    self.manageNavigation = manageNavigation;
-    self.getNavigationByOrigin = getNavigationByOrigin;
-    self.getNavigationByPosition = getNavigationByPosition;
-    self.getNavigationPosition = getNavigationPosition;
-    self.getNavigationList = getNavigationList;
-    self.getNavigationListSize = getNavigationListSize;
-    self.getOrphanNavigations = getOrphanNavigations;
-    self.existsNavigationTo = existsNavigationTo;
-    self.createNavigationTo = createNavigationTo;
-    self.removeNavigationOf = removeNavigationOf;
-    self.removeNavigationByIndex = removeNavigationByIndex;
-    self.removeCurrentLastNavigation = removeCurrentLastNavigation;
-
-    function init() {
-      _navigationList = [];
-    }
-
-    function loadJsonData(data) {
-      init();
-      data.forEach(function(navigationData) {
-        var inNavigations = navigationData.inNavigations.map(function(inNavigation) {
-          return getNavigationByOrigin(inNavigation.origin);
-        });
-        _navigationList.push(NavigationFactory.fromJson(navigationData, inNavigations));
-      });
-    }
-
-    function manageNavigation(navigationToManage) {
-      _navigationList = navigationToManage;
-    }
-
-    function getNavigationList() {
-      return _navigationList;
-    }
-
-    function getNavigationListSize() {
-      return _navigationList.length;
-    }
-
-    function getNavigationByOrigin(origin) {
-      var filter = _navigationList.filter(function(navigation) {
-        return findByOrigin(navigation, origin);
-      });
-
-      return filter[0];
-    }
-
-    function getNavigationByPosition(position) {
-      return _navigationList[position];
-    }
-
-    function getNavigationPosition(origin) {
-      var navigation = getNavigationByOrigin(origin);
-      if (navigation) {
-        return _navigationList.indexOf(navigation);
-      } else {
-        return null;
-      }
-    }
-
-    function getOrphanNavigations() {
-      var orphans = _navigationList.filter(function(navigation) {
-        return navigation.isOrphan();
-      });
-
-      return orphans;
-    }
-
-    function existsNavigationTo(origin) {
-      return (getNavigationByOrigin(origin)) ? true : false;
-    }
-
-    function createNavigationTo(origin, destination) {
-      var newNavigation = NavigationFactory.create(origin, destination);
-      newNavigation.index = _navigationList.length;
-      _addElementsPreviousTheNavigation(newNavigation);
-      _navigationList.push(newNavigation);
-    }
-
-    function _addElementsPreviousTheNavigation(navigation) {
-      if (_navigationList.length) {
-        var previous = _navigationList[_navigationList.length - 1];
-        navigation.addInNavigation(previous);
-      }
-    }
-
-    function removeNavigationOf(questionID) {
-      var navigationToRemove = _navigationList.filter(function(navigation) {
-        return findByOrigin(navigation, questionID);
-      });
-
-      var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
-      if (indexToRemove > -1) {
-        _navigationList.splice(indexToRemove, 1);
-      }
-    }
-
-    function removeNavigationByIndex(indexToRemove) {
-      _navigationList.splice(indexToRemove, 1);
-    }
-
-    function removeCurrentLastNavigation() {
-      _navigationList.splice(-1, 1);
-    }
-
-    /* Private methods */
-    function findByOrigin(navigation, questionID) {
-      return navigation.origin === questionID;
-    }
-  }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationManagerService', service);
-
-  service.$inject = [
-    'SurveyItemManagerService',
-    'otusjs.model.navigation.NavigationContainerService',
-    'otusjs.model.navigation.NavigationAddService',
-    'otusjs.model.navigation.NavigationRemoveService',
-    'otusjs.model.navigation.CreateDefaultRouteTaskService',
-    'otusjs.model.navigation.AddAlternativeRouteTaskService',
-    'otusjs.model.navigation.RemoveRouteTaskService',
-    'otusjs.model.navigation.UpdateRouteTaskService',
-    'otusjs.model.navigation.NavigationValidatorService'
-  ];
-
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService, AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
-    var self = this;
-    var _selectedNavigation = null;
-
-    /* Public interface */
-    self.init = init;
-    self.loadJsonData = loadJsonData;
-    self.getNavigationList = getNavigationList;
-    self.getDefaultNavigationPath = getDefaultNavigationPath;
-    self.selectNavigationByOrigin = selectNavigationByOrigin;
-    self.selectedNavigation = selectedNavigation;
-    self.addNavigation = addNavigation;
-    self.applyRoute = applyRoute;
-    self.deleteRoute = deleteRoute;
-    self.removeNavigation = removeNavigation;
-    self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
-    self.listOrphanNavigations = listOrphanNavigations;
-
-    function init() {
-      NavigationContainerService.init();
-    }
-
-    function loadJsonData(data) {
-      NavigationContainerService.loadJsonData(data);
-    }
-
-    function getNavigationList() {
-      return NavigationContainerService.getNavigationList();
-    }
-
-    function getDefaultNavigationPath() {
-      var navigations = getNavigationList();
-      var currentPathState = navigations[0];
-      var defaultPath = [currentPathState];
-
-      navigations.forEach(function(navigation) {
-        if (navigation.origin === currentPathState.getDefaultRoute().destination) {
-          defaultPath.push(navigation);
-          currentPathState = navigation;
-        }
-      });
-
-      return defaultPath;
-    }
-
-    function selectNavigationByOrigin(origin) {
-      _selectedNavigation = NavigationContainerService.getNavigationByOrigin(origin);
-      return _selectedNavigation;
-    }
-
-    function selectedNavigation() {
-      return _selectedNavigation;
-    }
-
-    function addNavigation() {
-      NavigationAddService.execute();
-    }
-
-    function applyRoute(routeData) {
-      if (_selectedNavigation.hasRoute(routeData)) {
-        return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
-      } else if (routeData.isDefault) {
-        CreateDefaultRouteTaskService.execute(routeData, _selectedNavigation);
-      } else {
-        AddAlternativeRouteTaskService.execute(routeData, _selectedNavigation);
-      }
-    }
-
-    function deleteRoute(routeData) {
-      RemoveRouteTaskService.execute(routeData, _selectedNavigation);
-    }
-
-    function removeNavigation(templateID) {
-      NavigationRemoveService.execute(templateID);
-    }
-
-    function getAvaiableRuleCriterionTargets(referenceItemID) {
-      var referenceItemIndex = SurveyItemManagerService.getItemPosition(referenceItemID);
-      var allItems = SurveyItemManagerService.getItemList();
-
-      var avaiableItems = allItems.filter(function(item, index) {
-        return index <= referenceItemIndex;
-      });
-
-      return avaiableItems;
-    }
-
-    function listOrphanNavigations() {
-      return NavigationContainerService.getOrphanNavigations();
-    }
-  }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationValidatorService', service);
-
-  service.$inject = [
-    'SurveyItemContainerService'
-  ];
-
-  function service(SurveyItemContainerService) {
-    var self = this;
-    var itemList = [];
-
-    /* Public methods */
-    self.init = init;
-    self.isRouteValid = isRouteValid;
-
-    init();
-
-    function init() {
-      itemList = SurveyItemContainerService.getItemList();
-    }
-
-    function isRouteValid(origin, destination) {
-      if (origin === destination) {
-        return false;
-      } else {
-        var origenInList = _searchByID(origin);
-        var destinationInList = _searchByID(destination);
-        if (origenInList.index < destinationInList.index) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    }
-
-    function _searchByID(questionID) {
-      var result = null;
-
-      itemList.forEach(function(question, index) {
-        if (question.customID === questionID) {
-          result = {};
-          result.question = question;
-          result.index = index;
-        }
-      });
-      return result;
-    }
-  }
-
 }());
 
 (function() {

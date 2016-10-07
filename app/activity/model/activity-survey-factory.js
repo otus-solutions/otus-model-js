@@ -40,6 +40,7 @@
     self.toJson = toJson;
 
     function getNavigationStack() {
+      self.navigationStack.goToBeginning();
       return self.navigationStack;
     }
 
