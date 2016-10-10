@@ -18,6 +18,8 @@
 
     function create(template) {
       StatusHistoryManagerService.newCreatedRegistry({});
+      FillingManagerService.init();
+      StatusHistoryManagerService.init();
       return new ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService, NavigationStackFactory);
     }
 
