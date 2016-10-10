@@ -10,10 +10,13 @@
 
         /* Public interdace */
         self.create = create;
-        self.load = load;
+        self.fromJson = fromJson;
 
-        function load(surveyMetaInfoJson) {
-          return new SurveyMetaInfo(surveyMetaInfoJson.creationDatetime);
+        function fromJson(json) {
+          if (typeof json === 'string') {
+            throw new Error("otusjs.model.survey.model.SurveyMetaInfoFactory.fromJson() method expects to receive a object instead a String");
+          }
+          return new SurveyMetaInfo(json.creationDatetime);
         }
 
         function create() {

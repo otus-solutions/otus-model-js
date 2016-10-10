@@ -1,53 +1,46 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.misc')
-        .factory('LabelFactory', LabelFactory);
+  angular
+    .module('otusjs.misc')
+    .factory('LabelFactory', LabelFactory);
 
-    function LabelFactory() {
-        var self = this;
+  function LabelFactory() {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        function create() {
-            return new Label();
-        }
-
-        return self;
+    function create() {
+      return new Label();
     }
 
-    function Label() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.LabelFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var label = new Label();
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'Label',
-            writable: false,
-            enumerable: true
-        });
+      label.oid = json.oid;
+      label.plainText = json.plainText;
+      label.formattedText = json.formattedText;
 
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
+      return label;
     }
+
+    return self;
+  }
+
+  function Label() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Label";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+
+  }
 
 }());
