@@ -8,7 +8,7 @@ describe('MetadataFillFactory', function() {
         module('otusjs');
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('MetadataFillFactory');
+            factory = _$injector_.get('otusjs.model.activity.MetadataFillFactory');
         });
 
     });

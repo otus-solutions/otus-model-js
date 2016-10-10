@@ -10,7 +10,7 @@ describe('MetadataFillFactory', function() {
         mockJson();
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('MetadataFillFactory');
+            factory = _$injector_.get('otusjs.model.activity.MetadataFillFactory');
         });
 
     });

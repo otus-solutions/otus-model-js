@@ -1,56 +1,66 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .factory('ActivitySurveyFactory', ActivitySurveyFactory);
+  angular
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.ActivitySurveyFactory', ActivitySurveyFactory);
 
-    ActivitySurveyFactory.$inject = [
-        'StatusHistoryManagerService',
-        'FillingManagerService'
-    ];
+  ActivitySurveyFactory.$inject = [
+    'otusjs.model.activity.StatusHistoryManagerService',
+    'otusjs.model.activity.FillingManagerService',
+    'otusjs.model.navigation.NavigationPathFactory'
+  ];
 
-    function ActivitySurveyFactory(StatusHistoryManagerService, FillingManagerService) {
-        var self = this;
+  function ActivitySurveyFactory(StatusHistoryManagerService, FillingManagerService, NavigationStackFactory) {
+    var self = this;
 
-        self.create = create;
+    self.create = create;
 
-        function create(category, group, templateOID, user) {
-            StatusHistoryManagerService.newCreatedRegistry(user);
-            return new ActivitySurvey(category, group, templateOID, FillingManagerService, StatusHistoryManagerService);
-        }
-
-        return self;
+    function create(template) {
+      StatusHistoryManagerService.newCreatedRegistry({});
+      FillingManagerService.init();
+      StatusHistoryManagerService.init();
+      return new ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService, NavigationStackFactory);
     }
 
-    function ActivitySurvey(category, group, templateOID, FillingManagerService, StatusHistoryManagerService) {
-        var self = this;
+    return self;
+  }
 
-        self.objectType = 'Activity';
-        //TODO: O modo de utilização deve ser revisto
-        self.activityID = 1;
-        self.category = category;
-        self.group = group;
-        self.templateOID = templateOID;
-        self.fillContainer = FillingManagerService;
-        self.statusHistory = StatusHistoryManagerService;
+  function ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService, NavigationStackFactory) {
+    var self = this;
 
-        /* Public methods */
-        self.toJson = toJson;
+    self.objectType = 'Activity';
+    //TODO: O modo de utilização deve ser revisto
+    self.activityID = 1;
+    self.template = template;
+    self.fillContainer = FillingManagerService;
+    self.statusHistory = StatusHistoryManagerService;
+    self.navigationStack = NavigationStackFactory.create();
 
-        function toJson() {
-            var json = {};
+    /* Public methods */
+    self.getNavigationStack = getNavigationStack;
+    self.toJson = toJson;
 
-            json.objectType = self.objectType;
-            json.activityID = self.activityID;
-            json.category = self.category;
-            json.group = self.group;
-            json.templateOID = self.templateOID;
-            json.fillContainer = self.fillContainer;
-            json.statusHistory = self.statusHistory;
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
-        }
+    function getNavigationStack() {
+      self.navigationStack.goToBeginning();
+      return self.navigationStack;
     }
+
+    function setNavigationStack(stack) {
+      return self.navigationStack = stack;
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.activityID = self.activityID;
+      json.template = self.template.toJson();
+      json.fillContainer = self.fillContainer;
+      json.statusHistory = self.statusHistory;
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+    }
+  }
 
 }());

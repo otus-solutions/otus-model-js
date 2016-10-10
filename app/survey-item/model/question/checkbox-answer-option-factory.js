@@ -40,6 +40,7 @@
         self.optionID = optionID;
         self.customOptionID = optionID;
         self.dataType = 'Boolean';
+        self.value = false;
         self.label = {
             ptBR: LabelFactory.create(),
             enUS: LabelFactory.create(),
@@ -62,6 +63,7 @@
             json.optionID = self.optionID;
             json.customOptionID = self.customOptionID;
             json.dataType = self.dataType;
+            json.value = self.value;
             json.label = self.label;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');

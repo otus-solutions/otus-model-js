@@ -14,7 +14,7 @@ describe('ActivityParticipantData', function() {
             mockActivityParticipantData();
             mockJson();
 
-            factory = _$injector_.get('ActivityParticipantDataFactory');
+            factory = _$injector_.get('otusjs.model.activity.ActivityParticipantDataFactory');
         });
 
         participantData = factory.create(Mock.participant);

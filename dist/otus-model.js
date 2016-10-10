@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusjs.activity', []);
+        .module('otusjs.model.activity', []);
 
 }());
 
@@ -60,7 +60,7 @@
   angular
     .module('otusjs', [
       'otusjs.survey',
-      'otusjs.activity',
+      'otusjs.model.activity',
       'otusjs.surveyItem',
       'otusjs.metadata',
       'otusjs.misc',
@@ -132,9 +132,8 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('ActivityParticipantDataFactory', ActivityParticipantDataFactory);
-
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.ActivityParticipantDataFactory', ActivityParticipantDataFactory);
 
     function ActivityParticipantDataFactory() {
         var self = this;
@@ -177,8 +176,8 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('ActivityStatusFactory', ActivityStatusFactory);
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.ActivityStatusFactory', ActivityStatusFactory);
 
     function ActivityStatusFactory() {
         var self = this;
@@ -243,59 +242,69 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .factory('ActivitySurveyFactory', ActivitySurveyFactory);
+  angular
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.ActivitySurveyFactory', ActivitySurveyFactory);
 
-    ActivitySurveyFactory.$inject = [
-        'StatusHistoryManagerService',
-        'FillingManagerService'
-    ];
+  ActivitySurveyFactory.$inject = [
+    'otusjs.model.activity.StatusHistoryManagerService',
+    'otusjs.model.activity.FillingManagerService',
+    'otusjs.model.navigation.NavigationPathFactory'
+  ];
 
-    function ActivitySurveyFactory(StatusHistoryManagerService, FillingManagerService) {
-        var self = this;
+  function ActivitySurveyFactory(StatusHistoryManagerService, FillingManagerService, NavigationStackFactory) {
+    var self = this;
 
-        self.create = create;
+    self.create = create;
 
-        function create(category, group, templateOID, user) {
-            StatusHistoryManagerService.newCreatedRegistry(user);
-            return new ActivitySurvey(category, group, templateOID, FillingManagerService, StatusHistoryManagerService);
-        }
-
-        return self;
+    function create(template) {
+      StatusHistoryManagerService.newCreatedRegistry({});
+      FillingManagerService.init();
+      StatusHistoryManagerService.init();
+      return new ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService, NavigationStackFactory);
     }
 
-    function ActivitySurvey(category, group, templateOID, FillingManagerService, StatusHistoryManagerService) {
-        var self = this;
+    return self;
+  }
 
-        self.objectType = 'Activity';
-        //TODO: O modo de utilização deve ser revisto
-        self.activityID = 1;
-        self.category = category;
-        self.group = group;
-        self.templateOID = templateOID;
-        self.fillContainer = FillingManagerService;
-        self.statusHistory = StatusHistoryManagerService;
+  function ActivitySurvey(template, FillingManagerService, StatusHistoryManagerService, NavigationStackFactory) {
+    var self = this;
 
-        /* Public methods */
-        self.toJson = toJson;
+    self.objectType = 'Activity';
+    //TODO: O modo de utilização deve ser revisto
+    self.activityID = 1;
+    self.template = template;
+    self.fillContainer = FillingManagerService;
+    self.statusHistory = StatusHistoryManagerService;
+    self.navigationStack = NavigationStackFactory.create();
 
-        function toJson() {
-            var json = {};
+    /* Public methods */
+    self.getNavigationStack = getNavigationStack;
+    self.toJson = toJson;
 
-            json.objectType = self.objectType;
-            json.activityID = self.activityID;
-            json.category = self.category;
-            json.group = self.group;
-            json.templateOID = self.templateOID;
-            json.fillContainer = self.fillContainer;
-            json.statusHistory = self.statusHistory;
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
-        }
+    function getNavigationStack() {
+      self.navigationStack.goToBeginning();
+      return self.navigationStack;
     }
+
+    function setNavigationStack(stack) {
+      return self.navigationStack = stack;
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.activityID = self.activityID;
+      json.template = self.template.toJson();
+      json.fillContainer = self.fillContainer;
+      json.statusHistory = self.statusHistory;
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+    }
+  }
 
 }());
 
@@ -303,8 +312,8 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('ActivityUserFactory', ActivityUserFactory);
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.ActivityUserFactory', ActivityUserFactory);
 
     function ActivityUserFactory() {
         var self = this;
@@ -343,59 +352,65 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .factory('AnswerFillFactory', AnswerFillFactory);
+  angular
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.AnswerFillFactory', AnswerFillFactory);
 
-    function AnswerFillFactory() {
-        var self = this;
+  AnswerFillFactory.$inject = [
+    'otusjs.model.activity.AnswerEvaluationService'
+  ];
 
-        /* Public interface */
-        self.create = create;
+  function AnswerFillFactory(AnswerEvaluationService) {
+    let self = this;
 
-        function create(value) {
-            return new AnswerFill(value);
-        }
+    /* Public interface */
+    self.create = create;
 
-        return self;
+    function create(questionType, value) {
+      return new AnswerFill(value, AnswerEvaluationService.getEvaluator(questionType));
     }
 
-    function AnswerFill(value) {
-        var self = this;
+    return self;
+  }
 
-        self.objectType = 'AnswerFill';
-        self.value = (value === undefined) ? null : value;
+  function AnswerFill(value, evaluator) {
+    let self = this;
 
-        /* Public methods */
-        self.isFilled = isFilled;
-        self.toJson = toJson;
+    self.objectType = 'AnswerFill';
+    self.value = (value === undefined) ? null : value;
+    self.eval = evaluator;
 
-        function isFilled() {
-            return (self.value) ? true : false;
-        }
+    /* Public methods */
+    self.isFilled = isFilled;
+    self.toJson = toJson;
 
-        function toJson() {
-            var json = {};
-
-            json.objectType = self.objectType;
-            json.value = self.value;
-
-            return JSON.stringify(json);
-        }
+    function isFilled() {
+      return (self.value) ? true : false;
     }
 
+    function toJson() {
+      let json = {};
+
+      json.objectType = self.objectType;
+      json.value = self.value;
+
+      return JSON.stringify(json);
+    }
+  }
 }());
 
 (function() {
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('InterviewFactory', InterviewFactory);
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.InterviewFactory', InterviewFactory);
 
-    InterviewFactory.$inject = ['InterviewerFactory'];
+    InterviewFactory.$inject = [
+      'otusjs.model.activity.InterviewerFactory'
+    ];
 
     function InterviewFactory(InterviewerFactory) {
         var self = this;
@@ -437,8 +452,8 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('InterviewerFactory', InterviewerFactory);
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.InterviewerFactory', InterviewerFactory);
 
     function InterviewerFactory() {
         var self = this;
@@ -476,314 +491,321 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .factory('MetadataFillFactory', MetadataFillFactory);
+  angular
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.MetadataFillFactory', MetadataFillFactory);
 
-    function MetadataFillFactory() {
-        var self = this;
+  function MetadataFillFactory() {
+    let self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
 
-        function create(value) {
-            return new MetadataFill(value);
-        }
-
-        return self;
+    function create(value) {
+      return new MetadataFill(value);
     }
 
-    function MetadataFill(value) {
-        var self = this;
+    return self;
+  }
 
-        self.objectType = 'MetadataFill';
-        self.value = (value === undefined) ? null : value;
+  function MetadataFill(value) {
+    let self = this;
 
-        /* Public methods */
-        self.isFilled = isFilled;
-        self.toJson = toJson;
+    self.objectType = 'MetadataFill';
+    self.value = (value === undefined) ? null : value;
 
-        function isFilled() {
-            return (self.value) ? true : false;
-        }
+    /* Public methods */
+    self.isFilled = isFilled;
+    self.toJson = toJson;
 
-        function toJson() {
-            var json = {};
-
-            json.objectType = self.objectType;
-            json.value = self.value;
-
-            return JSON.stringify(json);
-        }
+    function isFilled() {
+      return (self.value) ? true : false;
     }
+
+    function toJson() {
+      let json = {};
+
+      json.objectType = self.objectType;
+      json.value = self.value;
+
+      return JSON.stringify(json);
+    }
+  }
 
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .factory('QuestionFillFactory', QuestionFillFactory);
+  angular
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.QuestionFillFactory', QuestionFillFactory);
 
-    QuestionFillFactory.$inject = ['AnswerFillFactory', 'MetadataFillFactory'];
+  QuestionFillFactory.$inject = [
+    'otusjs.model.activity.AnswerFillFactory',
+    'otusjs.model.activity.MetadataFillFactory'
+  ];
 
-    function QuestionFillFactory(AnswerFillFactory, MetadataFillFactory) {
-        var self = this;
+  function QuestionFillFactory(AnswerFillFactory, MetadataFillFactory) {
+    var self = this;
 
-        self.create = create;
+    self.create = create;
 
-        function create(questionID, answer, metadata, comment) {
-            var answerFill = AnswerFillFactory.create(answer);
-            var metadataFill = MetadataFillFactory.create(metadata);
-            return new QuestionFill(questionID, answerFill, metadataFill, comment);
-        }
-
-        return self;
+    function create(item, answer, metadata, comment) {
+      var answerFill = AnswerFillFactory.create(item.objectType, answer);
+      var metadataFill = MetadataFillFactory.create(metadata);
+      return new QuestionFill(item, answerFill, metadataFill, comment);
     }
 
-    function QuestionFill(questionID, answer, metadata, comment) {
-        var self = this;
+    return self;
+  }
 
-        self.objectType = 'QuestionFill';
-        self.questionID = questionID;
-        self.answer = answer;
-        self.metadata = metadata;
-        self.comment = (comment === undefined) ? '' : comment;
-        self.isFilled = isFilled;
+  function QuestionFill(item, answer, metadata, comment) {
+    var self = this;
 
-        /* Public methods */
-        self.toJson = toJson;
+    self.objectType = 'QuestionFill';
+    self.questionID = item.customID;
+    self.answer = answer;
+    self.metadata = metadata;
+    self.comment = (comment === undefined) ? '' : comment;
+    self.isFilled = isFilled;
 
-        function isFilled() {
-            return  self.answer.isFilled() || self.metadata.isFilled() || !!self.comment;
-        }
+    /* Public methods */
+    self.toJson = toJson;
 
-        function toJson() {
-            var json = {};
-
-            json.objectType = self.objectType;
-            json.questionID = self.questionID;
-            json.answer = self.answer.toJson();
-            json.metadata = self.metadata.toJson();
-            json.comment = self.comment;
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
-        }
+    function isFilled() {
+      return self.answer.isFilled() || self.metadata.isFilled() || !!self.comment;
     }
 
+    function toJson() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.questionID = self.questionID;
+      json.answer = self.answer.toJson();
+      json.metadata = self.metadata.toJson();
+      json.comment = self.comment;
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+    }
+  }
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .service('ActivityFacadeService', ActivityFacadeService);
+  angular
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.ActivityFacadeService', ActivityFacadeService);
 
-    ActivityFacadeService.$inject = [
-        'AnswerFillFactory',
-        'MetadataFillFactory',
-        'QuestionFillFactory',
-        'ActivitySurveyFactory'
-    ];
+  ActivityFacadeService.$inject = [
+    'otusjs.model.activity.AnswerFillFactory',
+    'otusjs.model.activity.MetadataFillFactory',
+    'otusjs.model.activity.QuestionFillFactory',
+    'otusjs.model.activity.ActivitySurveyFactory'
+  ];
 
-    function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
-        var self = this;
-        self.activitySurvey = null;
+  function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
+    var self = this;
+    self.surveyActivity = null;
 
-        /* Public interface */
-        self.createActivity = createActivity;
-        self.createQuestionFill = createQuestionFill;
-        self.openActivitySurvey = openActivitySurvey;
-        self.initializeActivitySurvey = initializeActivitySurvey;
+    /* Public interface */
+    self.createActivity = createActivity;
+    self.createQuestionFill = createQuestionFill;
+    self.fillQuestion = fillQuestion;
+    self.openActivitySurvey = openActivitySurvey;
+    self.initializeActivitySurvey = initializeActivitySurvey;
+    self.getFillingByQuestionID = getFillingByQuestionID;
 
-
-        function createActivity(category, group, templateOID, user) {
-            self.activitySurvey = ActivitySurveyFactory.create(category, group, templateOID, user);
-        }
-
-        function openActivitySurvey() {
-            self.activitySurvey.statusHistory.newOpenedRegistry();
-        }
-
-        function initializeActivitySurvey() {
-            self.activitySurvey.statusHistory.newInitializedOnlineRegistry();
-        }
-
-        function createQuestionFill(questionID, answer, metadata, comment) {
-            var question = QuestionFillFactory.create(questionID, answer, metadata, comment);
-            self.activitySurvey.fillContainer.updateFilling(question);
-            //console.log(self.activitySurvey);
-            return question;
-        }
-
+    function createActivity(template) {
+      self.surveyActivity = ActivitySurveyFactory.create(template);
     }
 
+    function openActivitySurvey() {
+      self.surveyActivity.statusHistory.newOpenedRegistry();
+    }
+
+    function initializeActivitySurvey() {
+      self.surveyActivity.statusHistory.newInitializedOnlineRegistry();
+    }
+
+    function createQuestionFill(question, answer, metadata, comment) {
+      return QuestionFillFactory.create(question, answer, metadata, comment);
+    }
+
+    function fillQuestion(filling) {
+      self.surveyActivity.fillContainer.updateFilling(filling);
+    }
+
+    function getFillingByQuestionID(questionID) {
+      return self.surveyActivity.fillContainer.searchFillingByID(questionID);
+    }
+  }
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .service('FillingManagerService', FillingManagerService);
+  angular
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.FillingManagerService', FillingManagerService);
 
-    function FillingManagerService() {
-        var self = this;
-        var fillingList = [];
+  function FillingManagerService() {
+    var self = this;
+    var fillingList = [];
 
-        /* Public methods */
-        self.init = init;
-        self.listSize = listSize;
-        self.getFillingIndex = getFillingIndex;
-        self.existsFillingTo = existsFillingTo;
-        self.searchFillingByID = searchFillingByID;
-        self.updateFilling = updateFilling;
+    /* Public methods */
+    self.init = init;
+    self.listSize = listSize;
+    self.getFillingIndex = getFillingIndex;
+    self.existsFillingTo = existsFillingTo;
+    self.searchFillingByID = searchFillingByID;
+    self.updateFilling = updateFilling;
 
-        init();
+    init();
 
-        function init() {
-            fillingList = [];
-        }
-
-        function listSize() {
-            return fillingList.length;
-        }
-
-        function getFillingIndex(questionID) {
-            var result = _searchByID(questionID);
-            return (result) ? result.index : null;
-        }
-
-        function existsFillingTo(questionID) {
-            return (_searchByID(questionID)) ? true : false;
-        }
-
-        function searchFillingByID(questionID) {
-            var result = _searchByID(questionID);
-            return (result) ? result.filling : null;
-        }
-
-        function updateFilling(filling) {
-            if (filling.isFilled()) {
-                if (!existsFillingTo(filling.questionID)) {
-                    _add(filling);
-                } else {
-                    return _replaceFilling(filling);
-                }
-            } else {
-                return _removeFilling(filling.questionID);
-            }
-        }
-
-        function _searchByID(questionID) {
-            var result;
-
-            fillingList.forEach(function(filling, index) {
-                if (filling.questionID === questionID) {
-                    result = {};
-                    result.filling = filling;
-                    result.index = index;
-                }
-            });
-
-            return result;
-        }
-
-        function _add(filling) {
-            fillingList.push(filling);
-        }
-
-        function _replaceFilling(filling) {
-            var result = _searchByID(filling.questionID);
-            if (result !== undefined) {
-                return fillingList.splice(result.index, 1, filling)[0];
-            } else {
-                return null;
-            }
-        }
-
-        function _removeFilling(questionID) {
-            var result = _searchByID(questionID);
-            if (result !== undefined) {
-                return fillingList.splice(result.index, 1)[0];
-            } else {
-                return null;
-            }
-        }
+    function init() {
+      fillingList = [];
     }
 
+    function listSize() {
+      return fillingList.length;
+    }
+
+    function getFillingIndex(questionID) {
+      var result = _searchByID(questionID);
+      return (result) ? result.index : null;
+    }
+
+    function existsFillingTo(questionID) {
+      return (_searchByID(questionID)) ? true : false;
+    }
+
+    function searchFillingByID(questionID) {
+      var result = _searchByID(questionID);
+      return (result) ? result.filling : null;
+    }
+
+    function updateFilling(filling) {
+      if (filling.isFilled()) {
+        if (!existsFillingTo(filling.questionID)) {
+          _add(filling);
+        } else {
+          return _replaceFilling(filling);
+        }
+      } else {
+        return _removeFilling(filling.questionID);
+      }
+    }
+
+    function _searchByID(questionID) {
+      var result;
+
+      fillingList.forEach(function(filling, index) {
+        if (filling.questionID === questionID) {
+          result = {};
+          result.filling = filling;
+          result.index = index;
+        }
+      });
+
+      return result;
+    }
+
+    function _add(filling) {
+      fillingList.push(filling);
+    }
+
+    function _replaceFilling(filling) {
+      var result = _searchByID(filling.questionID);
+      if (result !== undefined) {
+        return fillingList.splice(result.index, 1, filling)[0];
+      } else {
+        return null;
+      }
+    }
+
+    function _removeFilling(questionID) {
+      var result = _searchByID(questionID);
+      if (result !== undefined) {
+        return fillingList.splice(result.index, 1)[0];
+      } else {
+        return null;
+      }
+    }
+  }
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .service('StatusHistoryManagerService', StatusHistoryManagerService);
+  angular
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.StatusHistoryManagerService', StatusHistoryManagerService);
 
-    StatusHistoryManagerService.$inject = ['ActivityStatusFactory'];
+  StatusHistoryManagerService.$inject = [
+    'otusjs.model.activity.ActivityStatusFactory'
+  ];
 
-    function StatusHistoryManagerService(ActivityStatusFactory) {
-        var self = this;
-        var history;
+  function StatusHistoryManagerService(ActivityStatusFactory) {
+    var self = this;
+    var history;
 
-        self.init = init;
-        self.historySize = historySize;
-        self.getHistory = getHistory;
-        self.newCreatedRegistry = newCreatedRegistry;
-        self.newInitializedOfflineRegistry = newInitializedOfflineRegistry;
-        self.newInitializedOnlineRegistry = newInitializedOnlineRegistry;
-        self.newOpenedRegistry = newOpenedRegistry;
-        self.newSavedRegistry = newSavedRegistry;
-        self.newFinalizedRegistry = newFinalizedRegistry;
-        self.toJson = toJson;
+    self.init = init;
+    self.historySize = historySize;
+    self.getHistory = getHistory;
+    self.newCreatedRegistry = newCreatedRegistry;
+    self.newInitializedOfflineRegistry = newInitializedOfflineRegistry;
+    self.newInitializedOnlineRegistry = newInitializedOnlineRegistry;
+    self.newOpenedRegistry = newOpenedRegistry;
+    self.newSavedRegistry = newSavedRegistry;
+    self.newFinalizedRegistry = newFinalizedRegistry;
+    self.toJson = toJson;
 
-        init();
+    init();
 
-        function init() {
-            history = [];
-        }
-
-        function getHistory() {
-            return history;
-        }
-
-        function newCreatedRegistry(user) {
-            history.push(ActivityStatusFactory.createCreatedStatus(user));
-        }
-
-        function newInitializedOfflineRegistry(user) {
-            history.push(ActivityStatusFactory.createInitializedOfflineStatus(user));
-        }
-
-        function newInitializedOnlineRegistry(user) {
-            history.push(ActivityStatusFactory.createInitializedOnlineStatus(user));
-        }
-
-        function newOpenedRegistry(user) {
-            history.push(ActivityStatusFactory.createOpenedStatus(user));
-        }
-
-        function newSavedRegistry(user) {
-            history.push(ActivityStatusFactory.createSavedStatus(user));
-        }
-
-        function newFinalizedRegistry(user) {
-            history.push(ActivityStatusFactory.createFinalizedStatus(user));
-        }
-
-        function historySize() {
-            return history.length;
-        }
-
-        function toJson() {
-            return JSON.stringify(history);
-        }
+    function init() {
+      history = [];
     }
+
+    function getHistory() {
+      return history;
+    }
+
+    function newCreatedRegistry(user) {
+      history.push(ActivityStatusFactory.createCreatedStatus(user));
+    }
+
+    function newInitializedOfflineRegistry(user) {
+      history.push(ActivityStatusFactory.createInitializedOfflineStatus(user));
+    }
+
+    function newInitializedOnlineRegistry(user) {
+      history.push(ActivityStatusFactory.createInitializedOnlineStatus(user));
+    }
+
+    function newOpenedRegistry(user) {
+      history.push(ActivityStatusFactory.createOpenedStatus(user));
+    }
+
+    function newSavedRegistry(user) {
+      history.push(ActivityStatusFactory.createSavedStatus(user));
+    }
+
+    function newFinalizedRegistry(user) {
+      history.push(ActivityStatusFactory.createFinalizedStatus(user));
+    }
+
+    function historySize() {
+      return history.length;
+    }
+
+    function toJson() {
+      return JSON.stringify(history);
+    }
+  }
 
 })();
 
@@ -1180,51 +1202,57 @@
     .module('otusjs.model.navigation')
     .service('otusjs.model.navigation.NavigationApiService', service);
 
-  service.$inject = [
-    'otusjs.model.navigation.RouteFactory',
-    'otusjs.model.navigation.RouteConditionFactory',
-    'otusjs.model.navigation.RuleFactory'
-  ];
-
-  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
+  function service() {
     var self = this;
 
     /* Public methods */
-    self.addRoute = addRoute;
-    self.addRouteCondition = addRouteCondition;
-    self.addConditionRule = addConditionRule;
-    self.removeRoute = removeRoute;
-    self.removeRouteCondition = removeRouteCondition;
-    self.removeConditionRule = removeConditionRule;
+    self.resolveNavigation = resolveNavigation;
 
-    function addRoute(routeData, navigation) {
-      var route = RouteFactory.create(routeData.name, routeData.origin, routeData.destination);
-      navigation.addRoute(route);
-      return route;
+    function resolveNavigation(CurrentItemService, navigation) {
+      var totalRoutes = navigation.routes.length;
+
+      if (totalRoutes === 1) {
+        return navigation.routes[0].destination;
+      } else {
+        var index = 1;
+        var route;
+
+        for (index; index < totalRoutes; index++) {
+          route = navigation.routes[index];
+          _checkConditions(route.conditions, CurrentItemService.filling);
+        }
+      }
     }
 
-    function addRouteCondition(conditionName, route) {
-      var routeCondition = RouteConditionFactory.create(conditionName);
-      route.addCondition(routeCondition);
-      return routeCondition;
+    function _checkConditions(conditions, questionFilling) {
+      conditions.some(function(condition) {
+
+        condition.rules.every(function(rule) {
+          return _checkRule(rule, questionFilling);
+        });
+
+      });
     }
 
-    function addConditionRule(ruleData, routeCondition) {
-      var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
-      routeCondition.addRule(newRule);
-      return newRule;
-    }
-
-    function removeRoute() {
-      routeData.parentNavigation.removeRoute(routeData.name);
-    }
-
-    function removeRouteCondition() {
+    function _checkRule(rule, questionFilling) {
 
     }
+  }
 
-    function removeConditionRule() {
-      route.conditions[0].removeRule(rule);
+  function RuleChecker() {
+    var self = this;
+    var _filling;
+
+    self.answer = answer;
+    self.equal = equal;
+
+    function answer(filling) {
+      _filling = filling;
+      return self;
+    }
+
+    function equal(reference) {
+
     }
   }
 })();
@@ -1590,6 +1618,198 @@
           return true;
         }
       });
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .factory('otusjs.model.navigation.NavigationPathFactory', Factory);
+
+  function Factory() {
+    let self = this;
+
+    /* Public methods */
+    self.create = create;
+
+    function create() {
+      return new NavigationStack();
+    }
+
+    return self;
+  }
+
+  function NavigationStack() {
+    let self = this;
+    let _size = 0;
+    let _head = null;
+    let _tail = null;
+    let _current = null;
+    let _currentIndex = null;
+
+    /* Public methods */
+    self.add = add;
+    self.ahead = ahead;
+    self.back = back;
+    self.getCurrentItem = getCurrentItem;
+    self.getSize = getSize;
+    self.goToBeginning = goToBeginning;
+
+    function add(item) {
+      if (_notExistsHead()) {
+        _setupHead(item);
+      } else {
+        _ensureCurrentValue();
+        _setupTail(item);
+        _setupCurrent();
+      }
+      _updateIndexation();
+    }
+
+    function ahead() {
+      _current = _current.getNext();
+      ++_currentIndex;
+    }
+
+    function back() {
+      _current = _current.getPrevious();
+      --_currentIndex;
+      if (!_current) {
+        _head = null;
+      }
+    }
+
+    function getCurrentItem() {
+      return _current;
+    }
+
+    function getSize() {
+      return _size;
+    }
+
+    function goToBeginning() {
+      _current = _head;
+      _currentIndex = 0;
+    }
+
+    function _ensureCurrentValue() {
+      _current = _current || _tail;
+    }
+
+    function _notExistsHead() {
+      return !_head;
+    }
+
+    function _setupCurrent() {
+      _current.setNext(_tail);
+      _current = _tail;
+    }
+
+    function _setupHead(item) {
+      _head = item;
+      _head.setPrevious(null);
+      _head.setNext(null);
+      _current = _head;
+    }
+
+    function _setupTail(item) {
+      _tail = item;
+      _tail.setPrevious(_current);
+      _tail.setNext(null);
+    }
+
+    function _updateIndexation() {
+      if ( (_currentIndex < (_size - 1)) ){
+        _size = _currentIndex + 2;
+        ++_currentIndex;
+      } else {
+        ++_size;
+        _currentIndex = _size - 1;
+      }
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .factory('otusjs.model.navigation.NavigationPathItemFactory', Factory);
+
+  function Factory() {
+    let self = this;
+
+    /* Public methods */
+    self.create = create;
+
+    function create(options) {
+      return new NavigationStackItem(options);
+    }
+
+    return self;
+  }
+
+  function NavigationStackItem(options) {
+    let self = this;
+
+    let _id = options.id;
+    let _label = options.label || '';
+    let _type = options.type;
+    let _answer = options.answer;
+    let _metadata = options.metadata;
+
+    let _previous = null;
+    let _next = null;
+
+    /* Public methods */
+    self.getID = getID;
+    self.getLabel = getLabel;
+    self.getType = getType;
+    self.getAnswer = getAnswer;
+    self.getMetadata = getMetadata;
+    self.getNext = getNext;
+    self.setNext = setNext;
+    self.getPrevious = getPrevious;
+    self.setPrevious = setPrevious;
+
+    function getID() {
+      return _id;
+    }
+
+    function getLabel() {
+      return _label;
+    }
+
+    function getType() {
+      return _type;
+    }
+
+    function getAnswer() {
+      return _answer;
+    }
+
+    function getMetadata() {
+      return _metadata;
+    }
+
+    function getNext() {
+      return _next;
+    }
+
+    function setNext(item) {
+      return _next = item;
+    }
+
+    function getPrevious() {
+      return _previous;
+    }
+
+    function setPrevious(item) {
+      return _previous = item;
     }
   }
 }());
@@ -2233,7 +2453,6 @@
       return navigation.origin === questionID;
     }
   }
-
 }());
 
 (function() {
@@ -3110,6 +3329,211 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.AnswerEvaluationService', Service);
+
+  Service.$inject = [
+    'otusjs.model.activity.NumericRuleTestService',
+    'otusjs.model.activity.TextRuleTestService',
+    'otusjs.model.activity.DateTimeRuleTestService'
+  ];
+
+  function Service(NumericRuleTestService, TextRuleTestService, DateTimeRuleTestService) {
+    let self = this;
+    let _evaluators = new Map();
+
+    /* Public methods */
+    self.getEvaluator = getEvaluator;
+
+    _setupEvaluators();
+
+    function getEvaluator(evaluator) {
+      return _evaluators.get(evaluator);
+    }
+
+    function _setupEvaluators() {
+      _evaluators.set('CalendarQuestion', DateTimeRuleTestService);
+      _evaluators.set('IntegerQuestion', NumericRuleTestService);
+      _evaluators.set('SingleSelectionQuestion', NumericRuleTestService);
+      _evaluators.set('TextQuestion', TextRuleTestService);
+      _evaluators.set('TimeQuestion', DateTimeRuleTestService);
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.DateTimeRuleTestService', Service);
+
+  function Service() {
+    let self = this;
+    let _runner = {};
+    self.name = 'DateTimeRuleTestService';
+
+    /* Public Methods */
+    self.run = run;
+
+    function run(rule, answer) {
+      if ( Number.isNaN( Date.parse(answer) ) ) {
+        return false;
+      }
+
+      return _runner[rule.operator](Date.parse(rule.answer), answer.getTime());
+    }
+
+    _runner.equal = function(reference, answer) {
+      return answer ===  reference;
+    }
+
+    _runner.notEqual = function(reference, answer) {
+      return answer !==  reference;
+    }
+
+    _runner.within = function(reference, answer) {
+      return reference.some(function(value) {
+        return _runner.contains(value, answer);
+      });
+    }
+
+    _runner.greater = function(reference, answer) {
+      return answer > reference;
+    }
+
+    _runner.greaterEqual = function(reference, answer) {
+      return answer >= reference;
+    }
+
+    _runner.lower = function(reference, answer) {
+      return answer < reference;
+    }
+
+    _runner.lowerEqual = function(reference, answer) {
+      return answer <= reference;
+    }
+
+    _runner.between = function(reference, answer) {
+      return (_runner.greaterEqual(reference[0], answer) && _runner.lowerEqual(reference[1], answer));
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.NumericRuleTestService', Service);
+
+  function Service() {
+    let self = this;
+    let _runner = {};
+    self.name = 'NumericRuleTestService';
+
+    /* Public Methods */
+    self.run = run;
+
+    function run(rule, answer) {
+      if (answer && !!answer['replace']) {
+        answer = answer.replace(/,/, '.');
+      }
+
+      if (!Number.isInteger(Number(answer)) && !_isFloat(answer)) {
+        return false;
+      }
+
+      return _runner[rule.operator](rule.answer, Number(answer));
+    }
+
+    function _isFloat(value) {
+      return (!Number.isNaN(Number(value)) && !Number.isInteger(Number(value)));
+    }
+
+    _runner.equal = function(reference, answer) {
+      return answer === Number(reference);
+    }
+
+    _runner.notEqual = function(reference, answer) {
+      return answer !== Number(reference);
+    }
+
+    _runner.within = function(reference, answer) {
+      return reference.some(function(value) {
+        if (!!value['replace']) {
+          value = value.replace(/,/, '.');
+        }
+        return _runner.equal(value, answer);
+      });
+    }
+
+    _runner.greater = function(reference, answer) {
+      return answer > Number(reference);
+    }
+
+    _runner.greaterEqual = function(reference, answer) {
+      return answer >= Number(reference);
+    }
+
+    _runner.lower = function(reference, answer) {
+      return answer < Number(reference);
+    }
+
+    _runner.lowerEqual = function(reference, answer) {
+      return answer <= Number(reference);
+    }
+
+    _runner.between = function(reference, answer) {
+      return (_runner.greaterEqual(reference[0], answer) && _runner.lowerEqual(reference[1], answer));
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.activity')
+    .service('otusjs.model.activity.TextRuleTestService', Service);
+
+  function Service() {
+    let self = this;
+    let _runner = {};
+    self.name = 'TextRuleTestService';
+
+    /* Public Methods */
+    self.run = run;
+
+    function run(rule, answer) {
+      return _runner[rule.operator](rule.answer, answer.toString());
+    }
+
+    _runner.equal = function(reference, answer) {
+      return answer ===  reference;
+    }
+
+    _runner.notEqual = function(reference, answer) {
+      return answer !==  reference;
+    }
+
+    _runner.within = function(reference, answer) {
+      return reference.some(function(value) {
+        return _runner.contains(value, answer);
+      });
+    }
+
+    _runner.contains = function(reference, answer) {
+      let reg = new RegExp(reference, 'i');
+      return reference.test(answer);
+    }
+  }
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -3411,6 +3835,7 @@
         self.optionID = optionID;
         self.customOptionID = optionID;
         self.dataType = 'Boolean';
+        self.value = false;
         self.label = {
             ptBR: LabelFactory.create(),
             enUS: LabelFactory.create(),
@@ -3433,6 +3858,7 @@
             json.optionID = self.optionID;
             json.customOptionID = self.customOptionID;
             json.dataType = self.dataType;
+            json.value = self.value;
             json.label = self.label;
 
             return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
@@ -4901,7 +5327,7 @@
     function _setupRules(ruleData) {
       var when = ruleData.when.customID || ruleData.when;
       var operator = ruleData.operator.type || ruleData.operator;
-      var answer = ruleData.getAnswer();
+      var answer = ruleData.answer;
       return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
     }
 
@@ -5025,7 +5451,7 @@
     function _setupRules(ruleData) {
       var when = ruleData.when.customID || ruleData.when;
       var operator = ruleData.operator.type || ruleData.operator;
-      var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
+      var answer = ruleData.answer;
       return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
     }
 

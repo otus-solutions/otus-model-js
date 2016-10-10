@@ -2,9 +2,8 @@
     'use strict';
 
     angular
-        .module('otusjs.activity')
-        .factory('ActivityParticipantDataFactory', ActivityParticipantDataFactory);
-
+        .module('otusjs.model.activity')
+        .factory('otusjs.model.activity.ActivityParticipantDataFactory', ActivityParticipantDataFactory);
 
     function ActivityParticipantDataFactory() {
         var self = this;

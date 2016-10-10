@@ -12,7 +12,7 @@ describe('InterviewFactory', function() {
         mockUser();
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('InterviewFactory', {
+            factory = _$injector_.get('otusjs.model.activity.InterviewFactory', {
                 InterviewerFactory: mockInterviewerFactory(_$injector_)
             });
         });
@@ -48,7 +48,7 @@ describe('InterviewFactory', function() {
     }
 
     function mockInterviewerFactory($injector) {
-        Mock.InterviewerFactory = $injector.get('InterviewerFactory');
+        Mock.InterviewerFactory = $injector.get('otusjs.model.activity.InterviewerFactory');
 
         spyOn(Mock.InterviewerFactory, 'create').and.callThrough();
 

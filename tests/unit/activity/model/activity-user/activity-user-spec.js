@@ -11,7 +11,7 @@ describe('ActivityUserF', function() {
         mockJson();
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('ActivityUserFactory');
+            factory = _$injector_.get('otusjs.model.activity.ActivityUserFactory');
         });
     });
 

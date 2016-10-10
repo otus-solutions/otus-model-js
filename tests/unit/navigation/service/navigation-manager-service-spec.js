@@ -1,4 +1,4 @@
-xdescribe('NavigationManagerService', function() {
+describe('NavigationManagerService', function() {
 
   var Mock = {};
   var service;
@@ -9,6 +9,7 @@ xdescribe('NavigationManagerService', function() {
 
     inject(function(_$injector_) {
       mockQuestions(_$injector_);
+      mockNavigations(_$injector_);
       mockSurveyItemContainerService(_$injector_);
       mockNavigationContainerService(_$injector_);
       mockNavigationAddService(_$injector_);
@@ -78,7 +79,7 @@ xdescribe('NavigationManagerService', function() {
       expect(Mock.NavigationContainerService.getNavigationByOrigin).toHaveBeenCalledWith(Mock.Q1.templateID);
     });
 
-    xit('should store a reference to requested navigation', function() {
+    it('should store a reference to requested navigation', function() {
       service.selectNavigationByOrigin(Mock.Q1.templateID);
       var selectedNavigation = service.selectedNavigation();
 
@@ -154,6 +155,17 @@ xdescribe('NavigationManagerService', function() {
     Mock.questions = [Mock.Q1, Mock.Q2, Mock.Q3, Mock.Q4, Mock.Q5, Mock.Q6, Mock.Q7];
   }
 
+  function mockNavigations($injector) {
+    var NavigationFactory = $injector.get('otusjs.model.navigation.NavigationFactory');
+    Mock.NQ1 = NavigationFactory.create(Mock.Q1.templateID, Mock.Q2.templateID);
+    Mock.NQ2 = NavigationFactory.create(Mock.Q2.templateID, Mock.Q3.templateID);
+    Mock.NQ3 = NavigationFactory.create(Mock.Q3.templateID, Mock.Q4.templateID);
+    Mock.NQ4 = NavigationFactory.create(Mock.Q4.templateID, Mock.Q5.templateID);
+    Mock.NQ5 = NavigationFactory.create(Mock.Q5.templateID, Mock.Q6.templateID);
+    Mock.NQ6 = NavigationFactory.create(Mock.Q6.templateID, Mock.Q7.templateID);
+    Mock.navigations = [Mock.NQ1, Mock.NQ2, Mock.NQ3, Mock.NQ4, Mock.NQ5, Mock.NQ6];
+  }
+
   function mockRouteData() {
     Mock.routeData = {};
     Mock.routeData.origin = 'Q2';
@@ -163,7 +175,7 @@ xdescribe('NavigationManagerService', function() {
 
   function mockNavigationContainerService($injector) {
     Mock.NavigationContainerService = $injector.get('otusjs.model.navigation.NavigationContainerService');
-    Mock.NavigationContainerService.manageNavigation(Mock.questions);
+    Mock.NavigationContainerService.manageNavigation(Mock.navigations);
     injections.NavigationContainerService = Mock.NavigationContainerService;
 
     spyOn(Mock.NavigationContainerService, 'getNavigationList').and.callThrough();

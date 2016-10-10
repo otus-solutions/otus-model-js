@@ -1,45 +1,49 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .factory('AnswerFillFactory', AnswerFillFactory);
+  angular
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.AnswerFillFactory', AnswerFillFactory);
 
-    function AnswerFillFactory() {
-        var self = this;
+  AnswerFillFactory.$inject = [
+    'otusjs.model.activity.AnswerEvaluationService'
+  ];
 
-        /* Public interface */
-        self.create = create;
+  function AnswerFillFactory(AnswerEvaluationService) {
+    let self = this;
 
-        function create(value) {
-            return new AnswerFill(value);
-        }
+    /* Public interface */
+    self.create = create;
 
-        return self;
+    function create(questionType, value) {
+      return new AnswerFill(value, AnswerEvaluationService.getEvaluator(questionType));
     }
 
-    function AnswerFill(value) {
-        var self = this;
+    return self;
+  }
 
-        self.objectType = 'AnswerFill';
-        self.value = (value === undefined) ? null : value;
+  function AnswerFill(value, evaluator) {
+    let self = this;
 
-        /* Public methods */
-        self.isFilled = isFilled;
-        self.toJson = toJson;
+    self.objectType = 'AnswerFill';
+    self.value = (value === undefined) ? null : value;
+    self.eval = evaluator;
 
-        function isFilled() {
-            return (self.value) ? true : false;
-        }
+    /* Public methods */
+    self.isFilled = isFilled;
+    self.toJson = toJson;
 
-        function toJson() {
-            var json = {};
-
-            json.objectType = self.objectType;
-            json.value = self.value;
-
-            return JSON.stringify(json);
-        }
+    function isFilled() {
+      return (self.value) ? true : false;
     }
 
+    function toJson() {
+      let json = {};
+
+      json.objectType = self.objectType;
+      json.value = self.value;
+
+      return JSON.stringify(json);
+    }
+  }
 }());

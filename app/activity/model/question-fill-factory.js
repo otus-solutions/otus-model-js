@@ -1,54 +1,56 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.activity')
-        .factory('QuestionFillFactory', QuestionFillFactory);
+  angular
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.QuestionFillFactory', QuestionFillFactory);
 
-    QuestionFillFactory.$inject = ['AnswerFillFactory', 'MetadataFillFactory'];
+  QuestionFillFactory.$inject = [
+    'otusjs.model.activity.AnswerFillFactory',
+    'otusjs.model.activity.MetadataFillFactory'
+  ];
 
-    function QuestionFillFactory(AnswerFillFactory, MetadataFillFactory) {
-        var self = this;
+  function QuestionFillFactory(AnswerFillFactory, MetadataFillFactory) {
+    var self = this;
 
-        self.create = create;
+    self.create = create;
 
-        function create(questionID, answer, metadata, comment) {
-            var answerFill = AnswerFillFactory.create(answer);
-            var metadataFill = MetadataFillFactory.create(metadata);
-            return new QuestionFill(questionID, answerFill, metadataFill, comment);
-        }
-
-        return self;
+    function create(item, answer, metadata, comment) {
+      var answerFill = AnswerFillFactory.create(item.objectType, answer);
+      var metadataFill = MetadataFillFactory.create(metadata);
+      return new QuestionFill(item, answerFill, metadataFill, comment);
     }
 
-    function QuestionFill(questionID, answer, metadata, comment) {
-        var self = this;
+    return self;
+  }
 
-        self.objectType = 'QuestionFill';
-        self.questionID = questionID;
-        self.answer = answer;
-        self.metadata = metadata;
-        self.comment = (comment === undefined) ? '' : comment;
-        self.isFilled = isFilled;
+  function QuestionFill(item, answer, metadata, comment) {
+    var self = this;
 
-        /* Public methods */
-        self.toJson = toJson;
+    self.objectType = 'QuestionFill';
+    self.questionID = item.customID;
+    self.answer = answer;
+    self.metadata = metadata;
+    self.comment = (comment === undefined) ? '' : comment;
+    self.isFilled = isFilled;
 
-        function isFilled() {
-            return  self.answer.isFilled() || self.metadata.isFilled() || !!self.comment;
-        }
+    /* Public methods */
+    self.toJson = toJson;
 
-        function toJson() {
-            var json = {};
-
-            json.objectType = self.objectType;
-            json.questionID = self.questionID;
-            json.answer = self.answer.toJson();
-            json.metadata = self.metadata.toJson();
-            json.comment = self.comment;
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
-        }
+    function isFilled() {
+      return self.answer.isFilled() || self.metadata.isFilled() || !!self.comment;
     }
 
+    function toJson() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.questionID = self.questionID;
+      json.answer = self.answer.toJson();
+      json.metadata = self.metadata.toJson();
+      json.comment = self.comment;
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+    }
+  }
 }());
