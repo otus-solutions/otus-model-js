@@ -1,27 +1,37 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.validation')
-        .factory('FutureDateValidatorFactory', FutureDateValidatorFactory);
+  angular
+    .module('otusjs.validation')
+    .factory('FutureDateValidatorFactory', FutureDateValidatorFactory);
 
-    function FutureDateValidatorFactory() {
-        var self = this;
+  function FutureDateValidatorFactory() {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        function create(value) {
-            return new FutureDateValidator(value);
-        }
-
-        return self;
+    function create() {
+      return new FutureDateValidator();
     }
 
-    function FutureDateValidator(value) {
-        var self = this;
-
-        self.reference = false;
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.FutureDateValidatorFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var validator = new FutureDateValidator();
+      validator.reference = json.reference;
+      return validator;
     }
+
+    return self;
+  }
+
+  function FutureDateValidator() {
+    var self = this;
+
+    self.reference = false;
+  }
 
 }());

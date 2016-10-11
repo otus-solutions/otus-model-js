@@ -26,6 +26,6 @@ describe('RulesFactory', function() {
           reference: true
         }
       });
-    };
+    }
 
 });

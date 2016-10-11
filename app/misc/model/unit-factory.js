@@ -20,7 +20,6 @@
       if (typeof json === 'string') {
         throw new Error("otusjs.model.misc.model.UnitFactory.fromJson() method expects to receive a object instead a String");
       }
-
       var unit = new Unit();
 
       unit.oid = json.oid;
@@ -42,4 +41,5 @@
     self.plainText = '';
     self.formattedText = '';
   }
+  
 }());

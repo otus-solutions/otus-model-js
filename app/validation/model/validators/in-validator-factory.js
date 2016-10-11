@@ -1,27 +1,40 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.validation')
-        .factory('InValidatorFactory', InValidatorFactory);
+  angular
+    .module('otusjs.validation')
+    .factory('InValidatorFactory', InValidatorFactory);
 
-    function InValidatorFactory() {
-        var self = this;
+  function InValidatorFactory() {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        function create(value) {
-            return new InValidator(value);
-        }
-
-        return self;
+    function create() {
+      return new InValidator();
     }
 
-    function InValidator(value) {
-        var self = this;
-
-        self.reference = {'initial':null, 'end': null};
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.InValidatorFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var validator = new InValidator();
+      validator.reference = json.reference;
+      return validator;
     }
+
+    return self;
+  }
+
+  function InValidator() {
+    var self = this;
+
+    self.reference = {
+      'initial': null,
+      'end': null
+    };
+  }
 
 }());
