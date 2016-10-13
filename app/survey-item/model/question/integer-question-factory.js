@@ -6,26 +6,26 @@
         .factory('IntegerQuestionFactory', IntegerQuestionFactory);
 
     IntegerQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'UnitFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function IntegerQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
+    function IntegerQuestionFactory(IdiomFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory);
+            return new IntegerQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
+    function IntegerQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -34,9 +34,9 @@
         self.customID = templateID;
         self.dataType = 'Integer';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();

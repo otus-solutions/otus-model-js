@@ -6,25 +6,25 @@
         .factory('PhoneQuestionFactory', PhoneQuestionFactory);
 
     PhoneQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function PhoneQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function PhoneQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new PhoneQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
+            return new PhoneQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function PhoneQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function PhoneQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -33,9 +33,9 @@
         self.customID = templateID;
         self.dataType = 'Integer';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();

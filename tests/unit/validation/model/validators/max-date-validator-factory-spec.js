@@ -19,7 +19,7 @@ describe('MaxDateValidatorFactory validator suite:', function() {
   describe('MaxDateValidatorFactory.create()', function() {
 
     beforeEach(function() {
-      validator = factory.fromJson(Mock.json);
+      validator = factory.create();
     });
 
     it('should return an validator with property reference with value Mock.now', function() {

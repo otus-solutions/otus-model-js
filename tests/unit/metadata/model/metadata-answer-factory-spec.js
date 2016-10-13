@@ -56,15 +56,15 @@ describe('MetadataAnswerFactory', function() {
       option = factory.fromJson(Mock.json);
     });
 
-    it("should call LabelFactory.fromJson three times", function () {
-      expect(Mock.LabelFactory.fromJson).toHaveBeenCalledTimes(3);
+    it("should call LabelFactory.fromJson with Mock.json.label", function () {
+      expect(Mock.LabelFactory.fromJson).toHaveBeenCalledWith(Mock.json.label);
     });
 
     it("should return a value with the same value on Mock.json.value", function () {
       expect(option.value).toBe(Mock.json.value);
     });
 
-    it("should return a value with the same value on Mock.json.value", function () {
+    it("should return a label with the same value on Mock.json.label", function () {
       expect(option.label).toEqual(Mock.json.label);
     });
 
@@ -92,9 +92,17 @@ describe('MetadataAnswerFactory', function() {
   }
 
   function mockLabelFactory($injector) {
-    Mock.LabelFactory = $injector.get('LabelFactory');
-    spyOn(Mock.LabelFactory, 'fromJson').and.returnValue({});
+    Mock.LabelFactory = $injector.get('LabelFactory', {
+      'IdiomFactory': mockIdiomFactory($injector)
+    });
+    spyOn(Mock.LabelFactory, 'fromJson').and.callThrough();
     return Mock.LabelFactory;
+  }
+
+  function mockIdiomFactory($injector) {
+    Mock.IdiomFactory = $injector.get('IdiomFactory');
+    spyOn(Mock.IdiomFactory, 'fromJson').and.returnValue({});
+    return Mock.IdiomFactory;
   }
 
 });

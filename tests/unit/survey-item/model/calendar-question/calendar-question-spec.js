@@ -34,9 +34,9 @@ describe('CalendarQuestion', function() {
             customID: Mock.TEMPLATE_ID,
             dataType: 'LocalDate',
             label: {
-                ptBR: $injector.get('LabelFactory').create(),
-                enUS: $injector.get('LabelFactory').create(),
-                esES: $injector.get('LabelFactory').create()
+                ptBR: $injector.get('IdiomFactory').create(),
+                enUS: $injector.get('IdiomFactory').create(),
+                esES: $injector.get('IdiomFactory').create()
             },
             metadata: $injector.get('MetadataGroupFactory').create(),
             fillingRules: $injector.get('FillingRulesOptionFactory').create()

@@ -53,6 +53,21 @@ describe('MetadataGroupFactory', function() {
       expect(Mock.MetadataAnswerFactory.fromJson).toHaveBeenCalledTimes(2);
     });
 
+    it("should call MetadataAnswerFactory.fromJson with Mock.option1 ", function () {
+      expect(Mock.MetadataAnswerFactory.fromJson).toHaveBeenCalledWith(Mock.option1);
+    });
+
+    it("should call MetadataAnswerFactory.fromJson with Mock.option2 ", function () {
+      expect(Mock.MetadataAnswerFactory.fromJson).toHaveBeenCalledWith(Mock.option2);
+    });
+
+    it("should throw an error when receive a string", function() {
+      expect(function() {
+        factory.fromJson(JSON.stringify(Mock.json));
+      }).toThrowError("otusjs.model.misc.model.MetadataGroupFactory.fromJson() " +
+        "method expects to receive a object instead a String");
+    });
+
   });
 
   function mockJson() {
@@ -89,16 +104,16 @@ describe('MetadataGroupFactory', function() {
 
   function mockMetadataAnswerFactory($injector) {
     Mock.MetadataAnswerFactory = $injector.get('MetadataAnswerFactory', {
-      'LabelFactory': mockLabelFactory($injector)
+      'IdiomFactory': mockIdiomFactory($injector)
     });
     spyOn(Mock.MetadataAnswerFactory, "fromJson").and.callThrough();
     return Mock.MetadataAnswerFactory;
   }
 
-  function mockLabelFactory($injector) {
-    Mock.LabelFactory = $injector.get('LabelFactory');
-    spyOn(Mock.LabelFactory, 'fromJson').and.returnValue({});
-    return Mock.LabelFactory;
+  function mockIdiomFactory($injector) {
+    Mock.IdiomFactory = $injector.get('IdiomFactory');
+    spyOn(Mock.IdiomFactory, 'fromJson').and.returnValue({});
+    return Mock.IdiomFactory;
   }
 
 });

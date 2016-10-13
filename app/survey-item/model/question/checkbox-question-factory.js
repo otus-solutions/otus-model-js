@@ -6,26 +6,26 @@
         .factory('CheckboxQuestionFactory', CheckboxQuestionFactory);
 
     CheckboxQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'CheckboxAnswerOptionFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
+    function CheckboxQuestionFactory(IdiomFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory);
+            return new CheckboxQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
+    function CheckboxQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -34,9 +34,9 @@
         self.customID = templateID;
         self.dataType = 'Array';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();
