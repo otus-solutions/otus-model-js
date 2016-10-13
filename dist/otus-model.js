@@ -2632,6 +2632,14 @@
         return false;
       }
 
+      if (other.isCustom !== self.isCustom) {
+        return false;
+      }
+
+      if (other.isMetadata !== self.isMetadata) {
+        return false;
+      }
+
       return true;
     }
 
@@ -5519,7 +5527,7 @@
     function _setupRules(ruleData) {
       var when = ruleData.when.customID || ruleData.when;
       var operator = ruleData.operator.type || ruleData.operator;
-      var answer = ruleData.getAnswer();
+      var answer = ruleData.answer;
       return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
     }
 
@@ -5643,7 +5651,7 @@
     function _setupRules(ruleData) {
       var when = ruleData.when.customID || ruleData.when;
       var operator = ruleData.operator.type || ruleData.operator;
-      var answer = (ruleData.answer.option) ? ruleData.answer.option.value : ruleData.answer;
+      var answer = ruleData.answer;
       return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
     }
 

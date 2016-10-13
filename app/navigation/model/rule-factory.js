@@ -114,6 +114,14 @@
         return false;
       }
 
+      if (other.isCustom !== self.isCustom) {
+        return false;
+      }
+
+      if (other.isMetadata !== self.isMetadata) {
+        return false;
+      }
+
       return true;
     }
 
