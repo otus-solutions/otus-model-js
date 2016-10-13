@@ -10,7 +10,7 @@ describe('SingleSelectionQuestion', function() {
             mockJson(_$injector_);
 
             var factory = _$injector_.get('SingleSelectionQuestionFactory', {
-                LabelFactory: mockLabelFactory(_$injector_),
+                IdiomFactory: mockIdiomFactory(_$injector_),
                 MetadataGroupFactory: mockMetadataGroupFactory(_$injector_),
                 AnswerOptionFactory: mockAnswerOptionFactory(_$injector_)
             });
@@ -118,12 +118,12 @@ describe('SingleSelectionQuestion', function() {
 
     });
 
-    function mockLabelFactory($injector) {
-        Mock.LabelFactory = $injector.get('LabelFactory');
+    function mockIdiomFactory($injector) {
+        Mock.IdiomFactory = $injector.get('IdiomFactory');
 
-        spyOn(Mock.LabelFactory, 'create').and.callThrough();
+        spyOn(Mock.IdiomFactory, 'create').and.callThrough();
 
-        return Mock.LabelFactory;
+        return Mock.IdiomFactory;
     }
 
     function mockMetadataGroupFactory($injector) {
@@ -154,9 +154,9 @@ describe('SingleSelectionQuestion', function() {
             templateID: Mock.TEMPLATE_ID,
             dataType: 'Integer',
             label: {
-                ptBR: $injector.get('LabelFactory').create(),
-                enUS: $injector.get('LabelFactory').create(),
-                esES: $injector.get('LabelFactory').create()
+                ptBR: $injector.get('IdiomFactory').create(),
+                enUS: $injector.get('IdiomFactory').create(),
+                esES: $injector.get('IdiomFactory').create()
             },
             option: [],
             metadata: $injector.get('MetadataGroupFactory').create()

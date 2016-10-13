@@ -5,22 +5,22 @@
         .module('otusjs.surveyItem')
         .factory('ImageItemFactory', ImageItemFactory);
 
-    ImageItemFactory.$inject = ['LabelFactory'];
+    ImageItemFactory.$inject = ['IdiomFactory'];
 
-    function ImageItemFactory(LabelFactory) {
+    function ImageItemFactory(IdiomFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new ImageItem(templateID, prototype, LabelFactory);
+            return new ImageItem(templateID, prototype, IdiomFactory);
         }
 
         return self;
     }
 
-    function ImageItem(templateID, prototype, LabelFactory) {
+    function ImageItem(templateID, prototype, IdiomFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -30,9 +30,9 @@
         self.dataType = 'String';
         self.url = '';
         self.footer = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
 
         /* Public methods */

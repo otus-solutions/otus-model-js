@@ -5,7 +5,9 @@
     .module('otusjs.misc')
     .factory('LabelFactory', LabelFactory);
 
-  function LabelFactory() {
+  LabelFactory.$inject = ['IdiomFactory'];
+
+  function LabelFactory(IdiomFactory) {
     var self = this;
 
     /* Public interface */
@@ -13,34 +15,29 @@
     self.fromJson = fromJson;
 
     function create() {
-      return new Label();
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.create();
+      labelObject.enUS = IdiomFactory.create();
+      labelObject.esES = IdiomFactory.create();
+
+      return labelObject;
     }
 
     function fromJson(json) {
       if (typeof json === 'string') {
         throw new Error("otusjs.model.misc.model.LabelFactory.fromJson() method expects to receive a object instead a String");
       }
-      var label = new Label();
+      var labelObject = {};
 
-      label.oid = json.oid;
-      label.plainText = json.plainText;
-      label.formattedText = json.formattedText;
+      labelObject.ptBR = IdiomFactory.fromJson(json.ptBR);
+      labelObject.enUS = IdiomFactory.fromJson(json.enUS);
+      labelObject.esES = IdiomFactory.fromJson(json.esES);
 
-      return label;
+      return labelObject;
     }
 
     return self;
-  }
-
-  function Label() {
-    var self = this;
-
-    self.extends = "StudioObject";
-    self.objectType = "Label";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
-
   }
 
 }());

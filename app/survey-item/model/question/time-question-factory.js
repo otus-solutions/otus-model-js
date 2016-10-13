@@ -6,25 +6,25 @@
         .factory('TimeQuestionFactory', TimeQuestionFactory);
 
     TimeQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function TimeQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function TimeQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
+            return new TimeQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function TimeQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -33,9 +33,9 @@
         self.customID = templateID;
         self.dataType = 'LocalTime';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();

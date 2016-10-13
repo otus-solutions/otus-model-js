@@ -9,7 +9,7 @@
         /* Question */
         'SurveyItemFactory',
         /* Setter */
-        'LabelFactory',
+        'IdiomFactory',
         'UnitFactory',
         /* Structure */
         'SurveyFactory',
@@ -17,12 +17,12 @@
         'MetadataGroupFactory'
     ];
 
-    function ModelFacadeService(SurveyItemFactory, LabelFactory, UnitFactory, SurveyFactory, SurveyIdentityFactory, MetadataGroupFactory) {
+    function ModelFacadeService(SurveyItemFactory, IdiomFactory, UnitFactory, SurveyFactory, SurveyIdentityFactory, MetadataGroupFactory) {
         var self = this;
 
         /* Public interface */
         self.getSurveyItemFactory = getSurveyItemFactory;
-        self.getLabelFactory = getLabelFactory;
+        self.getIdiomFactory = getIdiomFactory;
         self.getUnitFactory = getUnitFactory;
         self.getSurveyFactory = getSurveyFactory;
         self.getSurveyIdentityFactory = getSurveyIdentityFactory;
@@ -32,8 +32,8 @@
             return SurveyItemFactory;
         }
 
-        function getLabelFactory() {
-            return LabelFactory;
+        function getIdiomFactory() {
+            return IdiomFactory;
         }
 
         function getUnitFactory() {

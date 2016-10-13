@@ -6,25 +6,25 @@
         .factory('TextQuestionFactory', TextQuestionFactory);
 
     TextQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function TextQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function TextQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new TextQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
+            return new TextQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function TextQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function TextQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -33,9 +33,9 @@
         self.customID = templateID;
         self.dataType = 'String';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();

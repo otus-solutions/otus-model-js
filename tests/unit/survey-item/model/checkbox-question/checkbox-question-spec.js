@@ -10,7 +10,7 @@ describe('CheckboxQuestion', function() {
             mockJson(_$injector_);
 
             var factory = _$injector_.get('CheckboxQuestionFactory', {
-                LabelFactory: mockLabelFactory(_$injector_),
+                IdiomFactory: mockIdiomFactory(_$injector_),
                 MetadataGroupFactory: mockMetadataGroupFactory(_$injector_),
                 CheckboxAnswerOptionFactory: mockCheckboxAnswerOptionFactory(_$injector_)
             });
@@ -204,12 +204,12 @@ describe('CheckboxQuestion', function() {
 
     });
 
-    function mockLabelFactory($injector) {
-        Mock.LabelFactory = $injector.get('LabelFactory');
+    function mockIdiomFactory($injector) {
+        Mock.IdiomFactory = $injector.get('IdiomFactory');
 
-        spyOn(Mock.LabelFactory, 'create').and.callThrough();
+        spyOn(Mock.IdiomFactory, 'create').and.callThrough();
 
-        return Mock.LabelFactory;
+        return Mock.IdiomFactory;
     }
 
     function mockMetadataGroupFactory($injector) {
@@ -242,9 +242,9 @@ describe('CheckboxQuestion', function() {
             customID: Mock.TEMPLATE_ID,
             dataType: 'Array',
             label: {
-                ptBR: $injector.get('LabelFactory').create(),
-                enUS: $injector.get('LabelFactory').create(),
-                esES: $injector.get('LabelFactory').create()
+                ptBR: $injector.get('IdiomFactory').create(),
+                enUS: $injector.get('IdiomFactory').create(),
+                esES: $injector.get('IdiomFactory').create()
             },
             options: [],
             metadata: $injector.get('MetadataGroupFactory').create(),

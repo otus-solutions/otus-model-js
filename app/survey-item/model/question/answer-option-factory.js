@@ -5,22 +5,22 @@
         .module('otusjs.surveyItem')
         .factory('AnswerOptionFactory', AnswerOptionFactory);
 
-    AnswerOptionFactory.$inject = ['LabelFactory'];
+    AnswerOptionFactory.$inject = ['IdiomFactory'];
 
-    function AnswerOptionFactory(LabelFactory) {
+    function AnswerOptionFactory(IdiomFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value, parentQuestionID) {
-            return new AnswerOption(value, parentQuestionID, LabelFactory);
+            return new AnswerOption(value, parentQuestionID, IdiomFactory);
         }
 
         return self;
     }
 
-    function AnswerOption(value, parentQuestionID, LabelFactory) {
+    function AnswerOption(value, parentQuestionID, IdiomFactory) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -28,9 +28,9 @@
         self.value = value;
         self.dataType = 'Integer';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.parentQuestionID = parentQuestionID;
 
