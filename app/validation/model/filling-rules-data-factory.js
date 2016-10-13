@@ -61,8 +61,7 @@
             specials: SpecialsValidatorFactory,
             upperCase: UpperCaseValidatorFactory,
             upperLimit: UpperLimitValidatorFactory
-        }
-
+        };
 
         return self;
 

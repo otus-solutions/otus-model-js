@@ -21,8 +21,8 @@
         self.load = load;
 
         function load(surveyTemplateJson) {
-          var metainfo = SurveyMetaInfoFactory.load(surveyTemplateJson.metainfo);
-          var identity = SurveyIdentityFactory.load(surveyTemplateJson.identity);
+          var metainfo = SurveyMetaInfoFactory.fromJson(surveyTemplateJson.metainfo);
+          var identity = SurveyIdentityFactory.fromJson(surveyTemplateJson.identity);
           var UUID = surveyTemplateJson.oid;
 
           return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
@@ -118,7 +118,7 @@
                 if (navigation) {
                   json.navigationList.push(navigation.toJson());
                 } else {
-                  json.navigationList.push({});                  
+                  json.navigationList.push({});
                 }
             });
 

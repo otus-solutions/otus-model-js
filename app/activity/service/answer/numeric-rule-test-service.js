@@ -14,7 +14,7 @@
     self.run = run;
 
     function run(rule, answer) {
-      if (!!answer['replace']) {
+      if (answer && !!answer['replace']) {
         answer = answer.replace(/,/, '.');
       }
 

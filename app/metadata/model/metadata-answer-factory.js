@@ -1,37 +1,57 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.metadata')
-        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
+  angular
+    .module('otusjs.metadata')
+    .factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
-    MetadataAnswerFactory.$inject = ['LabelFactory'];
+  MetadataAnswerFactory.$inject = ['LabelFactory'];
 
-    function MetadataAnswerFactory(LabelFactory) {
-        var self = this;
+  function MetadataAnswerFactory(LabelFactory) {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        function create(value) {
-            return new MetadataAnswer(value, LabelFactory);
-        }
+    function create(value) {
+      var labelObject = {};
 
-        return self;
+      labelObject.ptBR = LabelFactory.create();
+      labelObject.enUS = LabelFactory.create();
+      labelObject.esES = LabelFactory.create();
+
+      return new MetadataAnswer(value, labelObject);
     }
 
-    function MetadataAnswer(value, LabelFactory) {
-        var self = this;
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.MetadataAnswerFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var labelObject = {};
 
-        self.extends = 'StudioObject';
-        self.objectType = 'MetadataAnswer';
-        self.dataType = 'Integer';
-        self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
+      labelObject.ptBR = LabelFactory.fromJson(json.ptBR);
+      labelObject.enUS = LabelFactory.fromJson(json.enUS);
+      labelObject.esES = LabelFactory.fromJson(json.esES);
+
+      return new MetadataAnswer(json.value, labelObject);
     }
+
+    return self;
+  }
+
+  function MetadataAnswer(value, labelObject) {
+    var self = this;
+
+    self.extends = 'StudioObject';
+    self.objectType = 'MetadataAnswer';
+    self.dataType = 'Integer';
+    self.value = value;
+    self.label = {
+      'ptBR': labelObject.ptBR,
+      'enUS': labelObject.enUS,
+      'esES': labelObject.esES
+    };
+  }
 
 }());

@@ -1,27 +1,37 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.validation')
-        .factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
+  angular
+    .module('otusjs.validation')
+    .factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
 
-    function AlphanumericValidatorFactory() {
-        var self = this;
+  function AlphanumericValidatorFactory() {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        function create(value) {
-            return new AlphanumericValidator(value);
-        }
-
-        return self;
+    function create() {
+      return new AlphanumericValidator();
     }
 
-    function AlphanumericValidator(value) {
-        var self = this;
-
-        self.reference = true;
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.AlphanumericValidatorFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var validator = new AlphanumericValidator();
+      validator.reference = json.reference;
+      return validator;
     }
+
+    return self;
+  }
+
+  function AlphanumericValidator() {
+    var self = this;
+
+    self.reference = true;
+  }
 
 }());
