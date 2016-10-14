@@ -1,8 +1,6 @@
-describe('IntegerQuestionFactory', function() {
+describe('EmailQuestionFactory', function() {
   var Mock = {};
-  var question,
-    TEMPLATE_ID = 'TEMPLATE_ID',
-    QUESTION_ID = 'QUESTION_ID';
+  var question;
 
   beforeEach(function() {
     module('otusjs');
@@ -10,40 +8,51 @@ describe('IntegerQuestionFactory', function() {
     mockJson();
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('IntegerQuestionFactory', {
-        'UnitFactory': mockUnitFactory(_$injector_),
+      mockQuestion(_$injector_);
+      factory = _$injector_.get('EmailQuestionFactory', {
         'LabelFactory': mockLabelFactory(_$injector_),
         'MetadataGroupFactory': mockMetaGroupFactory(_$injector_),
         'FillingRulesOptionFactory': mockFillingRulesOptionFactory(_$injector_)
       });
-
     });
+
   });
 
   describe('create method', function() {
 
-    beforeEach(function () {
-      question = factory.create(TEMPLATE_ID, QUESTION_ID);
+    beforeEach(function() {
+      question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
     });
 
-    it('should returned an object defined', function() {
-      expect(question).toBeDefined();
-    });
-
-    xit('returned object should have extends equal to objectType', function() {
+    xit('returned object should extends SurveyItem', function() {
       expect(question.extends).toBe('SurveyItem');
     });
 
-    it('returned object should have objectType equal to IntegerQuestion', function() {
-      expect(question.objectType).toBe('IntegerQuestion');
+    it('returned object should have objectType equal to EmailQuestion', function() {
+      expect(question.objectType).toBe('EmailQuestion');
     });
 
-    it('returned object should have templateID equal to templateID', function() {
-      expect(question.templateID).toBe(TEMPLATE_ID);
+    it('returned object should have a not null templateID', function() {
+      expect(question.templateID).toBe(Mock.TEMPLATE_ID);
     });
 
-    it('returned object should have dataType equal to Integer', function() {
-      expect(question.dataType).toBe('Integer');
+    it('returned object should have dataType equal to LocalDate', function() {
+      expect(question.dataType).toBe('String');
+    });
+
+    it('returned object should have a label object for ptBR locale', function() {
+      expect(question.label.ptBR).not.toBeNull();
+      expect(question.label.ptBR).not.toBeUndefined();
+    });
+
+    it('returned object should have a label object for enUS locale', function() {
+      expect(question.label.enUS).not.toBeNull();
+      expect(question.label.enUS).not.toBeUndefined();
+    });
+
+    it('returned object should have a label object for enUS locale', function() {
+      expect(question.label.esES).not.toBeNull();
+      expect(question.label.esES).not.toBeUndefined();
     });
 
   });
@@ -54,47 +63,42 @@ describe('IntegerQuestionFactory', function() {
       question = factory.fromJson(Mock.json);
     });
 
-    it("should have a templateID equal to Mock.json.templateID", function() {
+    it("should have a templateID equal to Mock.json.templateID", function () {
       expect(question.templateID).toBe(Mock.json.templateID);
     });
 
-    it("should have a customID equal to Mock.json.customID", function() {
+    it("should have a customID equal to Mock.json.customID", function () {
       expect(question.customID).toBe(Mock.json.customID);
     });
 
-    it("should have a objectType equal to Mock.json.objectType", function() {
+    it("should have a objectType equal to Mock.json.objectType", function () {
       expect(question.objectType).toBe(Mock.json.objectType);
     });
 
-    it("should call LabelFactory.fromJson method with Mock.json.label", function() {
+    it("should call LabelFactory.fromJson method with Mock.json.label", function () {
       expect(Mock.LabelFactory.fromJson).toHaveBeenCalledWith(Mock.json.label);
     });
 
-    it("should call MetadataGroupFactory.fromJson method with Mock.json.metadata", function() {
+    it("should call MetadataGroupFactory.fromJson method with Mock.json.metadata", function () {
       expect(Mock.MetadataGroupFactory.fromJson).toHaveBeenCalledWith(Mock.json.metadata);
     });
 
-    it("should call FillingRulesOptionFactory.fromJson method with Mock.json.fillingRules", function() {
+    it("should call FillingRulesOptionFactory.fromJson method with Mock.json.fillingRules", function () {
       expect(Mock.FillingRulesOptionFactory.fromJson).toHaveBeenCalledWith(Mock.json.fillingRules);
-    });
-
-    it("should call UnitFactory.fromJson 3 times", function() {
-      expect(Mock.UnitFactory.fromJson).toHaveBeenCalledTimes(3);
     });
 
     it("should throw a error if the method receive a string", function() {
       expect(function() {
         factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.misc.model.IntegerQuestionFactory.fromJson() " +
+      }).toThrowError("otusjs.model.misc.model.EmailQuestionFactory.fromJson() " +
         "method expects to receive a object instead a String");
     });
 
   });
 
-  function mockUnitFactory($injector) {
-    Mock.UnitFactory = $injector.get('UnitFactory');
-    spyOn(Mock.UnitFactory, "fromJson");
-    return Mock.UnitFactory;
+  function mockQuestion($injector) {
+    Mock.TEMPLATE_ID = 'TPL_ID';
+    Mock.Question = $injector.get('SurveyItemFactory').create('EmailQuestion', Mock.TEMPLATE_ID);
   }
 
   function mockLabelFactory($injector) {
@@ -118,10 +122,10 @@ describe('IntegerQuestionFactory', function() {
   function mockJson() {
     Mock.json = {
       "extents": "SurveyItem",
-      "objectType": "IntegerQuestion",
+      "objectType": "EmailQuestion",
       "templateID": "QUE1",
       "customID": "PersonalizedID",
-      "dataType": "Integer",
+      "dataType": "String",
       "label": {
         "ptBR": {},
         "enUS": {},
@@ -132,11 +136,6 @@ describe('IntegerQuestionFactory', function() {
         "objectType": "MetadataGroup",
         "options": []
       },
-      "unit": {
-        "ptBR": {},
-        "enUS": {},
-        "esES": {}
-      },
       "fillingRules": {
           "extends": "StudioObject",
           "objectType": "FillingRules",
@@ -144,4 +143,5 @@ describe('IntegerQuestionFactory', function() {
       }
     };
   }
+
 });
