@@ -6,26 +6,26 @@
         .factory('SingleSelectionQuestionFactory', SingleSelectionQuestionFactory);
 
     SingleSelectionQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'AnswerOptionFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function SingleSelectionQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
+    function SingleSelectionQuestionFactory(IdiomFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory);
+            return new SingleSelectionQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
+    function SingleSelectionQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -34,9 +34,9 @@
         self.customID = templateID;
         self.dataType = 'Integer';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();

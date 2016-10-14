@@ -5,9 +5,9 @@
         .module('otusjs.surveyItem')
         .factory('CheckboxAnswerOptionFactory', CheckboxAnswerOptionFactory);
 
-    CheckboxAnswerOptionFactory.$inject = ['LabelFactory'];
+    CheckboxAnswerOptionFactory.$inject = ['IdiomFactory'];
 
-    function CheckboxAnswerOptionFactory(LabelFactory) {
+    function CheckboxAnswerOptionFactory(IdiomFactory) {
         var self = this;
 
         /* Public interface */
@@ -15,12 +15,12 @@
         self.createWithData = createWithData;
 
         function create(optionID) {
-            return new CheckboxAnswerOption(optionID, LabelFactory);
+            return new CheckboxAnswerOption(optionID, IdiomFactory);
         }
 
         function createWithData(checkboxAnswerOptionJSON) {
             var parsedJson = JSON.parse(checkboxAnswerOptionJSON);
-            var CheckboxAnswerOptionObject = new CheckboxAnswerOption(parsedJson.optionID, LabelFactory);
+            var CheckboxAnswerOptionObject = new CheckboxAnswerOption(parsedJson.optionID, IdiomFactory);
 
             CheckboxAnswerOptionObject.optionID = parsedJson.optionID;
             CheckboxAnswerOptionObject.customOptionID = parsedJson.customOptionID;
@@ -32,7 +32,7 @@
         return self;
     }
 
-    function CheckboxAnswerOption(optionID, LabelFactory) {
+    function CheckboxAnswerOption(optionID, IdiomFactory) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -42,9 +42,9 @@
         self.dataType = 'Boolean';
         self.value = false;
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
 
         /* Public methods */

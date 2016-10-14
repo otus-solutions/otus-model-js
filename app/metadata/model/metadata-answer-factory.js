@@ -1,37 +1,43 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.metadata')
-        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
+  angular
+    .module('otusjs.metadata')
+    .factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
-    MetadataAnswerFactory.$inject = ['LabelFactory'];
+  MetadataAnswerFactory.$inject = ['LabelFactory'];
 
-    function MetadataAnswerFactory(LabelFactory) {
-        var self = this;
+  function MetadataAnswerFactory(LabelFactory) {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        function create(value) {
-            return new MetadataAnswer(value, LabelFactory);
-        }
-
-        return self;
+    function create(value) {
+      var labelObject = LabelFactory.create();
+      return new MetadataAnswer(value, labelObject);
     }
 
-    function MetadataAnswer(value, LabelFactory) {
-        var self = this;
-
-        self.extends = 'StudioObject';
-        self.objectType = 'MetadataAnswer';
-        self.dataType = 'Integer';
-        self.value = value;
-        self.label = {
-            'ptBR': LabelFactory.create(),
-            'enUS': LabelFactory.create(),
-            'esES': LabelFactory.create()
-        };
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.MetadataAnswerFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var labelObject = LabelFactory.fromJson(json.label);
+      return new MetadataAnswer(json.value, labelObject);
     }
+
+    return self;
+  }
+
+  function MetadataAnswer(value, labelObject) {
+    var self = this;
+
+    self.extends = 'StudioObject';
+    self.objectType = 'MetadataAnswer';
+    self.dataType = 'Integer';
+    self.value = value;
+    self.label = labelObject;
+  }
 
 }());

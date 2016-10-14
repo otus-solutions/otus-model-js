@@ -1,53 +1,43 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.misc')
-        .factory('LabelFactory', LabelFactory);
+  angular
+    .module('otusjs.misc')
+    .factory('LabelFactory', LabelFactory);
 
-    function LabelFactory() {
-        var self = this;
+  LabelFactory.$inject = ['IdiomFactory'];
 
-        /* Public interface */
-        self.create = create;
+  function LabelFactory(IdiomFactory) {
+    var self = this;
 
-        function create() {
-            return new Label();
-        }
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        return self;
+    function create() {
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.create();
+      labelObject.enUS = IdiomFactory.create();
+      labelObject.esES = IdiomFactory.create();
+
+      return labelObject;
     }
 
-    function Label() {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.LabelFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var labelObject = {};
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'Label',
-            writable: false,
-            enumerable: true
-        });
+      labelObject.ptBR = IdiomFactory.fromJson(json.ptBR);
+      labelObject.enUS = IdiomFactory.fromJson(json.enUS);
+      labelObject.esES = IdiomFactory.fromJson(json.esES);
 
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'plainText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'formattedText', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
+      return labelObject;
     }
+
+    return self;
+  }
 
 }());

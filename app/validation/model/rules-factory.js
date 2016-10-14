@@ -1,33 +1,40 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.validation')
-        .factory('RulesFactory', RulesFactory);
+  angular
+    .module('otusjs.validation')
+    .factory('RulesFactory', RulesFactory);
 
-    RulesFactory.$inject = [
-        'FillingRulesDataFactory'
-    ];
+  RulesFactory.$inject = [
+    'FillingRulesDataFactory'
+  ];
 
-    function RulesFactory(FillingRulesDataFactory) {
-        var self = this;
+  function RulesFactory(FillingRulesDataFactory) {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        function create(validatorType) {
-            return new Rule(FillingRulesDataFactory, validatorType);
-        }
-
-        return self;
+    function create(validatorType) {
+      var validator = FillingRulesDataFactory.create(validatorType);
+      return new Rule(validatorType, validator);
     }
 
-    function Rule(FillingRulesDataFactory, validatorType) {
-        var self = this;
-        self.extends = 'StudioObject';
-        self.objectType = 'Rule';
-        self.validatorType = validatorType;
-        self.data = FillingRulesDataFactory.create(validatorType);
+    function fromJson(json) {
+      var validator = FillingRulesDataFactory.fromJson(json);
+      return new Rule(json.validatorType, validator);
     }
+
+    return self;
+  }
+
+  function Rule(validatorType, validator) {
+    var self = this;
+    self.extends = 'StudioObject';
+    self.objectType = 'Rule';
+    self.validatorType = validatorType;
+    self.data = validator;
+  }
 
 }());

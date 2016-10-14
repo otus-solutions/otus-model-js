@@ -1,27 +1,37 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.validation')
-        .factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
+  angular
+    .module('otusjs.validation')
+    .factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
 
-    function MaxTimeValidatorFactory() {
-        var self = this;
+  function MaxTimeValidatorFactory() {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        function create(value) {
-            return new MaxTimeValidator(value);
-        }
-
-        return self;
+    function create() {
+      return new MaxTimeValidator();
     }
 
-    function MaxTimeValidator(value) {
-        var self = this;
-
-        self.reference = '';
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.MaxTimeValidatorFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var validator = new MaxTimeValidator();
+      validator.reference = json.reference;
+      return validator;
     }
+
+    return self;
+  }
+
+  function MaxTimeValidator() {
+    var self = this;
+
+    self.reference = '';
+  }
 
 }());

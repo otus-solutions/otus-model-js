@@ -1,4 +1,4 @@
-xdescribe('SurveyFactory', function() {
+describe('SurveyFactory', function() {
     var Mock = {};
     var survey;
 
@@ -72,7 +72,7 @@ xdescribe('SurveyFactory', function() {
     }
 
     function mockNavigationManagerService($injector) {
-        return $injector.get('NavigationManagerService');
+        return $injector.get('otusjs.model.navigation.NavigationManagerService');
     }
 
     function mockSurveyItemManagerService($injector) {

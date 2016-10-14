@@ -33,7 +33,7 @@
 
     _runner.contains = function(reference, answer) {
       let reg = new RegExp(reference, 'i');
-      return reference.test(answer);
+      return reg.test(answer);
     }
   }
 }());
