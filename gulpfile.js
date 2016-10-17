@@ -24,6 +24,11 @@
 
     gulp.src(['app/shared/st-utils/*-module.js', 'app/shared/st-utils/*.js'])
       .pipe(concat('st-utils.js'))
+      .pipe(gulp.dest(DEST))
+      .pipe(uglify())
+      .pipe(rename({
+        extname: '.min.js'
+      }))
       .pipe(gulp.dest(DEST));
   });
 
