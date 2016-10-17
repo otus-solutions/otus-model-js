@@ -14,7 +14,7 @@
     gulp.src(['app/**/*-module.js', 'app/**/*.js', '!app/shared/**'])
       .pipe(babel())
       .pipe(concat('otus-model.js'))
-      .pipe(gulp.dest(DEST));
+      .pipe(gulp.dest(DEST))
       .pipe(uglify())
       .pipe(gulp.dest(DEST));
 
