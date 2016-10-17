@@ -88,7 +88,7 @@ describe('CalendarQuestionFactory', function() {
       expect(Mock.FillingRulesOptionFactory.fromJson).toHaveBeenCalledWith(Mock.json.fillingRules);
     });
 
-    it("should throw a error if the method receive a string", function() {
+    it("should throw a error if the method received a string", function() {
       expect(function() {
         factory.fromJson(JSON.stringify(Mock.json));
       }).toThrowError("otusjs.model.misc.model.CalendarQuestionFactory.fromJson() " +
