@@ -8,6 +8,7 @@
   const uglify = require("gulp-uglify");
   const concat = require('gulp-concat');
   const sonar = require('gulp-sonar');
+  const rename = require('gulp-rename');
   const packageJson = require('./package.json');
 
   gulp.task('compress', function() {
@@ -16,6 +17,9 @@
       .pipe(concat('otus-model.js'))
       .pipe(gulp.dest(DEST))
       .pipe(uglify())
+      .pipe(rename({
+        extname: '.min.js'
+      }))
       .pipe(gulp.dest(DEST));
 
     gulp.src(['app/shared/st-utils/*-module.js', 'app/shared/st-utils/*.js'])

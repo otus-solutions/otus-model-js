@@ -1,9 +1,9 @@
 describe('QuestionFill', function() {
 
-  let QID1 = 'QID1';
-  let COMMENT = 'Este é o meu comentário: comentário.';
-  let Mock = {};
-  let factory;
+  var QID1 = 'QID1';
+  var COMMENT = 'Este é o meu comentário: comentário.';
+  var Mock = {};
+  var factory;
 
   beforeEach(function() {
     module('otusjs');
@@ -24,10 +24,10 @@ describe('QuestionFill', function() {
 
   describe('isFilled method', function() {
 
-    let answerFill;
-    let metadataFill;
-    let commentFill;
-    let unfilledQuestion;
+    var answerFill;
+    var metadataFill;
+    var commentFill;
+    var unfilledQuestion;
 
     beforeEach(function() {
       answerFill = factory.create(QID1, 'Yes', null, null);

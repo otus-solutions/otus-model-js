@@ -1,16 +1,16 @@
 describe('FillingManagerService', function() {
 
-  let Mock = {};
-  let service = {};
-  let QUESTION_FILL_TYPE = 'QuestionFill';
-  let METADATA_FILL_TYPE = 'MetadataFill';
-  let QID1 = 'QID1';
-  let QID2 = 'QID2';
-  let EMPTY_STRING = '';
-  let COMMENT = 'Este é o meu comentário: comentário.';
-  let NEW_COMMENT = 'Este é um novo comentário: comentário.';
-  let ANSWER = 1;
-  let METADATA = 2;
+  var Mock = {};
+  var service = {};
+  var QUESTION_FILL_TYPE = 'QuestionFill';
+  var METADATA_FILL_TYPE = 'MetadataFill';
+  var QID1 = 'QID1';
+  var QID2 = 'QID2';
+  var EMPTY_STRING = '';
+  var COMMENT = 'Este é o meu comentário: comentário.';
+  var NEW_COMMENT = 'Este é um novo comentário: comentário.';
+  var ANSWER = 1;
+  var METADATA = 2;
 
   beforeEach(function() {
     module('otusjs');
@@ -27,7 +27,7 @@ describe('FillingManagerService', function() {
   });
 
   describe('fillingListSize method', function() {
-    let filling;
+    var filling;
 
     beforeEach(function() {
       filling = Mock.QuestionFillFactory.create(Mock.item, ANSWER, METADATA, COMMENT);
@@ -45,7 +45,7 @@ describe('FillingManagerService', function() {
   });
 
   describe('getFillingIndex method', function() {
-    let filling;
+    var filling;
 
     beforeEach(function() {
       filling = Mock.QuestionFillFactory.create(Mock.item, ANSWER, METADATA, COMMENT);
@@ -53,13 +53,13 @@ describe('FillingManagerService', function() {
     });
 
     it('should return index of elemente on list', function() {
-      let index = service.getFillingIndex(QID1);
+      var index = service.getFillingIndex(QID1);
 
       expect(index).toBe(0);
     });
 
     it('should return null when element is not in the list', function() {
-      let index = service.getFillingIndex(QID2);
+      var index = service.getFillingIndex(QID2);
 
       expect(index).toBe(null);
     });
@@ -67,7 +67,7 @@ describe('FillingManagerService', function() {
   });
 
   describe('existsFillingTo method', function() {
-    let filling;
+    var filling;
 
     beforeEach(function() {
       filling = Mock.QuestionFillFactory.create(Mock.item, ANSWER, METADATA, COMMENT);
@@ -85,7 +85,7 @@ describe('FillingManagerService', function() {
   });
 
   describe('searchFillingByID method', function() {
-    let filling;
+    var filling;
 
     beforeEach(function() {
       filling = Mock.QuestionFillFactory.create(Mock.item, ANSWER, METADATA, COMMENT);
@@ -103,7 +103,7 @@ describe('FillingManagerService', function() {
   });
 
   describe('updateFilling method', function() {
-    let filling1, filling1Clone;
+    var filling1, filling1Clone;
 
     beforeEach(function() {
       filling1 = Mock.QuestionFillFactory.create(Mock.item, ANSWER, METADATA, COMMENT);
@@ -112,7 +112,7 @@ describe('FillingManagerService', function() {
 
     it('should add new filling when not exists on list for the same questionID', function() {
       service.updateFilling(filling1);
-      let result = service.searchFillingByID(filling1.questionID);
+      var result = service.searchFillingByID(filling1.questionID);
 
       expect(result).toEqual(filling1);
     });
@@ -121,7 +121,7 @@ describe('FillingManagerService', function() {
       service.updateFilling(filling1);
       service.updateFilling(filling2);
 
-      let result = service.searchFillingByID(filling1.questionID);
+      var result = service.searchFillingByID(filling1.questionID);
 
       expect(result.comment).not.toEqual(filling1.comment);
       expect(result.comment).toEqual(filling2.comment);
@@ -130,14 +130,14 @@ describe('FillingManagerService', function() {
 
     it('should remove when filling is empty', function() {
       service.updateFilling(filling1);
-      let emptyFilling1 = Mock.QuestionFillFactory.create(Mock.item);
+      var emptyFilling1 = Mock.QuestionFillFactory.create(Mock.item);
       service.updateFilling(emptyFilling1);
 
       expect(service.listSize()).toBe(0);
     });
 
     it('should return size list equal zero when question is empty', function() {
-      let emptyFilling1 = Mock.QuestionFillFactory.create(Mock.item);
+      var emptyFilling1 = Mock.QuestionFillFactory.create(Mock.item);
       service.updateFilling(emptyFilling1);
 
       expect(service.listSize()).toBe(0);
@@ -146,7 +146,7 @@ describe('FillingManagerService', function() {
   });
 
   describe('add method', function() {
-    let filling;
+    var filling;
 
     beforeEach(function() {
       filling = Mock.QuestionFillFactory.create(Mock.item, ANSWER, METADATA, COMMENT);
@@ -161,7 +161,7 @@ describe('FillingManagerService', function() {
   });
 
   describe('removeFilling method', function() {
-    let fillingQID1, fillingQID2;
+    var fillingQID1, fillingQID2;
 
     beforeEach(function() {
       fillingQID1 = Mock.QuestionFillFactory.create(Mock.item, ANSWER, METADATA, COMMENT);
@@ -171,14 +171,14 @@ describe('FillingManagerService', function() {
     });
 
     xit('should return object filling when removed element in list', function() {
-      let result = service.removeFilling(fillingQID1.questionID);
+      var result = service.removeFilling(fillingQID1.questionID);
 
       expect(result).toEqual(fillingQID1);
     });
 
     xit('should return null when none element removed of list', function() {
       service.removeFilling(fillingQID1.questionID);
-      let result = service.removeFilling(fillingQID1.questionID);
+      var result = service.removeFilling(fillingQID1.questionID);
 
       expect(result).toBe(null);
     });
@@ -193,7 +193,7 @@ describe('FillingManagerService', function() {
   });
 
   describe('replaceFilling method', function() {
-    let filling1, filling2;
+    var filling1, filling2;
 
     beforeEach(function() {
       filling1 = Mock.QuestionFillFactory.create(Mock.item, ANSWER, METADATA, COMMENT);
@@ -201,16 +201,16 @@ describe('FillingManagerService', function() {
     });
 
     xit('should return object substituted on list', function() {
-      let fillingModified = Mock.QuestionFillFactory.create(Mock.item, ANSWER, METADATA, NEW_COMMENT);
-      let resultOfReplace = service.replaceFilling(fillingModified);
-      let resultOfSearch = service.searchFillingByID(resultOfReplace.questionID);
+      var fillingModified = Mock.QuestionFillFactory.create(Mock.item, ANSWER, METADATA, NEW_COMMENT);
+      var resultOfReplace = service.replaceFilling(fillingModified);
+      var resultOfSearch = service.searchFillingByID(resultOfReplace.questionID);
 
       expect(resultOfReplace).toEqual(filling1);
       expect(resultOfSearch).toEqual(fillingModified);
     });
 
     xit('should return null when none element replace of list', function() {
-      let result = service.replaceFilling(filling2);
+      var result = service.replaceFilling(filling2);
 
       expect(result).toEqual(null);
     });

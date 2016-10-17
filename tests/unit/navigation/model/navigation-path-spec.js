@@ -1,7 +1,7 @@
 describe('NavigationStackFactory', function()  {
 
-  let Mock = {};
-  let stack = {};
+  var Mock = {};
+  var stack = {};
 
   beforeEach(function()  {
     module('otusjs');
@@ -213,8 +213,8 @@ describe('NavigationStackFactory', function()  {
   });
 
   function mockStackItems($injector) {
-    let itemFactory = $injector.get('otusjs.model.navigation.NavigationPathItemFactory');
-    let options = {};
+    var itemFactory = $injector.get('otusjs.model.navigation.NavigationPathItemFactory');
+    var options = {};
 
     options = { id: 'A', label: 'Label', type: 'IntegerQuestion', answer: 'Label da resposta', metadata: 'Label do metdado.' };
     Mock.itemA = itemFactory.create(options);

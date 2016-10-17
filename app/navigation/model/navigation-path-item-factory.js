@@ -6,7 +6,7 @@
     .factory('otusjs.model.navigation.NavigationPathItemFactory', Factory);
 
   function Factory() {
-    let self = this;
+    var self = this;
 
     /* Public methods */
     self.create = create;
@@ -19,16 +19,16 @@
   }
 
   function NavigationStackItem(options) {
-    let self = this;
+    var self = this;
 
-    let _id = options.id;
-    let _label = options.label || '';
-    let _type = options.type;
-    let _answer = options.answer;
-    let _metadata = options.metadata;
+    var _id = options.id;
+    var _label = options.label || '';
+    var _type = options.type;
+    var _answer = options.answer;
+    var _metadata = options.metadata;
 
-    let _previous = null;
-    let _next = null;
+    var _previous = null;
+    var _next = null;
 
     /* Public methods */
     self.getID = getID;

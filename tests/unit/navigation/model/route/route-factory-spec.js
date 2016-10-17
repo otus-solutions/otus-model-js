@@ -1,10 +1,10 @@
 describe('RouteFactory', function() {
 
-  let Mock = {};
-  let route;
-  let ORIGIN = 'ORIGIN';
-  let DESTINATION = 'DESTINATION';
-  let ROUTE_NAME = 'ORIGIN_DESTINATION';
+  var Mock = {};
+  var route;
+  var ORIGIN = 'ORIGIN';
+  var DESTINATION = 'DESTINATION';
+  var ROUTE_NAME = 'ORIGIN_DESTINATION';
 
   beforeEach(function() {
     module('otusjs');
@@ -224,9 +224,9 @@ describe('RouteFactory', function() {
   });
 
   function mockCondition($injector) {
-    let RuleFactory = $injector.get('otusjs.model.navigation.RuleFactory');
-    let rule = RuleFactory.create('QID1', 'equal', 1);
-    let conditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
+    var RuleFactory = $injector.get('otusjs.model.navigation.RuleFactory');
+    var rule = RuleFactory.create('QID1', 'equal', 1);
+    var conditionFactory = $injector.get('otusjs.model.navigation.RouteConditionFactory');
     Mock.conditionA = conditionFactory.create('CONDITION_A', [rule]);
     Mock.conditionB = conditionFactory.create('CONDITION_A', [rule]);
   }
