@@ -6,7 +6,7 @@
     .factory('otusjs.model.activity.MetadataFillFactory', MetadataFillFactory);
 
   function MetadataFillFactory() {
-    let self = this;
+    var self = this;
 
     /* Public interface */
     self.create = create;
@@ -19,7 +19,7 @@
   }
 
   function MetadataFill(value) {
-    let self = this;
+    var self = this;
 
     self.objectType = 'MetadataFill';
     self.value = (value === undefined) ? null : value;
@@ -33,7 +33,7 @@
     }
 
     function toJson() {
-      let json = {};
+      var json = {};
 
       json.objectType = self.objectType;
       json.value = self.value;

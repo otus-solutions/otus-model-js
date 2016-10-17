@@ -10,7 +10,7 @@
   ];
 
   function AnswerFillFactory(AnswerEvaluationService) {
-    let self = this;
+    var self = this;
 
     /* Public interface */
     self.create = create;
@@ -23,7 +23,7 @@
   }
 
   function AnswerFill(value, evaluator) {
-    let self = this;
+    var self = this;
 
     self.objectType = 'AnswerFill';
     self.value = (value === undefined) ? null : value;
@@ -38,7 +38,7 @@
     }
 
     function toJson() {
-      let json = {};
+      var json = {};
 
       json.objectType = self.objectType;
       json.value = self.value;

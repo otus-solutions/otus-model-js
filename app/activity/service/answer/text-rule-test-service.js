@@ -6,8 +6,8 @@
     .service('otusjs.model.activity.TextRuleTestService', Service);
 
   function Service() {
-    let self = this;
-    let _runner = {};
+    var self = this;
+    var _runner = {};
     self.name = 'TextRuleTestService';
 
     /* Public Methods */
@@ -32,7 +32,7 @@
     }
 
     _runner.contains = function(reference, answer) {
-      let reg = new RegExp(reference, 'i');
+      var reg = new RegExp(reference, 'i');
       return reg.test(answer);
     }
   }

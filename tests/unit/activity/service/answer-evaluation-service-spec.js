@@ -1,8 +1,8 @@
 describe('AnswerEvaluationService', function() {
 
-  let Mock = {};
-  let Injections = {};
-  let service = {};
+  var Mock = {};
+  var Injections = {};
+  var service = {};
 
   beforeEach(function() {
     module('otusjs');
@@ -17,7 +17,7 @@ describe('AnswerEvaluationService', function() {
     describe('when parameter is IntegerQuestion', function() {
 
       it('should keep a reference to an evaluator NumericRuleTestService', function() {
-        let evaluator = service.getEvaluator('IntegerQuestion');
+        var evaluator = service.getEvaluator('IntegerQuestion');
 
         expect(evaluator.name).toEqual('NumericRuleTestService');
       });

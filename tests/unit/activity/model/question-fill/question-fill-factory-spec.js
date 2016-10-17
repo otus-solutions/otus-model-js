@@ -1,12 +1,12 @@
 describe('QuestionFillFactory', function() {
 
-  let Mock = {};
-  let QUESTION_FILL_TYPE = 'QuestionFill';
-  let QID1 = 'QID1';
-  let ANSWER_FILL_TYPE = 'AnswerFill';
-  let METADATA_FILL_TYPE = 'MetadataFill';
-  let EMPTY_STRING = '';
-  let COMMENT = 'Este é o meu comentário: comentário.';
+  var Mock = {};
+  var QUESTION_FILL_TYPE = 'QuestionFill';
+  var QID1 = 'QID1';
+  var ANSWER_FILL_TYPE = 'AnswerFill';
+  var METADATA_FILL_TYPE = 'MetadataFill';
+  var EMPTY_STRING = '';
+  var COMMENT = 'Este é o meu comentário: comentário.';
 
   beforeEach(function() {
     module('otusjs');
@@ -25,7 +25,7 @@ describe('QuestionFillFactory', function() {
 
   describe('create method', function() {
 
-    let questionFill;
+    var questionFill;
 
     beforeEach(function() {
       questionFill = factory.create(Mock.item, Mock.answer, Mock.metadata);

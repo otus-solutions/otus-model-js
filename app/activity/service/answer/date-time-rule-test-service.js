@@ -6,8 +6,8 @@
     .service('otusjs.model.activity.DateTimeRuleTestService', Service);
 
   function Service() {
-    let self = this;
-    let _runner = {};
+    var self = this;
+    var _runner = {};
     self.name = 'DateTimeRuleTestService';
 
     /* Public Methods */
