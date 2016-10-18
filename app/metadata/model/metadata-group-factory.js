@@ -12,20 +12,20 @@
 
     /* Public interface */
     self.create = create;
-    self.fromJson = fromJson;
+    self.fromJsonObject = fromJsonObject;
 
     function create() {
       return new MetadataGroup(MetadataAnswerFactory);
     }
 
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.MetadataGroupFactory.fromJson() method expects to receive a object instead a String");
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.MetadataGroupFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var metadaGroup = new MetadataGroup();
 
-      json.options.forEach(function(metadataAnswerOption){
-        metadaGroup.options.push(MetadataAnswerFactory.fromJson(metadataAnswerOption));
+      jsonObject.options.forEach(function(metadataAnswerOption){
+        metadaGroup.options.push(MetadataAnswerFactory.fromJsonObject(metadataAnswerOption));
       });
 
       return metadaGroup;

@@ -10,18 +10,18 @@
 
     /* Public interface */
     self.create = create;
-    self.fromJson = fromJson;
+    self.fromJsonObject = fromJsonObject;
 
     function create() {
       return new UpperCaseValidator();
     }
 
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.UpperCaseValidatorFactory.fromJson() method expects to receive a object instead a String");
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.UpperCaseValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var validator = new UpperCaseValidator();
-      validator.reference = json.reference;
+      validator.reference = jsonObject.reference;
       return validator;
     }
 

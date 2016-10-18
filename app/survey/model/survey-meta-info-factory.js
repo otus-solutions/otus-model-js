@@ -1,52 +1,52 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.survey')
-        .factory('SurveyMetaInfoFactory', SurveyMetaInfoFactory);
+  angular
+    .module('otusjs.survey')
+    .factory('SurveyMetaInfoFactory', SurveyMetaInfoFactory);
 
-    function SurveyMetaInfoFactory() {
-        var self = this;
+  function SurveyMetaInfoFactory() {
+    var self = this;
 
-        /* Public interdace */
-        self.create = create;
-        self.fromJson = fromJson;
+    /* Public interdace */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
 
-        function fromJson(json) {
-          if (typeof json === 'string') {
-            throw new Error("otusjs.model.survey.model.SurveyMetaInfoFactory.fromJson() method expects to receive a object instead a String");
-          }
-          return new SurveyMetaInfo(json.creationDatetime);
-        }
-
-        function create() {
-            var now = Date.now();
-            return new SurveyMetaInfo(now);
-        }
-
-        return self;
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.survey.model.SurveyMetaInfoFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      return new SurveyMetaInfo(jsonObject.creationDatetime);
     }
 
-    function SurveyMetaInfo(creationDatetime) {
-        var self = this;
-
-        self.extents = 'StudioObject';
-        self.objectType = 'SurveyMetaInfo';
-        self.creationDatetime = creationDatetime;
-        self.otusStudioVersion = '';
-
-        self.toJson = toJson;
-
-        function toJson() {
-            var json = {};
-
-            json.extents = self.extents;
-            json.objectType = self.objectType;
-            json.creationDatetime = self.creationDatetime;
-            json.otusStudioVersion = self.otusStudioVersion;
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-        }
+    function create() {
+      var now = Date.now();
+      return new SurveyMetaInfo(now);
     }
+
+    return self;
+  }
+
+  function SurveyMetaInfo(creationDatetime) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'SurveyMetaInfo';
+    self.creationDatetime = creationDatetime;
+    self.otusStudioVersion = '';
+
+    self.toJson = toJson;
+
+    function toJson() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.creationDatetime = self.creationDatetime;
+      json.otusStudioVersion = self.otusStudioVersion;
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+  }
 
 }());

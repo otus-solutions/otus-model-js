@@ -2,7 +2,6 @@ describe('LabelFactory suite:', function() {
   var factory;
   var Mock = {};
 
-  /* @BeforeScenario */
   beforeEach(function() {
     module('otusjs');
 
@@ -13,7 +12,6 @@ describe('LabelFactory suite:', function() {
         'IdiomFactory': mockIdiomFactory(_$injector_)
       });
     });
-
   });
 
   describe('create method', function() {
@@ -40,36 +38,36 @@ describe('LabelFactory suite:', function() {
 
   });
 
-  describe('fromJson method', function() {
+  describe('fromJsonObject method', function() {
 
     beforeEach(function() {
-      label = factory.fromJson(Mock.json);
+      label = factory.fromJsonObject(Mock.jsonObject);
     });
 
-    it("should call IdiomFactory.fromJson method 3 times", function() {
-      expect(Mock.IdiomFactory.fromJson).toHaveBeenCalledTimes(3);
+    it("should call IdiomFactory.fromJsonObject method 3 times", function() {
+      expect(Mock.IdiomFactory.fromJsonObject).toHaveBeenCalledTimes(3);
     });
 
-    it("should call IdiomFactory.fromJson method with Mock.json.label.ptBR", function() {
-      expect(Mock.IdiomFactory.fromJson).toHaveBeenCalledWith(Mock.ptBR);
+    it("should call IdiomFactory.fromJsonObject method with Mock.jsonObject.label.ptBR", function() {
+      expect(Mock.IdiomFactory.fromJsonObject).toHaveBeenCalledWith(Mock.ptBR);
     });
 
-    it("should call IdiomFactory.fromJson method with Mock.json.label.enUS", function() {
-      expect(Mock.IdiomFactory.fromJson).toHaveBeenCalledWith(Mock.enUS);
+    it("should call IdiomFactory.fromJsonObject method with Mock.jsonObject.label.enUS", function() {
+      expect(Mock.IdiomFactory.fromJsonObject).toHaveBeenCalledWith(Mock.enUS);
     });
 
-    it("should call IdiomFactory.fromJson method with Mock.json.label.esES", function() {
-      expect(Mock.IdiomFactory.fromJson).toHaveBeenCalledWith(Mock.esES);
+    it("should call IdiomFactory.fromJsonObject method with Mock.jsonObject.label.esES", function() {
+      expect(Mock.IdiomFactory.fromJsonObject).toHaveBeenCalledWith(Mock.esES);
     });
 
-    it("should return a object equal to Mock.json", function() {
-      expect(JSON.stringify(label)).toBe(JSON.stringify(Mock.json));
+    it("should return a object equal to Mock.jsonObject", function() {
+      expect(JSON.stringify(label)).toEqual(JSON.stringify(Mock.jsonObject));
     });
 
     it("should throw a error when receives a String", function() {
       expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.misc.model.LabelFactory.fromJson() " +
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      }).toThrowError("otusjs.model.misc.model.LabelFactory.fromJsonObject() " +
         "method expects to receive a object instead a String");
     });
 
@@ -79,7 +77,7 @@ describe('LabelFactory suite:', function() {
     Mock.IdiomFactory = $injector.get('IdiomFactory');
 
     spyOn(Mock.IdiomFactory, "create").and.callThrough();
-    spyOn(Mock.IdiomFactory, "fromJson").and.callThrough();
+    spyOn(Mock.IdiomFactory, "fromJsonObject").and.callThrough();
 
     return Mock.IdiomFactory;
   }
@@ -117,7 +115,7 @@ describe('LabelFactory suite:', function() {
       "formattedText": ""
     };
 
-    Mock.json = {
+    Mock.jsonObject = {
       "ptBR": Mock.ptBR,
       "enUS": Mock.enUS,
       "esES": Mock.esES

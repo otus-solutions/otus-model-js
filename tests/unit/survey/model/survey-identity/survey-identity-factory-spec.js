@@ -9,14 +9,18 @@ describe('SurveyIdentity', function() {
   beforeEach(function() {
     module('otusjs');
 
+    mockJsonObject();
+
     inject(function(_$injector_) {
       factory = _$injector_.get('SurveyIdentityFactory');
     });
-
-    surveyIdentity = factory.create(NAME, ACRONYM, VERSION);
   });
 
   describe('SurveyIdentityFactory.create()', function() {
+
+    beforeEach(function() {
+      surveyIdentity = factory.create(NAME, ACRONYM, VERSION);
+    });
 
     it('should return an SurveyIdentity that extends from StudioObject', function() {
       expect(surveyIdentity.extents).toBe('StudioObject');
@@ -48,48 +52,50 @@ describe('SurveyIdentity', function() {
 
   });
 
-  describe('SurveyIdentityFactory.fromJson(json)', function() {
+  describe('SurveyIdentityFactory.fromJsonObject', function() {
 
-    beforeEach(function () {
-      surveyIdentity = factory.fromJson(Mock.json);
+    beforeEach(function() {
+      surveyIdentity = factory.fromJsonObject(Mock.jsonObject);
     });
 
     it('should return an SurveyIdentity with name equal to json value property', function() {
-      expect(surveyIdentity.name).toBe(Mock.json.name);
+      expect(surveyIdentity.name).toBe(Mock.jsonObject.name);
     });
 
     it('should return an SurveyIdentity with acronym equal to json value property', function() {
-      expect(surveyIdentity.acronym).toBe(Mock.json.acronym);
+      expect(surveyIdentity.acronym).toBe(Mock.jsonObject.acronym);
     });
 
     it('should return an SurveyIdentity with recommendedTo equal to empty String equal to json value property', function() {
-      expect(surveyIdentity.recommendedTo).toBe(Mock.json.recommendedTo);
+      expect(surveyIdentity.recommendedTo).toBe(Mock.jsonObject.recommendedTo);
     });
 
     it('should return an SurveyIdentity with description equal to empty String equal to json value property', function() {
-      expect(surveyIdentity.description).toBe(Mock.json.description);
+      expect(surveyIdentity.description).toBe(Mock.jsonObject.description);
     });
 
     it('should return an SurveyIdentity with array of keywords equal to json value property', function() {
-      expect(surveyIdentity.keywords).toBe(Mock.json.keywords);
+      expect(surveyIdentity.keywords).toBe(Mock.jsonObject.keywords);
     });
 
     it("should throw a error if the method receive a string", function() {
       expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.survey.model.SurveyIdentityFactory.fromJson() method expects to receive a object instead a String");
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      }).toThrowError("otusjs.model.survey.model.SurveyIdentityFactory.fromJsonObject() method expects to receive a object instead a String");
     });
 
   });
 
-  Mock.json = {
-    "extents": "StudioObject",
-    "objectType": "SurveyIdentity",
-    "name": "Test Name",
-    "acronym": "TNA",
-    "recommendedTo": "Everyone",
-    "description": "Some description.",
-    "keywords": ['Health', 'Blood']
-  };
+  function mockJsonObject() {
+    Mock.jsonObject = {
+      "extents": "StudioObject",
+      "objectType": "SurveyIdentity",
+      "name": "Test Name",
+      "acronym": "TNA",
+      "recommendedTo": "Everyone",
+      "description": "Some description.",
+      "keywords": ['Health', 'Blood']
+    };
+  }
 
 });

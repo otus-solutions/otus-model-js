@@ -37,31 +37,31 @@ describe('FillingRulesOptionFactory', function() {
 
   });
 
-  describe('fromJson method', function() {
+  describe('fromJsonObject method', function() {
 
-    it("should create a object equals Mock.jsonWithOptions", function () {
-      fillingRulesOption = factory.fromJson(Mock.jsonWithOptions);
+    it("should create a object equals Mock.jsonObjectWithOptions", function () {
+      fillingRulesOption = factory.fromJsonObject(Mock.jsonObjectWithOptions);
 
-      expect(JSON.stringify(fillingRulesOption)).toBe(JSON.stringify(Mock.jsonWithOptions));
+      expect(JSON.stringify(fillingRulesOption)).toBe(JSON.stringify(Mock.jsonObjectWithOptions));
     });
 
-    it("should create a object equals Mock.jsonWithoutOptions", function () {
-      fillingRulesOption = factory.fromJson(Mock.jsonWithoutOptions);
+    it("should create a object equals Mock.jsonObjectWithoutOptions", function () {
+      fillingRulesOption = factory.fromJsonObject(Mock.jsonObjectWithoutOptions);
 
-      expect(JSON.stringify(fillingRulesOption)).toBe(JSON.stringify(Mock.jsonWithoutOptions));
+      expect(JSON.stringify(fillingRulesOption)).toBe(JSON.stringify(Mock.jsonObjectWithoutOptions));
     });
 
     it("should throw a error if the method receive a string", function() {
       expect(function() {
-        factory.fromJson(JSON.stringify(Mock.jsonWithOptions));
-      }).toThrowError("otusjs.model.misc.model.FillingRulesOptionFactory.fromJson() " +
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObjectWithOptions));
+      }).toThrowError("otusjs.model.misc.model.FillingRulesOptionFactory.fromJsonObject() " +
         "method expects to receive a object instead a String");
     });
 
   });
 
   function mockJsons() {
-    Mock.jsonWithOptions = {
+    Mock.jsonObjectWithOptions = {
         "extends": "StudioObject",
         "objectType": "FillingRules",
         "options": {
@@ -92,7 +92,7 @@ describe('FillingRulesOptionFactory', function() {
         }
     };
 
-  Mock.jsonWithoutOptions =  {
+  Mock.jsonObjectWithoutOptions =  {
       extends: 'StudioObject',
       objectType: 'FillingRules',
       options: {}

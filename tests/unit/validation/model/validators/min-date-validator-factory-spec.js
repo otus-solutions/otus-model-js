@@ -15,7 +15,7 @@ describe('MinDateValidatorFactory validator suite:', function() {
 
   });
 
-  describe('MinDateValidatorFactory.create()', function() {
+  describe('create method', function() {
 
     beforeEach(function() {
       validator = factory.create();
@@ -27,26 +27,26 @@ describe('MinDateValidatorFactory validator suite:', function() {
 
   });
 
-  describe("MinDateValidatorFactory.fromJson(json)", function() {
+  describe("fromJsonObject method", function() {
 
     beforeEach(function() {
-      validator = factory.fromJson(Mock.json);
+      validator = factory.fromJsonObject(Mock.jsonObject);
     });
 
     it('should return an validator with reference equal to json value property', function() {
-      expect(validator.reference).toBe(Mock.json.reference);
+      expect(validator.reference).toBe(Mock.jsonObject.reference);
     });
 
     it("should throw a error if the method receive a string", function() {
       expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.misc.model.MinDateValidatorFactory.fromJson() " +
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      }).toThrowError("otusjs.model.misc.model.MinDateValidatorFactory.fromJsonObject() " +
         "method expects to receive a object instead a String");
     });
 
   });
 
-  Mock.json = {
+  Mock.jsonObject = {
     "reference": Mock.now,
   };
 

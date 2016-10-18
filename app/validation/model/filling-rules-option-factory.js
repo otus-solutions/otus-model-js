@@ -12,19 +12,19 @@
 
     /* Public interface */
     self.create = create;
-    self.fromJson = fromJson;
+    self.fromJsonObject = fromJsonObject;
 
     function create() {
       return new FillingRules(RulesFactory);
     }
 
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.FillingRulesOptionFactory.fromJson() method expects to receive a object instead a String");
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.FillingRulesOptionFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var fillingRules = new FillingRules(RulesFactory);
-      for(var rule in json.options) {
-        fillingRules.options[rule] = RulesFactory.fromJson(json.options[rule]);
+      for(var rule in jsonObject.options) {
+        fillingRules.options[rule] = RulesFactory.fromJsonObject(jsonObject.options[rule]);
       }
       return fillingRules;
     }

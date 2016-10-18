@@ -14,16 +14,16 @@
 
     /* Public interface */
     self.create = create;
-    self.fromJson = fromJson;
+    self.fromJsonObject = fromJsonObject;
 
     function create(validatorType) {
       var validator = FillingRulesDataFactory.create(validatorType);
       return new Rule(validatorType, validator);
     }
 
-    function fromJson(json) {
-      var validator = FillingRulesDataFactory.fromJson(json);
-      return new Rule(json.validatorType, validator);
+    function fromJsonObject(jsonObject) {
+      var validator = FillingRulesDataFactory.fromJsonObject(jsonObject);
+      return new Rule(jsonObject.validatorType, validator);
     }
 
     return self;

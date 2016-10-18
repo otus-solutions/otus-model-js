@@ -5,17 +5,19 @@ describe('SurveyMetaInfoFactory', function() {
   beforeEach(function() {
     module('otusjs');
 
+    mockJsonObject();
     mockDate();
 
     inject(function(_$injector_) {
       factory = _$injector_.get('SurveyMetaInfoFactory');
     });
-
-    surveyMetaInfo = factory.create();
-
   });
 
   describe('Dependencies uses', function() {
+
+    beforeEach(function() {
+      surveyMetaInfo = factory.create();
+    });
 
     it('Date.now() should be called in create() method', function() {
       expect(Date.now).toHaveBeenCalled();
@@ -24,6 +26,9 @@ describe('SurveyMetaInfoFactory', function() {
   });
 
   describe('SurveyMetaInfoFactory.create()', function() {
+    beforeEach(function() {
+      surveyMetaInfo = factory.create();
+    });
 
     it('should return an SurveyMetaInfo with creation date time equal to now date', function() {
       expect(surveyMetaInfo.creationDatetime).toEqual(Mock.now);
@@ -39,20 +44,20 @@ describe('SurveyMetaInfoFactory', function() {
 
   });
 
-  describe('SurveyMetaInfoFactory.fromJson(json)', function() {
+  describe('SurveyMetaInfoFactory.fromJsonObject', function() {
 
     beforeEach(function() {
-      surveyMetaInfo = factory.fromJson(Mock.json);
+      surveyMetaInfo = factory.fromJsonObject(Mock.jsonObject);
     });
 
-    it('should return an SurveyMetaInfo with creation date time equal to json value property', function() {
-      expect(surveyMetaInfo.creationDatetime).toEqual(Mock.json.creationDatetime);
+    it("should create an instance with the same values of Mock.jsonObject", function() {
+      expect(surveyMetaInfo.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
     });
 
     it("should throw a error if the method receive a string", function() {
       expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.survey.model.SurveyMetaInfoFactory.fromJson() method expects to receive a object instead a String");
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      }).toThrowError("otusjs.model.survey.model.SurveyMetaInfoFactory.fromJsonObject() method expects to receive a object instead a String");
     });
 
   });
@@ -73,11 +78,13 @@ describe('SurveyMetaInfoFactory', function() {
     spyOn(Date, 'now').and.returnValue(Mock.now);
   }
 
-  Mock.json = {
-    "extents": "StudioObject",
-    "objectType": "SurveyMetaInfo",
-    "creationDatetime": '20/12/1991',
-    "otusStudioVersion": ""
-  };
+  function mockJsonObject() {
+    Mock.jsonObject = {
+      "extents": "StudioObject",
+      "objectType": "SurveyMetaInfo",
+      "creationDatetime": '20/12/1991',
+      "otusStudioVersion": ""
+    };
+  }
 
 });

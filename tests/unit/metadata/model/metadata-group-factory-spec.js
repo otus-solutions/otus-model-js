@@ -5,7 +5,7 @@ describe('MetadataGroupFactory', function() {
   beforeEach(function() {
     module('otusjs');
 
-    mockJson();
+    mockJsonObject();
 
     inject(function(_$injector_) {
       factory = _$injector_.get('MetadataGroupFactory', {
@@ -39,39 +39,39 @@ describe('MetadataGroupFactory', function() {
 
   });
 
-  describe("fromJson(json) method", function() {
+  describe("fromJsonObject method", function() {
 
     beforeEach(function() {
-      metadataGroup = factory.fromJson(Mock.json);
+      metadataGroup = factory.fromJsonObject(Mock.jsonObject);
     });
 
     it("should return a object with 2 options", function() {
       expect(metadataGroup.getOptionListSize()).toBe(2);
     });
 
-    it("should call MetadataAnswerFactory.fromJson method 3 times ", function () {
-      expect(Mock.MetadataAnswerFactory.fromJson).toHaveBeenCalledTimes(2);
+    it("should call MetadataAnswerFactory.fromJsonObject method 3 times ", function () {
+      expect(Mock.MetadataAnswerFactory.fromJsonObject).toHaveBeenCalledTimes(2);
     });
 
-    it("should call MetadataAnswerFactory.fromJson with Mock.option1 ", function () {
-      expect(Mock.MetadataAnswerFactory.fromJson).toHaveBeenCalledWith(Mock.option1);
+    it("should call MetadataAnswerFactory.fromJsonObject with Mock.option1 ", function () {
+      expect(Mock.MetadataAnswerFactory.fromJsonObject).toHaveBeenCalledWith(Mock.option1);
     });
 
-    it("should call MetadataAnswerFactory.fromJson with Mock.option2 ", function () {
-      expect(Mock.MetadataAnswerFactory.fromJson).toHaveBeenCalledWith(Mock.option2);
+    it("should call MetadataAnswerFactory.fromJsonObject with Mock.option2 ", function () {
+      expect(Mock.MetadataAnswerFactory.fromJsonObject).toHaveBeenCalledWith(Mock.option2);
     });
 
     it("should throw an error when receive a string", function() {
       expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.misc.model.MetadataGroupFactory.fromJson() " +
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      }).toThrowError("otusjs.model.misc.model.MetadataGroupFactory.fromJsonObject() " +
         "method expects to receive a object instead a String");
     });
 
   });
 
-  function mockJson() {
-    Mock.json = {
+  function mockJsonObject() {
+    Mock.jsonObject = {
       "extents": "StudioObject",
       "objectType": "MetadataGroup",
       "options": [Mock.option1, Mock.option2]
@@ -106,13 +106,13 @@ describe('MetadataGroupFactory', function() {
     Mock.MetadataAnswerFactory = $injector.get('MetadataAnswerFactory', {
       'IdiomFactory': mockIdiomFactory($injector)
     });
-    spyOn(Mock.MetadataAnswerFactory, "fromJson").and.callThrough();
+    spyOn(Mock.MetadataAnswerFactory, "fromJsonObject").and.callThrough();
     return Mock.MetadataAnswerFactory;
   }
 
   function mockIdiomFactory($injector) {
     Mock.IdiomFactory = $injector.get('IdiomFactory');
-    spyOn(Mock.IdiomFactory, 'fromJson').and.returnValue({});
+    spyOn(Mock.IdiomFactory, 'fromJsonObject').and.returnValue({});
     return Mock.IdiomFactory;
   }
 

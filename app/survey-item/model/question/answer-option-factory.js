@@ -25,7 +25,7 @@
     }
 
     function fromJsonObject(jsonObject) {
-        var labelObject = LabelFactory.fromJson(jsonObject.label);
+        var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
         return new AnswerOption(jsonObject.value, jsonObject.parentQuestionID, labelObject);
     }
 

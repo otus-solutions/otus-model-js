@@ -8,7 +8,7 @@ describe('MaxDateValidatorFactory validator suite:', function() {
     module('otusjs.validation');
 
     mockDate();
-    mockJson();
+    mockJsonObject();
 
     inject(function(_$injector_) {
       factory = _$injector_.get('MaxDateValidatorFactory');
@@ -16,32 +16,32 @@ describe('MaxDateValidatorFactory validator suite:', function() {
 
   });
 
-  describe('MaxDateValidatorFactory.create()', function() {
+  describe('create method', function() {
 
     beforeEach(function() {
       validator = factory.create();
     });
 
     it('should return an validator with property reference with value Mock.now', function() {
-      expect(validator.reference.getTime()).toEqual(Mock.json.reference.getTime());
+      expect(validator.reference.getTime()).toEqual(Mock.jsonObject.reference.getTime());
     });
 
   });
 
-  describe("MaxDateValidatorFactory.fromJson(json)", function() {
+  describe("fromJsonObject method", function() {
 
     beforeEach(function() {
-      validator = factory.fromJson(Mock.json);
+      validator = factory.fromJsonObject(Mock.jsonObject);
     });
 
     it('should return an validator with reference equal to json value property', function() {
-      expect(validator.reference).toBe(Mock.json.reference);
+      expect(validator.reference).toBe(Mock.jsonObject.reference);
     });
 
     it("should throw a error if the method receive a string", function() {
       expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.misc.model.MaxDateValidatorFactory.fromJson() " +
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      }).toThrowError("otusjs.model.misc.model.MaxDateValidatorFactory.fromJsonObject() " +
         "method expects to receive a object instead a String");
     });
 
@@ -53,8 +53,8 @@ describe('MaxDateValidatorFactory validator suite:', function() {
     Mock.now = baseTime;
   }
 
-  function mockJson() {
-    Mock.json = {
+  function mockJsonObject() {
+    Mock.jsonObject = {
       "reference": Mock.now,
     };
   }

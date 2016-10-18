@@ -53,15 +53,14 @@ describe('SingleSelectionQuestionFactory', function() {
   describe("fromJsonObject method", function() {
 
     beforeEach(function() {
-      question = factory.fromJson(Mock.JSON_OBJECT);
+      question = factory.fromJsonObject(Mock.jsonObject);
     });
 
-    it("should reconstruct a question object with JSON_OBJECT data", function() {
-      expect(question.toJson()).toBe(JSON.stringify(Mock.JSON_OBJECT));
+    it("should reconstruct a question object with Mock.jsonObject data", function() {
+      expect(question.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
     });
 
   });
-
 
   function mockQuestion($injector) {
     Mock.TEMPLATE_ID = 'TPL_ID';
@@ -69,7 +68,7 @@ describe('SingleSelectionQuestionFactory', function() {
   }
 
   function mockJsonObject() {
-    Mock.JSON_OBJECT = {
+    Mock.jsonObject = {
       "extents": "SurveyItem",
       "objectType": "SingleSelectionQuestion",
       "templateID": "QUE1",

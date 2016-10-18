@@ -16,7 +16,7 @@
 
     /* Public interface */
     self.create = create;
-    self.fromJson = fromJson;
+    self.fromJsonObject = fromJsonObject;
 
     function create(templateID, prototype) {
       var labelObject = LabelFactory.create();
@@ -26,17 +26,17 @@
       return new TextQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
     }
 
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.TextQuestionFactory.fromJson() method expects to receive a object instead a String");
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.TextQuestionFactory.fromJsonObject() method expects to receive a object instead a String");
       }
-      var labelObject = LabelFactory.fromJson(json.label);
-      var metadataGroupObject = MetadataGroupFactory.fromJson(json.metadata);
-      var fillingRulesObject = FillingRulesOptionFactory.fromJson(json.fillingRules);
+      var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
+      var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
+      var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
       var prototype = {};
       prototype.objectType = "SurveyItem";
-      var question = new TextQuestion(json.templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
-      question.customID = json.customID;
+      var question = new TextQuestion(jsonObject.templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
+      question.customID = jsonObject.customID;
 
       return question;
     }

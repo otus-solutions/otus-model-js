@@ -5,7 +5,7 @@ describe('MetadataAnswerFactory', function() {
   beforeEach(function() {
     module('otusjs');
 
-    mockJson();
+    mockJsonObject();
 
     inject(function(_$injector_) {
       factory = _$injector_.get('MetadataAnswerFactory', {
@@ -50,35 +50,35 @@ describe('MetadataAnswerFactory', function() {
 
   });
 
-  describe("fromJson(json) method", function() {
+  describe("fromJsonObject method", function() {
 
     beforeEach(function() {
-      option = factory.fromJson(Mock.json);
+      option = factory.fromJsonObject(Mock.jsonObject);
     });
 
-    it("should call LabelFactory.fromJson with Mock.json.label", function () {
-      expect(Mock.LabelFactory.fromJson).toHaveBeenCalledWith(Mock.json.label);
+    it("should call LabelFactory.fromJsonObject with Mock.jsonObject.label", function () {
+      expect(Mock.LabelFactory.fromJsonObject).toHaveBeenCalledWith(Mock.jsonObject.label);
     });
 
-    it("should return a value with the same value on Mock.json.value", function () {
-      expect(option.value).toBe(Mock.json.value);
+    it("should return a value with the same value on Mock.jsonObject.value", function () {
+      expect(option.value).toBe(Mock.jsonObject.value);
     });
 
-    it("should return a label with the same value on Mock.json.label", function () {
-      expect(option.label).toEqual(Mock.json.label);
+    it("should return a label with the same value on Mock.jsonObject.label", function () {
+      expect(option.label).toEqual(Mock.jsonObject.label);
     });
 
     it("should throw a error if the method receive a string", function() {
       expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.misc.model.MetadataAnswerFactory.fromJson() " +
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      }).toThrowError("otusjs.model.misc.model.MetadataAnswerFactory.fromJsonObject() " +
         "method expects to receive a object instead a String");
     });
 
   });
 
-  function mockJson() {
-    Mock.json = {
+  function mockJsonObject() {
+    Mock.jsonObject = {
       "extends": "StudioObject",
       "objectType": "MetadataAnswer",
       "dataType": "Integer",
@@ -95,13 +95,13 @@ describe('MetadataAnswerFactory', function() {
     Mock.LabelFactory = $injector.get('LabelFactory', {
       'IdiomFactory': mockIdiomFactory($injector)
     });
-    spyOn(Mock.LabelFactory, 'fromJson').and.callThrough();
+    spyOn(Mock.LabelFactory, 'fromJsonObject').and.callThrough();
     return Mock.LabelFactory;
   }
 
   function mockIdiomFactory($injector) {
     Mock.IdiomFactory = $injector.get('IdiomFactory');
-    spyOn(Mock.IdiomFactory, 'fromJson').and.returnValue({});
+    spyOn(Mock.IdiomFactory, 'fromJsonObject').and.returnValue({});
     return Mock.IdiomFactory;
   }
 

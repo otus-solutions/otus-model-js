@@ -1,7 +1,6 @@
-describe('CheckboxAnswerOptionFactory', function() {
+describe('AnswerOptionFactory', function() {
   var Mock = {};
   var option;
-  var factory;
 
   beforeEach(function() {
     module('otusjs');
@@ -9,37 +8,37 @@ describe('CheckboxAnswerOptionFactory', function() {
     mockJsonObject();
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('CheckboxAnswerOptionFactory');
+      mockQuestion(_$injector_);
+
+      factory = _$injector_.get('AnswerOptionFactory');
     });
 
-    Mock.TEMPLATE_ID = 'TPL-IDa';
-    Mock.CUSTOM_ID = 'myCustomizedID';
   });
 
   describe('create method', function() {
 
     beforeEach(function() {
-      option = factory.create(Mock.TEMPLATE_ID);
+      option = factory.create(Mock.TEMPLATE_ID, Mock.Question.oid);
     });
 
     it('returned object should extends StudioObject', function() {
       expect(option.extents).toBe('StudioObject');
     });
 
-    it('returned object should have objectType equal to CheckboxAnswerOptionFactory', function() {
-      expect(option.objectType).toBe('CheckboxAnswerOption');
+    it('returned object should have objectType equal to AnswerOption', function() {
+      expect(option.objectType).toBe('AnswerOption');
     });
 
-    it('returned object should have optionID equal passed param', function() {
-      expect(option.optionID).toBe(Mock.TEMPLATE_ID);
+    it('returned object should have a not null value', function() {
+      expect(option.value).toBe(Mock.TEMPLATE_ID);
     });
 
-    it('returned object should have customID equal passed param', function() {
-      expect(option.customOptionID).toBe(Mock.TEMPLATE_ID);
+    it('returned object should have dataType equal to Integer', function() {
+      expect(option.dataType).toBe('Integer');
     });
 
-    it('returned object should have dataType equal to Boolean', function() {
-      expect(option.dataType).toBe('Boolean');
+    it('returned object should have parentQuestion equal to Question.oid', function() {
+      expect(option.parentQuestionID).toBe(Mock.Question.oid);
     });
 
     it('returned object should have a label object for ptBR locale', function() {
@@ -59,6 +58,18 @@ describe('CheckboxAnswerOptionFactory', function() {
 
   });
 
+  describe('fromJson method', function() {
+
+    beforeEach(function() {
+      option = factory.fromJson(JSON.stringify(Mock.jsonObject));
+    });
+
+    it("should create an instance with the same values of Mock.jsonObject in String", function() {
+      expect(option.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
+    });
+
+  });
+
   describe('fromJsonObject method', function() {
 
     beforeEach(function() {
@@ -71,35 +82,38 @@ describe('CheckboxAnswerOptionFactory', function() {
 
   });
 
+  function mockQuestion($injector) {
+    Mock.TEMPLATE_ID = 'TPL_ID';
+    Mock.Question = $injector.get('SurveyItemFactory').create('SingleSelectionQuestion', Mock.TEMPLATE_ID);
+  }
+
   function mockJsonObject() {
     Mock.jsonObject = {
       "extents": "StudioObject",
-      "objectType": "CheckboxAnswerOption",
-      "optionID": "AO2a",
-      "customOptionID": "anotherID",
-      "dataType": "Boolean",
-      "value": false,
+      "objectType": "AnswerOption",
+      "value": 1,
+      "dataType": "Integer",
       "label": {
         "ptBR": {
           "extends": "StudioObject",
           "objectType": "Label",
           "oid": "",
-          "plainText": "",
-          "formattedText": ""
+          "plainText": "Masculino",
+          "formattedText": "Masculino"
         },
         "enUS": {
           "extends": "StudioObject",
           "objectType": "Label",
           "oid": "",
-          "plainText": "",
-          "formattedText": ""
+          "plainText": "Male",
+          "formattedText": "Male"
         },
         "esES": {
           "extends": "StudioObject",
           "objectType": "Label",
           "oid": "",
-          "plainText": "",
-          "formattedText": ""
+          "plainText": "Masculino",
+          "formattedText": "Masculino"
         }
       }
     };

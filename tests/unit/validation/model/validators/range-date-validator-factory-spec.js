@@ -8,7 +8,7 @@ describe('RangeDateValidatorFactory validator suite:', function() {
     module('otusjs.validation');
 
     mockDate();
-    mockJson();
+    mockJsonObject();
 
     inject(function(_$injector_) {
       factory = _$injector_.get('RangeDateValidatorFactory');
@@ -16,33 +16,33 @@ describe('RangeDateValidatorFactory validator suite:', function() {
 
   });
 
-  describe('RangeDateValidatorFactory.create()', function() {
+  describe('create method', function() {
 
     beforeEach(function() {
       validator = factory.create();
     });
 
-    it('should return an validator with property reference with value Mock.json', function() {
-      expect(validator.reference.initial.getTime()).toEqual(Mock.json.reference.initial.getTime());
-      expect(validator.reference.end.getTime()).toEqual(Mock.json.reference.end.getTime());
+    it('should return an validator with property reference with value Mock.jsonObject', function() {
+      expect(validator.reference.initial.getTime()).toEqual(Mock.jsonObject.reference.initial.getTime());
+      expect(validator.reference.end.getTime()).toEqual(Mock.jsonObject.reference.end.getTime());
     });
 
   });
 
-  describe("RangeDateValidatorFactory.fromJson(json)", function() {
+  describe("fromJsonObject method", function() {
 
     beforeEach(function() {
-      validator = factory.fromJson(Mock.json);
+      validator = factory.fromJsonObject(Mock.jsonObject);
     });
 
     it('should return an validator with reference equal to json value property', function() {
-      expect(validator.reference).toBe(Mock.json.reference);
+      expect(validator.reference).toBe(Mock.jsonObject.reference);
     });
 
     it("should throw a error if the method receive a string", function() {
       expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.misc.model.RangeDateValidatorFactory.fromJson() " +
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      }).toThrowError("otusjs.model.misc.model.RangeDateValidatorFactory.fromJsonObject() " +
         "method expects to receive a object instead a String");
     });
 
@@ -54,8 +54,8 @@ describe('RangeDateValidatorFactory validator suite:', function() {
     Mock.now = baseTime;
   }
 
-  function mockJson() {
-    Mock.json = {
+  function mockJsonObject() {
+    Mock.jsonObject = {
       "reference": {
         'initial': Mock.now,
         'end': Mock.now

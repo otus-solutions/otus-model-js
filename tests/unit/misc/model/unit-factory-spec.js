@@ -37,33 +37,33 @@ describe('Unit suite:', function() {
 
   });
 
-  describe('UnitFactory.fromJson(json)', function() {
+  describe('UnitFactory.fromJsonObject(jsonObject)', function() {
 
     beforeEach(function () {
-      unit = factory.fromJson(Mock.json);
+      unit = factory.fromJsonObject(Mock.jsonObject);
     });
 
     it('should return an Unit with oid equal to json value property', function() {
-      expect(unit.oid).toBe(Mock.json.oid);
+      expect(unit.oid).toBe(Mock.jsonObject.oid);
     });
 
     it('should return an Unit with plainText equal to json value property', function() {
-      expect(unit.plainText).toBe(Mock.json.plainText);
+      expect(unit.plainText).toBe(Mock.jsonObject.plainText);
     });
 
     it('should return an Unit with formattedText equal to json value property', function() {
-      expect(unit.formattedText).toBe(Mock.json.formattedText);
+      expect(unit.formattedText).toBe(Mock.jsonObject.formattedText);
     });
 
     it("should throw a error if the method receive a string", function() {
       expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.misc.model.UnitFactory.fromJson() method expects to receive a object instead a String");
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      }).toThrowError("otusjs.model.misc.model.UnitFactory.fromJsonObject() method expects to receive a object instead a String");
     });
 
   });
 
-  Mock.json = {
+  Mock.jsonObject = {
     "extends": "StudioObject",
     "objectType": "Unit",
     "oid": "1",

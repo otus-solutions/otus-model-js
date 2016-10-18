@@ -7,7 +7,7 @@ describe('DecimalQuestionFactory', function() {
   beforeEach(function() {
     module('otusjs');
 
-    mockJson();
+    mockJsonObject();
 
     inject(function(_$injector_) {
       factory = _$injector_.get('DecimalQuestionFactory', {
@@ -16,13 +16,12 @@ describe('DecimalQuestionFactory', function() {
         'MetadataGroupFactory': mockMetaGroupFactory(_$injector_),
         'FillingRulesOptionFactory': mockFillingRulesOptionFactory(_$injector_)
       });
-
     });
   });
 
   describe('create method', function() {
 
-    beforeEach(function () {
+    beforeEach(function() {
       question = factory.create(TEMPLATE_ID, QUESTION_ID);
     });
 
@@ -48,100 +47,129 @@ describe('DecimalQuestionFactory', function() {
 
   });
 
-  describe('fromJson method', function() {
+  describe('fromJsonObject method', function() {
 
     beforeEach(function() {
-      question = factory.fromJson(Mock.json);
+      question = factory.fromJsonObject(Mock.jsonObject);
     });
 
-    it("should have a templateID equal to Mock.json.templateID", function() {
-      expect(question.templateID).toBe(Mock.json.templateID);
+    it("should create an instance with the same values of Mock.jsonObject", function() {
+      expect(question.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
     });
 
-    it("should have a customID equal to Mock.json.customID", function() {
-      expect(question.customID).toBe(Mock.json.customID);
+    it("should call LabelFactory.fromJsonObject method with Mock.label", function() {
+      expect(Mock.LabelFactory.fromJsonObject).toHaveBeenCalledWith(Mock.label);
     });
 
-    it("should have a objectType equal to Mock.json.objectType", function() {
-      expect(question.objectType).toBe(Mock.json.objectType);
+    it("should call MetadataGroupFactory.fromJsonObject method with Mock.metadata", function() {
+      expect(Mock.MetadataGroupFactory.fromJsonObject).toHaveBeenCalledWith(Mock.metadata);
     });
 
-    it("should call LabelFactory.fromJson method with Mock.json.label", function() {
-      expect(Mock.LabelFactory.fromJson).toHaveBeenCalledWith(Mock.json.label);
+    it("should call FillingRulesOptionFactory.fromJsonObject method with Mock.fillingRules", function() {
+      expect(Mock.FillingRulesOptionFactory.fromJsonObject).toHaveBeenCalledWith(Mock.fillingRules);
     });
 
-    it("should call MetadataGroupFactory.fromJson method with Mock.json.metadata", function() {
-      expect(Mock.MetadataGroupFactory.fromJson).toHaveBeenCalledWith(Mock.json.metadata);
+    it("should call UnitFactory.fromJsonObject 3 times", function() {
+      expect(Mock.UnitFactory.fromJsonObject).toHaveBeenCalledTimes(3);
     });
 
-    it("should call FillingRulesOptionFactory.fromJson method with Mock.json.fillingRules", function() {
-      expect(Mock.FillingRulesOptionFactory.fromJson).toHaveBeenCalledWith(Mock.json.fillingRules);
-    });
+    it("should throw an error when receives a string", function() {
+      var ERROR_MESSAGE = "otusjs.model.misc.model.DecimalQuestionFactory.fromJsonObject() " +
+        "method expects to receive a object instead a String";
 
-    it("should call UnitFactory.fromJson 3 times", function() {
-      expect(Mock.UnitFactory.fromJson).toHaveBeenCalledTimes(3);
-    });
+      var fromJsonObjectFunction = function() {
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      };
 
-    it("should throw a error if the method receive a string", function() {
-      expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.misc.model.DecimalQuestionFactory.fromJson() " +
-        "method expects to receive a object instead a String");
+      expect(fromJsonObjectFunction).toThrowError(ERROR_MESSAGE);
     });
 
   });
 
   function mockUnitFactory($injector) {
     Mock.UnitFactory = $injector.get('UnitFactory');
-    spyOn(Mock.UnitFactory, "fromJson");
+    spyOn(Mock.UnitFactory, "fromJsonObject").and.callThrough();
     return Mock.UnitFactory;
   }
 
   function mockLabelFactory($injector) {
     Mock.LabelFactory = $injector.get('LabelFactory');
-    spyOn(Mock.LabelFactory, 'fromJson').and.returnValue({});
+    spyOn(Mock.LabelFactory, 'fromJsonObject').and.returnValue(Mock.label);
     return Mock.LabelFactory;
   }
 
   function mockMetaGroupFactory($injector) {
     Mock.MetadataGroupFactory = $injector.get('MetadataGroupFactory');
-    spyOn(Mock.MetadataGroupFactory, 'fromJson').and.returnValue({});
+    spyOn(Mock.MetadataGroupFactory, 'fromJsonObject').and.returnValue(Mock.metadata);
     return Mock.MetadataGroupFactory;
   }
 
   function mockFillingRulesOptionFactory($injector) {
     Mock.FillingRulesOptionFactory = $injector.get('FillingRulesOptionFactory');
-    spyOn(Mock.FillingRulesOptionFactory, 'fromJson').and.returnValue({});
+    spyOn(Mock.FillingRulesOptionFactory, 'fromJsonObject').and.returnValue(Mock.fillingRules);
     return Mock.FillingRulesOptionFactory;
   }
 
-  function mockJson() {
-    Mock.json = {
+  function mockJsonObject() {
+    Mock.label = {
+      "ptBR": {},
+      "enUS": {},
+      "esES": {}
+    };
+
+    Mock.ptBR = {
+      "extends": "StudioObject",
+      "objectType": "Unit",
+      "oid": "1",
+      "plainText": "Qual sua data de nascimento?",
+      "formattedText": "Qual sua <b>data de nascimento</b>?"
+    };
+
+    Mock.enUS = {
+      "extends": "StudioObject",
+      "objectType": "Unit",
+      "oid": "2",
+      "plainText": "What is your birth date?",
+      "formattedText": "What is your <b>birth date</b>?"
+    };
+
+    Mock.esES = {
+      "extends": "StudioObject",
+      "objectType": "Unit",
+      "oid": "",
+      "plainText": "¿Cuál es su fecha de nacimiento?",
+      "formattedText": "¿Cuál es su fecha de <b>nacimiento</b>?"
+    };
+
+    Mock.unit = {
+      "ptBR": Mock.ptBR,
+      "enUS": Mock.enUS,
+      "esES": Mock.esES
+    };
+
+    Mock.metadata = {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": []
+    };
+
+    Mock.fillingRules = {
+      "extends": "StudiObject",
+      "objectType": "FillingRules",
+      "options": {}
+    };
+
+    Mock.jsonObject = {
       "extents": "SurveyItem",
       "objectType": "DecimalQuestion",
       "templateID": "QUE1",
       "customID": "PersonalizedID",
       "dataType": "Decimal",
-      "label": {
-        "ptBR": {},
-        "enUS": {},
-        "esES": {}
-      },
-      "metadata": {
-        "extents": "StudioObject",
-        "objectType": "MetadataGroup",
-        "options": []
-      },
-      "unit": {
-        "ptBR": {},
-        "enUS": {},
-        "esES": {}
-      },
-      "fillingRules": {
-          "extends": "StudioObject",
-          "objectType": "FillingRules",
-          "options": {}
-      }
+      "label": Mock.label,
+      "metadata": Mock.metadata,
+      "unit": Mock.unit,
+      "fillingRules": Mock.fillingRules
     };
   }
+
 });

@@ -17,7 +17,7 @@
 
     /* Public interface */
     self.create = create;
-    self.fromJson = fromJson;
+    self.fromJsonObject = fromJsonObject;
 
     function create(templateID, prototype) {
       var labelObject = LabelFactory.create();
@@ -27,22 +27,22 @@
       return new SingleSelectionQuestion(templateID, prototype, AnswerOptionFactory, labelObject, metadataGroupObject, fillingRulesObject);
     }
 
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.SingleSelectionQuestion.fromJson() method expects to receive a object instead a String");
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.SingleSelectionQuestion.fromJsonObject() method expects to receive a object instead a String");
       }
-      var labelObject = LabelFactory.fromJson(json.label);
-      var metadataGroupObject = MetadataGroupFactory.fromJson(json.metadata);
-      var fillingRulesObject = FillingRulesOptionFactory.fromJson(json.fillingRules);
+      var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
+      var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
+      var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
       var prototype = {};
       prototype.objectType = "SurveyItem";
-      var question = new SingleSelectionQuestion(json.templateID, prototype, AnswerOptionFactory, labelObject, metadataGroupObject, fillingRulesObject);
+      var question = new SingleSelectionQuestion(jsonObject.templateID, prototype, AnswerOptionFactory, labelObject, metadataGroupObject, fillingRulesObject);
 
-      json.options.forEach(function(answerOption){
+      jsonObject.options.forEach(function(answerOption){
         question.options.push(AnswerOptionFactory.fromJsonObject(answerOption));
       });
 
-      question.customID = json.customID;
+      question.customID = jsonObject.customID;
 
       return question;
     }

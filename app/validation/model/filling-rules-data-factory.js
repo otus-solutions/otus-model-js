@@ -34,14 +34,14 @@
 
     /* Public interface */
     self.create = create;
-    self.fromJson = fromJson;
+    self.fromJsonObject = fromJsonObject;
 
     function create(validator) {
       return validatorsTemplates[validator].create();
     }
 
-    function fromJson(json) {
-      return validatorsTemplates[json.validatorType].fromJson(json.data);
+    function fromJsonObject(jsonObject) {
+      return validatorsTemplates[jsonObject.validatorType].fromJsonObject(jsonObject.data);
     }
 
     var validatorsTemplates = {

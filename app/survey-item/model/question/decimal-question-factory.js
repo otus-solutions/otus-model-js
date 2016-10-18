@@ -16,7 +16,7 @@
     var self = this;
     /* Public interface */
     self.create = create;
-    self.fromJson = fromJson;
+    self.fromJsonObject = fromJsonObject;
 
     function create(templateID, prototype) {
       var labelObject = LabelFactory.create();
@@ -31,23 +31,23 @@
       return new DecimalQuestion(templateID, prototype, labelObject, metadataGroupObject, unitObject, fillingRulesObject);
     }
 
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.DecimalQuestionFactory.fromJson() method expects to receive a object instead a String");
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.DecimalQuestionFactory.fromJsonObject() method expects to receive a object instead a String");
       }
-      var labelObject = LabelFactory.fromJson(json.label);
-      var metadataGroupObject = MetadataGroupFactory.fromJson(json.metadata);
-      var fillingRulesObject = FillingRulesOptionFactory.fromJson(json.fillingRules);
+      var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
+      var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
+      var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
 
       var unitObject = {};
-      unitObject.ptBR = UnitFactory.fromJson(json.unit.ptBR);
-      unitObject.enUS = UnitFactory.fromJson(json.unit.enUS);
-      unitObject.esES = UnitFactory.fromJson(json.unit.esES);
+      unitObject.ptBR = UnitFactory.fromJsonObject(jsonObject.unit.ptBR);
+      unitObject.enUS = UnitFactory.fromJsonObject(jsonObject.unit.enUS);
+      unitObject.esES = UnitFactory.fromJsonObject(jsonObject.unit.esES);
 
       var prototype = {};
       prototype.objectType = "SurveyItem";
-      var question = new DecimalQuestion(json.templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
-      question.customID = json.customID;
+      var question = new DecimalQuestion(jsonObject.templateID, prototype, labelObject, metadataGroupObject, unitObject, fillingRulesObject);
+      question.customID = jsonObject.customID;
 
       return question;
     }

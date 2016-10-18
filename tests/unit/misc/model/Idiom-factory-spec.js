@@ -1,11 +1,11 @@
 describe('Idiom suite:', function() {
-
   var factory;
   var Mock = {};
 
-  /* @BeforeScenario */
   beforeEach(function() {
     module('otusjs');
+
+    mockJsonObject();
 
     inject(function(_$injector_) {
       factory = _$injector_.get('IdiomFactory');
@@ -37,39 +37,45 @@ describe('Idiom suite:', function() {
 
   });
 
-  describe("IdiomFactory.fromJson(json)", function() {
+  describe("IdiomFactory.fromJsonObject(jsonObject)", function() {
 
     beforeEach(function() {
-      label = factory.fromJson(Mock.json);
+      label = factory.fromJsonObject(Mock.jsonObject);
     });
 
-    it('should return an Idiom with oid equal to json value property', function() {
-      expect(label.oid).toBe(Mock.json.oid);
+    it('should return an Idiom with oid equal to jsonObject value property', function() {
+      expect(label.oid).toBe(Mock.jsonObject.oid);
     });
 
-    it('should return an Idiom with plainText equal to json value property', function() {
-      expect(label.plainText).toBe(Mock.json.plainText);
+    it('should return an Idiom with plainText equal to jsonObject value property', function() {
+      expect(label.plainText).toBe(Mock.jsonObject.plainText);
     });
 
-    it('should return an Idiom with formattedText equal to json value property', function() {
-      expect(label.formattedText).toBe(Mock.json.formattedText);
+    it('should return an Idiom with formattedText equal to jsonObject value property', function() {
+      expect(label.formattedText).toBe(Mock.jsonObject.formattedText);
     });
 
     it("should throw a error if the method receive a string", function() {
-      expect(function() {
-        factory.fromJson(JSON.stringify(Mock.json));
-      }).toThrowError("otusjs.model.misc.model.IdiomFactory.fromJson() " +
-        "method expects to receive a object instead a String");
+      var ERROR_MESSAGE = "otusjs.model.misc.model.IdiomFactory.fromJsonObject() " +
+        "method expects to receive a object instead a String";
+
+      var fromJsonObjectFunction = function() {
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      };
+
+      expect(fromJsonObjectFunction).toThrowError(ERROR_MESSAGE);
     });
 
   });
 
-  Mock.json = {
-    "extends": "StudioObject",
-    "objectType": "Label",
-    "oid": "1",
-    "plainText": "Quantos filhos você possui?",
-    "formattedText": "Quantos filhos você possui?"
-  };
+  function mockJsonObject() {
+    Mock.jsonObject = {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "1",
+      "plainText": "Quantos filhos você possui?",
+      "formattedText": "Quantos filhos você possui?"
+    };
+  }
 
 });

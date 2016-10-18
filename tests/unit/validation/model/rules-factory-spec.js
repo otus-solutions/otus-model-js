@@ -6,7 +6,7 @@ describe('RulesFactory', function() {
     module('otusjs');
 
     mockRule();
-    mockJson();
+    mockJsonObject();
 
     inject(function(_$injector_) {
       factory = _$injector_.get('RulesFactory');
@@ -26,14 +26,14 @@ describe('RulesFactory', function() {
 
   });
 
-  describe('fromJson method', function() {
+  describe('fromJsonObject method', function() {
 
     beforeEach(function() {
-      rule = factory.fromJson(Mock.json);
+      rule = factory.fromJsonObject(Mock.jsonObject);
     });
 
     it('should return a validator equal to json ', function() {
-      expect(JSON.stringify(rule)).toBe(JSON.stringify(Mock.json));
+      expect(JSON.stringify(rule)).toBe(JSON.stringify(Mock.jsonObject));
     });
 
   });
@@ -49,8 +49,8 @@ describe('RulesFactory', function() {
     });
   }
 
-  function mockJson() {
-    Mock.json = {
+  function mockJsonObject() {
+    Mock.jsonObject = {
       "extends": "StudioObject",
       "objectType": "Rule",
       "validatorType": "mandatory",

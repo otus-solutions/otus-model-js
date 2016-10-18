@@ -12,22 +12,22 @@
 
     /* Public interface */
     self.create = create;
-    self.fromJson = fromJson;
+    self.fromJsonObject = fromJsonObject;
 
     function create(templateID, prototype) {
       var labelObject = LabelFactory.create();
       return new TextItem(templateID, prototype, labelObject);
     }
 
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.TextItem.fromJson() method expects to receive a object instead a String");
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.TextItem.fromJsonObject() method expects to receive a object instead a String");
       }
-      var labelObject = LabelFactory.fromJson(json.label);
+      var labelObject = LabelFactory.fromJsonObject(jsonObject.value);
       var prototype = {};
       prototype.objectType = "SurveyItem";
-      var question = new TextItem(templateID, prototype, labelObject);
-      question.customID = json.customID;
+      var question = new TextItem(jsonObject.templateID, prototype, labelObject);
+      question.customID = jsonObject.customID;
 
       return question;
     }
