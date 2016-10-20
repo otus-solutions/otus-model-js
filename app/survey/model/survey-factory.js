@@ -18,7 +18,23 @@
 
     /* Public interdace */
     self.create = create;
+    self.load = load;
     self.fromJsonObject = fromJsonObject;
+
+    /**
+    TODO :
+
+    Quando for implementado o novo método de carregamento no projeto OTUS-STUDIO,
+    deve-se excluir o método load e usar somente o fromJsonObject.
+
+    */
+    function load(jsonObject) {
+      var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
+      var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
+      var UUID = jsonObject.oid;
+
+      return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+    }
 
     function create(name, acronym) {
       var metainfo = SurveyMetaInfoFactory.create();
