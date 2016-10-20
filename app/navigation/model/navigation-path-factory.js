@@ -6,7 +6,7 @@
     .factory('otusjs.model.navigation.NavigationPathFactory', Factory);
 
   function Factory() {
-    let self = this;
+    var self = this;
 
     /* Public methods */
     self.create = create;
@@ -19,12 +19,12 @@
   }
 
   function NavigationStack() {
-    let self = this;
-    let _size = 0;
-    let _head = null;
-    let _tail = null;
-    let _current = null;
-    let _currentIndex = null;
+    var self = this;
+    var _size = 0;
+    var _head = null;
+    var _tail = null;
+    var _current = null;
+    var _currentIndex = null;
 
     /* Public methods */
     self.add = add;

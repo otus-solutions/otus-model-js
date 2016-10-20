@@ -1,8 +1,8 @@
 describe('NumericRuleTestService', function() {
 
-  let Mock = {};
-  let Injections = {};
-  let service = {};
+  var Mock = {};
+  var Injections = {};
+  var service = {};
 
   beforeEach(function() {
     module('otusjs');

@@ -1,13 +1,13 @@
 describe('ActivityFacadeService', function() {
 
-  let Mock = {};
-  let Injections = {};
-  let factory;
-  let ANSWER = 'test_answer';
-  let METADATA = 'test_metadata';
-  let COMMENT = 'test_comment';
-  let QUESTION_FILL_TYPE = 'QuestionFill';
-  let QUESTION_ID = 'TEST1';
+  var Mock = {};
+  var Injections = {};
+  var factory;
+  var ANSWER = 'test_answer';
+  var METADATA = 'test_metadata';
+  var COMMENT = 'test_comment';
+  var QUESTION_FILL_TYPE = 'QuestionFill';
+  var QUESTION_ID = 'TEST1';
 
   beforeEach(function() {
     module('otusjs');
@@ -96,31 +96,31 @@ describe('ActivityFacadeService', function() {
     });
 
     it('should return object question when method createQuestionFill called', function() {
-      let questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+      var questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
 
       expect(questionFill.objectType).toEqual('QuestionFill');
     });
 
     it('should create QuestionFill with parameter QuestionID', function() {
-      let questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+      var questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
 
       expect(questionFill.questionID).toEqual(QUESTION_ID);
     });
 
     it('should create QuestionFill with parameter ANSWER', function() {
-      let questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+      var questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
 
       expect(questionFill.answer.value).toEqual(ANSWER);
     });
 
     it('should create QuestionFill with parameter METADATA', function() {
-      let questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+      var questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
 
       expect(questionFill.metadata.value).toEqual(METADATA);
     });
 
     it('should create QuestionFill with parameter COMMENT', function() {
-      let questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+      var questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
 
       expect(questionFill.comment).toEqual(COMMENT);
     });
@@ -145,7 +145,7 @@ describe('ActivityFacadeService', function() {
 
   describe('getFillingByQuestionID method', function() {
 
-    let filling = {};
+    var filling = {};
 
     beforeEach(function() {
       service.createActivity(Mock.surveyTemplate);
@@ -156,7 +156,7 @@ describe('ActivityFacadeService', function() {
     it('should retrieve the filling of a question', function() {
       spyOn(service.surveyActivity.fillContainer, 'searchFillingByID').and.callThrough();
 
-      let returnedValue = service.getFillingByQuestionID(QUESTION_ID);
+      var returnedValue = service.getFillingByQuestionID(QUESTION_ID);
 
       expect(service.surveyActivity.fillContainer.searchFillingByID).toHaveBeenCalled();
       expect(returnedValue).toEqual(filling);
