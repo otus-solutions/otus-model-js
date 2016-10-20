@@ -10,7 +10,7 @@
     'use strict';
 
     angular
-        .module('otusjs.metadata', []);
+        .module('otusjs.misc', []);
 
 }());
 
@@ -18,7 +18,7 @@
     'use strict';
 
     angular
-        .module('otusjs.misc', []);
+        .module('otusjs.metadata', []);
 
 }());
 
@@ -82,7 +82,7 @@
         /* Question */
         'SurveyItemFactory',
         /* Setter */
-        'LabelFactory',
+        'IdiomFactory',
         'UnitFactory',
         /* Structure */
         'SurveyFactory',
@@ -90,12 +90,12 @@
         'MetadataGroupFactory'
     ];
 
-    function ModelFacadeService(SurveyItemFactory, LabelFactory, UnitFactory, SurveyFactory, SurveyIdentityFactory, MetadataGroupFactory) {
+    function ModelFacadeService(SurveyItemFactory, IdiomFactory, UnitFactory, SurveyFactory, SurveyIdentityFactory, MetadataGroupFactory) {
         var self = this;
 
         /* Public interface */
         self.getSurveyItemFactory = getSurveyItemFactory;
-        self.getLabelFactory = getLabelFactory;
+        self.getIdiomFactory = getIdiomFactory;
         self.getUnitFactory = getUnitFactory;
         self.getSurveyFactory = getSurveyFactory;
         self.getSurveyIdentityFactory = getSurveyIdentityFactory;
@@ -105,8 +105,8 @@
             return SurveyItemFactory;
         }
 
-        function getLabelFactory() {
-            return LabelFactory;
+        function getIdiomFactory() {
+            return IdiomFactory;
         }
 
         function getUnitFactory() {
@@ -986,6 +986,143 @@
   'use strict';
 
   angular
+    .module('otusjs.misc')
+    .factory('IdiomFactory', IdiomFactory);
+
+  function IdiomFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create() {
+      return new Idiom();
+    }
+
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.IdiomFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var label = new Idiom();
+
+      label.oid = json.oid;
+      label.plainText = json.plainText;
+      label.formattedText = json.formattedText;
+
+      return label;
+    }
+
+    return self;
+  }
+
+  function Idiom() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Label";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.misc')
+    .factory('LabelFactory', LabelFactory);
+
+  LabelFactory.$inject = ['IdiomFactory'];
+
+  function LabelFactory(IdiomFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create() {
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.create();
+      labelObject.enUS = IdiomFactory.create();
+      labelObject.esES = IdiomFactory.create();
+
+      return labelObject;
+    }
+
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.LabelFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.fromJson(json.ptBR);
+      labelObject.enUS = IdiomFactory.fromJson(json.enUS);
+      labelObject.esES = IdiomFactory.fromJson(json.esES);
+
+      return labelObject;
+    }
+
+    return self;
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.misc')
+    .factory('UnitFactory', UnitFactory);
+
+  function UnitFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create() {
+      return new Unit();
+    }
+
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.UnitFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var unit = new Unit();
+
+      unit.oid = json.oid;
+      unit.plainText = json.plainText;
+      unit.formattedText = json.formattedText;
+
+      return unit;
+    }
+
+    return self;
+  }
+
+  function Unit() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Unit";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+  }
+  
+}());
+
+(function() {
+  'use strict';
+
+  angular
     .module('otusjs.metadata')
     .factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
@@ -999,12 +1136,7 @@
     self.fromJson = fromJson;
 
     function create(value) {
-      var labelObject = {};
-
-      labelObject.ptBR = LabelFactory.create();
-      labelObject.enUS = LabelFactory.create();
-      labelObject.esES = LabelFactory.create();
-
+      var labelObject = LabelFactory.create();
       return new MetadataAnswer(value, labelObject);
     }
 
@@ -1012,12 +1144,7 @@
       if (typeof json === 'string') {
         throw new Error("otusjs.model.misc.model.MetadataAnswerFactory.fromJson() method expects to receive a object instead a String");
       }
-      var labelObject = {};
-
-      labelObject.ptBR = LabelFactory.fromJson(json.ptBR);
-      labelObject.enUS = LabelFactory.fromJson(json.enUS);
-      labelObject.esES = LabelFactory.fromJson(json.esES);
-
+      var labelObject = LabelFactory.fromJson(json.label);
       return new MetadataAnswer(json.value, labelObject);
     }
 
@@ -1031,11 +1158,7 @@
     self.objectType = 'MetadataAnswer';
     self.dataType = 'Integer';
     self.value = value;
-    self.label = {
-      'ptBR': labelObject.ptBR,
-      'enUS': labelObject.enUS,
-      'esES': labelObject.esES
-    };
+    self.label = labelObject;
   }
 
 }());
@@ -1120,99 +1243,6 @@
     }
   }
 
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.misc')
-    .factory('LabelFactory', LabelFactory);
-
-  function LabelFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create() {
-      return new Label();
-    }
-
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.LabelFactory.fromJson() method expects to receive a object instead a String");
-      }
-      var label = new Label();
-
-      label.oid = json.oid;
-      label.plainText = json.plainText;
-      label.formattedText = json.formattedText;
-
-      return label;
-    }
-
-    return self;
-  }
-
-  function Label() {
-    var self = this;
-
-    self.extends = "StudioObject";
-    self.objectType = "Label";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
-
-  }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.misc')
-    .factory('UnitFactory', UnitFactory);
-
-  function UnitFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create() {
-      return new Unit();
-    }
-
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.UnitFactory.fromJson() method expects to receive a object instead a String");
-      }
-      var unit = new Unit();
-
-      unit.oid = json.oid;
-      unit.plainText = json.plainText;
-      unit.formattedText = json.formattedText;
-
-      return unit;
-    }
-
-    return self;
-  }
-
-  function Unit() {
-    var self = this;
-
-    self.extends = "StudioObject";
-    self.objectType = "Unit";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
-  }
-  
 }());
 
 (function() {
@@ -1321,20 +1351,24 @@
     Inject.RouteFactory = RouteFactory;
 
     self.create = create;
+    self.createInitial = createInitial;
     self.fromJson = fromJson;
 
-    function create(origin, destination) {
-      if (!origin || !destination) {
+    function create(origin) {
+      if (!origin) {
         return null;
       }
 
-      var defaultRoute = RouteFactory.createDefault(origin, destination);
-      if (!defaultRoute) {
-        return null;
-      }
+      return new Navigation(origin);
+    }
 
-      defaultRoute.index = 0;
-      return new Navigation(origin, defaultRoute);
+    function createInitial(origin, destination) {
+      var initialNavigation = new Navigation({
+        'extremity': origin
+      }, {
+        'extremity': destination
+      });
+      return initialNavigation;
     }
 
     function fromJson(json, inNavigations) {
@@ -1368,9 +1402,9 @@
     return self;
   }
 
-  function Navigation(origin, defaultRoute) {
+  function Navigation(origin) {
     var self = this;
-    var _defaultRoute = defaultRoute;
+    var _defaultRoute;
 
     /* Object properties */
     self.extents = 'SurveyTemplateObject';
@@ -1379,7 +1413,7 @@
     self.index = null;
     self.inNavigations = [];
     self.outNavigations = [];
-    self.routes = [defaultRoute];
+    self.routes = [];
 
     /* Public methods */
     self.addInNavigation = addInNavigation;
@@ -1390,6 +1424,7 @@
     self.getDefaultRoute = getDefaultRoute;
     self.getRouteByName = getRouteByName;
     self.hasRoute = hasRoute;
+    self.hasDefaultRoute = hasDefaultRoute;
     self.isOrphan = isOrphan;
     self.hasOrphanRoot = hasOrphanRoot;
     self.listRoutes = listRoutes;
@@ -1480,6 +1515,10 @@
 
     function getDefaultRoute() {
       return _defaultRoute.clone();
+    }
+
+    function hasDefaultRoute() {
+      return !_defaultRoute ? false : true
     }
 
     function getRouteByName(name) {
@@ -2381,6 +2420,8 @@
     self.removeNavigationOf = removeNavigationOf;
     self.removeNavigationByIndex = removeNavigationByIndex;
     self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+    self.setInitialNodes = setInitialNodes;
+    self.getPreviousOf = getPreviousOf;
 
     function init() {
       _navigationList = [];
@@ -2416,6 +2457,10 @@
       return filter[0];
     }
 
+    function getPreviousOf(index) {
+      return getNavigationByPosition(index - 1);
+    }
+
     function getNavigationByPosition(position) {
       return _navigationList[position];
     }
@@ -2445,7 +2490,17 @@
       var newNavigation = NavigationFactory.create(origin, destination);
       newNavigation.index = _navigationList.length;
       _addElementsPreviousTheNavigation(newNavigation);
+      //updateFinalIns();   //TODO
       _navigationList.push(newNavigation);
+      return newNavigation;
+    }
+
+    function setInitialNodes(origin, destination) {
+      var beginNavigation = NavigationFactory.createInitial('begin', 'end');
+      var endNavigation = NavigationFactory.createInitial('end', 'begin');
+
+      _navigationList.unshift(endNavigation);
+      _navigationList.unshift(beginNavigation);
     }
 
     function _addElementsPreviousTheNavigation(navigation) {
@@ -2459,8 +2514,7 @@
       var navigationToRemove = _navigationList.filter(function(navigation) {
         return findByOrigin(navigation, questionID);
       });
-
-      var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
+      removeCurrentLastNavigationndexOf(navigationToRemove[0]);
       if (indexToRemove > -1) {
         _navigationList.splice(indexToRemove, 1);
       }
@@ -2497,10 +2551,13 @@
     'otusjs.model.navigation.AddAlternativeRouteTaskService',
     'otusjs.model.navigation.RemoveRouteTaskService',
     'otusjs.model.navigation.UpdateRouteTaskService',
-    'otusjs.model.navigation.NavigationValidatorService'
+    'otusjs.model.navigation.NavigationValidatorService',
+    'otusjs.model.navigation.InitialNodesAddService'
   ];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService, AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService,
+    AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService, InitialNodesAddService) {
+
     var self = this;
     var _selectedNavigation = null;
 
@@ -2517,9 +2574,11 @@
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
     self.listOrphanNavigations = listOrphanNavigations;
+    self.generateNavigation = generateNavigation;
 
     function init() {
       NavigationContainerService.init();
+      //TODO survey.NavigationManager.setInitialNodes
     }
 
     function loadJsonData(data) {
@@ -2555,7 +2614,15 @@
     }
 
     function addNavigation() {
-      NavigationAddService.execute();
+      if (!NavigationContainerService.getNavigationListSize()) {
+         generateNavigation();
+      }
+      _selectedNavigation = NavigationAddService.execute();
+
+    }
+
+    function generateNavigation() {
+      InitialNodesAddService.execute();
     }
 
     function applyRoute(routeData) {
@@ -2971,6 +3038,182 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('otusjs.validation')
+    .factory('FillingRulesDataFactory', FillingRulesDataFactory);
+
+  FillingRulesDataFactory.$inject = [
+    'AlphanumericValidatorFactory',
+    'DistinctValidatorFactory',
+    'FutureDateValidatorFactory',
+    'InValidatorFactory',
+    'LowerCaseValidatorFactory',
+    'LowerLimitValidatorFactory',
+    'MandatoryValidatorFactory',
+    'MaxDateValidatorFactory',
+    'MaxLengthValidatorFactory',
+    'MaxTimeValidatorFactory',
+    'MinDateValidatorFactory',
+    'MinLengthValidatorFactory',
+    'MinTimeValidatorFactory',
+    'ParameterValidatorFactory',
+    'PastDateValidatorFactory',
+    'PrecisionValidatorFactory',
+    'RangeDateValidatorFactory',
+    'ScaleValidatorFactory',
+    'SpecialsValidatorFactory',
+    'UpperCaseValidatorFactory',
+    'UpperLimitValidatorFactory'
+  ];
+
+  function FillingRulesDataFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerCaseValidatorFactory, LowerLimitValidatorFactory, MandatoryValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create(validator) {
+      return validatorsTemplates[validator].create();
+    }
+
+    function fromJson(json) {
+      return validatorsTemplates[json.validatorType].fromJson(json.data);
+    }
+
+    var validatorsTemplates = {
+      alphanumeric: AlphanumericValidatorFactory,
+      distinct: DistinctValidatorFactory,
+      futureDate: FutureDateValidatorFactory,
+      in: InValidatorFactory,
+      lowerLimit: LowerLimitValidatorFactory,
+      lowerCase: LowerCaseValidatorFactory,
+      mandatory: MandatoryValidatorFactory,
+      maxDate: MaxDateValidatorFactory,
+      maxLength: MaxLengthValidatorFactory,
+      maxTime: MaxTimeValidatorFactory,
+      minDate: MinDateValidatorFactory,
+      minLength: MinLengthValidatorFactory,
+      minTime: MinTimeValidatorFactory,
+      parameter: ParameterValidatorFactory,
+      pastDate: PastDateValidatorFactory,
+      precision: PrecisionValidatorFactory,
+      rangeDate: RangeDateValidatorFactory,
+      scale: ScaleValidatorFactory,
+      specials: SpecialsValidatorFactory,
+      upperCase: UpperCaseValidatorFactory,
+      upperLimit: UpperLimitValidatorFactory
+    };
+
+    return self;
+
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.validation')
+    .factory('FillingRulesOptionFactory', FillingRulesOptionFactory);
+
+  FillingRulesOptionFactory.$inject = ['RulesFactory'];
+
+  function FillingRulesOptionFactory(RulesFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create() {
+      return new FillingRules(RulesFactory);
+    }
+
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.FillingRulesOptionFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var fillingRules = new FillingRules(RulesFactory);
+      for(var rule in json.options) {
+        fillingRules.options[rule] = RulesFactory.fromJson(json.options[rule]);
+      }
+      return fillingRules;
+    }
+
+    return self;
+  }
+
+  function FillingRules(RulesFactory) {
+    var self = this;
+
+    self.extends = 'StudioObject';
+    self.objectType = 'FillingRules';
+    self.options = {};
+
+    /* Public methods */
+    self.createOption = createOption;
+    self.removeFillingRules = removeFillingRules;
+
+    function createOption(type) {
+      var option = RulesFactory.create(type);
+      self.options[type] = option;
+      return option;
+    }
+
+    function removeFillingRules(type) {
+      delete self.options[type];
+    }
+
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.validation')
+    .factory('RulesFactory', RulesFactory);
+
+  RulesFactory.$inject = [
+    'FillingRulesDataFactory'
+  ];
+
+  function RulesFactory(FillingRulesDataFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create(validatorType) {
+      var validator = FillingRulesDataFactory.create(validatorType);
+      return new Rule(validatorType, validator);
+    }
+
+    function fromJson(json) {
+      var validator = FillingRulesDataFactory.fromJson(json);
+      return new Rule(json.validatorType, validator);
+    }
+
+    return self;
+  }
+
+  function Rule(validatorType, validator) {
+    var self = this;
+    self.extends = 'StudioObject';
+    self.objectType = 'Rule';
+    self.validatorType = validatorType;
+    self.data = validator;
+  }
+
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -2990,6 +3233,7 @@
         self.getItemListSize = getItemListSize;
         self.getItemByTemplateID = getItemByTemplateID;
         self.getItemByCustomID = getItemByCustomID;
+        self.getLastItem = getLastItem;
         self.getItemByID = getItemByID;
         self.getAllCheckboxQuestion = getAllCheckboxQuestion;
         self.getItemByPosition = getItemByPosition;
@@ -3062,6 +3306,10 @@
             } else {
                 return null;
             }
+        }
+
+        function getLastItem() {
+           return itemList[itemList.length - 1];
         }
 
         function existsItem(id) {
@@ -3207,158 +3455,6 @@
             });
             return (getItemByCustomID(id) || foundCustomOptionID) ? false : true;
         }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('FillingRulesDataFactory', FillingRulesDataFactory);
-
-    FillingRulesDataFactory.$inject = [
-        'AlphanumericValidatorFactory',
-        'DistinctValidatorFactory',
-        'FutureDateValidatorFactory',
-        'InValidatorFactory',
-        'LowerCaseValidatorFactory',
-        'LowerLimitValidatorFactory',
-        'MandatoryValidatorFactory',
-        'MaxDateValidatorFactory',
-        'MaxLengthValidatorFactory',
-        'MaxTimeValidatorFactory',
-        'MinDateValidatorFactory',
-        'MinLengthValidatorFactory',
-        'MinTimeValidatorFactory',
-        'ParameterValidatorFactory',
-        'PastDateValidatorFactory',
-        'PrecisionValidatorFactory',
-        'RangeDateValidatorFactory',
-        'ScaleValidatorFactory',
-        'SpecialsValidatorFactory',
-        'UpperCaseValidatorFactory',
-        'UpperLimitValidatorFactory'
-    ];
-
-    function FillingRulesDataFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerCaseValidatorFactory, LowerLimitValidatorFactory, MandatoryValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(validator) {
-          return validatorsTemplates[validator].create();
-        }
-
-        var validatorsTemplates = {
-            alphanumeric: AlphanumericValidatorFactory,
-            distinct: DistinctValidatorFactory,
-            futureDate: FutureDateValidatorFactory,
-            in: InValidatorFactory,
-            lowerLimit: LowerLimitValidatorFactory,
-            lowerCase: LowerCaseValidatorFactory,
-            mandatory: MandatoryValidatorFactory,
-            maxDate: MaxDateValidatorFactory,
-            maxLength: MaxLengthValidatorFactory,
-            maxTime: MaxTimeValidatorFactory,
-            minDate: MinDateValidatorFactory,
-            minLength: MinLengthValidatorFactory,
-            minTime: MinTimeValidatorFactory,
-            parameter: ParameterValidatorFactory,
-            pastDate: PastDateValidatorFactory,
-            precision: PrecisionValidatorFactory,
-            rangeDate: RangeDateValidatorFactory,
-            scale: ScaleValidatorFactory,
-            specials: SpecialsValidatorFactory,
-            upperCase: UpperCaseValidatorFactory,
-            upperLimit: UpperLimitValidatorFactory
-        };
-
-        return self;
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('FillingRulesOptionFactory', FillingRulesOptionFactory);
-
-    FillingRulesOptionFactory.$inject = ['RulesFactory'];
-
-    function FillingRulesOptionFactory(RulesFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new FillingRules(RulesFactory);
-        }
-
-        return self;
-    }
-
-    function FillingRules(RulesFactory) {
-        var self = this;
-
-        self.extends = 'StudioObject';
-        self.objectType = 'FillingRules';
-        self.options = {};
-
-        /* Public methods */
-        self.createOption = createOption;
-        self.removeFillingRules = removeFillingRules;
-
-        function createOption(type) {
-            var option = RulesFactory.create(type);
-            self.options[type] = option;
-            return option;
-        }
-
-        function removeFillingRules(type) {
-            delete self.options[type];
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.validation')
-        .factory('RulesFactory', RulesFactory);
-
-    RulesFactory.$inject = [
-        'FillingRulesDataFactory'
-    ];
-
-    function RulesFactory(FillingRulesDataFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(validatorType) {
-            return new Rule(FillingRulesDataFactory, validatorType);
-        }
-
-        return self;
-    }
-
-    function Rule(FillingRulesDataFactory, validatorType) {
-        var self = this;
-        self.extends = 'StudioObject';
-        self.objectType = 'Rule';
-        self.validatorType = validatorType;
-        self.data = FillingRulesDataFactory.create(validatorType);
     }
 
 }());
@@ -3575,22 +3671,22 @@
         .module('otusjs.surveyItem')
         .factory('ImageItemFactory', ImageItemFactory);
 
-    ImageItemFactory.$inject = ['LabelFactory'];
+    ImageItemFactory.$inject = ['IdiomFactory'];
 
-    function ImageItemFactory(LabelFactory) {
+    function ImageItemFactory(IdiomFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new ImageItem(templateID, prototype, LabelFactory);
+            return new ImageItem(templateID, prototype, IdiomFactory);
         }
 
         return self;
     }
 
-    function ImageItem(templateID, prototype, LabelFactory) {
+    function ImageItem(templateID, prototype, IdiomFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -3600,9 +3696,9 @@
         self.dataType = 'String';
         self.url = '';
         self.footer = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
 
         /* Public methods */
@@ -3637,22 +3733,22 @@
         .module('otusjs.surveyItem')
         .factory('TextItemFactory', TextItemFactory);
 
-    TextItemFactory.$inject = ['LabelFactory'];
+    TextItemFactory.$inject = ['IdiomFactory'];
 
-    function TextItemFactory(LabelFactory) {
+    function TextItemFactory(IdiomFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new TextItem(templateID, prototype, LabelFactory);
+            return new TextItem(templateID, prototype, IdiomFactory);
         }
 
         return self;
     }
 
-    function TextItem(templateID, prototype, LabelFactory) {
+    function TextItem(templateID, prototype, IdiomFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -3661,9 +3757,9 @@
         self.customID = templateID;
         self.dataType = 'String';
         self.value = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
 
         /* Public methods */
@@ -3697,22 +3793,22 @@
         .module('otusjs.surveyItem')
         .factory('AnswerOptionFactory', AnswerOptionFactory);
 
-    AnswerOptionFactory.$inject = ['LabelFactory'];
+    AnswerOptionFactory.$inject = ['IdiomFactory'];
 
-    function AnswerOptionFactory(LabelFactory) {
+    function AnswerOptionFactory(IdiomFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(value, parentQuestionID) {
-            return new AnswerOption(value, parentQuestionID, LabelFactory);
+            return new AnswerOption(value, parentQuestionID, IdiomFactory);
         }
 
         return self;
     }
 
-    function AnswerOption(value, parentQuestionID, LabelFactory) {
+    function AnswerOption(value, parentQuestionID, IdiomFactory) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -3720,9 +3816,9 @@
         self.value = value;
         self.dataType = 'Integer';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.parentQuestionID = parentQuestionID;
 
@@ -3747,84 +3843,99 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.surveyItem')
-        .factory('CalendarQuestionFactory', CalendarQuestionFactory);
+  angular
+    .module('otusjs.surveyItem')
+    .factory('CalendarQuestionFactory', CalendarQuestionFactory);
 
-    CalendarQuestionFactory.$inject = [
-        'LabelFactory',
-        'MetadataGroupFactory',
-        'FillingRulesOptionFactory'
-    ];
+  CalendarQuestionFactory.$inject = [
+    'LabelFactory',
+    'MetadataGroupFactory',
+    'FillingRulesOptionFactory'
+  ];
 
-    function CalendarQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-        var self = this;
+  function CalendarQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        function create(templateID, prototype) {
-            return new CalendarQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
-        }
+    function create(templateID, prototype) {
+      var labelObject = LabelFactory.create();
+      var metadataGroupObject = MetadataGroupFactory.create();
+      var fillingRulesObject = FillingRulesOptionFactory.create();
 
-        return self;
+      return new CalendarQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
     }
 
-    function CalendarQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-        var self = this;
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.CalendarQuestionFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var labelObject = LabelFactory.fromJson(json.label);
+      var metadataGroupObject = MetadataGroupFactory.fromJson(json.metadata);
+      var fillingRulesObject = FillingRulesOptionFactory.fromJson(json.fillingRules);
+      var prototype = {};
+      prototype.objectType = "SurveyItem";
+      var question = new CalendarQuestion(json.templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
+      question.customID = json.customID;
 
-        self.extents = prototype.objectType;
-        self.objectType = 'CalendarQuestion';
-        self.templateID = templateID;
-        self.customID = templateID;
-        self.dataType = 'LocalDate';
-        self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
-        };
-        self.metadata = MetadataGroupFactory.create();
-        self.fillingRules = FillingRulesOptionFactory.create();
-
-        /* Public methods */
-        self.isQuestion = isQuestion;
-        self.validators = validators;
-        self.toJson = toJson;
-
-
-        function isQuestion() {
-            return true;
-        }
-
-        function validators() {
-            var validatorsList = [
-                'mandatory',
-                'minDate',
-                'maxDate',
-                'rangeDate',
-                'futureDate',
-                'pastDate'
-            ];
-            return validatorsList;
-        }
-
-        function toJson() {
-            var json = {};
-
-            json.extents = self.extents;
-            json.objectType = self.objectType;
-            json.templateID = self.templateID;
-            json.customID = self.customID;
-            json.dataType = self.dataType;
-            json.label = self.label;
-            json.metadata = self.metadata;
-            json.fillingRules = self.fillingRules;
-
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-        }
+      return question;
     }
+
+    return self;
+  }
+
+  function CalendarQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject) {
+    var self = this;
+
+    self.extents = prototype.objectType;
+    self.objectType = 'CalendarQuestion';
+    self.templateID = templateID;
+    self.customID = templateID;
+    self.dataType = 'LocalDate';
+    self.label = labelObject;
+    self.metadata = metadataGroupObject;
+    self.fillingRules = fillingRulesObject;
+
+    /* Public methods */
+    self.isQuestion = isQuestion;
+    self.validators = validators;
+    self.toJson = toJson;
+
+    function isQuestion() {
+      return true;
+    }
+
+    function validators() {
+      var validatorsList = [
+        'mandatory',
+        'minDate',
+        'maxDate',
+        'rangeDate',
+        'futureDate',
+        'pastDate'
+      ];
+      return validatorsList;
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.templateID = self.templateID;
+      json.customID = self.customID;
+      json.dataType = self.dataType;
+      json.label = self.label;
+      json.metadata = self.metadata;
+      json.fillingRules = self.fillingRules;
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+  }
 
 }());
 
@@ -3835,9 +3946,9 @@
         .module('otusjs.surveyItem')
         .factory('CheckboxAnswerOptionFactory', CheckboxAnswerOptionFactory);
 
-    CheckboxAnswerOptionFactory.$inject = ['LabelFactory'];
+    CheckboxAnswerOptionFactory.$inject = ['IdiomFactory'];
 
-    function CheckboxAnswerOptionFactory(LabelFactory) {
+    function CheckboxAnswerOptionFactory(IdiomFactory) {
         var self = this;
 
         /* Public interface */
@@ -3845,12 +3956,12 @@
         self.createWithData = createWithData;
 
         function create(optionID) {
-            return new CheckboxAnswerOption(optionID, LabelFactory);
+            return new CheckboxAnswerOption(optionID, IdiomFactory);
         }
 
         function createWithData(checkboxAnswerOptionJSON) {
             var parsedJson = JSON.parse(checkboxAnswerOptionJSON);
-            var CheckboxAnswerOptionObject = new CheckboxAnswerOption(parsedJson.optionID, LabelFactory);
+            var CheckboxAnswerOptionObject = new CheckboxAnswerOption(parsedJson.optionID, IdiomFactory);
 
             CheckboxAnswerOptionObject.optionID = parsedJson.optionID;
             CheckboxAnswerOptionObject.customOptionID = parsedJson.customOptionID;
@@ -3862,7 +3973,7 @@
         return self;
     }
 
-    function CheckboxAnswerOption(optionID, LabelFactory) {
+    function CheckboxAnswerOption(optionID, IdiomFactory) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -3872,9 +3983,9 @@
         self.dataType = 'Boolean';
         self.value = false;
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
 
         /* Public methods */
@@ -3910,26 +4021,26 @@
         .factory('CheckboxQuestionFactory', CheckboxQuestionFactory);
 
     CheckboxQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'CheckboxAnswerOptionFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function CheckboxQuestionFactory(LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
+    function CheckboxQuestionFactory(IdiomFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory);
+            return new CheckboxQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function CheckboxQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
+    function CheckboxQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -3938,9 +4049,9 @@
         self.customID = templateID;
         self.dataType = 'Array';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();
@@ -4061,91 +4172,113 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.surveyItem')
-        .factory('DecimalQuestionFactory', DecimalQuestionFactory);
+  angular
+    .module('otusjs.surveyItem')
+    .factory('DecimalQuestionFactory', DecimalQuestionFactory);
 
-    DecimalQuestionFactory.$inject = [
-        'LabelFactory',
-        'MetadataGroupFactory',
-        'UnitFactory',
-        'FillingRulesOptionFactory'
-    ];
+  DecimalQuestionFactory.$inject = [
+    'LabelFactory',
+    'MetadataGroupFactory',
+    'UnitFactory',
+    'FillingRulesOptionFactory'
+  ];
 
-    function DecimalQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
-        var self = this;
-        /* Public interface */
-        self.create = create;
+  function DecimalQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
+    var self = this;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
 
-        function create(templateID, prototype) {
-            return new DecimalQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory);
-        }
+    function create(templateID, prototype) {
+      var labelObject = LabelFactory.create();
+      var metadataGroupObject = MetadataGroupFactory.create();
+      var fillingRulesObject = FillingRulesOptionFactory.create();
 
-        return self;
+      var unitObject = {};
+      unitObject.ptBR = UnitFactory.create();
+      unitObject.enUS = UnitFactory.create();
+      unitObject.esES = UnitFactory.create();
+
+      return new DecimalQuestion(templateID, prototype, labelObject, metadataGroupObject, unitObject, fillingRulesObject);
     }
 
-    function DecimalQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
-        var self = this;
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.DecimalQuestionFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var labelObject = LabelFactory.fromJson(json.label);
+      var metadataGroupObject = MetadataGroupFactory.fromJson(json.metadata);
+      var fillingRulesObject = FillingRulesOptionFactory.fromJson(json.fillingRules);
 
-        self.extents = prototype.objectType;
-        self.objectType = 'DecimalQuestion';
-        self.templateID = templateID;
-        self.customID = templateID;
-        self.dataType = 'Decimal';
-        self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
-        };
-        self.metadata = MetadataGroupFactory.create();
-        self.fillingRules = FillingRulesOptionFactory.create();
-        self.unit = {
-            ptBR: UnitFactory.create(),
-            enUS: UnitFactory.create(),
-            esES: UnitFactory.create()
-        };
+      var unitObject = {};
+      unitObject.ptBR = UnitFactory.fromJson(json.unit.ptBR);
+      unitObject.enUS = UnitFactory.fromJson(json.unit.enUS);
+      unitObject.esES = UnitFactory.fromJson(json.unit.esES);
 
-        /* Public methods */
-        self.isQuestion = isQuestion;
-        self.validators = validators;
-        self.toJson = toJson;
+      var prototype = {};
+      prototype.objectType = "SurveyItem";
+      var question = new DecimalQuestion(json.templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
+      question.customID = json.customID;
 
-        function isQuestion() {
-            return true;
-        }
-
-        function validators() {
-            var validatorsList = [
-                'mandatory',
-                'distinct',
-                'lowerLimit',
-                'upperLimit',
-                'in',
-                'scale'
-            ];
-
-            return validatorsList;
-        }
-
-        function toJson() {
-            var json = {};
-
-            json.extents = self.extents;
-            json.objectType = self.objectType;
-            json.templateID = self.templateID;
-            json.customID = self.customID;
-            json.dataType = self.dataType;
-            json.label = self.label;
-            json.metadata = self.metadata;
-            json.unit = self.unit;
-            json.fillingRules = self.fillingRules;
-
-
-            return JSON.stringify(json);
-        }
+      return question;
     }
+
+    return self;
+  }
+
+  function DecimalQuestion(templateID, prototype, labelObject, metadataGroupObject, unitObject, fillingRulesObject) {
+    var self = this;
+
+    self.extents = prototype.objectType;
+    self.objectType = 'DecimalQuestion';
+    self.templateID = templateID;
+    self.customID = templateID;
+    self.dataType = 'Decimal';
+    self.label = labelObject;
+    self.metadata = metadataGroupObject;
+    self.fillingRules = fillingRulesObject;
+    self.unit = unitObject;
+
+    /* Public methods */
+    self.isQuestion = isQuestion;
+    self.validators = validators;
+    self.toJson = toJson;
+
+    function isQuestion() {
+      return true;
+    }
+
+    function validators() {
+      var validatorsList = [
+        'mandatory',
+        'distinct',
+        'lowerLimit',
+        'upperLimit',
+        'in',
+        'scale'
+      ];
+
+      return validatorsList;
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.templateID = self.templateID;
+      json.customID = self.customID;
+      json.dataType = self.dataType;
+      json.label = self.label;
+      json.metadata = self.metadata;
+      json.unit = self.unit;
+      json.fillingRules = self.fillingRules;
+
+      return JSON.stringify(json);
+    }
+  }
 }());
 
 (function() {
@@ -4156,25 +4289,25 @@
         .factory('EmailQuestionFactory', EmailQuestionFactory);
 
     EmailQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function EmailQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function EmailQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new EmailQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
+            return new EmailQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function EmailQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function EmailQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -4183,9 +4316,9 @@
         self.customID = templateID;
         self.dataType = 'String';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();
@@ -4233,26 +4366,26 @@
         .factory('IntegerQuestionFactory', IntegerQuestionFactory);
 
     IntegerQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'UnitFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function IntegerQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
+    function IntegerQuestionFactory(IdiomFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory);
+            return new IntegerQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function IntegerQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
+    function IntegerQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -4261,9 +4394,9 @@
         self.customID = templateID;
         self.dataType = 'Integer';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();
@@ -4322,25 +4455,25 @@
         .factory('PhoneQuestionFactory', PhoneQuestionFactory);
 
     PhoneQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function PhoneQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function PhoneQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new PhoneQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
+            return new PhoneQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function PhoneQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function PhoneQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -4349,9 +4482,9 @@
         self.customID = templateID;
         self.dataType = 'Integer';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();
@@ -4401,26 +4534,26 @@
         .factory('SingleSelectionQuestionFactory', SingleSelectionQuestionFactory);
 
     SingleSelectionQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'AnswerOptionFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function SingleSelectionQuestionFactory(LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
+    function SingleSelectionQuestionFactory(IdiomFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory);
+            return new SingleSelectionQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function SingleSelectionQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
+    function SingleSelectionQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -4429,9 +4562,9 @@
         self.customID = templateID;
         self.dataType = 'Integer';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();
@@ -4514,25 +4647,25 @@
         .factory('TextQuestionFactory', TextQuestionFactory);
 
     TextQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function TextQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function TextQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new TextQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
+            return new TextQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function TextQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function TextQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -4541,9 +4674,9 @@
         self.customID = templateID;
         self.dataType = 'String';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();
@@ -4597,25 +4730,25 @@
         .factory('TimeQuestionFactory', TimeQuestionFactory);
 
     TimeQuestionFactory.$inject = [
-        'LabelFactory',
+        'IdiomFactory',
         'MetadataGroupFactory',
         'FillingRulesOptionFactory'
     ];
 
-    function TimeQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function TimeQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory);
+            return new TimeQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
         }
 
         return self;
     }
 
-    function TimeQuestion(templateID, prototype, LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+    function TimeQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
@@ -4624,9 +4757,9 @@
         self.customID = templateID;
         self.dataType = 'LocalTime';
         self.label = {
-            ptBR: LabelFactory.create(),
-            enUS: LabelFactory.create(),
-            esES: LabelFactory.create()
+            ptBR: IdiomFactory.create(),
+            enUS: IdiomFactory.create(),
+            esES: IdiomFactory.create()
         };
         self.metadata = MetadataGroupFactory.create();
         self.fillingRules = FillingRulesOptionFactory.create();
@@ -5478,28 +5611,80 @@
 
   angular
     .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationAddService', service);
+    .service('otusjs.model.navigation.InitialNodesAddService', service);
 
   service.$inject = [
     'otusjs.model.navigation.NavigationContainerService',
-    'SurveyItemContainerService'
+    'SurveyItemContainerService',
+    'otusjs.model.navigation.UpdateRouteTaskService',
+    'otusjs.model.navigation.CreateDefaultRouteTaskService'
   ];
 
-  function service(NavigationContainerService, SurveyItemContainerService) {
+  function service(NavigationContainerService, SurveyItemContainerService, UpdateRouteTaskService, CreateDefaultRouteTaskService) {
     var self = this;
 
     /* Public methods */
     self.execute = execute;
 
     function execute() {
-      var itemCount = SurveyItemContainerService.getItemListSize();
+      NavigationContainerService.setInitialNodes();
 
-      if (itemCount > 1) {
-        var origin = SurveyItemContainerService.getItemByPosition(itemCount - 2);
-        var destination = SurveyItemContainerService.getItemByPosition(itemCount - 1);
+      var routeData = {
+        'origin': NavigationContainerService.getNavigationList()[0].origin,
+        'destination': NavigationContainerService.getNavigationList()[1].origin
+      };
 
-        NavigationContainerService.createNavigationTo(origin.templateID, destination.templateID);
+      CreateDefaultRouteTaskService.execute(routeData, NavigationContainerService.getNavigationList()[0]);
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.model.navigation')
+    .service('otusjs.model.navigation.NavigationAddService', service);
+
+  service.$inject = [
+    'otusjs.model.navigation.NavigationContainerService',
+    'SurveyItemContainerService',
+    'otusjs.model.navigation.UpdateRouteTaskService',
+    'otusjs.model.navigation.CreateDefaultRouteTaskService'
+  ];
+
+  function service(NavigationContainerService, SurveyItemContainerService, UpdateRouteTaskService, CreateDefaultRouteTaskService) {
+    var self = this;
+
+    /* Public methods */
+    self.execute = execute;
+
+    function execute() {
+      var origin = SurveyItemContainerService.getLastItem();
+
+      var _newNavigation = NavigationContainerService.createNavigationTo(origin.templateID);
+
+      var _previousNavigation;
+      if (_newNavigation.index === 2) {
+         _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index -1);
+      }else{
+         _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index);
       }
+
+      var routeData = {
+        'origin': _newNavigation.origin,
+        'destination': _previousNavigation.getDefaultRoute().destination
+      };
+
+      CreateDefaultRouteTaskService.execute(routeData, _newNavigation);
+
+      var updateRouteData = {
+        'origin': _previousNavigation.origin,
+        'destination': _newNavigation.origin,
+        'isDefault': true
+      };
+
+      UpdateRouteTaskService.execute(updateRouteData, _previousNavigation);
     }
   }
 }());
@@ -5608,13 +5793,18 @@
     self.execute = execute;
 
     function execute(routeData, navigation) {
-      var currentDefaultRoute = navigation.getDefaultRoute();
-      var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+      if (navigation.hasDefaultRoute()) {
+         var currentDefaultRoute = navigation.getDefaultRoute();
+         var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+         navigation.setupDefaultRoute(route);
 
-      navigation.setupDefaultRoute(route);
-
-      _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
-      _notifyNewDefaultNavigation(route, navigation);
+         _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
+         _notifyNewDefaultNavigation(route, navigation);
+      } else {
+         var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+         navigation.setupDefaultRoute(route);
+         _notifyNewDefaultNavigation(route, navigation);
+      }
     }
 
     function _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation) {

@@ -28,6 +28,8 @@
     self.removeNavigationOf = removeNavigationOf;
     self.removeNavigationByIndex = removeNavigationByIndex;
     self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+    self.setInitialNodes = setInitialNodes;
+    self.getPreviousOf = getPreviousOf;
 
     function init() {
       _navigationList = [];
@@ -63,6 +65,10 @@
       return filter[0];
     }
 
+    function getPreviousOf(index) {
+      return getNavigationByPosition(index - 1);
+    }
+
     function getNavigationByPosition(position) {
       return _navigationList[position];
     }
@@ -92,7 +98,17 @@
       var newNavigation = NavigationFactory.create(origin, destination);
       newNavigation.index = _navigationList.length;
       _addElementsPreviousTheNavigation(newNavigation);
+      //updateFinalIns();   //TODO
       _navigationList.push(newNavigation);
+      return newNavigation;
+    }
+
+    function setInitialNodes(origin, destination) {
+      var beginNavigation = NavigationFactory.createInitial('begin', 'end');
+      var endNavigation = NavigationFactory.createInitial('end', 'begin');
+
+      _navigationList.unshift(endNavigation);
+      _navigationList.unshift(beginNavigation);
     }
 
     function _addElementsPreviousTheNavigation(navigation) {
@@ -106,8 +122,7 @@
       var navigationToRemove = _navigationList.filter(function(navigation) {
         return findByOrigin(navigation, questionID);
       });
-
-      var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
+      removeCurrentLastNavigationndexOf(navigationToRemove[0]);
       if (indexToRemove > -1) {
         _navigationList.splice(indexToRemove, 1);
       }

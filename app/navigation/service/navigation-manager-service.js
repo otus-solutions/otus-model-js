@@ -14,10 +14,13 @@
     'otusjs.model.navigation.AddAlternativeRouteTaskService',
     'otusjs.model.navigation.RemoveRouteTaskService',
     'otusjs.model.navigation.UpdateRouteTaskService',
-    'otusjs.model.navigation.NavigationValidatorService'
+    'otusjs.model.navigation.NavigationValidatorService',
+    'otusjs.model.navigation.InitialNodesAddService'
   ];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService, AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService,
+    AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService, InitialNodesAddService) {
+
     var self = this;
     var _selectedNavigation = null;
 
@@ -34,9 +37,11 @@
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
     self.listOrphanNavigations = listOrphanNavigations;
+    self.generateNavigation = generateNavigation;
 
     function init() {
       NavigationContainerService.init();
+      //TODO survey.NavigationManager.setInitialNodes
     }
 
     function loadJsonData(data) {
@@ -72,7 +77,15 @@
     }
 
     function addNavigation() {
-      NavigationAddService.execute();
+      if (!NavigationContainerService.getNavigationListSize()) {
+         generateNavigation();
+      }
+      _selectedNavigation = NavigationAddService.execute();
+
+    }
+
+    function generateNavigation() {
+      InitialNodesAddService.execute();
     }
 
     function applyRoute(routeData) {

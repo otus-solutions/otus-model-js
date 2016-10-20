@@ -18,6 +18,7 @@
         self.getItemListSize = getItemListSize;
         self.getItemByTemplateID = getItemByTemplateID;
         self.getItemByCustomID = getItemByCustomID;
+        self.getLastItem = getLastItem;
         self.getItemByID = getItemByID;
         self.getAllCheckboxQuestion = getAllCheckboxQuestion;
         self.getItemByPosition = getItemByPosition;
@@ -90,6 +91,10 @@
             } else {
                 return null;
             }
+        }
+
+        function getLastItem() {
+           return itemList[itemList.length - 1];
         }
 
         function existsItem(id) {

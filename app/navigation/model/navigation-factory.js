@@ -19,20 +19,24 @@
     Inject.RouteFactory = RouteFactory;
 
     self.create = create;
+    self.createInitial = createInitial;
     self.fromJson = fromJson;
 
-    function create(origin, destination) {
-      if (!origin || !destination) {
+    function create(origin) {
+      if (!origin) {
         return null;
       }
 
-      var defaultRoute = RouteFactory.createDefault(origin, destination);
-      if (!defaultRoute) {
-        return null;
-      }
+      return new Navigation(origin);
+    }
 
-      defaultRoute.index = 0;
-      return new Navigation(origin, defaultRoute);
+    function createInitial(origin, destination) {
+      var initialNavigation = new Navigation({
+        'extremity': origin
+      }, {
+        'extremity': destination
+      });
+      return initialNavigation;
     }
 
     function fromJson(json, inNavigations) {
@@ -66,9 +70,9 @@
     return self;
   }
 
-  function Navigation(origin, defaultRoute) {
+  function Navigation(origin) {
     var self = this;
-    var _defaultRoute = defaultRoute;
+    var _defaultRoute;
 
     /* Object properties */
     self.extents = 'SurveyTemplateObject';
@@ -77,7 +81,7 @@
     self.index = null;
     self.inNavigations = [];
     self.outNavigations = [];
-    self.routes = [defaultRoute];
+    self.routes = [];
 
     /* Public methods */
     self.addInNavigation = addInNavigation;
@@ -88,6 +92,7 @@
     self.getDefaultRoute = getDefaultRoute;
     self.getRouteByName = getRouteByName;
     self.hasRoute = hasRoute;
+    self.hasDefaultRoute = hasDefaultRoute;
     self.isOrphan = isOrphan;
     self.hasOrphanRoot = hasOrphanRoot;
     self.listRoutes = listRoutes;
@@ -178,6 +183,10 @@
 
     function getDefaultRoute() {
       return _defaultRoute.clone();
+    }
+
+    function hasDefaultRoute() {
+      return !_defaultRoute ? false : true
     }
 
     function getRouteByName(name) {
