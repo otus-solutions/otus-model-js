@@ -1,68 +1,147 @@
 describe('TimeQuestionFactory', function() {
-    var Mock = {};
+  var Mock = {};
+  var question;
+
+  beforeEach(function() {
+    module('otusjs');
+
+    mockJson();
+
+    inject(function(_$injector_) {
+      mockQuestion(_$injector_);
+      factory = _$injector_.get('TimeQuestionFactory', {
+        'LabelFactory': mockLabelFactory(_$injector_),
+        'MetadataGroupFactory': mockMetaGroupFactory(_$injector_),
+        'FillingRulesOptionFactory': mockFillingRulesOptionFactory(_$injector_)
+      });
+    });
+
+  });
+
+  describe('create method', function() {
 
     beforeEach(function() {
-        module('otusjs');
-
-        inject(function(_$injector_) {
-            mockQuestion(_$injector_);
-
-            factory = _$injector_.get('TimeQuestionFactory');
-        });
+      question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
     });
 
-    describe('TimeQuestion', function() {
-
-        xit('returned object should extends SurveyItem', function() {
-            var question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
-
-            expect(question.extents).toBe('SurveyItem');
-        });
-
-        it('returned object should have objectType equal to TimeQuestion', function() {
-            var question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
-
-            expect(question.objectType).toBe('TimeQuestion');
-        });
-
-        it('returned object should have a not null oid', function() {
-            var question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
-
-            expect(question.templateID).toBe(Mock.TEMPLATE_ID);
-        });
-
-        it('returned object should have dataType equal to LocalTime', function() {
-            var question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
-
-            expect(question.dataType).toBe('LocalTime');
-        });
-
-        it('returned object should have a label object for ptBR locale', function() {
-            var question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
-
-            expect(question.label.ptBR).not.toBeNull();
-            expect(question.label.ptBR).not.toBeUndefined();
-        });
-
-        it('returned object should have a label object for enUS locale', function() {
-            var question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
-
-            expect(question.label.enUS).not.toBeNull();
-            expect(question.label.enUS).not.toBeUndefined();
-        });
-
-        it('returned object should have a label object for enUS locale', function() {
-            var question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
-
-            expect(question.label.esES).not.toBeNull();
-            expect(question.label.esES).not.toBeUndefined();
-        });
-
+    xit('returned object should extends SurveyItem', function() {
+      expect(question.extends).toBe('SurveyItem');
     });
 
-    function mockQuestion($injector) {
-        Mock.TEMPLATE_ID = 'TPL_ID';
-        Mock.Question = $injector.get('SurveyItemFactory').create('TimeQuestion', Mock.TEMPLATE_ID);
-    }
+    it('returned object should have objectType equal to TimeQuestion', function() {
+      expect(question.objectType).toBe('TimeQuestion');
+    });
+
+    it('returned object should have a not null templateID', function() {
+      expect(question.templateID).toBe(Mock.TEMPLATE_ID);
+    });
+
+    it('returned object should have dataType equal to LocalTime', function() {
+      expect(question.dataType).toBe('LocalTime');
+    });
+
+    it('returned object should have a label object for ptBR locale', function() {
+      expect(question.label.ptBR).not.toBeNull();
+      expect(question.label.ptBR).not.toBeUndefined();
+    });
+
+    it('returned object should have a label object for enUS locale', function() {
+      expect(question.label.enUS).not.toBeNull();
+      expect(question.label.enUS).not.toBeUndefined();
+    });
+
+    it('returned object should have a label object for enUS locale', function() {
+      expect(question.label.esES).not.toBeNull();
+      expect(question.label.esES).not.toBeUndefined();
+    });
+
+  });
+
+  describe('fromJson method', function() {
+
+    beforeEach(function() {
+      question = factory.fromJson(Mock.json);
+    });
+
+    it("should have a templateID equal to Mock.json.templateID", function () {
+      expect(question.templateID).toBe(Mock.json.templateID);
+    });
+
+    it("should have a customID equal to Mock.json.customID", function () {
+      expect(question.customID).toBe(Mock.json.customID);
+    });
+
+    it("should have a objectType equal to Mock.json.objectType", function () {
+      expect(question.objectType).toBe(Mock.json.objectType);
+    });
+
+    it("should call LabelFactory.fromJson method with Mock.json.label", function () {
+      expect(Mock.LabelFactory.fromJson).toHaveBeenCalledWith(Mock.json.label);
+    });
+
+    it("should call MetadataGroupFactory.fromJson method with Mock.json.metadata", function () {
+      expect(Mock.MetadataGroupFactory.fromJson).toHaveBeenCalledWith(Mock.json.metadata);
+    });
+
+    it("should call FillingRulesOptionFactory.fromJson method with Mock.json.fillingRules", function () {
+      expect(Mock.FillingRulesOptionFactory.fromJson).toHaveBeenCalledWith(Mock.json.fillingRules);
+    });
+
+    it("should throw a error if the method receive a string", function() {
+      expect(function() {
+        factory.fromJson(JSON.stringify(Mock.json));
+      }).toThrowError("otusjs.model.misc.model.TimeQuestionFactory.fromJson() " +
+        "method expects to receive a object instead a String");
+    });
+
+  });
+
+  function mockQuestion($injector) {
+    Mock.TEMPLATE_ID = 'TPL_ID';
+    Mock.Question = $injector.get('SurveyItemFactory').create('TimeQuestion', Mock.TEMPLATE_ID);
+  }
+
+  function mockLabelFactory($injector) {
+    Mock.LabelFactory = $injector.get('LabelFactory');
+    spyOn(Mock.LabelFactory, 'fromJson').and.returnValue({});
+    return Mock.LabelFactory;
+  }
+
+  function mockMetaGroupFactory($injector) {
+    Mock.MetadataGroupFactory = $injector.get('MetadataGroupFactory');
+    spyOn(Mock.MetadataGroupFactory, 'fromJson').and.returnValue({});
+    return Mock.MetadataGroupFactory;
+  }
+
+  function mockFillingRulesOptionFactory($injector) {
+    Mock.FillingRulesOptionFactory = $injector.get('FillingRulesOptionFactory');
+    spyOn(Mock.FillingRulesOptionFactory, 'fromJson').and.returnValue({});
+    return Mock.FillingRulesOptionFactory;
+  }
+
+  function mockJson() {
+    Mock.json = {
+      "extents": "SurveyItem",
+      "objectType": "TimeQuestion",
+      "templateID": "QUE1",
+      "customID": "PersonalizedID",
+      "dataType": "LocalTime",
+      "label": {
+        "ptBR": {},
+        "enUS": {},
+        "esES": {}
+      },
+      "metadata": {
+        "extents": "StudioObject",
+        "objectType": "MetadataGroup",
+        "options": []
+      },
+      "fillingRules": {
+          "extends": "StudioObject",
+          "objectType": "FillingRules",
+          "options": {}
+      }
+    };
+  }
 
 });

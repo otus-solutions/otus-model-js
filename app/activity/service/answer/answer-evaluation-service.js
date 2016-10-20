@@ -12,8 +12,8 @@
   ];
 
   function Service(NumericRuleTestService, TextRuleTestService, DateTimeRuleTestService) {
-    let self = this;
-    let _evaluators = new Map();
+    var self = this;
+    var _evaluators = {};
 
     /* Public methods */
     self.getEvaluator = getEvaluator;
@@ -21,15 +21,15 @@
     _setupEvaluators();
 
     function getEvaluator(evaluator) {
-      return _evaluators.get(evaluator);
+      return _evaluators[evaluator];
     }
 
     function _setupEvaluators() {
-      _evaluators.set('CalendarQuestion', DateTimeRuleTestService);
-      _evaluators.set('IntegerQuestion', NumericRuleTestService);
-      _evaluators.set('SingleSelectionQuestion', NumericRuleTestService);
-      _evaluators.set('TextQuestion', TextRuleTestService);
-      _evaluators.set('TimeQuestion', DateTimeRuleTestService);
+      _evaluators.CalendarQuestion = DateTimeRuleTestService;
+      _evaluators.IntegerQuestion = NumericRuleTestService;
+      _evaluators.SingleSelectionQuestion = NumericRuleTestService;
+      _evaluators.TextQuestion = TextRuleTestService;
+      _evaluators.TimeQuestion = DateTimeRuleTestService;
     }
   }
 }());

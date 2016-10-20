@@ -18,12 +18,12 @@
     self.fromJson = fromJson;
 
     function createDefault(origin, destination) {
-      var route = new Route(origin, destination, null);
-
-      if (route) {
-        route.isDefault = true;
+      if (!origin || !destination) {
+        return null;
       }
 
+      var route = new Route(origin, destination, null);
+      route.isDefault = true;
       return route;
     }
 

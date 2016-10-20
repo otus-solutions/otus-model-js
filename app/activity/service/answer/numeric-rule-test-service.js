@@ -6,14 +6,16 @@
     .service('otusjs.model.activity.NumericRuleTestService', Service);
 
   function Service() {
-    let self = this;
-    let _runner = {};
+    var self = this;
+    var _runner = {};
     self.name = 'NumericRuleTestService';
 
     /* Public Methods */
     self.run = run;
 
     function run(rule, answer) {
+      _polyfillIsInteger();
+
       if (answer && !!answer['replace']) {
         answer = answer.replace(/,/, '.');
       }
@@ -26,7 +28,7 @@
     }
 
     function _isFloat(value) {
-      return (!Number.isNaN(Number(value)) && !Number.isInteger(Number(value)));
+      return (!isNaN(Number(value)) && !Number.isInteger(Number(value)));
     }
 
     _runner.equal = function(reference, answer) {
@@ -64,6 +66,14 @@
 
     _runner.between = function(reference, answer) {
       return (_runner.greaterEqual(reference[0], answer) && _runner.lowerEqual(reference[1], answer));
+    }
+
+    function _polyfillIsInteger() {
+      Number.isInteger = Number.isInteger || function(value) {
+        return typeof value === "number" &&
+          isFinite(value) &&
+          Math.floor(value) === value;
+      };
     }
   }
 }());
