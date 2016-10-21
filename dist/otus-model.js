@@ -10,30 +10,16 @@
 (function () {
     'use strict';
 
-<<<<<<< HEAD
-    angular
-        .module('otusjs.misc', []);
-
-}());
-=======
-    angular.module('otusjs.metadata', []);
+    angular.module('otusjs.misc', []);
 })();
 'use strict';
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
 (function () {
     'use strict';
 
-<<<<<<< HEAD
-    angular
-        .module('otusjs.metadata', []);
-
-}());
-=======
-    angular.module('otusjs.misc', []);
+    angular.module('otusjs.metadata', []);
 })();
 'use strict';
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
 (function () {
   'use strict';
@@ -76,25 +62,12 @@
     angular.module('otusjs').service('ModelFacadeService', ModelFacadeService);
 
     ModelFacadeService.$inject = [
-<<<<<<< HEAD
-        /* Question */
-        'SurveyItemFactory',
-        /* Setter */
-        'IdiomFactory',
-        'UnitFactory',
-        /* Structure */
-        'SurveyFactory',
-        'SurveyIdentityFactory',
-        'MetadataGroupFactory'
-    ];
-=======
     /* Question */
     'SurveyItemFactory',
     /* Setter */
     'IdiomFactory', 'UnitFactory',
     /* Structure */
     'SurveyFactory', 'SurveyIdentityFactory', 'MetadataGroupFactory'];
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     function ModelFacadeService(SurveyItemFactory, IdiomFactory, UnitFactory, SurveyFactory, SurveyIdentityFactory, MetadataGroupFactory) {
         var self = this;
@@ -933,234 +906,21 @@
 (function () {
   'use strict';
 
-<<<<<<< HEAD
-  angular
-    .module('otusjs.misc')
-    .factory('IdiomFactory', IdiomFactory);
-=======
-  angular.module('otusjs.metadata').factory('MetadataAnswerFactory', MetadataAnswerFactory);
-
-  MetadataAnswerFactory.$inject = ['LabelFactory'];
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
-
-  function IdiomFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJson = fromJson;
-
-<<<<<<< HEAD
-    function create() {
-      return new Idiom();
-=======
-    function create(value) {
-      var labelObject = LabelFactory.create();
-      return new MetadataAnswer(value, labelObject);
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
-    }
-
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.IdiomFactory.fromJson() method expects to receive a object instead a String");
-      }
-<<<<<<< HEAD
-      var label = new Idiom();
-
-      label.oid = json.oid;
-      label.plainText = json.plainText;
-      label.formattedText = json.formattedText;
-
-      return label;
-=======
-      var labelObject = LabelFactory.fromJson(json.label);
-      return new MetadataAnswer(json.value, labelObject);
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
-    }
-
-    return self;
-  }
-
-  function Idiom() {
-    var self = this;
-
-<<<<<<< HEAD
-    self.extends = "StudioObject";
-    self.objectType = "Label";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
-
-=======
-    self.extends = 'StudioObject';
-    self.objectType = 'MetadataAnswer';
-    self.dataType = 'Integer';
-    self.value = value;
-    self.label = labelObject;
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-<<<<<<< HEAD
-  angular
-    .module('otusjs.misc')
-    .factory('LabelFactory', LabelFactory);
-=======
-  angular.module('otusjs.metadata').factory('MetadataGroupFactory', MetadataGroupFactory);
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
-
-  LabelFactory.$inject = ['IdiomFactory'];
-
-  function LabelFactory(IdiomFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create() {
-      var labelObject = {};
-
-      labelObject.ptBR = IdiomFactory.create();
-      labelObject.enUS = IdiomFactory.create();
-      labelObject.esES = IdiomFactory.create();
-
-      return labelObject;
-    }
-
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.LabelFactory.fromJson() method expects to receive a object instead a String");
-      }
-      var labelObject = {};
-
-<<<<<<< HEAD
-      labelObject.ptBR = IdiomFactory.fromJson(json.ptBR);
-      labelObject.enUS = IdiomFactory.fromJson(json.enUS);
-      labelObject.esES = IdiomFactory.fromJson(json.esES);
-=======
-      json.options.forEach(function (metadataAnswerOption) {
-        metadaGroup.options.push(MetadataAnswerFactory.fromJson(metadataAnswerOption));
-      });
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
-
-      return labelObject;
-    }
-
-    return self;
-  }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.misc')
-    .factory('UnitFactory', UnitFactory);
-
-  function UnitFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create() {
-      return new Unit();
-    }
-
-<<<<<<< HEAD
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.UnitFactory.fromJson() method expects to receive a object instead a String");
-      }
-      var unit = new Unit();
-=======
-    function removeOption(value) {
-      self.options.splice(value - 1, 1);
-      reorderOptionValues();
-    }
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
-
-      unit.oid = json.oid;
-      unit.plainText = json.plainText;
-      unit.formattedText = json.formattedText;
-
-<<<<<<< HEAD
-      return unit;
-=======
-    function reorderOptionValues() {
-      self.options.forEach(function (option, index) {
-        option.value = ++index;
-      });
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
-    }
-
-    return self;
-  }
-})();
-'use strict';
-
-<<<<<<< HEAD
-  function Unit() {
-    var self = this;
-
-    self.extends = "StudioObject";
-    self.objectType = "Unit";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
-  }
-  
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.metadata')
-    .factory('MetadataAnswerFactory', MetadataAnswerFactory);
-
-  MetadataAnswerFactory.$inject = ['LabelFactory'];
-
-  function MetadataAnswerFactory(LabelFactory) {
-=======
-(function () {
-  'use strict';
-
   angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
 
   function IdiomFactory() {
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
     var self = this;
 
     /* Public interface */
     self.create = create;
     self.fromJson = fromJson;
 
-<<<<<<< HEAD
-    function create(value) {
-      var labelObject = LabelFactory.create();
-      return new MetadataAnswer(value, labelObject);
-=======
     function create() {
       return new Idiom();
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
     }
 
     function fromJson(json) {
       if (typeof json === 'string') {
-<<<<<<< HEAD
-        throw new Error("otusjs.model.misc.model.MetadataAnswerFactory.fromJson() method expects to receive a object instead a String");
-      }
-      var labelObject = LabelFactory.fromJson(json.label);
-      return new MetadataAnswer(json.value, labelObject);
-=======
         throw new Error("otusjs.model.misc.model.IdiomFactory.fromJson() method expects to receive a object instead a String");
       }
       var label = new Idiom();
@@ -1170,22 +930,11 @@
       label.formattedText = json.formattedText;
 
       return label;
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
     }
 
     return self;
   }
 
-<<<<<<< HEAD
-  function MetadataAnswer(value, labelObject) {
-    var self = this;
-
-    self.extends = 'StudioObject';
-    self.objectType = 'MetadataAnswer';
-    self.dataType = 'Integer';
-    self.value = value;
-    self.label = labelObject;
-=======
   function Idiom() {
     var self = this;
 
@@ -1194,7 +943,6 @@
     self.oid = '';
     self.plainText = '';
     self.formattedText = '';
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
   }
 })();
 'use strict';
@@ -1244,17 +992,9 @@
 (function () {
   'use strict';
 
-<<<<<<< HEAD
-  angular
-    .module('otusjs.metadata')
-    .factory('MetadataGroupFactory', MetadataGroupFactory);
-=======
   angular.module('otusjs.misc').factory('UnitFactory', UnitFactory);
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
-  MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
-
-  function MetadataGroupFactory(MetadataAnswerFactory) {
+  function UnitFactory() {
     var self = this;
 
     /* Public interface */
@@ -1262,75 +1002,36 @@
     self.fromJson = fromJson;
 
     function create() {
-      return new MetadataGroup(MetadataAnswerFactory);
+      return new Unit();
     }
 
     function fromJson(json) {
       if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.MetadataGroupFactory.fromJson() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.misc.model.UnitFactory.fromJson() method expects to receive a object instead a String");
       }
-      var metadaGroup = new MetadataGroup();
+      var unit = new Unit();
 
-      json.options.forEach(function(metadataAnswerOption){
-        metadaGroup.options.push(MetadataAnswerFactory.fromJson(metadataAnswerOption));
-      });
+      unit.oid = json.oid;
+      unit.plainText = json.plainText;
+      unit.formattedText = json.formattedText;
 
-      return metadaGroup;
+      return unit;
     }
 
     return self;
   }
 
-  function MetadataGroup(MetadataAnswerFactory) {
+  function Unit() {
     var self = this;
 
-    self.extents = 'StudioObject';
-    self.objectType = 'MetadataGroup';
-    self.options = [];
-
-    /* Public methods */
-    self.getOptionListSize = getOptionListSize;
-    self.getOptionByValue = getOptionByValue;
-    self.createOption = createOption;
-    self.removeOption = removeOption;
-    self.removeLastOption = removeLastOption;
-
-    function getOptionListSize() {
-      return self.options.length;
-    }
-
-    function getOptionByValue(value) {
-      return self.options[value - 1];
-    }
-
-    function createOption() {
-      var option = MetadataAnswerFactory.create(self.options.length + 1);
-      self.options.push(option);
-      return option;
-    }
-
-    function removeOption(value) {
-      self.options.splice((value - 1), 1);
-      reorderOptionValues();
-    }
-
-    function removeLastOption() {
-      self.options.splice(-1, 1);
-    }
-
-    function reorderOptionValues() {
-      self.options.forEach(function(option, index) {
-        option.value = ++index;
-      });
-    }
+    self.extends = "StudioObject";
+    self.objectType = "Unit";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
   }
-<<<<<<< HEAD
-
-}());
-=======
 })();
 'use strict';
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
 (function () {
 
@@ -1390,6 +1091,128 @@
 (function () {
   'use strict';
 
+  angular.module('otusjs.metadata').factory('MetadataAnswerFactory', MetadataAnswerFactory);
+
+  MetadataAnswerFactory.$inject = ['LabelFactory'];
+
+  function MetadataAnswerFactory(LabelFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create(value) {
+      var labelObject = LabelFactory.create();
+      return new MetadataAnswer(value, labelObject);
+    }
+
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.MetadataAnswerFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var labelObject = LabelFactory.fromJson(json.label);
+      return new MetadataAnswer(json.value, labelObject);
+    }
+
+    return self;
+  }
+
+  function MetadataAnswer(value, labelObject) {
+    var self = this;
+
+    self.extends = 'StudioObject';
+    self.objectType = 'MetadataAnswer';
+    self.dataType = 'Integer';
+    self.value = value;
+    self.label = labelObject;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.metadata').factory('MetadataGroupFactory', MetadataGroupFactory);
+
+  MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
+
+  function MetadataGroupFactory(MetadataAnswerFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create() {
+      return new MetadataGroup(MetadataAnswerFactory);
+    }
+
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.MetadataGroupFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var metadaGroup = new MetadataGroup();
+
+      json.options.forEach(function (metadataAnswerOption) {
+        metadaGroup.options.push(MetadataAnswerFactory.fromJson(metadataAnswerOption));
+      });
+
+      return metadaGroup;
+    }
+
+    return self;
+  }
+
+  function MetadataGroup(MetadataAnswerFactory) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'MetadataGroup';
+    self.options = [];
+
+    /* Public methods */
+    self.getOptionListSize = getOptionListSize;
+    self.getOptionByValue = getOptionByValue;
+    self.createOption = createOption;
+    self.removeOption = removeOption;
+    self.removeLastOption = removeLastOption;
+
+    function getOptionListSize() {
+      return self.options.length;
+    }
+
+    function getOptionByValue(value) {
+      return self.options[value - 1];
+    }
+
+    function createOption() {
+      var option = MetadataAnswerFactory.create(self.options.length + 1);
+      self.options.push(option);
+      return option;
+    }
+
+    function removeOption(value) {
+      self.options.splice(value - 1, 1);
+      reorderOptionValues();
+    }
+
+    function removeLastOption() {
+      self.options.splice(-1, 1);
+    }
+
+    function reorderOptionValues() {
+      self.options.forEach(function (option, index) {
+        option.value = ++index;
+      });
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ExceptionService', service);
 
   function service() {
@@ -1441,11 +1264,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function createInitial(origin, destination) {
-      var initialNavigation = new Navigation({
-        'extremity': origin
-      }, {
-        'extremity': destination
-      });
+      var initialNavigation = new Navigation(origin, destination);
       return initialNavigation;
     }
 
@@ -1596,7 +1415,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function hasDefaultRoute() {
-      return !_defaultRoute ? false : true
+      return !_defaultRoute ? false : true;
     }
 
     function getRouteByName(name) {
@@ -2494,8 +2313,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function loadJsonData(data) {
-      init();
+      _navigationList = _navigationList.slice(0, 2);
       data.forEach(function (navigationData) {
+        console.log(navigationData.inNavigations);
         var inNavigations = navigationData.inNavigations.map(function (inNavigation) {
           return getNavigationByOrigin(inNavigation.origin);
         });
@@ -2562,8 +2382,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function setInitialNodes(origin, destination) {
-      var beginNavigation = NavigationFactory.createInitial('begin', 'end');
-      var endNavigation = NavigationFactory.createInitial('end', 'begin');
+      var beginNavigation = NavigationFactory.createInitial('BEGIN NODE', 'END NODE');
+      var endNavigation = NavigationFactory.createInitial('END NODE', 'BEGIN NODE');
 
       _navigationList.unshift(endNavigation);
       _navigationList.unshift(beginNavigation);
@@ -2605,31 +2425,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-<<<<<<< HEAD
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationManagerService', service);
-
-  service.$inject = [
-    'SurveyItemManagerService',
-    'otusjs.model.navigation.NavigationContainerService',
-    'otusjs.model.navigation.NavigationAddService',
-    'otusjs.model.navigation.NavigationRemoveService',
-    'otusjs.model.navigation.CreateDefaultRouteTaskService',
-    'otusjs.model.navigation.AddAlternativeRouteTaskService',
-    'otusjs.model.navigation.RemoveRouteTaskService',
-    'otusjs.model.navigation.UpdateRouteTaskService',
-    'otusjs.model.navigation.NavigationValidatorService',
-    'otusjs.model.navigation.InitialNodesAddService'
-  ];
-=======
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationManagerService', service);
 
-  service.$inject = ['SurveyItemManagerService', 'otusjs.model.navigation.NavigationContainerService', 'otusjs.model.navigation.NavigationAddService', 'otusjs.model.navigation.NavigationRemoveService', 'otusjs.model.navigation.CreateDefaultRouteTaskService', 'otusjs.model.navigation.AddAlternativeRouteTaskService', 'otusjs.model.navigation.RemoveRouteTaskService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.NavigationValidatorService'];
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
+  service.$inject = ['SurveyItemManagerService', 'otusjs.model.navigation.NavigationContainerService', 'otusjs.model.navigation.NavigationAddService', 'otusjs.model.navigation.NavigationRemoveService', 'otusjs.model.navigation.CreateDefaultRouteTaskService', 'otusjs.model.navigation.AddAlternativeRouteTaskService', 'otusjs.model.navigation.RemoveRouteTaskService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.NavigationValidatorService', 'otusjs.model.navigation.InitialNodesAddService'];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService,
-    AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService, InitialNodesAddService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService, AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService, InitialNodesAddService) {
 
     var self = this;
     var _selectedNavigation = null;
@@ -2647,7 +2447,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
     self.listOrphanNavigations = listOrphanNavigations;
-    self.generateNavigation = generateNavigation;
+    self.getExportableList = getExportableList;
 
     function init() {
       NavigationContainerService.init();
@@ -2660,6 +2460,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function getNavigationList() {
       return NavigationContainerService.getNavigationList();
+    }
+
+    function getExportableList() {
+      var fullList = NavigationContainerService.getNavigationList();
+      return fullList.slice(2, fullList.length);
     }
 
     function getDefaultNavigationPath() {
@@ -2688,13 +2493,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function addNavigation() {
       if (!NavigationContainerService.getNavigationListSize()) {
-         generateNavigation();
+        _generateNavigation();
       }
       _selectedNavigation = NavigationAddService.execute();
-
     }
 
-    function generateNavigation() {
+    function _generateNavigation() {
       InitialNodesAddService.execute();
     }
 
@@ -2893,7 +2697,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             });
 
             json.navigationList = [];
-            NavigationManagerService.getNavigationList().forEach(function (navigation) {
+            console.log(NavigationManagerService.getExportableList());
+            NavigationManagerService.getExportableList().forEach(function (navigation) {
                 if (navigation) {
                     json.navigationList.push(navigation.toJson());
                 } else {
@@ -3072,197 +2877,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 })();
 'use strict';
 
-<<<<<<< HEAD
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.validation')
-    .factory('FillingRulesDataFactory', FillingRulesDataFactory);
-
-  FillingRulesDataFactory.$inject = [
-    'AlphanumericValidatorFactory',
-    'DistinctValidatorFactory',
-    'FutureDateValidatorFactory',
-    'InValidatorFactory',
-    'LowerCaseValidatorFactory',
-    'LowerLimitValidatorFactory',
-    'MandatoryValidatorFactory',
-    'MaxDateValidatorFactory',
-    'MaxLengthValidatorFactory',
-    'MaxTimeValidatorFactory',
-    'MinDateValidatorFactory',
-    'MinLengthValidatorFactory',
-    'MinTimeValidatorFactory',
-    'ParameterValidatorFactory',
-    'PastDateValidatorFactory',
-    'PrecisionValidatorFactory',
-    'RangeDateValidatorFactory',
-    'ScaleValidatorFactory',
-    'SpecialsValidatorFactory',
-    'UpperCaseValidatorFactory',
-    'UpperLimitValidatorFactory'
-  ];
-=======
 (function () {
     'use strict';
 
     angular.module('otusjs.surveyItem').service('SurveyItemContainerService', SurveyItemContainerService);
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
-
-  function FillingRulesDataFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerCaseValidatorFactory, LowerLimitValidatorFactory, MandatoryValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create(validator) {
-      return validatorsTemplates[validator].create();
-    }
-
-    function fromJson(json) {
-      return validatorsTemplates[json.validatorType].fromJson(json.data);
-    }
-
-    var validatorsTemplates = {
-      alphanumeric: AlphanumericValidatorFactory,
-      distinct: DistinctValidatorFactory,
-      futureDate: FutureDateValidatorFactory,
-      in: InValidatorFactory,
-      lowerLimit: LowerLimitValidatorFactory,
-      lowerCase: LowerCaseValidatorFactory,
-      mandatory: MandatoryValidatorFactory,
-      maxDate: MaxDateValidatorFactory,
-      maxLength: MaxLengthValidatorFactory,
-      maxTime: MaxTimeValidatorFactory,
-      minDate: MinDateValidatorFactory,
-      minLength: MinLengthValidatorFactory,
-      minTime: MinTimeValidatorFactory,
-      parameter: ParameterValidatorFactory,
-      pastDate: PastDateValidatorFactory,
-      precision: PrecisionValidatorFactory,
-      rangeDate: RangeDateValidatorFactory,
-      scale: ScaleValidatorFactory,
-      specials: SpecialsValidatorFactory,
-      upperCase: UpperCaseValidatorFactory,
-      upperLimit: UpperLimitValidatorFactory
-    };
-
-    return self;
-
-  }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.validation')
-    .factory('FillingRulesOptionFactory', FillingRulesOptionFactory);
-
-  FillingRulesOptionFactory.$inject = ['RulesFactory'];
-
-  function FillingRulesOptionFactory(RulesFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create() {
-      return new FillingRules(RulesFactory);
-    }
-
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.FillingRulesOptionFactory.fromJson() method expects to receive a object instead a String");
-      }
-      var fillingRules = new FillingRules(RulesFactory);
-      for(var rule in json.options) {
-        fillingRules.options[rule] = RulesFactory.fromJson(json.options[rule]);
-      }
-      return fillingRules;
-    }
-
-    return self;
-  }
-
-  function FillingRules(RulesFactory) {
-    var self = this;
-
-    self.extends = 'StudioObject';
-    self.objectType = 'FillingRules';
-    self.options = {};
-
-    /* Public methods */
-    self.createOption = createOption;
-    self.removeFillingRules = removeFillingRules;
-
-    function createOption(type) {
-      var option = RulesFactory.create(type);
-      self.options[type] = option;
-      return option;
-    }
-
-    function removeFillingRules(type) {
-      delete self.options[type];
-    }
-
-  }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.validation')
-    .factory('RulesFactory', RulesFactory);
-
-  RulesFactory.$inject = [
-    'FillingRulesDataFactory'
-  ];
-
-  function RulesFactory(FillingRulesDataFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create(validatorType) {
-      var validator = FillingRulesDataFactory.create(validatorType);
-      return new Rule(validatorType, validator);
-    }
-
-    function fromJson(json) {
-      var validator = FillingRulesDataFactory.fromJson(json);
-      return new Rule(json.validatorType, validator);
-    }
-
-    return self;
-  }
-
-  function Rule(validatorType, validator) {
-    var self = this;
-    self.extends = 'StudioObject';
-    self.objectType = 'Rule';
-    self.validatorType = validatorType;
-    self.data = validator;
-  }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otusjs.surveyItem')
-        .service('SurveyItemContainerService', SurveyItemContainerService);
 
     SurveyItemContainerService.$inject = ['SurveyItemFactory'];
 
@@ -3353,7 +2971,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         function getLastItem() {
-           return itemList[itemList.length - 1];
+            return itemList[itemList.length - 1];
         }
 
         function existsItem(id) {
@@ -3499,11 +3117,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 })();
 'use strict';
 
-<<<<<<< HEAD
-}());
-
-(function() {
-=======
 (function () {
   'use strict';
 
@@ -3649,7 +3262,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 'use strict';
 
 (function () {
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
   'use strict';
 
   angular.module('otusjs.model.activity').service('otusjs.model.activity.AnswerEvaluationService', Service);
@@ -3857,51 +3469,22 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-<<<<<<< HEAD
-    ImageItemFactory.$inject = ['IdiomFactory'];
-
-    function ImageItemFactory(IdiomFactory) {
-        var self = this;
-=======
   angular.module('otusjs.surveyItem').factory('ImageItemFactory', ImageItemFactory);
 
   ImageItemFactory.$inject = ['LabelFactory'];
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
   function ImageItemFactory(LabelFactory) {
     var self = this;
 
-<<<<<<< HEAD
-        function create(templateID, prototype) {
-            return new ImageItem(templateID, prototype, IdiomFactory);
-        }
-=======
     /* Public interface */
     self.create = create;
     self.fromJson = fromJson;
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     function create(templateID, prototype) {
       var labelObject = LabelFactory.create();
       return new ImageItem(templateID, prototype, labelObject);
     }
 
-<<<<<<< HEAD
-    function ImageItem(templateID, prototype, IdiomFactory) {
-        var self = this;
-
-        self.extents = prototype.objectType;
-        self.objectType = 'ImageItem';
-        self.templateID = templateID;
-        self.customID = templateID;
-        self.dataType = 'String';
-        self.url = '';
-        self.footer = {
-            ptBR: IdiomFactory.create(),
-            enUS: IdiomFactory.create(),
-            esES: IdiomFactory.create()
-        };
-=======
     function fromJson(json) {
       if (typeof json === 'string') {
         throw new Error("otusjs.model.misc.model.ImageItemFactory.fromJson() method expects to receive a object instead a String");
@@ -3914,7 +3497,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       return question;
     }
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     return self;
   }
@@ -3955,28 +3537,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 })();
 'use strict';
 
-<<<<<<< HEAD
-    TextItemFactory.$inject = ['IdiomFactory'];
-
-    function TextItemFactory(IdiomFactory) {
-        var self = this;
-=======
 (function () {
   'use strict';
 
   angular.module('otusjs.surveyItem').factory('TextItemFactory', TextItemFactory);
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
   TextItemFactory.$inject = ['LabelFactory'];
 
-<<<<<<< HEAD
-        function create(templateID, prototype) {
-            return new TextItem(templateID, prototype, IdiomFactory);
-        }
-=======
   function TextItemFactory(LabelFactory) {
     var self = this;
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     /* Public interface */
     self.create = create;
@@ -3987,21 +3556,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return new TextItem(templateID, prototype, labelObject);
     }
 
-<<<<<<< HEAD
-    function TextItem(templateID, prototype, IdiomFactory) {
-        var self = this;
-
-        self.extents = prototype.objectType;
-        self.objectType = 'TextItem';
-        self.templateID = templateID;
-        self.customID = templateID;
-        self.dataType = 'String';
-        self.value = {
-            ptBR: IdiomFactory.create(),
-            enUS: IdiomFactory.create(),
-            esES: IdiomFactory.create()
-        };
-=======
     function fromJson(json) {
       if (typeof json === 'string') {
         throw new Error("otusjs.model.misc.model.TextItem.fromJson() method expects to receive a object instead a String");
@@ -4014,7 +3568,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       return question;
     }
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     return self;
   }
@@ -4110,102 +3663,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-<<<<<<< HEAD
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.surveyItem')
-    .factory('CalendarQuestionFactory', CalendarQuestionFactory);
-
-  CalendarQuestionFactory.$inject = [
-    'LabelFactory',
-    'MetadataGroupFactory',
-    'FillingRulesOptionFactory'
-  ];
-
-  function CalendarQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create(templateID, prototype) {
-      var labelObject = LabelFactory.create();
-      var metadataGroupObject = MetadataGroupFactory.create();
-      var fillingRulesObject = FillingRulesOptionFactory.create();
-
-      return new CalendarQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
-    }
-
-    function fromJson(json) {
-      if (typeof json === 'string') {
-        throw new Error("otusjs.model.misc.model.CalendarQuestionFactory.fromJson() method expects to receive a object instead a String");
-      }
-      var labelObject = LabelFactory.fromJson(json.label);
-      var metadataGroupObject = MetadataGroupFactory.fromJson(json.metadata);
-      var fillingRulesObject = FillingRulesOptionFactory.fromJson(json.fillingRules);
-      var prototype = {};
-      prototype.objectType = "SurveyItem";
-      var question = new CalendarQuestion(json.templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
-      question.customID = json.customID;
-
-      return question;
-    }
-
-    return self;
-  }
-
-  function CalendarQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject) {
-    var self = this;
-
-    self.extents = prototype.objectType;
-    self.objectType = 'CalendarQuestion';
-    self.templateID = templateID;
-    self.customID = templateID;
-    self.dataType = 'LocalDate';
-    self.label = labelObject;
-    self.metadata = metadataGroupObject;
-    self.fillingRules = fillingRulesObject;
-
-    /* Public methods */
-    self.isQuestion = isQuestion;
-    self.validators = validators;
-    self.toJson = toJson;
-
-    function isQuestion() {
-      return true;
-    }
-
-    function validators() {
-      var validatorsList = [
-        'mandatory',
-        'minDate',
-        'maxDate',
-        'rangeDate',
-        'futureDate',
-        'pastDate'
-      ];
-      return validatorsList;
-    }
-
-    function toJson() {
-      var json = {};
-
-      json.extents = self.extents;
-      json.objectType = self.objectType;
-      json.templateID = self.templateID;
-      json.customID = self.customID;
-      json.dataType = self.dataType;
-      json.label = self.label;
-      json.metadata = self.metadata;
-      json.fillingRules = self.fillingRules;
-
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-    }
-  }
-=======
   angular.module('otusjs.surveyItem').factory('CalendarQuestionFactory', CalendarQuestionFactory);
 
   CalendarQuestionFactory.$inject = ['LabelFactory', 'MetadataGroupFactory', 'FillingRulesOptionFactory'];
@@ -4286,7 +3743,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }
 })();
 'use strict';
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
 (function () {
     'use strict';
@@ -4365,16 +3821,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('otusjs.surveyItem').factory('CheckboxQuestionFactory', CheckboxQuestionFactory);
 
-<<<<<<< HEAD
-    CheckboxQuestionFactory.$inject = [
-        'IdiomFactory',
-        'MetadataGroupFactory',
-        'CheckboxAnswerOptionFactory',
-        'FillingRulesOptionFactory'
-    ];
-=======
     CheckboxQuestionFactory.$inject = ['IdiomFactory', 'MetadataGroupFactory', 'CheckboxAnswerOptionFactory', 'FillingRulesOptionFactory'];
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     function CheckboxQuestionFactory(IdiomFactory, MetadataGroupFactory, CheckboxAnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
@@ -4520,25 +3967,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-<<<<<<< HEAD
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.surveyItem')
-    .factory('DecimalQuestionFactory', DecimalQuestionFactory);
-
-  DecimalQuestionFactory.$inject = [
-    'LabelFactory',
-    'MetadataGroupFactory',
-    'UnitFactory',
-    'FillingRulesOptionFactory'
-  ];
-=======
   angular.module('otusjs.surveyItem').factory('DecimalQuestionFactory', DecimalQuestionFactory);
 
   DecimalQuestionFactory.$inject = ['LabelFactory', 'MetadataGroupFactory', 'UnitFactory', 'FillingRulesOptionFactory'];
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
   function DecimalQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
     var self = this;
@@ -4606,42 +4037,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function validators() {
-<<<<<<< HEAD
-      var validatorsList = [
-        'mandatory',
-        'distinct',
-        'lowerLimit',
-        'upperLimit',
-        'in',
-        'scale'
-      ];
-
-      return validatorsList;
-    }
-
-    function toJson() {
-      var json = {};
-
-      json.extents = self.extents;
-      json.objectType = self.objectType;
-      json.templateID = self.templateID;
-      json.customID = self.customID;
-      json.dataType = self.dataType;
-      json.label = self.label;
-      json.metadata = self.metadata;
-      json.unit = self.unit;
-      json.fillingRules = self.fillingRules;
-
-      return JSON.stringify(json);
-    }
-  }
-}());
-=======
       var validatorsList = ['mandatory', 'distinct', 'lowerLimit', 'upperLimit', 'in', 'scale'];
 
       return validatorsList;
     }
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     function toJson() {
       var json = {};
@@ -4656,16 +4055,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       json.unit = self.unit;
       json.fillingRules = self.fillingRules;
 
-<<<<<<< HEAD
-    EmailQuestionFactory.$inject = [
-        'IdiomFactory',
-        'MetadataGroupFactory',
-        'FillingRulesOptionFactory'
-    ];
-
-    function EmailQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-        var self = this;
-=======
       return JSON.stringify(json);
     }
   }
@@ -4674,17 +4063,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 (function () {
   'use strict';
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
   angular.module('otusjs.surveyItem').factory('EmailQuestionFactory', EmailQuestionFactory);
 
-<<<<<<< HEAD
-        function create(templateID, prototype) {
-            return new EmailQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
-        }
-=======
   EmailQuestionFactory.$inject = ['LabelFactory', 'MetadataGroupFactory', 'FillingRulesOptionFactory'];
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
   function EmailQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
     var self = this;
@@ -4701,23 +4083,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return new EmailQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
     }
 
-<<<<<<< HEAD
-    function EmailQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-        var self = this;
-
-        self.extents = prototype.objectType;
-        self.objectType = 'EmailQuestion';
-        self.templateID = templateID;
-        self.customID = templateID;
-        self.dataType = 'String';
-        self.label = {
-            ptBR: IdiomFactory.create(),
-            enUS: IdiomFactory.create(),
-            esES: IdiomFactory.create()
-        };
-        self.metadata = MetadataGroupFactory.create();
-        self.fillingRules = FillingRulesOptionFactory.create();
-=======
     function fromJson(json) {
       if (typeof json === 'string') {
         throw new Error("otusjs.model.misc.model.EmailQuestionFactory.fromJson() method expects to receive a object instead a String");
@@ -4732,7 +4097,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       return question;
     }
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     return self;
   }
@@ -4788,66 +4152,26 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   IntegerQuestionFactory.$inject = ['LabelFactory', 'MetadataGroupFactory', 'UnitFactory', 'FillingRulesOptionFactory'];
 
-<<<<<<< HEAD
-    IntegerQuestionFactory.$inject = [
-        'IdiomFactory',
-        'MetadataGroupFactory',
-        'UnitFactory',
-        'FillingRulesOptionFactory'
-    ];
-
-    function IntegerQuestionFactory(IdiomFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
-        var self = this;
-=======
   function IntegerQuestionFactory(LabelFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
     var self = this;
 
     /* Public interface */
     self.create = create;
     self.fromJson = fromJson;
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     function create(templateID, prototype) {
       var labelObject = LabelFactory.create();
       var metadataGroupObject = MetadataGroupFactory.create();
       var fillingRulesObject = FillingRulesOptionFactory.create();
 
-<<<<<<< HEAD
-        function create(templateID, prototype) {
-            return new IntegerQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory);
-        }
-=======
       var unitObject = {};
       unitObject.ptBR = UnitFactory.create();
       unitObject.enUS = UnitFactory.create();
       unitObject.esES = UnitFactory.create();
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
       return new IntegerQuestion(templateID, prototype, labelObject, metadataGroupObject, unitObject, fillingRulesObject);
     }
 
-<<<<<<< HEAD
-    function IntegerQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, UnitFactory, FillingRulesOptionFactory) {
-        var self = this;
-
-        self.extents = prototype.objectType;
-        self.objectType = 'IntegerQuestion';
-        self.templateID = templateID;
-        self.customID = templateID;
-        self.dataType = 'Integer';
-        self.label = {
-            ptBR: IdiomFactory.create(),
-            enUS: IdiomFactory.create(),
-            esES: IdiomFactory.create()
-        };
-        self.metadata = MetadataGroupFactory.create();
-        self.fillingRules = FillingRulesOptionFactory.create();
-        self.unit = {
-            ptBR: UnitFactory.create(),
-            enUS: UnitFactory.create(),
-            esES: UnitFactory.create()
-        };
-=======
     function fromJson(json) {
       if (typeof json === 'string') {
         throw new Error("otusjs.model.misc.model.IntegerQuestionFactory.fromJson() method expects to receive a object instead a String");
@@ -4860,7 +4184,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       unitObject.ptBR = UnitFactory.fromJson(json.unit.ptBR);
       unitObject.enUS = UnitFactory.fromJson(json.unit.enUS);
       unitObject.esES = UnitFactory.fromJson(json.unit.esES);
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
       var prototype = {};
       prototype.objectType = "SurveyItem";
@@ -4919,54 +4242,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 })();
 'use strict';
 
-<<<<<<< HEAD
-    PhoneQuestionFactory.$inject = [
-        'IdiomFactory',
-        'MetadataGroupFactory',
-        'FillingRulesOptionFactory'
-    ];
-
-    function PhoneQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-        var self = this;
-=======
 (function () {
   'use strict';
 
   angular.module('otusjs.surveyItem').factory('PhoneQuestionFactory', PhoneQuestionFactory);
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
   PhoneQuestionFactory.$inject = ['LabelFactory', 'MetadataGroupFactory', 'FillingRulesOptionFactory'];
 
-<<<<<<< HEAD
-        function create(templateID, prototype) {
-            return new PhoneQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
-        }
-=======
   function PhoneQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
     var self = this;
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     /* Public interface */
     self.create = create;
     self.fromJson = fromJson;
 
-<<<<<<< HEAD
-    function PhoneQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-        var self = this;
-
-        self.extents = prototype.objectType;
-        self.objectType = 'PhoneQuestion';
-        self.templateID = templateID;
-        self.customID = templateID;
-        self.dataType = 'Integer';
-        self.label = {
-            ptBR: IdiomFactory.create(),
-            enUS: IdiomFactory.create(),
-            esES: IdiomFactory.create()
-        };
-        self.metadata = MetadataGroupFactory.create();
-        self.fillingRules = FillingRulesOptionFactory.create();
-=======
     function create(templateID, prototype) {
       var labelObject = LabelFactory.create();
       var metadataGroupObject = MetadataGroupFactory.create();
@@ -4974,7 +4263,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       return new PhoneQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
     }
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     function fromJson(json) {
       if (typeof json === 'string') {
@@ -5045,16 +4333,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('otusjs.surveyItem').factory('SingleSelectionQuestionFactory', SingleSelectionQuestionFactory);
 
-<<<<<<< HEAD
-    SingleSelectionQuestionFactory.$inject = [
-        'IdiomFactory',
-        'MetadataGroupFactory',
-        'AnswerOptionFactory',
-        'FillingRulesOptionFactory'
-    ];
-=======
     SingleSelectionQuestionFactory.$inject = ['IdiomFactory', 'MetadataGroupFactory', 'AnswerOptionFactory', 'FillingRulesOptionFactory'];
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     function SingleSelectionQuestionFactory(IdiomFactory, MetadataGroupFactory, AnswerOptionFactory, FillingRulesOptionFactory) {
         var self = this;
@@ -5160,37 +4439,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   TextQuestionFactory.$inject = ['LabelFactory', 'MetadataGroupFactory', 'FillingRulesOptionFactory'];
 
-<<<<<<< HEAD
-    TextQuestionFactory.$inject = [
-        'IdiomFactory',
-        'MetadataGroupFactory',
-        'FillingRulesOptionFactory'
-    ];
-
-    function TextQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-        var self = this;
-=======
   function TextQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
     var self = this;
 
     /* Public interface */
     self.create = create;
     self.fromJson = fromJson;
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     function create(templateID, prototype) {
       var labelObject = LabelFactory.create();
       var metadataGroupObject = MetadataGroupFactory.create();
       var fillingRulesObject = FillingRulesOptionFactory.create();
 
-<<<<<<< HEAD
-        function create(templateID, prototype) {
-            return new TextQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
-        }
-=======
       return new TextQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
     }
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     function fromJson(json) {
       if (typeof json === 'string') {
@@ -5207,29 +4469,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return question;
     }
 
-<<<<<<< HEAD
-    function TextQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-        var self = this;
-
-        self.extents = prototype.objectType;
-        self.objectType = 'TextQuestion';
-        self.templateID = templateID;
-        self.customID = templateID;
-        self.dataType = 'String';
-        self.label = {
-            ptBR: IdiomFactory.create(),
-            enUS: IdiomFactory.create(),
-            esES: IdiomFactory.create()
-        };
-        self.metadata = MetadataGroupFactory.create();
-        self.fillingRules = FillingRulesOptionFactory.create();
-=======
     return self;
   }
 
   function TextQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject) {
     var self = this;
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     self.extents = prototype.objectType;
     self.objectType = 'TextQuestion';
@@ -5277,57 +4521,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.surveyItem').factory('TimeQuestionFactory', TimeQuestionFactory);
 
-<<<<<<< HEAD
-    TimeQuestionFactory.$inject = [
-        'IdiomFactory',
-        'MetadataGroupFactory',
-        'FillingRulesOptionFactory'
-    ];
-
-    function TimeQuestionFactory(IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-        var self = this;
-=======
   TimeQuestionFactory.$inject = ['LabelFactory', 'MetadataGroupFactory', 'FillingRulesOptionFactory'];
 
   function TimeQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
     var self = this;
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     /* Public interface */
     self.create = create;
     self.fromJson = fromJson;
 
-<<<<<<< HEAD
-        function create(templateID, prototype) {
-            return new TimeQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory);
-        }
-=======
     function create(templateID, prototype) {
       var labelObject = LabelFactory.create();
       var metadataGroupObject = MetadataGroupFactory.create();
       var fillingRulesObject = FillingRulesOptionFactory.create();
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
       return new TimeQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
     }
 
-<<<<<<< HEAD
-    function TimeQuestion(templateID, prototype, IdiomFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
-        var self = this;
-
-        self.extents = prototype.objectType;
-        self.objectType = 'TimeQuestion';
-        self.templateID = templateID;
-        self.customID = templateID;
-        self.dataType = 'LocalTime';
-        self.label = {
-            ptBR: IdiomFactory.create(),
-            enUS: IdiomFactory.create(),
-            esES: IdiomFactory.create()
-        };
-        self.metadata = MetadataGroupFactory.create();
-        self.fillingRules = FillingRulesOptionFactory.create();
-=======
     function fromJson(json) {
       if (typeof json === 'string') {
         throw new Error("otusjs.model.misc.model.TimeQuestionFactory.fromJson() method expects to receive a object instead a String");
@@ -5342,7 +4552,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       return question;
     }
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
 
     return self;
   }
@@ -6158,17 +5367,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-<<<<<<< HEAD
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.InitialNodesAddService', service);
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.InitialNodesAddService', service);
 
-  service.$inject = [
-    'otusjs.model.navigation.NavigationContainerService',
-    'SurveyItemContainerService',
-    'otusjs.model.navigation.UpdateRouteTaskService',
-    'otusjs.model.navigation.CreateDefaultRouteTaskService'
-  ];
+  service.$inject = ['otusjs.model.navigation.NavigationContainerService', 'SurveyItemContainerService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.CreateDefaultRouteTaskService'];
 
   function service(NavigationContainerService, SurveyItemContainerService, UpdateRouteTaskService, CreateDefaultRouteTaskService) {
     var self = this;
@@ -6187,26 +5388,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       CreateDefaultRouteTaskService.execute(routeData, NavigationContainerService.getNavigationList()[0]);
     }
   }
-}());
+})();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular
-    .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationAddService', service);
-
-  service.$inject = [
-    'otusjs.model.navigation.NavigationContainerService',
-    'SurveyItemContainerService',
-    'otusjs.model.navigation.UpdateRouteTaskService',
-    'otusjs.model.navigation.CreateDefaultRouteTaskService'
-  ];
-=======
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationAddService', service);
 
-  service.$inject = ['otusjs.model.navigation.NavigationContainerService', 'SurveyItemContainerService'];
->>>>>>> bb3bc83304eec0cb11c283e7432bb3a9f15b604b
+  service.$inject = ['otusjs.model.navigation.NavigationContainerService', 'SurveyItemContainerService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.CreateDefaultRouteTaskService'];
 
   function service(NavigationContainerService, SurveyItemContainerService, UpdateRouteTaskService, CreateDefaultRouteTaskService) {
     var self = this;
@@ -6218,12 +5408,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var origin = SurveyItemContainerService.getLastItem();
 
       var _newNavigation = NavigationContainerService.createNavigationTo(origin.templateID);
-
       var _previousNavigation;
+
       if (_newNavigation.index === 2) {
-         _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index -1);
-      }else{
-         _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index);
+        _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index - 1);
+      } else {
+        _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index);
       }
 
       var routeData = {
@@ -6231,6 +5421,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         'destination': _previousNavigation.getDefaultRoute().destination
       };
 
+      console.log(routeData.origin);
       CreateDefaultRouteTaskService.execute(routeData, _newNavigation);
 
       var updateRouteData = {
@@ -6239,6 +5430,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         'isDefault': true
       };
 
+      // console.info('on update');
+      // console.log('origin: ' + updateRouteData.origin);
+      // console.log('destination: ' + updateRouteData.destination);
       UpdateRouteTaskService.execute(updateRouteData, _previousNavigation);
     }
   }
@@ -6335,16 +5529,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function execute(routeData, navigation) {
       if (navigation.hasDefaultRoute()) {
-         var currentDefaultRoute = navigation.getDefaultRoute();
-         var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
-         navigation.setupDefaultRoute(route);
+        var currentDefaultRoute = navigation.getDefaultRoute();
+        var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+        navigation.setupDefaultRoute(route);
 
-         _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
-         _notifyNewDefaultNavigation(route, navigation);
+        _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
+        _notifyNewDefaultNavigation(route, navigation);
       } else {
-         var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
-         navigation.setupDefaultRoute(route);
-         _notifyNewDefaultNavigation(route, navigation);
+        var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+        navigation.setupDefaultRoute(route);
+        _notifyNewDefaultNavigation(route, navigation);
       }
     }
 

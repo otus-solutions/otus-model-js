@@ -31,11 +31,7 @@
     }
 
     function createInitial(origin, destination) {
-      var initialNavigation = new Navigation({
-        'extremity': origin
-      }, {
-        'extremity': destination
-      });
+      var initialNavigation = new Navigation(origin, destination);
       return initialNavigation;
     }
 

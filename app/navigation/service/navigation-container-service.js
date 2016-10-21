@@ -36,8 +36,9 @@
     }
 
     function loadJsonData(data) {
-      init();
+      _navigationList = _navigationList.slice(0, 2);
       data.forEach(function(navigationData) {
+         console.log(navigationData.inNavigations);
         var inNavigations = navigationData.inNavigations.map(function(inNavigation) {
           return getNavigationByOrigin(inNavigation.origin);
         });
@@ -104,8 +105,8 @@
     }
 
     function setInitialNodes(origin, destination) {
-      var beginNavigation = NavigationFactory.createInitial('begin', 'end');
-      var endNavigation = NavigationFactory.createInitial('end', 'begin');
+      var beginNavigation = NavigationFactory.createInitial('BEGIN NODE', 'END NODE');
+      var endNavigation = NavigationFactory.createInitial('END NODE', 'BEGIN NODE');
 
       _navigationList.unshift(endNavigation);
       _navigationList.unshift(beginNavigation);

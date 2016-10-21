@@ -37,7 +37,7 @@
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
     self.listOrphanNavigations = listOrphanNavigations;
-    self.generateNavigation = generateNavigation;
+    self.getExportableList = getExportableList;
 
     function init() {
       NavigationContainerService.init();
@@ -51,6 +51,11 @@
     function getNavigationList() {
       return NavigationContainerService.getNavigationList();
     }
+
+    function getExportableList() {
+      var fullList = NavigationContainerService.getNavigationList();
+      return fullList.slice(2,fullList.length);
+   }
 
     function getDefaultNavigationPath() {
       var navigations = getNavigationList();
@@ -78,13 +83,13 @@
 
     function addNavigation() {
       if (!NavigationContainerService.getNavigationListSize()) {
-         generateNavigation();
+         _generateNavigation();
       }
       _selectedNavigation = NavigationAddService.execute();
 
     }
 
-    function generateNavigation() {
+    function _generateNavigation() {
       InitialNodesAddService.execute();
     }
 

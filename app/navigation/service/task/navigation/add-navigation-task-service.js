@@ -22,12 +22,12 @@
       var origin = SurveyItemContainerService.getLastItem();
 
       var _newNavigation = NavigationContainerService.createNavigationTo(origin.templateID);
-
       var _previousNavigation;
+
       if (_newNavigation.index === 2) {
-         _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index -1);
-      }else{
-         _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index);
+        _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index - 1);
+      } else {
+        _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index);
       }
 
       var routeData = {
@@ -35,7 +35,9 @@
         'destination': _previousNavigation.getDefaultRoute().destination
       };
 
+      console.log(routeData.origin);
       CreateDefaultRouteTaskService.execute(routeData, _newNavigation);
+
 
       var updateRouteData = {
         'origin': _previousNavigation.origin,
@@ -43,6 +45,9 @@
         'isDefault': true
       };
 
+      // console.info('on update');
+      // console.log('origin: ' + updateRouteData.origin);
+      // console.log('destination: ' + updateRouteData.destination);
       UpdateRouteTaskService.execute(updateRouteData, _previousNavigation);
     }
   }

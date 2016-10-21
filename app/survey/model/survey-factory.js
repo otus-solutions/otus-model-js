@@ -114,7 +114,8 @@
             });
 
             json.navigationList = [];
-            NavigationManagerService.getNavigationList().forEach(function(navigation) {
+            console.log(NavigationManagerService.getExportableList());      
+            NavigationManagerService.getExportableList().forEach(function(navigation) {
                 if (navigation) {
                   json.navigationList.push(navigation.toJson());
                 } else {
