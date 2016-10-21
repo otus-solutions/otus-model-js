@@ -88,7 +88,12 @@ describe('FillingRulesOptionFactory', function() {
             "maxLength": {"extends": "StudioObject","objectType": "Rule","validatorType": "maxLength","data": {"reference": 20}},
             /* TimecQuestion */
             "minTime": {"extends": "StudioObject","objectType": "Rule","validatorType": "minTime","data": {"reference": "Wed Mar 25 2015 01:30:00 GMT-0300 (BRT)"}},
-            "maxTime": {"extends": "StudioObject","objectType": "Rule","validatorType": "maxTime","data": {"reference": "Mon Aug 29 2016 23:30:00 GMT-0300 (BRT)"}}
+            "maxTime": {"extends": "StudioObject","objectType": "Rule","validatorType": "maxTime","data": {"reference": "Mon Aug 29 2016 23:30:00 GMT-0300 (BRT)"}},
+            /* Array */
+            "minSelected": {"extends": "StudioObject","objectType": "Rule","validatorType": "minSelected","data": {"reference": 5}},
+            "maxSelected": {"extends": "StudioObject","objectType": "Rule","validatorType": "maxSelected","data": {"reference": 5}},
+            "quantity": {"extends": "StudioObject","objectType": "Rule","validatorType": "quantity","data": {"reference": 5}},
+
         }
     };
 

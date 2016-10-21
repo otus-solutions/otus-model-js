@@ -116,10 +116,13 @@
 
     function validators() {
       var validatorsList = [
-        'mandatory'
+        'mandatory',
+        'minSelected',
+        'maxSelected',
+        'quantity'
       ];
-      return validatorsList;
 
+      return validatorsList;
     }
 
     function createOption(id) {
