@@ -70,6 +70,7 @@
         'mandatory',
         'minTime',
         'maxTime'
+        /* TODO: Verificar se não está sendo usado. Caso não esteja excluir. */
         // 'parameter'
       ];
       return validatorsList;
