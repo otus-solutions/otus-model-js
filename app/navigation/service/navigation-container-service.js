@@ -98,7 +98,7 @@
     function createNavigationTo(origin, destination) {
       var newNavigation = NavigationFactory.create(origin, destination);
       newNavigation.index = _navigationList.length;
-      _addElementsPreviousTheNavigation(newNavigation);
+      // _addElementsPreviousTheNavigation(newNavigation);
       //updateFinalIns();   //TODO
       _navigationList.push(newNavigation);
       return newNavigation;
@@ -112,18 +112,18 @@
       _navigationList.unshift(beginNavigation);
     }
 
-    function _addElementsPreviousTheNavigation(navigation) {
-      if (_navigationList.length) {
-        var previous = _navigationList[_navigationList.length - 1];
-        navigation.addInNavigation(previous);
-      }
-    }
+   //  function _addElementsPreviousTheNavigation(navigation) {
+   //    if (_navigationList.length) {
+   //      var previous = _navigationList[_navigationList.length - 1];
+   //      navigation.addInNavigation(previous);
+   //    }
+   //  }
 
     function removeNavigationOf(questionID) {
       var navigationToRemove = _navigationList.filter(function(navigation) {
         return findByOrigin(navigation, questionID);
       });
-      removeCurrentLastNavigationndexOf(navigationToRemove[0]);
+      var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
       if (indexToRemove > -1) {
         _navigationList.splice(indexToRemove, 1);
       }

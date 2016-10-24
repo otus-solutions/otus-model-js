@@ -32,6 +32,11 @@
 
     function createInitial(origin, destination) {
       var initialNavigation = new Navigation(origin, destination);
+
+      if (origin === 'BEGIN NODE') {
+         initialNavigation.index = 0;
+      }
+      
       return initialNavigation;
     }
 
@@ -68,7 +73,6 @@
 
   function Navigation(origin) {
     var self = this;
-    var _defaultRoute;
 
     /* Object properties */
     self.extents = 'SurveyTemplateObject';
@@ -110,7 +114,7 @@
     }
 
     function clone() {
-      var clone = new self.constructor(self.origin, _defaultRoute);
+      var clone = new self.constructor(self.origin, self.routes[0]);
       self.inNavigations.map(clone.addInNavigation);
       self.outNavigations.map(clone.addOutNavigation);
       var routes = self.listRoutes();
@@ -178,11 +182,11 @@
     }
 
     function getDefaultRoute() {
-      return _defaultRoute.clone();
+      return self.routes[0].clone();
     }
 
     function hasDefaultRoute() {
-      return !_defaultRoute ? false : true
+      return !self.routes[0] ? false : true
     }
 
     function getRouteByName(name) {
@@ -205,7 +209,7 @@
     }
 
     function _isCurrentDefaultRoute(route) {
-      return (_defaultRoute && route.name === _defaultRoute.name);
+      return (self.routes[0] && route.name === self.routes[0].name);
     }
 
     function hasOrphanRoot() {
@@ -240,11 +244,6 @@
       return clones;
     }
 
-    function _removeDefaultRoute() {
-      _defaultRoute = null;
-      self.routes.shift();
-    }
-
     function removeInNavigation(navigationToRemove) {
       self.inNavigations.some(function(navigation, index) {
         if (navigation.origin === navigationToRemove.origin) {
@@ -259,7 +258,7 @@
         if (route.name === name) {
           self.routes.splice(index, 1);
           if (route.isDefault) {
-            _defaultRoute = null;
+            self.routes[0] = null;
           }
           return true;
         }
@@ -278,7 +277,6 @@
       removeRouteByName(route.name);
       route.conditions = [];
       self.routes[0] = route;
-      _defaultRoute = route;
     }
 
     function toJson() {
@@ -305,9 +303,8 @@
     }
 
     function _updateDefaultRoute(route) {
-      _defaultRoute = route;
-      _defaultRoute.conditions = [];
-      self.routes[0] = _defaultRoute;
+      self.routes[0] = route;
+      self.routes[0].conditions = [];
     }
 
     function updateInNavigation(navigation) {

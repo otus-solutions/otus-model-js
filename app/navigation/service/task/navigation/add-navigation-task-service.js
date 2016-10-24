@@ -35,9 +35,8 @@
         'destination': _previousNavigation.getDefaultRoute().destination
       };
 
-      console.log(routeData.origin);
+      console.log(routeData);
       CreateDefaultRouteTaskService.execute(routeData, _newNavigation);
-
 
       var updateRouteData = {
         'origin': _previousNavigation.origin,
@@ -45,9 +44,8 @@
         'isDefault': true
       };
 
-      // console.info('on update');
-      // console.log('origin: ' + updateRouteData.origin);
-      // console.log('destination: ' + updateRouteData.destination);
+      console.log(_newNavigation);
+
       UpdateRouteTaskService.execute(updateRouteData, _previousNavigation);
     }
   }
