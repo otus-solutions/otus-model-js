@@ -24,10 +24,18 @@
       console.log("----");
       console.log("answer");
       console.log(answer);
+
+      return _runner[rule.operator](rule.answer, answer);
     }
 
-    function functionName() {
+    _runner.equal = function(reference, answer) {
+      answer.filter(function(answer) {
+        return answer.option === reference;
+      });
+    }
 
+    _runner.notEqual = function(reference, answer) {
+      return answer !== reference;
     }
   }
 }());
