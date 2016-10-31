@@ -19,23 +19,65 @@
     self.run = run;
 
     function run(rule, answer) {
-      console.log("rule");
-      console.log(rule);
-      console.log("----");
-      console.log("answer");
-      console.log(answer);
-
       return _runner[rule.operator](rule.answer, answer);
     }
 
     _runner.equal = function(reference, answer) {
-      answer.filter(function(answer) {
-        return answer.option === reference;
+      var result = answer.filter(function(answer) {
+        if (answer.option === reference && answer.state === true) {
+          return true;
+        }
       });
+      return result.length > 0 ? true : false;
     }
 
     _runner.notEqual = function(reference, answer) {
-      return answer !== reference;
+      var result = answer.filter(function(answer) {
+        if (answer.option === reference && answer.state === true) {
+          return true;
+        }
+      });
+      return result.length > 0 ? false : true;
     }
+
+    _runner.contains = function(reference, answer) {
+      var result = answer.filter(function(answer) {
+        if (answer.option === reference && answer.state === true) {
+          return true;
+        }
+      });
+      return result.length > 0 ? true : false;
+    }
+
+    _runner.quantity = function(reference, answer) {
+      var result = answer.filter(function(answer) {
+        if (answer.state === true) {
+          return true;
+        }
+      });
+
+      return reference == result.length;
+    }
+
+    _runner.minSelected = function(reference, answer) {
+      var result = answer.filter(function(answer) {
+        if (answer.state === true) {
+          return true;
+        }
+      });
+
+      return reference >= result.length;
+    }
+
+    _runner.maxSelected = function(reference, answer) {
+      var result = answer.filter(function(answer) {
+        if (answer.state === true) {
+          return true;
+        }
+      });
+
+      return reference <= result.length;
+    }
+
   }
 }());
