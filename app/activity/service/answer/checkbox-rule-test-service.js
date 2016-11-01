@@ -6,11 +6,10 @@
     .service('otusjs.model.activity.CheckboxRuleTestService', Service);
 
   Service.$inject = [
-    'otusjs.model.activity.NumericRuleTestService',
-    'otusjs.model.activity.TextRuleTestService'
+    'otusjs.model.activity.NumericRuleTestService'
   ];
 
-  function Service(NumericRuleTestService, TextRuleTestService) {
+  function Service(NumericRuleTestService) {
     var self = this;
     var _runner = {};
     self.name = 'CheckboxRuleTest';
@@ -19,7 +18,13 @@
     self.run = run;
 
     function run(rule, answer) {
-      return _runner[rule.operator](rule.answer, answer);
+      if (answer instanceof Array) {
+        return _runner[rule.operator](rule.answer, answer);
+      } else if (rule.isMetadata && Number.isInteger(answer)) {
+        return NumericRuleTestService.run(rule, answer);
+      } else {
+        return false;
+      }
     }
 
     _runner.equal = function(reference, answer) {
