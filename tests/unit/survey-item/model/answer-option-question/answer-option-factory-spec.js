@@ -2,6 +2,10 @@ describe('AnswerOptionFactory', function() {
   var Mock = {};
   var option;
 
+  Mock.VALUE = 1;
+  Mock.EXTRACTION_VALUE = '.extractionValue';
+
+
   beforeEach(function() {
     module('otusjs');
 
@@ -18,7 +22,7 @@ describe('AnswerOptionFactory', function() {
   describe('create method', function() {
 
     beforeEach(function() {
-      option = factory.create(Mock.TEMPLATE_ID, Mock.Question.oid);
+      option = factory.create(Mock.VALUE, Mock.EXTRACTION_VALUE, Mock.Question.oid);
     });
 
     it('returned object should extends StudioObject', function() {
@@ -30,7 +34,11 @@ describe('AnswerOptionFactory', function() {
     });
 
     it('returned object should have a not null value', function() {
-      expect(option.value).toBe(Mock.TEMPLATE_ID);
+      expect(option.value).toBe(Mock.VALUE);
+    });
+
+    it('returned object should have a not null extractionValue', function() {
+      expect(option.extractionValue).toBe(Mock.EXTRACTION_VALUE);
     });
 
     it('returned object should have dataType equal to Integer', function() {
@@ -92,6 +100,7 @@ describe('AnswerOptionFactory', function() {
       "extents": "StudioObject",
       "objectType": "AnswerOption",
       "value": 1,
+      "extractionValue": 'extractionValue',
       "dataType": "Integer",
       "label": {
         "ptBR": {

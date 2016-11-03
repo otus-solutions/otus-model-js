@@ -38,7 +38,7 @@
       prototype.objectType = "SurveyItem";
       var question = new SingleSelectionQuestion(jsonObject.templateID, prototype, AnswerOptionFactory, labelObject, metadataGroupObject, fillingRulesObject);
 
-      jsonObject.options.forEach(function(answerOption){
+      jsonObject.options.forEach(function(answerOption) {
         question.options.push(AnswerOptionFactory.fromJsonObject(answerOption));
       });
 
@@ -66,11 +66,13 @@
     /* Public methods */
     self.getOptionListSize = getOptionListSize;
     self.getOptionByValue = getOptionByValue;
+    self.getOptionByExtractionValue = getOptionByExtractionValue;
     self.createOption = createOption;
     self.removeOption = removeOption;
     self.removeLastOption = removeLastOption;
     self.isQuestion = isQuestion;
     self.validators = validators;
+    self.isAvailableValue = isAvailableValue;
     self.toJson = toJson;
 
     function getOptionListSize() {
@@ -79,6 +81,16 @@
 
     function getOptionByValue(value) {
       return self.options[value - 1];
+    }
+
+    function getOptionByExtractionValue(extractionValue) {
+      var filter = self.options.filter(function(option) {
+        if (option.extractionValue.toString() === extractionValue.toString()) {
+          return option;
+        }
+      });
+
+      return filter[0];
     }
 
     function isQuestion() {
@@ -93,8 +105,15 @@
     }
 
     function createOption() {
-      var option = AnswerOptionFactory.create(self.options.length + 1);
+      var value = self.options.length;
+
+      do {
+        value++;
+      } while (!isAvailableValue(value));
+
+      var option = AnswerOptionFactory.create(value, value);
       self.options.push(option);
+
       return option;
     }
 
@@ -105,6 +124,10 @@
 
     function removeLastOption() {
       self.options.splice(-1, 1);
+    }
+
+    function isAvailableValue(newValue) {
+      return getOptionByExtractionValue(newValue) ? false : true;
     }
 
     function toJson() {

@@ -24,7 +24,7 @@
       }
       var metadaGroup = new MetadataGroup();
 
-      jsonObject.options.forEach(function(metadataAnswerOption){
+      jsonObject.options.forEach(function(metadataAnswerOption) {
         metadaGroup.options.push(MetadataAnswerFactory.fromJsonObject(metadataAnswerOption));
       });
 
@@ -44,9 +44,11 @@
     /* Public methods */
     self.getOptionListSize = getOptionListSize;
     self.getOptionByValue = getOptionByValue;
+    self.getOptionByExtractionValue = getOptionByExtractionValue;
     self.createOption = createOption;
     self.removeOption = removeOption;
     self.removeLastOption = removeLastOption;
+    self.isAvailableValue = isAvailableValue;
 
     function getOptionListSize() {
       return self.options.length;
@@ -56,9 +58,26 @@
       return self.options[value - 1];
     }
 
+    function getOptionByExtractionValue(extractionValue) {
+      var filter = self.options.filter(function(option) {
+        if (option.extractionValue.toString() === extractionValue.toString()) {
+          return option;
+        }
+      });
+
+      return filter[0];
+    }
+
     function createOption() {
-      var option = MetadataAnswerFactory.create(self.options.length + 1);
+      var value = self.options.length;
+
+      do {
+        value++;
+      } while (!isAvailableValue(value));
+
+      var option = MetadataAnswerFactory.create(value, value);
       self.options.push(option);
+
       return option;
     }
 
@@ -75,6 +94,10 @@
       self.options.forEach(function(option, index) {
         option.value = ++index;
       });
+    }
+
+    function isAvailableValue(newValue) {
+      return getOptionByExtractionValue(newValue) ? false : true;
     }
   }
 
