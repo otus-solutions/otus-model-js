@@ -20,7 +20,7 @@
     function run(rule, answer) {
       if (answer instanceof Array) {
         return _runner[rule.operator](rule.answer, answer);
-      } else if (rule.isMetadata && Number.isInteger(answer)) {
+      } else if (rule.isMetadata) {
         return NumericRuleTestService.run(rule, answer);
       } else {
         return false;
