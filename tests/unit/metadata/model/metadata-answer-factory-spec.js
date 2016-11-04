@@ -17,7 +17,10 @@ describe('MetadataAnswerFactory', function() {
   describe('create method', function() {
 
     beforeEach(function() {
-      option = factory.create(0);
+      Mock.VALUE = 0;
+      Mock.EXTRACTION_VALUE = ".anyValue";
+
+      option = factory.create(Mock.VALUE, Mock.EXTRACTION_VALUE);
     });
 
     it('returned object should extends StudioObject', function() {
@@ -48,6 +51,10 @@ describe('MetadataAnswerFactory', function() {
       expect(option.value).toBeDefined();
     });
 
+    it('returned object should have a extraction value property defined', function() {
+      expect(option.value).toBeDefined();
+    });
+
   });
 
   describe("fromJsonObject method", function() {
@@ -56,16 +63,8 @@ describe('MetadataAnswerFactory', function() {
       option = factory.fromJsonObject(Mock.jsonObject);
     });
 
-    it("should call LabelFactory.fromJsonObject with Mock.jsonObject.label", function () {
-      expect(Mock.LabelFactory.fromJsonObject).toHaveBeenCalledWith(Mock.jsonObject.label);
-    });
-
-    it("should return a value with the same value on Mock.jsonObject.value", function () {
-      expect(option.value).toBe(Mock.jsonObject.value);
-    });
-
-    it("should return a label with the same value on Mock.jsonObject.label", function () {
-      expect(option.label).toEqual(Mock.jsonObject.label);
+    it("should create an instance with the same values of Mock.jsonObject", function() {
+      expect(JSON.stringify(option)).toEqual(JSON.stringify(Mock.jsonObject));
     });
 
     it("should throw a error if the method receive a string", function() {
@@ -83,6 +82,7 @@ describe('MetadataAnswerFactory', function() {
       "objectType": "MetadataAnswer",
       "dataType": "Integer",
       "value": 1,
+      "extractionValue": ".anyValue",
       "label": {
         "ptBR": {},
         "enUS": {},
