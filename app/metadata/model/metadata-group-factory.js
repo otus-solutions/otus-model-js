@@ -48,6 +48,7 @@
     self.createOption = createOption;
     self.removeOption = removeOption;
     self.removeLastOption = removeLastOption;
+    self.isAvailableExtractionValue = isAvailableExtractionValue;
     self.isAvailableValue = isAvailableValue;
 
     function getOptionListSize() {
@@ -55,7 +56,13 @@
     }
 
     function getOptionByValue(value) {
-      return self.options[value - 1];
+      var filter = self.options.filter(function(option) {
+        if (option.value === value) {
+          return option;
+        }
+      });
+
+      return filter[0];
     }
 
     function getOptionByExtractionValue(extractionValue) {
@@ -73,7 +80,7 @@
 
       do {
         value++;
-      } while (!isAvailableValue(value));
+      } while (!(isAvailableExtractionValue(value) && isAvailableValue(value)));
 
       var option = MetadataAnswerFactory.create(value, value);
       self.options.push(option);
@@ -96,8 +103,12 @@
       });
     }
 
-    function isAvailableValue(newValue) {
+    function isAvailableExtractionValue(newValue) {
       return getOptionByExtractionValue(newValue) ? false : true;
+    }
+
+    function isAvailableValue(value) {
+      return getOptionByValue(value) ? false : true;
     }
   }
 

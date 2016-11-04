@@ -127,19 +127,35 @@ describe('SingleSelectionQuestion', function() {
 
   });
 
-  describe('isAvailableValue method', function() {
+  describe('isAvailableExtractionValue method', function() {
 
     beforeEach(function() {
-      question.createOption();
-      question.createOption();
+      option = question.createOption();
+      option.setExtractionValue("myValue");
     });
 
     it('should return FALSE already exists an AnswerOption with extractionValue property equals to passed argument', function() {
-      expect(question.isAvailableValue(1)).toBe(false);
+      expect(question.isAvailableExtractionValue("myValue")).toBe(false);
     });
 
     it('should return TRUE when not found an AnswerOption with extractionValue property equals to passed argument', function() {
-      expect(question.isAvailableValue(3)).toBe(true);
+      expect(question.isAvailableExtractionValue(3)).toBe(true);
+    });
+
+  });
+
+  describe('isAvailableValue method', function() {
+
+    beforeEach(function() {
+      option = question.createOption();
+    });
+
+    it('should return FALSE already exists an AnswerOption with value property equals to passed argument', function() {
+      expect(question.isAvailableValue(1)).toBe(false);
+    });
+
+    it('should return TRUE when not found an AnswerOption with value property equals to passed argument', function() {
+      expect(question.isAvailableValue(2)).toBe(true);
     });
 
   });

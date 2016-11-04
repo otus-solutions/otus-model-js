@@ -123,6 +123,23 @@ describe('MetadataGroup', function() {
 
   });
 
+  describe('isAvailableExtractionValue method', function() {
+
+    beforeEach(function() {
+        option = metadataGroup.createOption();
+        option.setExtractionValue("customized!");
+    });
+
+    it('should return FALSE already exists an AnswerOption with extractionValue property equals to passed argument', function() {
+      expect(metadataGroup.isAvailableExtractionValue("customized!")).toBe(false);
+    });
+
+    it('should return TRUE when not found an AnswerOption with extractionValue property equals to passed argument', function() {
+      expect(metadataGroup.isAvailableExtractionValue(1)).toBe(true);
+    });
+
+  });
+
   describe('isAvailableValue method', function() {
 
     beforeEach(function() {
@@ -130,11 +147,11 @@ describe('MetadataGroup', function() {
       metadataGroup.createOption();
     });
 
-    it('should return FALSE already exists an AnswerOption with extractionValue property equals to passed argument', function() {
+    it('should return FALSE already exists an AnswerOption with value property equals to passed argument', function() {
       expect(metadataGroup.isAvailableValue(1)).toBe(false);
     });
 
-    it('should return TRUE when not found an AnswerOption with extractionValue property equals to passed argument', function() {
+    it('should return TRUE when not found an AnswerOption with value property equals to passed argument', function() {
       expect(metadataGroup.isAvailableValue(3)).toBe(true);
     });
 

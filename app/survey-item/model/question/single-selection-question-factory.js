@@ -72,6 +72,7 @@
     self.removeLastOption = removeLastOption;
     self.isQuestion = isQuestion;
     self.validators = validators;
+    self.isAvailableExtractionValue = isAvailableExtractionValue;
     self.isAvailableValue = isAvailableValue;
     self.toJson = toJson;
 
@@ -80,7 +81,13 @@
     }
 
     function getOptionByValue(value) {
-      return self.options[value - 1];
+      var filter = self.options.filter(function(option) {
+        if (option.value === value) {
+          return option;
+        }
+      });
+
+      return filter[0];
     }
 
     function getOptionByExtractionValue(extractionValue) {
@@ -109,7 +116,7 @@
 
       do {
         value++;
-      } while (!isAvailableValue(value));
+      } while (!(isAvailableExtractionValue(value) && isAvailableValue(value)));
 
       var option = AnswerOptionFactory.create(value, value);
       self.options.push(option);
@@ -119,15 +126,19 @@
 
     function removeOption(value) {
       self.options.splice((value - 1), 1);
-      reorderOptionValues();
+      _reorderOptionValues();
     }
 
     function removeLastOption() {
       self.options.splice(-1, 1);
     }
 
-    function isAvailableValue(newValue) {
+    function isAvailableExtractionValue(newValue) {
       return getOptionByExtractionValue(newValue) ? false : true;
+    }
+
+    function isAvailableValue(value) {
+      return getOptionByValue(value) ? false : true;
     }
 
     function toJson() {
@@ -146,7 +157,7 @@
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
 
-    function reorderOptionValues() {
+    function _reorderOptionValues() {
       self.options.forEach(function(option, index) {
         option.value = ++index;
       });
