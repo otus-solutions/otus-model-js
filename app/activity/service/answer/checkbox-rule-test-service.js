@@ -62,7 +62,7 @@
           return true;
         }
       });
-      return result.length === reference;
+      return result.length == reference;
     }
 
     _runner.minSelected = function(reference, answer) {
