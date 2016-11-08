@@ -14,10 +14,13 @@
     'otusjs.model.navigation.AddAlternativeRouteTaskService',
     'otusjs.model.navigation.RemoveRouteTaskService',
     'otusjs.model.navigation.UpdateRouteTaskService',
-    'otusjs.model.navigation.NavigationValidatorService'
+    'otusjs.model.navigation.NavigationValidatorService',
+    'otusjs.model.navigation.InitialNodesAddService'
   ];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService, AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService,
+    AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService, InitialNodesAddService) {
+
     var self = this;
     var _selectedNavigation = null;
 
@@ -34,9 +37,11 @@
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
     self.listOrphanNavigations = listOrphanNavigations;
+    self.getExportableList = getExportableList;
 
     function init() {
       NavigationContainerService.init();
+      //TODO survey.NavigationManager.setInitialNodes
     }
 
     function loadJsonData(data) {
@@ -46,6 +51,11 @@
     function getNavigationList() {
       return NavigationContainerService.getNavigationList();
     }
+
+    function getExportableList() {
+      var fullList = NavigationContainerService.getNavigationList();
+      return fullList.slice(2,fullList.length);
+   }
 
     function getDefaultNavigationPath() {
       var navigations = getNavigationList();
@@ -72,7 +82,15 @@
     }
 
     function addNavigation() {
-      NavigationAddService.execute();
+      if (!NavigationContainerService.getNavigationListSize()) {
+         _generateNavigation();
+      }
+      _selectedNavigation = NavigationAddService.execute();
+
+    }
+
+    function _generateNavigation() {
+      InitialNodesAddService.execute();
     }
 
     function applyRoute(routeData) {

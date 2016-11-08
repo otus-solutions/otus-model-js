@@ -10,14 +10,14 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.metadata', []);
+    angular.module('otusjs.misc', []);
 })();
 'use strict';
 
 (function () {
     'use strict';
 
-    angular.module('otusjs.misc', []);
+    angular.module('otusjs.metadata', []);
 })();
 'use strict';
 
@@ -906,6 +906,7 @@
 (function () {
   'use strict';
 
+<<<<<<< HEAD
   angular.module('otusjs.metadata').factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
   MetadataAnswerFactory.$inject = ['LabelFactory'];
@@ -1069,6 +1070,8 @@
 (function () {
   'use strict';
 
+=======
+>>>>>>> OTUS-25
   angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
 
   function IdiomFactory() {
@@ -1254,6 +1257,128 @@
 (function () {
   'use strict';
 
+  angular.module('otusjs.metadata').factory('MetadataAnswerFactory', MetadataAnswerFactory);
+
+  MetadataAnswerFactory.$inject = ['LabelFactory'];
+
+  function MetadataAnswerFactory(LabelFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create(value) {
+      var labelObject = LabelFactory.create();
+      return new MetadataAnswer(value, labelObject);
+    }
+
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.MetadataAnswerFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var labelObject = LabelFactory.fromJson(json.label);
+      return new MetadataAnswer(json.value, labelObject);
+    }
+
+    return self;
+  }
+
+  function MetadataAnswer(value, labelObject) {
+    var self = this;
+
+    self.extends = 'StudioObject';
+    self.objectType = 'MetadataAnswer';
+    self.dataType = 'Integer';
+    self.value = value;
+    self.label = labelObject;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.metadata').factory('MetadataGroupFactory', MetadataGroupFactory);
+
+  MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
+
+  function MetadataGroupFactory(MetadataAnswerFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create() {
+      return new MetadataGroup(MetadataAnswerFactory);
+    }
+
+    function fromJson(json) {
+      if (typeof json === 'string') {
+        throw new Error("otusjs.model.misc.model.MetadataGroupFactory.fromJson() method expects to receive a object instead a String");
+      }
+      var metadaGroup = new MetadataGroup();
+
+      json.options.forEach(function (metadataAnswerOption) {
+        metadaGroup.options.push(MetadataAnswerFactory.fromJson(metadataAnswerOption));
+      });
+
+      return metadaGroup;
+    }
+
+    return self;
+  }
+
+  function MetadataGroup(MetadataAnswerFactory) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'MetadataGroup';
+    self.options = [];
+
+    /* Public methods */
+    self.getOptionListSize = getOptionListSize;
+    self.getOptionByValue = getOptionByValue;
+    self.createOption = createOption;
+    self.removeOption = removeOption;
+    self.removeLastOption = removeLastOption;
+
+    function getOptionListSize() {
+      return self.options.length;
+    }
+
+    function getOptionByValue(value) {
+      return self.options[value - 1];
+    }
+
+    function createOption() {
+      var option = MetadataAnswerFactory.create(self.options.length + 1);
+      self.options.push(option);
+      return option;
+    }
+
+    function removeOption(value) {
+      self.options.splice(value - 1, 1);
+      reorderOptionValues();
+    }
+
+    function removeLastOption() {
+      self.options.splice(-1, 1);
+    }
+
+    function reorderOptionValues() {
+      self.options.forEach(function (option, index) {
+        option.value = ++index;
+      });
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ExceptionService', service);
 
   function service() {
@@ -1293,20 +1418,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     Inject.RouteFactory = RouteFactory;
 
     self.create = create;
+    self.createInitial = createInitial;
     self.fromJson = fromJson;
 
-    function create(origin, destination) {
-      if (!origin || !destination) {
+    function create(origin) {
+      if (!origin) {
         return null;
       }
 
-      var defaultRoute = RouteFactory.createDefault(origin, destination);
-      if (!defaultRoute) {
-        return null;
-      }
+      return new Navigation(origin);
+    }
 
-      defaultRoute.index = 0;
-      return new Navigation(origin, defaultRoute);
+    function createInitial(origin, destination) {
+      var initialNavigation = new Navigation(origin, destination);
+      return initialNavigation;
     }
 
     function fromJson(json, inNavigations) {
@@ -1340,9 +1465,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return self;
   }
 
-  function Navigation(origin, defaultRoute) {
+  function Navigation(origin) {
     var self = this;
-    var _defaultRoute = defaultRoute;
+    var _defaultRoute;
 
     /* Object properties */
     self.extents = 'SurveyTemplateObject';
@@ -1351,7 +1476,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.index = null;
     self.inNavigations = [];
     self.outNavigations = [];
-    self.routes = [defaultRoute];
+    self.routes = [];
 
     /* Public methods */
     self.addInNavigation = addInNavigation;
@@ -1362,6 +1487,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.getDefaultRoute = getDefaultRoute;
     self.getRouteByName = getRouteByName;
     self.hasRoute = hasRoute;
+    self.hasDefaultRoute = hasDefaultRoute;
     self.isOrphan = isOrphan;
     self.hasOrphanRoot = hasOrphanRoot;
     self.listRoutes = listRoutes;
@@ -1452,6 +1578,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function getDefaultRoute() {
       return _defaultRoute.clone();
+    }
+
+    function hasDefaultRoute() {
+      return !_defaultRoute ? false : true;
     }
 
     function getRouteByName(name) {
@@ -2341,14 +2471,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.removeNavigationOf = removeNavigationOf;
     self.removeNavigationByIndex = removeNavigationByIndex;
     self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+    self.setInitialNodes = setInitialNodes;
+    self.getPreviousOf = getPreviousOf;
 
     function init() {
       _navigationList = [];
     }
 
     function loadJsonData(data) {
-      init();
+      _navigationList = _navigationList.slice(0, 2);
       data.forEach(function (navigationData) {
+        console.log(navigationData.inNavigations);
         var inNavigations = navigationData.inNavigations.map(function (inNavigation) {
           return getNavigationByOrigin(inNavigation.origin);
         });
@@ -2374,6 +2507,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       });
 
       return filter[0];
+    }
+
+    function getPreviousOf(index) {
+      return getNavigationByPosition(index - 1);
     }
 
     function getNavigationByPosition(position) {
@@ -2405,7 +2542,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var newNavigation = NavigationFactory.create(origin, destination);
       newNavigation.index = _navigationList.length;
       _addElementsPreviousTheNavigation(newNavigation);
+      //updateFinalIns();   //TODO
       _navigationList.push(newNavigation);
+      return newNavigation;
+    }
+
+    function setInitialNodes(origin, destination) {
+      var beginNavigation = NavigationFactory.createInitial('BEGIN NODE', 'END NODE');
+      var endNavigation = NavigationFactory.createInitial('END NODE', 'BEGIN NODE');
+
+      _navigationList.unshift(endNavigation);
+      _navigationList.unshift(beginNavigation);
     }
 
     function _addElementsPreviousTheNavigation(navigation) {
@@ -2419,8 +2566,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var navigationToRemove = _navigationList.filter(function (navigation) {
         return findByOrigin(navigation, questionID);
       });
-
-      var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
+      removeCurrentLastNavigationndexOf(navigationToRemove[0]);
       if (indexToRemove > -1) {
         _navigationList.splice(indexToRemove, 1);
       }
@@ -2447,9 +2593,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationManagerService', service);
 
-  service.$inject = ['SurveyItemManagerService', 'otusjs.model.navigation.NavigationContainerService', 'otusjs.model.navigation.NavigationAddService', 'otusjs.model.navigation.NavigationRemoveService', 'otusjs.model.navigation.CreateDefaultRouteTaskService', 'otusjs.model.navigation.AddAlternativeRouteTaskService', 'otusjs.model.navigation.RemoveRouteTaskService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.NavigationValidatorService'];
+  service.$inject = ['SurveyItemManagerService', 'otusjs.model.navigation.NavigationContainerService', 'otusjs.model.navigation.NavigationAddService', 'otusjs.model.navigation.NavigationRemoveService', 'otusjs.model.navigation.CreateDefaultRouteTaskService', 'otusjs.model.navigation.AddAlternativeRouteTaskService', 'otusjs.model.navigation.RemoveRouteTaskService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.NavigationValidatorService', 'otusjs.model.navigation.InitialNodesAddService'];
 
-  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService, AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService, AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService, InitialNodesAddService) {
+
     var self = this;
     var _selectedNavigation = null;
 
@@ -2466,9 +2613,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.removeNavigation = removeNavigation;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
     self.listOrphanNavigations = listOrphanNavigations;
+    self.getExportableList = getExportableList;
 
     function init() {
       NavigationContainerService.init();
+      //TODO survey.NavigationManager.setInitialNodes
     }
 
     function loadJsonData(data) {
@@ -2477,6 +2626,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function getNavigationList() {
       return NavigationContainerService.getNavigationList();
+    }
+
+    function getExportableList() {
+      var fullList = NavigationContainerService.getNavigationList();
+      return fullList.slice(2, fullList.length);
     }
 
     function getDefaultNavigationPath() {
@@ -2504,7 +2658,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function addNavigation() {
-      NavigationAddService.execute();
+      if (!NavigationContainerService.getNavigationListSize()) {
+        _generateNavigation();
+      }
+      _selectedNavigation = NavigationAddService.execute();
+    }
+
+    function _generateNavigation() {
+      InitialNodesAddService.execute();
     }
 
     function applyRoute(routeData) {
@@ -2691,11 +2852,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return self.SurveyItemManager.isAvailableCustomID(id);
     }
 
+<<<<<<< HEAD
     function addItem(type) {
       var item = self.SurveyItemManager.addItem(type, self.identity.acronym);
       self.NavigationManager.addNavigation();
       return item;
     }
+=======
+            json.navigationList = [];
+            console.log(NavigationManagerService.getExportableList());
+            NavigationManagerService.getExportableList().forEach(function (navigation) {
+                if (navigation) {
+                    json.navigationList.push(navigation.toJson());
+                } else {
+                    json.navigationList.push({});
+                }
+            });
+>>>>>>> OTUS-25
 
     function removeItem(templateID) {
       self.SurveyItemManager.removeItem(templateID);
@@ -2916,6 +3089,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     var self = this;
     var itemList = []; // TODO: To implement Immutable collection
 
+<<<<<<< HEAD
     /* Public methods */
     self.init = init;
     self.loadFromItemContainerObject = loadFromItemContainerObject;
@@ -2933,6 +3107,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.removeItem = removeItem;
     self.removeItemByPosition = removeItemByPosition;
     self.removeCurrentLastItem = removeCurrentLastItem;
+=======
+        /* Public methods */
+        self.init = init;
+        self.manageItems = manageItems;
+        self.getItemList = getItemList;
+        self.getItemListSize = getItemListSize;
+        self.getItemByTemplateID = getItemByTemplateID;
+        self.getItemByCustomID = getItemByCustomID;
+        self.getLastItem = getLastItem;
+        self.getItemByID = getItemByID;
+        self.getAllCheckboxQuestion = getAllCheckboxQuestion;
+        self.getItemByPosition = getItemByPosition;
+        self.getItemPosition = getItemPosition;
+        self.existsItem = existsItem;
+        self.createItem = createItem;
+        self.removeItem = removeItem;
+        self.removeItemByPosition = removeItemByPosition;
+        self.removeCurrentLastItem = removeCurrentLastItem;
+
+        function init() {
+            itemList = [];
+        }
+>>>>>>> OTUS-25
 
     function init() {
       itemList = [];
@@ -2992,9 +3189,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return occurences;
     }
 
+<<<<<<< HEAD
     function getItemByPosition(position) {
       return itemList[position];
     }
+=======
+        function getLastItem() {
+            return itemList[itemList.length - 1];
+        }
+
+        function existsItem(id) {
+            return getItemByTemplateID(id) || getItemByCustomID(id) ? true : false;
+        }
+>>>>>>> OTUS-25
 
     function getItemPosition(templateID) {
       var item = getItemByTemplateID(templateID);
@@ -5698,6 +5905,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+<<<<<<< HEAD
   angular.module('otusjs.validation').factory('SpecialsValidatorFactory', SpecialsValidatorFactory);
 
   function SpecialsValidatorFactory() {
@@ -5718,6 +5926,75 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var validator = new SpecialsValidator();
       validator.reference = jsonObject.reference;
       return validator;
+=======
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.InitialNodesAddService', service);
+
+  service.$inject = ['otusjs.model.navigation.NavigationContainerService', 'SurveyItemContainerService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.CreateDefaultRouteTaskService'];
+
+  function service(NavigationContainerService, SurveyItemContainerService, UpdateRouteTaskService, CreateDefaultRouteTaskService) {
+    var self = this;
+
+    /* Public methods */
+    self.execute = execute;
+
+    function execute() {
+      NavigationContainerService.setInitialNodes();
+
+      var routeData = {
+        'origin': NavigationContainerService.getNavigationList()[0].origin,
+        'destination': NavigationContainerService.getNavigationList()[1].origin
+      };
+
+      CreateDefaultRouteTaskService.execute(routeData, NavigationContainerService.getNavigationList()[0]);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationAddService', service);
+
+  service.$inject = ['otusjs.model.navigation.NavigationContainerService', 'SurveyItemContainerService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.CreateDefaultRouteTaskService'];
+
+  function service(NavigationContainerService, SurveyItemContainerService, UpdateRouteTaskService, CreateDefaultRouteTaskService) {
+    var self = this;
+
+    /* Public methods */
+    self.execute = execute;
+
+    function execute() {
+      var origin = SurveyItemContainerService.getLastItem();
+
+      var _newNavigation = NavigationContainerService.createNavigationTo(origin.templateID);
+      var _previousNavigation;
+
+      if (_newNavigation.index === 2) {
+        _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index - 1);
+      } else {
+        _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index);
+      }
+
+      var routeData = {
+        'origin': _newNavigation.origin,
+        'destination': _previousNavigation.getDefaultRoute().destination
+      };
+
+      console.log(routeData.origin);
+      CreateDefaultRouteTaskService.execute(routeData, _newNavigation);
+
+      var updateRouteData = {
+        'origin': _previousNavigation.origin,
+        'destination': _newNavigation.origin,
+        'isDefault': true
+      };
+
+      // console.info('on update');
+      // console.log('origin: ' + updateRouteData.origin);
+      // console.log('destination: ' + updateRouteData.destination);
+      UpdateRouteTaskService.execute(updateRouteData, _previousNavigation);
+>>>>>>> OTUS-25
     }
 
     return self;
@@ -5811,12 +6088,31 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   function MinTimeValidatorFactory() {
     var self = this;
 
+<<<<<<< HEAD
     /* Public interface */
     self.create = create;
     self.fromJsonObject = fromJsonObject;
 
     function create() {
       return new MinTimeValidator();
+=======
+    /* Public methods */
+    self.execute = execute;
+
+    function execute(routeData, navigation) {
+      if (navigation.hasDefaultRoute()) {
+        var currentDefaultRoute = navigation.getDefaultRoute();
+        var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+        navigation.setupDefaultRoute(route);
+
+        _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
+        _notifyNewDefaultNavigation(route, navigation);
+      } else {
+        var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+        navigation.setupDefaultRoute(route);
+        _notifyNewDefaultNavigation(route, navigation);
+      }
+>>>>>>> OTUS-25
     }
 
     function fromJsonObject(jsonObject) {

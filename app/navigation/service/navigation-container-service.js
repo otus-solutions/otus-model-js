@@ -28,14 +28,17 @@
     self.removeNavigationOf = removeNavigationOf;
     self.removeNavigationByIndex = removeNavigationByIndex;
     self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+    self.setInitialNodes = setInitialNodes;
+    self.getPreviousOf = getPreviousOf;
 
     function init() {
       _navigationList = [];
     }
 
     function loadJsonData(data) {
-      init();
+      _navigationList = _navigationList.slice(0, 2);
       data.forEach(function(navigationData) {
+         console.log(navigationData.inNavigations);
         var inNavigations = navigationData.inNavigations.map(function(inNavigation) {
           return getNavigationByOrigin(inNavigation.origin);
         });
@@ -61,6 +64,10 @@
       });
 
       return filter[0];
+    }
+
+    function getPreviousOf(index) {
+      return getNavigationByPosition(index - 1);
     }
 
     function getNavigationByPosition(position) {
@@ -91,22 +98,31 @@
     function createNavigationTo(origin, destination) {
       var newNavigation = NavigationFactory.create(origin, destination);
       newNavigation.index = _navigationList.length;
-      _addElementsPreviousTheNavigation(newNavigation);
+      // _addElementsPreviousTheNavigation(newNavigation);
+      //updateFinalIns();   //TODO
       _navigationList.push(newNavigation);
+      return newNavigation;
     }
 
-    function _addElementsPreviousTheNavigation(navigation) {
-      if (_navigationList.length) {
-        var previous = _navigationList[_navigationList.length - 1];
-        navigation.addInNavigation(previous);
-      }
+    function setInitialNodes(origin, destination) {
+      var beginNavigation = NavigationFactory.createInitial('BEGIN NODE', 'END NODE');
+      var endNavigation = NavigationFactory.createInitial('END NODE', 'BEGIN NODE');
+
+      _navigationList.unshift(endNavigation);
+      _navigationList.unshift(beginNavigation);
     }
+
+   //  function _addElementsPreviousTheNavigation(navigation) {
+   //    if (_navigationList.length) {
+   //      var previous = _navigationList[_navigationList.length - 1];
+   //      navigation.addInNavigation(previous);
+   //    }
+   //  }
 
     function removeNavigationOf(questionID) {
       var navigationToRemove = _navigationList.filter(function(navigation) {
         return findByOrigin(navigation, questionID);
       });
-
       var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
       if (indexToRemove > -1) {
         _navigationList.splice(indexToRemove, 1);
