@@ -3429,7 +3429,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.model.activity').service('otusjs.model.activity.DateTimeRuleTestService', Service);
 
-  function Service() {
+  Service.$inject = ['otusjs.model.activity.NumericRuleTestService'];
+
+  function Service(NumericRuleTestService) {
     var self = this;
     var _runner = {};
     self.name = 'DateTimeRuleTestService';
@@ -3438,19 +3440,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.run = run;
 
     function run(rule, answer) {
-      if (Number.isNaN(Date.parse(answer))) {
-        return false;
+      _polyfillIsInteger();
+      if (rule.isMetadata && Number.isInteger(parseInt(answer))) {
+        return NumericRuleTestService.run(rule, answer);
+      } else if (rule.answer instanceof Array && rule.operator == 'between' || rule.operator == 'within') {
+        return _runner[rule.operator](_filter(rule.answer), answer);
       }
+      var resultRegex = rule.answer.match(/^(\d{1,2})[\/](\d{1,2})[\/](\d{4})$/);
+      var ruleDate = new Date(resultRegex[3], resultRegex[2] - 1, resultRegex[1]);
+      return _runner[rule.operator](ruleDate, answer);
+    }
 
-      return _runner[rule.operator](Date.parse(rule.answer), answer.getTime());
+    function _filter(answer) {
+      var dates = [];
+      answer.filter(function (rule) {
+        var resultRegex = rule.match(/^(\d{1,2})[\/](\d{1,2})[\/](\d{4})$/);
+        dates.push(new Date(resultRegex[3], resultRegex[2] - 1, resultRegex[1]));
+      });
+      return dates;
     }
 
     _runner.equal = function (reference, answer) {
-      return answer === reference;
+      return answer.getTime() == reference.getTime();
     };
 
     _runner.notEqual = function (reference, answer) {
-      return answer !== reference;
+      return answer.getTime() != reference.getTime();
     };
 
     _runner.within = function (reference, answer) {
@@ -3460,24 +3475,30 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     _runner.greater = function (reference, answer) {
-      return answer > reference;
+      return answer.getTime() > reference.getTime();
     };
 
     _runner.greaterEqual = function (reference, answer) {
-      return answer >= reference;
+      return answer.getTime() >= reference.getTime();
     };
 
     _runner.lower = function (reference, answer) {
-      return answer < reference;
+      return answer.getTime() < reference.getTime();
     };
 
     _runner.lowerEqual = function (reference, answer) {
-      return answer <= reference;
+      return answer.getTime() <= reference.getTime();
     };
 
     _runner.between = function (reference, answer) {
       return _runner.greaterEqual(reference[0], answer) && _runner.lowerEqual(reference[1], answer);
     };
+
+    function _polyfillIsInteger() {
+      Number.isInteger = Number.isInteger || function (value) {
+        return typeof value === "number" && isFinite(value) && Math.floor(value) === value;
+      };
+    }
   }
 })();
 'use strict';
