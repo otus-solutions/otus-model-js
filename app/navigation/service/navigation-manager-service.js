@@ -46,6 +46,19 @@
 
     function loadJsonData(data) {
       NavigationContainerService.loadJsonData(data);
+
+      // _updateRoutesOnLoad(); //question load temporary fix
+    }
+
+    function _updateRoutesOnLoad() {
+      var navList = getNavigationList();
+      data.forEach(function(jsonNav) {
+        _selectedNavigation = selectNavigationByOrigin(jsonNav.origin);
+        jsonNav.routes.forEach(function(route) {
+          applyRoute(route);
+        });
+        // var _route = {origin: jsonNav.origin, destination: jsonNav.destination, conditions: Array[1], isDefault: true};
+      });
     }
 
     function getNavigationList() {
@@ -54,8 +67,8 @@
 
     function getExportableList() {
       var fullList = NavigationContainerService.getNavigationList();
-      return fullList.slice(2,fullList.length);
-   }
+      return fullList.slice(2, fullList.length);
+    }
 
     function getDefaultNavigationPath() {
       var navigations = getNavigationList();
@@ -83,7 +96,7 @@
 
     function addNavigation() {
       if (!NavigationContainerService.getNavigationListSize()) {
-         _generateNavigation();
+        _generateNavigation();
       }
       _selectedNavigation = NavigationAddService.execute();
 

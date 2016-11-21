@@ -24,6 +24,7 @@
 
     function create(origin) {
       if (!origin) {
+        console.log('return null');
         return null;
       }
 
@@ -35,19 +36,22 @@
 
       if (origin === 'BEGIN NODE') {
          initialNavigation.index = 0;
+      }else{
+        initialNavigation.index = 1;
       }
-      
+
       return initialNavigation;
     }
 
     function fromJson(json, inNavigations) {
       var jsonObj = _parse(json);
 
-      if (!jsonObj.routes || !jsonObj.routes.length) {
+      if ((!jsonObj.routes || !jsonObj.routes.length) && jsonObj.origin !== 'END NODE') {
+        console.log('return null');
         return null;
       }
 
-      var navigation = create(jsonObj.origin, jsonObj.routes[0].destination);
+      var navigation = create(jsonObj.origin);
 
       if (navigation) {
         navigation.index = jsonObj.index;

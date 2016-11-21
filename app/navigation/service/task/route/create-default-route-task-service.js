@@ -26,7 +26,7 @@
          _notifyNewDefaultNavigation(route, navigation);
       } else {
          var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
-         console.log(route);
+        //  console.log(route);
          navigation.setupDefaultRoute(route);
          _notifyNewDefaultNavigation(route, navigation);
       }
