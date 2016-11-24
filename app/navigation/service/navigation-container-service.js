@@ -37,28 +37,47 @@
       console.log(' set []');
     }
 
-    function loadJsonData(data) {
+    function loadJsonData(jsonData) {
       init();
-      console.log(data);
-      data.forEach(function(navigationData) {
-        console.log('----');
-        console.log(navigationData.origin);
-        var inNavigations = navigationData.inNavigations.map(function(inNavigation) {
-          console.log('- in -');
-          console.log(inNavigation);
-          console.log('- -');
-          return getNavigationByOrigin(inNavigation.origin);
-        });
-        console.log(inNavigations);
-        _navigationList.push(NavigationFactory.fromJson(navigationData, inNavigations));
-        console.log('alterou');
-        console.log('----');
-      });
+      // assumes previous load
+      console.log(jsonData);
+      console.log(_navigationList);
+      var navMap = _loadNavigations(jsonData);
+      var inNavMap = _getInNavigationsMap(jsonData);
+      console.log(navMap);
+      console.log(inNavMap);
     }
+
+    function _getInNavigationsMap(jsonData) {
+      var inNavigationsMap = {};
+      jsonData.forEach(function(navigationJson) {
+        navigationJson.inNavigations.forEach(function(inNavigation) {
+          if (inNavigation in inNavigationsMap) {
+            inNavigationsMap[inNavigation.origin].append(navigationJson.origin);
+          } else {
+            inNavigationsMap[inNavigation.origin] = navigationJson.origin;
+          }
+        });
+      });
+      return inNavigationsMap;
+    }
+
+    function _loadNavigations(jsonData) {
+      var navMap = {};
+      var navigation;
+      jsonData.forEach(function(newNavigation){
+        navigation = NavigationFactory.fromJson(newNavigation);
+        _navigationList.push(navigation);
+        navMap[navigation.origin] = navigation;
+      });
+      return navMap;
+    }
+
     function getNavigationByOrigin(origin) {
       var filter = _navigationList.filter(function(navigation) {
         return findByOrigin(navigation, origin);
       });
+      console.log(filter);
 
       return filter[0];
     }
@@ -87,6 +106,9 @@
 
 
     function getPreviousOf(index) {
+      if (index === 2) {
+        index = 1;
+      }
       return getNavigationByPosition(index - 1);
     }
 
@@ -94,7 +116,15 @@
       return _navigationList[position];
     }
 
-    function getNavigationPosition(origin) {
+    function getNavigationPosition(navigation) {
+      if (navigation) {
+        return _navigationList.indexOf(navigation);
+      } else {
+        return null;
+      }
+    }
+
+    function getNavigationPositionByOrigin(origin) {
       var navigation = getNavigationByOrigin(origin);
       if (navigation) {
         return _navigationList.indexOf(navigation);
@@ -134,12 +164,12 @@
       console.log('alterou');
     }
 
-   //  function _addElementsPreviousTheNavigation(navigation) {
-   //    if (_navigationList.length) {
-   //      var previous = _navigationList[_navigationList.length - 1];
-   //      navigation.addInNavigation(previous);
-   //    }
-   //  }
+    //  function _addElementsPreviousTheNavigation(navigation) {
+    //    if (_navigationList.length) {
+    //      var previous = _navigationList[_navigationList.length - 1];
+    //      navigation.addInNavigation(previous);
+    //    }
+    //  }
 
     function removeNavigationOf(questionID) {
       var navigationToRemove = _navigationList.filter(function(navigation) {

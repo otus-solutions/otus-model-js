@@ -31,8 +31,8 @@
       return new Navigation(origin);
     }
 
-    function createInitial(origin, destination) {
-      var initialNavigation = new Navigation(origin, destination);
+    function createInitial(origin) {
+      var initialNavigation = new Navigation(origin);
 
       if (origin === 'BEGIN NODE') {
          initialNavigation.index = 0;
@@ -43,19 +43,24 @@
       return initialNavigation;
     }
 
+    function createNullNavigation(){}
+
     function fromJson(json, inNavigations) {
       var jsonObj = _parse(json);
-
-      if ((!jsonObj.routes || !jsonObj.routes.length) && jsonObj.origin !== 'END NODE') {
-        console.log('return null');
-        return null;
+      var navigation;
+      if (jsonObj.origin === 'BEGIN NODE' || jsonObj.origin === 'END NODE') {
+        navigation = createInitial(jsonObj.origin);
+      } else {
+        if (!jsonObj.routes || !jsonObj.routes.length) {  //TODO check if needed
+          console.log('return null');
+          return null;
+        }
+        navigation = create(jsonObj.origin);
       }
-
-      var navigation = create(jsonObj.origin);
 
       if (navigation) {
         navigation.index = jsonObj.index;
-        navigation.inNavigations = inNavigations;
+        navigation.inNavigations = jsonObj.inNavigations;
         navigation.routes = jsonObj.routes.map(function(route) {
           return RouteFactory.fromJson(JSON.stringify(route));
         });

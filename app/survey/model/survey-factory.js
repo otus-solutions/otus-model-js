@@ -135,6 +135,7 @@
       });
 
       json.navigationList = [];
+      console.log(NavigationManagerService.getNavigationList());
       NavigationManagerService.getNavigationList().forEach(function(navigation) {
         if (navigation) {
           json.navigationList.push(navigation.toJson());
