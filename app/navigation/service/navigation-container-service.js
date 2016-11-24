@@ -40,32 +40,28 @@
     function loadJsonData(jsonData) {
       init();
       // assumes previous load
-      console.log(jsonData);
-      console.log(_navigationList);
       var navMap = _loadNavigations(jsonData);
-      var inNavMap = _getInNavigationsMap(jsonData);
-      console.log(navMap);
-      console.log(inNavMap);
-    }
 
-    function _getInNavigationsMap(jsonData) {
-      var inNavigationsMap = {};
-      jsonData.forEach(function(navigationJson) {
-        navigationJson.inNavigations.forEach(function(inNavigation) {
-          if (inNavigation in inNavigationsMap) {
-            inNavigationsMap[inNavigation.origin].append(navigationJson.origin);
-          } else {
-            inNavigationsMap[inNavigation.origin] = navigationJson.origin;
+      /* FIX IN NAVIGATIONS */
+      var nullNavigation = NavigationFactory.createNullNavigation();
+      _navigationList.forEach(function(navigation) {
+        var replacer = [];
+        navigation.inNavigations.forEach(function(inNav) {
+          if (inNav.origin in navMap) {
+            replacer.push(navMap[inNav.origin]);
+          }else {
+            replacer.push(nullNavigation);
           }
         });
+        navigation.inNavigations = replacer.slice();
+        console.log(navigation);
       });
-      return inNavigationsMap;
     }
 
     function _loadNavigations(jsonData) {
       var navMap = {};
       var navigation;
-      jsonData.forEach(function(newNavigation){
+      jsonData.forEach(function(newNavigation) {
         navigation = NavigationFactory.fromJson(newNavigation);
         _navigationList.push(navigation);
         navMap[navigation.origin] = navigation;

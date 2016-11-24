@@ -21,6 +21,7 @@
     self.create = create;
     self.createInitial = createInitial;
     self.fromJson = fromJson;
+    self.createNullNavigation = createNullNavigation;
 
     function create(origin) {
       if (!origin) {
@@ -35,15 +36,44 @@
       var initialNavigation = new Navigation(origin);
 
       if (origin === 'BEGIN NODE') {
-         initialNavigation.index = 0;
-      }else{
+        initialNavigation.index = 0;
+      } else {
         initialNavigation.index = 1;
       }
 
       return initialNavigation;
     }
 
-    function createNullNavigation(){}
+    function createNullNavigation() {
+      var navigation = create('NULL NAVIGATION');
+      /* Object properties */
+      navigation.index = null;
+      navigation.inNavigations = [];
+      navigation.outNavigations = [];
+      navigation.routes = [];
+
+      /* Public methods */
+      // navigation.addInNavigation = addInNavigation;
+      // navigation.addOutNavigation = addOutNavigation;
+      // navigation.clone = clone;
+      // navigation.createAlternativeRoute = createAlternativeRoute;
+      // navigation.equals = equals;
+      // navigation.getDefaultRoute = getDefaultRoute;
+      // navigation.getRouteByName = getRouteByName;
+      // navigation.hasRoute = hasRoute;
+      // navigation.hasDefaultRoute = hasDefaultRoute;
+      navigation.isOrphan = function(){return true;};
+      navigation.hasOrphanRoot = function(){return true;};
+      // navigation.listRoutes = listRoutes;
+      // navigation.removeInNavigation = removeInNavigation;
+      // navigation.removeRouteByName = removeRouteByName;
+      // navigation.selfsame = selfsame;
+      // navigation.setupDefaultRoute = setupDefaultRoute;
+      // navigation.toJson = toJson;
+      // navigation.updateInNavigation = updateInNavigation;
+      // navigation.updateRoute = updateRoute;
+      return navigation;
+    }
 
     function fromJson(json, inNavigations) {
       var jsonObj = _parse(json);
@@ -51,7 +81,7 @@
       if (jsonObj.origin === 'BEGIN NODE' || jsonObj.origin === 'END NODE') {
         navigation = createInitial(jsonObj.origin);
       } else {
-        if (!jsonObj.routes || !jsonObj.routes.length) {  //TODO check if needed
+        if (!jsonObj.routes || !jsonObj.routes.length) { //TODO check if needed
           console.log('return null');
           return null;
         }
