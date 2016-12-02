@@ -19,8 +19,8 @@ describe('MandatoryValidatorFactory validator suite:', function() {
       validator = factory.create();
     });
 
-    it('should return an validator with property reference with value false', function() {
-      expect(validator.reference).toBe(false);
+    it('should return an validator with property reference with value true', function() {
+      expect(validator.reference).toBe(true);
     });
 
   });
@@ -45,7 +45,7 @@ describe('MandatoryValidatorFactory validator suite:', function() {
   });
 
   Mock.jsonObject = {
-    "reference": false,
+    "reference": true,
   };
 
 });

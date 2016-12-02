@@ -3470,7 +3470,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     _runner.within = function (reference, answer) {
       return reference.some(function (value) {
-        return _runner.contains(value, answer);
+        return _runner.equal(value, answer);
       });
     };
 
@@ -4879,7 +4879,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   function MandatoryValidator() {
     var self = this;
 
-    self.reference = false;
+    self.reference = true;
   }
 })();
 'use strict';

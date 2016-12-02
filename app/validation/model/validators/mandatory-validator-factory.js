@@ -31,7 +31,7 @@
   function MandatoryValidator() {
     var self = this;
 
-    self.reference = false;
+    self.reference = true;
   }
 
 }());
