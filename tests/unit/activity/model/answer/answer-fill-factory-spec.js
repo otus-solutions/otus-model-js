@@ -61,6 +61,18 @@ describe('AnswerFillFactory', function() {
 
   });
 
+  describe('clear method', function() {
+    it('When calling method clear value should be null', function() {
+      var answer = factory.create('IntegerQuestion', ANSWER_VALUE);
+
+      expect(answer.value).toEqual(ANSWER_VALUE);
+
+      answer.clear();
+
+      expect(answer.value).toBe(null);
+    });
+  });
+
   function mockAnswerEvaluationService($injector) {
     Mock.AnswerEvaluationService = $injector.get('otusjs.model.activity.AnswerEvaluationService');
     Injections.AnswerEvaluationService = Mock.AnswerEvaluationService;

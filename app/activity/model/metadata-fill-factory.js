@@ -27,6 +27,7 @@
     /* Public methods */
     self.isFilled = isFilled;
     self.toJson = toJson;
+    self.clear = clear;
 
     function isFilled() {
       return (self.value) ? true : false;
@@ -39,6 +40,10 @@
       json.value = self.value;
 
       return JSON.stringify(json);
+    }
+
+    function clear() {
+      self.value = null;
     }
   }
 

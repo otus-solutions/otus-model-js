@@ -41,4 +41,16 @@ describe('MetadataFillFactory', function() {
 
     });
 
+    describe('clear method', function() {
+      it('When calling method clear value should be null', function() {
+        var metadata = factory.create(METADATA_VALUE);
+
+        expect(metadata.value).toEqual(METADATA_VALUE);
+
+        metadata.clear();
+
+        expect(metadata.value).toBe(null);
+      });
+    });
+
 });
