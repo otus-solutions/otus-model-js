@@ -76,6 +76,7 @@
 
     /* Public methods */
     self.addItem = addItem;
+    self.loadItem = loadItem;
     self.removeItem = removeItem;
     self.getItemByTemplateID = getItemByTemplateID;
     self.getItemByCustomID = getItemByCustomID;
@@ -111,6 +112,12 @@
       return item;
     }
 
+    function loadItem(type, templateID) {
+      var item = self.SurveyItemManager.loadItem(type, templateID, self.identity.acronym);
+      self.NavigationManager.addNavigation();
+      return item;
+    }
+
     function removeItem(templateID) {
       self.SurveyItemManager.removeItem(templateID);
       self.NavigationManager.removeNavigation(templateID);
@@ -135,7 +142,6 @@
       });
 
       json.navigationList = [];
-      console.log(NavigationManagerService.getNavigationList());
       NavigationManagerService.getNavigationList().forEach(function(navigation) {
         if (navigation) {
           json.navigationList.push(navigation.toJson());

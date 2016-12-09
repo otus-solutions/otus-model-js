@@ -19,6 +19,9 @@
     self.execute = execute;
 
     function execute(routeData, navigation) {
+      if (routeData.origin === 'BEGIN NODE') {
+        return;
+      }
       var conditions = routeData.conditions.map(_setupConditions);
       var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, conditions);
 

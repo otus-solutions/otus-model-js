@@ -25,6 +25,7 @@
     self.getItemPosition = getItemPosition;
     self.getAllCustomOptionsID = getAllCustomOptionsID;
     self.addItem = addItem;
+    self.loadItem = loadItem;
     self.removeItem = removeItem;
     self.existsItem = existsItem;
     self.isAvailableCustomID = isAvailableCustomID;
@@ -73,6 +74,17 @@
         });
       }
       return customOptionsID;
+    }
+
+    function loadItem(itemType, templateID, surveyAcronym) {
+
+      var item = SurveyItemContainerService.createItem(itemType, templateID);
+      _setIncrementalIDValue(parseInt(templateID.split(surveyAcronym)[1]));
+      return item;
+    }
+
+    function _setIncrementalIDValue(id) {
+      incrementalIDValue = id;
     }
 
     function addItem(itemType, templateIDPrefix) {

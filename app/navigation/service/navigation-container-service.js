@@ -34,7 +34,6 @@
 
     function init() {
       _navigationList = [];
-      console.log(' set []');
     }
 
     function loadJsonData(jsonData) {
@@ -54,7 +53,6 @@
           }
         });
         navigation.inNavigations = replacer.slice();
-        console.log(navigation);
       });
     }
 
@@ -73,14 +71,8 @@
       var filter = _navigationList.filter(function(navigation) {
         return findByOrigin(navigation, origin);
       });
-      console.log(filter);
-
       return filter[0];
     }
-
-    // function findByOrigin(navigation, questionID) {
-    //   return navigation.origin === questionID;
-    // }
 
     function getEmptyNavigation(indexToRemove) {
       _navigationList[indexToRemove].routes = [];
@@ -89,7 +81,6 @@
 
     function manageNavigation(navigationToManage) {
       _navigationList = navigationToManage;
-      console.log('set to navigationToManage');
     }
 
     function getNavigationList() {
@@ -147,7 +138,6 @@
       // _addElementsPreviousTheNavigation(newNavigation);
       //updateFinalIns();   //TODO
       _navigationList.push(newNavigation);
-      console.log('alterou');
       return newNavigation;
     }
 
@@ -157,15 +147,7 @@
 
       _navigationList.unshift(endNavigation);
       _navigationList.unshift(beginNavigation);
-      console.log('alterou');
     }
-
-    //  function _addElementsPreviousTheNavigation(navigation) {
-    //    if (_navigationList.length) {
-    //      var previous = _navigationList[_navigationList.length - 1];
-    //      navigation.addInNavigation(previous);
-    //    }
-    //  }
 
     function removeNavigationOf(questionID) {
       var navigationToRemove = _navigationList.filter(function(navigation) {
@@ -174,18 +156,31 @@
       var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
       if (indexToRemove > -1) {
         _navigationList.splice(indexToRemove, 1);
-        console.log('removeNavigationOf');
+        _removeFromInNavigations(indexToRemove, navigationToRemove[0]);
+      }
+    }
+
+    function _removeFromInNavigations(indexToRemove, navigationToRemove) {
+      var nullNavigation = NavigationFactory.createNullNavigation();
+      var endNodeIndex = _navigationList[1].inNavigations.indexOf(navigationToRemove);
+      if (endNodeIndex > -1) {
+        _navigationList[1].inNavigations[endNodeIndex] = nullNavigation;
+      }
+      for (var i = indexToRemove; i < _navigationList.length; i++) {
+        var inIndex = _navigationList[i].inNavigations.indexOf(navigationToRemove);
+        if(inIndex > -1){
+          _navigationList[i].inNavigations[inIndex] = nullNavigation;
+        }
+
       }
     }
 
     function removeNavigationByIndex(indexToRemove) {
       _navigationList.splice(indexToRemove, 1);
-      console.log('alterou');
     }
 
     function removeCurrentLastNavigation() {
       _navigationList.splice(-1, 1);
-      console.log('alterou');
     }
 
     /* Private methods */

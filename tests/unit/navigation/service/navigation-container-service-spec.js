@@ -1,4 +1,4 @@
-describe('NavigationContainerService', function() {
+fdescribe('NavigationContainerService', function() {
   var Mock = {};
   var service;
 
@@ -17,7 +17,7 @@ describe('NavigationContainerService', function() {
     });
   });
 
-  xdescribe('init method', function() {
+  describe('init method', function() {
 
     it('should clear the array of navigations', function() {
       service.createNavigationTo(Mock.questionOne.templateID);
@@ -69,9 +69,9 @@ describe('NavigationContainerService', function() {
     });
 
     it('should return the number of added navigations', function() {
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
-      service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
-      service.createNavigationTo(Mock.questionThree.templateID, Mock.questionFour.templateID);
+      service.createNavigationTo(Mock.questionOne.templateID);
+      service.createNavigationTo(Mock.questionTwo.templateID);
+      service.createNavigationTo(Mock.questionThree.templateID);
       service.createNavigationTo(Mock.questionFour.templateID);
       expect(service.getNavigationListSize()).toBe(4);
 
@@ -84,8 +84,8 @@ describe('NavigationContainerService', function() {
   xdescribe('getNavigationByOrigin method', function() {
 
     beforeEach(function() {
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
-      service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
+      service.createNavigationTo(Mock.questionOne.templateID);
+      service.createNavigationTo(Mock.questionTwo.templateID);
     });
 
     it('should return the navigation when exists', function() {
@@ -105,8 +105,8 @@ describe('NavigationContainerService', function() {
   xdescribe('getNavigationByPosition method', function() {
 
     beforeEach(function() {
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
-      service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
+      service.createNavigationTo(Mock.questionOne.templateID);
+      service.createNavigationTo(Mock.questionTwo.templateID);
     });
 
     it('should return the navigation when exists', function() {
@@ -126,9 +126,9 @@ describe('NavigationContainerService', function() {
   xdescribe('getNavigationPosition method', function() {
 
     beforeEach(function() {
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
-      service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
-      service.createNavigationTo(Mock.questionThree.templateID, Mock.questionFour.templateID);
+      service.createNavigationTo(Mock.questionOne.templateID);
+      service.createNavigationTo(Mock.questionTwo.templateID);
+      service.createNavigationTo(Mock.questionThree.templateID);
     });
 
     it('should return an integer that represents the index of navigation', function() {
@@ -168,16 +168,16 @@ describe('NavigationContainerService', function() {
   describe('createNavigationTo method', function() {
 
     beforeEach(function() {
-      Mock.navigation = Mock.NavigationFactory.create(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+      Mock.navigation = Mock.NavigationFactory.create(Mock.questionOne.templateID);
 
       spyOn(Mock.NavigationFactory, 'create').and.returnValue(Mock.navigation);
       spyOn(Mock.navigation, 'addInNavigation').and.callThrough();
 
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+      service.createNavigationTo(Mock.questionOne.templateID);
     });
 
     it('should call NavigationFactory.create', function() {
-      expect(Mock.NavigationFactory.create).toHaveBeenCalledWith(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+      expect(Mock.NavigationFactory.create).toHaveBeenCalledWith(Mock.questionOne.templateID);
     });
 
     it('should add a new Navigation in the navigationList', function() {
@@ -186,7 +186,7 @@ describe('NavigationContainerService', function() {
 
     xit('should called method _addElementsPreviousTheNavigation', function() {
       spyOn(service, '_addElementsPreviousTheNavigation');
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+      service.createNavigationTo(Mock.questionOne.templateID);
 
       expect(service._addElementsPreviousTheNavigation).toHaveBeenCalledWith(Mock.navigation);
     });
@@ -196,7 +196,7 @@ describe('NavigationContainerService', function() {
   xdescribe('_addElementsPreviousTheNavigation', function() {
 
     beforeEach(function() {
-      Mock.navigationOne = Mock.NavigationFactory.create(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+      Mock.navigationOne = Mock.NavigationFactory.create(Mock.questionOne.templateID);
 
       spyOn(Mock.NavigationFactory, 'create').and.returnValue(Mock.navigationOne);
       spyOn(Mock.navigation, 'addInNavigation').and.callThrough();
@@ -204,7 +204,7 @@ describe('NavigationContainerService', function() {
     });
 
     it('should called method addInNavigation when length of list is bigger than zero', function() {
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+      service.createNavigationTo(Mock.questionOne.templateID);
 
       expect(Mock.navigation.addInNavigation).toHaveBeenCalledWith(jasmine.any(Array));
     });
@@ -218,8 +218,8 @@ describe('NavigationContainerService', function() {
   xdescribe('removeNavigationOf method', function() {
 
     beforeEach(function() {
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
-      service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
+      service.createNavigationTo(Mock.questionOne.templateID);
+      service.createNavigationTo(Mock.questionTwo.templateID);
     });
 
     it('should remove a navigation of navigationList', function() {
@@ -240,8 +240,8 @@ describe('NavigationContainerService', function() {
   xdescribe('removeNavigationByIndex method', function() {
 
     beforeEach(function() {
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
-      service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
+      service.createNavigationTo(Mock.questionOne.templateID);
+      service.createNavigationTo(Mock.questionTwo.templateID);
     });
 
     it('should remove a navigation of index', function() {
@@ -257,8 +257,8 @@ describe('NavigationContainerService', function() {
   xdescribe('removeCurrentLastNavigation method', function() {
 
     beforeEach(function() {
-      service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
-      service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
+      service.createNavigationTo(Mock.questionOne.templateID);
+      service.createNavigationTo(Mock.questionTwo.templateID);
     });
 
     it('should remove the last navigation present in navigation list', function() {
@@ -286,13 +286,13 @@ describe('NavigationContainerService', function() {
   function mockNavigationToManage($injector) {
     Mock.navigationToManage = [];
 
-    var navigation = Mock.NavigationFactory.create(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+    var navigation = Mock.NavigationFactory.create(Mock.questionOne.templateID);
     Mock.navigationToManage.push(navigation);
 
-    navigation = Mock.NavigationFactory.create(Mock.questionTwo.templateID, Mock.questionThree.templateID);
+    navigation = Mock.NavigationFactory.create(Mock.questionTwo.templateID);
     Mock.navigationToManage.push(navigation);
 
-    navigation = Mock.NavigationFactory.create(Mock.questionThree.templateID, Mock.questionFour.templateID);
+    navigation = Mock.NavigationFactory.create(Mock.questionThree.templateID);
     Mock.navigationToManage.push(navigation);
   }
 
