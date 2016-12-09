@@ -35,7 +35,7 @@
     self.clear = clear;
 
     function isFilled() {
-      return (self.value) ? true : false;
+      return (self.value !== null) ? true : false;
     }
 
     function toJson() {
