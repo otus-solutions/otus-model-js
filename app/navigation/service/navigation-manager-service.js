@@ -41,13 +41,11 @@
 
     function init() {
       NavigationContainerService.init();
-      //TODO survey.NavigationManager.setInitialNodes
+      _generateNavigation();
     }
 
     function loadJsonData(data) {
       NavigationContainerService.loadJsonData(data);
-
-      // _updateRoutesOnLoad(); //question load temporary fix
     }
 
     function _updateRoutesOnLoad() {
@@ -57,7 +55,6 @@
         jsonNav.routes.forEach(function(route) {
           applyRoute(route);
         });
-        // var _route = {origin: jsonNav.origin, destination: jsonNav.destination, conditions: Array[1], isDefault: true};
       });
     }
 
@@ -95,7 +92,7 @@
     }
 
     function addNavigation() {
-      if (!NavigationContainerService.getNavigationListSize()) {
+      if (!NavigationContainerService.getNavigationListSize()) {  //TODO remove?
         _generateNavigation();
       }
       _selectedNavigation = NavigationAddService.execute();

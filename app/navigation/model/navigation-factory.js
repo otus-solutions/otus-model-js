@@ -25,7 +25,7 @@
 
     function create(origin) {
       if (!origin) {
-        return null;
+        return createNullNavigation();
       }
 
       return new Navigation(origin);
@@ -56,14 +56,14 @@
       return navigation;
     }
 
-    function fromJson(json, inNavigations) {
-      var jsonObj = _parse(json);
+    function fromJson(jsonData) {
+      var jsonObj = _parse(jsonData);
       var navigation;
       if (jsonObj.origin === 'BEGIN NODE' || jsonObj.origin === 'END NODE') {
         navigation = createInitial(jsonObj.origin);
       } else {
         if (!jsonObj.routes || !jsonObj.routes.length) { //TODO check if needed
-          return null;
+          return createNullNavigation();
         }
         navigation = create(jsonObj.origin);
       }
@@ -79,11 +79,11 @@
       return navigation;
     }
 
-    function _parse(json) {
-      if (typeof json === 'string') {
-        return JSON.parse(json);
-      } else if (typeof json === 'object') {
-        return JSON.parse(JSON.stringify(json));
+    function _parse(jsonData) {
+      if (typeof jsonData === 'string') {
+        return JSON.parse(jsonData);
+      } else if (typeof jsonData === 'object') {
+        return JSON.parse(JSON.stringify(jsonData));
       }
     }
 
@@ -288,7 +288,7 @@
       return Object.is(self, other);
     }
 
-    function setupDefaultRoute(route) {
+    function setupDefaultRoute(route) {      
       if (!route) {
         throw new TypeError('Default route should not be undefined or null.', 'navigation-factory.js', 285);
       }

@@ -7,12 +7,10 @@
 
   service.$inject = [
     'otusjs.model.navigation.NavigationContainerService',
-    'SurveyItemContainerService',
-    'otusjs.model.navigation.UpdateRouteTaskService',
     'otusjs.model.navigation.CreateDefaultRouteTaskService'
   ];
 
-  function service(NavigationContainerService, SurveyItemContainerService, UpdateRouteTaskService, CreateDefaultRouteTaskService) {
+  function service(NavigationContainerService, CreateDefaultRouteTaskService) {
     var self = this;
 
     /* Public methods */

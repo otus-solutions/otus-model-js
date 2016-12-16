@@ -44,7 +44,7 @@
     }
 
     function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
-      var nextNavigation = NavigationContainerService.getNavigationByOrigin(newDefaultRoute.destination);
+      var nextNavigation = NavigationContainerService.getNavigationByOrigin(newDefaultRoute.destination);      
       nextNavigation.updateInNavigation(navigation);
     }
   }

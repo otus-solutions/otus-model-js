@@ -20,6 +20,7 @@
     self.getNavigationByOrigin = getNavigationByOrigin;
     self.getNavigationByPosition = getNavigationByPosition;
     self.getNavigationPosition = getNavigationPosition;
+    self.getNavigationPositionByOrigin = getNavigationPositionByOrigin;
     self.getNavigationList = getNavigationList;
     self.getNavigationListSize = getNavigationListSize;
     self.getOrphanNavigations = getOrphanNavigations;
@@ -134,9 +135,7 @@
 
     function createNavigationTo(origin) {
       var newNavigation = NavigationFactory.create(origin);
-      newNavigation.index = _navigationList.length;
-      // _addElementsPreviousTheNavigation(newNavigation);
-      //updateFinalIns();   //TODO
+      newNavigation.index = _navigationList.length;      
       _navigationList.push(newNavigation);
       return newNavigation;
     }
