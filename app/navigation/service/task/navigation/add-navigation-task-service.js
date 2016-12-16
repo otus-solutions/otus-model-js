@@ -7,24 +7,43 @@
 
   service.$inject = [
     'otusjs.model.navigation.NavigationContainerService',
-    'SurveyItemContainerService'
+    'SurveyItemContainerService',
+    'otusjs.model.navigation.UpdateRouteTaskService',
+    'otusjs.model.navigation.CreateDefaultRouteTaskService'
   ];
 
-  function service(NavigationContainerService, SurveyItemContainerService) {
+  function service(NavigationContainerService, SurveyItemContainerService, UpdateRouteTaskService, CreateDefaultRouteTaskService) {
     var self = this;
 
     /* Public methods */
     self.execute = execute;
 
     function execute() {
-      var itemCount = SurveyItemContainerService.getItemListSize();
+      var origin = SurveyItemContainerService.getLastItem();
 
-      if (itemCount > 1) {
-        var origin = SurveyItemContainerService.getItemByPosition(itemCount - 2);
-        var destination = SurveyItemContainerService.getItemByPosition(itemCount - 1);
+      var _newNavigation = NavigationContainerService.createNavigationTo(origin.templateID);
+      var _previousNavigation;
 
-        NavigationContainerService.createNavigationTo(origin.templateID, destination.templateID);
+      if (_newNavigation.index === 2) {
+        _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index - 1);
+      } else {
+        _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index);
       }
+
+      var routeData = {
+        'origin': _newNavigation.origin,
+        'destination': _previousNavigation.getDefaultRoute().destination
+      };
+
+      CreateDefaultRouteTaskService.execute(routeData, _newNavigation);
+
+      var updateRouteData = {
+        'origin': _previousNavigation.origin,
+        'destination': _newNavigation.origin,
+        'isDefault': true
+      };
+
+      UpdateRouteTaskService.execute(updateRouteData, _previousNavigation);
     }
   }
 }());

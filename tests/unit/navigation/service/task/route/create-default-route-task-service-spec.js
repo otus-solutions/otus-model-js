@@ -12,9 +12,9 @@ describe('CreateDefaultRouteTaskService', function() {
     module('otusjs.model.navigation');
 
     inject(function(_$injector_) {
-      mockRoute(_$injector_);
-      mockNavigation(_$injector_);
       mockNavigationContainerService(_$injector_);
+      mockNavigation(_$injector_);
+      mockRoute(_$injector_);
 
       service = _$injector_.get('otusjs.model.navigation.CreateDefaultRouteTaskService', injections);
     });
@@ -25,16 +25,15 @@ describe('CreateDefaultRouteTaskService', function() {
     it('should retrieve the current default route from navigation', function() {
       spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
       spyOn(Mock.navigationA, 'getDefaultRoute').and.returnValue(Mock.routeCAD1_CAD2);
-
+      service.execute(Mock.routeCAD1_CAD2, Mock.navigationA);
       service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
 
       expect(Mock.navigationA.getDefaultRoute).toHaveBeenCalled();
     });
 
-    it('should create a default route based on route data', function() {
+      it('should create a default route based on route data', function() {
       spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
       spyOn(Mock.RouteFactory, 'createDefault').and.callThrough();
-
       service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
 
       expect(Mock.RouteFactory.createDefault).toHaveBeenCalledWith(Mock.routeCAD1_CAD3.origin, Mock.routeCAD1_CAD3.destination);
@@ -53,9 +52,10 @@ describe('CreateDefaultRouteTaskService', function() {
     it('should notify previous default navigation', function() {
       spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
       spyOn(Mock.RouteFactory, 'createDefault').and.returnValue(Mock.routeCAD1_CAD3);
-      spyOn(Mock.navigationA, 'setupDefaultRoute');
+      spyOn(Mock.navigationA, 'setupDefaultRoute').and.callThrough();
       spyOn(Mock.navigationB, 'removeInNavigation');
 
+      service.execute(Mock.routeCAD1_CAD2, Mock.navigationA);
       service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
 
       expect(Mock.navigationB.removeInNavigation).toHaveBeenCalledWith(Mock.navigationA);
@@ -77,13 +77,18 @@ describe('CreateDefaultRouteTaskService', function() {
 
   function mockNavigation($injector) {
     Mock.NavigationFactory = $injector.get('otusjs.model.navigation.NavigationFactory');
-    Mock.navigationA = Mock.NavigationFactory.create(CAD1, CAD2);
-    Mock.navigationB = Mock.NavigationFactory.create(CAD2, CAD3);
-    Mock.navigationC = Mock.NavigationFactory.create(CAD3, CAD4);
+
+    Mock.navigationA = Mock.NavigationContainerService.createNavigationTo(CAD1);
+    Mock.navigationB = Mock.NavigationContainerService.createNavigationTo(CAD2);
+    Mock.navigationC = Mock.NavigationContainerService.createNavigationTo(CAD3);
+    Mock.navigationD = Mock.NavigationContainerService.createNavigationTo(CAD4);
   }
 
   function mockRoute($injector) {
     Mock.RouteFactory = $injector.get('otusjs.model.navigation.RouteFactory');
+
+    Mock.routeDataCAD1_CAD2 = {'origin': 'CAD1', 'destination':'CAD2'};
+    Mock.routeDataCAD1_CAD3 = {'origin': 'CAD1', 'destination':'CAD3'};
 
     Mock.routeCAD1_CAD2 = Mock.RouteFactory.createDefault(CAD1, CAD2);
     Mock.routeCAD1_CAD3 = Mock.RouteFactory.createDefault(CAD1, CAD3);

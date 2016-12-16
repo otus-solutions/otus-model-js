@@ -23,6 +23,7 @@
     self.getAllCheckboxQuestion = getAllCheckboxQuestion;
     self.getItemByPosition = getItemByPosition;
     self.getItemPosition = getItemPosition;
+    self.getLastItem = getLastItem;
     self.existsItem = existsItem;
     self.createItem = createItem;
     self.removeItem = removeItem;
@@ -98,6 +99,10 @@
       } else {
         return null;
       }
+    }
+
+    function getLastItem() {
+      return itemList[itemList.length - 1];
     }
 
     function existsItem(id) {

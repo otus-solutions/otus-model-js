@@ -34,7 +34,7 @@
     self.getSize = getSize;
     self.goToBeginning = goToBeginning;
 
-    function add(item) {
+    function add(item) {            
       if (_notExistsHead()) {
         _setupHead(item);
       } else {

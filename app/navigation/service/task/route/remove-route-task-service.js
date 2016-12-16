@@ -7,7 +7,7 @@
 
   service.$inject = [
     'otusjs.model.navigation.NavigationContainerService'
-  ]
+  ];
 
   function service(NavigationContainerService) {
     var self = this;

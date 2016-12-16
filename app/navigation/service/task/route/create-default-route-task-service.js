@@ -17,13 +17,19 @@
     self.execute = execute;
 
     function execute(routeData, navigation) {
-      var currentDefaultRoute = navigation.getDefaultRoute();
-      var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+      var route;
+      if (navigation.hasDefaultRoute()) {
+         var currentDefaultRoute = navigation.getDefaultRoute();
+         route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+         navigation.setupDefaultRoute(route);
 
-      navigation.setupDefaultRoute(route);
-
-      _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
-      _notifyNewDefaultNavigation(route, navigation);
+         _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
+         _notifyNewDefaultNavigation(route, navigation);
+      } else {
+         route = RouteFactory.createDefault(routeData.origin, routeData.destination);         
+         navigation.setupDefaultRoute(route);
+         _notifyNewDefaultNavigation(route, navigation);
+      }
     }
 
     function _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation) {

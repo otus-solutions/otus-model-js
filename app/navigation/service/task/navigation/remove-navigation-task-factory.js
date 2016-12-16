@@ -16,19 +16,17 @@
     self.execute = execute;
 
     function execute(templateID) {
-      if (NavigationContainerService.existsNavigationTo(templateID)) {
-        var navigationToRecicle = NavigationContainerService.getNavigationByOrigin(templateID);
-        var positionToRecicle = NavigationContainerService.getNavigationPosition(templateID);
-
-        if (positionToRecicle && positionToRecicle !== 0) {
-          var navigationToUpdate = NavigationContainerService.getNavigationByPosition(positionToRecicle - 1);
-          navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
-        }
-
-        NavigationContainerService.removeNavigationOf(templateID);
-      } else {
-        NavigationContainerService.removeCurrentLastNavigation();
+      var navigationToRecicle = NavigationContainerService.getNavigationByOrigin(templateID);
+      var navigationPosition = NavigationContainerService.getNavigationPosition(navigationToRecicle);
+      var navigationToUpdate = NavigationContainerService.getPreviousOf(navigationPosition);
+      if (navigationToRecicle.inNavigations.indexOf(navigationToUpdate) > -1) {
+        _updateRoutes(navigationToUpdate, navigationToRecicle);
       }
+      NavigationContainerService.removeNavigationOf(templateID);
+    }
+    function _updateRoutes(navigationToUpdate, navigationToRecicle){
+      navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
+      navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;
     }
   }
 

@@ -1,4 +1,4 @@
-xdescribe('NavigationFactory', function() {
+describe('NavigationFactory', function() {
 
   var Mock = {};
   var EXTENTS = 'SurveyTemplateObject';
@@ -20,41 +20,28 @@ xdescribe('NavigationFactory', function() {
     var navigation;
 
     it('should return an object that extends SurveyTemplateObject', function() {
-      navigation = factory.create(ORIGIN, DESTINATION);
+      navigation = factory.create(ORIGIN);
 
       expect(navigation.extents).toEqual(EXTENTS);
     });
 
     it('should return an object of Navigation type', function() {
-      navigation = factory.create(ORIGIN, DESTINATION);
+      navigation = factory.create(ORIGIN);
 
       expect(navigation.objectType).toEqual(OBJECT_TYPE);
     });
 
     it('should return an object with a valid origin defined', function() {
-      navigation = factory.create(ORIGIN, DESTINATION);
+      navigation = factory.create(ORIGIN);
 
       expect(navigation.origin).toBeDefined();
     });
 
-    it('should return an object with an array of routes with size equal to one', function() {
-      navigation = factory.create(ORIGIN, DESTINATION);
-
-      expect(navigation.listRoutes().length).toBe(1);
-    });
-
     it('should return null when origin is not set', function() {
-      navigation = factory.create(null, DESTINATION);
+      navigation = factory.create(null);
 
-      expect(navigation).toBe(null);
+      expect(navigation.origin).toBe('NULL NAVIGATION');
     });
-
-    it('should return null when destination is not set', function() {
-      navigation = factory.create(ORIGIN, null);
-
-      expect(navigation).toBe(null);
-    });
-
   });
 
   describe('fromJson method', function() {
@@ -81,30 +68,42 @@ xdescribe('NavigationFactory', function() {
       expect(navigation.origin).toBeDefined();
     });
 
-    it('should return an object with an array with at least one element', function() {
-      navigation = factory.create(ORIGIN, DESTINATION);
-
-      expect(navigation.listRoutes().length).toBeGreaterThan(0);
-    });
-
-    it('should return null when origin is not set', function() {
+    it('should return NULL NAVIGATION when origin is not set', function() {
       var navigation = factory.fromJson(Mock.jsonWithoutOrigin);
 
-      expect(navigation).toBe(null);
+      expect(navigation.origin).toBe('NULL NAVIGATION');
     });
 
-    it('should return null when is json without route', function() {
+    it('should return NULL NAVIGATION when is json without route', function() {
       var navigation = factory.fromJson(Mock.jsonWithoutRoute);
 
-      expect(navigation).toBe(null);
+      expect(navigation.origin).toBe('NULL NAVIGATION');
+    });
+  });
+
+  describe('createNullNavigation method', function() {
+    beforeEach(function() {
+      nullNavigation = factory.createNullNavigation();
     });
 
-    it('should return null when is json without destination', function() {
-      var navigation = factory.fromJson(Mock.jsonWithoutRoute);
-
-      expect(navigation).toBe(null);
+    it('should have NULL NAVIGATION as origin',function(){
+      expect(nullNavigation.origin).toEqual('NULL NAVIGATION');
     });
 
+    it('should have empty arrays of navigations and routes',function(){
+      expect(nullNavigation.inNavigations.length).toBe(0);
+      expect(nullNavigation.outNavigations.length).toBe(0);
+      expect(nullNavigation.routes.length).toBe(0);
+    });
+
+    it('should return true for orphan',function(){
+      expect(nullNavigation.isOrphan()).toBe(true);
+      expect(nullNavigation.hasOrphanRoot()).toBe(true);
+    });
+
+    it('should have null index',function(){
+      expect(nullNavigation.index).toBe(null);
+    });
   });
 
   function mockJson() {

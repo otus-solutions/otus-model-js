@@ -76,6 +76,7 @@
 
     /* Public methods */
     self.addItem = addItem;
+    self.loadItem = loadItem;
     self.removeItem = removeItem;
     self.getItemByTemplateID = getItemByTemplateID;
     self.getItemByCustomID = getItemByCustomID;
@@ -107,6 +108,12 @@
 
     function addItem(type) {
       var item = self.SurveyItemManager.addItem(type, self.identity.acronym);
+      self.NavigationManager.addNavigation();
+      return item;
+    }
+
+    function loadItem(type, templateID) {
+      var item = self.SurveyItemManager.loadItem(type, templateID, self.identity.acronym);
       self.NavigationManager.addNavigation();
       return item;
     }

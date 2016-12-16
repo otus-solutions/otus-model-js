@@ -38,14 +38,14 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.surveyItem', []);
+    angular.module('otusjs.validation', []);
 })();
 'use strict';
 
 (function () {
     'use strict';
 
-    angular.module('otusjs.validation', []);
+    angular.module('otusjs.surveyItem', []);
 })();
 'use strict';
 
@@ -104,6 +104,211 @@
             return MetadataGroupFactory;
         }
     }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityFacadeService', ActivityFacadeService);
+
+  ActivityFacadeService.$inject = ['otusjs.model.activity.AnswerFillFactory', 'otusjs.model.activity.MetadataFillFactory', 'otusjs.model.activity.QuestionFillFactory', 'otusjs.model.activity.ActivitySurveyFactory'];
+
+  function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
+    var self = this;
+    self.surveyActivity = null;
+
+    /* Public interface */
+    self.createActivity = createActivity;
+    self.createQuestionFill = createQuestionFill;
+    self.fillQuestion = fillQuestion;
+    self.openActivitySurvey = openActivitySurvey;
+    self.initializeActivitySurvey = initializeActivitySurvey;
+    self.getFillingByQuestionID = getFillingByQuestionID;
+
+    function createActivity(template) {
+      self.surveyActivity = ActivitySurveyFactory.create(template);
+    }
+
+    function openActivitySurvey() {
+      self.surveyActivity.statusHistory.newOpenedRegistry();
+    }
+
+    function initializeActivitySurvey() {
+      self.surveyActivity.statusHistory.newInitializedOnlineRegistry();
+    }
+
+    function createQuestionFill(question, answer, metadata, comment) {
+      return QuestionFillFactory.create(question, answer, metadata, comment);
+    }
+
+    function fillQuestion(filling) {
+      self.surveyActivity.fillContainer.updateFilling(filling);
+    }
+
+    function getFillingByQuestionID(questionID) {
+      return self.surveyActivity.fillContainer.searchFillingByID(questionID);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.activity').service('otusjs.model.activity.FillingManagerService', FillingManagerService);
+
+  function FillingManagerService() {
+    var self = this;
+    var fillingList = [];
+
+    /* Public methods */
+    self.init = init;
+    self.listSize = listSize;
+    self.getFillingIndex = getFillingIndex;
+    self.existsFillingTo = existsFillingTo;
+    self.searchFillingByID = searchFillingByID;
+    self.updateFilling = updateFilling;
+
+    init();
+
+    function init() {
+      fillingList = [];
+    }
+
+    function listSize() {
+      return fillingList.length;
+    }
+
+    function getFillingIndex(questionID) {
+      var result = _searchByID(questionID);
+      return result ? result.index : null;
+    }
+
+    function existsFillingTo(questionID) {
+      return _searchByID(questionID) ? true : false;
+    }
+
+    function searchFillingByID(questionID) {
+      var result = _searchByID(questionID);
+      return result ? result.filling : null;
+    }
+
+    function updateFilling(filling) {
+      if (filling.isFilled()) {
+        if (!existsFillingTo(filling.questionID)) {
+          _add(filling);
+        } else {
+          return _replaceFilling(filling);
+        }
+      } else {
+        return _removeFilling(filling.questionID);
+      }
+    }
+
+    function _searchByID(questionID) {
+      var result;
+
+      fillingList.forEach(function (filling, index) {
+        if (filling.questionID === questionID) {
+          result = {};
+          result.filling = filling;
+          result.index = index;
+        }
+      });
+
+      return result;
+    }
+
+    function _add(filling) {
+      fillingList.push(filling);
+    }
+
+    function _replaceFilling(filling) {
+      var result = _searchByID(filling.questionID);
+      if (result !== undefined) {
+        return fillingList.splice(result.index, 1, filling)[0];
+      } else {
+        return null;
+      }
+    }
+
+    function _removeFilling(questionID) {
+      var result = _searchByID(questionID);
+      if (result !== undefined) {
+        return fillingList.splice(result.index, 1)[0];
+      } else {
+        return null;
+      }
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.activity').service('otusjs.model.activity.StatusHistoryManagerService', StatusHistoryManagerService);
+
+  StatusHistoryManagerService.$inject = ['otusjs.model.activity.ActivityStatusFactory'];
+
+  function StatusHistoryManagerService(ActivityStatusFactory) {
+    var self = this;
+    var history;
+
+    self.init = init;
+    self.historySize = historySize;
+    self.getHistory = getHistory;
+    self.newCreatedRegistry = newCreatedRegistry;
+    self.newInitializedOfflineRegistry = newInitializedOfflineRegistry;
+    self.newInitializedOnlineRegistry = newInitializedOnlineRegistry;
+    self.newOpenedRegistry = newOpenedRegistry;
+    self.newSavedRegistry = newSavedRegistry;
+    self.newFinalizedRegistry = newFinalizedRegistry;
+    self.toJson = toJson;
+
+    init();
+
+    function init() {
+      history = [];
+    }
+
+    function getHistory() {
+      return history;
+    }
+
+    function newCreatedRegistry(user) {
+      history.push(ActivityStatusFactory.createCreatedStatus(user));
+    }
+
+    function newInitializedOfflineRegistry(user) {
+      history.push(ActivityStatusFactory.createInitializedOfflineStatus(user));
+    }
+
+    function newInitializedOnlineRegistry(user) {
+      history.push(ActivityStatusFactory.createInitializedOnlineStatus(user));
+    }
+
+    function newOpenedRegistry(user) {
+      history.push(ActivityStatusFactory.createOpenedStatus(user));
+    }
+
+    function newSavedRegistry(user) {
+      history.push(ActivityStatusFactory.createSavedStatus(user));
+    }
+
+    function newFinalizedRegistry(user) {
+      history.push(ActivityStatusFactory.createFinalizedStatus(user));
+    }
+
+    function historySize() {
+      return history.length;
+    }
+
+    function toJson() {
+      return JSON.stringify(history);
+    }
+  }
 })();
 'use strict';
 
@@ -555,211 +760,6 @@
 'use strict';
 
 (function () {
-  'use strict';
-
-  angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityFacadeService', ActivityFacadeService);
-
-  ActivityFacadeService.$inject = ['otusjs.model.activity.AnswerFillFactory', 'otusjs.model.activity.MetadataFillFactory', 'otusjs.model.activity.QuestionFillFactory', 'otusjs.model.activity.ActivitySurveyFactory'];
-
-  function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
-    var self = this;
-    self.surveyActivity = null;
-
-    /* Public interface */
-    self.createActivity = createActivity;
-    self.createQuestionFill = createQuestionFill;
-    self.fillQuestion = fillQuestion;
-    self.openActivitySurvey = openActivitySurvey;
-    self.initializeActivitySurvey = initializeActivitySurvey;
-    self.getFillingByQuestionID = getFillingByQuestionID;
-
-    function createActivity(template) {
-      self.surveyActivity = ActivitySurveyFactory.create(template);
-    }
-
-    function openActivitySurvey() {
-      self.surveyActivity.statusHistory.newOpenedRegistry();
-    }
-
-    function initializeActivitySurvey() {
-      self.surveyActivity.statusHistory.newInitializedOnlineRegistry();
-    }
-
-    function createQuestionFill(question, answer, metadata, comment) {
-      return QuestionFillFactory.create(question, answer, metadata, comment);
-    }
-
-    function fillQuestion(filling) {
-      self.surveyActivity.fillContainer.updateFilling(filling);
-    }
-
-    function getFillingByQuestionID(questionID) {
-      return self.surveyActivity.fillContainer.searchFillingByID(questionID);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.activity').service('otusjs.model.activity.FillingManagerService', FillingManagerService);
-
-  function FillingManagerService() {
-    var self = this;
-    var fillingList = [];
-
-    /* Public methods */
-    self.init = init;
-    self.listSize = listSize;
-    self.getFillingIndex = getFillingIndex;
-    self.existsFillingTo = existsFillingTo;
-    self.searchFillingByID = searchFillingByID;
-    self.updateFilling = updateFilling;
-
-    init();
-
-    function init() {
-      fillingList = [];
-    }
-
-    function listSize() {
-      return fillingList.length;
-    }
-
-    function getFillingIndex(questionID) {
-      var result = _searchByID(questionID);
-      return result ? result.index : null;
-    }
-
-    function existsFillingTo(questionID) {
-      return _searchByID(questionID) ? true : false;
-    }
-
-    function searchFillingByID(questionID) {
-      var result = _searchByID(questionID);
-      return result ? result.filling : null;
-    }
-
-    function updateFilling(filling) {
-      if (filling.isFilled()) {
-        if (!existsFillingTo(filling.questionID)) {
-          _add(filling);
-        } else {
-          return _replaceFilling(filling);
-        }
-      } else {
-        return _removeFilling(filling.questionID);
-      }
-    }
-
-    function _searchByID(questionID) {
-      var result;
-
-      fillingList.forEach(function (filling, index) {
-        if (filling.questionID === questionID) {
-          result = {};
-          result.filling = filling;
-          result.index = index;
-        }
-      });
-
-      return result;
-    }
-
-    function _add(filling) {
-      fillingList.push(filling);
-    }
-
-    function _replaceFilling(filling) {
-      var result = _searchByID(filling.questionID);
-      if (result !== undefined) {
-        return fillingList.splice(result.index, 1, filling)[0];
-      } else {
-        return null;
-      }
-    }
-
-    function _removeFilling(questionID) {
-      var result = _searchByID(questionID);
-      if (result !== undefined) {
-        return fillingList.splice(result.index, 1)[0];
-      } else {
-        return null;
-      }
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.activity').service('otusjs.model.activity.StatusHistoryManagerService', StatusHistoryManagerService);
-
-  StatusHistoryManagerService.$inject = ['otusjs.model.activity.ActivityStatusFactory'];
-
-  function StatusHistoryManagerService(ActivityStatusFactory) {
-    var self = this;
-    var history;
-
-    self.init = init;
-    self.historySize = historySize;
-    self.getHistory = getHistory;
-    self.newCreatedRegistry = newCreatedRegistry;
-    self.newInitializedOfflineRegistry = newInitializedOfflineRegistry;
-    self.newInitializedOnlineRegistry = newInitializedOnlineRegistry;
-    self.newOpenedRegistry = newOpenedRegistry;
-    self.newSavedRegistry = newSavedRegistry;
-    self.newFinalizedRegistry = newFinalizedRegistry;
-    self.toJson = toJson;
-
-    init();
-
-    function init() {
-      history = [];
-    }
-
-    function getHistory() {
-      return history;
-    }
-
-    function newCreatedRegistry(user) {
-      history.push(ActivityStatusFactory.createCreatedStatus(user));
-    }
-
-    function newInitializedOfflineRegistry(user) {
-      history.push(ActivityStatusFactory.createInitializedOfflineStatus(user));
-    }
-
-    function newInitializedOnlineRegistry(user) {
-      history.push(ActivityStatusFactory.createInitializedOnlineStatus(user));
-    }
-
-    function newOpenedRegistry(user) {
-      history.push(ActivityStatusFactory.createOpenedStatus(user));
-    }
-
-    function newSavedRegistry(user) {
-      history.push(ActivityStatusFactory.createSavedStatus(user));
-    }
-
-    function newFinalizedRegistry(user) {
-      history.push(ActivityStatusFactory.createFinalizedStatus(user));
-    }
-
-    function historySize() {
-      return history.length;
-    }
-
-    function toJson() {
-      return JSON.stringify(history);
-    }
-  }
-})();
-'use strict';
-
-(function () {
     'use strict';
 
     angular.module('otusjs.metadata').service('AddMetadataAnswerService', AddMetadataAnswerService);
@@ -822,6 +822,23 @@
 
         function execute(itemType, survey) {
             return survey.addItem(itemType);
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.surveyItem').service('LoadSurveyItemService', LoadSurveyItemService);
+
+    function LoadSurveyItemService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, survey) {
+            return survey.loadItem(item.objectType, item.templateID);
         }
     }
 })();
@@ -1557,34 +1574,63 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     Inject.RouteFactory = RouteFactory;
 
     self.create = create;
+    self.createInitial = createInitial;
     self.fromJson = fromJson;
+    self.createNullNavigation = createNullNavigation;
 
-    function create(origin, destination) {
-      if (!origin || !destination) {
-        return null;
+    function create(origin) {
+      if (!origin) {
+        return createNullNavigation();
       }
 
-      var defaultRoute = RouteFactory.createDefault(origin, destination);
-      if (!defaultRoute) {
-        return null;
-      }
-
-      defaultRoute.index = 0;
-      return new Navigation(origin, defaultRoute);
+      return new Navigation(origin);
     }
 
-    function fromJson(json, inNavigations) {
-      var jsonObj = _parse(json);
+    function createInitial(origin) {
+      var initialNavigation = new Navigation(origin);
 
-      if (!jsonObj.routes || !jsonObj.routes.length) {
-        return null;
+      if (origin === 'BEGIN NODE') {
+        initialNavigation.index = 0;
+      } else {
+        initialNavigation.index = 1;
       }
 
-      var navigation = create(jsonObj.origin, jsonObj.routes[0].destination);
+      return initialNavigation;
+    }
+
+    function createNullNavigation() {
+      var navigation = create('NULL NAVIGATION');
+
+      /* Object properties */
+      navigation.index = null;
+      navigation.inNavigations = [];
+      navigation.outNavigations = [];
+      navigation.routes = [];
+      navigation.isOrphan = function () {
+        return true;
+      };
+      navigation.hasOrphanRoot = function () {
+        return true;
+      };
+      return navigation;
+    }
+
+    function fromJson(jsonData) {
+      var jsonObj = _parse(jsonData);
+      var navigation;
+      if (jsonObj.origin === 'BEGIN NODE' || jsonObj.origin === 'END NODE') {
+        navigation = createInitial(jsonObj.origin);
+      } else {
+        if (!jsonObj.routes || !jsonObj.routes.length) {
+          //TODO check if needed
+          return createNullNavigation();
+        }
+        navigation = create(jsonObj.origin);
+      }
 
       if (navigation) {
         navigation.index = jsonObj.index;
-        navigation.inNavigations = inNavigations;
+        navigation.inNavigations = jsonObj.inNavigations;
         navigation.routes = jsonObj.routes.map(function (route) {
           return RouteFactory.fromJson(JSON.stringify(route));
         });
@@ -1593,20 +1639,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return navigation;
     }
 
-    function _parse(json) {
-      if (typeof json === 'string') {
-        return JSON.parse(json);
-      } else if ((typeof json === 'undefined' ? 'undefined' : _typeof(json)) === 'object') {
-        return JSON.parse(JSON.stringify(json));
+    function _parse(jsonData) {
+      if (typeof jsonData === 'string') {
+        return JSON.parse(jsonData);
+      } else if ((typeof jsonData === 'undefined' ? 'undefined' : _typeof(jsonData)) === 'object') {
+        return JSON.parse(JSON.stringify(jsonData));
       }
     }
 
     return self;
   }
 
-  function Navigation(origin, defaultRoute) {
+  function Navigation(origin) {
     var self = this;
-    var _defaultRoute = defaultRoute;
 
     /* Object properties */
     self.extents = 'SurveyTemplateObject';
@@ -1615,7 +1660,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.index = null;
     self.inNavigations = [];
     self.outNavigations = [];
-    self.routes = [defaultRoute];
+    self.routes = [];
 
     /* Public methods */
     self.addInNavigation = addInNavigation;
@@ -1626,6 +1671,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.getDefaultRoute = getDefaultRoute;
     self.getRouteByName = getRouteByName;
     self.hasRoute = hasRoute;
+    self.hasDefaultRoute = hasDefaultRoute;
     self.isOrphan = isOrphan;
     self.hasOrphanRoot = hasOrphanRoot;
     self.listRoutes = listRoutes;
@@ -1647,7 +1693,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function clone() {
-      var clone = new self.constructor(self.origin, _defaultRoute);
+      var clone = new self.constructor(self.origin, self.routes[0]);
       self.inNavigations.map(clone.addInNavigation);
       self.outNavigations.map(clone.addOutNavigation);
       var routes = self.listRoutes();
@@ -1715,7 +1761,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function getDefaultRoute() {
-      return _defaultRoute.clone();
+      return self.routes[0].clone();
+    }
+
+    function hasDefaultRoute() {
+      return !self.routes[0] ? false : true;
     }
 
     function getRouteByName(name) {
@@ -1738,7 +1788,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function _isCurrentDefaultRoute(route) {
-      return _defaultRoute && route.name === _defaultRoute.name;
+      return self.routes[0] && route.name === self.routes[0].name;
     }
 
     function hasOrphanRoot() {
@@ -1773,11 +1823,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return clones;
     }
 
-    function _removeDefaultRoute() {
-      _defaultRoute = null;
-      self.routes.shift();
-    }
-
     function removeInNavigation(navigationToRemove) {
       self.inNavigations.some(function (navigation, index) {
         if (navigation.origin === navigationToRemove.origin) {
@@ -1792,7 +1837,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         if (route.name === name) {
           self.routes.splice(index, 1);
           if (route.isDefault) {
-            _defaultRoute = null;
+            self.routes[0] = null;
           }
           return true;
         }
@@ -1811,7 +1856,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       removeRouteByName(route.name);
       route.conditions = [];
       self.routes[0] = route;
-      _defaultRoute = route;
     }
 
     function toJson() {
@@ -1838,9 +1882,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function _updateDefaultRoute(route) {
-      _defaultRoute = route;
-      _defaultRoute.conditions = [];
-      self.routes[0] = _defaultRoute;
+      self.routes[0] = route;
+      self.routes[0].conditions = [];
     }
 
     function updateInNavigation(navigation) {
@@ -2594,6 +2637,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     var self = this;
 
+<<<<<<< HEAD
     var factoryMap = {
       /* Question items */
       'CalendarQuestion': CalendarQuestionFactory,
@@ -2609,11 +2653,33 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       'TextItem': TextItemFactory,
       'ImageItem': ImageItemFactory
     };
+=======
+    /* Public methods */
+    self.init = init;
+    self.loadJsonData = loadJsonData;
+    self.manageNavigation = manageNavigation;
+    self.getNavigationByOrigin = getNavigationByOrigin;
+    self.getNavigationByPosition = getNavigationByPosition;
+    self.getNavigationPosition = getNavigationPosition;
+    self.getNavigationPositionByOrigin = getNavigationPositionByOrigin;
+    self.getNavigationList = getNavigationList;
+    self.getNavigationListSize = getNavigationListSize;
+    self.getOrphanNavigations = getOrphanNavigations;
+    self.existsNavigationTo = existsNavigationTo;
+    self.createNavigationTo = createNavigationTo;
+    self.removeNavigationOf = removeNavigationOf;
+    self.removeNavigationByIndex = removeNavigationByIndex;
+    self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+    self.setInitialNodes = setInitialNodes;
+    self.getPreviousOf = getPreviousOf;
+    self.getEmptyNavigation = getEmptyNavigation;
+>>>>>>> feature-otus-46
 
     /* Public interface */
     self.create = create;
     self.load = load;
 
+<<<<<<< HEAD
     function create(itemType, templateID) {
       var item = new SurveyItem(templateID);
       return factoryMap[itemType].create(templateID, item);
@@ -2668,13 +2734,49 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function loadJsonData(data) {
+=======
+    function loadJsonData(jsonData) {
+>>>>>>> feature-otus-46
       init();
-      data.forEach(function (navigationData) {
-        var inNavigations = navigationData.inNavigations.map(function (inNavigation) {
-          return getNavigationByOrigin(inNavigation.origin);
+      // assumes previous load
+      var navMap = _loadNavigations(jsonData);
+
+      /* FIX IN NAVIGATIONS */
+      var nullNavigation = NavigationFactory.createNullNavigation();
+      _navigationList.forEach(function (navigation) {
+        var replacer = [];
+        navigation.inNavigations.forEach(function (inNav) {
+          if (inNav.origin in navMap) {
+            replacer.push(navMap[inNav.origin]);
+          } else {
+            replacer.push(nullNavigation);
+          }
         });
-        _navigationList.push(NavigationFactory.fromJson(navigationData, inNavigations));
+        navigation.inNavigations = replacer.slice();
       });
+    }
+
+    function _loadNavigations(jsonData) {
+      var navMap = {};
+      var navigation;
+      jsonData.forEach(function (newNavigation) {
+        navigation = NavigationFactory.fromJson(newNavigation);
+        _navigationList.push(navigation);
+        navMap[navigation.origin] = navigation;
+      });
+      return navMap;
+    }
+
+    function getNavigationByOrigin(origin) {
+      var filter = _navigationList.filter(function (navigation) {
+        return findByOrigin(navigation, origin);
+      });
+      return filter[0];
+    }
+
+    function getEmptyNavigation(indexToRemove) {
+      _navigationList[indexToRemove].routes = [];
+      return _navigationList[indexToRemove];
     }
 
     function manageNavigation(navigationToManage) {
@@ -2689,19 +2791,26 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return _navigationList.length;
     }
 
-    function getNavigationByOrigin(origin) {
-      var filter = _navigationList.filter(function (navigation) {
-        return findByOrigin(navigation, origin);
-      });
-
-      return filter[0];
+    function getPreviousOf(index) {
+      if (index === 2) {
+        index = 1;
+      }
+      return getNavigationByPosition(index - 1);
     }
 
     function getNavigationByPosition(position) {
       return _navigationList[position];
     }
 
-    function getNavigationPosition(origin) {
+    function getNavigationPosition(navigation) {
+      if (navigation) {
+        return _navigationList.indexOf(navigation);
+      } else {
+        return null;
+      }
+    }
+
+    function getNavigationPositionByOrigin(origin) {
       var navigation = getNavigationByOrigin(origin);
       if (navigation) {
         return _navigationList.indexOf(navigation);
@@ -2722,34 +2831,375 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return getNavigationByOrigin(origin) ? true : false;
     }
 
-    function createNavigationTo(origin, destination) {
-      var newNavigation = NavigationFactory.create(origin, destination);
+    function createNavigationTo(origin) {
+      var newNavigation = NavigationFactory.create(origin);
       newNavigation.index = _navigationList.length;
-      _addElementsPreviousTheNavigation(newNavigation);
       _navigationList.push(newNavigation);
+      return newNavigation;
     }
 
-    function _addElementsPreviousTheNavigation(navigation) {
-      if (_navigationList.length) {
-        var previous = _navigationList[_navigationList.length - 1];
-        navigation.addInNavigation(previous);
-      }
+    function setInitialNodes() {
+      var beginNavigation = NavigationFactory.createInitial('BEGIN NODE', 'END NODE');
+      var endNavigation = NavigationFactory.createInitial('END NODE', 'BEGIN NODE');
+
+      _navigationList.unshift(endNavigation);
+      _navigationList.unshift(beginNavigation);
     }
 
     function removeNavigationOf(questionID) {
       var navigationToRemove = _navigationList.filter(function (navigation) {
         return findByOrigin(navigation, questionID);
       });
-
       var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
       if (indexToRemove > -1) {
         _navigationList.splice(indexToRemove, 1);
+        _removeFromInNavigations(indexToRemove, navigationToRemove[0]);
+      }
+    }
+
+    function _removeFromInNavigations(indexToRemove, navigationToRemove) {
+      var nullNavigation = NavigationFactory.createNullNavigation();
+      var endNodeIndex = _navigationList[1].inNavigations.indexOf(navigationToRemove);
+      if (endNodeIndex > -1) {
+        _navigationList[1].inNavigations[endNodeIndex] = nullNavigation;
+      }
+      for (var i = indexToRemove; i < _navigationList.length; i++) {
+        var inIndex = _navigationList[i].inNavigations.indexOf(navigationToRemove);
+        if (inIndex > -1) {
+          _navigationList[i].inNavigations[inIndex] = nullNavigation;
+        }
       }
     }
 
     function removeNavigationByIndex(indexToRemove) {
       _navigationList.splice(indexToRemove, 1);
     }
+<<<<<<< HEAD
+=======
+
+    function removeCurrentLastNavigation() {
+      _navigationList.splice(-1, 1);
+    }
+
+    /* Private methods */
+    function findByOrigin(navigation, questionID) {
+      return navigation.origin === questionID;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationManagerService', service);
+
+  service.$inject = ['SurveyItemManagerService', 'otusjs.model.navigation.NavigationContainerService', 'otusjs.model.navigation.NavigationAddService', 'otusjs.model.navigation.NavigationRemoveService', 'otusjs.model.navigation.CreateDefaultRouteTaskService', 'otusjs.model.navigation.AddAlternativeRouteTaskService', 'otusjs.model.navigation.RemoveRouteTaskService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.NavigationValidatorService', 'otusjs.model.navigation.InitialNodesAddService'];
+
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService, AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService, InitialNodesAddService) {
+
+    var self = this;
+    var _selectedNavigation = null;
+
+    /* Public interface */
+    self.init = init;
+    self.loadJsonData = loadJsonData;
+    self.getNavigationList = getNavigationList;
+    self.getDefaultNavigationPath = getDefaultNavigationPath;
+    self.selectNavigationByOrigin = selectNavigationByOrigin;
+    self.selectedNavigation = selectedNavigation;
+    self.addNavigation = addNavigation;
+    self.applyRoute = applyRoute;
+    self.deleteRoute = deleteRoute;
+    self.removeNavigation = removeNavigation;
+    self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
+    self.listOrphanNavigations = listOrphanNavigations;
+    self.getExportableList = getExportableList;
+
+    function init() {
+      NavigationContainerService.init();
+      _generateNavigation();
+    }
+
+    function loadJsonData(data) {
+      NavigationContainerService.loadJsonData(data);
+    }
+
+    function _updateRoutesOnLoad() {
+      var navList = getNavigationList();
+      data.forEach(function (jsonNav) {
+        _selectedNavigation = selectNavigationByOrigin(jsonNav.origin);
+        jsonNav.routes.forEach(function (route) {
+          applyRoute(route);
+        });
+      });
+    }
+
+    function getNavigationList() {
+      return NavigationContainerService.getNavigationList();
+    }
+
+    function getExportableList() {
+      var fullList = NavigationContainerService.getNavigationList();
+      return fullList.slice(2, fullList.length);
+    }
+
+    function getDefaultNavigationPath() {
+      var navigations = getNavigationList();
+      var currentPathState = navigations[0];
+      var defaultPath = [currentPathState];
+
+      navigations.forEach(function (navigation) {
+        if (navigation.origin === currentPathState.getDefaultRoute().destination) {
+          defaultPath.push(navigation);
+          currentPathState = navigation;
+        }
+      });
+
+      return defaultPath;
+    }
+
+    function selectNavigationByOrigin(origin) {
+      _selectedNavigation = NavigationContainerService.getNavigationByOrigin(origin);
+      return _selectedNavigation;
+    }
+
+    function selectedNavigation() {
+      return _selectedNavigation;
+    }
+
+    function addNavigation() {
+      if (!NavigationContainerService.getNavigationListSize()) {
+        //TODO remove?
+        _generateNavigation();
+      }
+      _selectedNavigation = NavigationAddService.execute();
+    }
+
+    function _generateNavigation() {
+      InitialNodesAddService.execute();
+    }
+
+    function applyRoute(routeData) {
+      if (_selectedNavigation.hasRoute(routeData)) {
+        return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
+      } else if (routeData.isDefault) {
+        CreateDefaultRouteTaskService.execute(routeData, _selectedNavigation);
+      } else {
+        AddAlternativeRouteTaskService.execute(routeData, _selectedNavigation);
+      }
+    }
+
+    function deleteRoute(routeData) {
+      RemoveRouteTaskService.execute(routeData, _selectedNavigation);
+    }
+
+    function removeNavigation(templateID) {
+      NavigationRemoveService.execute(templateID);
+    }
+
+    function getAvaiableRuleCriterionTargets(referenceItemID) {
+      var referenceItemIndex = SurveyItemManagerService.getItemPosition(referenceItemID);
+      var allItems = SurveyItemManagerService.getItemList();
+
+      var avaiableItems = allItems.filter(function (item, index) {
+        return index <= referenceItemIndex;
+      });
+
+      return avaiableItems;
+    }
+
+    function listOrphanNavigations() {
+      return NavigationContainerService.getOrphanNavigations();
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationValidatorService', service);
+
+  service.$inject = ['SurveyItemContainerService'];
+
+  function service(SurveyItemContainerService) {
+    var self = this;
+    var itemList = [];
+
+    /* Public methods */
+    self.init = init;
+    self.isRouteValid = isRouteValid;
+
+    init();
+
+    function init() {
+      itemList = SurveyItemContainerService.getItemList();
+    }
+
+    function isRouteValid(origin, destination) {
+      if (origin === destination) {
+        return false;
+      } else {
+        var origenInList = _searchByID(origin);
+        var destinationInList = _searchByID(destination);
+        if (origenInList.index < destinationInList.index) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    function _searchByID(questionID) {
+      var result = null;
+
+      itemList.forEach(function (question, index) {
+        if (question.customID === questionID) {
+          result = {};
+          result.question = question;
+          result.index = index;
+        }
+      });
+      return result;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.survey').factory('SurveyFactory', SurveyFactory);
+
+  SurveyFactory.$inject = ['SurveyIdentityFactory', 'SurveyMetaInfoFactory', 'SurveyUUIDGenerator', 'otusjs.model.navigation.NavigationManagerService', 'SurveyItemManagerService'];
+
+  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService, SurveyItemManagerService) {
+    var self = this;
+
+    /* Public interdace */
+    self.create = create;
+    self.load = load;
+    self.fromJsonObject = fromJsonObject;
+
+    /**
+    TODO :
+     Quando for implementado o novo método de carregamento no projeto OTUS-STUDIO,
+    deve-se excluir o método load e usar somente o fromJsonObject.
+     */
+    function load(jsonObject) {
+      var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
+      var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
+      var UUID = jsonObject.oid;
+
+      return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+    }
+
+    function create(name, acronym) {
+      var metainfo = SurveyMetaInfoFactory.create();
+      var identity = SurveyIdentityFactory.create(name, acronym);
+      var UUID = SurveyUUIDGenerator.generateSurveyUUID();
+
+      return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+    }
+
+    function fromJsonObject(jsonObject) {
+      var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
+      var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
+      var UUID = jsonObject.oid;
+
+      var survey = new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+
+      survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
+      survey.NavigationManager.loadJsonData(jsonObject.navigationList);
+
+      return survey;
+    }
+
+    return self;
+  }
+
+  function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService, SurveyItemManagerService) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'Survey';
+    self.oid = uuid;
+    self.identity = surveyIdentity;
+    self.metainfo = surveyMetainfo;
+    self.SurveyItemManager = SurveyItemManagerService;
+    self.NavigationManager = NavigationManagerService;
+
+    self.NavigationManager.init();
+    self.SurveyItemManager.init();
+
+    /* Public methods */
+    self.addItem = addItem;
+    self.loadItem = loadItem;
+    self.removeItem = removeItem;
+    self.getItemByTemplateID = getItemByTemplateID;
+    self.getItemByCustomID = getItemByCustomID;
+    self.getItemByID = getItemByID;
+    self.isAvailableID = isAvailableID;
+    self.isAvailableCustomID = isAvailableCustomID;
+    self.updateItem = updateItem;
+    self.toJson = toJson;
+
+    function getItemByTemplateID(templateID) {
+      return self.SurveyItemManager.getItemByTemplateID(templateID);
+    }
+
+    function getItemByCustomID(customID) {
+      return self.SurveyItemManager.getItemByCustomID(customID);
+    }
+
+    function getItemByID(id) {
+      return self.SurveyItemManager.getItemByID(id);
+    }
+
+    function isAvailableID(id) {
+      return !self.SurveyItemManager.existsItem(id);
+    }
+
+    function isAvailableCustomID(id) {
+      return self.SurveyItemManager.isAvailableCustomID(id);
+    }
+
+    function addItem(type) {
+      var item = self.SurveyItemManager.addItem(type, self.identity.acronym);
+      self.NavigationManager.addNavigation();
+      return item;
+    }
+
+    function loadItem(type, templateID) {
+      var item = self.SurveyItemManager.loadItem(type, templateID, self.identity.acronym);
+      self.NavigationManager.addNavigation();
+      return item;
+    }
+
+    function removeItem(templateID) {
+      self.SurveyItemManager.removeItem(templateID);
+      self.NavigationManager.removeNavigation(templateID);
+    }
+
+    function updateItem(item) {
+      self.navigationList[item.templateID] = item;
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.oid = self.oid;
+      json.identity = self.identity.toJson();
+      json.metainfo = self.metainfo.toJson();
+
+      json.itemContainer = [];
+      self.SurveyItemManager.getItemList().forEach(function (item) {
+        json.itemContainer.push(item.toJson());
+      });
+>>>>>>> feature-otus-46
 
     function removeCurrentLastNavigation() {
       _navigationList.splice(-1, 1);
@@ -2867,305 +3317,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+<<<<<<< HEAD
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationValidatorService', service);
-
-  service.$inject = ['SurveyItemContainerService'];
-
-  function service(SurveyItemContainerService) {
-    var self = this;
-    var itemList = [];
-
-    /* Public methods */
-    self.init = init;
-    self.isRouteValid = isRouteValid;
-
-    init();
-
-    function init() {
-      itemList = SurveyItemContainerService.getItemList();
-    }
-
-    function isRouteValid(origin, destination) {
-      if (origin === destination) {
-        return false;
-      } else {
-        var origenInList = _searchByID(origin);
-        var destinationInList = _searchByID(destination);
-        if (origenInList.index < destinationInList.index) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    }
-
-    function _searchByID(questionID) {
-      var result = null;
-
-      itemList.forEach(function (question, index) {
-        if (question.customID === questionID) {
-          result = {};
-          result.question = question;
-          result.index = index;
-        }
-      });
-      return result;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').service('SurveyItemContainerService', SurveyItemContainerService);
-
-  SurveyItemContainerService.$inject = ['SurveyItemFactory'];
-
-  function SurveyItemContainerService(SurveyItemFactory) {
-    var self = this;
-    var itemList = []; // TODO: To implement Immutable collection
-
-    /* Public methods */
-    self.init = init;
-    self.loadFromItemContainerObject = loadFromItemContainerObject;
-    self.manageItems = manageItems;
-    self.getItemList = getItemList;
-    self.getItemListSize = getItemListSize;
-    self.getItemByTemplateID = getItemByTemplateID;
-    self.getItemByCustomID = getItemByCustomID;
-    self.getItemByID = getItemByID;
-    self.getAllCheckboxQuestion = getAllCheckboxQuestion;
-    self.getItemByPosition = getItemByPosition;
-    self.getItemPosition = getItemPosition;
-    self.existsItem = existsItem;
-    self.createItem = createItem;
-    self.removeItem = removeItem;
-    self.removeItemByPosition = removeItemByPosition;
-    self.removeCurrentLastItem = removeCurrentLastItem;
-
-    function init() {
-      itemList = [];
-    }
-
-    function loadFromItemContainerObject(itemContainerObject) {
-      init();
-      itemContainerObject.forEach(function (item) {
-        itemList.push(SurveyItemFactory.load(item));
-      });
-    }
-
-    function manageItems(itemsToManage) {
-      itemList = itemsToManage;
-    }
-
-    function getItemList() {
-      return itemList;
-    }
-
-    function getItemListSize() {
-      return itemList.length;
-    }
-
-    function getItemByTemplateID(templateID) {
-      var filter = itemList.filter(function (item) {
-        return findByTemplateID(item, templateID);
-      });
-
-      return filter[0];
-    }
-
-    function getItemByCustomID(customID) {
-      var filter = itemList.filter(function (item) {
-        return findByCustomID(item, customID);
-      });
-
-      return filter[0];
-    }
-
-    function getItemByID(id) {
-      var item = getItemByTemplateID(id);
-      if (item) {
-        return item;
-      } else {
-        return getItemByCustomID(id);
-      }
-    }
-
-    function getAllCheckboxQuestion() {
-      var occurences = [];
-      itemList.filter(function (item) {
-        if (item.objectType === "CheckboxQuestion") {
-          occurences.push(item);
-        }
-      });
-      return occurences;
-    }
-
-    function getItemByPosition(position) {
-      return itemList[position];
-    }
-
-    function getItemPosition(templateID) {
-      var item = getItemByTemplateID(templateID);
-      if (item) {
-        return itemList.indexOf(item);
-      } else {
-        return null;
-      }
-    }
-
-    function existsItem(id) {
-      return getItemByTemplateID(id) || getItemByCustomID(id) ? true : false;
-    }
-
-    function createItem(itemType, templateID) {
-      var item = SurveyItemFactory.create(itemType, templateID);
-      itemList.push(item);
-      return item;
-    }
-
-    function removeItem(templateID) {
-      var itemToRemove = itemList.filter(function (item) {
-        return findByTemplateID(item, templateID);
-      });
-
-      var indexToRemove = itemList.indexOf(itemToRemove[0]);
-      if (indexToRemove > -1) {
-        itemList.splice(indexToRemove, 1);
-      }
-    }
-
-    function removeItemByPosition(indexToRemove) {
-      itemList.splice(indexToRemove, 1);
-    }
-
-    function removeCurrentLastItem() {
-      itemList.splice(-1, 1);
-    }
-
-    /* Private methods */
-    function findByTemplateID(item, templateID) {
-      return item.templateID.toLowerCase() === templateID.toLowerCase();
-    }
-
-    function findByCustomID(item, customID) {
-      return item.customID.toLowerCase() === customID.toLowerCase();
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').service('SurveyItemManagerService', SurveyItemManagerService);
-
-  SurveyItemManagerService.$inject = ['SurveyItemContainerService'];
-
-  function SurveyItemManagerService(SurveyItemContainerService) {
-    var self = this;
-
-    var incrementalIDValue = 0;
-
-    /* Public interface */
-    self.init = init;
-    self.loadJsonDataObject = loadJsonDataObject;
-    self.getItemList = getItemList;
-    self.getItemListSize = getItemListSize;
-    self.getItemByTemplateID = getItemByTemplateID;
-    self.getItemByCustomID = getItemByCustomID;
-    self.getItemByID = getItemByID;
-    self.getItemPosition = getItemPosition;
-    self.getAllCustomOptionsID = getAllCustomOptionsID;
-    self.addItem = addItem;
-    self.removeItem = removeItem;
-    self.existsItem = existsItem;
-    self.isAvailableCustomID = isAvailableCustomID;
-
-    function init() {
-      SurveyItemContainerService.init();
-      incrementalIDValue = 0;
-    }
-
-    function loadJsonDataObject(itemContainerObject) {
-      SurveyItemContainerService.loadFromItemContainerObject(itemContainerObject);
-    }
-
-    function getItemList() {
-      return SurveyItemContainerService.getItemList();
-    }
-
-    function getItemListSize() {
-      return SurveyItemContainerService.getItemListSize();
-    }
-
-    function getItemByTemplateID(templateID) {
-      return SurveyItemContainerService.getItemByTemplateID(templateID);
-    }
-
-    function getItemByCustomID(customID) {
-      return SurveyItemContainerService.getItemByCustomID(customID);
-    }
-
-    function getItemByID(id) {
-      return SurveyItemContainerService.getItemByID(id);
-    }
-
-    function getItemPosition(customID) {
-      return SurveyItemContainerService.getItemPosition(customID);
-    }
-
-    function getAllCustomOptionsID() {
-      var customOptionsID = [];
-      var checkboxQuestions = SurveyItemContainerService.getAllCheckboxQuestion();
-      if (checkboxQuestions.length > 0) {
-        checkboxQuestions.forEach(function (checkboxQuestion) {
-          checkboxQuestion.getAllCustomOptionsID().forEach(function (customOptionID) {
-            customOptionsID.push(customOptionID);
-          });
-        });
-      }
-      return customOptionsID;
-    }
-
-    function addItem(itemType, templateIDPrefix) {
-      var templateID;
-      do {
-        templateID = templateIDPrefix + getNextIncrementalGenerator();
-      } while (!isAvailableCustomID(templateID));
-      var item = SurveyItemContainerService.createItem(itemType, templateID);
-      return item;
-    }
-
-    function removeItem(templateID) {
-      SurveyItemContainerService.removeItem(templateID);
-    }
-
-    function getNextIncrementalGenerator() {
-      return ++incrementalIDValue;
-    }
-
-    function existsItem(id) {
-      return SurveyItemContainerService.existsItem(id);
-    }
-
-    function isAvailableCustomID(id) {
-      var foundCustomOptionID = false;
-      getAllCustomOptionsID().forEach(function (customOptionID) {
-        if (customOptionID === id) {
-          foundCustomOptionID = true;
-        }
-      });
-      return getItemByCustomID(id) || foundCustomOptionID ? false : true;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
+=======
   angular.module('otusjs.validation').factory('FillingRulesDataFactory', FillingRulesDataFactory);
 
   FillingRulesDataFactory.$inject = ['AlphanumericValidatorFactory', 'DistinctValidatorFactory', 'FutureDateValidatorFactory', 'InValidatorFactory', 'LowerCaseValidatorFactory', 'LowerLimitValidatorFactory', 'MandatoryValidatorFactory', 'MaxDateValidatorFactory', 'MaxLengthValidatorFactory', 'MaxTimeValidatorFactory', 'MinDateValidatorFactory', 'MinLengthValidatorFactory', 'MinTimeValidatorFactory', 'ParameterValidatorFactory', 'PastDateValidatorFactory', 'PrecisionValidatorFactory', 'RangeDateValidatorFactory', 'ScaleValidatorFactory', 'SpecialsValidatorFactory', 'UpperCaseValidatorFactory', 'UpperLimitValidatorFactory', 'otusjs.model.validation.MinSelectedValidatorFactory', 'otusjs.model.validation.MaxSelectedValidatorFactory', 'otusjs.model.validation.QuantityValidatorFactory'];
@@ -3306,6 +3460,329 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.objectType = 'Rule';
     self.validatorType = validatorType;
     self.data = validator;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('SurveyItemFactory', SurveyItemFactory);
+
+  SurveyItemFactory.$inject = [
+  /* Question items */
+  'CalendarQuestionFactory', 'IntegerQuestionFactory', 'DecimalQuestionFactory', 'SingleSelectionQuestionFactory', 'CheckboxQuestionFactory', 'TextQuestionFactory', 'TimeQuestionFactory', 'EmailQuestionFactory', 'PhoneQuestionFactory',
+  /* Miscelaneous items */
+  'TextItemFactory', 'ImageItemFactory'];
+>>>>>>> feature-otus-46
+
+  service.$inject = ['SurveyItemContainerService'];
+
+  function service(SurveyItemContainerService) {
+    var self = this;
+    var itemList = [];
+
+    /* Public methods */
+    self.init = init;
+    self.isRouteValid = isRouteValid;
+
+    init();
+
+    function init() {
+      itemList = SurveyItemContainerService.getItemList();
+    }
+
+    function isRouteValid(origin, destination) {
+      if (origin === destination) {
+        return false;
+      } else {
+        var origenInList = _searchByID(origin);
+        var destinationInList = _searchByID(destination);
+        if (origenInList.index < destinationInList.index) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    function _searchByID(questionID) {
+      var result = null;
+
+      itemList.forEach(function (question, index) {
+        if (question.customID === questionID) {
+          result = {};
+          result.question = question;
+          result.index = index;
+        }
+      });
+      return result;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').service('SurveyItemContainerService', SurveyItemContainerService);
+
+  SurveyItemContainerService.$inject = ['SurveyItemFactory'];
+
+  function SurveyItemContainerService(SurveyItemFactory) {
+    var self = this;
+    var itemList = []; // TODO: To implement Immutable collection
+
+    /* Public methods */
+    self.init = init;
+    self.loadFromItemContainerObject = loadFromItemContainerObject;
+    self.manageItems = manageItems;
+    self.getItemList = getItemList;
+    self.getItemListSize = getItemListSize;
+    self.getItemByTemplateID = getItemByTemplateID;
+    self.getItemByCustomID = getItemByCustomID;
+    self.getItemByID = getItemByID;
+    self.getAllCheckboxQuestion = getAllCheckboxQuestion;
+    self.getItemByPosition = getItemByPosition;
+    self.getItemPosition = getItemPosition;
+    self.getLastItem = getLastItem;
+    self.existsItem = existsItem;
+    self.createItem = createItem;
+    self.removeItem = removeItem;
+    self.removeItemByPosition = removeItemByPosition;
+    self.removeCurrentLastItem = removeCurrentLastItem;
+
+    function init() {
+      itemList = [];
+    }
+
+    function loadFromItemContainerObject(itemContainerObject) {
+      init();
+      itemContainerObject.forEach(function (item) {
+        itemList.push(SurveyItemFactory.load(item));
+      });
+    }
+
+    function manageItems(itemsToManage) {
+      itemList = itemsToManage;
+    }
+
+    function getItemList() {
+      return itemList;
+    }
+
+    function getItemListSize() {
+      return itemList.length;
+    }
+
+    function getItemByTemplateID(templateID) {
+      var filter = itemList.filter(function (item) {
+        return findByTemplateID(item, templateID);
+      });
+
+      return filter[0];
+    }
+
+    function getItemByCustomID(customID) {
+      var filter = itemList.filter(function (item) {
+        return findByCustomID(item, customID);
+      });
+
+      return filter[0];
+    }
+
+    function getItemByID(id) {
+      var item = getItemByTemplateID(id);
+      if (item) {
+        return item;
+      } else {
+        return getItemByCustomID(id);
+      }
+    }
+
+    function getAllCheckboxQuestion() {
+      var occurences = [];
+      itemList.filter(function (item) {
+        if (item.objectType === "CheckboxQuestion") {
+          occurences.push(item);
+        }
+      });
+      return occurences;
+    }
+
+    function getItemByPosition(position) {
+      return itemList[position];
+    }
+
+    function getItemPosition(templateID) {
+      var item = getItemByTemplateID(templateID);
+      if (item) {
+        return itemList.indexOf(item);
+      } else {
+        return null;
+      }
+    }
+
+    function getLastItem() {
+      return itemList[itemList.length - 1];
+    }
+
+    function existsItem(id) {
+      return getItemByTemplateID(id) || getItemByCustomID(id) ? true : false;
+    }
+
+    function createItem(itemType, templateID) {
+      var item = SurveyItemFactory.create(itemType, templateID);
+      itemList.push(item);
+      return item;
+    }
+
+    function removeItem(templateID) {
+      var itemToRemove = itemList.filter(function (item) {
+        return findByTemplateID(item, templateID);
+      });
+
+      var indexToRemove = itemList.indexOf(itemToRemove[0]);
+      if (indexToRemove > -1) {
+        itemList.splice(indexToRemove, 1);
+      }
+    }
+
+    function removeItemByPosition(indexToRemove) {
+      itemList.splice(indexToRemove, 1);
+    }
+
+    function removeCurrentLastItem() {
+      itemList.splice(-1, 1);
+    }
+
+    /* Private methods */
+    function findByTemplateID(item, templateID) {
+      return item.templateID.toLowerCase() === templateID.toLowerCase();
+    }
+
+    function findByCustomID(item, customID) {
+      return item.customID.toLowerCase() === customID.toLowerCase();
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').service('SurveyItemManagerService', SurveyItemManagerService);
+
+  SurveyItemManagerService.$inject = ['SurveyItemContainerService'];
+
+  function SurveyItemManagerService(SurveyItemContainerService) {
+    var self = this;
+
+    var incrementalIDValue = 0;
+
+    /* Public interface */
+    self.init = init;
+    self.loadJsonDataObject = loadJsonDataObject;
+    self.getItemList = getItemList;
+    self.getItemListSize = getItemListSize;
+    self.getItemByTemplateID = getItemByTemplateID;
+    self.getItemByCustomID = getItemByCustomID;
+    self.getItemByID = getItemByID;
+    self.getItemPosition = getItemPosition;
+    self.getAllCustomOptionsID = getAllCustomOptionsID;
+    self.addItem = addItem;
+    self.loadItem = loadItem;
+    self.removeItem = removeItem;
+    self.existsItem = existsItem;
+    self.isAvailableCustomID = isAvailableCustomID;
+
+    function init() {
+      SurveyItemContainerService.init();
+      incrementalIDValue = 0;
+    }
+
+    function loadJsonDataObject(itemContainerObject) {
+      SurveyItemContainerService.loadFromItemContainerObject(itemContainerObject);
+    }
+
+    function getItemList() {
+      return SurveyItemContainerService.getItemList();
+    }
+
+    function getItemListSize() {
+      return SurveyItemContainerService.getItemListSize();
+    }
+
+    function getItemByTemplateID(templateID) {
+      return SurveyItemContainerService.getItemByTemplateID(templateID);
+    }
+
+    function getItemByCustomID(customID) {
+      return SurveyItemContainerService.getItemByCustomID(customID);
+    }
+
+    function getItemByID(id) {
+      return SurveyItemContainerService.getItemByID(id);
+    }
+
+    function getItemPosition(customID) {
+      return SurveyItemContainerService.getItemPosition(customID);
+    }
+
+    function getAllCustomOptionsID() {
+      var customOptionsID = [];
+      var checkboxQuestions = SurveyItemContainerService.getAllCheckboxQuestion();
+      if (checkboxQuestions.length > 0) {
+        checkboxQuestions.forEach(function (checkboxQuestion) {
+          checkboxQuestion.getAllCustomOptionsID().forEach(function (customOptionID) {
+            customOptionsID.push(customOptionID);
+          });
+        });
+      }
+      return customOptionsID;
+    }
+
+    function loadItem(itemType, templateID, surveyAcronym) {
+
+      var item = SurveyItemContainerService.createItem(itemType, templateID);
+      _setIncrementalIDValue(parseInt(templateID.split(surveyAcronym)[1]));
+      return item;
+    }
+
+    function _setIncrementalIDValue(id) {
+      incrementalIDValue = id;
+    }
+
+    function addItem(itemType, templateIDPrefix) {
+      var templateID;
+      do {
+        templateID = templateIDPrefix + getNextIncrementalGenerator();
+      } while (!isAvailableCustomID(templateID));
+      var item = SurveyItemContainerService.createItem(itemType, templateID);
+      return item;
+    }
+
+    function removeItem(templateID) {
+      SurveyItemContainerService.removeItem(templateID);
+    }
+
+    function getNextIncrementalGenerator() {
+      return ++incrementalIDValue;
+    }
+
+    function existsItem(id) {
+      return SurveyItemContainerService.existsItem(id);
+    }
+
+    function isAvailableCustomID(id) {
+      var foundCustomOptionID = false;
+      getAllCustomOptionsID().forEach(function (customOptionID) {
+        if (customOptionID === id) {
+          foundCustomOptionID = true;
+        }
+      });
+      return getItemByCustomID(id) || foundCustomOptionID ? false : true;
+    }
   }
 })();
 'use strict';
@@ -3625,6 +4102,78 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var reg = new RegExp(reference, 'i');
       return reg.test(answer);
     };
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.validation').factory('MandatoryValidatorFactory', MandatoryValidatorFactory);
+
+  function MandatoryValidatorFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new MandatoryValidator();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.MandatoryValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new MandatoryValidator();
+      validator.reference = jsonObject.reference;
+      return validator;
+    }
+
+    return self;
+  }
+
+  function MandatoryValidator() {
+    var self = this;
+
+    self.reference = false;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.validation').factory('ParameterValidatorFactory', ParameterValidatorFactory);
+
+  function ParameterValidatorFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new ParameterValidator();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.ParameterValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new ParameterValidator();
+      validator.reference = jsonObject.reference;
+      return validator;
+    }
+
+    return self;
+  }
+
+  function ParameterValidator() {
+    var self = this;
+
+    self.reference = '';
   }
 })();
 'use strict';
@@ -4861,34 +5410,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.validation').factory('MandatoryValidatorFactory', MandatoryValidatorFactory);
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.InitialNodesAddService', service);
 
-  function MandatoryValidatorFactory() {
+  service.$inject = ['otusjs.model.navigation.NavigationContainerService', 'SurveyItemContainerService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.CreateDefaultRouteTaskService'];
+
+  function service(NavigationContainerService, SurveyItemContainerService, UpdateRouteTaskService, CreateDefaultRouteTaskService) {
     var self = this;
 
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MandatoryValidator();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.MandatoryValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new MandatoryValidator();
-      validator.reference = jsonObject.reference;
-      return validator;
-    }
-
-    return self;
-  }
-
-  function MandatoryValidator() {
-    var self = this;
-
+<<<<<<< HEAD
     self.reference = true;
   }
 })();
@@ -4901,31 +5430,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   function ParameterValidatorFactory() {
     var self = this;
+=======
+    /* Public methods */
+    self.execute = execute;
+>>>>>>> feature-otus-46
 
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
+    function execute() {
+      NavigationContainerService.setInitialNodes();
 
-    function create() {
-      return new ParameterValidator();
+      var routeData = {
+        'origin': NavigationContainerService.getNavigationList()[0].origin,
+        'destination': NavigationContainerService.getNavigationList()[1].origin
+      };
+
+      CreateDefaultRouteTaskService.execute(routeData, NavigationContainerService.getNavigationList()[0]);
     }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.ParameterValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new ParameterValidator();
-      validator.reference = jsonObject.reference;
-      return validator;
-    }
-
-    return self;
-  }
-
-  function ParameterValidator() {
-    var self = this;
-
-    self.reference = '';
   }
 })();
 'use strict';
@@ -4935,23 +5454,40 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationAddService', service);
 
-  service.$inject = ['otusjs.model.navigation.NavigationContainerService', 'SurveyItemContainerService'];
+  service.$inject = ['otusjs.model.navigation.NavigationContainerService', 'SurveyItemContainerService', 'otusjs.model.navigation.UpdateRouteTaskService', 'otusjs.model.navigation.CreateDefaultRouteTaskService'];
 
-  function service(NavigationContainerService, SurveyItemContainerService) {
+  function service(NavigationContainerService, SurveyItemContainerService, UpdateRouteTaskService, CreateDefaultRouteTaskService) {
     var self = this;
 
     /* Public methods */
     self.execute = execute;
 
     function execute() {
-      var itemCount = SurveyItemContainerService.getItemListSize();
+      var origin = SurveyItemContainerService.getLastItem();
 
-      if (itemCount > 1) {
-        var origin = SurveyItemContainerService.getItemByPosition(itemCount - 2);
-        var destination = SurveyItemContainerService.getItemByPosition(itemCount - 1);
+      var _newNavigation = NavigationContainerService.createNavigationTo(origin.templateID);
+      var _previousNavigation;
 
-        NavigationContainerService.createNavigationTo(origin.templateID, destination.templateID);
+      if (_newNavigation.index === 2) {
+        _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index - 1);
+      } else {
+        _previousNavigation = NavigationContainerService.getPreviousOf(_newNavigation.index);
       }
+
+      var routeData = {
+        'origin': _newNavigation.origin,
+        'destination': _previousNavigation.getDefaultRoute().destination
+      };
+
+      CreateDefaultRouteTaskService.execute(routeData, _newNavigation);
+
+      var updateRouteData = {
+        'origin': _previousNavigation.origin,
+        'destination': _newNavigation.origin,
+        'isDefault': true
+      };
+
+      UpdateRouteTaskService.execute(updateRouteData, _previousNavigation);
     }
   }
 })();
@@ -4971,19 +5507,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.execute = execute;
 
     function execute(templateID) {
-      if (NavigationContainerService.existsNavigationTo(templateID)) {
-        var navigationToRecicle = NavigationContainerService.getNavigationByOrigin(templateID);
-        var positionToRecicle = NavigationContainerService.getNavigationPosition(templateID);
-
-        if (positionToRecicle && positionToRecicle !== 0) {
-          var navigationToUpdate = NavigationContainerService.getNavigationByPosition(positionToRecicle - 1);
-          navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
-        }
-
-        NavigationContainerService.removeNavigationOf(templateID);
-      } else {
-        NavigationContainerService.removeCurrentLastNavigation();
+      var navigationToRecicle = NavigationContainerService.getNavigationByOrigin(templateID);
+      var navigationPosition = NavigationContainerService.getNavigationPosition(navigationToRecicle);
+      var navigationToUpdate = NavigationContainerService.getPreviousOf(navigationPosition);
+      if (navigationToRecicle.inNavigations.indexOf(navigationToUpdate) > -1) {
+        _updateRoutes(navigationToUpdate, navigationToRecicle);
       }
+      NavigationContainerService.removeNavigationOf(templateID);
+    }
+    function _updateRoutes(navigationToUpdate, navigationToRecicle) {
+      navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
+      navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;
     }
   }
 })();
@@ -5003,6 +5537,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.execute = execute;
 
     function execute(routeData, navigation) {
+      if (routeData.origin === 'BEGIN NODE') {
+        return;
+      }
       var conditions = routeData.conditions.map(_setupConditions);
       var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, conditions);
 
@@ -5046,13 +5583,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.execute = execute;
 
     function execute(routeData, navigation) {
-      var currentDefaultRoute = navigation.getDefaultRoute();
-      var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+      if (navigation.hasDefaultRoute()) {
+        var currentDefaultRoute = navigation.getDefaultRoute();
+        var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+        navigation.setupDefaultRoute(route);
 
-      navigation.setupDefaultRoute(route);
-
-      _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
-      _notifyNewDefaultNavigation(route, navigation);
+        _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
+        _notifyNewDefaultNavigation(route, navigation);
+      } else {
+        var route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+        navigation.setupDefaultRoute(route);
+        _notifyNewDefaultNavigation(route, navigation);
+      }
     }
 
     function _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation) {
@@ -5104,6 +5646,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.execute = execute;
 
     function execute(routeData, navigation) {
+      console.log('here');
       if (_isCurrentDefaultRoute(routeData, navigation.getDefaultRoute())) {
         throw new Error('Is not possible update a default route.', 'update-route-task-service.js', 23);
       } else if (routeData.isDefault) {

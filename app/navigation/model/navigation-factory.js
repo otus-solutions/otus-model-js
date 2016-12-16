@@ -19,34 +19,58 @@
     Inject.RouteFactory = RouteFactory;
 
     self.create = create;
+    self.createInitial = createInitial;
     self.fromJson = fromJson;
+    self.createNullNavigation = createNullNavigation;
 
-    function create(origin, destination) {
-      if (!origin || !destination) {
-        return null;
+    function create(origin) {
+      if (!origin) {
+        return createNullNavigation();
       }
 
-      var defaultRoute = RouteFactory.createDefault(origin, destination);
-      if (!defaultRoute) {
-        return null;
-      }
-
-      defaultRoute.index = 0;
-      return new Navigation(origin, defaultRoute);
+      return new Navigation(origin);
     }
 
-    function fromJson(json, inNavigations) {
-      var jsonObj = _parse(json);
+    function createInitial(origin) {
+      var initialNavigation = new Navigation(origin);
 
-      if (!jsonObj.routes || !jsonObj.routes.length) {
-        return null;
+      if (origin === 'BEGIN NODE') {
+        initialNavigation.index = 0;
+      } else {
+        initialNavigation.index = 1;
       }
 
-      var navigation = create(jsonObj.origin, jsonObj.routes[0].destination);
+      return initialNavigation;
+    }
+
+    function createNullNavigation() {
+      var navigation = create('NULL NAVIGATION');
+
+      /* Object properties */
+      navigation.index = null;
+      navigation.inNavigations = [];
+      navigation.outNavigations = [];
+      navigation.routes = [];
+      navigation.isOrphan = function(){return true;};
+      navigation.hasOrphanRoot = function(){return true;};
+      return navigation;
+    }
+
+    function fromJson(jsonData) {
+      var jsonObj = _parse(jsonData);
+      var navigation;
+      if (jsonObj.origin === 'BEGIN NODE' || jsonObj.origin === 'END NODE') {
+        navigation = createInitial(jsonObj.origin);
+      } else {
+        if (!jsonObj.routes || !jsonObj.routes.length) { //TODO check if needed
+          return createNullNavigation();
+        }
+        navigation = create(jsonObj.origin);
+      }
 
       if (navigation) {
         navigation.index = jsonObj.index;
-        navigation.inNavigations = inNavigations;
+        navigation.inNavigations = jsonObj.inNavigations;
         navigation.routes = jsonObj.routes.map(function(route) {
           return RouteFactory.fromJson(JSON.stringify(route));
         });
@@ -55,20 +79,19 @@
       return navigation;
     }
 
-    function _parse(json) {
-      if (typeof json === 'string') {
-        return JSON.parse(json);
-      } else if (typeof json === 'object') {
-        return JSON.parse(JSON.stringify(json));
+    function _parse(jsonData) {
+      if (typeof jsonData === 'string') {
+        return JSON.parse(jsonData);
+      } else if (typeof jsonData === 'object') {
+        return JSON.parse(JSON.stringify(jsonData));
       }
     }
 
     return self;
   }
 
-  function Navigation(origin, defaultRoute) {
+  function Navigation(origin) {
     var self = this;
-    var _defaultRoute = defaultRoute;
 
     /* Object properties */
     self.extents = 'SurveyTemplateObject';
@@ -77,7 +100,7 @@
     self.index = null;
     self.inNavigations = [];
     self.outNavigations = [];
-    self.routes = [defaultRoute];
+    self.routes = [];
 
     /* Public methods */
     self.addInNavigation = addInNavigation;
@@ -88,6 +111,7 @@
     self.getDefaultRoute = getDefaultRoute;
     self.getRouteByName = getRouteByName;
     self.hasRoute = hasRoute;
+    self.hasDefaultRoute = hasDefaultRoute;
     self.isOrphan = isOrphan;
     self.hasOrphanRoot = hasOrphanRoot;
     self.listRoutes = listRoutes;
@@ -109,7 +133,7 @@
     }
 
     function clone() {
-      var clone = new self.constructor(self.origin, _defaultRoute);
+      var clone = new self.constructor(self.origin, self.routes[0]);
       self.inNavigations.map(clone.addInNavigation);
       self.outNavigations.map(clone.addOutNavigation);
       var routes = self.listRoutes();
@@ -177,7 +201,11 @@
     }
 
     function getDefaultRoute() {
-      return _defaultRoute.clone();
+      return self.routes[0].clone();
+    }
+
+    function hasDefaultRoute() {
+      return !self.routes[0] ? false : true
     }
 
     function getRouteByName(name) {
@@ -200,7 +228,7 @@
     }
 
     function _isCurrentDefaultRoute(route) {
-      return (_defaultRoute && route.name === _defaultRoute.name);
+      return (self.routes[0] && route.name === self.routes[0].name);
     }
 
     function hasOrphanRoot() {
@@ -235,11 +263,6 @@
       return clones;
     }
 
-    function _removeDefaultRoute() {
-      _defaultRoute = null;
-      self.routes.shift();
-    }
-
     function removeInNavigation(navigationToRemove) {
       self.inNavigations.some(function(navigation, index) {
         if (navigation.origin === navigationToRemove.origin) {
@@ -254,7 +277,7 @@
         if (route.name === name) {
           self.routes.splice(index, 1);
           if (route.isDefault) {
-            _defaultRoute = null;
+            self.routes[0] = null;
           }
           return true;
         }
@@ -265,7 +288,7 @@
       return Object.is(self, other);
     }
 
-    function setupDefaultRoute(route) {
+    function setupDefaultRoute(route) {      
       if (!route) {
         throw new TypeError('Default route should not be undefined or null.', 'navigation-factory.js', 285);
       }
@@ -273,7 +296,6 @@
       removeRouteByName(route.name);
       route.conditions = [];
       self.routes[0] = route;
-      _defaultRoute = route;
     }
 
     function toJson() {
@@ -300,9 +322,8 @@
     }
 
     function _updateDefaultRoute(route) {
-      _defaultRoute = route;
-      _defaultRoute.conditions = [];
-      self.routes[0] = _defaultRoute;
+      self.routes[0] = route;
+      self.routes[0].conditions = [];
     }
 
     function updateInNavigation(navigation) {
