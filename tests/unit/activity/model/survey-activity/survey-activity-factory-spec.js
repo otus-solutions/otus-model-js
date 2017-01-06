@@ -37,7 +37,7 @@ xdescribe('ActivitySurveyFactory', function() {
     });
 
     it('should return attribute template equal to contructor paramenter', function() {
-      expect(activity.template).toEqual(Mock.surveyTemplate);
+      expect(activity.surveyForm.surveyTemplate).toEqual(Mock.surveyTemplate);
     });
 
     it('should return attribute fillContainer equal to FillingManagerService', function() {

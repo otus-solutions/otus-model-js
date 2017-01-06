@@ -44,7 +44,7 @@ xdescribe('ActivityFacadeService', function() {
     it('should create ActivitySurvey with parameter template', function() {
       service.createActivity(Mock.surveyTemplate);
 
-      expect(service.surveyActivity.template).toEqual(Mock.surveyTemplate);
+      expect(service.surveyActivity.surveyForm.surveyTemplate).toEqual(Mock.surveyTemplate);
     });
 
     it('should create new object ActivitySurvey with call method create used parameter User', function() {
