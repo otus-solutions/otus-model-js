@@ -10,14 +10,15 @@
     'otusjs.model.activity.FillingManagerService',
     'otusjs.model.activity.InterviewFactory',
     'otusjs.model.navigation.NavigationPathFactory',
-    'SurveyFactory'
+    'SurveyFormFactory'
   ];
 
   var Inject = {};
 
-  function Factory(StatusHistoryManagerFactory, FillingManagerService, InterviewFactory, NavigationPathFactory, SurveyFactory) {
+  function Factory(StatusHistoryManagerFactory, FillingManagerService, InterviewFactory, NavigationPathFactory, SurveyFormFactory) {
     Inject.FillingManagerService = FillingManagerService;
     Inject.NavigationPathFactory = NavigationPathFactory;
+    Inject.SurveyFormFactory = SurveyFormFactory;
 
     var self = this;
     self.OBJECT_TYPE = 'Activity';
@@ -27,33 +28,33 @@
     self.createPaperActivity = createPaperActivity;
     self.fromJsonObject = fromJsonObject;
 
-    function create(template, user, participant) {
+    function create(surveyForm, user, participant) {
       Inject.FillingManagerService.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
 
-      var activity = new ActivitySurvey(template, participant, statusHistory);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory);
       activity.mode = 'ONLINE';
       return activity;
     }
 
-    function createPaperActivity(template, user, participant, paperActivityData) {
+    function createPaperActivity(surveyForm, user, participant, paperActivityData) {
       Inject.FillingManagerService.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
 
-      var activity = new ActivitySurvey(template, participant, statusHistory);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory);
       activity.mode = 'PAPER';
       return activity;
     }
 
     function fromJsonObject(jsonObject) {
-      var activity = new ActivitySurvey(SurveyFactory.fromJsonObject(jsonObject.template), jsonObject.participantData);
+      var activity = new ActivitySurvey(SurveyFormFactory.fromJsonObject(jsonObject.surveyForm), jsonObject.participantData);
       activity.mode = jsonObject.mode;
-      activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);;
+      activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
       activity.interviews = jsonObject.interviews.map(function(interview) {
         return InterviewFactory.fromJsonObject(interview);
       });
@@ -63,12 +64,12 @@
     return self;
   }
 
-  function ActivitySurvey(template, participant, statusHistory) {
+  function ActivitySurvey(surveyForm, participant, statusHistory) {
     var self = this;
 
     self.objectType = 'Activity';
     self.activityID = null;
-    self.template = template;
+    self.surveyForm = surveyForm;
     self.participantData = participant;
     self.interviews = [];
     self.fillContainer = Inject.FillingManagerService;
@@ -101,7 +102,7 @@
     }
 
     function setNavigationStack(stack) {
-      return self.navigationStack = stack;
+      self.navigationStack = stack;
     }
 
     function toJson() {
@@ -109,7 +110,7 @@
 
       json.objectType = self.objectType;
       json.activityID = self.activityID;
-      json.template = self.template.toJson();
+      json.surveyForm = self.surveyForm.toJson();
       json.participantData = self.participantData;
       json.mode = self.mode;
       json.interviews = self.interviews.map(function(interview) {
