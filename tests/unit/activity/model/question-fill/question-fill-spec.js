@@ -1,4 +1,4 @@
-describe('QuestionFill', function() {
+xdescribe('QuestionFill', function() {
 
   var QID1 = 'QID1';
   var COMMENT = 'Este é o meu comentário: comentário.';
