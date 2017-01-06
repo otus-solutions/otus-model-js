@@ -3,12 +3,14 @@
 
   angular
     .module('otusjs.model.activity')
-    .factory('otusjs.model.activity.MetadataFillFactory', MetadataFillFactory);
+    .factory('otusjs.model.activity.MetadataFillFactory', Factory);
 
-  function MetadataFillFactory() {
+  function Factory() {
     var self = this;
 
-    /* Public interface */
+    self.OBJECT_TYPE = 'MetadataFill';
+
+    /* Public methods */
     self.create = create;
 
     function create(value) {
@@ -26,11 +28,15 @@
 
     /* Public methods */
     self.isFilled = isFilled;
-    self.toJson = toJson;
     self.clear = clear;
+    self.toJson = toJson;
 
     function isFilled() {
-      return (self.value) ? true : false;
+      return (self.value !== null) ? true : false;
+    }
+
+    function clear() {
+      self.value = null;
     }
 
     function toJson() {
@@ -40,10 +46,6 @@
       json.value = self.value;
 
       return JSON.stringify(json);
-    }
-
-    function clear() {
-      self.value = null;
     }
   }
 

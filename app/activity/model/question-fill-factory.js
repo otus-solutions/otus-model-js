@@ -3,16 +3,19 @@
 
   angular
     .module('otusjs.model.activity')
-    .factory('otusjs.model.activity.QuestionFillFactory', QuestionFillFactory);
+    .factory('otusjs.model.activity.QuestionFillFactory', Factory);
 
-  QuestionFillFactory.$inject = [
+  Factory.$inject = [
     'otusjs.model.activity.AnswerFillFactory',
     'otusjs.model.activity.MetadataFillFactory'
   ];
 
-  function QuestionFillFactory(AnswerFillFactory, MetadataFillFactory) {
+  function Factory(AnswerFillFactory, MetadataFillFactory) {
     var self = this;
 
+    self.OBJECT_TYPE = 'QuestionFill';
+
+    /* Public methods */
     self.create = create;
 
     function create(item, answer, metadata, comment) {

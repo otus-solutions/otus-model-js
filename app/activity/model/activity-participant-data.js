@@ -1,43 +1,46 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.model.activity')
-        .factory('otusjs.model.activity.ActivityParticipantDataFactory', ActivityParticipantDataFactory);
+  angular
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.ActivityParticipantDataFactory', Factory);
 
-    function ActivityParticipantDataFactory() {
-        var self = this;
+  function Factory() {
+    var self = this;
 
-        self.create = create;
+    self.OBJECT_TYPE = 'ActivityParticipantData';
 
-        function create(participant) {
-            return new ActivityParticipantData(participant);
-        }
+    /* Public methods */
+    self.create = create;
 
-        return self;
+    function create(participant) {
+      return new ActivityParticipantData(participant);
     }
 
-    function ActivityParticipantData(participant) {
-        var self = this;
+    return self;
+  }
 
-        self.objectType = 'ActivityParticipantData';
-        self.recruitmentNumber = participant.recruitmentNumber;
-        self.name = participant.name;
-        self.fieldCenter = participant.fieldCenter;
+  function ActivityParticipantData(participant) {
+    var self = this;
 
-        /* Public methods */
-        self.toJson = toJson;
+    self.objectType = 'ActivityParticipantData';
+    self.recruitmentNumber = participant.recruitmentNumber;
+    self.name = participant.name;
+    self.fieldCenter = participant.fieldCenter;
 
-        function toJson() {
-            var json = {};
+    /* Public methods */
+    self.toJson = toJson;
 
-            json.objectType = self.objectType;
-            json.recruitmentNumber = self.recruitmentNumber;
-            json.name = self.name;
-            json.fieldCenter = self.fieldCenter;
+    function toJson() {
+      var json = {};
 
-            return JSON.stringify(json);
-        }
+      json.objectType = self.objectType;
+      json.recruitmentNumber = self.recruitmentNumber;
+      json.name = self.name;
+      json.fieldCenter = self.fieldCenter;
+
+      return JSON.stringify(json);
     }
+  }
 
 }());

@@ -9,31 +9,39 @@
     'otusjs.model.activity.AnswerFillFactory',
     'otusjs.model.activity.MetadataFillFactory',
     'otusjs.model.activity.QuestionFillFactory',
-    'otusjs.model.activity.ActivitySurveyFactory'
+    'otusjs.model.activity.ActivityFactory',
+    'otusjs.model.activity.InterviewFactory'
   ];
 
-  function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivitySurveyFactory) {
+  function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivityFactory, InterviewFactory) {
     var self = this;
     self.surveyActivity = null;
 
     /* Public interface */
     self.createActivity = createActivity;
+    self.createPaperActivity = createPaperActivity;
     self.createQuestionFill = createQuestionFill;
     self.fillQuestion = fillQuestion;
     self.openActivitySurvey = openActivitySurvey;
     self.initializeActivitySurvey = initializeActivitySurvey;
     self.getFillingByQuestionID = getFillingByQuestionID;
 
-    function createActivity(template) {
-      self.surveyActivity = ActivitySurveyFactory.create(template);
+    function createActivity(template, user, participant) {
+      self.surveyActivity = ActivityFactory.create(template, user, participant);
     }
 
-    function openActivitySurvey() {
-      self.surveyActivity.statusHistory.newOpenedRegistry();
+    function createPaperActivity(template, user, participant, paperActivityData) {
+      self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData);
+      self.surveyActivity.interviews.push(InterviewFactory.create(paperActivityData));
     }
 
-    function initializeActivitySurvey() {
-      self.surveyActivity.statusHistory.newInitializedOnlineRegistry();
+    function openActivitySurvey(user) {
+      self.surveyActivity.statusHistory.newOpenedRegistry(user);
+    }
+
+    function initializeActivitySurvey(user) {
+      self.surveyActivity.statusHistory.newInitializedOnlineRegistry(user);
+      self.surveyActivity.interviews.push(InterviewFactory.create(user));
     }
 
     function createQuestionFill(question, answer, metadata, comment) {

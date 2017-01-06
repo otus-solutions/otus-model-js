@@ -7,6 +7,8 @@
 
   function SurveyIdentityFactory() {
     var self = this;
+    
+    self.OBJECT_TYPE = 'SurveyIdentity';
 
     /* Public interface */
     self.create = create;

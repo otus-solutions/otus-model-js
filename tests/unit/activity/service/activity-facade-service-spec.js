@@ -1,4 +1,4 @@
-describe('ActivityFacadeService', function() {
+xdescribe('ActivityFacadeService', function() {
 
   var Mock = {};
   var Injections = {};

@@ -1,42 +1,44 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusjs.model.activity')
-        .factory('otusjs.model.activity.ActivityUserFactory', ActivityUserFactory);
+  angular
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.ActivityUserFactory', Factory);
 
-    function ActivityUserFactory() {
-        var self = this;
+  function Factory() {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    self.OBJECT_TYPE = 'ActivityUser';
 
-        function create(name, email) {
-            return new ActivityUser(name, email);
-        }
+    /* Public methods */
+    self.create = create;
 
-        return self;
+    function create(name, email) {
+      return new ActivityUser(name, email);
     }
 
-    function ActivityUser(name, email) {
-        var self = this;
+    return self;
+  }
 
-        self.objectType = 'ActivityUser';
-        self.name = name;
-        self.email = email;
+  function ActivityUser(name, email) {
+    var self = this;
 
-        self.toJson = toJson;
+    self.objectType = 'ActivityUser';
+    self.name = name;
+    self.email = email;
 
-        function toJson() {
-            var json = {};
+    self.toJson = toJson;
 
-            json.objectType = self.objectType;
-            json.name = self.name;
-            json.email = self.email;
+    function toJson() {
+      var json = {};
 
-            return JSON.stringify(json);
-        }
+      json.objectType = self.objectType;
+      json.name = self.name;
+      json.email = self.email;
 
+      return JSON.stringify(json);
     }
+
+  }
 
 }());

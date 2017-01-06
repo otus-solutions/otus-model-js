@@ -15,6 +15,8 @@
 
   function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService, SurveyItemManagerService) {
     var self = this;
+    
+    self.OBJECT_TYPE = 'Survey';
 
     /* Public interdace */
     self.create = create;

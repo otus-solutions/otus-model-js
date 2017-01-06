@@ -16,6 +16,7 @@
     self.existsFillingTo = existsFillingTo;
     self.searchFillingByID = searchFillingByID;
     self.updateFilling = updateFilling;
+    self.toJson = toJson;
 
     init();
 
@@ -51,6 +52,16 @@
       } else {
         return _removeFilling(filling.questionID);
       }
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.fillingList = fillingList.map(function(questionFill) {
+        return questionFill.toJson();
+      });
+
+      return json;
     }
 
     function _searchByID(questionID) {

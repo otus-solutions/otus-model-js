@@ -7,6 +7,8 @@
 
   function SurveyMetaInfoFactory() {
     var self = this;
+    
+    self.OBJECT_TYPE = 'SurveyMetaInfo';
 
     /* Public interdace */
     self.create = create;

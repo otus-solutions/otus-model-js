@@ -1,4 +1,4 @@
-describe('ActivitySurveyFactory', function() {
+xdescribe('ActivitySurveyFactory', function() {
 
   var Mock = {};
   var Injections = {};

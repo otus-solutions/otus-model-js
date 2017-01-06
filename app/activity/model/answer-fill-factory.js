@@ -3,16 +3,18 @@
 
   angular
     .module('otusjs.model.activity')
-    .factory('otusjs.model.activity.AnswerFillFactory', AnswerFillFactory);
+    .factory('otusjs.model.activity.AnswerFillFactory', Factory);
 
-  AnswerFillFactory.$inject = [
+  Factory.$inject = [
     'otusjs.model.activity.AnswerEvaluationService'
   ];
 
-  function AnswerFillFactory(AnswerEvaluationService) {
+  function Factory(AnswerEvaluationService) {
     var self = this;
 
-    /* Public interface */
+    self.OBJECT_TYPE = 'AnswerFill';
+
+    /* Public methods */
     self.create = create;
 
     function create(questionType, value) {
@@ -31,11 +33,15 @@
 
     /* Public methods */
     self.isFilled = isFilled;
-    self.toJson = toJson;
     self.clear = clear;
+    self.toJson = toJson;
 
     function isFilled() {
       return (self.value !== null) ? true : false;
+    }
+
+    function clear() {
+      self.value = null;
     }
 
     function toJson() {
@@ -45,10 +51,6 @@
       json.value = self.value;
 
       return JSON.stringify(json);
-    }
-
-    function clear() {
-      self.value = null;
     }
   }
 }());
