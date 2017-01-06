@@ -1,4 +1,4 @@
-describe('StatusHistoryManagerService', function() {
+xdescribe('StatusHistoryManagerService', function() {
 
   var Mock = {};
   var service;
