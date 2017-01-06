@@ -18,16 +18,17 @@
     self.create = create;
 
     function create(questionType, value) {
-      return new AnswerFill(value, AnswerEvaluationService.getEvaluator(questionType));
+      return new AnswerFill(value, AnswerEvaluationService.getEvaluator(questionType), questionType);
     }
 
     return self;
   }
 
-  function AnswerFill(value, evaluator) {
+  function AnswerFill(value, evaluator, questionType) {
     var self = this;
 
     self.objectType = 'AnswerFill';
+    self.type = questionType;
     self.value = (value === undefined) ? null : value;
     self.eval = evaluator;
 
@@ -48,6 +49,7 @@
       var json = {};
 
       json.objectType = self.objectType;
+      json.type = self.type;
       json.value = self.value;
 
       return JSON.stringify(json);
