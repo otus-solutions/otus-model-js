@@ -116,6 +116,7 @@
 
     function validators() {
       var validatorsList = [
+        'accept',
         'mandatory',
         'minSelected',
         'maxSelected',

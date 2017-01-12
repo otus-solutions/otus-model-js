@@ -106,6 +106,7 @@
 
     function validators() {
       var validatorsList = [
+        'accept',
         'mandatory'
       ];
       return validatorsList;
