@@ -9,13 +9,13 @@
     'SurveyIdentityFactory',
     'SurveyMetaInfoFactory',
     'SurveyUUIDGenerator',
-    'otusjs.model.navigation.NavigationManagerService',
-    'SurveyItemManagerService'
+    'otusjs.model.navigation.NavigationManagerFactory',
+    'SurveyItemManagerFactory'
   ];
 
-  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService, SurveyItemManagerService) {
+  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory) {
     var self = this;
-    
+
     self.OBJECT_TYPE = 'Survey';
 
     /* Public interdace */
@@ -34,24 +34,26 @@
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
+      var itemManager = SurveyItemManagerFactory.create();
 
-      return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+      return new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
     }
 
     function create(name, acronym) {
       var metainfo = SurveyMetaInfoFactory.create();
       var identity = SurveyIdentityFactory.create(name, acronym);
       var UUID = SurveyUUIDGenerator.generateSurveyUUID();
+      var itemManager = SurveyItemManagerFactory.create();
 
-      return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+      return new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
     }
 
     function fromJsonObject(jsonObject) {
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-
-      var survey = new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+      var itemManager = SurveyItemManagerFactory.create();
+      var survey = new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
 
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
@@ -62,7 +64,7 @@
     return self;
   }
 
-  function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService, SurveyItemManagerService) {
+  function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService, SurveyItemManager) {
     var self = this;
 
     self.extents = 'StudioObject';
@@ -70,7 +72,7 @@
     self.oid = uuid;
     self.identity = surveyIdentity;
     self.metainfo = surveyMetainfo;
-    self.SurveyItemManager = SurveyItemManagerService;
+    self.SurveyItemManager = SurveyItemManager;
     self.NavigationManager = NavigationManagerService;
 
     self.NavigationManager.init();

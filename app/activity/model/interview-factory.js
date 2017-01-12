@@ -24,9 +24,10 @@
     }
 
     function fromJsonObject(jsonObject) {
-      var interview = InterviewerFactory.create(jsonObject.interviewer);
+      var interviewer = InterviewerFactory.fromJsonObject(jsonObject.interviewer);
+      var interview = new Interview(interviewer);
       interview.date = jsonObject.date;
-      return interview;;
+      return interview;
     }
 
     return self;

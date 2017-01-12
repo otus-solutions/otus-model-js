@@ -3,27 +3,16 @@
 
   angular
     .module('otusjs.surveyItem')
-    .factory('SurveyItemContainerFactory', Factory);
+    .service('SurveyItemContainerService', SurveyItemContainerService);
 
-  Factory.$inject = ['SurveyItemFactory'];
+  SurveyItemContainerService.$inject = ['SurveyItemFactory'];
 
-  function Factory(SurveyItemFactory) {
+  function SurveyItemContainerService(SurveyItemFactory) {
     var self = this;
-
-    self.create = create;
-
-    function create() {
-      return new SurveyItemContainer(SurveyItemFactory);
-    }
-
-    return self;
-  }
-
-  function SurveyItemContainer(SurveyItemFactory) {
-    var self = this;
-    var _itemList = []; // TODO: To implement Immutable collection
+    var itemList = []; // TODO: To implement Immutable collection
 
     /* Public methods */
+    self.init = init;
     self.loadFromItemContainerObject = loadFromItemContainerObject;
     self.manageItems = manageItems;
     self.getItemList = getItemList;
@@ -41,27 +30,31 @@
     self.removeItemByPosition = removeItemByPosition;
     self.removeCurrentLastItem = removeCurrentLastItem;
 
+    function init() {
+      itemList = [];
+    }
+
     function loadFromItemContainerObject(itemContainerObject) {
-      _itemList = [];
+      init();
       itemContainerObject.forEach(function(item) {
-        _itemList.push(SurveyItemFactory.load(item));
+        itemList.push(SurveyItemFactory.load(item));
       });
     }
 
     function manageItems(itemsToManage) {
-      _itemList = itemsToManage;
+      itemList = itemsToManage;
     }
 
     function getItemList() {
-      return _itemList;
+      return itemList;
     }
 
     function getItemListSize() {
-      return _itemList.length;
+      return itemList.length;
     }
 
     function getItemByTemplateID(templateID) {
-      var filter = _itemList.filter(function(item) {
+      var filter = itemList.filter(function(item) {
         return findByTemplateID(item, templateID);
       });
 
@@ -69,7 +62,7 @@
     }
 
     function getItemByCustomID(customID) {
-      var filter = _itemList.filter(function(item) {
+      var filter = itemList.filter(function(item) {
         return findByCustomID(item, customID);
       });
 
@@ -87,7 +80,7 @@
 
     function getAllCheckboxQuestion() {
       var occurences = [];
-      _itemList.filter(function(item) {
+      itemList.filter(function(item) {
         if (item.objectType === "CheckboxQuestion") {
           occurences.push(item);
         }
@@ -96,20 +89,20 @@
     }
 
     function getItemByPosition(position) {
-      return _itemList[position];
+      return itemList[position];
     }
 
     function getItemPosition(templateID) {
       var item = getItemByTemplateID(templateID);
       if (item) {
-        return _itemList.indexOf(item);
+        return itemList.indexOf(item);
       } else {
         return null;
       }
     }
 
     function getLastItem() {
-      return _itemList[_itemList.length - 1];
+      return itemList[itemList.length - 1];
     }
 
     function existsItem(id) {
@@ -118,27 +111,27 @@
 
     function createItem(itemType, templateID) {
       var item = SurveyItemFactory.create(itemType, templateID);
-      _itemList.push(item);
+      itemList.push(item);
       return item;
     }
 
     function removeItem(templateID) {
-      var itemToRemove = _itemList.filter(function(item) {
+      var itemToRemove = itemList.filter(function(item) {
         return findByTemplateID(item, templateID);
       });
 
-      var indexToRemove = _itemList.indexOf(itemToRemove[0]);
+      var indexToRemove = itemList.indexOf(itemToRemove[0]);
       if (indexToRemove > -1) {
-        _itemList.splice(indexToRemove, 1);
+        itemList.splice(indexToRemove, 1);
       }
     }
 
     function removeItemByPosition(indexToRemove) {
-      _itemList.splice(indexToRemove, 1);
+      itemList.splice(indexToRemove, 1);
     }
 
     function removeCurrentLastItem() {
-      _itemList.splice(-1, 1);
+      itemList.splice(-1, 1);
     }
 
     /* Private methods */
@@ -150,4 +143,5 @@
       return item.customID.toLowerCase() === customID.toLowerCase();
     }
   }
+
 }());

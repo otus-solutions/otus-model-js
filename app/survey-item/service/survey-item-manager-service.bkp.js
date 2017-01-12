@@ -3,26 +3,15 @@
 
   angular
     .module('otusjs.surveyItem')
-    .factory('SurveyItemManagerFactory', Factory);
+    .service('SurveyItemManagerService', SurveyItemManagerService);
 
-  Factory.$inject = [
-    'SurveyItemContainerFactory'
+  SurveyItemManagerService.$inject = [
+    'SurveyItemContainerService'
   ];
 
-  function Factory(SurveyItemContainerFactory) {
+  function SurveyItemManagerService(SurveyItemContainerService) {
     var self = this;
 
-    self.create = create;
-
-    function create() {
-      return new SurveyItemManager(SurveyItemContainerFactory.create());
-    }
-
-    return self;
-  }
-
-  function SurveyItemManager(surveyItemContainer) {
-    var self = this;
     var incrementalIDValue = 0;
 
     /* Public interface */
@@ -42,41 +31,41 @@
     self.isAvailableCustomID = isAvailableCustomID;
 
     function init() {
-      // surveyItemContainer.init();
+      SurveyItemContainerService.init();
       incrementalIDValue = 0;
     }
 
     function loadJsonDataObject(itemContainerObject) {
-      surveyItemContainer.loadFromItemContainerObject(itemContainerObject);
+      SurveyItemContainerService.loadFromItemContainerObject(itemContainerObject);
     }
 
     function getItemList() {
-      return surveyItemContainer.getItemList();
+      return SurveyItemContainerService.getItemList();
     }
 
     function getItemListSize() {
-      return surveyItemContainer.getItemListSize();
+      return SurveyItemContainerService.getItemListSize();
     }
 
     function getItemByTemplateID(templateID) {
-      return surveyItemContainer.getItemByTemplateID(templateID);
+      return SurveyItemContainerService.getItemByTemplateID(templateID);
     }
 
     function getItemByCustomID(customID) {
-      return surveyItemContainer.getItemByCustomID(customID);
+      return SurveyItemContainerService.getItemByCustomID(customID);
     }
 
     function getItemByID(id) {
-      return surveyItemContainer.getItemByID(id);
+      return SurveyItemContainerService.getItemByID(id);
     }
 
     function getItemPosition(customID) {
-      return surveyItemContainer.getItemPosition(customID);
+      return SurveyItemContainerService.getItemPosition(customID);
     }
 
     function getAllCustomOptionsID() {
       var customOptionsID = [];
-      var checkboxQuestions = surveyItemContainer.getAllCheckboxQuestion();
+      var checkboxQuestions = SurveyItemContainerService.getAllCheckboxQuestion();
       if (checkboxQuestions.length > 0) {
         checkboxQuestions.forEach(function(checkboxQuestion) {
           checkboxQuestion.getAllCustomOptionsID().forEach(function(customOptionID) {
@@ -89,7 +78,7 @@
 
     function loadItem(itemType, templateID, surveyAcronym) {
 
-      var item = surveyItemContainer.createItem(itemType, templateID);
+      var item = SurveyItemContainerService.createItem(itemType, templateID);
       _setIncrementalIDValue(parseInt(templateID.split(surveyAcronym)[1]));
       return item;
     }
@@ -103,12 +92,12 @@
       do {
         templateID = templateIDPrefix + getNextIncrementalGenerator();
       } while (!isAvailableCustomID(templateID));
-      var item = surveyItemContainer.createItem(itemType, templateID);
+      var item = SurveyItemContainerService.createItem(itemType, templateID);
       return item;
     }
 
     function removeItem(templateID) {
-      surveyItemContainer.removeItem(templateID);
+      SurveyItemContainerService.removeItem(templateID);
     }
 
     function getNextIncrementalGenerator() {
@@ -116,7 +105,7 @@
     }
 
     function existsItem(id) {
-      return surveyItemContainer.existsItem(id);
+      return SurveyItemContainerService.existsItem(id);
     }
 
     function isAvailableCustomID(id) {
@@ -129,4 +118,5 @@
       return (getItemByCustomID(id) || foundCustomOptionID) ? false : true;
     }
   }
+
 }());

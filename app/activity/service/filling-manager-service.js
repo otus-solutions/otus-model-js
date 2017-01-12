@@ -3,11 +3,36 @@
 
   angular
     .module('otusjs.model.activity')
-    .service('otusjs.model.activity.FillingManagerService', FillingManagerService);
+    .factory('otusjs.model.activity.FillingManagerFactory', Factory);
 
-  function FillingManagerService() {
+  Factory.$inject = [
+    'otusjs.model.activity.QuestionFillFactory'
+  ]
+
+  function Factory(QuestionFillFactory) {
     var self = this;
-    var fillingList = [];
+
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new FillingManager();
+    }
+
+    function fromJsonObject(jsonObject) {
+      var fillingList = jsonObject.fillingList.map(QuestionFillFactory.fromJsonObject);
+      var fillingManager = new FillingManager();
+      fillingManager.init(fillingList);
+
+      return fillingManager;
+    }
+
+    return self;
+  }
+
+  function FillingManager() {
+    var self = this;
+    var _fillingList = [];
 
     /* Public methods */
     self.init = init;
@@ -18,14 +43,12 @@
     self.updateFilling = updateFilling;
     self.toJson = toJson;
 
-    init();
-
-    function init() {
-      fillingList = [];
+    function init(fillingList) {
+      _fillingList = fillingList || [];
     }
 
     function listSize() {
-      return fillingList.length;
+      return _fillingList.length;
     }
 
     function getFillingIndex(questionID) {
@@ -57,7 +80,7 @@
     function toJson() {
       var json = {};
 
-      json.fillingList = fillingList.map(function(questionFill) {
+      json.fillingList = _fillingList.map(function(questionFill) {
         return questionFill.toJson();
       });
 
@@ -67,7 +90,7 @@
     function _searchByID(questionID) {
       var result;
 
-      fillingList.forEach(function(filling, index) {
+      _fillingList.forEach(function(filling, index) {
         if (filling.questionID === questionID) {
           result = {};
           result.filling = filling;
@@ -79,13 +102,13 @@
     }
 
     function _add(filling) {
-      fillingList.push(filling);
+      _fillingList.push(filling);
     }
 
     function _replaceFilling(filling) {
       var result = _searchByID(filling.questionID);
       if (result !== undefined) {
-        return fillingList.splice(result.index, 1, filling)[0];
+        return _fillingList.splice(result.index, 1, filling)[0];
       } else {
         return null;
       }
@@ -94,7 +117,7 @@
     function _removeFilling(questionID) {
       var result = _searchByID(questionID);
       if (result !== undefined) {
-        return fillingList.splice(result.index, 1)[0];
+        return _fillingList.splice(result.index, 1)[0];
       } else {
         return null;
       }

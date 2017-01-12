@@ -12,9 +12,14 @@
 
     /* Public methods */
     self.create = create;
+    self.fromJsonObject = fromJsonObject;
 
     function create(value) {
       return new MetadataFill(value);
+    }
+
+    function fromJsonObject(jsonObject) {
+      return create(jsonObject.value);
     }
 
     return self;
@@ -48,5 +53,4 @@
       return JSON.stringify(json);
     }
   }
-
 }());

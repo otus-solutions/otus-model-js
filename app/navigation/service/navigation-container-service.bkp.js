@@ -3,25 +3,13 @@
 
   angular
     .module('otusjs.model.navigation')
-    .factory('otusjs.model.navigation.NavigationContainerFactory', Factory);
+    .service('otusjs.model.navigation.NavigationContainerService', service);
 
-  Factory.$inject = [
+  service.$inject = [
     'otusjs.model.navigation.NavigationFactory'
   ];
 
-  function Factory(NavigationFactory) {
-    var self = this;
-
-    self.create = create;
-
-    function create() {
-      return new NavigationContainer(NavigationFactory);
-    }
-
-    return self;
-  }
-
-  function NavigationContainer(NavigationFactory) {
+  function service(NavigationFactory) {
     var self = this;
     var _navigationList = []; // TODO: To implement Immutable collection
 
@@ -104,6 +92,7 @@
       return _navigationList.length;
     }
 
+
     function getPreviousOf(index) {
       if (index === 2) {
         index = 1;
@@ -146,7 +135,7 @@
 
     function createNavigationTo(origin) {
       var newNavigation = NavigationFactory.create(origin);
-      newNavigation.index = _navigationList.length;
+      newNavigation.index = _navigationList.length;      
       _navigationList.push(newNavigation);
       return newNavigation;
     }

@@ -3,10 +3,11 @@
 
   angular
     .module('otusjs.model.navigation')
-    .factory('otusjs.model.navigation.NavigationManagerFactory', Factory);
+    .service('otusjs.model.navigation.NavigationManagerService', service);
 
-  Factory.$inject = [
-    'otusjs.model.navigation.NavigationContainerFactory',
+  service.$inject = [
+    'SurveyItemManagerService',
+    'otusjs.model.navigation.NavigationContainerService',
     'otusjs.model.navigation.NavigationAddService',
     'otusjs.model.navigation.NavigationRemoveService',
     'otusjs.model.navigation.CreateDefaultRouteTaskService',
@@ -17,41 +18,8 @@
     'otusjs.model.navigation.InitialNodesAddService'
   ];
 
-  var Inject = {};
-
-  function Factory(
-    NavigationContainerFactory,
-    NavigationAddService,
-    NavigationRemoveService,
-    CreateDefaultRouteTaskService,
-    AddAlternativeRouteTaskService,
-    RemoveRouteTaskService,
-    UpdateRouteTaskService,
-    NavigationValidatorService,
-    InitialNodesAddService
-  ) {
-
-    Inject.NavigationAddService = NavigationAddService;
-    Inject.NavigationRemoveService = NavigationRemoveService;
-    Inject.CreateDefaultRouteTaskService = CreateDefaultRouteTaskService;
-    Inject.AddAlternativeRouteTaskService = AddAlternativeRouteTaskService;
-    Inject.RemoveRouteTaskService = RemoveRouteTaskService;
-    Inject.UpdateRouteTaskService = UpdateRouteTaskService;
-    Inject.NavigationValidatorService = NavigationValidatorService;
-    Inject.InitialNodesAddService = InitialNodesAddService;
-
-    var self = this;
-
-    self.create = create;
-
-    function create(SurveyItemManager) {
-      return new NavigationManager(SurveyItemManager, NavigationContainerFactory.create());
-    }
-
-    return self;
-  }
-
-  function NavigationManager(SurveyItemManager, NavigationContainer) {
+  function service(SurveyItemManagerService, NavigationContainerService, NavigationAddService, NavigationRemoveService, CreateDefaultRouteTaskService,
+    AddAlternativeRouteTaskService, RemoveRouteTaskService, UpdateRouteTaskService, NavigationValidatorService, InitialNodesAddService) {
 
     var self = this;
     var _selectedNavigation = null;
@@ -72,12 +40,12 @@
     self.getExportableList = getExportableList;
 
     function init() {
-      NavigationContainer.init();
+      NavigationContainerService.init();
       _generateNavigation();
     }
 
     function loadJsonData(data) {
-      NavigationContainer.loadJsonData(data);
+      NavigationContainerService.loadJsonData(data);
     }
 
     function _updateRoutesOnLoad() {
@@ -91,11 +59,11 @@
     }
 
     function getNavigationList() {
-      return NavigationContainer.getNavigationList();
+      return NavigationContainerService.getNavigationList();
     }
 
     function getExportableList() {
-      var fullList = NavigationContainer.getNavigationList();
+      var fullList = NavigationContainerService.getNavigationList();
       return fullList.slice(2, fullList.length);
     }
 
@@ -115,7 +83,7 @@
     }
 
     function selectNavigationByOrigin(origin) {
-      _selectedNavigation = NavigationContainer.getNavigationByOrigin(origin);
+      _selectedNavigation = NavigationContainerService.getNavigationByOrigin(origin);
       return _selectedNavigation;
     }
 
@@ -124,38 +92,38 @@
     }
 
     function addNavigation() {
-      if (!NavigationContainer.getNavigationListSize()) {  //TODO remove?
+      if (!NavigationContainerService.getNavigationListSize()) {  //TODO remove?
         _generateNavigation();
       }
-      _selectedNavigation = Inject.NavigationAddService.execute();
+      _selectedNavigation = NavigationAddService.execute();
 
     }
 
     function _generateNavigation() {
-      Inject.InitialNodesAddService.execute();
+      InitialNodesAddService.execute();
     }
 
     function applyRoute(routeData) {
       if (_selectedNavigation.hasRoute(routeData)) {
-        return Inject.UpdateRouteTaskService.execute(routeData, _selectedNavigation);
+        return UpdateRouteTaskService.execute(routeData, _selectedNavigation);
       } else if (routeData.isDefault) {
-        Inject.CreateDefaultRouteTaskService.execute(routeData, _selectedNavigation);
+        CreateDefaultRouteTaskService.execute(routeData, _selectedNavigation);
       } else {
-        Inject.AddAlternativeRouteTaskService.execute(routeData, _selectedNavigation);
+        AddAlternativeRouteTaskService.execute(routeData, _selectedNavigation);
       }
     }
 
     function deleteRoute(routeData) {
-      Inject.RemoveRouteTaskService.execute(routeData, _selectedNavigation);
+      RemoveRouteTaskService.execute(routeData, _selectedNavigation);
     }
 
     function removeNavigation(templateID) {
-      Inject.NavigationRemoveService.execute(templateID);
+      NavigationRemoveService.execute(templateID);
     }
 
     function getAvaiableRuleCriterionTargets(referenceItemID) {
-      var referenceItemIndex = SurveyItemManager.getItemPosition(referenceItemID);
-      var allItems = SurveyItemManager.getItemList();
+      var referenceItemIndex = SurveyItemManagerService.getItemPosition(referenceItemID);
+      var allItems = SurveyItemManagerService.getItemList();
 
       var avaiableItems = allItems.filter(function(item, index) {
         return index <= referenceItemIndex;
@@ -165,7 +133,7 @@
     }
 
     function listOrphanNavigations() {
-      return NavigationContainer.getOrphanNavigations();
+      return NavigationContainerService.getOrphanNavigations();
     }
   }
 }());

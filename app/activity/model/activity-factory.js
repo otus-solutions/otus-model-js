@@ -7,7 +7,7 @@
 
   Factory.$inject = [
     'otusjs.model.activity.StatusHistoryManagerFactory',
-    'otusjs.model.activity.FillingManagerService',
+    'otusjs.model.activity.FillingManagerFactory',
     'otusjs.model.activity.InterviewFactory',
     'otusjs.model.navigation.NavigationPathFactory',
     'SurveyFormFactory'
@@ -15,8 +15,8 @@
 
   var Inject = {};
 
-  function Factory(StatusHistoryManagerFactory, FillingManagerService, InterviewFactory, NavigationPathFactory, SurveyFormFactory) {
-    Inject.FillingManagerService = FillingManagerService;
+  function Factory(StatusHistoryManagerFactory, FillingManagerFactory, InterviewFactory, NavigationPathFactory, SurveyFormFactory) {
+    Inject.FillingManager = FillingManagerFactory.create();
     Inject.NavigationPathFactory = NavigationPathFactory;
     Inject.SurveyFormFactory = SurveyFormFactory;
 
@@ -29,7 +29,7 @@
     self.fromJsonObject = fromJsonObject;
 
     function create(surveyForm, user, participant) {
-      Inject.FillingManagerService.init();
+      Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
@@ -40,7 +40,7 @@
     }
 
     function createPaperActivity(surveyForm, user, participant, paperActivityData) {
-      Inject.FillingManagerService.init();
+      Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
@@ -58,6 +58,7 @@
       activity.interviews = jsonObject.interviews.map(function(interview) {
         return InterviewFactory.fromJsonObject(interview);
       });
+      activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
       return activity;
     }
 
@@ -72,7 +73,7 @@
     self.surveyForm = surveyForm;
     self.participantData = participant;
     self.interviews = [];
-    self.fillContainer = Inject.FillingManagerService;
+    self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
     self.navigationStack = Inject.NavigationPathFactory.create();
 

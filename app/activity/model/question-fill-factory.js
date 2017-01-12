@@ -17,11 +17,19 @@
 
     /* Public methods */
     self.create = create;
+    self.fromJsonObject = fromJsonObject;
 
     function create(item, answer, metadata, comment) {
       var answerFill = AnswerFillFactory.create(item.objectType, answer);
       var metadataFill = MetadataFillFactory.create(metadata);
       return new QuestionFill(item, answerFill, metadataFill, comment);
+    }
+
+    function fromJsonObject(jsonObject) {
+      var answerFill = AnswerFillFactory.fromJsonObject(jsonObject.answer);
+      var metadataFill = MetadataFillFactory.fromJsonObject(jsonObject.metadata);
+
+      return new QuestionFill({customID: jsonObject.questionID} , answerFill, metadataFill, jsonObject.comment);
     }
 
     return self;
