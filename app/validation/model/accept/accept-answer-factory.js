@@ -31,7 +31,7 @@
   function AcceptAnswer() {
     var self = this;
 
-    self.reference = true;
+    self.reference = false;
   }
 
 }());
