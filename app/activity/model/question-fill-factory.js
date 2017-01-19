@@ -35,6 +35,7 @@
     self.answer = answer;
     self.metadata = metadata;
     self.comment = (comment === undefined) ? '' : comment;
+    self.forceAnswer = false;
     self.isFilled = isFilled;
 
     /* Public methods */
@@ -52,6 +53,7 @@
       json.answer = self.answer.toJson();
       json.metadata = self.metadata.toJson();
       json.comment = self.comment;
+      json.accept = self.accept;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
     }
