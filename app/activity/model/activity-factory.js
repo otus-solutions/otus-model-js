@@ -28,60 +28,73 @@
     self.createPaperActivity = createPaperActivity;
     self.fromJsonObject = fromJsonObject;
 
-    function create(surveyForm, user, participant) {
+    function create(surveyForm, user, participant, id) {
       Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
       activity.mode = 'ONLINE';
       return activity;
     }
 
-    function createPaperActivity(surveyForm, user, participant, paperActivityData) {
+    function createPaperActivity(surveyForm, user, participant, paperActivityData, id) {
       Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
       activity.mode = 'PAPER';
       return activity;
     }
 
     function fromJsonObject(jsonObject) {
-      var activity = new ActivitySurvey(SurveyFormFactory.fromJsonObject(jsonObject.surveyForm), jsonObject.participantData);
+      var surveyForm = SurveyFormFactory.fromJsonObject(jsonObject.surveyForm);
+      var participantData = jsonObject.participantData;
+      var statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
+      var id = jsonObject._id;
+
+      var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, id);
+
+      activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
+      activity.isDiscarded = jsonObject.isDiscarded;
       activity.mode = jsonObject.mode;
-      activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
       activity.interviews = jsonObject.interviews.map(function(interview) {
         return InterviewFactory.fromJsonObject(interview);
       });
-      activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
+
       return activity;
     }
 
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, id) {
     var self = this;
+    var _id = id || null;
 
     self.objectType = 'Activity';
-    self.activityID = null;
     self.surveyForm = surveyForm;
     self.participantData = participant;
     self.interviews = [];
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
     self.navigationStack = Inject.NavigationPathFactory.create();
+    self.isDiscarded = false;
 
     /* Public methods */
+    self.getID = getID;
     self.getRealizationDate = getRealizationDate;
     self.getNavigationStack = getNavigationStack;
     self.setNavigationStack = setNavigationStack;
     self.toJson = toJson;
+
+    function getID() {
+      return _id;
+    }
 
     function getRealizationDate() {
       var finalizedRegistries = self.statusHistory.getFinalizedRegistries();
@@ -110,7 +123,7 @@
       var json = {};
 
       json.objectType = self.objectType;
-      json.activityID = self.activityID;
+      json._id = _id;
       json.surveyForm = self.surveyForm.toJson();
       json.participantData = self.participantData;
       json.mode = self.mode;
@@ -119,6 +132,7 @@
       });
       json.fillContainer = self.fillContainer.toJson();
       json.statusHistory = self.statusHistory.toJson();
+      json.isDiscarded = self.isDiscarded;
       // json.navigationStack = self.navigationStack.toJson();
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
