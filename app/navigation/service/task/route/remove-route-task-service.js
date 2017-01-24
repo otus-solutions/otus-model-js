@@ -3,21 +3,23 @@
 
   angular
     .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.RemoveRouteTaskService', service);
+    .service('otusjs.model.navigation.RouteRemovalTaskService', Service);
 
-  service.$inject = [
-    'otusjs.model.navigation.NavigationContainerService'
-  ];
-
-  function service(NavigationContainerService) {
+  function Service() {
     var self = this;
+    var _container = null;
 
     /* Public methods */
+    self.setContainer = setContainer;
     self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
 
     function execute(routeData, navigation) {
       navigation.removeRouteByName(routeData.name);
-      var nextNavigation = NavigationContainerService.getNavigationByOrigin(routeData.destination);
+      var nextNavigation = _container.getNavigationByOrigin(routeData.destination);
       nextNavigation.removeInNavigation(navigation);
     }
   }

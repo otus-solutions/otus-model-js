@@ -23,10 +23,10 @@
 
   function NavigationContainer(NavigationFactory) {
     var self = this;
-    var _navigationList = []; // TODO: To implement Immutable collection
+    var _navigationList = [];
 
     /* Public methods */
-    self.init = init;
+    self.resetData = resetData;
     self.loadJsonData = loadJsonData;
     self.manageNavigation = manageNavigation;
     self.getNavigationByOrigin = getNavigationByOrigin;
@@ -36,6 +36,7 @@
     self.getNavigationList = getNavigationList;
     self.getNavigationListSize = getNavigationListSize;
     self.getOrphanNavigations = getOrphanNavigations;
+    self.getLastNavigation = getLastNavigation;
     self.existsNavigationTo = existsNavigationTo;
     self.createNavigationTo = createNavigationTo;
     self.removeNavigationOf = removeNavigationOf;
@@ -45,12 +46,12 @@
     self.getPreviousOf = getPreviousOf;
     self.getEmptyNavigation = getEmptyNavigation;
 
-    function init() {
+    function resetData() {
       _navigationList = [];
     }
 
     function loadJsonData(jsonData) {
-      init();
+      resetData();
       // assumes previous load
       var navMap = _loadNavigations(jsonData);
 
@@ -138,6 +139,14 @@
       });
 
       return orphans;
+    }
+
+    function getLastNavigation() {
+      if (getNavigationListSize() === 2) {
+        return getNavigationByPosition(0);
+      } else {
+        return getNavigationByPosition(getNavigationList().length - 1);
+      }
     }
 
     function existsNavigationTo(origin) {
