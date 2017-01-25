@@ -22,6 +22,8 @@
       }
       var validator = new LowerLimitValidator();
       validator.reference = jsonObject.reference;
+      validator.canBeIgnored = jsonObject.canBeIgnored;
+      
       return validator;
     }
 
@@ -31,6 +33,7 @@
   function LowerLimitValidator() {
     var self = this;
 
+    self.canBeIgnored = true;
     self.reference = null;
   }
 
