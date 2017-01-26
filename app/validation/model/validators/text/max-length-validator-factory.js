@@ -31,6 +31,7 @@
   function MaxLengthValidator() {
     var self = this;
 
+    self.canBeIgnored = true;
     self.reference = null;
   }
 

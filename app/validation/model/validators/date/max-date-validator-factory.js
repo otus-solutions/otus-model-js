@@ -31,6 +31,7 @@
   function MaxDateValidator() {
     var self = this;
 
+    self.canBeIgnored = true;
     self.reference = new Date();
   }
 

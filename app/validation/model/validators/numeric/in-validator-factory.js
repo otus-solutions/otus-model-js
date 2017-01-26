@@ -31,6 +31,7 @@
   function InValidator() {
     var self = this;
 
+    self.canBeIgnored = true;
     self.reference = {
       'initial': null,
       'end': null

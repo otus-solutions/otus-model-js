@@ -31,6 +31,7 @@
   function FutureDateValidator() {
     var self = this;
 
+    self.canBeIgnored = true;
     self.reference = false;
   }
 

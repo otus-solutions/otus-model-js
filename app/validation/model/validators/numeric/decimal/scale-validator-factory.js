@@ -31,6 +31,7 @@
   function ScaleValidator() {
     var self = this;
 
+    self.canBeIgnored = true;
     self.reference = null;
   }
 

@@ -31,6 +31,7 @@
   function PastDateValidator() {
     var self = this;
 
+    self.canBeIgnored = true;
     self.reference = false;
   }
 

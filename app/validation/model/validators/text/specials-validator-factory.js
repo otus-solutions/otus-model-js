@@ -31,6 +31,7 @@
   function SpecialsValidator() {
     var self = this;
 
+    self.canBeIgnored = true;
     self.reference = true;
 
   }

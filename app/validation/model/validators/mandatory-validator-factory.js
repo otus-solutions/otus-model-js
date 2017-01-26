@@ -31,6 +31,7 @@
   function MandatoryValidator() {
     var self = this;
 
+    self.canBeIgnored = false;
     self.reference = true;
   }
 

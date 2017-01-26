@@ -31,6 +31,7 @@
   function RangeDateValidator() {
     var self = this;
 
+    self.canBeIgnored = true;
     self.reference = {
       'initial': new Date(),
       'end': new Date()
