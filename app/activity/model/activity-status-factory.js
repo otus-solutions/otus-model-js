@@ -24,7 +24,7 @@
     }
 
     function createInitializedOfflineStatus(offlineData) {
-      return new ActivityStatus('INITIALIZED_OFFLINE', offlineData.checker, offlineData.realizationDate);
+      return new ActivityStatus('INITIALIZED_OFFLINE', offlineData.checker, offlineData.realizationDate.getTime());
     }
 
     function createInitializedOnlineStatus(user) {

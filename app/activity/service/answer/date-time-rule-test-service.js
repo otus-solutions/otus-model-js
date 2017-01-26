@@ -26,7 +26,7 @@
       }
       var resultRegex = rule.answer.match(/^(\d{1,2})[\/](\d{1,2})[\/](\d{4})$/);
       var ruleDate = new Date(resultRegex[3], (resultRegex[2] - 1), resultRegex[1]);
-      return _runner[rule.operator](ruleDate, answer);
+      return _runner[rule.operator](ruleDate, new Date(answer));
     }
 
     function _filter(answer) {
@@ -40,37 +40,37 @@
 
     _runner.equal = function(reference, answer) {
       return answer.getTime() == reference.getTime();
-    }
+    };
 
     _runner.notEqual = function(reference, answer) {
       return answer.getTime() != reference.getTime();
-    }
+    };
 
     _runner.within = function(reference, answer) {
       return reference.some(function(value) {
         return _runner.equal(value, answer);
       });
-    }
+    };
 
     _runner.greater = function(reference, answer) {
       return answer.getTime() > reference.getTime();
-    }
+    };
 
     _runner.greaterEqual = function(reference, answer) {
       return answer.getTime() >= reference.getTime();
-    }
+    };
 
     _runner.lower = function(reference, answer) {
       return answer.getTime() < reference.getTime();
-    }
+    };
 
     _runner.lowerEqual = function(reference, answer) {
       return answer.getTime() <= reference.getTime();
-    }
+    };
 
     _runner.between = function(reference, answer) {
       return (_runner.greaterEqual(reference[0], answer) && _runner.lowerEqual(reference[1], answer));
-    }
+    };
 
     function _polyfillIsInteger() {
       Number.isInteger = Number.isInteger || function(value) {
