@@ -10,7 +10,7 @@ describe('DateTimeRuleTestService', function() {
     inject(function(_$injector_) {
       service = _$injector_.get('otusjs.model.activity.DateTimeRuleTestService', {
         NumericRuleTestService: mockNumericRuleTestService(_$injector_)
-      })
+      });
     });
   });
 
