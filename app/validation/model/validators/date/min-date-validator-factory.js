@@ -21,6 +21,7 @@
         throw new Error("otusjs.model.misc.model.MinDateValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var validator = new MinDateValidator();
+      validator.canBeIgnored = jsonObject.canBeIgnored;
       validator.reference = jsonObject.reference;
       return validator;
     }

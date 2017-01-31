@@ -21,6 +21,7 @@
         throw new Error("otusjs.model.validation.MinSelectedValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var validator = new MinSelectedValidator();
+      validator.canBeIgnored = jsonObject.canBeIgnored;
       validator.reference = jsonObject.reference;
       return validator;
     }

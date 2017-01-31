@@ -149,6 +149,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "mandatory",
                     "data": {
+                        "canBeIgnored": false,
                         "reference": true
                     }
                 },
@@ -157,6 +158,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "rangeDate",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": {
                             "initial": "2016-10-03T03:00:00.000Z",
                             "end": "2016-10-03T03:00:00.000Z"
@@ -168,6 +170,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "minDate",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": "2016-10-20T15:39:56.079Z"
                     }
                 },
@@ -176,6 +179,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "maxDate",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": "2016-10-20T15:39:57.203Z"
                     }
                 },
@@ -184,6 +188,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "futureDate",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": true
                     }
                 },
@@ -192,6 +197,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "pastDate",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": true
                     }
                 }
@@ -347,6 +353,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "mandatory",
                     "data": {
+                        "canBeIgnored": false,
                         "reference": true
                     }
                 },
@@ -355,6 +362,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "distinct",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": 1
                     }
                 },
@@ -363,6 +371,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "lowerLimit",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": 20
                     }
                 },
@@ -371,6 +380,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "upperLimit",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": 50
                     }
                 },
@@ -379,6 +389,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "precision",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": 2
                     }
                 },
@@ -387,6 +398,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "in",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": {
                             "initial": 1,
                             "end": 50
@@ -545,6 +557,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "mandatory",
                     "data": {
+                        "canBeIgnored": false,
                         "reference": true
                     }
                 },
@@ -553,6 +566,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "distinct",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": 1
                     }
                 },
@@ -561,6 +575,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "lowerLimit",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": 20
                     }
                 },
@@ -569,6 +584,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "upperLimit",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": 50
                     }
                 },
@@ -577,6 +593,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "scale",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": 2
                     }
                 },
@@ -585,6 +602,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "in",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": {
                             "initial": 20,
                             "end": 50
@@ -777,6 +795,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "mandatory",
                     "data": {
+                        "canBeIgnored": false,
                         "reference": true
                     }
                 }
@@ -1123,6 +1142,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "mandatory",
                     "data": {
+                        "canBeIgnored": false,
                         "reference": true
                     }
                 },
@@ -1131,6 +1151,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "alphanumeric",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": true
                     }
                 },
@@ -1139,6 +1160,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "lowerCase",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": true
                     }
                 },
@@ -1147,6 +1169,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "upperCase",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": true
                     }
                 },
@@ -1155,6 +1178,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "specials",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": true
                     }
                 },
@@ -1163,6 +1187,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "minLength",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": 14
                     }
                 },
@@ -1171,6 +1196,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "maxLength",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": 90
                     }
                 }
@@ -1303,6 +1329,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "mandatory",
                     "data": {
+                        "canBeIgnored": false,
                         "reference": false
                     }
                 }
@@ -1435,6 +1462,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "mandatory",
                     "data": {
+                        "canBeIgnored": false,
                         "reference": true
                     }
                 },
@@ -1443,6 +1471,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "minTime",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": "Wed Mar 25 2015 02:00:00 GMT-0300 (Hora oficial do Brasil)"
                     }
                 },
@@ -1451,6 +1480,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "maxTime",
                     "data": {
+                        "canBeIgnored": true,
                         "reference": "Thu Oct 20 2016 03:00:00 GMT-0200 (Horário brasileiro de verão)"
                     }
                 }
@@ -1583,6 +1613,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "objectType": "Rule",
                     "validatorType": "mandatory",
                     "data": {
+                        "canBeIgnored": false,
                         "reference": true
                     }
                 }

@@ -21,6 +21,7 @@
         throw new Error("otusjs.model.misc.model.ScaleValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var validator = new ScaleValidator();
+      validator.canBeIgnored = jsonObject.canBeIgnored;
       validator.reference = jsonObject.reference;
       return validator;
     }

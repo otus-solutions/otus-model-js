@@ -44,6 +44,7 @@ describe('RulesFactory', function() {
       objectType: 'Rule',
       validatorType: 'upperCase',
       data: {
+        canBeIgnored: true,
         reference: true
       }
     });
@@ -55,6 +56,7 @@ describe('RulesFactory', function() {
       "objectType": "Rule",
       "validatorType": "mandatory",
       "data": {
+        "canBeIgnored": false,
         "reference": true
       }
     };

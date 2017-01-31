@@ -21,9 +21,9 @@
         throw new Error("otusjs.model.misc.model.UpperLimitValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var validator = new UpperLimitValidator();
-      validator.reference = jsonObject.reference;
       validator.canBeIgnored = jsonObject.canBeIgnored;
-      
+      validator.reference = jsonObject.reference;
+
       return validator;
     }
 

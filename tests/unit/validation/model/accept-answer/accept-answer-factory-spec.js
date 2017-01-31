@@ -1,0 +1,5 @@
+describe('AcceptAnswerFactory', function() {
+
+
+
+});
