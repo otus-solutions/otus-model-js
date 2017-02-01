@@ -160,6 +160,7 @@ Test.utils.data.latestSurveyTemplate = {
                     "data": {
                         "canBeIgnored": true,
                         "reference": {
+                            "canBeIgnored": false,
                             "initial": "2016-10-03T03:00:00.000Z",
                             "end": "2016-10-03T03:00:00.000Z"
                         }
