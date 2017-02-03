@@ -30,16 +30,23 @@
 
     self.objectType = 'Interviewer';
     self.name = userData.name;
+    self.surname = userData.surname;
     self.email = userData.email;
 
     /* Public methods */
+    self.getFullname = getFullname;
     self.toJson = toJson;
+
+    function getFullname() {
+      return self.name + ' ' + self.surname;
+    }
 
     function toJson() {
       var json = {};
 
       json.objectType = self.objectType;
       json.name = self.name;
+      json.surname = self.surname;
       json.email = self.email;
 
       return JSON.stringify(json);

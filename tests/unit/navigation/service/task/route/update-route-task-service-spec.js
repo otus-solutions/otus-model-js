@@ -18,7 +18,7 @@ describe('UpdateRouteTaskService', function() {
       mockNavigation(_$injector_);
       mockRoute(_$injector_);
 
-      service = _$injector_.get('otusjs.model.navigation.UpdateRouteTaskService', injections);
+      service = _$injector_.get('otusjs.model.navigation.RouteUpdateTaskService', injections);
     });
   });
 
@@ -140,10 +140,10 @@ describe('UpdateRouteTaskService', function() {
   }
 
   function mockAddAlternativeRouteTaskService($injector){
-    Mock.AddAlternativeRouteTaskService = $injector.get('otusjs.model.navigation.AddAlternativeRouteTaskService');
+    Mock.AddAlternativeRouteTaskService = $injector.get('otusjs.model.navigation.AlternativeRouteCreationTaskService');
   }
 
   function mockCreateDefaultRouteTaskService($injector) {
-    Mock.CreateDefaultRouteTaskService = $injector.get('otusjs.model.navigation.CreateDefaultRouteTaskService');
+    Mock.CreateDefaultRouteTaskService = $injector.get('otusjs.model.navigation.DefaultRouteCreationTaskService');
   }
 });

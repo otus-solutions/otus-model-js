@@ -16,9 +16,14 @@
 
     /* Public methods */
     self.create = create;
+    self.fromJsonObject = fromJsonObject;
 
     function create(questionType, value) {
       return new AnswerFill(value, AnswerEvaluationService.getEvaluator(questionType), questionType);
+    }
+
+    function fromJsonObject(jsonObject) {
+      return create(jsonObject.type, jsonObject.value);
     }
 
     return self;

@@ -7,7 +7,7 @@
 
   Factory.$inject = [
     'otusjs.model.activity.StatusHistoryManagerFactory',
-    'otusjs.model.activity.FillingManagerService',
+    'otusjs.model.activity.FillingManagerFactory',
     'otusjs.model.activity.InterviewFactory',
     'otusjs.model.navigation.NavigationPathFactory',
     'SurveyFormFactory'
@@ -15,8 +15,8 @@
 
   var Inject = {};
 
-  function Factory(StatusHistoryManagerFactory, FillingManagerService, InterviewFactory, NavigationPathFactory, SurveyFormFactory) {
-    Inject.FillingManagerService = FillingManagerService;
+  function Factory(StatusHistoryManagerFactory, FillingManagerFactory, InterviewFactory, NavigationPathFactory, SurveyFormFactory) {
+    Inject.FillingManager = FillingManagerFactory.create();
     Inject.NavigationPathFactory = NavigationPathFactory;
     Inject.SurveyFormFactory = SurveyFormFactory;
 
@@ -28,59 +28,94 @@
     self.createPaperActivity = createPaperActivity;
     self.fromJsonObject = fromJsonObject;
 
-    function create(surveyForm, user, participant) {
-      Inject.FillingManagerService.init();
+    function create(surveyForm, user, participant, id) {
+      Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
       activity.mode = 'ONLINE';
       return activity;
     }
 
-    function createPaperActivity(surveyForm, user, participant, paperActivityData) {
-      Inject.FillingManagerService.init();
+    function createPaperActivity(surveyForm, user, participant, paperActivityData, id) {
+      Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
       activity.mode = 'PAPER';
       return activity;
     }
 
     function fromJsonObject(jsonObject) {
-      var activity = new ActivitySurvey(SurveyFormFactory.fromJsonObject(jsonObject.surveyForm), jsonObject.participantData);
+      var surveyForm = SurveyFormFactory.fromJsonObject(jsonObject.surveyForm);
+      var participantData = jsonObject.participantData;
+      var statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
+      var id = jsonObject._id;
+
+      var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, id);
+
+      activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
+      activity.isDiscarded = jsonObject.isDiscarded;
       activity.mode = jsonObject.mode;
       activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
       activity.interviews = jsonObject.interviews.map(function(interview) {
         return InterviewFactory.fromJsonObject(interview);
       });
+
       return activity;
     }
 
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, id) {
     var self = this;
+    var _id = id || null;
 
     self.objectType = 'Activity';
-    self.activityID = null;
     self.surveyForm = surveyForm;
     self.participantData = participant;
     self.interviews = [];
-    self.fillContainer = Inject.FillingManagerService;
+    self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
     self.navigationStack = Inject.NavigationPathFactory.create();
+    self.isDiscarded = false;
 
     /* Public methods */
+    self.getID = getID;
+    self.getItems = getItems;
+    self.getNavigations = getNavigations;
+    self.getIdentity = getIdentity;
+    self.getName = getName;
     self.getRealizationDate = getRealizationDate;
     self.getNavigationStack = getNavigationStack;
     self.setNavigationStack = setNavigationStack;
     self.toJson = toJson;
+
+    function getID() {
+      return _id;
+    }
+
+    function getItems() {
+      return _getTemplate().SurveyItemManager.getItemList();
+    }
+
+    function getNavigations() {
+      return _getTemplate().NavigationManager.getNavigationList();
+    }
+
+    function getIdentity() {
+      return _getTemplate().identity;
+    }
+
+    function getName() {
+      return getIdentity().name;
+    }
 
     function getRealizationDate() {
       var finalizedRegistries = self.statusHistory.getFinalizedRegistries();
@@ -109,7 +144,7 @@
       var json = {};
 
       json.objectType = self.objectType;
-      json.activityID = self.activityID;
+      json._id = _id;
       json.surveyForm = self.surveyForm.toJson();
       json.participantData = self.participantData;
       json.mode = self.mode;
@@ -118,9 +153,29 @@
       });
       json.fillContainer = self.fillContainer.toJson();
       json.statusHistory = self.statusHistory.toJson();
+      json.isDiscarded = self.isDiscarded;
       // json.navigationStack = self.navigationStack.toJson();
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+    }
+
+    function _getTemplate() {
+      if (_existStructuralFailure()) {
+        return self.surveyForm;
+      } else {
+        return self.surveyForm.surveyTemplate;
+      }
+    }
+
+    /**
+     * TODO: effectively to resolve the bug #252 (Mantis)
+     * This method is an workaround for the reported bug #252 (on Mantis) and story OTUS-85 (on
+     * Jira). The problem is: ActivitySurvey generation. In Otus Studio, the survey template goes to
+     * activitie's property "surveyForm", but in the Otus the survey template goes to SurveyForm's
+     * property "surveyTemplate" (that is the CORRECT way).
+     */
+    function _existStructuralFailure() {
+      return (!self.surveyForm.surveyTemplate) ? true : false;
     }
   }
 }());

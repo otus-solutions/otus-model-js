@@ -9,14 +9,19 @@
     'SurveyIdentityFactory',
     'SurveyMetaInfoFactory',
     'SurveyUUIDGenerator',
-    'otusjs.model.navigation.NavigationManagerService',
-    'SurveyItemManagerService'
+    'otusjs.model.navigation.NavigationManagerFactory',
+    'SurveyItemManagerFactory'
   ];
 
-  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService, SurveyItemManagerService) {
+  var Inject = {};
+
+  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory) {
     var self = this;
-    
+
     self.OBJECT_TYPE = 'Survey';
+
+    Inject.SurveyItemManagerFactory = SurveyItemManagerFactory;
+    Inject.NavigationManagerFactory = NavigationManagerFactory;
 
     /* Public interdace */
     self.create = create;
@@ -34,24 +39,28 @@
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
+      var itemManager = SurveyItemManagerFactory.create();
 
-      return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+      return new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
     }
 
     function create(name, acronym) {
+      var UUID = SurveyUUIDGenerator.generateSurveyUUID();
       var metainfo = SurveyMetaInfoFactory.create();
       var identity = SurveyIdentityFactory.create(name, acronym);
-      var UUID = SurveyUUIDGenerator.generateSurveyUUID();
 
-      return new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+      var survey = new Survey(metainfo, identity, UUID);
+      survey.initialize();
+
+      return survey;
     }
 
     function fromJsonObject(jsonObject) {
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-
-      var survey = new Survey(metainfo, identity, UUID, NavigationManagerService, SurveyItemManagerService);
+      var itemManager = SurveyItemManagerFactory.create();
+      var survey = new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
 
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
@@ -62,7 +71,7 @@
     return self;
   }
 
-  function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService, SurveyItemManagerService) {
+  function Survey(surveyMetainfo, surveyIdentity, uuid) {
     var self = this;
 
     self.extents = 'StudioObject';
@@ -70,23 +79,47 @@
     self.oid = uuid;
     self.identity = surveyIdentity;
     self.metainfo = surveyMetainfo;
-    self.SurveyItemManager = SurveyItemManagerService;
-    self.NavigationManager = NavigationManagerService;
-
-    self.NavigationManager.init();
-    self.SurveyItemManager.init();
+    self.SurveyItemManager = Inject.SurveyItemManagerFactory.create();
+    self.NavigationManager = Inject.NavigationManagerFactory.create(self);
 
     /* Public methods */
+    self.initialize = initialize;
     self.addItem = addItem;
-    self.loadItem = loadItem;
     self.removeItem = removeItem;
+    self.updateItem = updateItem;
+    self.loadItem = loadItem;
     self.getItemByTemplateID = getItemByTemplateID;
     self.getItemByCustomID = getItemByCustomID;
     self.getItemByID = getItemByID;
     self.isAvailableID = isAvailableID;
     self.isAvailableCustomID = isAvailableCustomID;
-    self.updateItem = updateItem;
     self.toJson = toJson;
+
+    function initialize() {
+      self.SurveyItemManager.init();
+      self.NavigationManager.initialize();
+    }
+
+    function addItem(type) {
+      var item = self.SurveyItemManager.addItem(type, self.identity.acronym);
+      self.NavigationManager.addNavigation();
+      return item;
+    }
+
+    function removeItem(templateID) {
+      self.SurveyItemManager.removeItem(templateID);
+      self.NavigationManager.removeNavigation(templateID);
+    }
+
+    function updateItem(item) {
+      self.navigationList[item.templateID] = item;
+    }
+
+    function loadItem(type, templateID) {
+      var item = self.SurveyItemManager.loadItem(type, templateID, self.identity.acronym);
+      self.NavigationManager.addNavigation();
+      return item;
+    }
 
     function getItemByTemplateID(templateID) {
       return self.SurveyItemManager.getItemByTemplateID(templateID);
@@ -108,27 +141,6 @@
       return self.SurveyItemManager.isAvailableCustomID(id);
     }
 
-    function addItem(type) {
-      var item = self.SurveyItemManager.addItem(type, self.identity.acronym);
-      self.NavigationManager.addNavigation();
-      return item;
-    }
-
-    function loadItem(type, templateID) {
-      var item = self.SurveyItemManager.loadItem(type, templateID, self.identity.acronym);
-      self.NavigationManager.addNavigation();
-      return item;
-    }
-
-    function removeItem(templateID) {
-      self.SurveyItemManager.removeItem(templateID);
-      self.NavigationManager.removeNavigation(templateID);
-    }
-
-    function updateItem(item) {
-      self.navigationList[item.templateID] = item;
-    }
-
     function toJson() {
       var json = {};
 
@@ -144,7 +156,7 @@
       });
 
       json.navigationList = [];
-      NavigationManagerService.getNavigationList().forEach(function(navigation) {
+      self.NavigationManager.getNavigationList().forEach(function(navigation) {
         if (navigation) {
           json.navigationList.push(navigation.toJson());
         } else {
@@ -155,5 +167,4 @@
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
     }
   }
-
 }());

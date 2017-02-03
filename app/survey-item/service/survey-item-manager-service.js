@@ -3,15 +3,26 @@
 
   angular
     .module('otusjs.surveyItem')
-    .service('SurveyItemManagerService', SurveyItemManagerService);
+    .factory('SurveyItemManagerFactory', Factory);
 
-  SurveyItemManagerService.$inject = [
-    'SurveyItemContainerService'
+  Factory.$inject = [
+    'SurveyItemContainerFactory'
   ];
 
-  function SurveyItemManagerService(SurveyItemContainerService) {
+  function Factory(SurveyItemContainerFactory) {
     var self = this;
 
+    self.create = create;
+
+    function create() {
+      return new SurveyItemManager(SurveyItemContainerFactory.create());
+    }
+
+    return self;
+  }
+
+  function SurveyItemManager(surveyItemContainer) {
+    var self = this;
     var incrementalIDValue = 0;
 
     /* Public interface */
@@ -24,6 +35,7 @@
     self.getItemByID = getItemByID;
     self.getItemPosition = getItemPosition;
     self.getAllCustomOptionsID = getAllCustomOptionsID;
+    self.getLastItem = getLastItem;
     self.addItem = addItem;
     self.loadItem = loadItem;
     self.removeItem = removeItem;
@@ -31,41 +43,41 @@
     self.isAvailableCustomID = isAvailableCustomID;
 
     function init() {
-      SurveyItemContainerService.init();
+      // surveyItemContainer.init();
       incrementalIDValue = 0;
     }
 
     function loadJsonDataObject(itemContainerObject) {
-      SurveyItemContainerService.loadFromItemContainerObject(itemContainerObject);
+      surveyItemContainer.loadFromItemContainerObject(itemContainerObject);
     }
 
     function getItemList() {
-      return SurveyItemContainerService.getItemList();
+      return surveyItemContainer.getItemList();
     }
 
     function getItemListSize() {
-      return SurveyItemContainerService.getItemListSize();
+      return surveyItemContainer.getItemListSize();
     }
 
     function getItemByTemplateID(templateID) {
-      return SurveyItemContainerService.getItemByTemplateID(templateID);
+      return surveyItemContainer.getItemByTemplateID(templateID);
     }
 
     function getItemByCustomID(customID) {
-      return SurveyItemContainerService.getItemByCustomID(customID);
+      return surveyItemContainer.getItemByCustomID(customID);
     }
 
     function getItemByID(id) {
-      return SurveyItemContainerService.getItemByID(id);
+      return surveyItemContainer.getItemByID(id);
     }
 
     function getItemPosition(customID) {
-      return SurveyItemContainerService.getItemPosition(customID);
+      return surveyItemContainer.getItemPosition(customID);
     }
 
     function getAllCustomOptionsID() {
       var customOptionsID = [];
-      var checkboxQuestions = SurveyItemContainerService.getAllCheckboxQuestion();
+      var checkboxQuestions = surveyItemContainer.getAllCheckboxQuestion();
       if (checkboxQuestions.length > 0) {
         checkboxQuestions.forEach(function(checkboxQuestion) {
           checkboxQuestion.getAllCustomOptionsID().forEach(function(customOptionID) {
@@ -76,9 +88,13 @@
       return customOptionsID;
     }
 
+    function getLastItem() {
+      return surveyItemContainer.getLastItem();
+    }
+
     function loadItem(itemType, templateID, surveyAcronym) {
 
-      var item = SurveyItemContainerService.createItem(itemType, templateID);
+      var item = surveyItemContainer.createItem(itemType, templateID);
       _setIncrementalIDValue(parseInt(templateID.split(surveyAcronym)[1]));
       return item;
     }
@@ -92,12 +108,12 @@
       do {
         templateID = templateIDPrefix + getNextIncrementalGenerator();
       } while (!isAvailableCustomID(templateID));
-      var item = SurveyItemContainerService.createItem(itemType, templateID);
+      var item = surveyItemContainer.createItem(itemType, templateID);
       return item;
     }
 
     function removeItem(templateID) {
-      SurveyItemContainerService.removeItem(templateID);
+      surveyItemContainer.removeItem(templateID);
     }
 
     function getNextIncrementalGenerator() {
@@ -105,7 +121,7 @@
     }
 
     function existsItem(id) {
-      return SurveyItemContainerService.existsItem(id);
+      return surveyItemContainer.existsItem(id);
     }
 
     function isAvailableCustomID(id) {
@@ -118,5 +134,4 @@
       return (getItemByCustomID(id) || foundCustomOptionID) ? false : true;
     }
   }
-
 }());

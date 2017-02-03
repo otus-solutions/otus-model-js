@@ -3,18 +3,30 @@
 
   angular
     .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.NavigationContainerService', service);
+    .factory('otusjs.model.navigation.NavigationContainerFactory', Factory);
 
-  service.$inject = [
+  Factory.$inject = [
     'otusjs.model.navigation.NavigationFactory'
   ];
 
-  function service(NavigationFactory) {
+  function Factory(NavigationFactory) {
     var self = this;
-    var _navigationList = []; // TODO: To implement Immutable collection
+
+    self.create = create;
+
+    function create() {
+      return new NavigationContainer(NavigationFactory);
+    }
+
+    return self;
+  }
+
+  function NavigationContainer(NavigationFactory) {
+    var self = this;
+    var _navigationList = [];
 
     /* Public methods */
-    self.init = init;
+    self.resetData = resetData;
     self.loadJsonData = loadJsonData;
     self.manageNavigation = manageNavigation;
     self.getNavigationByOrigin = getNavigationByOrigin;
@@ -24,6 +36,7 @@
     self.getNavigationList = getNavigationList;
     self.getNavigationListSize = getNavigationListSize;
     self.getOrphanNavigations = getOrphanNavigations;
+    self.getLastNavigation = getLastNavigation;
     self.existsNavigationTo = existsNavigationTo;
     self.createNavigationTo = createNavigationTo;
     self.removeNavigationOf = removeNavigationOf;
@@ -33,12 +46,12 @@
     self.getPreviousOf = getPreviousOf;
     self.getEmptyNavigation = getEmptyNavigation;
 
-    function init() {
+    function resetData() {
       _navigationList = [];
     }
 
     function loadJsonData(jsonData) {
-      init();
+      resetData();
       // assumes previous load
       var navMap = _loadNavigations(jsonData);
 
@@ -92,7 +105,6 @@
       return _navigationList.length;
     }
 
-
     function getPreviousOf(index) {
       if (index === 2) {
         index = 1;
@@ -129,13 +141,21 @@
       return orphans;
     }
 
+    function getLastNavigation() {
+      if (getNavigationListSize() === 2) {
+        return getNavigationByPosition(0);
+      } else {
+        return getNavigationByPosition(getNavigationList().length - 1);
+      }
+    }
+
     function existsNavigationTo(origin) {
       return (getNavigationByOrigin(origin)) ? true : false;
     }
 
     function createNavigationTo(origin) {
       var newNavigation = NavigationFactory.create(origin);
-      newNavigation.index = _navigationList.length;      
+      newNavigation.index = _navigationList.length;
       _navigationList.push(newNavigation);
       return newNavigation;
     }

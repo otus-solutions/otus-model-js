@@ -6,7 +6,7 @@
     .service('otusjs.model.navigation.NavigationValidatorService', service);
 
   service.$inject = [
-    'SurveyItemContainerService'
+    'SurveyItemContainerFactory'
   ];
 
   function service(SurveyItemContainerService) {

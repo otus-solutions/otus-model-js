@@ -15,6 +15,7 @@
 
   function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivityFactory, InterviewFactory) {
     var self = this;
+    var _user = null;
     self.surveyActivity = null;
 
     /* Public interface */
@@ -24,6 +25,8 @@
     self.fillQuestion = fillQuestion;
     self.openActivitySurvey = openActivitySurvey;
     self.initializeActivitySurvey = initializeActivitySurvey;
+    self.finalizeActivitySurvey = finalizeActivitySurvey;
+    self.saveActivitySurvey = saveActivitySurvey;
     self.getFillingByQuestionID = getFillingByQuestionID;
 
     function createActivity(template, user, participant) {
@@ -36,12 +39,21 @@
     }
 
     function openActivitySurvey(user) {
-      self.surveyActivity.statusHistory.newOpenedRegistry(user);
+      _user = user;
+      self.surveyActivity.statusHistory.newOpenedRegistry(_user);
     }
 
-    function initializeActivitySurvey(user) {
-      self.surveyActivity.statusHistory.newInitializedOnlineRegistry(user);
-      self.surveyActivity.interviews.push(InterviewFactory.create(user));
+    function initializeActivitySurvey() {
+      self.surveyActivity.statusHistory.newInitializedOnlineRegistry(_user);
+      self.surveyActivity.interviews.push(InterviewFactory.create(_user));
+    }
+
+    function finalizeActivitySurvey() {
+      self.surveyActivity.statusHistory.newFinalizedRegistry(_user);
+    }
+
+    function saveActivitySurvey() {
+      self.surveyActivity.statusHistory.newSavedRegistry(_user);
     }
 
     function createQuestionFill(question, answer, metadata, comment) {
