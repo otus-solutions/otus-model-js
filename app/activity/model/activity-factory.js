@@ -78,10 +78,42 @@
     self.navigationStack = Inject.NavigationPathFactory.create();
 
     /* Public methods */
+    self.getItems = getItems;
+    self.getNavigations = getNavigations;
+    self.getIdentity = getIdentity;
+    self.getName = getName;
     self.getRealizationDate = getRealizationDate;
     self.getNavigationStack = getNavigationStack;
     self.setNavigationStack = setNavigationStack;
     self.toJson = toJson;
+
+    function getItems() {
+      if (!self.surveyForm.surveyTemplate) {
+        return self.surveyForm.SurveyItemManager.getItemList();
+      } else {
+        return self.surveyForm.SurveyItemManager.getItemList();
+      }
+    }
+
+    function getNavigations() {
+      if (!self.surveyForm.surveyTemplate) {
+        return self.surveyForm.NavigationManager.getNavigationList();
+      } else {
+        return self.surveyForm.NavigationManager.getNavigationList();
+      }
+    }
+
+    function getIdentity() {
+      if (!self.surveyForm.surveyTemplate) {
+        return self.surveyForm.identity;
+      } else {
+        return self.surveyForm.surveyTemplate.identity;
+      }
+    }
+
+    function getName() {
+      return getIdentity().name;
+    }
 
     function getRealizationDate() {
       var finalizedRegistries = self.statusHistory.getFinalizedRegistries();

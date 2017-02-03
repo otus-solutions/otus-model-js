@@ -1,4 +1,4 @@
-fdescribe('NavigationManager', function() {
+xdescribe('NavigationManager', function() {
 
   var Mock = {};
   var manager;
@@ -25,7 +25,7 @@ fdescribe('NavigationManager', function() {
     });
   });
 
-  fdescribe('init method', function() {
+  describe('init method', function() {
 
     it('should be defined in manager', function() {
       expect(manager.init).toBeDefined();
