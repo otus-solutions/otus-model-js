@@ -1,34 +1,38 @@
-describe('NavigationManagerService', function() {
+xdescribe('NavigationManager', function() {
 
   var Mock = {};
-  var service;
-  var injections = {};
+  var manager;
+  var Injections = {};
 
   beforeEach(function() {
     module('otusjs');
 
     inject(function(_$injector_) {
+      /* Test data */
       mockQuestions(_$injector_);
       mockNavigations(_$injector_);
-      mockSurveyItemContainerService(_$injector_);
+
+      /* Injectable mocks */
       mockNavigationContainerService(_$injector_);
+      mockSurveyItemContainerService(_$injector_);
       mockNavigationAddService(_$injector_);
       mockNavigationRemoveService(_$injector_);
       mockNavigationValidatorService(_$injector_);
       mockRouteData();
 
-      service = _$injector_.get('otusjs.model.navigation.NavigationManagerService', injections);
+      var factory = _$injector_.get('otusjs.model.navigation.NavigationManagerFactory', Injections);
+      manager = factory.create();
     });
   });
 
   describe('init method', function() {
 
-    it('should be defined in service', function() {
-      expect(service.init).toBeDefined();
+    it('should be defined in manager', function() {
+      expect(manager.init).toBeDefined();
     });
 
     it('should call NavigationContainerService.init method', function() {
-      service.init();
+      manager.init();
 
       expect(Mock.NavigationContainerService.init).toHaveBeenCalled();
     });
@@ -40,7 +44,7 @@ describe('NavigationManagerService', function() {
     it('should call NavigationContainerService.loadJsonData', function() {
       spyOn(Mock.NavigationContainerService, 'loadJsonData');
 
-      service.loadJsonData([]);
+      manager.loadJsonData([]);
 
       expect(Mock.NavigationContainerService.loadJsonData).toHaveBeenCalled();
     });
@@ -49,18 +53,18 @@ describe('NavigationManagerService', function() {
 
   describe('getNavigationList method', function() {
 
-    it('should be defined in service', function() {
-      expect(service.getNavigationList).toBeDefined();
+    it('should be defined in manager', function() {
+      expect(manager.getNavigationList).toBeDefined();
     });
 
     it('should call NavigationContainerService.getNavigationList method', function() {
-      service.getNavigationList();
+      manager.getNavigationList();
 
       expect(Mock.NavigationContainerService.getNavigationList).toHaveBeenCalled();
     });
 
     it('should return an array', function() {
-      var returnedValue = service.getNavigationList();
+      var returnedValue = manager.getNavigationList();
 
       expect(returnedValue).toEqual(jasmine.any(Array));
     });
@@ -69,19 +73,19 @@ describe('NavigationManagerService', function() {
 
   describe('selectNavigationByOrigin method', function() {
 
-    it('should be defined in service', function() {
-      expect(service.selectNavigationByOrigin).toBeDefined();
+    it('should be defined in manager', function() {
+      expect(manager.selectNavigationByOrigin).toBeDefined();
     });
 
     it('should call NavigationContainerService.getNavigationByOrigin method with origin', function() {
-      service.selectNavigationByOrigin(Mock.Q1.templateID);
+      manager.selectNavigationByOrigin(Mock.Q1.templateID);
 
       expect(Mock.NavigationContainerService.getNavigationByOrigin).toHaveBeenCalledWith(Mock.Q1.templateID);
     });
 
     it('should store a reference to requested navigation', function() {
-      service.selectNavigationByOrigin(Mock.Q1.templateID);
-      var selectedNavigation = service.selectedNavigation();
+      manager.selectNavigationByOrigin(Mock.Q1.templateID);
+      var selectedNavigation = manager.selectedNavigation();
 
       expect(selectedNavigation.origin).toEqual(Mock.Q1.templateID);
     });
@@ -91,7 +95,7 @@ describe('NavigationManagerService', function() {
   describe('addNavigation method', function() {
 
     it('should call NavigationAddService.execute method', function() {
-      service.addNavigation();
+      manager.addNavigation();
 
       expect(Mock.NavigationAddService.execute).toHaveBeenCalled();
     });
@@ -101,7 +105,7 @@ describe('NavigationManagerService', function() {
   describe('applyRoute method', function() {
 
     xit('should called method isRouteValid', function() {
-      service.applyRoute(Mock.routeData);
+      manager.applyRoute(Mock.routeData);
 
       expect(Mock.NavigationValidatorService.isRouteValid).toHaveBeenCalled();
     });
@@ -111,7 +115,7 @@ describe('NavigationManagerService', function() {
   describe('removeNavigation method', function() {
 
     it('should call NavigationRemove.execute method', function() {
-      service.removeNavigation(Mock.Q1);
+      manager.removeNavigation(Mock.Q1);
 
       expect(Mock.NavigationRemoveService.execute).toHaveBeenCalled();
     });
@@ -123,7 +127,7 @@ describe('NavigationManagerService', function() {
     var avaiableItems = [];
 
     beforeEach(function() {
-      avaiableItems = service.getAvaiableRuleCriterionTargets(Mock.Q4.customID);
+      avaiableItems = manager.getAvaiableRuleCriterionTargets(Mock.Q4.customID);
     });
 
     it('should get all items of survey', function() {
@@ -176,7 +180,7 @@ describe('NavigationManagerService', function() {
   function mockNavigationContainerService($injector) {
     Mock.NavigationContainerService = $injector.get('otusjs.model.navigation.NavigationContainerService');
     Mock.NavigationContainerService.manageNavigation(Mock.navigations);
-    injections.NavigationContainerService = Mock.NavigationContainerService;
+    Injections.NavigationContainerService = Mock.NavigationContainerService;
 
     spyOn(Mock.NavigationContainerService, 'getNavigationList').and.callThrough();
     spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.callThrough();
@@ -184,27 +188,27 @@ describe('NavigationManagerService', function() {
   }
 
   function mockNavigationAddService($injector) {
-    Mock.NavigationAddService = $injector.get('otusjs.model.navigation.NavigationAddService');
-    injections.NavigationAddService = Mock.NavigationAddService;
+    Mock.NavigationAddService = $injector.get('otusjs.model.navigation.NavigationCreationTaskService');
+    Injections.NavigationAddService = Mock.NavigationAddService;
     spyOn(Mock.NavigationAddService, 'execute');
   }
 
   function mockNavigationRemoveService($injector) {
-    Mock.NavigationRemoveService = $injector.get('otusjs.model.navigation.NavigationRemoveService');
-    injections.NavigationRemoveService = Mock.NavigationRemoveService;
+    Mock.NavigationRemoveService = $injector.get('otusjs.model.navigation.NavigationRemovalTaskService');
+    Injections.NavigationRemoveService = Mock.NavigationRemoveService;
     spyOn(Mock.NavigationRemoveService, 'execute');
   }
 
   function mockSurveyItemContainerService($injector) {
     Mock.SurveyItemManagerService = $injector.get('SurveyItemManagerService');
-    injections.SurveyItemManagerService = Mock.SurveyItemManagerService;
+    Injections.SurveyItemManagerService = Mock.SurveyItemManagerService;
     spyOn(Mock.SurveyItemManagerService, 'getItemList').and.returnValue(Mock.questions);
     spyOn(Mock.SurveyItemManagerService, 'getItemPosition').and.returnValue(3);
   }
 
   function mockNavigationValidatorService($injector) {
     Mock.NavigationValidatorService = $injector.get('otusjs.model.navigation.NavigationValidatorService');
-    injections.NavigationValidatorService = Mock.NavigationValidatorService;
+    Injections.NavigationValidatorService = Mock.NavigationValidatorService;
     spyOn(Mock.NavigationValidatorService, 'isRouteValid');
   }
 

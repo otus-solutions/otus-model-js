@@ -62,6 +62,7 @@
       activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
       activity.isDiscarded = jsonObject.isDiscarded;
       activity.mode = jsonObject.mode;
+      activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
       activity.interviews = jsonObject.interviews.map(function(interview) {
         return InterviewFactory.fromJsonObject(interview);
       });
@@ -87,6 +88,10 @@
 
     /* Public methods */
     self.getID = getID;
+    self.getItems = getItems;
+    self.getNavigations = getNavigations;
+    self.getIdentity = getIdentity;
+    self.getName = getName;
     self.getRealizationDate = getRealizationDate;
     self.getNavigationStack = getNavigationStack;
     self.setNavigationStack = setNavigationStack;
@@ -94,6 +99,34 @@
 
     function getID() {
       return _id;
+    }
+
+    function getItems() {
+      if (!self.surveyForm.surveyTemplate) {
+        return self.surveyForm.SurveyItemManager.getItemList();
+      } else {
+        return self.surveyForm.SurveyItemManager.getItemList();
+      }
+    }
+
+    function getNavigations() {
+      if (!self.surveyForm.surveyTemplate) {
+        return self.surveyForm.NavigationManager.getNavigationList();
+      } else {
+        return self.surveyForm.NavigationManager.getNavigationList();
+      }
+    }
+
+    function getIdentity() {
+      if (!self.surveyForm.surveyTemplate) {
+        return self.surveyForm.identity;
+      } else {
+        return self.surveyForm.surveyTemplate.identity;
+      }
+    }
+
+    function getName() {
+      return getIdentity().name;
     }
 
     function getRealizationDate() {

@@ -7,95 +7,119 @@
 
   Factory.$inject = [
     'otusjs.model.navigation.NavigationContainerFactory',
-    'otusjs.model.navigation.NavigationAddService',
-    'otusjs.model.navigation.NavigationRemoveService',
-    'otusjs.model.navigation.CreateDefaultRouteTaskService',
-    'otusjs.model.navigation.AddAlternativeRouteTaskService',
-    'otusjs.model.navigation.RemoveRouteTaskService',
-    'otusjs.model.navigation.UpdateRouteTaskService',
-    'otusjs.model.navigation.NavigationValidatorService',
-    'otusjs.model.navigation.InitialNodesAddService'
+    'otusjs.model.navigation.ContainerInitializationTaskService',
+    'otusjs.model.navigation.InitialNodesCreationTaskService',
+    'otusjs.model.navigation.NavigationCreationTaskService',
+    'otusjs.model.navigation.NavigationRemovalTaskService',
+    'otusjs.model.navigation.DefaultRouteCreationTaskService',
+    'otusjs.model.navigation.AlternativeRouteCreationTaskService',
+    'otusjs.model.navigation.RouteRemovalTaskService',
+    'otusjs.model.navigation.RouteUpdateTaskService'
   ];
 
   var Inject = {};
 
   function Factory(
     NavigationContainerFactory,
-    NavigationAddService,
-    NavigationRemoveService,
-    CreateDefaultRouteTaskService,
-    AddAlternativeRouteTaskService,
-    RemoveRouteTaskService,
-    UpdateRouteTaskService,
-    NavigationValidatorService,
-    InitialNodesAddService
+    ContainerInitializationTask,
+    InitialNodesCreationTask,
+    NavigationCreationTask,
+    NavigationRemovalTask,
+    DefaultRouteCreationTaskService,
+    AlternativeRouteCreationTaskService,
+    RouteRemovalTaskService,
+    RouteUpdateTaskService
   ) {
-
-    Inject.NavigationAddService = NavigationAddService;
-    Inject.NavigationRemoveService = NavigationRemoveService;
-    Inject.CreateDefaultRouteTaskService = CreateDefaultRouteTaskService;
-    Inject.AddAlternativeRouteTaskService = AddAlternativeRouteTaskService;
-    Inject.RemoveRouteTaskService = RemoveRouteTaskService;
-    Inject.UpdateRouteTaskService = UpdateRouteTaskService;
-    Inject.NavigationValidatorService = NavigationValidatorService;
-    Inject.InitialNodesAddService = InitialNodesAddService;
-
     var self = this;
 
     self.create = create;
 
-    function create(SurveyItemManager) {
-      return new NavigationManager(SurveyItemManager, NavigationContainerFactory.create());
+    function create(surveyTemplate) {
+      var container = NavigationContainerFactory.create();
+      _setupTaskServices(container);
+
+      return new NavigationManager(surveyTemplate, container);
+    }
+
+    function _setupTaskServices(container) {
+      ContainerInitializationTask.setContainer(container);
+      NavigationCreationTask.setContainer(container);
+      NavigationRemovalTask.setContainer(container);
+      DefaultRouteCreationTaskService.setContainer(container);
+      AlternativeRouteCreationTaskService.setContainer(container);
+      RouteRemovalTaskService.setContainer(container);
+      RouteUpdateTaskService.setContainer(container);
+      InitialNodesCreationTask.setContainer(container);
+
+      Inject.ContainerInitializationTask = ContainerInitializationTask;
+      Inject.NavigationCreationTask = NavigationCreationTask;
+      Inject.NavigationRemovalTask = NavigationRemovalTask;
+      Inject.DefaultRouteCreationTaskService = DefaultRouteCreationTaskService;
+      Inject.AlternativeRouteCreationTaskService = AlternativeRouteCreationTaskService;
+      Inject.RouteRemovalTaskService = RouteRemovalTaskService;
+      Inject.RouteUpdateTaskService = RouteUpdateTaskService;
+      Inject.InitialNodesCreationTask = InitialNodesCreationTask;
     }
 
     return self;
   }
 
-  function NavigationManager(SurveyItemManager, NavigationContainer) {
-
+  function NavigationManager(surveyTemplate, container) {
     var self = this;
     var _selectedNavigation = null;
 
     /* Public interface */
-    self.init = init;
+    self.initialize = initialize;
     self.loadJsonData = loadJsonData;
-    self.getNavigationList = getNavigationList;
-    self.getDefaultNavigationPath = getDefaultNavigationPath;
-    self.selectNavigationByOrigin = selectNavigationByOrigin;
-    self.selectedNavigation = selectedNavigation;
     self.addNavigation = addNavigation;
+    self.removeNavigation = removeNavigation;
     self.applyRoute = applyRoute;
     self.deleteRoute = deleteRoute;
-    self.removeNavigation = removeNavigation;
+    self.getNavigationList = getNavigationList;
+    self.getExportableList = getExportableList;
+    self.getDefaultNavigationPath = getDefaultNavigationPath;
     self.getAvaiableRuleCriterionTargets = getAvaiableRuleCriterionTargets;
     self.listOrphanNavigations = listOrphanNavigations;
-    self.getExportableList = getExportableList;
+    self.selectNavigationByOrigin = selectNavigationByOrigin;
+    self.selectedNavigation = selectedNavigation;
 
-    function init() {
-      NavigationContainer.init();
-      _generateNavigation();
+    function initialize() {
+      Inject.ContainerInitializationTask.execute();
     }
 
     function loadJsonData(data) {
-      NavigationContainer.loadJsonData(data);
+      container.loadJsonData(data);
     }
 
-    function _updateRoutesOnLoad() {
-      var navList = getNavigationList();
-      data.forEach(function(jsonNav) {
-        _selectedNavigation = selectNavigationByOrigin(jsonNav.origin);
-        jsonNav.routes.forEach(function(route) {
-          applyRoute(route);
-        });
-      });
+    function addNavigation() {
+      _ensuresInitialNodes();
+      _selectedNavigation = Inject.NavigationCreationTask.execute(surveyTemplate.SurveyItemManager.getLastItem());
+    }
+
+    function removeNavigation(templateID) {
+      Inject.NavigationRemovalTask.execute(templateID);
+    }
+
+    function applyRoute(routeData) {
+      if (_selectedNavigation.hasRoute(routeData)) {
+        return Inject.RouteUpdateTaskService.execute(routeData, _selectedNavigation);
+      } else if (routeData.isDefault) {
+        Inject.DefaultRouteCreationTaskService.execute(routeData, _selectedNavigation);
+      } else {
+        Inject.AlternativeRouteCreationTaskService.execute(routeData, _selectedNavigation);
+      }
+    }
+
+    function deleteRoute(routeData) {
+      Inject.RouteRemovalTaskService.execute(routeData, _selectedNavigation);
     }
 
     function getNavigationList() {
-      return NavigationContainer.getNavigationList();
+      return container.getNavigationList();
     }
 
     function getExportableList() {
-      var fullList = NavigationContainer.getNavigationList();
+      var fullList = container.getNavigationList();
       return fullList.slice(2, fullList.length);
     }
 
@@ -114,48 +138,9 @@
       return defaultPath;
     }
 
-    function selectNavigationByOrigin(origin) {
-      _selectedNavigation = NavigationContainer.getNavigationByOrigin(origin);
-      return _selectedNavigation;
-    }
-
-    function selectedNavigation() {
-      return _selectedNavigation;
-    }
-
-    function addNavigation() {
-      if (!NavigationContainer.getNavigationListSize()) {  //TODO remove?
-        _generateNavigation();
-      }
-      _selectedNavigation = Inject.NavigationAddService.execute();
-
-    }
-
-    function _generateNavigation() {
-      Inject.InitialNodesAddService.execute();
-    }
-
-    function applyRoute(routeData) {
-      if (_selectedNavigation.hasRoute(routeData)) {
-        return Inject.UpdateRouteTaskService.execute(routeData, _selectedNavigation);
-      } else if (routeData.isDefault) {
-        Inject.CreateDefaultRouteTaskService.execute(routeData, _selectedNavigation);
-      } else {
-        Inject.AddAlternativeRouteTaskService.execute(routeData, _selectedNavigation);
-      }
-    }
-
-    function deleteRoute(routeData) {
-      Inject.RemoveRouteTaskService.execute(routeData, _selectedNavigation);
-    }
-
-    function removeNavigation(templateID) {
-      Inject.NavigationRemoveService.execute(templateID);
-    }
-
     function getAvaiableRuleCriterionTargets(referenceItemID) {
-      var referenceItemIndex = SurveyItemManager.getItemPosition(referenceItemID);
-      var allItems = SurveyItemManager.getItemList();
+      var referenceItemIndex = surveyTemplate.SurveyItemManager.getItemPosition(referenceItemID);
+      var allItems = surveyTemplate.SurveyItemManager.getItemList();
 
       var avaiableItems = allItems.filter(function(item, index) {
         return index <= referenceItemIndex;
@@ -166,6 +151,21 @@
 
     function listOrphanNavigations() {
       return NavigationContainer.getOrphanNavigations();
+    }
+
+    function selectNavigationByOrigin(origin) {
+      _selectedNavigation = container.getNavigationByOrigin(origin);
+      return _selectedNavigation;
+    }
+
+    function selectedNavigation() {
+      return _selectedNavigation;
+    }
+
+    function _ensuresInitialNodes() {
+      if (!container.getNavigationListSize()) {  //TODO remove?
+        Inject.InitialNodesCreationTask.execute();
+      }
     }
   }
 }());

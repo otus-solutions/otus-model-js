@@ -35,6 +35,7 @@
     self.getItemByID = getItemByID;
     self.getItemPosition = getItemPosition;
     self.getAllCustomOptionsID = getAllCustomOptionsID;
+    self.getLastItem = getLastItem;
     self.addItem = addItem;
     self.loadItem = loadItem;
     self.removeItem = removeItem;
@@ -85,6 +86,10 @@
         });
       }
       return customOptionsID;
+    }
+
+    function getLastItem() {
+      return surveyItemContainer.getLastItem();
     }
 
     function loadItem(itemType, templateID, surveyAcronym) {

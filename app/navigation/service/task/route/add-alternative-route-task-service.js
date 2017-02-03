@@ -3,20 +3,25 @@
 
   angular
     .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.AddAlternativeRouteTaskService', service);
+    .service('otusjs.model.navigation.AlternativeRouteCreationTaskService', service);
 
   service.$inject = [
     'otusjs.model.navigation.RouteFactory',
     'otusjs.model.navigation.RouteConditionFactory',
-    'otusjs.model.navigation.RuleFactory',
-    'otusjs.model.navigation.NavigationContainerService'
+    'otusjs.model.navigation.RuleFactory'
   ];
 
-  function service(RouteFactory, RouteConditionFactory, RuleFactory, NavigationContainerService) {
+  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
     var self = this;
+    var _container = null;
 
     /* Public methods */
+    self.setContainer = setContainer;
     self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
 
     function execute(routeData, navigation) {
       if (routeData.origin === 'BEGIN NODE') {
@@ -44,7 +49,7 @@
     }
 
     function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
-      var nextNavigation = NavigationContainerService.getNavigationByOrigin(newDefaultRoute.destination);      
+      var nextNavigation = _container.getNavigationByOrigin(newDefaultRoute.destination);
       nextNavigation.updateInNavigation(navigation);
     }
   }

@@ -16,7 +16,7 @@ describe('CreateDefaultRouteTaskService', function() {
       mockNavigation(_$injector_);
       mockRoute(_$injector_);
 
-      service = _$injector_.get('otusjs.model.navigation.CreateDefaultRouteTaskService', injections);
+      service = _$injector_.get('otusjs.model.navigation.DefaultRouteCreationTaskService', injections);
     });
   });
 
