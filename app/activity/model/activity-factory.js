@@ -102,27 +102,15 @@
     }
 
     function getItems() {
-      if (!self.surveyForm.surveyTemplate) {
-        return self.surveyForm.SurveyItemManager.getItemList();
-      } else {
-        return self.surveyForm.SurveyItemManager.getItemList();
-      }
+      return _getTemplate().SurveyItemManager.getItemList();
     }
 
     function getNavigations() {
-      if (!self.surveyForm.surveyTemplate) {
-        return self.surveyForm.NavigationManager.getNavigationList();
-      } else {
-        return self.surveyForm.NavigationManager.getNavigationList();
-      }
+      return _getTemplate().NavigationManager.getNavigationList();
     }
 
     function getIdentity() {
-      if (!self.surveyForm.surveyTemplate) {
-        return self.surveyForm.identity;
-      } else {
-        return self.surveyForm.surveyTemplate.identity;
-      }
+      return _getTemplate().identity;
     }
 
     function getName() {
@@ -169,6 +157,25 @@
       // json.navigationStack = self.navigationStack.toJson();
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+    }
+
+    function _getTemplate() {
+      if (_existStructuralFailure()) {
+        return self.surveyForm;
+      } else {
+        return self.surveyForm.surveyTemplate;
+      }
+    }
+
+    /**
+     * TODO: effectively to resolve the bug #252 (Mantis)
+     * This method is an workaround for the reported bug #252 (on Mantis) and story OTUS-85 (on
+     * Jira). The problem is: ActivitySurvey generation. In Otus Studio, the survey template goes to
+     * activitie's property "surveyForm", but in the Otus the survey template goes to SurveyForm's
+     * property "surveyTemplate" (that is the CORRECT way).
+     */
+    function _existStructuralFailure() {
+      return (!self.surveyForm.surveyTemplate) ? true : false;
     }
   }
 }());

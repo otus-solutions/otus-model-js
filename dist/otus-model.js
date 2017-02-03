@@ -510,27 +510,15 @@
     }
 
     function getItems() {
-      if (!self.surveyForm.surveyTemplate) {
-        return self.surveyForm.SurveyItemManager.getItemList();
-      } else {
-        return self.surveyForm.SurveyItemManager.getItemList();
-      }
+      return _getTemplate().SurveyItemManager.getItemList();
     }
 
     function getNavigations() {
-      if (!self.surveyForm.surveyTemplate) {
-        return self.surveyForm.NavigationManager.getNavigationList();
-      } else {
-        return self.surveyForm.NavigationManager.getNavigationList();
-      }
+      return _getTemplate().NavigationManager.getNavigationList();
     }
 
     function getIdentity() {
-      if (!self.surveyForm.surveyTemplate) {
-        return self.surveyForm.identity;
-      } else {
-        return self.surveyForm.surveyTemplate.identity;
-      }
+      return _getTemplate().identity;
     }
 
     function getName() {
@@ -577,6 +565,25 @@
       // json.navigationStack = self.navigationStack.toJson();
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+    }
+
+    function _getTemplate() {
+      if (_existStructuralFailure()) {
+        return self.surveyForm;
+      } else {
+        return self.surveyForm.surveyTemplate;
+      }
+    }
+
+    /**
+     * TODO: effectively to resolve the bug #252 (Mantis)
+     * This method is an workaround for the reported bug #252 (on Mantis) and story OTUS-85 (on
+     * Jira). The problem is: ActivitySurvey generation. In Otus Studio, the survey template goes to
+     * activitie's property "surveyForm", but in the Otus the survey template goes to SurveyForm's
+     * property "surveyTemplate" (that is the CORRECT way).
+     */
+    function _existStructuralFailure() {
+      return !self.surveyForm.surveyTemplate ? true : false;
     }
   }
 })();
@@ -1370,61 +1377,6 @@
 'use strict';
 
 (function () {
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationApiService', service);
-
-  function service() {
-    var self = this;
-
-    /* Public methods */
-    self.resolveNavigation = resolveNavigation;
-
-    function resolveNavigation(CurrentItemService, navigation) {
-      var totalRoutes = navigation.routes.length;
-
-      if (totalRoutes === 1) {
-        return navigation.routes[0].destination;
-      } else {
-        var index = 1;
-        var route;
-
-        for (index; index < totalRoutes; index++) {
-          route = navigation.routes[index];
-          _checkConditions(route.conditions, CurrentItemService.filling);
-        }
-      }
-    }
-
-    function _checkConditions(conditions, questionFilling) {
-      conditions.some(function (condition) {
-
-        condition.rules.every(function (rule) {
-          return _checkRule(rule, questionFilling);
-        });
-      });
-    }
-
-    function _checkRule(rule, questionFilling) {}
-  }
-
-  function RuleChecker() {
-    var self = this;
-    var _filling;
-
-    self.answer = answer;
-    self.equal = equal;
-
-    function answer(filling) {
-      _filling = filling;
-      return self;
-    }
-
-    function equal(reference) {}
-  }
-})();
-'use strict';
-
-(function () {
   'use strict';
 
   angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
@@ -1550,6 +1502,61 @@
     self.oid = '';
     self.plainText = '';
     self.formattedText = '';
+  }
+})();
+'use strict';
+
+(function () {
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationApiService', service);
+
+  function service() {
+    var self = this;
+
+    /* Public methods */
+    self.resolveNavigation = resolveNavigation;
+
+    function resolveNavigation(CurrentItemService, navigation) {
+      var totalRoutes = navigation.routes.length;
+
+      if (totalRoutes === 1) {
+        return navigation.routes[0].destination;
+      } else {
+        var index = 1;
+        var route;
+
+        for (index; index < totalRoutes; index++) {
+          route = navigation.routes[index];
+          _checkConditions(route.conditions, CurrentItemService.filling);
+        }
+      }
+    }
+
+    function _checkConditions(conditions, questionFilling) {
+      conditions.some(function (condition) {
+
+        condition.rules.every(function (rule) {
+          return _checkRule(rule, questionFilling);
+        });
+      });
+    }
+
+    function _checkRule(rule, questionFilling) {}
+  }
+
+  function RuleChecker() {
+    var self = this;
+    var _filling;
+
+    self.answer = answer;
+    self.equal = equal;
+
+    function answer(filling) {
+      _filling = filling;
+      return self;
+    }
+
+    function equal(reference) {}
   }
 })();
 'use strict';
@@ -3393,6 +3400,63 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.surveyItem').factory('SurveyItemFactory', SurveyItemFactory);
+
+  SurveyItemFactory.$inject = [
+  /* Question items */
+  'CalendarQuestionFactory', 'IntegerQuestionFactory', 'DecimalQuestionFactory', 'SingleSelectionQuestionFactory', 'CheckboxQuestionFactory', 'TextQuestionFactory', 'TimeQuestionFactory', 'EmailQuestionFactory', 'PhoneQuestionFactory',
+  /* Miscelaneous items */
+  'TextItemFactory', 'ImageItemFactory'];
+
+  function SurveyItemFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, CheckboxQuestionFactory, TextQuestionFactory, TimeQuestionFactory, EmailQuestionFactory, PhoneQuestionFactory, TextItemFactory, ImageItemFactory) {
+
+    var self = this;
+
+    var factoryMap = {
+      /* Question items */
+      'CalendarQuestion': CalendarQuestionFactory,
+      'IntegerQuestion': IntegerQuestionFactory,
+      'DecimalQuestion': DecimalQuestionFactory,
+      'SingleSelectionQuestion': SingleSelectionQuestionFactory,
+      'CheckboxQuestion': CheckboxQuestionFactory,
+      'TextQuestion': TextQuestionFactory,
+      'TimeQuestion': TimeQuestionFactory,
+      'EmailQuestion': EmailQuestionFactory,
+      'PhoneQuestion': PhoneQuestionFactory,
+      /* Miscelaneous items */
+      'TextItem': TextItemFactory,
+      'ImageItem': ImageItemFactory
+    };
+
+    /* Public interface */
+    self.create = create;
+    self.load = load;
+
+    function create(itemType, templateID) {
+      var item = new SurveyItem(templateID);
+      return factoryMap[itemType].create(templateID, item);
+    }
+
+    function load(itemObject) {
+      return factoryMap[itemObject.objectType].fromJsonObject(itemObject);
+    }
+
+    return self;
+  }
+
+  function SurveyItem(templateID) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'SurveyItem';
+    self.templateID = templateID;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.surveyItem').factory('SurveyItemContainerFactory', Factory);
 
   Factory.$inject = ['SurveyItemFactory'];
@@ -3674,63 +3738,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       });
       return getItemByCustomID(id) || foundCustomOptionID ? false : true;
     }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('SurveyItemFactory', SurveyItemFactory);
-
-  SurveyItemFactory.$inject = [
-  /* Question items */
-  'CalendarQuestionFactory', 'IntegerQuestionFactory', 'DecimalQuestionFactory', 'SingleSelectionQuestionFactory', 'CheckboxQuestionFactory', 'TextQuestionFactory', 'TimeQuestionFactory', 'EmailQuestionFactory', 'PhoneQuestionFactory',
-  /* Miscelaneous items */
-  'TextItemFactory', 'ImageItemFactory'];
-
-  function SurveyItemFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, CheckboxQuestionFactory, TextQuestionFactory, TimeQuestionFactory, EmailQuestionFactory, PhoneQuestionFactory, TextItemFactory, ImageItemFactory) {
-
-    var self = this;
-
-    var factoryMap = {
-      /* Question items */
-      'CalendarQuestion': CalendarQuestionFactory,
-      'IntegerQuestion': IntegerQuestionFactory,
-      'DecimalQuestion': DecimalQuestionFactory,
-      'SingleSelectionQuestion': SingleSelectionQuestionFactory,
-      'CheckboxQuestion': CheckboxQuestionFactory,
-      'TextQuestion': TextQuestionFactory,
-      'TimeQuestion': TimeQuestionFactory,
-      'EmailQuestion': EmailQuestionFactory,
-      'PhoneQuestion': PhoneQuestionFactory,
-      /* Miscelaneous items */
-      'TextItem': TextItemFactory,
-      'ImageItem': ImageItemFactory
-    };
-
-    /* Public interface */
-    self.create = create;
-    self.load = load;
-
-    function create(itemType, templateID) {
-      var item = new SurveyItem(templateID);
-      return factoryMap[itemType].create(templateID, item);
-    }
-
-    function load(itemObject) {
-      return factoryMap[itemObject.objectType].fromJsonObject(itemObject);
-    }
-
-    return self;
-  }
-
-  function SurveyItem(templateID) {
-    var self = this;
-
-    self.extents = 'StudioObject';
-    self.objectType = 'SurveyItem';
-    self.templateID = templateID;
   }
 })();
 'use strict';
@@ -5505,150 +5512,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ContainerInitializationTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.InitialNodesCreationTaskService'];
-
-  function Service(InitialNodesCreationTask) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute() {
-      _container.resetData();
-      InitialNodesCreationTask.execute();
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.InitialNodesCreationTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.DefaultRouteCreationTaskService'];
-
-  function Service(DefaultRouteCreationTaskService) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(navigationContainer) {
-      _container.setInitialNodes();
-
-      var routeData = {
-        'origin': _container.getNavigationList()[0].origin,
-        'destination': _container.getNavigationList()[1].origin
-      };
-
-      DefaultRouteCreationTaskService.execute(routeData, _container.getNavigationList()[0]);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationCreationTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService', 'otusjs.model.navigation.DefaultRouteCreationTaskService'];
-
-  function Service(RouteUpdateTaskService, DefaultRouteCreationTaskService) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(originItem) {
-      var _newNavigation = _container.createNavigationTo(originItem.templateID);
-      var _previousNavigation;
-
-      if (_newNavigation.index === 2) {
-        _previousNavigation = _container.getPreviousOf(_newNavigation.index - 1);
-      } else {
-        _previousNavigation = _container.getPreviousOf(_newNavigation.index);
-      }
-
-      var routeData = {
-        'origin': _newNavigation.origin,
-        'destination': _previousNavigation.getDefaultRoute().destination
-      };
-
-      DefaultRouteCreationTaskService.execute(routeData, _newNavigation);
-
-      var updateRouteData = {
-        'origin': _previousNavigation.origin,
-        'destination': _newNavigation.origin,
-        'isDefault': true
-      };
-
-      RouteUpdateTaskService.execute(updateRouteData, _previousNavigation);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationRemovalTaskService', Service);
-
-  function Service() {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(templateID) {
-      var navigationToRecicle = _container.getNavigationByOrigin(templateID);
-      var navigationPosition = _container.getNavigationPosition(navigationToRecicle);
-      var navigationToUpdate = _container.getPreviousOf(navigationPosition);
-
-      if (navigationToRecicle.inNavigations.indexOf(navigationToUpdate) > -1) {
-        _updateRoutes(navigationToUpdate, navigationToRecicle);
-      }
-
-      _container.removeNavigationOf(templateID);
-    }
-    function _updateRoutes(navigationToUpdate, navigationToRecicle) {
-      navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
-      navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.AlternativeRouteCreationTaskService', service);
 
   service.$inject = ['otusjs.model.navigation.RouteFactory', 'otusjs.model.navigation.RouteConditionFactory', 'otusjs.model.navigation.RuleFactory'];
@@ -5827,6 +5690,150 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (nextNavigation) {
         nextNavigation.updateInNavigation(navigation);
       }
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ContainerInitializationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.InitialNodesCreationTaskService'];
+
+  function Service(InitialNodesCreationTask) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute() {
+      _container.resetData();
+      InitialNodesCreationTask.execute();
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.InitialNodesCreationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.DefaultRouteCreationTaskService'];
+
+  function Service(DefaultRouteCreationTaskService) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(navigationContainer) {
+      _container.setInitialNodes();
+
+      var routeData = {
+        'origin': _container.getNavigationList()[0].origin,
+        'destination': _container.getNavigationList()[1].origin
+      };
+
+      DefaultRouteCreationTaskService.execute(routeData, _container.getNavigationList()[0]);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationCreationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService', 'otusjs.model.navigation.DefaultRouteCreationTaskService'];
+
+  function Service(RouteUpdateTaskService, DefaultRouteCreationTaskService) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(originItem) {
+      var _newNavigation = _container.createNavigationTo(originItem.templateID);
+      var _previousNavigation;
+
+      if (_newNavigation.index === 2) {
+        _previousNavigation = _container.getPreviousOf(_newNavigation.index - 1);
+      } else {
+        _previousNavigation = _container.getPreviousOf(_newNavigation.index);
+      }
+
+      var routeData = {
+        'origin': _newNavigation.origin,
+        'destination': _previousNavigation.getDefaultRoute().destination
+      };
+
+      DefaultRouteCreationTaskService.execute(routeData, _newNavigation);
+
+      var updateRouteData = {
+        'origin': _previousNavigation.origin,
+        'destination': _newNavigation.origin,
+        'isDefault': true
+      };
+
+      RouteUpdateTaskService.execute(updateRouteData, _previousNavigation);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationRemovalTaskService', Service);
+
+  function Service() {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(templateID) {
+      var navigationToRecicle = _container.getNavigationByOrigin(templateID);
+      var navigationPosition = _container.getNavigationPosition(navigationToRecicle);
+      var navigationToUpdate = _container.getPreviousOf(navigationPosition);
+
+      if (navigationToRecicle.inNavigations.indexOf(navigationToUpdate) > -1) {
+        _updateRoutes(navigationToUpdate, navigationToRecicle);
+      }
+
+      _container.removeNavigationOf(templateID);
+    }
+    function _updateRoutes(navigationToUpdate, navigationToRecicle) {
+      navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
+      navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;
     }
   }
 })();
@@ -6273,78 +6280,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.validation').factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
-
-  function MaxTimeValidatorFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MaxTimeValidator();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.MaxTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new MaxTimeValidator();
-      validator.reference = jsonObject.reference;
-      return validator;
-    }
-
-    return self;
-  }
-
-  function MaxTimeValidator() {
-    var self = this;
-
-    self.reference = '';
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.validation').factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
-
-  function MinTimeValidatorFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MinTimeValidator();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.MinTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new MinTimeValidator();
-      validator.reference = jsonObject.reference;
-      return validator;
-    }
-
-    return self;
-  }
-
-  function MinTimeValidator() {
-    var self = this;
-
-    self.reference = '';
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.validation').factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
 
   function AlphanumericValidatorFactory() {
@@ -6554,6 +6489,78 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     var self = this;
 
     self.reference = true;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.validation').factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
+
+  function MaxTimeValidatorFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new MaxTimeValidator();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.MaxTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new MaxTimeValidator();
+      validator.reference = jsonObject.reference;
+      return validator;
+    }
+
+    return self;
+  }
+
+  function MaxTimeValidator() {
+    var self = this;
+
+    self.reference = '';
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.validation').factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
+
+  function MinTimeValidatorFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new MinTimeValidator();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.MinTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new MinTimeValidator();
+      validator.reference = jsonObject.reference;
+      return validator;
+    }
+
+    return self;
+  }
+
+  function MinTimeValidator() {
+    var self = this;
+
+    self.reference = '';
   }
 })();
 'use strict';
