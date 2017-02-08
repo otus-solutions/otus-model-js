@@ -190,7 +190,6 @@
         if(inIndex > -1){
           _navigationList[i].inNavigations[inIndex] = nullNavigation;
         }
-
       }
     }
 

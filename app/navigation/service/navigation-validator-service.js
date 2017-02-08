@@ -41,7 +41,7 @@
       var result = null;
 
       itemList.forEach(function(question, index) {
-        if (question.customID === questionID) {
+        if (question.templateID === questionID) {
           result = {};
           result.question = question;
           result.index = index;

@@ -205,7 +205,7 @@
     }
 
     function hasDefaultRoute() {
-      return !self.routes[0] ? false : true
+      return !self.routes[0] ? false : true;
     }
 
     function getRouteByName(name) {
@@ -288,7 +288,7 @@
       return Object.is(self, other);
     }
 
-    function setupDefaultRoute(route) {      
+    function setupDefaultRoute(route) {
       if (!route) {
         throw new TypeError('Default route should not be undefined or null.', 'navigation-factory.js', 285);
       }

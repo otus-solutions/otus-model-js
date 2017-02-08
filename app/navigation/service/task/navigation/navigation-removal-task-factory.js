@@ -5,7 +5,11 @@
     .module('otusjs.model.navigation')
     .service('otusjs.model.navigation.NavigationRemovalTaskService', Service);
 
-  function Service() {
+  Service.$inject = [
+    'otusjs.model.navigation.RouteUpdateTaskService'
+  ];
+
+  function Service(RouteUpdateTaskService) {
     var self = this;
     var _container = null;
 
@@ -23,11 +27,21 @@
       var navigationToUpdate = _container.getPreviousOf(navigationPosition);
 
       if (navigationToRecicle.inNavigations.indexOf(navigationToUpdate) > -1) {
-        _updateRoutes(navigationToUpdate, navigationToRecicle);
+        var routeData = _getRouteData(navigationToUpdate, navigationToRecicle);
+        RouteUpdateTaskService.execute(routeData, navigationToUpdate);
       }
 
       _container.removeNavigationOf(templateID);
     }
+
+    function _getRouteData(navigationToUpdate, navigationToRecicle){
+      var routeData = {};
+      routeData.isDefault = true;
+      routeData.origin = navigationToUpdate.routes[0].origin;
+      routeData.destination = navigationToRecicle.routes[0].destination;
+      return routeData;
+    }
+
     function _updateRoutes(navigationToUpdate, navigationToRecicle){
       navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
       navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;

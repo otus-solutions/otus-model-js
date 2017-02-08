@@ -29,7 +29,7 @@
       var answerFill = AnswerFillFactory.fromJsonObject(jsonObject.answer);
       var metadataFill = MetadataFillFactory.fromJsonObject(jsonObject.metadata);
 
-      return new QuestionFill({customID: jsonObject.questionID} , answerFill, metadataFill, jsonObject.comment);
+      return new QuestionFill({templateID: jsonObject.questionID} , answerFill, metadataFill, jsonObject.comment);
     }
 
     return self;
@@ -39,7 +39,7 @@
     var self = this;
 
     self.objectType = 'QuestionFill';
-    self.questionID = item.customID;
+    self.questionID = item.templateID;
     self.answer = answer;
     self.metadata = metadata;
     self.comment = (comment === undefined) ? '' : comment;
