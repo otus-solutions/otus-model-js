@@ -697,7 +697,10 @@
       var answerFill = AnswerFillFactory.fromJsonObject(jsonObject.answer);
       var metadataFill = MetadataFillFactory.fromJsonObject(jsonObject.metadata);
 
-      return new QuestionFill({ templateID: jsonObject.questionID }, answerFill, metadataFill, jsonObject.comment);
+      var questionFill = new QuestionFill({ templateID: jsonObject.questionID }, answerFill, metadataFill, jsonObject.comment);
+      questionFill.forceAnswer = jsonObject.forceAnswer;
+
+      return questionFill;
     }
 
     return self;
@@ -726,6 +729,7 @@
 
       json.objectType = self.objectType;
       json.questionID = self.questionID;
+      json.forceAnswer = self.forceAnswer;
       json.answer = self.answer.toJson();
       json.metadata = self.metadata.toJson();
       json.comment = self.comment;
