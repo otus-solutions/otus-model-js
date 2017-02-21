@@ -7,7 +7,7 @@
 
   Factory.$inject = [
     'otusjs.model.activity.QuestionFillFactory'
-  ]
+  ];
 
   function Factory(QuestionFillFactory) {
     var self = this;
@@ -41,6 +41,7 @@
     self.existsFillingTo = existsFillingTo;
     self.searchFillingByID = searchFillingByID;
     self.updateFilling = updateFilling;
+    self.clearFilling = clearFilling;
     self.toJson = toJson;
 
     function init(fillingList) {
@@ -75,6 +76,10 @@
       } else {
         return _removeFilling(filling.questionID);
       }
+    }
+
+    function clearFilling(questionID) {
+      _removeFilling(questionID);
     }
 
     function toJson() {

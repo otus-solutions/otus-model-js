@@ -112,13 +112,13 @@
 
   angular.module('otusjs.model.activity').factory('otusjs.model.activity.ActivityFactory', Factory);
 
-  Factory.$inject = ['otusjs.model.activity.StatusHistoryManagerFactory', 'otusjs.model.activity.FillingManagerFactory', 'otusjs.model.activity.InterviewFactory', 'otusjs.model.navigation.NavigationPathFactory', 'SurveyFormFactory'];
+  Factory.$inject = ['otusjs.model.activity.StatusHistoryManagerFactory', 'otusjs.model.activity.FillingManagerFactory', 'otusjs.model.activity.InterviewFactory', 'otusjs.model.navigation.NavigationTrackerFactory', 'SurveyFormFactory'];
 
   var Inject = {};
 
-  function Factory(StatusHistoryManagerFactory, FillingManagerFactory, InterviewFactory, NavigationPathFactory, SurveyFormFactory) {
+  function Factory(StatusHistoryManagerFactory, FillingManagerFactory, InterviewFactory, NavigationTrackerFactory, SurveyFormFactory) {
     Inject.FillingManager = FillingManagerFactory.create();
-    Inject.NavigationPathFactory = NavigationPathFactory;
+    Inject.NavigationTrackerFactory = NavigationTrackerFactory;
     Inject.SurveyFormFactory = SurveyFormFactory;
 
     var self = this;
@@ -137,6 +137,9 @@
 
       var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
       activity.mode = 'ONLINE';
+
+      activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
+
       return activity;
     }
 
@@ -168,7 +171,17 @@
         return InterviewFactory.fromJsonObject(interview);
       });
 
+      _addBackCompatibility(activity, jsonObject);
+
       return activity;
+    }
+
+    function _addBackCompatibility(activity, jsonObject) {
+      if (!jsonObject.navigationTracker) {
+        activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
+      } else {
+        activity.setNavigationTracker(Inject.NavigationTrackerFactory.fromJsonObject(jsonObject.navigationTracker));
+      }
     }
 
     return self;
@@ -184,18 +197,19 @@
     self.interviews = [];
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
-    self.navigationStack = Inject.NavigationPathFactory.create();
     self.isDiscarded = false;
 
     /* Public methods */
     self.getID = getID;
     self.getItems = getItems;
     self.getNavigations = getNavigations;
+    self.getExportableList = getExportableList;
     self.getIdentity = getIdentity;
     self.getName = getName;
     self.getRealizationDate = getRealizationDate;
-    self.getNavigationStack = getNavigationStack;
-    self.setNavigationStack = setNavigationStack;
+    self.getNavigationTracker = getNavigationTracker;
+    self.setNavigationTracker = setNavigationTracker;
+    self.clearSkippedAnswers = clearSkippedAnswers;
     self.toJson = toJson;
 
     function getID() {
@@ -208,6 +222,11 @@
 
     function getNavigations() {
       return _getTemplate().NavigationManager.getNavigationList();
+    }
+
+    function getExportableList() {
+      var fullList = _getTemplate().NavigationManager.getNavigationList();
+      return fullList.slice(2, fullList.length);
     }
 
     function getIdentity() {
@@ -232,13 +251,18 @@
       }
     }
 
-    function getNavigationStack() {
-      self.navigationStack.goToBeginning();
-      return self.navigationStack;
+    function getNavigationTracker() {
+      return self.navigationTracker;
     }
 
-    function setNavigationStack(stack) {
-      self.navigationStack = stack;
+    function clearSkippedAnswers() {
+      self.navigationTracker.getSkippedItems().forEach(function (itemTracking) {
+        self.fillContainer.clearFilling(itemTracking.getID());
+      });
+    }
+
+    function setNavigationTracker(stack) {
+      self.navigationTracker = stack;
     }
 
     function toJson() {
@@ -255,7 +279,7 @@
       json.fillContainer = self.fillContainer.toJson();
       json.statusHistory = self.statusHistory.toJson();
       json.isDiscarded = self.isDiscarded;
-      // json.navigationStack = self.navigationStack.toJson();
+      json.navigationTracker = self.navigationTracker.toJson();
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
     }
@@ -273,7 +297,7 @@
      * This method is an workaround for the reported bug #252 (on Mantis) and story OTUS-85 (on
      * Jira). The problem is: ActivitySurvey generation. In Otus Studio, the survey template goes to
      * activitie's property "surveyForm", but in the Otus the survey template goes to SurveyForm's
-     * property "surveyTemplate" (that is the CORRECT way).
+     * property "surveyTemplate" (this is the CORRECT way).
      */
     function _existStructuralFailure() {
       return !self.surveyForm.surveyTemplate ? true : false;
@@ -716,12 +740,24 @@
     self.comment = comment === undefined ? '' : comment;
     self.forceAnswer = false;
     self.isFilled = isFilled;
+    self.isIgnored = isIgnored;
+    self.clear = clear;
 
     /* Public methods */
     self.toJson = toJson;
 
     function isFilled() {
       return self.answer.isFilled() || self.metadata.isFilled() || !!self.comment;
+    }
+
+    function isIgnored() {
+      return self.answer.value === null || self.answer.value.trim() === '';
+    }
+
+    function clear() {
+      self.answer.clear();
+      self.metadata.clear();
+      self.comment = '';
     }
 
     function toJson() {
@@ -763,6 +799,7 @@
     self.finalizeActivitySurvey = finalizeActivitySurvey;
     self.saveActivitySurvey = saveActivitySurvey;
     self.getFillingByQuestionID = getFillingByQuestionID;
+    self.clearSkippedAnswers = clearSkippedAnswers;
 
     function createActivity(template, user, participant) {
       self.surveyActivity = ActivityFactory.create(template, user, participant);
@@ -801,6 +838,10 @@
 
     function getFillingByQuestionID(questionID) {
       return self.surveyActivity.fillContainer.searchFillingByID(questionID);
+    }
+
+    function clearSkippedAnswers() {
+      self.surveyActivity.clearSkippedAnswers();
     }
   }
 })();
@@ -845,6 +886,7 @@
     self.existsFillingTo = existsFillingTo;
     self.searchFillingByID = searchFillingByID;
     self.updateFilling = updateFilling;
+    self.clearFilling = clearFilling;
     self.toJson = toJson;
 
     function init(fillingList) {
@@ -879,6 +921,10 @@
       } else {
         return _removeFilling(filling.questionID);
       }
+    }
+
+    function clearFilling(questionID) {
+      _removeFilling(questionID);
     }
 
     function toJson() {
@@ -1706,6 +1752,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.equals = equals;
     self.getDefaultRoute = getDefaultRoute;
     self.getRouteByName = getRouteByName;
+    self.listRoutes = listRoutes;
     self.hasRoute = hasRoute;
     self.hasDefaultRoute = hasDefaultRoute;
     self.isOrphan = isOrphan;
@@ -1911,9 +1958,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function _buildJsonInNavigations() {
       return self.inNavigations.map(function (element) {
-        return {
-          origin: element.origin
-        };
+        if (element.origin !== 'NULL NAVIGATION') {
+          return {
+            origin: element.origin,
+            index: element.index
+          };
+        }
       });
     }
 
@@ -1960,108 +2010,357 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.navigation').factory('otusjs.model.navigation.NavigationPathFactory', Factory);
+  angular.module('otusjs.model.navigation').factory('otusjs.model.navigation.NavigationTrackerFactory', Factory);
 
-  function Factory() {
+  Factory.$inject = ['otusjs.model.navigation.NavigationTrackingItemFactory'];
+
+  function Factory(NavigationTrackingItemFactory) {
     var self = this;
 
     /* Public methods */
     self.create = create;
+    self.fromJsonObject = fromJsonObject;
 
-    function create() {
-      return new NavigationStack();
+    /**
+     * Creates a NavigationTracker. A NavigationTracker must have at least one item to track.
+     * @param {array} itemsToTrack - the items that will be tracked
+     * @returns {NavigationTracker}
+     * @throws An error when no items are passed as parameter
+     * @memberof NavigationTrackerFactory
+     */
+    function create(itemsToTrack, startIndex) {
+      var validatedData = _applyPolicies(itemsToTrack, startIndex);
+      var trackingItems = validatedData.itemsToTrack.map(_toNavigationTrackingItems);
+      return new NavigationTracker(trackingItems, validatedData.startIndex);
+    }
+
+    function fromJsonObject(jsonObject) {
+      return create(jsonObject.items, jsonObject.lastVisitedIndex);
+    }
+
+    // TODO: Move these methods to another object
+    function _applyPolicies(itemsToTrack, startIndex) {
+      _applyAtLeastOneItemToTrackPolicy(itemsToTrack);
+
+      try {
+        _applyValidStartIndexPolicy(startIndex, itemsToTrack.length - 1);
+      } catch (error) {
+        startIndex = null;
+      }
+
+      return {
+        itemsToTrack: itemsToTrack,
+        startIndex: startIndex
+      };
+    }
+
+    function _applyAtLeastOneItemToTrackPolicy(itemsToTrack) {
+      if (!itemsToTrack || !itemsToTrack.length) {
+        throw new Error('No item to track is detected.', 'navigation-tracker-factory.js', 51);
+      }
+    }
+
+    function _applyValidStartIndexPolicy(value, maxIndex) {
+      if (!value || isNaN(value) || value < 0 || maxIndex < value) {
+        throw new Error('An invalid start index has passed to NavigationTracker.', 'navigation-tracker-factory.js', 57);
+      }
+    }
+
+    function _toNavigationTrackingItems(itemToTrack, index) {
+      var item = {};
+      item.index = index;
+      item.id = itemToTrack.id || itemToTrack.origin;
+      item.state = itemToTrack.state;
+      item.previous = itemToTrack.previous;
+      item.inputs = itemToTrack.inputs || _buildInputs(itemToTrack);
+      item.outputs = itemToTrack.outputs || _buildOutputs(itemToTrack);
+      return NavigationTrackingItemFactory.create(item);
+    }
+
+    function _buildInputs(itemToTrack) {
+      if (itemToTrack.inNavigations) {
+        return itemToTrack.inNavigations.filter(function (navigation) {
+          return navigation.origin !== 'BEGIN NODE';
+        }).map(function (navigation) {
+          return navigation.origin;
+        });
+      } else {
+        return [];
+      }
+    }
+
+    function _buildOutputs(itemToTrack) {
+      if (itemToTrack.inNavigations) {
+        return itemToTrack.listRoutes().filter(function (route) {
+          return route.getDestination() !== 'END NODE';
+        }).map(function (route) {
+          return route.getDestination();
+        });
+      } else {
+        return [];
+      }
     }
 
     return self;
   }
 
-  function NavigationStack() {
+  function NavigationTracker(items, startIndex) {
     var self = this;
+    var _objectType = 'NavigationTracker';
+    var _currentItem = null;
+    var _items = null;
     var _size = 0;
-    var _head = null;
-    var _tail = null;
-    var _current = null;
-    var _currentIndex = null;
 
     /* Public methods */
-    self.add = add;
-    self.ahead = ahead;
-    self.back = back;
+    self.getObjectType = getObjectType;
+    self.getItems = getItems;
     self.getCurrentItem = getCurrentItem;
-    self.getSize = getSize;
-    self.goToBeginning = goToBeginning;
+    self.getCurrentIndex = getCurrentIndex;
+    self.getItemCount = getItemCount;
+    self.getSkippedItems = getSkippedItems;
+    self.visitItem = visitItem;
+    self.updateCurrentItem = updateCurrentItem;
+    self.hasPreviousItem = hasPreviousItem;
+    self.toJson = toJson;
 
-    function add(item) {
-      if (_notExistsHead()) {
-        _setupHead(item);
-      } else {
-        _ensureCurrentValue();
-        _setupTail(item);
-        _setupCurrent();
-      }
-      _updateIndexation();
+    (function constructor() {
+      _items = _createNavigationTrackingItemContainer(items);
+      _size = items.length;
+    })();
+
+    function _createNavigationTrackingItemContainer(items) {
+      var container = {};
+
+      items.forEach(function (item, index) {
+        container[item.getID()] = item;
+      });
+
+      return container;
     }
 
-    function ahead() {
-      _current = _current.getNext();
-      ++_currentIndex;
+    /**
+     * Returns the object type of instance.
+     * @returns {String}
+     * @memberof NavigationTracker
+     */
+    function getObjectType() {
+      return _objectType;
     }
 
-    function back() {
-      _current = _current.getPrevious();
-      --_currentIndex;
-      if (!_current) {
-        _head = null;
-      }
+    /**
+     * Returns all items that are on tracking.
+     * @returns {Map}
+     * @memberof NavigationTracker
+     */
+    function getItems() {
+      return _items;
     }
 
+    /**
+     * Returns the item being visited.
+     * @returns {NavigationTrackingItem}
+     * @memberof NavigationTracker
+     */
     function getCurrentItem() {
-      return _current;
+      return _currentItem;
     }
 
-    function getSize() {
+    /**
+     * Returns the index of item being visited.
+     * @returns {Integer}
+     * @memberof NavigationTracker
+     */
+    function getCurrentIndex() {
+      if (_currentItem) {
+        return _currentItem.getIndex();
+      } else {
+        return null;
+      }
+    }
+
+    /**
+     * Returns count of all items on tracking.
+     * @returns {Integer}
+     * @memberof NavigationTracker
+     */
+    function getItemCount() {
       return _size;
     }
 
-    function goToBeginning() {
-      _current = _head;
-      _currentIndex = 0;
-    }
+    /**
+     * Returns all items that are currently skipped.
+     * @returns {Array}
+     * @memberof NavigationTracker
+     */
+    function getSkippedItems() {
+      var skippedItems = [];
 
-    function _ensureCurrentValue() {
-      _current = _current || _tail;
-    }
-
-    function _notExistsHead() {
-      return !_head;
-    }
-
-    function _setupCurrent() {
-      _current.setNext(_tail);
-      _current = _tail;
-    }
-
-    function _setupHead(item) {
-      _head = item;
-      _head.setPrevious(null);
-      _head.setNext(null);
-      _current = _head;
-    }
-
-    function _setupTail(item) {
-      _tail = item;
-      _tail.setPrevious(_current);
-      _tail.setNext(null);
-    }
-
-    function _updateIndexation() {
-      if (_currentIndex < _size - 1) {
-        _size = _currentIndex + 2;
-        ++_currentIndex;
-      } else {
-        ++_size;
-        _currentIndex = _size - 1;
+      for (var itemID in _items) {
+        if (_items[itemID].isSkipped()) {
+          skippedItems.push(_items[itemID]);
+        }
       }
+
+      return skippedItems;
+    }
+
+    /**
+     * @memberof NavigationTracker
+     */
+    function visitItem(idToVisit) {
+      if (_isMovingForward(idToVisit)) {
+        _setPrevious(idToVisit);
+        _move(idToVisit);
+        _resolveJumps();
+      } else {
+        _move(idToVisit);
+      }
+    }
+
+    /**
+     * @memberof NavigationTracker
+     */
+    function updateCurrentItem(item) {
+      if (item.isFilled()) {
+        _currentItem.setAsAnswered();
+      } else if (item.isIgnored()) {
+        _currentItem.setAsIgnored();
+      }
+    }
+
+    function hasPreviousItem() {
+      if (!_currentItem) {
+        return false;
+      } else {
+        return _currentItem.getIndex() > 0;
+      }
+    }
+
+    /**
+     * Returns the representation of instance in JSON format.
+     * @returns {JSON}
+     * @memberof NavigationTracker
+     */
+    function toJson() {
+      var json = {};
+
+      json.objectType = _objectType;
+
+      if (_currentItem) {
+        json.lastVisitedIndex = _currentItem.getIndex();
+      } else {
+        json.lastVisitedIndex = null;
+      }
+
+      json.items = [];
+      Object.keys(_items).forEach(function (itemID) {
+        json.items.push(_items[itemID].toJson());
+      });
+
+      return json;
+    }
+
+    function _isMovingForward(idToVisit) {
+      if (!_currentItem) {
+        return true;
+      }
+
+      return _currentItem.getIndex() < _items[idToVisit].getIndex() ? true : false;
+    }
+
+    function _move(idToVisit) {
+      _currentItem = _items[idToVisit];
+    }
+
+    function _setPrevious(idToVisit) {
+      if (_currentItem) {
+        _items[idToVisit].setPrevious(_currentItem.getID());
+      }
+    }
+
+    //---------------------------------------------------------------------------------------------
+    // Skipping service
+    //---------------------------------------------------------------------------------------------
+    function _resolveJumps() {
+      if (_existsSiblings()) {
+        _skipUnreachableSiblings();
+      }
+    }
+
+    function _existsSiblings() {
+      if (!_currentItem.getPrevious()) {
+        return false;
+      }
+
+      if (_items[_currentItem.getPrevious()].getOutputs() === 1) {
+        return false;
+      }
+
+      return true;
+    }
+
+    function _skipUnreachableSiblings() {
+      _items[_currentItem.getPrevious()].getOutputs().forEach(function (siblingID) {
+        if (!_isItemReachable(siblingID)) {
+          _skipItem(siblingID);
+          _tryPropagateSkip(siblingID);
+        }
+      });
+    }
+
+    function _isItemReachable(itemID) {
+      if (_currentItem.getID() === itemID) {
+        return true;
+      }
+      return _currentItem.getOutputs().some(function (outputID) {
+        return outputID === itemID;
+      });
+    }
+
+    function _tryPropagateSkip(skipedID) {
+      _items[skipedID].getOutputs().forEach(function (outputID) {
+        if (_isNotCurrentItem(outputID) && _isNotChildOfCurrentItem(outputID) && _isNotChildOfOriginItem(outputID)) {
+          if (!_isOnPathOf(_currentItem.getID(), outputID, skipedID)) {
+            _skipItem(outputID);
+            _tryPropagateSkip(outputID);
+          }
+        }
+      });
+    }
+
+    function _isNotCurrentItem(itemID) {
+      return _currentItem.getID() !== itemID;
+    }
+
+    function _isNotChildOfCurrentItem(itemID) {
+      return _currentItem.getOutputs().indexOf !== itemID;
+    }
+
+    function _isNotChildOfOriginItem(itemID) {
+      return _items[_currentItem.getPrevious()].getOutputs().indexOf(itemID) === -1;
+    }
+
+    function _isOnPathOf(referenceID, idToTest, idToIgnore) {
+      // If idToTest not comes after of the referenceID... is out of the way
+      if (_items[idToTest].getIndex() <= _items[referenceID].getIndex()) {
+        return false;
+      }
+
+      // If idToTest has direct access to referenceID... is on the way
+      if (_items[idToTest].getInputs().indexOf(referenceID) !== -1) {
+        return true;
+      }
+
+      // Verify if some input of idToTest is on the path of referenceID
+      return _items[idToTest].getInputs().some(function (inputID) {
+        if (idToIgnore !== inputID) {
+          return _isOnPathOf(referenceID, inputID);
+        }
+      });
+    }
+
+    function _skipItem(itemID) {
+      _items[itemID].setAsSkipped();
     }
   }
 })();
@@ -2070,70 +2369,80 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.navigation').factory('otusjs.model.navigation.NavigationPathItemFactory', Factory);
+  angular.module('otusjs.model.navigation').factory('otusjs.model.navigation.NavigationTrackingItemFactory', Factory);
 
   function Factory() {
     var self = this;
 
     /* Public methods */
     self.create = create;
+    self.fromJsonObject = fromJsonObject;
 
     function create(options) {
-      return new NavigationStackItem(options);
+      return new NavigationTrackingItem(options);
+    }
+
+    function fromJsonObject(jsonObject) {
+      return new NavigationTrackingItem(jsonObject);
     }
 
     return self;
   }
 
-  function NavigationStackItem(options) {
+  function NavigationTrackingItem(options) {
     var self = this;
 
-    var _id = options.id;
-    var _label = options.label || '';
-    var _type = options.type;
-    var _answer = options.answer;
-    var _metadata = options.metadata;
+    var ANSWERED = 'ANSWERED';
+    var SKIPPED = 'SKIPPED';
+    var NOT_VISITED = 'NOT_VISITED';
+    var VISITED = 'VISITED';
+    var IGNORED = 'IGNORED';
 
-    var _previous = null;
-    var _next = null;
+    var _objectType = 'NavigationTrackingItem';
+    var _id = options.id;
+    var _index = options.index;
+    var _state = options.state || NOT_VISITED;
+    var _previous = options.previous || null;
+    var _inputs = options.inputs || [];
+    var _outputs = options.outputs || [];
 
     /* Public methods */
+    self.getObjectType = getObjectType;
     self.getID = getID;
-    self.getLabel = getLabel;
-    self.getType = getType;
-    self.getAnswer = getAnswer;
-    self.getMetadata = getMetadata;
-    self.getNext = getNext;
-    self.setNext = setNext;
+    self.getIndex = getIndex;
+    self.getState = getState;
     self.getPrevious = getPrevious;
     self.setPrevious = setPrevious;
+    self.getInputs = getInputs;
+    self.getOutputs = getOutputs;
+    self.setAsVisited = setAsVisited;
+    self.setAsAnswered = setAsAnswered;
+    self.setAsIgnored = setAsIgnored;
+    self.setAsSkipped = setAsSkipped;
+    self.isAnswered = isAnswered;
+    self.isIgnored = isIgnored;
+    self.isSkipped = isSkipped;
+    self.toJson = toJson;
+
+    /**
+     * Returns the object type of instance.
+     * @returns {String}
+     * @memberof NavigationTrackingItem
+     */
+    function getObjectType() {
+      return _objectType;
+    }
 
     function getID() {
       return _id;
     }
 
-    function getLabel() {
-      return _label;
+    function getIndex() {
+      return _index;
     }
 
-    function getType() {
-      return _type;
-    }
-
-    function getAnswer() {
-      return _answer;
-    }
-
-    function getMetadata() {
-      return _metadata;
-    }
-
-    function getNext() {
-      return _next;
-    }
-
-    function setNext(item) {
-      return _next = item;
+    function getState() {
+      return _state;
     }
 
     function getPrevious() {
@@ -2141,7 +2450,58 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function setPrevious(item) {
-      return _previous = item;
+      _previous = item;
+    }
+
+    function getInputs() {
+      return _inputs;
+    }
+
+    function getOutputs() {
+      return _outputs;
+    }
+
+    function setAsVisited() {
+      _state = VISITED;
+    }
+
+    function setAsAnswered() {
+      _state = ANSWERED;
+    }
+
+    function setAsIgnored() {
+      _state = IGNORED;
+    }
+
+    function setAsSkipped() {
+      _state = SKIPPED;
+      _previous = null;
+    }
+
+    function isAnswered() {
+      return _state === ANSWERED ? true : false;
+    }
+
+    function isIgnored() {
+      return _state === IGNORED ? true : false;
+    }
+
+    function isSkipped() {
+      return _state === SKIPPED ? true : false;
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.objectType = _objectType;
+      json.id = _id;
+      json.index = _index;
+      json.state = _state;
+      json.previous = _previous;
+      json.inputs = _inputs;
+      json.outputs = _outputs;
+
+      return json;
     }
   }
 })();
@@ -2383,6 +2743,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.conditions = [];
 
     /* Public interface */
+    self.getDestination = getDestination;
     self.addCondition = addCondition;
     self.instanceOf = instanceOf;
     self.listConditions = listConditions;
@@ -2393,6 +2754,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.toJson = toJson;
 
     _init();
+
+    function getDestination() {
+      return self.destination;
+    }
 
     function addCondition(condition) {
       if (!self.isDefault && !_conditionExists(condition)) {
@@ -5560,162 +5925,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ContainerInitializationTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.InitialNodesCreationTaskService'];
-
-  function Service(InitialNodesCreationTask) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute() {
-      _container.resetData();
-      InitialNodesCreationTask.execute();
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.InitialNodesCreationTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.DefaultRouteCreationTaskService'];
-
-  function Service(DefaultRouteCreationTaskService) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(navigationContainer) {
-      _container.setInitialNodes();
-
-      var routeData = {
-        'origin': _container.getNavigationList()[0].origin,
-        'destination': _container.getNavigationList()[1].origin
-      };
-
-      DefaultRouteCreationTaskService.execute(routeData, _container.getNavigationList()[0]);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationCreationTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService', 'otusjs.model.navigation.DefaultRouteCreationTaskService'];
-
-  function Service(RouteUpdateTaskService, DefaultRouteCreationTaskService) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(originItem) {
-      var _newNavigation = _container.createNavigationTo(originItem.templateID);
-      var _previousNavigation;
-
-      if (_newNavigation.index === 2) {
-        _previousNavigation = _container.getPreviousOf(_newNavigation.index - 1);
-      } else {
-        _previousNavigation = _container.getPreviousOf(_newNavigation.index);
-      }
-
-      var routeData = {
-        'origin': _newNavigation.origin,
-        'destination': _previousNavigation.getDefaultRoute().destination
-      };
-
-      DefaultRouteCreationTaskService.execute(routeData, _newNavigation);
-
-      var updateRouteData = {
-        'origin': _previousNavigation.origin,
-        'destination': _newNavigation.origin,
-        'isDefault': true
-      };
-
-      RouteUpdateTaskService.execute(updateRouteData, _previousNavigation);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationRemovalTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService'];
-
-  function Service(RouteUpdateTaskService) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(templateID) {
-      var navigationToRecicle = _container.getNavigationByOrigin(templateID);
-      var navigationPosition = _container.getNavigationPosition(navigationToRecicle);
-      var navigationToUpdate = _container.getPreviousOf(navigationPosition);
-
-      if (navigationToRecicle.inNavigations.indexOf(navigationToUpdate) > -1) {
-        var routeData = _getRouteData(navigationToUpdate, navigationToRecicle);
-        RouteUpdateTaskService.execute(routeData, navigationToUpdate);
-      }
-
-      _container.removeNavigationOf(templateID);
-    }
-
-    function _getRouteData(navigationToUpdate, navigationToRecicle) {
-      var routeData = {};
-      routeData.isDefault = true;
-      routeData.origin = navigationToUpdate.routes[0].origin;
-      routeData.destination = navigationToRecicle.routes[0].destination;
-      return routeData;
-    }
-
-    function _updateRoutes(navigationToUpdate, navigationToRecicle) {
-      navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
-      navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.AlternativeRouteCreationTaskService', service);
 
   service.$inject = ['otusjs.model.navigation.RouteFactory', 'otusjs.model.navigation.RouteConditionFactory', 'otusjs.model.navigation.RuleFactory'];
@@ -5894,6 +6103,162 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (nextNavigation) {
         nextNavigation.updateInNavigation(navigation);
       }
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ContainerInitializationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.InitialNodesCreationTaskService'];
+
+  function Service(InitialNodesCreationTask) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute() {
+      _container.resetData();
+      InitialNodesCreationTask.execute();
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.InitialNodesCreationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.DefaultRouteCreationTaskService'];
+
+  function Service(DefaultRouteCreationTaskService) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(navigationContainer) {
+      _container.setInitialNodes();
+
+      var routeData = {
+        'origin': _container.getNavigationList()[0].origin,
+        'destination': _container.getNavigationList()[1].origin
+      };
+
+      DefaultRouteCreationTaskService.execute(routeData, _container.getNavigationList()[0]);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationCreationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService', 'otusjs.model.navigation.DefaultRouteCreationTaskService'];
+
+  function Service(RouteUpdateTaskService, DefaultRouteCreationTaskService) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(originItem) {
+      var _newNavigation = _container.createNavigationTo(originItem.templateID);
+      var _previousNavigation;
+
+      if (_newNavigation.index === 2) {
+        _previousNavigation = _container.getPreviousOf(_newNavigation.index - 1);
+      } else {
+        _previousNavigation = _container.getPreviousOf(_newNavigation.index);
+      }
+
+      var routeData = {
+        'origin': _newNavigation.origin,
+        'destination': _previousNavigation.getDefaultRoute().destination
+      };
+
+      DefaultRouteCreationTaskService.execute(routeData, _newNavigation);
+
+      var updateRouteData = {
+        'origin': _previousNavigation.origin,
+        'destination': _newNavigation.origin,
+        'isDefault': true
+      };
+
+      RouteUpdateTaskService.execute(updateRouteData, _previousNavigation);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationRemovalTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService'];
+
+  function Service(RouteUpdateTaskService) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(templateID) {
+      var navigationToRecicle = _container.getNavigationByOrigin(templateID);
+      var navigationPosition = _container.getNavigationPosition(navigationToRecicle);
+      var navigationToUpdate = _container.getPreviousOf(navigationPosition);
+
+      if (navigationToRecicle.inNavigations.indexOf(navigationToUpdate) > -1) {
+        var routeData = _getRouteData(navigationToUpdate, navigationToRecicle);
+        RouteUpdateTaskService.execute(routeData, navigationToUpdate);
+      }
+
+      _container.removeNavigationOf(templateID);
+    }
+
+    function _getRouteData(navigationToUpdate, navigationToRecicle) {
+      var routeData = {};
+      routeData.isDefault = true;
+      routeData.origin = navigationToUpdate.routes[0].origin;
+      routeData.destination = navigationToRecicle.routes[0].destination;
+      return routeData;
+    }
+
+    function _updateRoutes(navigationToUpdate, navigationToRecicle) {
+      navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
+      navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;
     }
   }
 })();

@@ -13,7 +13,13 @@
     'otusjs.model.activity.InterviewFactory'
   ];
 
-  function ActivityFacadeService(AnswerFillFactory, MetadataFillFactory, QuestionFillFactory, ActivityFactory, InterviewFactory) {
+  function ActivityFacadeService(
+    AnswerFillFactory,
+    MetadataFillFactory,
+    QuestionFillFactory,
+    ActivityFactory,
+    InterviewFactory
+  ) {
     var self = this;
     var _user = null;
     self.surveyActivity = null;
@@ -28,6 +34,7 @@
     self.finalizeActivitySurvey = finalizeActivitySurvey;
     self.saveActivitySurvey = saveActivitySurvey;
     self.getFillingByQuestionID = getFillingByQuestionID;
+    self.clearSkippedAnswers = clearSkippedAnswers;
 
     function createActivity(template, user, participant) {
       self.surveyActivity = ActivityFactory.create(template, user, participant);
@@ -66,6 +73,10 @@
 
     function getFillingByQuestionID(questionID) {
       return self.surveyActivity.fillContainer.searchFillingByID(questionID);
+    }
+
+    function clearSkippedAnswers() {
+      self.surveyActivity.clearSkippedAnswers();
     }
   }
 }());

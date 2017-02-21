@@ -48,12 +48,24 @@
     self.comment = (comment === undefined) ? '' : comment;
     self.forceAnswer = false;
     self.isFilled = isFilled;
+    self.isIgnored = isIgnored;
+    self.clear = clear;
 
     /* Public methods */
     self.toJson = toJson;
 
     function isFilled() {
       return self.answer.isFilled() || self.metadata.isFilled() || !!self.comment;
+    }
+
+    function isIgnored() {
+      return self.answer.value === null || self.answer.value.trim() === '';
+    }
+
+    function clear() {
+      self.answer.clear();
+      self.metadata.clear();
+      self.comment = '';
     }
 
     function toJson() {

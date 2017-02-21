@@ -67,6 +67,7 @@
     self.conditions = [];
 
     /* Public interface */
+    self.getDestination = getDestination;
     self.addCondition = addCondition;
     self.instanceOf = instanceOf;
     self.listConditions = listConditions;
@@ -77,6 +78,10 @@
     self.toJson = toJson;
 
     _init();
+
+    function getDestination() {
+      return self.destination;
+    }
 
     function addCondition(condition) {
       if (!self.isDefault && !_conditionExists(condition)) {

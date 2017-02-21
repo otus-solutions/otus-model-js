@@ -110,6 +110,7 @@
     self.equals = equals;
     self.getDefaultRoute = getDefaultRoute;
     self.getRouteByName = getRouteByName;
+    self.listRoutes = listRoutes;
     self.hasRoute = hasRoute;
     self.hasDefaultRoute = hasDefaultRoute;
     self.isOrphan = isOrphan;
@@ -315,9 +316,12 @@
 
     function _buildJsonInNavigations() {
       return self.inNavigations.map(function(element) {
-        return {
-          origin: element.origin
-        };
+        if (element.origin !== 'NULL NAVIGATION') {
+          return {
+            origin: element.origin,
+            index: element.index
+          };
+        }
       });
     }
 

@@ -9,15 +9,21 @@
     'otusjs.model.activity.StatusHistoryManagerFactory',
     'otusjs.model.activity.FillingManagerFactory',
     'otusjs.model.activity.InterviewFactory',
-    'otusjs.model.navigation.NavigationPathFactory',
+    'otusjs.model.navigation.NavigationTrackerFactory',
     'SurveyFormFactory'
   ];
 
   var Inject = {};
 
-  function Factory(StatusHistoryManagerFactory, FillingManagerFactory, InterviewFactory, NavigationPathFactory, SurveyFormFactory) {
+  function Factory(
+    StatusHistoryManagerFactory,
+    FillingManagerFactory,
+    InterviewFactory,
+    NavigationTrackerFactory,
+    SurveyFormFactory
+  ) {
     Inject.FillingManager = FillingManagerFactory.create();
-    Inject.NavigationPathFactory = NavigationPathFactory;
+    Inject.NavigationTrackerFactory = NavigationTrackerFactory;
     Inject.SurveyFormFactory = SurveyFormFactory;
 
     var self = this;
@@ -36,6 +42,9 @@
 
       var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
       activity.mode = 'ONLINE';
+
+      activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
+
       return activity;
     }
 
@@ -67,7 +76,17 @@
         return InterviewFactory.fromJsonObject(interview);
       });
 
+      _addBackCompatibility(activity, jsonObject);
+
       return activity;
+    }
+
+    function _addBackCompatibility(activity, jsonObject) {
+      if (!jsonObject.navigationTracker) {
+        activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
+      } else {
+        activity.setNavigationTracker(Inject.NavigationTrackerFactory.fromJsonObject(jsonObject.navigationTracker));
+      }
     }
 
     return self;
@@ -83,18 +102,19 @@
     self.interviews = [];
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
-    self.navigationStack = Inject.NavigationPathFactory.create();
     self.isDiscarded = false;
 
     /* Public methods */
     self.getID = getID;
     self.getItems = getItems;
     self.getNavigations = getNavigations;
+    self.getExportableList = getExportableList;
     self.getIdentity = getIdentity;
     self.getName = getName;
     self.getRealizationDate = getRealizationDate;
-    self.getNavigationStack = getNavigationStack;
-    self.setNavigationStack = setNavigationStack;
+    self.getNavigationTracker = getNavigationTracker;
+    self.setNavigationTracker = setNavigationTracker;
+    self.clearSkippedAnswers = clearSkippedAnswers;
     self.toJson = toJson;
 
     function getID() {
@@ -107,6 +127,11 @@
 
     function getNavigations() {
       return _getTemplate().NavigationManager.getNavigationList();
+    }
+
+    function getExportableList() {
+      var fullList = _getTemplate().NavigationManager.getNavigationList();
+      return fullList.slice(2, fullList.length);
     }
 
     function getIdentity() {
@@ -124,20 +149,25 @@
 
       if (lastFinalizedStatus) {
         return lastFinalizedStatus.date;
-      } else if(offlineInitialization) {
+      } else if (offlineInitialization) {
         return offlineInitialization.date;
       } else {
         throw new Error('Can not determine the realization date of Activity.');
       }
     }
 
-    function getNavigationStack() {
-      self.navigationStack.goToBeginning();
-      return self.navigationStack;
+    function getNavigationTracker() {
+      return self.navigationTracker;
     }
 
-    function setNavigationStack(stack) {
-      self.navigationStack = stack;
+    function clearSkippedAnswers() {
+      self.navigationTracker.getSkippedItems().forEach(function(itemTracking) {
+        self.fillContainer.clearFilling(itemTracking.getID());
+      });
+    }
+
+    function setNavigationTracker(stack) {
+      self.navigationTracker = stack;
     }
 
     function toJson() {
@@ -154,7 +184,7 @@
       json.fillContainer = self.fillContainer.toJson();
       json.statusHistory = self.statusHistory.toJson();
       json.isDiscarded = self.isDiscarded;
-      // json.navigationStack = self.navigationStack.toJson();
+      json.navigationTracker = self.navigationTracker.toJson();
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
     }
@@ -172,7 +202,7 @@
      * This method is an workaround for the reported bug #252 (on Mantis) and story OTUS-85 (on
      * Jira). The problem is: ActivitySurvey generation. In Otus Studio, the survey template goes to
      * activitie's property "surveyForm", but in the Otus the survey template goes to SurveyForm's
-     * property "surveyTemplate" (that is the CORRECT way).
+     * property "surveyTemplate" (this is the CORRECT way).
      */
     function _existStructuralFailure() {
       return (!self.surveyForm.surveyTemplate) ? true : false;

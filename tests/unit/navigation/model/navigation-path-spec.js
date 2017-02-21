@@ -10,7 +10,7 @@ describe('NavigationStackFactory', function()  {
       /* Test data */
       mockStackItems(_$injector_);
 
-      stack = _$injector_.get('otusjs.model.navigation.NavigationPathFactory').create();
+      stack = _$injector_.get('otusjs.model.navigation.NavigationTrackerFactory').create();
     });
   });
 
@@ -213,7 +213,7 @@ describe('NavigationStackFactory', function()  {
   });
 
   function mockStackItems($injector) {
-    var itemFactory = $injector.get('otusjs.model.navigation.NavigationPathItemFactory');
+    var itemFactory = $injector.get('otusjs.model.navigation.NavigationTrackingItemFactory');
     var options = {};
 
     options = { id: 'A', label: 'Label', type: 'IntegerQuestion', answer: 'Label da resposta', metadata: 'Label do metdado.' };
