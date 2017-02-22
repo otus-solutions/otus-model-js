@@ -220,7 +220,7 @@
      * @memberof NavigationTracker
      */
     function updateCurrentItem(item) {
-      if (item.isFilled) {
+      if (item && item.isFilled) {
         if (item.isFilled()) {
           _currentItem.setAsAnswered();
         } else if (item.isIgnored()) {
