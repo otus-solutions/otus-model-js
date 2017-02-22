@@ -83,6 +83,13 @@
 
     function _addBackCompatibility(activity, jsonObject) {
       if (!jsonObject.navigationTracker) {
+        var navigations = activity.getExportableList();
+        var questionNavigations = navigations.filter(function(navigation) {
+          var item = activity.getTemplate().getItemByTemplateID(navigation.origin);
+          if (item && item.isQuestion()) {
+            return navigation;
+          }
+        });
         activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
       } else {
         activity.setNavigationTracker(Inject.NavigationTrackerFactory.fromJsonObject(jsonObject.navigationTracker));
@@ -109,6 +116,7 @@
     self.getItems = getItems;
     self.getNavigations = getNavigations;
     self.getExportableList = getExportableList;
+    self.getTemplate = getTemplate;
     self.getIdentity = getIdentity;
     self.getName = getName;
     self.getRealizationDate = getRealizationDate;
@@ -122,20 +130,28 @@
     }
 
     function getItems() {
-      return _getTemplate().SurveyItemManager.getItemList();
+      return getTemplate().getItems();
     }
 
     function getNavigations() {
-      return _getTemplate().NavigationManager.getNavigationList();
+      return getTemplate().NavigationManager.getNavigationList();
     }
 
     function getExportableList() {
-      var fullList = _getTemplate().NavigationManager.getNavigationList();
+      var fullList = getTemplate().NavigationManager.getNavigationList();
       return fullList.slice(2, fullList.length);
     }
 
+    function getTemplate() {
+      if (_existStructuralFailure()) {
+        return self.surveyForm;
+      } else {
+        return self.surveyForm.surveyTemplate;
+      }
+    }
+
     function getIdentity() {
-      return _getTemplate().identity;
+      return getTemplate().identity;
     }
 
     function getName() {
@@ -187,14 +203,6 @@
       json.navigationTracker = self.navigationTracker.toJson();
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
-    }
-
-    function _getTemplate() {
-      if (_existStructuralFailure()) {
-        return self.surveyForm;
-      } else {
-        return self.surveyForm.surveyTemplate;
-      }
     }
 
     /**

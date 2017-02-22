@@ -41,7 +41,13 @@
     self.surveyFormType = options.surveyFormType || null;
     self.surveyTemplate = options.surveyTemplate || null;
 
+    /* Public methods */
+    self.getItems = getItems;
     self.toJson = toJson;
+
+    function getItems() {
+      return self.surveyTemplate.getItems();
+    }
 
     function toJson() {
       var json = {};

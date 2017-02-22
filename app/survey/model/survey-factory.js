@@ -88,6 +88,7 @@
     self.removeItem = removeItem;
     self.updateItem = updateItem;
     self.loadItem = loadItem;
+    self.getItems = getItems;
     self.getItemByTemplateID = getItemByTemplateID;
     self.getItemByCustomID = getItemByCustomID;
     self.getItemByID = getItemByID;
@@ -119,6 +120,10 @@
       var item = self.SurveyItemManager.loadItem(type, templateID, self.identity.acronym);
       self.NavigationManager.addNavigation();
       return item;
+    }
+
+    function getItems() {
+      return self.SurveyItemManager.getItemList();
     }
 
     function getItemByTemplateID(templateID) {
