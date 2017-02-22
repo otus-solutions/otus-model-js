@@ -83,14 +83,7 @@
 
     function _addBackCompatibility(activity, jsonObject) {
       if (!jsonObject.navigationTracker) {
-        var navigations = activity.getExportableList();
-        var questionNavigations = navigations.filter(function(navigation) {
-          var item = activity.getTemplate().getItemByTemplateID(navigation.origin);
-          if (item && item.isQuestion()) {
-            return navigation;
-          }
-        });
-        activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(questionNavigations, 0));
+        activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
       } else {
         activity.setNavigationTracker(Inject.NavigationTrackerFactory.fromJsonObject(jsonObject.navigationTracker));
       }
