@@ -185,7 +185,7 @@
             return navigation;
           }
         });
-        activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
+        activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(questionNavigations, 0));
       } else {
         activity.setNavigationTracker(Inject.NavigationTrackerFactory.fromJsonObject(jsonObject.navigationTracker));
       }
