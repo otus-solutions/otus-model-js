@@ -60,7 +60,7 @@
       _navigationList.forEach(function(navigation) {
         var replacer = [];
         navigation.inNavigations.forEach(function(inNav) {
-          if (inNav.origin in navMap) {
+          if (inNav && inNav.origin in navMap) {
             replacer.push(navMap[inNav.origin]);
           }else {
             replacer.push(nullNavigation);
