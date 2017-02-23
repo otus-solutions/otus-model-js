@@ -271,6 +271,7 @@
 
     function _move(idToVisit) {
       _currentItem = _items[idToVisit];
+      _currentItem.setAsVisited();
     }
 
     function _setPrevious(idToVisit) {
