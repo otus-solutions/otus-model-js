@@ -26,7 +26,7 @@ module.exports = function(config) {
             APP_ROOT_PATH + 'app.js',
             APP_ROOT_PATH + '**/*-module.js',
             APP_ROOT_PATH + '**/*.js', {
-                pattern: 'tests/unit/**/test.js',
+                pattern: 'tests/unit/**/*test.js',
                 included: true
             },
             'tests/utils/data/**/*.js'

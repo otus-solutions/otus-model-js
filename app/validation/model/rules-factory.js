@@ -34,7 +34,7 @@
     self.extends = 'StudioObject';
     self.objectType = 'Rule';
     self.validatorType = validatorType;
-    self.data = validator;
+    self.data = validator;  
   }
 
 }());

@@ -308,7 +308,7 @@
       json.index = self.index;
       json.inNavigations = _buildJsonInNavigations();
       json.routes = self.routes.map(function(route) {
-        return route.toJson();
+        return route.toJson(); 
       });
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');

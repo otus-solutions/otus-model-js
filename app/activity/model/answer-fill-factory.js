@@ -6,10 +6,11 @@
     .factory('otusjs.model.activity.AnswerFillFactory', Factory);
 
   Factory.$inject = [
-    'otusjs.model.activity.AnswerEvaluationService'
+    'otusjs.model.activity.AnswerEvaluationService',
+    'otusjs.utils.ImmutableDate'
   ];
 
-  function Factory(AnswerEvaluationService) {
+  function Factory(AnswerEvaluationService, ImmutableDate) {
     var self = this;
 
     self.OBJECT_TYPE = 'AnswerFill';
@@ -23,6 +24,10 @@
     }
 
     function fromJsonObject(jsonObject) {
+      //TODO montar serviço responsável por essa verificação
+      if(jsonObject.type === "CalendarQuestion" || jsonObject.type === "TimeQuestion") {
+        return create(jsonObject.type, new ImmutableDate(jsonObject.value.value));
+      }
       return create(jsonObject.type, jsonObject.value);
     }
 

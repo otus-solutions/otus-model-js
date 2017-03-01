@@ -26,7 +26,7 @@
     function fromJsonObject(jsonObject) {
       var interviewer = InterviewerFactory.fromJsonObject(jsonObject.interviewer);
       var interview = new Interview(interviewer);
-      interview.date = jsonObject.date;
+      interview.date = new Date(jsonObject.date); 
       return interview;
     }
 
@@ -37,7 +37,7 @@
     var self = this;
 
     self.objectType = 'Interview';
-    self.date = Date.now();
+    self.date = new Date();
     self.interviewer = interviewer;
 
     /* Public methods */

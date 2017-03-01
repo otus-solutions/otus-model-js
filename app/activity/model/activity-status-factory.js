@@ -24,7 +24,7 @@
     }
 
     function createInitializedOfflineStatus(offlineData) {
-      return new ActivityStatus('INITIALIZED_OFFLINE', offlineData.checker, offlineData.realizationDate.getTime());
+      return new ActivityStatus('INITIALIZED_OFFLINE', offlineData.checker, offlineData.realizationDate);
     }
 
     function createInitializedOnlineStatus(user) {
@@ -45,7 +45,7 @@
 
     function fromJsonObject(jsonObject) {
       var status = new ActivityStatus(jsonObject.name, jsonObject.user);
-      status.date = jsonObject.date;
+      status.date = new Date(jsonObject.date);
       return status;
     }
 
@@ -57,7 +57,7 @@
 
     self.objectType = 'ActivityStatus';
     self.name = name;
-    self.date = statusDate || Date.now();
+    self.date = statusDate || new Date();
     self.user = user;
 
     self.toJson = toJson;
@@ -67,7 +67,7 @@
 
       json.objectType = self.objectType;
       json.name = self.name;
-      json.date = self.date;
+      json.date = self.date.toISOString();
       json.user = self.user;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');

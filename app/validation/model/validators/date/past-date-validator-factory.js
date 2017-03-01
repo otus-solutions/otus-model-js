@@ -5,6 +5,10 @@
     .module('otusjs.validation')
     .factory('PastDateValidatorFactory', PastDateValidatorFactory);
 
+    PastDateValidatorFactory.$inject=[
+      'otusjs.utils.ImmutableDate'
+   ];
+
   function PastDateValidatorFactory() {
     var self = this;
 
@@ -22,7 +26,7 @@
       }
       var validator = new PastDateValidator();
       validator.canBeIgnored = jsonObject.canBeIgnored;
-      validator.reference = jsonObject.reference;
+      validator.reference = jsonObject.reference; 
       return validator;
     }
 

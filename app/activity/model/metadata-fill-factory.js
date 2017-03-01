@@ -48,7 +48,7 @@
       var json = {};
 
       json.objectType = self.objectType;
-      json.value = self.value;
+      json.value = self.value; 
 
       return JSON.stringify(json);
     }

@@ -141,7 +141,7 @@
       json.objectType = 'RouteCondition';
       json.name = self.name;
       json.rules = self.rules.map(function(rule) {
-        return rule.toJson();
+        return rule.toJson(); 
       });
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');

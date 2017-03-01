@@ -10,14 +10,14 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.metadata', []);
+    angular.module('otusjs.misc', []);
 })();
 'use strict';
 
 (function () {
     'use strict';
 
-    angular.module('otusjs.misc', []);
+    angular.module('otusjs.metadata', []);
 })();
 'use strict';
 
@@ -376,7 +376,7 @@
     }
 
     function createInitializedOfflineStatus(offlineData) {
-      return new ActivityStatus('INITIALIZED_OFFLINE', offlineData.checker, offlineData.realizationDate.getTime());
+      return new ActivityStatus('INITIALIZED_OFFLINE', offlineData.checker, offlineData.realizationDate);
     }
 
     function createInitializedOnlineStatus(user) {
@@ -397,7 +397,7 @@
 
     function fromJsonObject(jsonObject) {
       var status = new ActivityStatus(jsonObject.name, jsonObject.user);
-      status.date = jsonObject.date;
+      status.date = new Date(jsonObject.date);
       return status;
     }
 
@@ -409,7 +409,7 @@
 
     self.objectType = 'ActivityStatus';
     self.name = name;
-    self.date = statusDate || Date.now();
+    self.date = statusDate || new Date();
     self.user = user;
 
     self.toJson = toJson;
@@ -419,7 +419,7 @@
 
       json.objectType = self.objectType;
       json.name = self.name;
-      json.date = self.date;
+      json.date = self.date.toISOString();
       json.user = self.user;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
@@ -475,9 +475,9 @@
 
   angular.module('otusjs.model.activity').factory('otusjs.model.activity.AnswerFillFactory', Factory);
 
-  Factory.$inject = ['otusjs.model.activity.AnswerEvaluationService'];
+  Factory.$inject = ['otusjs.model.activity.AnswerEvaluationService', 'otusjs.utils.ImmutableDate'];
 
-  function Factory(AnswerEvaluationService) {
+  function Factory(AnswerEvaluationService, ImmutableDate) {
     var self = this;
 
     self.OBJECT_TYPE = 'AnswerFill';
@@ -491,6 +491,10 @@
     }
 
     function fromJsonObject(jsonObject) {
+      //TODO montar serviço responsável por essa verificação
+      if (jsonObject.type === "CalendarQuestion" || jsonObject.type === "TimeQuestion") {
+        return create(jsonObject.type, new ImmutableDate(jsonObject.value.value));
+      }
       return create(jsonObject.type, jsonObject.value);
     }
 
@@ -555,7 +559,7 @@
     function fromJsonObject(jsonObject) {
       var interviewer = InterviewerFactory.fromJsonObject(jsonObject.interviewer);
       var interview = new Interview(interviewer);
-      interview.date = jsonObject.date;
+      interview.date = new Date(jsonObject.date);
       return interview;
     }
 
@@ -566,7 +570,7 @@
     var self = this;
 
     self.objectType = 'Interview';
-    self.date = Date.now();
+    self.date = new Date();
     self.interviewer = interviewer;
 
     /* Public methods */
@@ -1270,6 +1274,136 @@
 (function () {
   'use strict';
 
+  angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
+
+  function IdiomFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new Idiom();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.IdiomFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var label = new Idiom();
+
+      label.oid = jsonObject.oid;
+      label.plainText = jsonObject.plainText;
+      label.formattedText = jsonObject.formattedText;
+
+      return label;
+    }
+
+    return self;
+  }
+
+  function Idiom() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Label";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.misc').factory('LabelFactory', LabelFactory);
+
+  LabelFactory.$inject = ['IdiomFactory'];
+
+  function LabelFactory(IdiomFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.create();
+      labelObject.enUS = IdiomFactory.create();
+      labelObject.esES = IdiomFactory.create();
+
+      return labelObject;
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.LabelFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.fromJsonObject(jsonObject.ptBR);
+      labelObject.enUS = IdiomFactory.fromJsonObject(jsonObject.enUS);
+      labelObject.esES = IdiomFactory.fromJsonObject(jsonObject.esES);
+
+      return labelObject;
+    }
+
+    return self;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.misc').factory('UnitFactory', UnitFactory);
+
+  function UnitFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new Unit();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.UnitFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var unit = new Unit();
+
+      unit.oid = jsonObject.oid;
+      unit.plainText = jsonObject.plainText;
+      unit.formattedText = jsonObject.formattedText;
+
+      return unit;
+    }
+
+    return self;
+  }
+
+  function Unit() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Unit";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.metadata').factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
   MetadataAnswerFactory.$inject = ['LabelFactory'];
@@ -1426,136 +1560,6 @@
     function isAvailableValue(value) {
       return getOptionByValue(value) ? false : true;
     }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
-
-  function IdiomFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new Idiom();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.IdiomFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var label = new Idiom();
-
-      label.oid = jsonObject.oid;
-      label.plainText = jsonObject.plainText;
-      label.formattedText = jsonObject.formattedText;
-
-      return label;
-    }
-
-    return self;
-  }
-
-  function Idiom() {
-    var self = this;
-
-    self.extends = "StudioObject";
-    self.objectType = "Label";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.misc').factory('LabelFactory', LabelFactory);
-
-  LabelFactory.$inject = ['IdiomFactory'];
-
-  function LabelFactory(IdiomFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      var labelObject = {};
-
-      labelObject.ptBR = IdiomFactory.create();
-      labelObject.enUS = IdiomFactory.create();
-      labelObject.esES = IdiomFactory.create();
-
-      return labelObject;
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.LabelFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var labelObject = {};
-
-      labelObject.ptBR = IdiomFactory.fromJsonObject(jsonObject.ptBR);
-      labelObject.enUS = IdiomFactory.fromJsonObject(jsonObject.enUS);
-      labelObject.esES = IdiomFactory.fromJsonObject(jsonObject.esES);
-
-      return labelObject;
-    }
-
-    return self;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.misc').factory('UnitFactory', UnitFactory);
-
-  function UnitFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new Unit();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.UnitFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var unit = new Unit();
-
-      unit.oid = jsonObject.oid;
-      unit.plainText = jsonObject.plainText;
-      unit.formattedText = jsonObject.formattedText;
-
-      return unit;
-    }
-
-    return self;
-  }
-
-  function Unit() {
-    var self = this;
-
-    self.extends = "StudioObject";
-    self.objectType = "Unit";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
   }
 })();
 'use strict';
@@ -3753,7 +3757,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function create() {
-      var now = Date.now();
+      var now = new Date();
       return new SurveyMetaInfo(now);
     }
 
@@ -4592,147 +4596,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var reg = new RegExp(reference, 'i');
       return reg.test(answer);
     };
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('ImageItemFactory', ImageItemFactory);
-
-  ImageItemFactory.$inject = ['LabelFactory'];
-
-  function ImageItemFactory(LabelFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(templateID, prototype) {
-      var labelObject = LabelFactory.create();
-      return new ImageItem(templateID, prototype, labelObject);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.ImageItemFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var labelObject = LabelFactory.fromJsonObject(jsonObject.footer);
-      var prototype = {};
-      prototype.objectType = "SurveyItem";
-      var question = new ImageItem(jsonObject.templateID, prototype, labelObject);
-      question.customID = jsonObject.customID;
-      question.url = jsonObject.url;
-
-      return question;
-    }
-
-    return self;
-  }
-
-  function ImageItem(templateID, prototype, labelObject) {
-    var self = this;
-
-    self.extents = prototype.objectType;
-    self.objectType = 'ImageItem';
-    self.templateID = templateID;
-    self.customID = templateID;
-    self.dataType = 'String';
-    self.url = '';
-    self.footer = labelObject;
-
-    /* Public methods */
-    self.isQuestion = isQuestion;
-    self.toJson = toJson;
-
-    function isQuestion() {
-      return false;
-    }
-
-    function toJson() {
-      var json = {};
-
-      json.extents = self.extents;
-      json.objectType = self.objectType;
-      json.templateID = self.templateID;
-      json.customID = self.customID;
-      json.dataType = self.dataType;
-      json.url = self.url;
-      json.footer = self.footer;
-
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('TextItemFactory', TextItemFactory);
-
-  TextItemFactory.$inject = ['LabelFactory'];
-
-  function TextItemFactory(LabelFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(templateID, prototype) {
-      var labelObject = LabelFactory.create();
-      return new TextItem(templateID, prototype, labelObject);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.TextItem.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var labelObject = LabelFactory.fromJsonObject(jsonObject.value);
-      var prototype = {};
-      prototype.objectType = "SurveyItem";
-      var question = new TextItem(jsonObject.templateID, prototype, labelObject);
-      question.customID = jsonObject.customID;
-
-      return question;
-    }
-
-    return self;
-  }
-
-  function TextItem(templateID, prototype, labelObject) {
-    var self = this;
-
-    self.extents = prototype.objectType;
-    self.objectType = 'TextItem';
-    self.templateID = templateID;
-    self.customID = templateID;
-    self.dataType = 'String';
-    self.value = labelObject;
-
-    /* Public methods */
-    self.isQuestion = isQuestion;
-    self.toJson = toJson;
-
-    function isQuestion() {
-      return false;
-    }
-
-    function toJson() {
-      var json = {};
-
-      json.extents = self.extents;
-      json.objectType = self.objectType;
-      json.templateID = self.templateID;
-      json.customID = self.customID;
-      json.dataType = self.dataType;
-      json.value = self.value;
-
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
-    }
   }
 })();
 'use strict';
@@ -5828,6 +5691,147 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.surveyItem').factory('ImageItemFactory', ImageItemFactory);
+
+  ImageItemFactory.$inject = ['LabelFactory'];
+
+  function ImageItemFactory(LabelFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(templateID, prototype) {
+      var labelObject = LabelFactory.create();
+      return new ImageItem(templateID, prototype, labelObject);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.ImageItemFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var labelObject = LabelFactory.fromJsonObject(jsonObject.footer);
+      var prototype = {};
+      prototype.objectType = "SurveyItem";
+      var question = new ImageItem(jsonObject.templateID, prototype, labelObject);
+      question.customID = jsonObject.customID;
+      question.url = jsonObject.url;
+
+      return question;
+    }
+
+    return self;
+  }
+
+  function ImageItem(templateID, prototype, labelObject) {
+    var self = this;
+
+    self.extents = prototype.objectType;
+    self.objectType = 'ImageItem';
+    self.templateID = templateID;
+    self.customID = templateID;
+    self.dataType = 'String';
+    self.url = '';
+    self.footer = labelObject;
+
+    /* Public methods */
+    self.isQuestion = isQuestion;
+    self.toJson = toJson;
+
+    function isQuestion() {
+      return false;
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.templateID = self.templateID;
+      json.customID = self.customID;
+      json.dataType = self.dataType;
+      json.url = self.url;
+      json.footer = self.footer;
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('TextItemFactory', TextItemFactory);
+
+  TextItemFactory.$inject = ['LabelFactory'];
+
+  function TextItemFactory(LabelFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(templateID, prototype) {
+      var labelObject = LabelFactory.create();
+      return new TextItem(templateID, prototype, labelObject);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.TextItem.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var labelObject = LabelFactory.fromJsonObject(jsonObject.value);
+      var prototype = {};
+      prototype.objectType = "SurveyItem";
+      var question = new TextItem(jsonObject.templateID, prototype, labelObject);
+      question.customID = jsonObject.customID;
+
+      return question;
+    }
+
+    return self;
+  }
+
+  function TextItem(templateID, prototype, labelObject) {
+    var self = this;
+
+    self.extents = prototype.objectType;
+    self.objectType = 'TextItem';
+    self.templateID = templateID;
+    self.customID = templateID;
+    self.dataType = 'String';
+    self.value = labelObject;
+
+    /* Public methods */
+    self.isQuestion = isQuestion;
+    self.toJson = toJson;
+
+    function isQuestion() {
+      return false;
+    }
+
+    function toJson() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.templateID = self.templateID;
+      json.customID = self.customID;
+      json.dataType = self.dataType;
+      json.value = self.value;
+
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.validation').factory('otusjs.model.accept.AcceptAnswerFactory', AcceptAnswerFactory);
 
   function AcceptAnswerFactory() {
@@ -6436,7 +6440,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.validation').factory('MaxDateValidatorFactory', MaxDateValidatorFactory);
 
-  function MaxDateValidatorFactory() {
+  MaxDateValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
+
+  function MaxDateValidatorFactory(ImmutableDate) {
     var self = this;
 
     /* Public interface */
@@ -6444,14 +6450,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new MaxDateValidator();
+      return new MaxDateValidator(ImmutableDate);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
         throw new Error("otusjs.model.misc.model.MaxDateValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
       }
-      var validator = new MaxDateValidator();
+      var validator = new MaxDateValidator(ImmutableDate);
       validator.canBeIgnored = jsonObject.canBeIgnored;
       validator.reference = jsonObject.reference;
       return validator;
@@ -6460,11 +6466,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return self;
   }
 
-  function MaxDateValidator() {
+  function MaxDateValidator(ImmutableDate) {
     var self = this;
 
     self.canBeIgnored = true;
-    self.reference = new Date();
+    self.reference = { value: null };
   }
 })();
 'use strict';
@@ -6474,7 +6480,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.validation').factory('MinDateValidatorFactory', MinDateValidatorFactory);
 
-  function MinDateValidatorFactory() {
+  MinDateValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
+
+  function MinDateValidatorFactory(ImmutableDate) {
     var self = this;
 
     /* Public interface */
@@ -6482,14 +6490,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new MinDateValidator();
+      return new MinDateValidator(ImmutableDate);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
         throw new Error("otusjs.model.misc.model.MinDateValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
       }
-      var validator = new MinDateValidator();
+      var validator = new MinDateValidator(ImmutableDate);
       validator.canBeIgnored = jsonObject.canBeIgnored;
       validator.reference = jsonObject.reference;
       return validator;
@@ -6498,11 +6506,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return self;
   }
 
-  function MinDateValidator() {
+  function MinDateValidator(ImmutableDate) {
     var self = this;
 
     self.canBeIgnored = true;
-    self.reference = new Date();
+    self.reference = { value: null };
   }
 })();
 'use strict';
@@ -6511,6 +6519,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   'use strict';
 
   angular.module('otusjs.validation').factory('PastDateValidatorFactory', PastDateValidatorFactory);
+
+  PastDateValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
 
   function PastDateValidatorFactory() {
     var self = this;
@@ -6550,7 +6560,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.validation').factory('RangeDateValidatorFactory', RangeDateValidatorFactory);
 
-  function RangeDateValidatorFactory() {
+  RangeDateValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
+
+  function RangeDateValidatorFactory(ImmutableDate) {
     var self = this;
 
     /* Public interface */
@@ -6558,14 +6570,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new RangeDateValidator();
+      return new RangeDateValidator(ImmutableDate);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
         throw new Error("otusjs.model.misc.model.RangeDateValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
       }
-      var validator = new RangeDateValidator();
+      var validator = new RangeDateValidator(ImmutableDate);
       validator.canBeIgnored = jsonObject.canBeIgnored;
       validator.reference = jsonObject.reference;
       return validator;
@@ -6574,13 +6586,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return self;
   }
 
-  function RangeDateValidator() {
+  function RangeDateValidator(ImmutableDate) {
     var self = this;
 
     self.canBeIgnored = true;
     self.reference = {
-      'initial': new Date(),
-      'end': new Date()
+      initial: { value: null },
+      end: { value: null }
     };
   }
 })();
@@ -6976,7 +6988,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.validation').factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
 
-  function MaxTimeValidatorFactory() {
+  MaxTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
+
+  function MaxTimeValidatorFactory(ImmutableDate) {
     var self = this;
 
     /* Public interface */
@@ -6984,14 +6998,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new MaxTimeValidator();
+      return new MaxTimeValidator(ImmutableDate);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
         throw new Error("otusjs.model.misc.model.MaxTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
       }
-      var validator = new MaxTimeValidator();
+      var validator = new MaxTimeValidator(ImmutableDate);
       validator.canBeIgnored = jsonObject.canBeIgnored;
       validator.reference = jsonObject.reference;
       return validator;
@@ -7000,11 +7014,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return self;
   }
 
-  function MaxTimeValidator() {
+  function MaxTimeValidator(ImmutableDate) {
     var self = this;
 
     self.canBeIgnored = true;
-    self.reference = '';
+    self.reference = { value: '' };
   }
 })();
 'use strict';
@@ -7014,7 +7028,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.validation').factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
 
-  function MinTimeValidatorFactory() {
+  MinTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
+
+  function MinTimeValidatorFactory(ImmutableDate) {
     var self = this;
 
     /* Public interface */
@@ -7022,14 +7038,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new MinTimeValidator();
+      return new MinTimeValidator(ImmutableDate);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
         throw new Error("otusjs.model.misc.model.MinTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
       }
-      var validator = new MinTimeValidator();
+      var validator = new MinTimeValidator(ImmutableDate);
       validator.canBeIgnored = jsonObject.canBeIgnored;
       validator.reference = jsonObject.reference;
       return validator;
@@ -7038,11 +7054,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return self;
   }
 
-  function MinTimeValidator() {
+  function MinTimeValidator(ImmutableDate) {
     var self = this;
 
     self.canBeIgnored = true;
-    self.reference = '';
+    self.reference = { value: '' };
   }
 })();
 'use strict';

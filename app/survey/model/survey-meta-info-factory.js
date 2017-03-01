@@ -7,7 +7,7 @@
 
   function SurveyMetaInfoFactory() {
     var self = this;
-    
+
     self.OBJECT_TYPE = 'SurveyMetaInfo';
 
     /* Public interdace */
@@ -22,7 +22,7 @@
     }
 
     function create() {
-      var now = Date.now();
+      var now = new Date();
       return new SurveyMetaInfo(now);
     }
 

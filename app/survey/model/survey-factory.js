@@ -152,18 +152,18 @@
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.oid = self.oid;
-      json.identity = self.identity.toJson();
-      json.metainfo = self.metainfo.toJson();
+      json.identity = self.identity.toJson(); 
+      json.metainfo = self.metainfo.toJson(); 
 
       json.itemContainer = [];
       self.SurveyItemManager.getItemList().forEach(function(item) {
-        json.itemContainer.push(item.toJson());
+        json.itemContainer.push(item.toJson()); 
       });
 
       json.navigationList = [];
       self.NavigationManager.getNavigationList().forEach(function(navigation) {
         if (navigation) {
-          json.navigationList.push(navigation.toJson());
+          json.navigationList.push(navigation.toJson()); 
         } else {
           json.navigationList.push({});
         }
