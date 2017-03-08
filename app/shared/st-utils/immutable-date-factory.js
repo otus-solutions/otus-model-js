@@ -28,12 +28,16 @@
 
       /*Date Methods*/
       self.setHours = setHours;
+      self.getHours = getHours;
       self.setMinutes = setMinutes;
+      self.getMinutes = getMinutes;
       self.setSeconds = setSeconds;
+      self.getSeconds = getSeconds;
       self.setMilliseconds = setMilliseconds;
       self.setDate = setDate;
       self.setMonth = setMonth;
       self.setFullYear = setFullYear;
+      self.getTime = getTime;
       self.resetDate = resetDate;
       self.resetTime = resetTime;
       self.toString = toString;
@@ -42,12 +46,24 @@
         self.date.setHours(hours);
       }
 
+      function getHours() {
+        return self.date.getHours();
+      }
+
       function setMinutes(minutes) {
         self.date.setMinutes(minutes);
       }
 
+      function getMinutes() {
+        return self.date.getMinutes();
+      }
+
       function setSeconds(seconds) {
         self.date.setSeconds(seconds);
+      }
+
+      function getSeconds() {
+        return self.date.getSeconds();
       }
 
       function setMilliseconds(milliseconds) {
@@ -63,7 +79,11 @@
       }
 
       function setFullYear(fullYear) {
-        self.date.setFullYear(milliseconds);
+        self.date.setFullYear(fullYear);
+      }
+
+      function getTime() {
+        return self.date.getTime();
       }
 
       function resetDate() {

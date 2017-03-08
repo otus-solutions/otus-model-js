@@ -1,4 +1,4 @@
-describe('DateTimeRuleTestService', function() {
+fdescribe('DateTimeRuleTestService:', function() {
 
   var Mock = {};
   var Injections = {};
@@ -8,29 +8,32 @@ describe('DateTimeRuleTestService', function() {
     module('otusjs');
 
     inject(function(_$injector_) {
-      service = _$injector_.get('otusjs.model.activity.DateTimeRuleTestService', {
+      service = _$injector_.get('otusjs.model.activity.CalendarRuleTestService', {
         NumericRuleTestService: mockNumericRuleTestService(_$injector_)
       });
     });
   });
 
-  describe('run method', function() {
-    beforeEach(function() {
-      Mock.rule = {};
-      Mock.rule.when = 'CAD1';
-      Mock.rule.operator = 'equal';
-      Mock.rule.answer = 1;
-      Mock.rule.isMetadata = true;
-    });
+  describe('run method, ', function() {
 
-    it('should call NumericRuleTestService when answer is number', function() {
-      expect(service.run(Mock.rule, 1)).toBe(true);
-      expect(Mock.NumericRuleTestService.run).toHaveBeenCalledWith(Mock.rule, 1);
-    });
+    describe('test cases for NumericRuleTestService service', function() {
+      beforeEach(function() {
+        Mock.rule = {};
+        Mock.rule.when = 'CAD1';
+        Mock.rule.operator = 'equal';
+        Mock.rule.answer = 1;
+        Mock.rule.isMetadata = true;
+      });
 
-    it('should no call NumericRuleTestService when answer is not number', function() {
-      expect(service.run(Mock.rule, '1')).toBe(true);
-      expect(Mock.NumericRuleTestService.run).not.toHaveBeenCalledWith(Mock.rule, 1);
+      it('should call NumericRuleTestService when answer is number', function() {
+        expect(service.run(Mock.rule, 1)).toBe(true);
+        expect(Mock.NumericRuleTestService.run).toHaveBeenCalledWith(Mock.rule, 1);
+      });
+
+      it('should no call NumericRuleTestService when answer is not number', function() {
+        expect(service.run(Mock.rule, '1')).toBe(true);
+        expect(Mock.NumericRuleTestService.run).not.toHaveBeenCalledWith(Mock.rule, 1);
+      });
     });
 
     describe('equal cases', function() {
@@ -226,7 +229,7 @@ describe('DateTimeRuleTestService', function() {
 
     });
 
-    describe('between cases', function() {
+    xdescribe('between cases', function() {
       beforeEach(function() {
         Mock.rule = {};
         Mock.rule.when = 'CAD1';
@@ -250,7 +253,7 @@ describe('DateTimeRuleTestService', function() {
 
     });
 
-    describe('within cases', function() {
+    xdescribe('within cases', function() {
       beforeEach(function() {
         Mock.rule = {};
         Mock.rule.when = 'CAD1';

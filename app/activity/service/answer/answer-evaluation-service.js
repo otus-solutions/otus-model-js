@@ -8,11 +8,12 @@
   Service.$inject = [
     'otusjs.model.activity.NumericRuleTestService',
     'otusjs.model.activity.TextRuleTestService',
-    'otusjs.model.activity.DateTimeRuleTestService',
+    'otusjs.model.activity.CalendarRuleTestService',
+    'otusjs.model.activity.TimeRuleTestService',
     'otusjs.model.activity.CheckboxRuleTestService'
   ];
 
-  function Service(NumericRuleTestService, TextRuleTestService, DateTimeRuleTestService, CheckboxRuleTestService) {
+  function Service(NumericRuleTestService, TextRuleTestService, CalendarRuleTestService, TimeRuleTestService, CheckboxRuleTestService) {
     var self = this;
     var _evaluators = {};
 
@@ -26,13 +27,16 @@
     }
 
     function _setupEvaluators() {
-      _evaluators.CalendarQuestion = DateTimeRuleTestService;
+      //TODO: regras de navegação ok
       _evaluators.IntegerQuestion = NumericRuleTestService;
       _evaluators.DecimalQuestion = NumericRuleTestService;
       _evaluators.SingleSelectionQuestion = NumericRuleTestService;
       _evaluators.TextQuestion = TextRuleTestService;
-      _evaluators.TimeQuestion = DateTimeRuleTestService;
+      _evaluators.TimeQuestion = TimeRuleTestService;
       _evaluators.CheckboxQuestion = CheckboxRuleTestService;
+
+      //TODO: regras de navegação que necessitam de revisão
+      _evaluators.CalendarQuestion = CalendarRuleTestService;
     }
   }
 }());
