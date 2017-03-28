@@ -57,6 +57,9 @@
 
       var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
       activity.mode = 'PAPER';
+
+      activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
+
       return activity;
     }
 
