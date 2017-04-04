@@ -7,6 +7,80 @@
 
 (function() {
   'use strict';
+  angular
+    .module('utils')
+    .service('otusjs.utils.DatasourceService', service);
+
+  service.$inject = [
+      '$q'
+   ];
+
+  function service($q) {
+    var self = this;
+    var _datasources,
+        _provided,
+        _dsAddress = function(){}; //this will teach player where to get the ds on otus db
+
+    /* Public Methods */
+    //  self.getDatasources = getDatasources;
+    self.fetchDatasources = fetchDatasources;
+    self.provideDatasourcesAddress = provideDatasourcesAddress;
+
+
+    function fetchDatasources(namesList) {
+      var deferred = $q.defer();
+      _datasources = _dsAddress();
+      if (_provided) {
+         if (_datasources) {
+            deferred.resolve(_getDatasourceByArray(namesList));
+         }else {
+            deferred.reject();
+         }
+      } else {
+         deferred.resolve(_getFakeList());
+      }
+      return deferred.promise;
+    }
+
+
+    function _getDatasourceByArray(dsArr){
+      var _arrayResult = [];
+      dsArr.forEach(function(id){
+         _arrayResult = _arrayResult.concat(_datasources[id].data);
+      });
+      return _arrayResult;
+   }
+
+    function provideDatasourcesAddress(dsAddress) {
+      _dsAddress = dsAddress;
+      _provided = true;
+    }
+
+    function _getFakeList() {
+      return [
+        {
+          'value': 'Atroveran'
+          },
+        {
+          'value': 'Paracetamol'
+          },
+        {
+          'value': 'Dorflex'
+          },
+        {
+          'value': 'Cataflan'
+          },
+        {
+          'value': 'Tylenol'
+          }
+      ];
+    }
+
+  }
+}());
+
+(function() {
+  'use strict';
 
   angular
     .module('utils')
@@ -145,6 +219,64 @@
     }
   }
 
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('utils')
+    .factory('otusjs.utils.SearchQueryFactory', factory);
+
+  factory.$inject = [
+     '$q'
+      ];
+
+  function factory($q) {
+    var self = this;
+
+
+    /* Public Interface */
+    self.newStringSearch = function(datasource) {
+      return new StringSearch(datasource);
+    };
+
+
+    /* -------- */
+    function StringSearch(datasource, opt) { //perform a search in arrays of string
+      var self = this;
+      var options = opt || {
+      //   id: "value",
+      //   shouldSort: true,
+        threshold: 0.2,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: [
+          "value"
+        ]
+      };
+      var fuse = new Fuse(datasource, options); // "datasource" is the item array
+
+      /* Public Interface */
+      self.perform = perform;
+
+
+      function perform(text) {
+        var deferred = $q.defer();
+        deferred.resolve(text ? _filter(text) : datasource);
+        return deferred.promise;
+      }
+
+      function _filter(typedText) {
+        var matchIndexes = fuse.search(typedText);
+        return matchIndexes;
+      }
+
+    }
+    return self;
+  }
 }());
 
 (function() {

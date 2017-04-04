@@ -10,18 +10,20 @@
     'SurveyMetaInfoFactory',
     'SurveyUUIDGenerator',
     'otusjs.model.navigation.NavigationManagerFactory',
-    'SurveyItemManagerFactory'
+    'SurveyItemManagerFactory',
+    'otusjs.model.survey.DataSourceDefinitionManagerFactory'
   ];
 
   var Inject = {};
 
-  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory) {
+  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory) {
     var self = this;
 
     self.OBJECT_TYPE = 'Survey';
 
     Inject.SurveyItemManagerFactory = SurveyItemManagerFactory;
     Inject.NavigationManagerFactory = NavigationManagerFactory;
+    Inject.DataSourceDefinitionManagerFactory = DataSourceDefinitionManagerFactory;
 
     /* Public interdace */
     self.create = create;
@@ -41,7 +43,10 @@
       var UUID = jsonObject.oid;
       var itemManager = SurveyItemManagerFactory.create();
 
-      return new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
+      var survey = new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
+      survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
+
+      return survey;
     }
 
     function create(name, acronym) {
@@ -64,6 +69,7 @@
 
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
+      survey.DataSourceManager.loadJsonData(jsonObject.dataSources);  //TODO sometimes jsonObject.dataSources comes null
 
       return survey;
     }
@@ -81,6 +87,7 @@
     self.metainfo = surveyMetainfo;
     self.SurveyItemManager = Inject.SurveyItemManagerFactory.create();
     self.NavigationManager = Inject.NavigationManagerFactory.create(self);
+    self.DataSourceManager = Inject.DataSourceDefinitionManagerFactory.create();
 
     /* Public methods */
     self.initialize = initialize;
@@ -94,6 +101,8 @@
     self.getItemByID = getItemByID;
     self.isAvailableID = isAvailableID;
     self.isAvailableCustomID = isAvailableCustomID;
+    self.getDataSource = getDataSource;
+    self.getAllDataSources = getAllDataSources;
     self.toJson = toJson;
 
     function initialize() {
@@ -146,24 +155,37 @@
       return self.SurveyItemManager.isAvailableCustomID(id);
     }
 
+    function getDataSource(name) {
+      return self.DataSourceManager.getDataSourceDefinition(name);
+    }
+
+    function getAllDataSources(){
+      return angular.copy(self.DataSourceManager.list());
+   }
+
+    function isAutocomplete(item) {
+      return item.objectType === "AutocompleteQuestion";
+    }
+
     function toJson() {
       var json = {};
 
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.oid = self.oid;
-      json.identity = self.identity.toJson(); 
-      json.metainfo = self.metainfo.toJson(); 
+      json.identity = self.identity.toJson();
+      json.metainfo = self.metainfo.toJson();
+      json.dataSources = self.DataSourceManager.toJson();
 
       json.itemContainer = [];
       self.SurveyItemManager.getItemList().forEach(function(item) {
-        json.itemContainer.push(item.toJson()); 
+        json.itemContainer.push(item.toJson());
       });
 
       json.navigationList = [];
       self.NavigationManager.getNavigationList().forEach(function(navigation) {
         if (navigation) {
-          json.navigationList.push(navigation.toJson()); 
+          json.navigationList.push(navigation.toJson());
         } else {
           json.navigationList.push({});
         }

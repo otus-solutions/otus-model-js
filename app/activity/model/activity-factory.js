@@ -119,6 +119,7 @@
     self.getNavigationTracker = getNavigationTracker;
     self.setNavigationTracker = setNavigationTracker;
     self.clearSkippedAnswers = clearSkippedAnswers;
+    self.getDataSources = getDataSources;
     self.toJson = toJson;
 
     function getID() {
@@ -133,10 +134,18 @@
       return getTemplate().NavigationManager.getNavigationList();
     }
 
+    function getDatasources(){
+      return getTemplate().getAllDataSources();
+   }
+
     function getExportableList() {
       var fullList = getTemplate().NavigationManager.getNavigationList();
       return fullList.slice(2, fullList.length);
     }
+
+    function getDataSources(){
+      return getTemplate().getAllDataSources();
+   }
 
     function getTemplate() {
       if (_existStructuralFailure()) {

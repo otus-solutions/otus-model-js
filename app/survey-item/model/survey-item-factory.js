@@ -16,6 +16,7 @@
     'TimeQuestionFactory',
     'EmailQuestionFactory',
     'PhoneQuestionFactory',
+    'AutocompleteQuestionFactory',
     /* Miscelaneous items */
     'TextItemFactory',
     'ImageItemFactory'
@@ -31,6 +32,7 @@
     TimeQuestionFactory,
     EmailQuestionFactory,
     PhoneQuestionFactory,
+    AutocompleteQuestionFactory,
     TextItemFactory,
     ImageItemFactory) {
 
@@ -47,6 +49,7 @@
       'TimeQuestion': TimeQuestionFactory,
       'EmailQuestion': EmailQuestionFactory,
       'PhoneQuestion': PhoneQuestionFactory,
+      'AutocompleteQuestion': AutocompleteQuestionFactory,
       /* Miscelaneous items */
       'TextItem': TextItemFactory,
       'ImageItem': ImageItemFactory
