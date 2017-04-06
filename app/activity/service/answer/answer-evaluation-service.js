@@ -27,15 +27,13 @@
     }
 
     function _setupEvaluators() {
-      //TODO: regras de navegação ok
       _evaluators.IntegerQuestion = NumericRuleTestService;
       _evaluators.DecimalQuestion = NumericRuleTestService;
       _evaluators.SingleSelectionQuestion = NumericRuleTestService;
       _evaluators.TextQuestion = TextRuleTestService;
       _evaluators.TimeQuestion = TimeRuleTestService;
       _evaluators.CheckboxQuestion = CheckboxRuleTestService;
-
-      //TODO: regras de navegação que necessitam de revisão
+      _evaluators.AutocompleteQuestion = TextRuleTestService;
       _evaluators.CalendarQuestion = CalendarRuleTestService;
     }
   }
