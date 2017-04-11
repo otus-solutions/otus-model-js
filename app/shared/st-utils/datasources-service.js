@@ -8,48 +8,48 @@
       '$q'
    ];
 
-  function service($q) {
+  function service($q, DataSourceDefinitionManagerFactory) {
     var self = this;
     var _datasources,
-        _provided,
-        _dsAddress = function(){}; //this will teach player where to get the ds on otus db
+      _provided,
+      _fetchDatasources = function() {}; //this will teach player where to get the ds on otus db
 
     /* Public Methods */
-    //  self.getDatasources = getDatasources;
-    self.fetchDatasources = fetchDatasources;
+    self.fetchDatasources = fetchDatasources;    
     self.provideDatasourcesAddress = provideDatasourcesAddress;
 
 
-    function fetchDatasources(namesList) {
+    function fetchDatasources(itemId) {
       var deferred = $q.defer();
-      _datasources = _dsAddress();
+      _datasources = _fetchDatasources();
       if (_provided) {
-         if (_datasources) {
-            deferred.resolve(_getDatasourceByArray(namesList));
-         }else {
-            deferred.reject();
-         }
+        if (_datasources) {
+          deferred.resolve(_fetchDatasourcesByItemID(itemId));
+        } else {
+          deferred.reject();
+        }
       } else {
-         deferred.resolve(_getFakeList());
+        deferred.resolve(_getFakeList());
       }
       return deferred.promise;
     }
 
-
-    function _getDatasourceByArray(dsArr){
+    function _fetchDatasourcesByItemID(itemId){
       var _arrayResult = [];
-      dsArr.forEach(function(id){
-         _arrayResult = _arrayResult.concat(_datasources[id].data);
+      Object.keys(_datasources).forEach(function(dsName){
+         if (_datasources[dsName].bindedItems.includes(itemId)) {
+            _arrayResult = _arrayResult.concat(_datasources[dsName].data);
+         }
       });
       return _arrayResult;
    }
 
     function provideDatasourcesAddress(dsAddress) {
-      _dsAddress = dsAddress;
+      _fetchDatasources = dsAddress;
       _provided = true;
     }
 
-    function _getFakeList() {
+    function _getFakeList() { //for studio purposes
       return [
         {
           'value': 'Atroveran'

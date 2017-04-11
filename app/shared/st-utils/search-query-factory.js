@@ -23,12 +23,8 @@
     function StringSearch(datasource, opt) { //perform a search in arrays of string
       var self = this;
       var options = opt || {
-      //   id: "value",
-      //   shouldSort: true,
         threshold: 0.2,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
+        maxPatternLength: 10,
         minMatchCharLength: 1,
         keys: [
           "value"
