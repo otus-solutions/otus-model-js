@@ -15,7 +15,35 @@
 
     /* Public Interface */
     self.newStringSearch = function(datasource) {
-      return new StringSearch(datasource);
+      var options = {
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: [
+            "value"
+         ]
+      };
+      return new StringSearch(datasource, options);
+    };
+
+    self.newParticipantFilter = function(datasource) {
+      var options = {
+         shouldSort: true,
+          tokenize: true,
+         //  matchAllTokens: true,
+          threshold: 0.2,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+        keys: [
+            "name",
+            "recruitmentNumber"
+         ]
+      };
+      return new StringSearch(datasource, options);
     };
 
 
@@ -26,6 +54,8 @@
         threshold: 0.2,
         maxPatternLength: 10,
         minMatchCharLength: 1,
+        location: 0,
+        distance: 50,
         keys: [
           "value"
         ]
@@ -38,7 +68,7 @@
 
       function perform(text) {
         var deferred = $q.defer();
-        deferred.resolve(text ? _filter(text) : datasource);
+        deferred.resolve(text ? _filter(text) : []);
         return deferred.promise;
       }
 
