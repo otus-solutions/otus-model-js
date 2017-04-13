@@ -12,9 +12,12 @@
   function factory($q) {
     var self = this;
 
-
     /* Public Interface */
-    self.newStringSearch = function(datasource) {
+    self.newStringSearch = newStringSearch;
+    self.newParticipantFilter = newParticipantFilter;
+
+
+    function newStringSearch(datasource) {
       var options = {
         threshold: 0.6,
         location: 0,
@@ -26,13 +29,12 @@
          ]
       };
       return new StringSearch(datasource, options);
-    };
+    }
 
-    self.newParticipantFilter = function(datasource) {
+    function newParticipantFilter(datasource) {
       var options = {
          shouldSort: true,
           tokenize: true,
-         //  matchAllTokens: true,
           threshold: 0.2,
           location: 0,
           distance: 100,
@@ -40,7 +42,7 @@
           minMatchCharLength: 1,
         keys: [
             "name",
-            "recruitmentNumber"
+            "stringfiedRN"
          ]
       };
       return new StringSearch(datasource, options);
