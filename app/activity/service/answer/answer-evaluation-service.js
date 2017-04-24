@@ -34,6 +34,7 @@
       _evaluators.TimeQuestion = TimeRuleTestService;
       _evaluators.CheckboxQuestion = CheckboxRuleTestService;
       _evaluators.AutocompleteQuestion = TextRuleTestService;
+      _evaluators.fileUploadQuestion = TextRuleTestService;
       _evaluators.CalendarQuestion = CalendarRuleTestService;
     }
   }

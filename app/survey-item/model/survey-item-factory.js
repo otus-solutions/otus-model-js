@@ -17,6 +17,7 @@
     'EmailQuestionFactory',
     'PhoneQuestionFactory',
     'AutocompleteQuestionFactory',
+    'FileUploadQuestionFactory',
     /* Miscelaneous items */
     'TextItemFactory',
     'ImageItemFactory'
@@ -33,6 +34,7 @@
     EmailQuestionFactory,
     PhoneQuestionFactory,
     AutocompleteQuestionFactory,
+    FileUploadQuestionFactory,
     TextItemFactory,
     ImageItemFactory) {
 
@@ -50,6 +52,7 @@
       'EmailQuestion': EmailQuestionFactory,
       'PhoneQuestion': PhoneQuestionFactory,
       'AutocompleteQuestion': AutocompleteQuestionFactory,
+      'FileUploadQuestion': FileUploadQuestionFactory,
       /* Miscelaneous items */
       'TextItem': TextItemFactory,
       'ImageItem': ImageItemFactory
