@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -75,7 +75,7 @@
       activity.isDiscarded = jsonObject.isDiscarded;
       activity.mode = jsonObject.mode;
       activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
-      activity.interviews = jsonObject.interviews.map(function(interview) {
+      activity.interviews = jsonObject.interviews.map(function (interview) {
         return InterviewFactory.fromJsonObject(interview);
       });
 
@@ -134,18 +134,18 @@
       return getTemplate().NavigationManager.getNavigationList();
     }
 
-    function getDatasources(){
+    function getDatasources() {
       return getTemplate().getAllDataSources();
-   }
+    }
 
     function getExportableList() {
       var fullList = getTemplate().NavigationManager.getNavigationList();
       return fullList.slice(2, fullList.length);
     }
 
-    function getDataSources(){
+    function getDataSources() {
       return getTemplate().getAllDataSources();
-   }
+    }
 
     function getTemplate() {
       if (_existStructuralFailure()) {
@@ -182,7 +182,7 @@
     }
 
     function clearSkippedAnswers() {
-      self.navigationTracker.getSkippedItems().forEach(function(itemTracking) {
+      self.navigationTracker.getSkippedItems().forEach(function (itemTracking) {
         self.fillContainer.clearFilling(itemTracking.getID());
       });
     }
@@ -196,18 +196,20 @@
 
       json.objectType = self.objectType;
       json._id = _id;
-      json.surveyForm = self.surveyForm.toJson();
+      json.surveyForm = JSON.parse(self.surveyForm.toJson());
       json.participantData = self.participantData;
       json.mode = self.mode;
-      json.interviews = self.interviews.map(function(interview) {
-        return interview.toJson();
+      json.interviews = self.interviews.map(function (interview) {
+        return JSON.parse(interview.toJson());
       });
-      json.fillContainer = self.fillContainer.toJson();
-      json.statusHistory = self.statusHistory.toJson();
+      json.fillContainer = self.fillContainer.buildJsonToFillContainer();
+      json.statusHistory = self.statusHistory.toJson().map(function (statusHistory) {
+        return JSON.parse(statusHistory);
+      });
       json.isDiscarded = self.isDiscarded;
       json.navigationTracker = self.navigationTracker.toJson();
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+      return JSON.stringify(json);
     }
 
     /**

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -29,7 +29,7 @@
       var answerFill = AnswerFillFactory.fromJsonObject(jsonObject.answer);
       var metadataFill = MetadataFillFactory.fromJsonObject(jsonObject.metadata);
 
-      var questionFill = new QuestionFill({templateID: jsonObject.questionID} , answerFill, metadataFill, jsonObject.comment);
+      var questionFill = new QuestionFill({ templateID: jsonObject.questionID }, answerFill, metadataFill, jsonObject.comment);
       questionFill.forceAnswer = jsonObject.forceAnswer;
 
       return questionFill;
@@ -74,12 +74,12 @@
       json.objectType = self.objectType;
       json.questionID = self.questionID;
       json.forceAnswer = self.forceAnswer;
-      json.answer = self.answer.toJson();
-      json.metadata = self.metadata.toJson();
+      json.answer = JSON.parse(self.answer.toJson());
+      json.metadata = JSON.parse(self.metadata.toJson());
       json.comment = self.comment;
       json.accept = self.accept;
-
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+      
+      return JSON.stringify(json);
     }
   }
 }());

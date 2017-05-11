@@ -70,7 +70,7 @@
       json.date = self.date.toISOString();
       json.user = self.user;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+      return JSON.stringify(json);
     }
   }
 

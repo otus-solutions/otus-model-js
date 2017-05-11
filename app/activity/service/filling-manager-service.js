@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -42,7 +42,7 @@
     self.searchFillingByID = searchFillingByID;
     self.updateFilling = updateFilling;
     self.clearFilling = clearFilling;
-    self.toJson = toJson;
+    self.buildJsonToFillContainer = buildJsonToFillContainer;
 
     function init(fillingList) {
       _fillingList = fillingList || [];
@@ -82,20 +82,20 @@
       _removeFilling(questionID);
     }
 
-    function toJson() {
+    function buildJsonToFillContainer() {
       var json = {};
 
-      json.fillingList = _fillingList.map(function(questionFill) {
-        return questionFill.toJson();
+      json.fillingList = _fillingList.map(function (questionFill) {
+        return JSON.parse(questionFill.toJson());
       });
 
-      return json;
+      return json; 
     }
 
     function _searchByID(questionID) {
       var result;
 
-      _fillingList.forEach(function(filling, index) {
+      _fillingList.forEach(function (filling, index) {
         if (filling.questionID === questionID) {
           result = {};
           result.filling = filling;
