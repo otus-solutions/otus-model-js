@@ -27,8 +27,6 @@
     }
 
     function fromJsonObject(jsonObject) {
-      console.log("jsonObject");
-      console.log(jsonObject);
       if (typeof jsonObject === 'string') {
         throw new Error("otusjs.model.misc.model.FileUploadQuestionFactory.fromJsonObject() method expects to receive a object instead a String");
       }

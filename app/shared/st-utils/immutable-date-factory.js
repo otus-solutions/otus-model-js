@@ -1,4 +1,4 @@
-(function() {
+var ImmutableDate = (function() {
   'use strict';
 
   angular
@@ -137,5 +137,5 @@
       return self;
     }
   }
-
+  return factory();
 }());

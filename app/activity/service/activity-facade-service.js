@@ -29,6 +29,7 @@
     self.createPaperActivity = createPaperActivity;
     self.createQuestionFill = createQuestionFill;
     self.fillQuestion = fillQuestion;
+    self.getInterviewer = getInterviewer;
     self.openActivitySurvey = openActivitySurvey;
     self.initializeActivitySurvey = initializeActivitySurvey;
     self.finalizeActivitySurvey = finalizeActivitySurvey;
@@ -44,6 +45,10 @@
       self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData);
       self.surveyActivity.interviews.push(InterviewFactory.create(paperActivityData));
     }
+
+    function getInterviewer(){
+      return _user;
+   }
 
     function openActivitySurvey(user) {
       _user = user;
