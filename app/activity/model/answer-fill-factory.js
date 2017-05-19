@@ -26,7 +26,9 @@
     function fromJsonObject(jsonObject) {
       //TODO montar serviço responsável por essa verificação
       if(jsonObject.type === "CalendarQuestion" || jsonObject.type === "TimeQuestion") {
-        return create(jsonObject.type, new ImmutableDate(jsonObject.value.value));
+        if(jsonObject.value !== null) {
+          return create(jsonObject.type, new ImmutableDate(jsonObject.value.value));
+        }
       }
       return create(jsonObject.type, jsonObject.value);
     }
