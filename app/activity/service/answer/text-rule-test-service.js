@@ -14,7 +14,7 @@
     self.run = run;
 
     function run(rule, answer) {
-      return _runner[rule.operator](rule.answer, answer.toString());
+      return _runner[rule.operator](rule.answer, answer ? answer.toString() : answer);
     }
 
     _runner.equal = function(reference, answer) {
