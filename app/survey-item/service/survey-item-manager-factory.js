@@ -78,10 +78,21 @@
     function getAllCustomOptionsID() {
       var customOptionsID = [];
       var checkboxQuestions = surveyItemContainer.getAllCheckboxQuestion();
+      var gridTextQuestions = surveyItemContainer.getAllGridTextQuestion();
       if (checkboxQuestions.length > 0) {
         checkboxQuestions.forEach(function(checkboxQuestion) {
           checkboxQuestion.getAllCustomOptionsID().forEach(function(customOptionID) {
             customOptionsID.push(customOptionID);
+          });
+        });
+      }
+
+      if (gridTextQuestions.length > 0) {
+        gridTextQuestions.forEach(function(gridTextQuestion) {
+          gridTextQuestion.getAllCustomOptionsID().forEach(function(arrayResult) {
+            arrayResult.forEach(function(customOptionID){
+              customOptionsID.push(customOptionID);
+            })
           });
         });
       }

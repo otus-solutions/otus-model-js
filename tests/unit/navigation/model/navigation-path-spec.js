@@ -1,4 +1,4 @@
-describe('NavigationStackFactory', function()  {
+xdescribe('NavigationStackFactory', function()  {
 
   var Mock = {};
   var stack = {};

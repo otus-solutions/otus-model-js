@@ -1,4 +1,4 @@
-describe('InitialNodesAddService', function() {
+xdescribe('InitialNodesAddService', function() {
 
   var Mock = {};
   var service = {};

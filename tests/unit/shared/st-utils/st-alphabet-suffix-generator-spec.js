@@ -1,4 +1,4 @@
-describe('CheckboxSuffixIDGenerator', function() {
+describe('otusjs.model.utils.AlphabetSuffixIDGenerator', function() {
 
     var service;
 
@@ -6,7 +6,7 @@ describe('CheckboxSuffixIDGenerator', function() {
         module('utils');
 
         inject(function(_$injector_) {
-            service = _$injector_.get('CheckboxSuffixIDGenerator');
+            service = _$injector_.get('otusjs.model.utils.AlphabetSuffixIDGenerator');
         });
     });
 

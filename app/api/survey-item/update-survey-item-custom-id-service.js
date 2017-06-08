@@ -12,7 +12,6 @@
 
     function execute(item, id, survey) {
       // it needs a service to validate if is a valid or available id
-      console.dir(survey);
       item.customID = id;
     }
   }

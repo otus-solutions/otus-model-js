@@ -1,4 +1,4 @@
-describe("DataSourceDefinitionManager", function() {
+xdescribe("DataSourceDefinitionManager", function() {
 
   var DATA_SOURCE_1 = "Lista de Medicamentos";
   var DATA_SOURCE_2 = "Lista de Tubos";

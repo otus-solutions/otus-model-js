@@ -1,4 +1,4 @@
-describe('MinTimeValidatorFactory validator suite:', function() {
+xdescribe('MinTimeValidatorFactory validator suite:', function() {
 
   var factory;
   var Mock = {};

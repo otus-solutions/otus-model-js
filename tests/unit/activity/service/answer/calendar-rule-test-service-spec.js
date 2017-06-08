@@ -1,4 +1,4 @@
-fdescribe('DateTimeRuleTestService:', function() {
+xdescribe('DateTimeRuleTestService:', function() {
 
   var Mock = {};
   var Injections = {};

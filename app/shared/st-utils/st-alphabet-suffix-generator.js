@@ -3,9 +3,9 @@
 
     angular
         .module('utils')
-        .service('CheckboxSuffixIDGenerator', CheckboxSuffixIDGenerator);
+        .service('otusjs.model.utils.AlphabetSuffixIDGenerator', Service);
 
-    function CheckboxSuffixIDGenerator() {
+    function Service() {
 
         var _alphabet = 'abcdefghijklmnopqrstuvwxyz';
         var self = this;

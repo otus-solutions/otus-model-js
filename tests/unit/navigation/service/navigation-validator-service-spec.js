@@ -1,4 +1,4 @@
-describe('NavigationValidatorService', function() {
+xdescribe('NavigationValidatorService', function() {
   var Mock = {};
 
   beforeEach(function() {

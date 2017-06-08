@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -10,10 +10,11 @@
     'otusjs.model.activity.TextRuleTestService',
     'otusjs.model.activity.CalendarRuleTestService',
     'otusjs.model.activity.TimeRuleTestService',
-    'otusjs.model.activity.CheckboxRuleTestService'
+    'otusjs.model.activity.CheckboxRuleTestService',
+    'otusjs.model.activity.AutocompleteRuleTestService'
   ];
 
-  function Service(NumericRuleTestService, TextRuleTestService, CalendarRuleTestService, TimeRuleTestService, CheckboxRuleTestService) {
+  function Service(NumericRuleTestService, TextRuleTestService, CalendarRuleTestService, TimeRuleTestService, CheckboxRuleTestService, AutocompleteRuleTestService) {
     var self = this;
     var _evaluators = {};
 
@@ -33,8 +34,9 @@
       _evaluators.TextQuestion = TextRuleTestService;
       _evaluators.TimeQuestion = TimeRuleTestService;
       _evaluators.CheckboxQuestion = CheckboxRuleTestService;
-      _evaluators.AutocompleteQuestion = TextRuleTestService;
-      _evaluators.fileUploadQuestion = TextRuleTestService;
+      _evaluators.AutocompleteQuestion = AutocompleteRuleTestService;
+      _evaluators.FileUploadQuestion = NumericRuleTestService;
+      _evaluators.GridTextQuestion = NumericRuleTestService;
       _evaluators.CalendarQuestion = CalendarRuleTestService;
     }
   }

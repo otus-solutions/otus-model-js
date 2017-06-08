@@ -1,4 +1,4 @@
-describe('QuestionFillFactory', function() {
+xdescribe('QuestionFillFactory', function() {
 
   var Mock = {};
   var QUESTION_FILL_TYPE = 'QuestionFill';

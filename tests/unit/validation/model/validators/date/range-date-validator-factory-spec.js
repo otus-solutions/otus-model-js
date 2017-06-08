@@ -1,4 +1,4 @@
-describe('RangeDateValidatorFactory validator suite:', function() {
+xdescribe('RangeDateValidatorFactory validator suite:', function() {
 
   var factory;
   var Mock = {};

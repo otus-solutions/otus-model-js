@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -18,6 +18,7 @@
     'PhoneQuestionFactory',
     'AutocompleteQuestionFactory',
     'FileUploadQuestionFactory',
+    'otusjs.model.question.GridTextQuestionFactory',
     /* Miscelaneous items */
     'TextItemFactory',
     'ImageItemFactory'
@@ -35,6 +36,7 @@
     PhoneQuestionFactory,
     AutocompleteQuestionFactory,
     FileUploadQuestionFactory,
+    GridTextQuestionFactory,
     TextItemFactory,
     ImageItemFactory) {
 
@@ -53,6 +55,7 @@
       'PhoneQuestion': PhoneQuestionFactory,
       'AutocompleteQuestion': AutocompleteQuestionFactory,
       'FileUploadQuestion': FileUploadQuestionFactory,
+      'GridTextQuestion': GridTextQuestionFactory,
       /* Miscelaneous items */
       'TextItem': TextItemFactory,
       'ImageItem': ImageItemFactory

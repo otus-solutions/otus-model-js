@@ -1,4 +1,4 @@
-describe('otusjs.model.navigation.NavigationTrackerFactory', function() {
+xdescribe('otusjs.model.navigation.NavigationTrackerFactory', function() {
 
   var UNIT_NAME = 'otusjs.model.navigation.NavigationTrackerFactory';
   var Mock = {};
