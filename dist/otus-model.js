@@ -799,6 +799,40 @@
 'use strict';
 
 (function () {
+    'use strict';
+
+    angular.module('otusjs.metadata').service('AddMetadataAnswerService', AddMetadataAnswerService);
+
+    function AddMetadataAnswerService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            return item.metadata.createOption();
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.metadata').service('RemoveMetadataOptionService', RemoveMetadataOptionService);
+
+    function RemoveMetadataOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            item.metadata.removeLastOption();
+        }
+    }
+})();
+'use strict';
+
+(function () {
   'use strict';
 
   angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityFacadeService', ActivityFacadeService);
@@ -1117,40 +1151,6 @@
       });
     }
   }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.metadata').service('AddMetadataAnswerService', AddMetadataAnswerService);
-
-    function AddMetadataAnswerService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            return item.metadata.createOption();
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.metadata').service('RemoveMetadataOptionService', RemoveMetadataOptionService);
-
-    function RemoveMetadataOptionService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            item.metadata.removeLastOption();
-        }
-    }
 })();
 'use strict';
 
@@ -4352,9 +4352,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.model.activity').service('otusjs.model.activity.AnswerEvaluationService', Service);
 
-  Service.$inject = ['otusjs.model.activity.NumericRuleTestService', 'otusjs.model.activity.TextRuleTestService', 'otusjs.model.activity.CalendarRuleTestService', 'otusjs.model.activity.TimeRuleTestService', 'otusjs.model.activity.CheckboxRuleTestService', 'otusjs.model.activity.AutocompleteRuleTestService'];
+  Service.$inject = ['otusjs.model.activity.NumericRuleTestService', 'otusjs.model.activity.TextRuleTestService', 'otusjs.model.activity.CalendarRuleTestService', 'otusjs.model.activity.TimeRuleTestService', 'otusjs.model.activity.CheckboxRuleTestService'];
 
-  function Service(NumericRuleTestService, TextRuleTestService, CalendarRuleTestService, TimeRuleTestService, CheckboxRuleTestService, AutocompleteRuleTestService) {
+  function Service(NumericRuleTestService, TextRuleTestService, CalendarRuleTestService, TimeRuleTestService, CheckboxRuleTestService) {
     var self = this;
     var _evaluators = {};
 
@@ -4372,40 +4372,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       _evaluators.DecimalQuestion = NumericRuleTestService;
       _evaluators.SingleSelectionQuestion = NumericRuleTestService;
       _evaluators.TextQuestion = TextRuleTestService;
+      _evaluators.EmailQuestion = TextRuleTestService;
       _evaluators.TimeQuestion = TimeRuleTestService;
       _evaluators.CheckboxQuestion = CheckboxRuleTestService;
-      _evaluators.AutocompleteQuestion = AutocompleteRuleTestService;
+      _evaluators.AutocompleteQuestion = TextRuleTestService;
       _evaluators.FileUploadQuestion = NumericRuleTestService;
       _evaluators.GridTextQuestion = NumericRuleTestService;
       _evaluators.CalendarQuestion = CalendarRuleTestService;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.activity').service('otusjs.model.activity.AutocompleteRuleTestService', Service);
-
-  Service.$inject = ['otusjs.model.activity.NumericRuleTestService', 'otusjs.model.activity.TextRuleTestService'];
-
-  function Service(NumericRuleTestService, TextRuleTestService) {
-    var self = this;
-    var _runner = {};
-    self.name = 'AutocompleteRuleTestService';
-
-    /* Public Methods */
-    self.run = run;
-
-    function run(rule, answer) {
-      if (!rule.isMetadata && !answer) {
-        return false;
-      } else if (rule.isMetadata) {
-        return NumericRuleTestService.run(rule, answer);
-      } else {
-        return TextRuleTestService.run(rule, answer);
-      }
     }
   }
 })();
@@ -4658,7 +4631,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.model.activity').service('otusjs.model.activity.TextRuleTestService', Service);
 
-  function Service() {
+  Service.$inject = ['otusjs.model.activity.NumericRuleTestService'];
+
+  function Service(NumericRuleTestService) {
     var self = this;
     var _runner = {};
     self.name = 'TextRuleTestService';
@@ -4667,7 +4642,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.run = run;
 
     function run(rule, answer) {
-      return _runner[rule.operator](rule.answer, answer.toString());
+      if (!rule.isMetadata && !answer) {
+        return false;
+      } else if (rule.isMetadata) {
+        return NumericRuleTestService.run(rule, answer);
+      } else {
+        return _runner[rule.operator](rule.answer, answer.toString());
+      }
     }
 
     _runner.equal = function (reference, answer) {

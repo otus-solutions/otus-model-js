@@ -10,11 +10,10 @@
     'otusjs.model.activity.TextRuleTestService',
     'otusjs.model.activity.CalendarRuleTestService',
     'otusjs.model.activity.TimeRuleTestService',
-    'otusjs.model.activity.CheckboxRuleTestService',
-    'otusjs.model.activity.AutocompleteRuleTestService'
+    'otusjs.model.activity.CheckboxRuleTestService'
   ];
 
-  function Service(NumericRuleTestService, TextRuleTestService, CalendarRuleTestService, TimeRuleTestService, CheckboxRuleTestService, AutocompleteRuleTestService) {
+  function Service(NumericRuleTestService, TextRuleTestService, CalendarRuleTestService, TimeRuleTestService, CheckboxRuleTestService) {
     var self = this;
     var _evaluators = {};
 
@@ -32,9 +31,10 @@
       _evaluators.DecimalQuestion = NumericRuleTestService;
       _evaluators.SingleSelectionQuestion = NumericRuleTestService;
       _evaluators.TextQuestion = TextRuleTestService;
+      _evaluators.EmailQuestion = TextRuleTestService;
       _evaluators.TimeQuestion = TimeRuleTestService;
       _evaluators.CheckboxQuestion = CheckboxRuleTestService;
-      _evaluators.AutocompleteQuestion = AutocompleteRuleTestService;
+      _evaluators.AutocompleteQuestion = TextRuleTestService;
       _evaluators.FileUploadQuestion = NumericRuleTestService;
       _evaluators.GridTextQuestion = NumericRuleTestService;
       _evaluators.CalendarQuestion = CalendarRuleTestService;
