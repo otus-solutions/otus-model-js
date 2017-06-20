@@ -10,6 +10,7 @@
       'otusjs.misc',
       'otusjs.model.navigation',
       'otusjs.validation',
+      'otusjs.laboratory',
       'utils'
     ]);
 
