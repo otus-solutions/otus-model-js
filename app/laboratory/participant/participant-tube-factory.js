@@ -5,11 +5,12 @@
     .module('otusjs.laboratory')
     .factory('otusjs.laboratory.ParticipanTubeFactory', factory);
 
-    factory.$inject = [
-      'otusjs.laboratory.TubeCollectionDataFactory'
+  factory.$inject = [
+      'otusjs.laboratory.TubeCollectionDataFactory',
+      'otusjs.laboratory.ParticipantAliquoteFactory'
    ];
 
-  function factory(TubeCollectionDataFactory) {
+  function factory(TubeCollectionDataFactory, ParticipantAliquoteFactory) {
     var self = this;
 
     _onInit();
@@ -22,13 +23,13 @@
 
 
     function create(tubeInfo, laboratoryConfiguration, operator) {
-      var tube = new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator);
+      var tube = new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquoteFactory);
       return tube;
     }
 
     function buildFromArray(tubeArray, laboratoryConfiguration, operator) {
       return tubeArray.map(function(tubeInfo) {
-        return new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator);
+        return new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquoteFactory);
       });
     }
 
@@ -36,7 +37,7 @@
     return self;
   }
 
-  function Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator) {
+  function Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquoteFactory) {
     var self = this;
     var _labConfig;
     var _operator;
@@ -49,11 +50,13 @@
     self.code = tubeInfo.code;
     self.moment = tubeInfo.moment;
     self.groupName = tubeInfo.groupName;
-    self.aliquotes = tubeInfo.aliquotes;
+    self.aliquotes = tubeInfo.aliquotes.length ? ParticipantAliquoteFactory.fromJSON(tubeInfo.aliquotes) : [];
     self.order = tubeInfo.order;
     self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);
 
+    /* Custom Methods */
     self.collect = collect;
+    self.toAliquot = toAliquot;
     self.toJSON = toJSON;
 
     _onInit();
@@ -70,16 +73,22 @@
       });
 
       var momentDescriptor = _labConfig.collectMomentConfiguration.collectMomentDescriptors.find(function(descriptor) {
-         return descriptor.name == self.moment;
+        return descriptor.name == self.moment;
       });
 
       self.label = tubeDescriptor ? tubeDescriptor.label : '';
       self.boxColor = tubeDescriptor ? tubeDescriptor.color : '';
       self.momentLabel = momentDescriptor.label !== '' ? momentDescriptor.label : 'Nenhum';
+      self.avaiableAliquotes = ''; //TODO ler arquivo de configuração e retornar aliquotas disponíveis
     }
 
     function collect() {
       self.tubeCollectionData.fill(_operator);
+    }
+
+    function toAliquot(type, code) {
+      //TODO check if code fits
+      self.aliquotes.push(ParticipantAliquoteFactory.create(type, code));
     }
 
     function toJSON() {
