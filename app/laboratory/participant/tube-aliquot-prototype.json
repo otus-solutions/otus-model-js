@@ -1,0 +1,27 @@
+{
+  "objectType": "Tube",
+  "type": "GEL",
+  "moment": "FASTING",
+  "code": "341002263",
+  "groupName": "DEFAULT",
+  "aliquotes": [
+     {
+    "objectType": "Aliquote",
+    "CODE": 34200252,
+    "NAME": "STORAGE",
+    "CONTAINER": "CRIOTUBE",
+    "ROLE": "STORAGE",
+    "COLLECTIONDATA": {
+      "OPERATOR": "LALA@GMAIL.COM",
+      "TIME": "today"      
+    }    
+  }],
+  "order": 1,
+  "tubeCollectionData": {
+    "objectType": "TubeCollectionData",
+    "isCollected": true,
+    "metadata": "",
+    "operator": "lalala@gmail.com",
+    "time": "2017-06-06T15:15:28.958Z"
+  }
+}
