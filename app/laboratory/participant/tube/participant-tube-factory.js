@@ -75,7 +75,7 @@
         return descriptor.name == self.type;
       });
 
-      var momentDescriptor = _labConfig.collectMomentConfiguration.collectMomentDescriptors.find(function(descriptor) {
+      var momentDescriptor = _labConfig.collectMomentConfiguration.momentDescriptors.find(function(descriptor) {
         return descriptor.name == self.moment;
       });
 
