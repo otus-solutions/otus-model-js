@@ -7,13 +7,14 @@
   "aliquotes": [
      {
     "objectType": "Aliquote",
-    "CODE": 34200252,
-    "NAME": "STORAGE",
-    "CONTAINER": "CRIOTUBE",
-    "ROLE": "STORAGE",
-    "COLLECTIONDATA": {
-      "OPERATOR": "LALA@GMAIL.COM",
-      "TIME": "today"      
+    "code": 34200252,
+    "name": "storage",
+    "container": "criotube",
+    "role": "storage",
+    "collectionData": {
+      "metadata": "",
+      "operator": "LALA@GMAIL.COM",
+      "time": "2017-06-22T21:43:06.086Z"    
     }    
   }],
   "order": 1,

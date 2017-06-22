@@ -7,10 +7,10 @@
 
   factory.$inject = [
       'otusjs.laboratory.TubeCollectionDataFactory',
-      'otusjs.laboratory.ParticipantAliquoteFactory'
+      'otusjs.laboratory.ParticipantAliquotFactory'
    ];
 
-  function factory(TubeCollectionDataFactory, ParticipantAliquoteFactory) {
+  function factory(TubeCollectionDataFactory, ParticipantAliquotFactory) {
     var self = this;
 
     _onInit();
@@ -23,13 +23,13 @@
 
 
     function create(tubeInfo, laboratoryConfiguration, operator) {
-      var tube = new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquoteFactory);
+      var tube = new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquotFactory);
       return tube;
     }
 
     function buildFromArray(tubeArray, laboratoryConfiguration, operator) {
       return tubeArray.map(function(tubeInfo) {
-        return new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquoteFactory);
+        return new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquotFactory);
       });
     }
 
@@ -37,7 +37,7 @@
     return self;
   }
 
-  function Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquoteFactory) {
+  function Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquotFactory) {
     var self = this;
     var _labConfig;
     var _operator;
@@ -50,7 +50,10 @@
     self.code = tubeInfo.code;
     self.moment = tubeInfo.moment;
     self.groupName = tubeInfo.groupName;
-    self.aliquotes = tubeInfo.aliquotes.length ? ParticipantAliquoteFactory.fromJSON(tubeInfo.aliquotes) : [];
+    self.aliquotes = tubeInfo.aliquotes.length ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquotes) : [];
+    if (self.aliquotes.length) {
+       console.log(self.aliquotes);
+    }
     self.order = tubeInfo.order;
     self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);
 
@@ -88,7 +91,7 @@
 
     function toAliquot(type, code) {
       //TODO check if code fits
-      self.aliquotes.push(ParticipantAliquoteFactory.create(type, code));
+      self.aliquotes.push(ParticipantAliquotFactory.create(type, code));
     }
 
     function toJSON() {
