@@ -32,10 +32,10 @@
     var self = this;
 
     /* Public Interface*/
-    self.objectType = "Aliquote";
+    self.objectType = aliquoteInfo.objectType || "Aliquot";
     self.code = aliquoteInfo.code;
     self.name = aliquoteInfo.name;
-    self.collectionData = AliquotCollectionDataFactory.create(aliquoteInfo.collectionData);
+    self.collectionData = aliquoteInfo.collectionData ? AliquotCollectionDataFactory.create(aliquoteInfo.collectionData) : {};
     self.container = aliquoteInfo.container;
     self.role = aliquoteInfo.role;
 

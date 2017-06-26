@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory')
-    .factory('otusjs.laboratory.AliquotCollectionDataFactory', factory); 
+    .factory('otusjs.laboratory.AliquotCollectionDataFactory', factory);
 
   function factory() {
     var self = this;
@@ -21,9 +21,9 @@
     var self = this;
 
     self.objectType = 'AliquotCollectionData';
-    self.metadata = collectionInfo.metadata;
-    self.operator = collectionInfo.operator;
-    self.time = collectionInfo.time;
+    self.metadata = collectionInfo.metadata || '';
+    self.operator = collectionInfo.operator || '';
+    self.time = collectionInfo.time || '';
 
 
     self.fill = fill;
