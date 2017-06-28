@@ -1850,3 +1850,890 @@ Test.utils.data.latestSurveyTemplate = {
         }]
     }]
 };
+Test.utils.data.participantLaboratory = {
+
+  "objectType": null,
+  "recruitmentNumber": 5003304,
+  "collectGroupName": "DEFAULT",
+  "tubes": [{
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "FASTING",
+      "code": "341002263",
+      "groupName": "DEFAULT",
+      "aliquotes": [{
+        "objectType": "Aliquot",
+        "code": 34200252,
+        "name": "BIOSORO",
+        "container": "CRIOTUBE",
+        "role": "exam",
+        "collectionData": {
+          "metadata": "",
+          "operator": "LALA@GMAIL.COM",
+          "time": "2017-06-22T21:43:06.086Z"
+        }
+        }],
+      "order": 1,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": true,
+        "metadata": "",
+        "operator": "lalala@gmail.com",
+        "time": "2017-06-06T15:15:28.958Z"
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "EDTA",
+      "moment": "FASTING",
+      "code": "361009386",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 2,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "FLUORIDE",
+      "moment": "FASTING",
+      "code": "361009389",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 3,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "FASTING",
+      "code": "361009381",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 4,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "FASTING",
+      "code": "361009382",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 5,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "FASTING",
+      "code": "361009383",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 6,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "EDTA",
+      "moment": "FASTING",
+      "code": "361009387",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 7,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "EDTA",
+      "moment": "FASTING",
+      "code": "361009388",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 8,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD",
+      "code": "361009390",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 9,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD",
+      "code": "361009391",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 10,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "FLUORIDE",
+      "moment": "POST_OVERLOAD",
+      "code": "361009385",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 11,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      },
+    {
+      "objectType": "Tube",
+      "type": "URINE",
+      "moment": "NONE",
+      "code": "361009384",
+      "groupName": "DEFAULT",
+      "aliquotes": [],
+      "order": 12,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+      }
+    ],
+  "exams": []
+};
+Test.utils.data.laboratoryConfiguration = {
+  "codeConfiguration": {
+    "waveNumberToken": 3,
+    "tubeToken": 1,
+    "palletToken": 2,
+    "cryotubeToken": 3,
+    "lastInsertion": 738
+  },
+  "aliquotConfiguration": {
+    "objectType": "AliquotConfiguration",
+
+
+    "aliquotMomentDescriptors2": {
+      "FASTING": {
+         "objectType": "FASTING",
+         "aliquotTypesDescriptors": {
+            "GEL": {
+               "objectType": "GEL",
+               "aliquoteGroupDescriptors": {
+                  "DEFAULT": {},
+                  "CQ1": {},
+                  "CQ2": {},
+                  "CQ3": {}
+               }
+            },
+            "EDTA": {},
+            "FLUORETO": {}
+         }
+      },
+      "MIDDLE": {},
+      "POST_OVERLOAD": {}
+   },
+
+
+    "aliquotMomentDescriptors": [{
+      "objectType": "AliquotMomentDescriptor",
+      "name": "FASTING",
+      "aliquotTypesDescriptors": [
+        {
+          "objectType": "AliquotTypesDescriptor",
+          "name": "GEL",
+          "aliquoteGroupDescriptors": [
+            {
+              "objectType": "AliquoteGroupDescriptor",
+              "name": "DEFAULT",
+              "aliquots": [
+                {
+                  "objectType": "AliquoteDescriptor",
+                  "name": "BIOSORO",
+                  "label": "Bioquímica Soro",
+                  "quantity": 1
+                        },
+                {
+                  "objectType": "AliquoteDescriptor",
+                  "name": "PCR",
+                  "label": "PCR",
+                  "quantity": 1
+                        },
+                {
+                  "objectType": "AliquoteDescriptor",
+                  "name": "FASTING_INSULINE",
+                  "label": "Insulina Jejum",
+                  "quantity": 1
+                        },
+                {
+                  "objectType": "AliquoteDescriptor",
+                  "name": "STORAGE",
+                  "label": "Armazenamento",
+                  "quantity": 8
+                        }
+                     ]
+                  },
+            {
+              "objectType": "AliquoteGroupDescriptor",
+              "name": "CQ1",
+              "aliquots": [
+                {
+                  "objectType": "AliquoteDescriptor",
+                  "name": "BIOSORO",
+                  "label": "Bioquímica Soro",
+                  "quantity": 2
+                        },
+                {
+                  "objectType": "AliquoteDescriptor",
+                  "name": "FASTING_INSULINE",
+                  "label": "Insulina Jejum",
+                  "quantity": 2
+                        }
+                     ]
+                  }
+            ]
+         }]
+      }, {
+      "objectType": "AliquotMoment",
+      "name": "POST_OVERLOAD",
+      "aliquotTypesDescriptors": []
+      }],
+    "containerDescriptor": [{
+      "objectType": "ContainerDescriptor",
+      "name": "PALLET",
+      "label": "Palheta"
+      }, {
+      "objectType": "ContainerDescriptor",
+      "name": "CRIOTUBE",
+      "label": "Criotubo"
+      }]
+  },
+
+
+
+  "tubeConfiguration": {
+    "tubeDescriptors": [{
+      "name": "FLUORIDE",
+      "label": "Fluoreto",
+      "color": "#666666"
+      }, {
+      "name": "EDTA",
+      "label": "EDTA",
+      "color": "#660066"
+      }, {
+      "name": "EDTA_DNA",
+      "label": "EDTA DNA",
+      "color": "#ffcc00"
+      }, {
+      "name": "URINE",
+      "label": "Urina",
+      "color": "#ffffff"
+      }, {
+      "name": "CITRATE",
+      "label": "Citrato",
+      "color": "#66ccff"
+      }, {
+      "name": "GEL",
+      "label": "Gel",
+      "color": "#ffcc00"
+      }]
+  },
+  "collectMomentConfiguration": {
+    "momentDescriptors": [{
+      "name": "POST_OVERLOAD",
+      "label": "Pós"
+      }, {
+      "name": "FASTING",
+      "label": "Jejum"
+      }, {
+      "name": "MIDDLE",
+      "label": "Meio"
+      }, {
+      "name": "NONE",
+      "label": ""
+      }]
+  },
+  "collectGroupConfiguration": {
+    "groupDescriptors": [{
+      "name": "QC_1",
+      "type": "QUALITY_CONTROL",
+      "tubeSet": [{
+        "count": 1,
+        "type": "FLUORIDE",
+        "moment": "FASTING"
+         }, {
+        "count": 2,
+        "type": "EDTA",
+        "moment": "FASTING"
+         }, {
+        "count": 3,
+        "type": "GEL",
+        "moment": "FASTING"
+         }]
+      }, {
+      "name": "RS",
+      "type": "CENTER",
+      "tubeSet": [{
+        "count": 1,
+        "type": "GEL",
+        "moment": "MIDDLE"
+         }, {
+        "count": 2,
+        "type": "EDTA_DNA",
+        "moment": "NONE"
+         }, {
+        "count": 1,
+        "type": "FLUORIDE",
+        "moment": "MIDDLE"
+         }]
+      }, {
+      "name": "BA",
+      "type": "CENTER",
+      "tubeSet": [{
+        "count": 3,
+        "type": "EDTA_DNA",
+        "moment": "NONE"
+         }]
+      }, {
+      "name": "QC_4",
+      "type": "QUALITY_CONTROL",
+      "tubeSet": [{
+        "count": 2,
+        "type": "EDTA",
+        "moment": "FASTING"
+         }, {
+        "count": 3,
+        "type": "GEL",
+        "moment": "FASTING"
+         }]
+      }, {
+      "name": "QC_3",
+      "type": "QUALITY_CONTROL",
+      "tubeSet": [{
+        "count": 3,
+        "type": "GEL",
+        "moment": "FASTING"
+         }, {
+        "count": 1,
+        "type": "FLUORIDE",
+        "moment": "POST_OVERLOAD"
+         }, {
+        "count": 2,
+        "type": "EDTA",
+        "moment": "FASTING"
+         }]
+      }, {
+      "name": "MG",
+      "type": "CENTER",
+      "tubeSet": [{
+        "count": 1,
+        "type": "CITRATE",
+        "moment": "NONE"
+         }, {
+        "count": 2,
+        "type": "EDTA_DNA",
+        "moment": "NONE"
+         }]
+      }, {
+      "name": "QC_2",
+      "type": "QUALITY_CONTROL",
+      "tubeSet": [{
+        "count": 3,
+        "type": "EDTA",
+        "moment": "FASTING"
+         }, {
+        "count": 3,
+        "type": "GEL",
+        "moment": "FASTING"
+         }, {
+        "count": 1,
+        "type": "FLUORIDE",
+        "moment": "FASTING"
+         }]
+      }, {
+      "name": "DEFAULT",
+      "type": "DEFAULT",
+      "tubeSet": [{
+        "count": 1,
+        "type": "FLUORIDE",
+        "moment": "FASTING"
+         }, {
+        "count": 2,
+        "type": "GEL",
+        "moment": "POST_OVERLOAD"
+         }, {
+        "count": 1,
+        "type": "FLUORIDE",
+        "moment": "POST_OVERLOAD"
+         }, {
+        "count": 4,
+        "type": "GEL",
+        "moment": "FASTING"
+         }, {
+        "count": 3,
+        "type": "EDTA",
+        "moment": "FASTING"
+         }, {
+        "count": 1,
+        "type": "URINE",
+        "moment": "NONE"
+         }]
+      }, {
+      "name": "ES",
+      "type": "CENTER",
+      "tubeSet": [{
+        "count": 1,
+        "type": "GEL",
+        "moment": "POST_OVERLOAD"
+         }, {
+        "count": 1,
+        "type": "EDTA",
+        "moment": "FASTING"
+         }, {
+        "count": 2,
+        "type": "EDTA_DNA",
+        "moment": "NONE"
+         }, {
+        "count": 2,
+        "type": "GEL",
+        "moment": "FASTING"
+         }]
+      }, {
+      "name": "RJ",
+      "type": "CENTER",
+      "tubeSet": [{
+        "count": 2,
+        "type": "EDTA_DNA",
+        "moment": "NONE"
+         }, {
+        "count": 1,
+        "type": "GEL",
+        "moment": "FASTING"
+         }, {
+        "count": 1,
+        "type": "FLUORIDE",
+        "moment": "FASTING"
+         }, {
+        "count": 1,
+        "type": "EDTA",
+        "moment": "FASTING"
+         }, {
+        "count": 1,
+        "type": "FLUORIDE",
+        "moment": "POST_OVERLOAD"
+         }]
+      }]
+  },
+  "labelPrintConfiguration": {
+    "QC_2": [{
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_2",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "FLUORIDE",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_2",
+      "type": "FLUORIDE",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_2",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_2",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_2",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_2",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_2",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "FLUORIDE",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "URINE",
+      "moment": "NONE"
+      }],
+    "QC_1": [{
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "FLUORIDE",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_1",
+      "type": "FLUORIDE",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_1",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_1",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_1",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_1",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_1",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "FLUORIDE",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "URINE",
+      "moment": "NONE"
+      }],
+    "QC_4": [{
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "FLUORIDE",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_4",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_4",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_4",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_4",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_4",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "FLUORIDE",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "URINE",
+      "moment": "NONE"
+      }],
+    "QC_3": [{
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "FLUORIDE",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_3",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_3",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_3",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_3",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "QC_3",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "FLUORIDE",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "QC_3",
+      "type": "FLUORIDE",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "URINE",
+      "moment": "NONE"
+      }],
+    "DEFAULT": [{
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "FLUORIDE",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "EDTA",
+      "moment": "FASTING"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "FLUORIDE",
+      "moment": "POST_OVERLOAD"
+      }, {
+      "groupName": "DEFAULT",
+      "type": "URINE",
+      "moment": "NONE"
+      }]
+  },
+  "metadataConfiguration": [{
+    "objectType": "MetadataConfiguration",
+    "extractionValue": ".vp",
+    "label": "Volume Parcial"
+   }, {
+    "objectType": "MetadataConfiguration",
+    "extractionValue": ".nc",
+    "label": "Não coletado"
+   }]
+};
