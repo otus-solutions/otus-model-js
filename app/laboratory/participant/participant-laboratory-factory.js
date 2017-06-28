@@ -6,26 +6,27 @@
     .factory('otusjs.laboratory.ParticipantLaboratoryFactory', factory);
 
   factory.$inject = [
-    'otusjs.laboratory.ParticipanTubeFactory'
+    'otusjs.laboratory.ParticipanTubeFactory',
+    'otusjs.laboratory.LaboratoryConfigurationService'
    ];
 
-  function factory(ParticipanTubeFactory) {
+  function factory(ParticipanTubeFactory, LaboratoryConfigurationService) {
     var self = this;
 
     self.create = create;
     self.fromJson = fromJson;
 
     function create(labParticipant, labConfig, loggedUser) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, labParticipant, labConfig, loggedUser);
+      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser);
     }
     function fromJson(labParticipant, labConfig, loggedUser) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, JSON.parse(labParticipant), labConfig, loggedUser);
+      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser);
     }
     return self;
 
   }
 
-  function ParticipantLaboratory(ParticipanTubeFactory, labParticipant, labConfig, loggedUser) {
+  function ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser) {
     var self = this;
     var _backupJSON;
 
@@ -43,6 +44,7 @@
 
 
     function onInit() {
+      LaboratoryConfigurationService.initialize(labConfig);
       _backupJSON = angular.copy(labParticipant);
     }
 

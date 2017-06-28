@@ -7,10 +7,11 @@
 
   factory.$inject = [
       'otusjs.laboratory.TubeCollectionDataFactory',
-      'otusjs.laboratory.ParticipantAliquotFactory'
+      'otusjs.laboratory.ParticipantAliquotFactory',
+      'otusjs.laboratory.LaboratoryConfigurationService'
    ];
 
-  function factory(TubeCollectionDataFactory, ParticipantAliquotFactory) {
+  function factory(TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService) {
     var self = this;
 
     _onInit();
@@ -22,14 +23,14 @@
     self.buildFromArray = buildFromArray;
 
 
-    function create(tubeInfo, laboratoryConfiguration, operator) {
-      var tube = new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquotFactory);
+    function create(tubeInfo, operator) {
+      var tube = new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService);
       return tube;
     }
 
-    function buildFromArray(tubeArray, laboratoryConfiguration, operator) {
+    function buildFromArray(tubeArray, operator) {
       return tubeArray.map(function(tubeInfo) {
-        return new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquotFactory);
+        return new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService);
       });
     }
 
@@ -37,7 +38,7 @@
     return self;
   }
 
-  function Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator, ParticipantAliquotFactory) {
+  function Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService) {
     var self = this;
     var _labConfig;
     var _operator;
@@ -50,7 +51,7 @@
     self.code = tubeInfo.code;
     self.moment = tubeInfo.moment;
     self.groupName = tubeInfo.groupName;
-    self.aliquotes = tubeInfo.aliquotes.length ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquotes) : [];
+    self.aliquotes = tubeInfo.aliquotes.length ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquotes, self) : [];
     if (self.aliquotes.length) {
        console.log(self.aliquotes);
     }
@@ -66,7 +67,7 @@
 
     function _onInit() {
       _operator = operator;
-      _labConfig = laboratoryConfiguration;
+      _labConfig = LaboratoryConfigurationService.getLaboratoryConfiguration();
       _fillDescriptors();
     }
 

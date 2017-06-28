@@ -1,44 +1,44 @@
 fdescribe('ParticipantAliquotFactory', function() {
   var Mock = {};
-  var aliquoteInfo;
 
   beforeEach(function() {
     module('otusjs.laboratory');
 
-    mockLabParticipant();
     inject(function(_$injector_) {
       var injections = {
-        'AliquotCollectionDataFactory': mockAliquoteCollectionDataFactory(_$injector_)
+        'AliquotCollectionDataFactory': mockAliquoteCollectionDataFactory(_$injector_),
+        'LaboratoryConfigurationService': mockLaboratoryConfigurationService(_$injector_)
       };
       factory = _$injector_.get('otusjs.laboratory.ParticipantAliquotFactory', injections);
     });
+
+    mockLabDescriptors();
+    mockLabParticipant();
+    mockSingleTube();
+    mockAliquotInfo();
+    Mock.LaboratoryConfigurationService.initialize(Mock.LabDescriptors);
   });
-  aliquoteInfo = {
-    "objectType": "Aliquot",
-    "code": 34200252,
-    "name": "storage",
-    "container": "criotube",
-    "role": "storage",
-  };
   describe('the creation method', function() {
     it('should create an aliquote typed object', function() {
-      var aliquote = factory.create(aliquoteInfo);
+      var aliquote = factory.create(Mock.aliquotInfo, Mock.singleTube);
 
       expect(aliquote.objectType).toEqual('Aliquot');
     });
 
     it('should generate the same values for this fields', function() {
-      var aliquote = factory.create(aliquoteInfo);
+      var aliquote = factory.create(Mock.aliquotInfo, Mock.singleTube);
 
-      expect(aliquote.objectType).toEqual(aliquoteInfo.objectType);
-      expect(aliquote.code).toEqual(aliquoteInfo.code);
-      expect(aliquote.name).toEqual(aliquoteInfo.name);
-      expect(aliquote.container).toEqual(aliquoteInfo.container);
-      expect(aliquote.role).toEqual(aliquoteInfo.role);
+      expect(aliquote.objectType).toEqual(Mock.aliquotInfo.objectType);
+      expect(aliquote.code).toEqual(Mock.aliquotInfo.code);
+      expect(aliquote.name).toEqual(Mock.aliquotInfo.name);
+      expect(aliquote.container).toEqual(Mock.aliquotInfo.container);
+      expect(aliquote.role).toEqual(Mock.aliquotInfo.role);
     });
 
     it('should not call the AliquotCollectionDataFactory when any collectionData is given', function() {
-      var aliquote = factory.create(aliquoteInfo);
+      //TODO check what to do when collectionData comes empty
+      Mock.aliquotInfo.collectionData = null;
+      var aliquote = factory.create(Mock.aliquotInfo, Mock.singleTube);
       expect(Mock.AliquotCollectionDataFactory.create).not.toHaveBeenCalled();
     });
 
@@ -47,15 +47,35 @@ fdescribe('ParticipantAliquotFactory', function() {
 
   describe('the fromJSON method', function() {
     it('should call AliquotCollectionDataFactory.create', function() {
-      aliquoteInfo.collectionData = {
+      Mock.aliquotInfo.collectionData = {
         time: '2017-06-26T05:50:19.434Z',
         operator: 'lalala@gmail.com'
       };
-      var aliquote = factory.create(aliquoteInfo);
-      expect(Mock.AliquotCollectionDataFactory.create).toHaveBeenCalledWith(aliquoteInfo.collectionData);
+      var aliquote = factory.create(Mock.aliquotInfo, Mock.singleTube);
+      expect(Mock.AliquotCollectionDataFactory.create).toHaveBeenCalledWith(Mock.aliquotInfo.collectionData);
     });
   });
 
+  describe('the Aliquot descriptor filler', function() {
+     var aliquot;
+     var aliquotDescriptor;
+     beforeEach(function(){
+        aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
+        aliquotDescriptor = Mock.LaboratoryConfigurationService
+                           .getAliquotDescriptor(Mock.aliquotInfo.name, Mock.singleTube.moment,
+                                                Mock.singleTube.type, Mock.singleTube.groupName);
+     });
+
+    it('should attrib the right label for the given aliquot', function() {
+      expect(aliquot.label).toEqual(aliquotDescriptor.label);
+      expect(aliquot.quantity).toEqual(aliquotDescriptor.quantity);
+    });
+
+    it('should attrib the right quantity for the given aliquot', function() {
+      expect(aliquot.quantity).toEqual(aliquotDescriptor.quantity);
+    });
+
+  });
 
   function mockAliquoteCollectionDataFactory(_$injector_) {
     Mock.AliquotCollectionDataFactory = _$injector_.get('otusjs.laboratory.AliquotCollectionDataFactory');
@@ -63,98 +83,24 @@ fdescribe('ParticipantAliquotFactory', function() {
     return Mock.AliquotCollectionDataFactory;
   }
 
-  function mockLabParticipant() {
-    Mock.AliquotConfiguration = {
-      objectType: "AliquotConfiguration",
-      aliquotMomentDescriptors: [{
-          objectType: "AliquotMoment",
-          name: "FASTING",
-          aliquotTypesDescriptors: [{
-             objectType: "AliquotType",
-             name: "EDTA",
-             aliquots: [
-             {
-                objectType: "AliquoteDescriptor",
-                name: "STORAGE",
-                label: "Armazenamento",
-                quantity: 5
-             }, {
-                objectType: "AliquoteDescriptor",
-                name: "BIOSORO_AL",
-                label: "Biosoro",
-                quantity: 2
-             }, {
-                objectType: "AliquoteDescriptor",
-                name: "",
-                label: "",
-                quantity: 0
-             }
-             ]
-          },
-          {
-             objectType: "AliquotType",
-             name: "GEL",
-             aliquots: [
-                {
-                   objectType: "AliquoteDescriptor",
-                   name: "BIOSORO",
-                   label: "Bioquímica Soro",
-                   quantity: 1
-                },
-                {
-                   objectType: "AliquoteDescriptor",
-                   name: "PCR",
-                   label: "PCR",
-                   quantity: 1
-                },
-                {
-                   objectType: "AliquoteDescriptor",
-                   name: "FASTING_INSULINE",
-                   label: "Insulina Jejum",
-                   quantity: 1
-                },
-                {
-                   objectType: "AliquoteDescriptor",
-                   name: "BIOSORO_CQ",
-                   label: "Bioquímica Soro CQ",
-                   quantity: 2
-                },
-                {
-                   objectType: "AliquoteDescriptor",
-                   name: "FASTING_INSULINE_CQ",
-                   label: "Insulina Jejum CQ",
-                   quantity: 2
-                },
-                {
-                   objectType: "AliquoteDescriptor",
-                   name: "STORAGE",
-                   label: "Armazenamento",
-                   quantity: 8
-                },
-                {
-                   objectType: "AliquoteDescriptor",
-                   name: "STORAGE_CQ",
-                   label: "Armazenamento",
-                   quantity: 8
-                }
-             ]
-          }]
-      }, {
-          objectType: "AliquotMoment",
-          name: "POST_OVERLOAD",
-          aliquotTypesDescriptors: []
-      }],
-      containerDescriptor: [{
-          objectType: "ContainerDescriptor",
-          name: "PALLET",
-          label: "Palheta"
-      }, {
-          objectType: "ContainerDescriptor",
-          name: "CRIOTUBE",
-          label: "Criotubo"
-      }]
-   };
-
+  function mockLaboratoryConfigurationService(_$injector_) {
+    Mock.LaboratoryConfigurationService = _$injector_.get('otusjs.laboratory.LaboratoryConfigurationService');
+    return Mock.LaboratoryConfigurationService;
   }
 
+  function mockLabParticipant() {
+    Mock.ParticipantLaboratory = Test.utils.data.participantLaboratory; //json-importer.js
+  }
+
+  function mockLabDescriptors() {
+    Mock.LabDescriptors = Test.utils.data.laboratoryConfiguration; //json-importer.js
+  }
+
+  function mockSingleTube() {
+    Mock.singleTube = Mock.ParticipantLaboratory.tubes[0];
+  }
+
+  function mockAliquotInfo() {
+     Mock.aliquotInfo = Mock.singleTube.aliquotes[0];
+  }
 });

@@ -2071,30 +2071,6 @@ Test.utils.data.laboratoryConfiguration = {
   },
   "aliquotConfiguration": {
     "objectType": "AliquotConfiguration",
-
-
-    "aliquotMomentDescriptors2": {
-      "FASTING": {
-         "objectType": "FASTING",
-         "aliquotTypesDescriptors": {
-            "GEL": {
-               "objectType": "GEL",
-               "aliquoteGroupDescriptors": {
-                  "DEFAULT": {},
-                  "CQ1": {},
-                  "CQ2": {},
-                  "CQ3": {}
-               }
-            },
-            "EDTA": {},
-            "FLUORETO": {}
-         }
-      },
-      "MIDDLE": {},
-      "POST_OVERLOAD": {}
-   },
-
-
     "aliquotMomentDescriptors": [{
       "objectType": "AliquotMomentDescriptor",
       "name": "FASTING",
@@ -2102,7 +2078,7 @@ Test.utils.data.laboratoryConfiguration = {
         {
           "objectType": "AliquotTypesDescriptor",
           "name": "GEL",
-          "aliquoteGroupDescriptors": [
+          "aliquotsSet": [
             {
               "objectType": "AliquoteGroupDescriptor",
               "name": "DEFAULT",

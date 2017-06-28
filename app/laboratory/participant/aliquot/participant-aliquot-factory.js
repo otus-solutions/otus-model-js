@@ -6,40 +6,55 @@
     .factory('otusjs.laboratory.ParticipantAliquotFactory', factory);
 
   factory.$inject = [
-      'otusjs.laboratory.AliquotCollectionDataFactory'
+      'otusjs.laboratory.AliquotCollectionDataFactory',
+      'otusjs.laboratory.LaboratoryConfigurationService'
    ];
 
-  function factory(AliquotCollectionDataFactory) {
+  function factory(AliquotCollectionDataFactory, LaboratoryConfigurationService) {
     var self = this;
 
     self.create = create;
     self.fromJSON = fromJSON;
 
-    function create(aliquoteInfo) {
-      return new ParticipantAliquote(AliquotCollectionDataFactory, aliquoteInfo);
+    function create(aliquotInfo, tubeInfo) {
+      return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
     }
 
-    function fromJSON(aliquotesArray) {
-      return aliquotesArray.map(function(aliquoteInfo) {
-        return new ParticipantAliquote(AliquotCollectionDataFactory, aliquoteInfo);
+    function fromJSON(aliquotsArray, tubeInfo) {
+      return aliquotsArray.map(function(aliquotInfo) {
+        return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
       });
     }
 
     return self;
   }
 
-  function ParticipantAliquote(AliquotCollectionDataFactory, aliquoteInfo) {
+  function ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo) {
     var self = this;
+    var _aliquotDescriptor;
 
     /* Public Interface*/
-    self.objectType = aliquoteInfo.objectType || "Aliquot";
-    self.code = aliquoteInfo.code;
-    self.name = aliquoteInfo.name;
-    self.collectionData = aliquoteInfo.collectionData ? AliquotCollectionDataFactory.create(aliquoteInfo.collectionData) : {};
-    self.container = aliquoteInfo.container;
-    self.role = aliquoteInfo.role;
+    self.objectType = aliquotInfo.objectType || "Aliquot";
+    self.code = aliquotInfo.code;
+    self.name = aliquotInfo.name;
+    //TODO check what to do when aliquotInfo is empty
+    self.collectionData = aliquotInfo.collectionData ? AliquotCollectionDataFactory.create(aliquotInfo.collectionData) : {};
+    self.container = aliquotInfo.container;
+    self.role = aliquotInfo.role;
 
     self.toJSON = toJSON;
+
+    onInit();
+
+    function onInit() {
+      _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name, tubeInfo.moment, tubeInfo.type, tubeInfo.groupName);
+      _runDescriptors(_aliquotDescriptor);
+    }
+
+    function _runDescriptors(aliquotDescriptor) {
+      self.label = aliquotDescriptor.label;
+      self.quantity = aliquotDescriptor.quantity;
+    }
 
     function toJSON() {
       var json = {
