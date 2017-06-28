@@ -2087,24 +2087,28 @@ Test.utils.data.laboratoryConfiguration = {
                   "objectType": "AliquoteDescriptor",
                   "name": "BIOSORO",
                   "label": "Bioquímica Soro",
+                  "role": "exam",
                   "quantity": 1
                         },
                 {
                   "objectType": "AliquoteDescriptor",
                   "name": "PCR",
                   "label": "PCR",
+                  "role": "exam",
                   "quantity": 1
                         },
                 {
                   "objectType": "AliquoteDescriptor",
                   "name": "FASTING_INSULINE",
                   "label": "Insulina Jejum",
+                  "role": "exam",
                   "quantity": 1
                         },
                 {
                   "objectType": "AliquoteDescriptor",
                   "name": "STORAGE",
                   "label": "Armazenamento",
+                  "role": "storage",
                   "quantity": 8
                         }
                      ]
@@ -2117,12 +2121,14 @@ Test.utils.data.laboratoryConfiguration = {
                   "objectType": "AliquoteDescriptor",
                   "name": "BIOSORO",
                   "label": "Bioquímica Soro",
+                  "role": "exam",
                   "quantity": 2
                         },
                 {
                   "objectType": "AliquoteDescriptor",
                   "name": "FASTING_INSULINE",
                   "label": "Insulina Jejum",
+                  "role": "exam",
                   "quantity": 2
                         }
                      ]

@@ -35,12 +35,15 @@
 
     /* Public Interface*/
     self.objectType = aliquotInfo.objectType || "Aliquot";
-    self.code = aliquotInfo.code;
     self.name = aliquotInfo.name;
+    self.role = aliquotInfo.role;
+
+    // -------
+
+    self.code = aliquotInfo.code || '';
+    self.container = aliquotInfo.container || '';
     //TODO check what to do when aliquotInfo is empty
     self.collectionData = aliquotInfo.collectionData ? AliquotCollectionDataFactory.create(aliquotInfo.collectionData) : {};
-    self.container = aliquotInfo.container;
-    self.role = aliquotInfo.role;
 
     self.toJSON = toJSON;
 

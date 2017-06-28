@@ -1,0 +1,3 @@
+describe('the participantTubeFactory', function() {
+  
+});

@@ -11,6 +11,7 @@
     self.initialize = initialize;
     self.getLaboratoryConfiguration = getLaboratoryConfiguration;
     self.getAliquotDescriptor = getAliquotDescriptor;
+    self.getTubeAliquots = getTubeAliquots;
 
     function initialize(labDescriptor) {
       _laboratoryDescriptor = labDescriptor;
@@ -39,6 +40,25 @@
       .find(function(aliquotDescriptor){
           return aliquotDescriptor.name === aliquotName;
       });
+   }
+
+    function getTubeAliquots(momentName, tubeType, groupName){
+      var allTubeAliquots = _laboratoryDescriptor.aliquotConfiguration
+      .aliquotMomentDescriptors
+      .find(function(momentDescriptor){
+          return momentDescriptor.name === momentName;
+      })
+      .aliquotTypesDescriptors
+      .find(function(typeDescriptor){
+          return typeDescriptor.name === tubeType;
+      })
+      .aliquoteGroupDescriptors
+      .find(function(groupDescriptor){
+          return groupDescriptor.name === groupName;
+      })
+      .aliquots;
+
+      return allTubeAliquots;
    }
 
     return self;

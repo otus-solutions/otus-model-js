@@ -47,11 +47,17 @@
     /* Public Interface */
     self.objectType = "Tube";
 
-    self.type = tubeInfo.type;
     self.code = tubeInfo.code;
+
+    self.type = tubeInfo.type;
     self.moment = tubeInfo.moment;
     self.groupName = tubeInfo.groupName;
+
+    //TODO change name to self.aliquots - keep aliquotes on toJSON method
     self.aliquotes = tubeInfo.aliquotes.length ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquotes, self) : [];
+
+    //TODO remove the already collected
+    self.avaiableAliquotes = LaboratoryConfigurationService.getTubeAliquots(self.moment, self.type, self.groupName, self.aliquotes);
     if (self.aliquotes.length) {
        console.log(self.aliquotes);
     }
