@@ -55,12 +55,6 @@
 
     //TODO change name to self.aliquots - keep aliquotes on toJSON method
     self.aliquotes = tubeInfo.aliquotes.length ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquotes, self) : [];
-
-    //TODO remove the already collected
-    self.avaiableAliquotes = LaboratoryConfigurationService.getTubeAliquots(self.moment, self.type, self.groupName, self.aliquotes);
-    if (self.aliquotes.length) {
-       console.log(self.aliquotes);
-    }
     self.order = tubeInfo.order;
     self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);
 
@@ -89,7 +83,13 @@
       self.label = tubeDescriptor ? tubeDescriptor.label : '';
       self.boxColor = tubeDescriptor ? tubeDescriptor.color : '';
       self.momentLabel = momentDescriptor.label !== '' ? momentDescriptor.label : 'Nenhum';
-      self.avaiableAliquotes = ''; //TODO ler arquivo de configuração e retornar aliquotas disponíveis
+      if (self.aliquotes.length) {
+         console.log(self.aliquotes);
+      }
+      self.avaiableAliquotes = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type, self.groupName);
+      if (self.avaiableAliquotes) {
+         console.log(self.avaiableAliquotes);
+      }
     }
 
     function collect() {
