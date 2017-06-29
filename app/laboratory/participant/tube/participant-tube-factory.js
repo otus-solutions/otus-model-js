@@ -72,13 +72,9 @@
     }
 
     function _fillDescriptors() {
-      var tubeDescriptor = _labConfig.tubeConfiguration.tubeDescriptors.find(function(descriptor) {
-        return descriptor.name == self.type;
-      });
+      var tubeDescriptor = LaboratoryConfigurationService.getTubeDescriptor(self.type);
 
-      var momentDescriptor = _labConfig.collectMomentConfiguration.momentDescriptors.find(function(descriptor) {
-        return descriptor.name == self.moment;
-      });
+      var momentDescriptor = LaboratoryConfigurationService.getMomentDescriptor(self.moment);
 
       self.label = tubeDescriptor ? tubeDescriptor.label : '';
       self.boxColor = tubeDescriptor ? tubeDescriptor.color : '';

@@ -2078,7 +2078,7 @@ Test.utils.data.laboratoryConfiguration = {
         {
           "objectType": "AliquotTypesDescriptor",
           "name": "GEL",
-          "aliquotsSet": [
+          "aliquoteGroupDescriptors": [
             {
               "objectType": "AliquoteGroupDescriptor",
               "name": "DEFAULT",
