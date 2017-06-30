@@ -23,14 +23,14 @@
     self.buildFromArray = buildFromArray;
 
 
-    function create(tubeInfo, operator) {
-      var tube = new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService);
+    function create(tubeInfo, operator, aliquotManager) {
+      var tube = new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService, aliquotManager);
       return tube;
     }
 
-    function buildFromArray(tubeArray, operator) {
+    function buildFromArray(tubeArray, operator, aliquotManager) {
       return tubeArray.map(function(tubeInfo) {
-        return new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService);
+        return new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService, aliquotManager);
       });
     }
 
@@ -38,7 +38,7 @@
     return self;
   }
 
-  function Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService) {
+  function Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService, aliquotManager) {
     var self = this;
     var _labConfig;
     var _operator;
@@ -69,6 +69,7 @@
       _operator = operator;
       _labConfig = LaboratoryConfigurationService.getLaboratoryConfiguration();
       _fillDescriptors();
+      _manageAliquots();
     }
 
     function _fillDescriptors() {
@@ -79,13 +80,11 @@
       self.label = tubeDescriptor ? tubeDescriptor.label : '';
       self.boxColor = tubeDescriptor ? tubeDescriptor.color : '';
       self.momentLabel = momentDescriptor.label !== '' ? momentDescriptor.label : 'Nenhum';
-      if (self.aliquotes.length) {
-         console.log(self.aliquotes);
-      }
-      self.avaiableAliquotes = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type, self.groupName);
-      if (self.avaiableAliquotes) {
-         console.log(self.avaiableAliquotes);
-      }
+    }
+
+    function _manageAliquots() {
+      var _avaiableAliquotes = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type, self.groupName);
+
     }
 
     function collect() {

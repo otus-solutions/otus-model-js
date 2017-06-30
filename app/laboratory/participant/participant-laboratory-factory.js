@@ -7,26 +7,27 @@
 
   factory.$inject = [
     'otusjs.laboratory.ParticipanTubeFactory',
+    'otusjs.laboratory.AliquotManagerFactory',
     'otusjs.laboratory.LaboratoryConfigurationService'
    ];
 
-  function factory(ParticipanTubeFactory, LaboratoryConfigurationService) {
+  function factory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService) {
     var self = this;
 
     self.create = create;
     self.fromJson = fromJson;
 
     function create(labParticipant, labConfig, loggedUser) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser);
+      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser);
     }
     function fromJson(labParticipant, labConfig, loggedUser) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser);
+      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser);
     }
     return self;
 
   }
 
-  function ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser) {
+  function ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser) {
     var self = this;
     var _backupJSON;
 
@@ -35,7 +36,11 @@
     self.objectType = 'ParticipantLaboratory';
     self.recruitmentNumber = labParticipant.recruitmentNumber;
     self.collectGroupName = labParticipant.collectGroupName;
-    self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, labConfig, loggedUser);
+
+    //tube handling
+
+    self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, labConfig, loggedUser, aliquotManager);
+    var aliquotManager = AliquotManagetFactory.create(loggedUser.recruitmentNumber, self.tubes);
     self.exams = labParticipant.exams;
 
     self.reloadTubeList = reloadTubeList;
