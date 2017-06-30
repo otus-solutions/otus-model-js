@@ -44,8 +44,8 @@
     self.container = aliquotInfo.container || '';
     //TODO check what to do when aliquotInfo is empty
     self.collectionData = aliquotInfo.collectionData ? AliquotCollectionDataFactory.create(aliquotInfo.collectionData) : {};
-
-    self.toJSON = toJSON;
+    self.fillFromJson = fillFromJson;
+    // self.toJSON = toJSON;
 
     onInit();
 
@@ -57,6 +57,11 @@
     function _runDescriptors(aliquotDescriptor) {
       self.label = aliquotDescriptor.label;
       self.quantity = aliquotDescriptor.quantity;
+    }
+
+    function fillFromJson(jsonAliquot){
+      console.log(self);
+      console.log(jsonAliquot);
     }
 
     function toJSON() {

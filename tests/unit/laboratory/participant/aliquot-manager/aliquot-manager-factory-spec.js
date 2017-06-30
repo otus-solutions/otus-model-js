@@ -24,8 +24,7 @@ fdescribe('the aliquot manager factory', function() {
     });
 
     it('should be called at ParticipantLaboratory creation', function() {
-      var _participantLaboratory = Mock.ParticipantLaboratoryFactory.create(Mock.ParticipantLaboratory, Mock.LabDescriptors, Mock.LoggedUser);
-      console.log(Mock.LoggedUser);
+      var _participantLaboratory = Mock.ParticipantLaboratoryFactory.create(Mock.ParticipantLaboratory, Mock.LabDescriptors, Mock.LoggedUser);      
       expect(factory.create).toHaveBeenCalledWith(Mock.LoggedUser.recruitmentNumber, _participantLaboratory.tubes);
     });
 

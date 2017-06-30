@@ -35,8 +35,7 @@
       });
     }
 
-    function getAvaiableAliquots(momentName, tubeType, groupName) {
-      console.log(momentName, tubeType, groupName);
+    function getAvaiableAliquots(momentName, tubeType, groupName) {      
       return _laboratoryDescriptor.aliquotConfiguration
         .aliquotMomentDescriptors
         .find(function(momentDescriptor) {
