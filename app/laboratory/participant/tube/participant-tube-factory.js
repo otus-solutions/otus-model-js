@@ -74,12 +74,12 @@
 
     function _fillDescriptors() {
       var tubeDescriptor = LaboratoryConfigurationService.getTubeDescriptor(self.type);
-
       var momentDescriptor = LaboratoryConfigurationService.getMomentDescriptor(self.moment);
 
       self.label = tubeDescriptor ? tubeDescriptor.label : '';
       self.boxColor = tubeDescriptor ? tubeDescriptor.color : '';
       self.momentLabel = momentDescriptor.label !== '' ? momentDescriptor.label : 'Nenhum';
+      self.typeLabel = tubeDescriptor.label;
     }
 
     function _manageAliquots() {
@@ -91,9 +91,17 @@
       self.tubeCollectionData.fill(_operator);
     }
 
-    function toAliquot(type, code) {
+    function toAliquot(aliquotInfo, code) {
       //TODO check if code fits
-      self.aliquotes.push(ParticipantAliquotFactory.create(type, code));
+      self.aliquotes.push(ParticipantAliquotFactory.create(aliquotInfo, code));
+    }
+
+    function unAliquot(code) {
+      var indexToRemove = self.aliquots.findIndex(function(aliquot) {
+        return aliquot.code == code;
+      });
+      self.aliquots.slice(indexToRemove, 1);
+
     }
 
     function toJSON() {

@@ -15,6 +15,7 @@
 
     self.create = create;
     self.fromJSON = fromJSON;
+    self.buildEmptyAliquots = buildEmptyAliquots;
 
     function create(aliquotInfo, tubeInfo) {
       return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
@@ -26,12 +27,20 @@
       });
     }
 
+    function buildEmptyAliquots(aliquotConfigArray) {
+      return aliquotConfigArray.map(function(aliquotConfig) {
+        return new EmptyParticipantAliquot(aliquotConfig);
+      });
+
+    }
+
     return self;
   }
 
   function ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo) {
     var self = this;
     var _aliquotDescriptor;
+    console.log(aliquotInfo);
 
     /* Public Interface*/
     self.objectType = aliquotInfo.objectType || "Aliquot";
@@ -41,11 +50,16 @@
     // -------
 
     self.code = aliquotInfo.code || '';
-    self.container = aliquotInfo.container || '';
+    self.container = aliquotInfo.container || ''; //TODO get container by aliquot code
     //TODO check what to do when aliquotInfo is empty
     self.collectionData = aliquotInfo.collectionData ? AliquotCollectionDataFactory.create(aliquotInfo.collectionData) : {};
     self.fillFromJson = fillFromJson;
     // self.toJSON = toJSON;
+
+    //Custom
+    self.tubeCode = tubeInfo.code;
+
+
 
     onInit();
 
@@ -56,7 +70,6 @@
 
     function _runDescriptors(aliquotDescriptor) {
       self.label = aliquotDescriptor.label;
-      self.quantity = aliquotDescriptor.quantity;
     }
 
     function fillFromJson(jsonAliquot){
@@ -74,6 +87,37 @@
 
       return json;
     }
+  }
+
+  function EmptyParticipantAliquot(aliquotConfig) {
+    var self = this;
+    var _aliquotDescriptor;
+
+    /* Public Interface*/
+    self.objectType = aliquotConfig.objectType || "Aliquot";
+    self.name = aliquotConfig.name;
+    self.role = aliquotConfig.role;
+    self.collectionData = {};
+    self.toAliquot = toAliquot;
+
+    function onInit() {
+
+    }
+
+    function _runDescriptors(aliquotDescriptor) {
+      self.label = aliquotDescriptor.label;
+    }
+
+    function toAliquot(tube, code) {
+      self.tubeCode = tube.code;
+      //TODO implement
+      // self.container = LaboratoryConfigurationService.getAliquotContainer(code);
+    }
+
+    function fillAliquotInfo(operator) {
+
+    }
+
 
   }
 }());

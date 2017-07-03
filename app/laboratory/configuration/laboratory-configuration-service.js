@@ -6,6 +6,7 @@
   function service() {
     var self = this;
     var _laboratoryDescriptor;
+    var _selectedParticipant;
 
     /* Public Interface */
     self.initialize = initialize;

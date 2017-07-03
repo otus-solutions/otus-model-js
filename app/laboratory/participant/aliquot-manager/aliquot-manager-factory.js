@@ -29,31 +29,13 @@ function AliquotManager(ParticipantAliquotFactory, LaboratoryConfigurationServic
   var self = this;
   var _momentTypeMap = {};
 
-  var t = {
-    "FASTING": {
-      "GEL": {},
-      "EDTA": {},
-      "FLUORIDE": {}
-    },
-    "POST_OVERLOAD": {
-      "GEL": {},
-      "FLUORIDE": {}
-    },
-    "NONE": {
-      "URINE": {}
-    }
-  };
-
   onInit();
+
+  /* Public Interface*/
+  self.getMomentType = getMomentType;
 
   function onInit() {
     _buildMap();
-  }
-
-
-
-  function getAliquotsList(moment, type) {
-    return _momentTypeMap[moment][type];
   }
 
   function _buildMap() {
@@ -63,20 +45,49 @@ function AliquotManager(ParticipantAliquotFactory, LaboratoryConfigurationServic
       var moment = tube.moment;
       var type = tube.type;
       var avaiableAliquots;
+      var momentType;
       if (_momentTypeMap.hasOwnProperty(moment)) {
         if (!_momentTypeMap[moment].hasOwnProperty(type)) {
           avaiableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(moment, type, tube.groupName);
-          _momentTypeMap[moment][type] = ParticipantAliquotFactory.fromJSON(avaiableAliquots, tube);
+          momentType = {
+            type: type,
+            moment: moment,
+            momentLabel: tube.momentLabel,
+            typeLabel: tube.typeLabel,
+            boxColor: tube.boxColor,
+            aliquotsConfig: avaiableAliquots,
+            aliquots: ParticipantAliquotFactory.fromJSON(tube),
+            tubeList: []
+          };
+          momentType.tubeList.push(tube);
+          momentType.aliquots = ParticipantAliquotFactory.buildEmptyAliquots(avaiableAliquots);
+          _momentTypeMap[moment][type] = momentType;
         }
       } else {
         _momentTypeMap[moment] = {};
         avaiableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(moment, type, tube.groupName);
-        _momentTypeMap[moment][type] = ParticipantAliquotFactory.fromJSON(avaiableAliquots, tube);
+        momentType = {
+          type: type,
+          moment: moment,
+          momentLabel: tube.momentLabel,
+          typeLabel: tube.typeLabel,
+          boxColor: tube.boxColor,
+          tubeList: []
+        };
+        momentType.tubeList.push(tube);
+        momentType.aliquotsConfig = ParticipantAliquotFactory.buildEmptyAliquots(avaiableAliquots);
+        _momentTypeMap[moment][type] = momentType;
 
       }
       // _fillCollecterdAliquots(tube);
     });
-    console.log(JSON.stringify(_momentTypeMap));
+    console.log(_momentTypeMap);
+
+
+  }
+
+  function getMomentType(type, moment){
+    return _momentTypeMap[moment][type];
   }
 
   function _fillCollecterdAliquots(tube) {
