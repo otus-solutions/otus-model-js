@@ -12,11 +12,12 @@ fdescribe('ParticipantAliquotFactory', function() {
       factory = _$injector_.get('otusjs.laboratory.ParticipantAliquotFactory', injections);
     });
 
+    mockSelectedParticipant();
     mockLabDescriptors();
     mockLabParticipant();
     mockSingleTube();
     mockAliquotInfo();
-    Mock.LaboratoryConfigurationService.initialize(Mock.LabDescriptors);
+    Mock.LaboratoryConfigurationService.initialize(Mock.LabDescriptors, Mock.SelectedParticipant);
   });
   describe('the creation method', function() {
     it('should create an aliquote typed object', function() {
@@ -86,6 +87,10 @@ fdescribe('ParticipantAliquotFactory', function() {
   function mockLaboratoryConfigurationService(_$injector_) {
     Mock.LaboratoryConfigurationService = _$injector_.get('otusjs.laboratory.LaboratoryConfigurationService');
     return Mock.LaboratoryConfigurationService;
+  }
+
+  function mockSelectedParticipant() {
+    Mock.SelectedParticipant = angular.copy(Test.utils.data.selectedParticipant); //json-importer.js
   }
 
   function mockLabParticipant() {

@@ -103,7 +103,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         },
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -131,7 +131,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         },
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -159,7 +159,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         },
-            }]
+      }]
     },
     "fillingRules": {
       "extends": "StudioObject",
@@ -225,7 +225,7 @@ Test.utils.data.latestSurveyTemplate = {
         }
       }
     }
-    }, {
+  }, {
     "extents": "SurveyItem",
     "objectType": "IntegerQuestion",
     "templateID": "TC2",
@@ -285,7 +285,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -313,7 +313,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -341,7 +341,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }]
+      }]
     },
     "unit": {
       "ptBR": {
@@ -429,7 +429,7 @@ Test.utils.data.latestSurveyTemplate = {
         }
       }
     }
-    }, {
+  }, {
     "extents": "SurveyItem",
     "objectType": "DecimalQuestion",
     "templateID": "TC3",
@@ -489,7 +489,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -517,7 +517,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -545,7 +545,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }]
+      }]
     },
     "unit": {
       "ptBR": {
@@ -633,7 +633,7 @@ Test.utils.data.latestSurveyTemplate = {
         }
       }
     }
-    }, {
+  }, {
     "extents": "SurveyItem",
     "objectType": "SingleSelectionQuestion",
     "templateID": "TC4",
@@ -690,7 +690,7 @@ Test.utils.data.latestSurveyTemplate = {
           "formattedText": ""
         }
       }
-        }, {
+    }, {
       "extents": "StudioObject",
       "objectType": "AnswerOption",
       "value": 2,
@@ -718,7 +718,7 @@ Test.utils.data.latestSurveyTemplate = {
           "formattedText": ""
         }
       }
-        }],
+    }],
     "metadata": {
       "extents": "StudioObject",
       "objectType": "MetadataGroup",
@@ -750,7 +750,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -778,7 +778,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -806,7 +806,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }]
+      }]
     },
     "fillingRules": {
       "extends": "StudioObject",
@@ -823,7 +823,7 @@ Test.utils.data.latestSurveyTemplate = {
         }
       }
     }
-    }, {
+  }, {
     "extents": "SurveyItem",
     "objectType": "CheckboxQuestion",
     "templateID": "TC5",
@@ -882,7 +882,7 @@ Test.utils.data.latestSurveyTemplate = {
           "formattedText": ""
         }
       }
-        }, {
+    }, {
       "extents": "StudioObject",
       "objectType": "CheckboxAnswerOption",
       "optionID": "TC5b",
@@ -912,7 +912,7 @@ Test.utils.data.latestSurveyTemplate = {
           "formattedText": ""
         }
       }
-        }, {
+    }, {
       "extents": "StudioObject",
       "objectType": "CheckboxAnswerOption",
       "optionID": "TC5c",
@@ -942,7 +942,7 @@ Test.utils.data.latestSurveyTemplate = {
           "formattedText": ""
         }
       }
-        }],
+    }],
     "metadata": {
       "extents": "StudioObject",
       "objectType": "MetadataGroup",
@@ -974,7 +974,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -1002,7 +1002,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -1030,14 +1030,14 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }]
+      }]
     },
     "fillingRules": {
       "extends": "StudioObject",
       "objectType": "FillingRules",
       "options": {}
     }
-    }, {
+  }, {
     "extents": "SurveyItem",
     "objectType": "TextQuestion",
     "templateID": "TC6",
@@ -1097,7 +1097,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -1125,7 +1125,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -1153,7 +1153,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }]
+      }]
     },
     "fillingRules": {
       "extends": "StudioObject",
@@ -1224,7 +1224,7 @@ Test.utils.data.latestSurveyTemplate = {
         }
       }
     }
-    }, {
+  }, {
     "extents": "SurveyItem",
     "objectType": "EmailQuestion",
     "templateID": "TC7",
@@ -1284,7 +1284,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -1312,7 +1312,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -1340,7 +1340,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }]
+      }]
     },
     "fillingRules": {
       "extends": "StudioObject",
@@ -1357,7 +1357,7 @@ Test.utils.data.latestSurveyTemplate = {
         }
       }
     }
-    }, {
+  }, {
     "extents": "SurveyItem",
     "objectType": "TimeQuestion",
     "templateID": "TC8",
@@ -1417,7 +1417,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -1445,7 +1445,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -1473,7 +1473,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }]
+      }]
     },
     "fillingRules": {
       "extends": "StudioObject",
@@ -1508,7 +1508,7 @@ Test.utils.data.latestSurveyTemplate = {
         }
       }
     }
-    }, {
+  }, {
     "extents": "SurveyItem",
     "objectType": "PhoneQuestion",
     "templateID": "TC9",
@@ -1568,7 +1568,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -1596,7 +1596,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }, {
+      }, {
         "extends": "StudioObject",
         "objectType": "MetadataAnswer",
         "dataType": "Integer",
@@ -1624,7 +1624,7 @@ Test.utils.data.latestSurveyTemplate = {
             "formattedText": ""
           }
         }
-            }]
+      }]
     },
     "fillingRules": {
       "extends": "StudioObject",
@@ -1641,7 +1641,7 @@ Test.utils.data.latestSurveyTemplate = {
         }
       }
     }
-    }, {
+  }, {
     "extents": "SurveyItem",
     "objectType": "TextItem",
     "templateID": "TC10",
@@ -1670,7 +1670,7 @@ Test.utils.data.latestSurveyTemplate = {
         "formattedText": ""
       }
     }
-    }, {
+  }, {
     "extents": "SurveyItem",
     "objectType": "ImageItem",
     "templateID": "TC11",
@@ -1700,7 +1700,7 @@ Test.utils.data.latestSurveyTemplate = {
         "formattedText": ""
       }
     }
-    }],
+  }],
   "navigationList": [{
     "extents": "SurveyTemplateObject",
     "objectType": "Navigation",
@@ -1715,15 +1715,15 @@ Test.utils.data.latestSurveyTemplate = {
       "name": "TC1_TC2",
       "isDefault": true,
       "conditions": []
-        }]
-    }, {
+    }]
+  }, {
     "extents": "SurveyTemplateObject",
     "objectType": "Navigation",
     "origin": "TC2",
     "index": 1,
     "inNavigations": [{
       "origin": "TC1"
-        }],
+    }],
     "routes": [{
       "extents": "SurveyTemplateObject",
       "objectType": "Route",
@@ -1732,15 +1732,15 @@ Test.utils.data.latestSurveyTemplate = {
       "name": "TC2_TC3",
       "isDefault": true,
       "conditions": []
-        }]
-    }, {
+    }]
+  }, {
     "extents": "SurveyTemplateObject",
     "objectType": "Navigation",
     "origin": "TC3",
     "index": 2,
     "inNavigations": [{
       "origin": "TC2"
-        }],
+    }],
     "routes": [{
       "extents": "SurveyTemplateObject",
       "objectType": "Route",
@@ -1749,15 +1749,15 @@ Test.utils.data.latestSurveyTemplate = {
       "name": "TC3_TC4",
       "isDefault": true,
       "conditions": []
-        }]
-    }, {
+    }]
+  }, {
     "extents": "SurveyTemplateObject",
     "objectType": "Navigation",
     "origin": "TC4",
     "index": 3,
     "inNavigations": [{
       "origin": "TC3"
-        }],
+    }],
     "routes": [{
       "extents": "SurveyTemplateObject",
       "objectType": "Route",
@@ -1766,15 +1766,15 @@ Test.utils.data.latestSurveyTemplate = {
       "name": "TC4_TC5",
       "isDefault": true,
       "conditions": []
-        }]
-    }, {
+    }]
+  }, {
     "extents": "SurveyTemplateObject",
     "objectType": "Navigation",
     "origin": "TC5",
     "index": 4,
     "inNavigations": [{
       "origin": "TC4"
-        }],
+    }],
     "routes": [{
       "extents": "SurveyTemplateObject",
       "objectType": "Route",
@@ -1783,15 +1783,15 @@ Test.utils.data.latestSurveyTemplate = {
       "name": "TC5_TC6",
       "isDefault": true,
       "conditions": []
-        }]
-    }, {
+    }]
+  }, {
     "extents": "SurveyTemplateObject",
     "objectType": "Navigation",
     "origin": "TC6",
     "index": 5,
     "inNavigations": [{
       "origin": "TC5"
-        }],
+    }],
     "routes": [{
       "extents": "SurveyTemplateObject",
       "objectType": "Route",
@@ -1800,15 +1800,15 @@ Test.utils.data.latestSurveyTemplate = {
       "name": "TC6_TC7",
       "isDefault": true,
       "conditions": []
-        }]
-    }, {
+    }]
+  }, {
     "extents": "SurveyTemplateObject",
     "objectType": "Navigation",
     "origin": "TC7",
     "index": 6,
     "inNavigations": [{
       "origin": "TC6"
-        }],
+    }],
     "routes": [{
       "extents": "SurveyTemplateObject",
       "objectType": "Route",
@@ -1817,15 +1817,15 @@ Test.utils.data.latestSurveyTemplate = {
       "name": "TC7_TC8",
       "isDefault": true,
       "conditions": []
-        }]
-    }, {
+    }]
+  }, {
     "extents": "SurveyTemplateObject",
     "objectType": "Navigation",
     "origin": "TC8",
     "index": 7,
     "inNavigations": [{
       "origin": "TC7"
-        }],
+    }],
     "routes": [{
       "extents": "SurveyTemplateObject",
       "objectType": "Route",
@@ -1834,15 +1834,15 @@ Test.utils.data.latestSurveyTemplate = {
       "name": "TC8_TC9",
       "isDefault": true,
       "conditions": []
-        }]
-    }, {
+    }]
+  }, {
     "extents": "SurveyTemplateObject",
     "objectType": "Navigation",
     "origin": "TC9",
     "index": 8,
     "inNavigations": [{
       "origin": "TC8"
-        }],
+    }],
     "routes": [{
       "extents": "SurveyTemplateObject",
       "objectType": "Route",
@@ -1851,15 +1851,15 @@ Test.utils.data.latestSurveyTemplate = {
       "name": "TC9_TC10",
       "isDefault": true,
       "conditions": []
-        }]
-    }, {
+    }]
+  }, {
     "extents": "SurveyTemplateObject",
     "objectType": "Navigation",
     "origin": "TC10",
     "index": 9,
     "inNavigations": [{
       "origin": "TC9"
-        }],
+    }],
     "routes": [{
       "extents": "SurveyTemplateObject",
       "objectType": "Route",
@@ -1868,8 +1868,8 @@ Test.utils.data.latestSurveyTemplate = {
       "name": "TC10_TC11",
       "isDefault": true,
       "conditions": []
-        }]
     }]
+  }]
 };
 Test.utils.data.participantLaboratory = {
 
@@ -1877,209 +1877,197 @@ Test.utils.data.participantLaboratory = {
   "recruitmentNumber": 5003304,
   "collectGroupName": "DEFAULT",
   "tubes": [{
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "FASTING",
-      "code": "341002263",
-      "groupName": "DEFAULT",
-      "aliquotes": [{
-        "objectType": "Aliquot",
-        "code": 34200252,
-        "name": "BIOSORO",
-        "container": "CRIOTUBE",
-        "role": "exam",
-        "collectionData": {
-          "metadata": "",
-          "operator": "LALA@GMAIL.COM",
-          "time": "2017-06-22T21:43:06.086Z"
-        }
-        }],
-      "order": 1,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": true,
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "FASTING",
+    "code": "341002263",
+    "groupName": "DEFAULT",
+    "aliquotes": [{
+      "objectType": "Aliquot",
+      "code": 34200252,
+      "name": "BIOSORO",
+      "container": "CRIOTUBE",
+      "role": "exam",
+      "collectionData": {
         "metadata": "",
-        "operator": "lalala@gmail.com",
-        "time": "2017-06-06T15:15:28.958Z"
+        "operator": "LALA@GMAIL.COM",
+        "time": "2017-06-22T21:43:06.086Z"
       }
-      },
-    {
-      "objectType": "Tube",
-      "type": "EDTA",
-      "moment": "FASTING",
-      "code": "361009386",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 2,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "FLUORIDE",
-      "moment": "FASTING",
-      "code": "361009389",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 3,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "FASTING",
-      "code": "361009381",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 4,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "FASTING",
-      "code": "361009382",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 5,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "FASTING",
-      "code": "361009383",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 6,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "EDTA",
-      "moment": "FASTING",
-      "code": "361009387",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 7,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "EDTA",
-      "moment": "FASTING",
-      "code": "361009388",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 8,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "POST_OVERLOAD",
-      "code": "361009390",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 9,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "POST_OVERLOAD",
-      "code": "361009391",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 10,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "FLUORIDE",
-      "moment": "POST_OVERLOAD",
-      "code": "361009385",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 11,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "URINE",
-      "moment": "NONE",
-      "code": "361009384",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 12,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      }
-    ],
+    }],
+    "order": 1,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": true,
+      "metadata": "",
+      "operator": "lalala@gmail.com",
+      "time": "2017-06-06T15:15:28.958Z"
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "EDTA",
+    "moment": "FASTING",
+    "code": "361009386",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 2,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "FLUORIDE",
+    "moment": "FASTING",
+    "code": "361009389",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 3,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "FASTING",
+    "code": "361009381",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 4,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "FASTING",
+    "code": "361009382",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 5,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "FASTING",
+    "code": "361009383",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 6,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "EDTA",
+    "moment": "FASTING",
+    "code": "361009387",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 7,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "EDTA",
+    "moment": "FASTING",
+    "code": "361009388",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 8,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "POST_OVERLOAD",
+    "code": "361009390",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 9,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "POST_OVERLOAD",
+    "code": "361009391",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 10,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "FLUORIDE",
+    "moment": "POST_OVERLOAD",
+    "code": "361009385",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 11,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "URINE",
+    "moment": "NONE",
+    "code": "361009384",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 12,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }],
   "exams": []
 };
 Test.utils.data.laboratoryConfiguration = {
@@ -2091,256 +2079,445 @@ Test.utils.data.laboratoryConfiguration = {
     "lastInsertion": 738
   },
   "aliquotConfiguration": {
-    "objectType": "AliquotConfiguration",
-    "aliquotMomentDescriptors": [{
-      "objectType": "AliquotMomentDescriptor",
-      "name": "FASTING",
-      "aliquotTypesDescriptors": [{
-        "objectType": "AliquotTypesDescriptor",
-        "name": "GEL",
-        "aliquoteGroupDescriptors": [{
-          "objectType": "AliquoteGroupDescriptor",
-          "name": "DEFAULT",
-          "aliquots": [{
-            "objectType": "AliquoteDescriptor",
-            "name": "BIOSORO",
-            "label": "Bioquímica Soro",
-            "role": "exam",
-            "quantity": 1
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "PCR",
-            "label": "PCR",
-            "role": "exam",
-            "quantity": 1
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "FASTING_INSULINE",
-            "label": "Insulina Jejum",
-            "role": "exam",
-            "quantity": 1
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "STORAGE",
-            "label": "Armazenamento",
-            "role": "storage",
-            "quantity": 8
-          }]
-        }, {
-          "objectType": "AliquoteGroupDescriptor",
-          "name": "CQ1",
-          "aliquots": [{
-            "objectType": "AliquoteDescriptor",
-            "name": "BIOSORO",
-            "label": "Bioquímica Soro",
-            "role": "exam",
-            "quantity": 2
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "FASTING_INSULINE",
-            "label": "Insulina Jejum",
-            "role": "exam",
-            "quantity": 2
-          }]
-        }]
-      }, {
-        "objectType": "AliquotTypesDescriptor",
-        "name": "EDTA",
-        "aliquoteGroupDescriptors": [{
-          "objectType": "AliquoteGroupDescriptor",
-          "name": "DEFAULT",
-          "aliquots": [{
-            "objectType": "AliquoteDescriptor",
-            "name": "BIOSORO",
-            "label": "Bioquímica Soro",
-            "role": "exam",
-            "quantity": 1
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "PCR",
-            "label": "PCR",
-            "role": "exam",
-            "quantity": 1
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "FASTING_INSULINE",
-            "label": "Insulina Jejum",
-            "role": "exam",
-            "quantity": 1
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "STORAGE",
-            "label": "Armazenamento",
-            "role": "storage",
-            "quantity": 8
-          }]
-        }]
-      }, {
-         "objectType": "AliquotTypesDescriptor",
-         "name": "FLUORIDE",
-         "aliquoteGroupDescriptors": [{
-           "objectType": "AliquoteGroupDescriptor",
-           "name": "DEFAULT",
-           "aliquots": [{
-             "objectType": "AliquoteDescriptor",
-             "name": "BIOSORO",
-             "label": "Bioquímica Soro",
-             "role": "exam",
-             "quantity": 1
-           }, {
-             "objectType": "AliquoteDescriptor",
-             "name": "PCR",
-             "label": "PCR",
-             "role": "exam",
-             "quantity": 1
-           }, {
-             "objectType": "AliquoteDescriptor",
-             "name": "FASTING_INSULINE",
-             "label": "Insulina Jejum",
-             "role": "exam",
-             "quantity": 1
-           }, {
-             "objectType": "AliquoteDescriptor",
-             "name": "STORAGE",
-             "label": "Armazenamento",
-             "role": "storage",
-             "quantity": 8
-           }]
-         }]
-         }]
-    }, {
-      "objectType": "AliquotMoment",
-      "name": "POST_OVERLOAD",
-      "aliquotTypesDescriptors": [
-         {
-           "objectType": "AliquotTypesDescriptor",
-           "name": "GEL",
-           "aliquoteGroupDescriptors": [{
-            "objectType": "AliquoteGroupDescriptor",
-            "name": "DEFAULT",
+    "aliquotCenterDescriptors": [{
+      "objectType": "AliquotCenterDescriptor",
+      "name": "RS",
+      "aliquotGroupDescriptors": [{
+        "objectType": "AliquotGroupDescriptor",
+        "name": "DEFAULT",
+        "aliquotMomentDescriptors": [{
+          "objectType": "AliquotMomentDescriptor",
+          "name": "FASTING",
+          "aliquotTypesDescriptors": [{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "GEL",
             "aliquots": [{
-              "objectType": "AliquoteDescriptor",
+              "objectType": "AliquotDescriptor",
               "name": "BIOSORO",
               "label": "Bioquímica Soro",
               "role": "exam",
               "quantity": 1
             }, {
-              "objectType": "AliquoteDescriptor",
+              "objectType": "AliquotDescriptor",
               "name": "PCR",
               "label": "PCR",
               "role": "exam",
               "quantity": 1
             }, {
-              "objectType": "AliquoteDescriptor",
+              "objectType": "AliquotDescriptor",
               "name": "FASTING_INSULINE",
               "label": "Insulina Jejum",
               "role": "exam",
               "quantity": 1
             }, {
-              "objectType": "AliquoteDescriptor",
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage",
+              "quantity": 8
+            }]
+          }, {
+            "objectType": "AliquotTypesDescriptor",
+            "name": "EDTA",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage",
+              "quantity": 8
+            }]
+          }, {
+            "objectType": "AliquotTypesDescriptor",
+            "name": "FLUORIDE",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
               "name": "STORAGE",
               "label": "Armazenamento",
               "role": "storage",
               "quantity": 8
             }]
           }]
-       },{
-          "objectType": "AliquotTypesDescriptor",
-          "name": "FLUORIDE",
-          "aliquoteGroupDescriptors": [{
-            "objectType": "AliquoteGroupDescriptor",
-            "name": "DEFAULT",
+        }, {
+          "objectType": "AliquotMomentDescriptor",
+          "name": "POST_OVERLOAD",
+          "aliquotTypesDescriptors": [{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "GEL",
             "aliquots": [{
-              "objectType": "AliquoteDescriptor",
+              "objectType": "AliquotDescriptor",
               "name": "BIOSORO",
               "label": "Bioquímica Soro",
               "role": "exam",
               "quantity": 1
             }, {
-              "objectType": "AliquoteDescriptor",
+              "objectType": "AliquotDescriptor",
               "name": "PCR",
               "label": "PCR",
               "role": "exam",
               "quantity": 1
             }, {
-              "objectType": "AliquoteDescriptor",
+              "objectType": "AliquotDescriptor",
               "name": "FASTING_INSULINE",
               "label": "Insulina Jejum",
               "role": "exam",
               "quantity": 1
             }, {
-              "objectType": "AliquoteDescriptor",
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage",
+              "quantity": 8
+            }]
+          }, {
+            "objectType": "AliquotTypesDescriptor",
+            "name": "FLUORIDE",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
               "name": "STORAGE",
               "label": "Armazenamento",
               "role": "storage",
               "quantity": 8
             }]
           }]
-       }
-      ]
-    }, {
-      "objectType": "AliquotMoment",
-      "name": "NONE",
-      "aliquotTypesDescriptors": [{
-        "objectType": "AliquotTypesDescriptor",
-        "name": "URINE",
-        "aliquoteGroupDescriptors": [{
-          "objectType": "AliquoteGroupDescriptor",
-          "name": "DEFAULT",
-          "aliquots": [{
-            "objectType": "AliquoteDescriptor",
-            "name": "BIOSORO",
-            "label": "Bioquímica Soro",
-            "role": "exam",
-            "quantity": 1
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "PCR",
-            "label": "PCR",
-            "role": "exam",
-            "quantity": 1
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "FASTING_INSULINE",
-            "label": "Insulina Jejum",
-            "role": "exam",
-            "quantity": 1
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "STORAGE",
-            "label": "Armazenamento",
-            "role": "storage",
-            "quantity": 8
-          }]
         }, {
-          "objectType": "AliquoteGroupDescriptor",
-          "name": "CQ1",
-          "aliquots": [{
-            "objectType": "AliquoteDescriptor",
-            "name": "BIOSORO",
-            "label": "Bioquímica Soro",
-            "role": "exam",
-            "quantity": 2
-          }, {
-            "objectType": "AliquoteDescriptor",
-            "name": "FASTING_INSULINE",
-            "label": "Insulina Jejum",
-            "role": "exam",
-            "quantity": 2
+          "objectType": "AliquotMomentDescriptor",
+          "name": "NONE",
+          "aliquotTypesDescriptors": [{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "URINE",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam",
+              "quantity": 1
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage",
+              "quantity": 8
+            }]
           }]
         }]
       }]
-    }],
-    "containerDescriptor": [{
-      "objectType": "ContainerDescriptor",
-      "name": "PALLET",
-      "label": "Palheta"
-    }, {
-      "objectType": "ContainerDescriptor",
-      "name": "CRIOTUBE",
-      "label": "Criotubo"
     }]
   },
+  // "aliquotConfiguration": {
+  //   "objectType": "AliquotConfiguration",
+  //   "aliquotMomentDescriptors": [{
+  //     "objectType": "AliquotMomentDescriptor",
+  //     "name": "FASTING",
+  //     "aliquotTypesDescriptors": [{
+  //       "objectType": "AliquotTypesDescriptor",
+  //       "name": "GEL",
+  //       "aliquotGroupDescriptors": [{
+  //         "objectType": "AliquotGroupDescriptor",
+  //         "name": "DEFAULT",
+  //         "aliquots": [{
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "BIOSORO",
+  //           "label": "Bioquímica Soro",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "PCR",
+  //           "label": "PCR",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "FASTING_INSULINE",
+  //           "label": "Insulina Jejum",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "STORAGE",
+  //           "label": "Armazenamento",
+  //           "role": "storage",
+  //           "quantity": 8
+  //         }]
+  //       }, {
+  //         "objectType": "AliquotGroupDescriptor",
+  //         "name": "CQ1",
+  //         "aliquots": [{
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "BIOSORO",
+  //           "label": "Bioquímica Soro",
+  //           "role": "exam",
+  //           "quantity": 2
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "FASTING_INSULINE",
+  //           "label": "Insulina Jejum",
+  //           "role": "exam",
+  //           "quantity": 2
+  //         }]
+  //       }]
+  //     }, {
+  //       "objectType": "AliquotTypesDescriptor",
+  //       "name": "EDTA",
+  //       "aliquotGroupDescriptors": [{
+  //         "objectType": "AliquotGroupDescriptor",
+  //         "name": "DEFAULT",
+  //         "aliquots": [{
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "BIOSORO",
+  //           "label": "Bioquímica Soro",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "PCR",
+  //           "label": "PCR",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "FASTING_INSULINE",
+  //           "label": "Insulina Jejum",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "STORAGE",
+  //           "label": "Armazenamento",
+  //           "role": "storage",
+  //           "quantity": 8
+  //         }]
+  //       }]
+  //     }, {
+  //       "objectType": "AliquotTypesDescriptor",
+  //       "name": "FLUORIDE",
+  //       "aliquotGroupDescriptors": [{
+  //         "objectType": "AliquotGroupDescriptor",
+  //         "name": "DEFAULT",
+  //         "aliquots": [{
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "BIOSORO",
+  //           "label": "Bioquímica Soro",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "PCR",
+  //           "label": "PCR",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "FASTING_INSULINE",
+  //           "label": "Insulina Jejum",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "STORAGE",
+  //           "label": "Armazenamento",
+  //           "role": "storage",
+  //           "quantity": 8
+  //         }]
+  //       }]
+  //     }]
+  //   }, {
+  //     "objectType": "AliquotMoment",
+  //     "name": "POST_OVERLOAD",
+  //     "aliquotTypesDescriptors": [{
+  //       "objectType": "AliquotTypesDescriptor",
+  //       "name": "GEL",
+  //       "aliquotGroupDescriptors": [{
+  //         "objectType": "AliquotGroupDescriptor",
+  //         "name": "DEFAULT",
+  //         "aliquots": [{
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "BIOSORO",
+  //           "label": "Bioquímica Soro",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "PCR",
+  //           "label": "PCR",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "FASTING_INSULINE",
+  //           "label": "Insulina Jejum",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "STORAGE",
+  //           "label": "Armazenamento",
+  //           "role": "storage",
+  //           "quantity": 8
+  //         }]
+  //       }]
+  //     }, {
+  //       "objectType": "AliquotTypesDescriptor",
+  //       "name": "FLUORIDE",
+  //       "aliquotGroupDescriptors": [{
+  //         "objectType": "AliquotGroupDescriptor",
+  //         "name": "DEFAULT",
+  //         "aliquots": [{
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "BIOSORO",
+  //           "label": "Bioquímica Soro",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "PCR",
+  //           "label": "PCR",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "FASTING_INSULINE",
+  //           "label": "Insulina Jejum",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "STORAGE",
+  //           "label": "Armazenamento",
+  //           "role": "storage",
+  //           "quantity": 8
+  //         }]
+  //       }]
+  //     }]
+  //   }, {
+  //     "objectType": "AliquotMoment",
+  //     "name": "NONE",
+  //     "aliquotTypesDescriptors": [{
+  //       "objectType": "AliquotTypesDescriptor",
+  //       "name": "URINE",
+  //       "aliquotGroupDescriptors": [{
+  //         "objectType": "AliquotGroupDescriptor",
+  //         "name": "DEFAULT",
+  //         "aliquots": [{
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "BIOSORO",
+  //           "label": "Bioquímica Soro",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "PCR",
+  //           "label": "PCR",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "FASTING_INSULINE",
+  //           "label": "Insulina Jejum",
+  //           "role": "exam",
+  //           "quantity": 1
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "STORAGE",
+  //           "label": "Armazenamento",
+  //           "role": "storage",
+  //           "quantity": 8
+  //         }]
+  //       }, {
+  //         "objectType": "AliquotGroupDescriptor",
+  //         "name": "CQ1",
+  //         "aliquots": [{
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "BIOSORO",
+  //           "label": "Bioquímica Soro",
+  //           "role": "exam",
+  //           "quantity": 2
+  //         }, {
+  //           "objectType": "AliquotDescriptor",
+  //           "name": "FASTING_INSULINE",
+  //           "label": "Insulina Jejum",
+  //           "role": "exam",
+  //           "quantity": 2
+  //         }]
+  //       }]
+  //     }]
+  //   }],
+  //   "containerDescriptor": [{
+  //     "objectType": "ContainerDescriptor",
+  //     "name": "PALLET",
+  //     "label": "Palheta"
+  //   }, {
+  //     "objectType": "ContainerDescriptor",
+  //     "name": "CRIOTUBE",
+  //     "label": "Criotubo"
+  //   }]
+  // },
 
 
 
@@ -2910,3 +3087,37 @@ Test.utils.data.laboratoryConfiguration = {
     "label": "Não coletado"
   }]
 };
+
+
+// console.log(Mock.LabDescriptors.aliquotConfiguration.aliquotMomentDescriptors);
+// var aliquotConfiguration = {
+//   "aliquotCenterDescriptors": [{
+//     "objectType": "AliquotCenterDescriptor",
+//     "name": "RS",
+//     "aliquotGroupDescriptors": [{
+//       "objectType": "AliquoteGroupDescriptor",
+//       "name": "DEFAULT",
+//       "aliquotMomentDescriptors": []
+//     }]
+//   }]
+// };
+// var aliquotMomentDescriptors = angular.copy(Mock.LabDescriptors.aliquotConfiguration.aliquotMomentDescriptors);
+// Mock.LabDescriptors.aliquotConfiguration.aliquotMomentDescriptors.forEach(function(moment) {
+//   var momentDesc = {
+//     "objectType": "AliquotMomentDescriptor",
+//     "name": moment.name,
+//     "aliquotTypesDescriptors": []
+//   };
+//     console.log('=======');
+//     console.log(moment.name);
+//     moment.aliquotTypesDescriptors.forEach(function(type) {
+//       var typeDesc = {
+//         "objectType": "AliquotTypesDescriptor",
+//         "name": type.name,
+//         "aliquots": type.aliquoteGroupDescriptors[0].aliquots
+//       };
+//       momentDesc.aliquotTypesDescriptors.push(typeDesc);
+//     });
+//     aliquotConfiguration.aliquotCenterDescriptors[0].aliquotGroupDescriptors[0].aliquotMomentDescriptors.push(momentDesc);
+// });
+// console.log(JSON.stringify(aliquotConfiguration));

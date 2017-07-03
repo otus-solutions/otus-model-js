@@ -60,8 +60,8 @@
     }
 
     function fillFromJson(jsonAliquot){
-      console.log(self);
-      console.log(jsonAliquot);
+      // console.log(self);
+      // console.log(jsonAliquot);
     }
 
     function toJSON() {

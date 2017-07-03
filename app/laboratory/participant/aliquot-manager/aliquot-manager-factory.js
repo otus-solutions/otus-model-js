@@ -50,6 +50,8 @@ function AliquotManager(ParticipantAliquotFactory, LaboratoryConfigurationServic
     _buildMap();
   }
 
+
+
   function getAliquotsList(moment, type) {
     return _momentTypeMap[moment][type];
   }
@@ -72,8 +74,9 @@ function AliquotManager(ParticipantAliquotFactory, LaboratoryConfigurationServic
         _momentTypeMap[moment][type] = ParticipantAliquotFactory.fromJSON(avaiableAliquots, tube);
 
       }
-      _fillCollecterdAliquots(tube);
+      // _fillCollecterdAliquots(tube);
     });
+    console.log(JSON.stringify(_momentTypeMap));
   }
 
   function _fillCollecterdAliquots(tube) {

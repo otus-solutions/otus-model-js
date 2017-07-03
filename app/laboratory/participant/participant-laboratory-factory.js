@@ -17,17 +17,17 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(labParticipant, labConfig, loggedUser) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser);
+    function create(labParticipant, labConfig, loggedUser, selectedParticipant) {
+      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant);
     }
-    function fromJson(labParticipant, labConfig, loggedUser) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser);
+    function fromJson(labParticipant, labConfig, loggedUser, selectedParticipant) {
+      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser, selectedParticipant);
     }
     return self;
 
   }
 
-  function ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser) {
+  function ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant) {
     var self = this;
     var _backupJSON;
 
@@ -36,7 +36,6 @@
     self.objectType = 'ParticipantLaboratory';
     self.recruitmentNumber = labParticipant.recruitmentNumber;
     self.collectGroupName = labParticipant.collectGroupName;
-
     //tube handling
 
     self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, labConfig, loggedUser, aliquotManager);
@@ -49,7 +48,8 @@
 
 
     function onInit() {
-      LaboratoryConfigurationService.initialize(labConfig);
+      console.log(selectedParticipant);
+      LaboratoryConfigurationService.initialize(labConfig, selectedParticipant);
       _backupJSON = angular.copy(labParticipant);
     }
 

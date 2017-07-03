@@ -15,8 +15,9 @@
     self.getTubeDescriptor = getTubeDescriptor;
     self.getMomentDescriptor = getMomentDescriptor;
 
-    function initialize(labDescriptor) {
+    function initialize(labDescriptor, selectedParticipant) {
       _laboratoryDescriptor = labDescriptor;
+      _selectedParticipant = selectedParticipant;
     }
 
     function getLaboratoryConfiguration() {
@@ -35,8 +36,16 @@
       });
     }
 
-    function getAvaiableAliquots(momentName, tubeType, groupName) {      
+    function getAvaiableAliquots(momentName, tubeType, groupName) {
       return _laboratoryDescriptor.aliquotConfiguration
+        .aliquotCenterDescriptors
+        .find(function(centerDescriptor) {
+          return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
+        })
+        .aliquotGroupDescriptors
+        .find(function(groupDescriptor) {
+          return groupDescriptor.name === groupName;
+        })
         .aliquotMomentDescriptors
         .find(function(momentDescriptor) {
           return momentDescriptor.name === momentName;
@@ -44,16 +53,20 @@
         .aliquotTypesDescriptors
         .find(function(typeDescriptor) {
           return typeDescriptor.name === tubeType;
-        })
-        .aliquoteGroupDescriptors
-        .find(function(groupDescriptor) {
-          return groupDescriptor.name === groupName;
         })
         .aliquots;
     }
 
     function getAliquotDescriptor(aliquotName, momentName, tubeType, groupName) {
       return _laboratoryDescriptor.aliquotConfiguration
+        .aliquotCenterDescriptors
+        .find(function(centerDescriptor) {
+          return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
+        })
+        .aliquotGroupDescriptors
+        .find(function(groupDescriptor) {
+          return groupDescriptor.name === groupName;
+        })
         .aliquotMomentDescriptors
         .find(function(momentDescriptor) {
           return momentDescriptor.name === momentName;
@@ -61,10 +74,6 @@
         .aliquotTypesDescriptors
         .find(function(typeDescriptor) {
           return typeDescriptor.name === tubeType;
-        })
-        .aliquoteGroupDescriptors
-        .find(function(groupDescriptor) {
-          return groupDescriptor.name === groupName;
         })
         .aliquots
         .find(function(aliquotDescriptor) {
