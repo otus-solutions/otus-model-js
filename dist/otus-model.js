@@ -1299,28 +1299,96 @@
 'use strict';
 
 (function () {
+  angular.module('otusjs.laboratory').service('otusjs.laboratory.LaboratoryConfigurationService', service);
+
+  function service() {
+    var self = this;
+    var _laboratoryDescriptor;
+    var _selectedParticipant;
+
+    /* Public Interface */
+    self.initialize = initialize;
+    self.getLaboratoryConfiguration = getLaboratoryConfiguration;
+    self.getAliquotDescriptor = getAliquotDescriptor;
+    self.getAvaiableAliquots = getAvaiableAliquots;
+    self.getTubeDescriptor = getTubeDescriptor;
+    self.getMomentDescriptor = getMomentDescriptor;
+
+    function initialize(labDescriptor, selectedParticipant) {
+      _laboratoryDescriptor = labDescriptor;
+      _selectedParticipant = selectedParticipant;
+    }
+
+    function getLaboratoryConfiguration() {
+      return _laboratoryDescriptor;
+    }
+
+    function getTubeDescriptor(type) {
+      return _laboratoryDescriptor.tubeConfiguration.tubeDescriptors.find(function (descriptor) {
+        return descriptor.name == type;
+      });
+    }
+
+    function getMomentDescriptor(momentName) {
+      return _laboratoryDescriptor.collectMomentConfiguration.momentDescriptors.find(function (descriptor) {
+        return descriptor.name == momentName;
+      });
+    }
+
+    function getAvaiableAliquots(momentName, tubeType, groupName) {
+      return _laboratoryDescriptor.aliquotConfiguration.aliquotCenterDescriptors.find(function (centerDescriptor) {
+        return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
+      }).aliquotGroupDescriptors.find(function (groupDescriptor) {
+        return groupDescriptor.name === groupName;
+      }).aliquotMomentDescriptors.find(function (momentDescriptor) {
+        return momentDescriptor.name === momentName;
+      }).aliquotTypesDescriptors.find(function (typeDescriptor) {
+        return typeDescriptor.name === tubeType;
+      }).aliquots;
+    }
+
+    function getAliquotDescriptor(aliquotName, momentName, tubeType, groupName) {
+      return _laboratoryDescriptor.aliquotConfiguration.aliquotCenterDescriptors.find(function (centerDescriptor) {
+        return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
+      }).aliquotGroupDescriptors.find(function (groupDescriptor) {
+        return groupDescriptor.name === groupName;
+      }).aliquotMomentDescriptors.find(function (momentDescriptor) {
+        return momentDescriptor.name === momentName;
+      }).aliquotTypesDescriptors.find(function (typeDescriptor) {
+        return typeDescriptor.name === tubeType;
+      }).aliquots.find(function (aliquotDescriptor) {
+        return aliquotDescriptor.name === aliquotName;
+      });
+    }
+
+    return self;
+  }
+})();
+'use strict';
+
+(function () {
   'use strict';
 
   angular.module('otusjs.laboratory').factory('otusjs.laboratory.ParticipantLaboratoryFactory', factory);
 
-  factory.$inject = ['otusjs.laboratory.ParticipanTubeFactory'];
+  factory.$inject = ['otusjs.laboratory.ParticipanTubeFactory', 'otusjs.laboratory.AliquotManagerService', 'otusjs.laboratory.LaboratoryConfigurationService'];
 
-  function factory(ParticipanTubeFactory) {
+  function factory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService) {
     var self = this;
 
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(labParticipant, labConfig, loggedUser) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, labParticipant, labConfig, loggedUser);
+    function create(labParticipant, labConfig, loggedUser, selectedParticipant) {
+      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant);
     }
-    function fromJson(labParticipant, labConfig, loggedUser) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, JSON.parse(labParticipant), labConfig, loggedUser);
+    function fromJson(labParticipant, labConfig, loggedUser, selectedParticipant) {
+      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser, selectedParticipant);
     }
     return self;
   }
 
-  function ParticipantLaboratory(ParticipanTubeFactory, labParticipant, labConfig, loggedUser) {
+  function ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant) {
     var self = this;
     var _backupJSON;
 
@@ -1329,7 +1397,10 @@
     self.objectType = 'ParticipantLaboratory';
     self.recruitmentNumber = labParticipant.recruitmentNumber;
     self.collectGroupName = labParticipant.collectGroupName;
+
+    //tube handling
     self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, labConfig, loggedUser);
+    AliquotManagetFactory.initialize(self.tubes);
     self.exams = labParticipant.exams;
 
     self.reloadTubeList = reloadTubeList;
@@ -1337,6 +1408,8 @@
     self.toJSON = toJSON;
 
     function onInit() {
+      console.log(selectedParticipant);
+      LaboratoryConfigurationService.initialize(labConfig, selectedParticipant);
       _backupJSON = angular.copy(labParticipant);
     }
 
@@ -1359,149 +1432,6 @@
     function updateTubeList() {
       delete _backupJSON.tubes;
       _backupJSON.tubes = angular.copy(self.tubes);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.laboratory').factory('otusjs.laboratory.ParticipanTubeFactory', factory);
-
-  factory.$inject = ['otusjs.laboratory.TubeCollectionDataFactory'];
-
-  function factory(TubeCollectionDataFactory) {
-    var self = this;
-
-    _onInit();
-
-    function _onInit() {}
-
-    /* Public Methods */
-    self.create = create;
-    self.buildFromArray = buildFromArray;
-
-    function create(tubeInfo, laboratoryConfiguration, operator) {
-      var tube = new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator);
-      return tube;
-    }
-
-    function buildFromArray(tubeArray, laboratoryConfiguration, operator) {
-      return tubeArray.map(function (tubeInfo) {
-        return new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator);
-      });
-    }
-
-    return self;
-  }
-
-  function Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator) {
-    var self = this;
-    var _labConfig;
-    var _operator;
-
-    /* Public Interface */
-    self.objectType = "Tube";
-
-    self.type = tubeInfo.type;
-    self.code = tubeInfo.code;
-    self.moment = tubeInfo.moment;
-    self.groupName = tubeInfo.groupName;
-    self.aliquotes = tubeInfo.aliquotes;
-    self.order = tubeInfo.order;
-    self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);
-
-    self.collect = collect;
-    self.toJSON = toJSON;
-
-    _onInit();
-
-    function _onInit() {
-      _operator = operator;
-      _labConfig = laboratoryConfiguration;
-      _fillDescriptors();
-    }
-
-    function _fillDescriptors() {
-      var tubeDescriptor = _labConfig.tubeConfiguration.tubeDescriptors.find(function (descriptor) {
-        return descriptor.name == self.type;
-      });
-
-      var momentDescriptor = _labConfig.collectMomentConfiguration.collectMomentDescriptors.find(function (descriptor) {
-        return descriptor.name == self.moment;
-      });
-
-      self.label = tubeDescriptor ? tubeDescriptor.label : '';
-      self.boxColor = tubeDescriptor ? tubeDescriptor.color : '';
-      self.momentLabel = momentDescriptor.label !== '' ? momentDescriptor.label : 'Nenhum';
-    }
-
-    function collect() {
-      self.tubeCollectionData.fill(_operator);
-    }
-
-    function toJSON() {
-      var json = {
-        objectType: self.objectType,
-        type: self.type,
-        moment: self.moment,
-        code: self.code,
-        groupName: self.groupName,
-        aliquotes: self.aliquotes,
-        order: self.order,
-        tubeCollectionData: self.tubeCollectionData
-      };
-      return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.laboratory').factory('otusjs.laboratory.TubeCollectionDataFactory', factory);
-
-  function factory() {
-    var self = this;
-
-    self.create = create;
-
-    function create(collectionInfo) {
-      return new TubeCollectionData(collectionInfo);
-    }
-
-    return self;
-  }
-
-  function TubeCollectionData(collectionInfo) {
-    var self = this;
-
-    self.objectType = 'TubeCollectionData';
-    self.isCollected = collectionInfo.isCollected;
-    self.metadata = collectionInfo.metadata;
-    self.operator = collectionInfo.operator;
-    self.time = collectionInfo.time;
-
-    self.fill = fill;
-    self.toJSON = toJSON;
-
-    function fill(operator) {
-      self.isCollected = true;
-      self.metadata = "";
-      self.operator = operator.email;
-      self.time = new Date().toISOString();
-    }
-
-    function toJSON() {
-      return {
-        objectType: self.objectType,
-        isCollected: self.isCollected,
-        metadata: self.metadata,
-        operator: self.operator,
-        time: self.time
-      };
     }
   }
 })();
@@ -1801,29 +1731,6 @@
 'use strict';
 
 (function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ExceptionService', service);
-
-  function service() {
-    var self = this;
-
-    self.InvalidStateError = createErrorType('InvalidStateError');
-
-    function createErrorType(name) {
-      function E(message) {
-        this.message = message;
-      }
-      E.prototype = Object.create(Error.prototype);
-      E.prototype.name = name;
-      E.prototype.constructor = E;
-      return E;
-    }
-  }
-})();
-'use strict';
-
-(function () {
 
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationApiService', service);
 
@@ -1874,6 +1781,29 @@
     }
 
     function equal(reference) {}
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ExceptionService', service);
+
+  function service() {
+    var self = this;
+
+    self.InvalidStateError = createErrorType('InvalidStateError');
+
+    function createErrorType(name) {
+      function E(message) {
+        this.message = message;
+      }
+      E.prototype = Object.create(Error.prototype);
+      E.prototype.name = name;
+      E.prototype.constructor = E;
+      return E;
+    }
   }
 })();
 'use strict';
@@ -4955,6 +4885,431 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       immutableDate.setSeconds(resultRegex[2] != undefined ? resultRegex[2] : 0);
       immutableDate.setMilliseconds(resultRegex[3] != undefined ? resultRegex[3] : 0);
       return immutableDate;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory').factory('otusjs.laboratory.AliquotCollectionDataFactory', factory);
+
+  function factory() {
+    var self = this;
+
+    self.create = create;
+
+    function create(collectionInfo) {
+      return new AliquotCollectionData(collectionInfo);
+    }
+
+    return self;
+  }
+
+  function AliquotCollectionData(collectionInfo) {
+    var self = this;
+
+    self.objectType = 'AliquotCollectionData';
+    self.metadata = collectionInfo.metadata || '';
+    self.operator = collectionInfo.operator || '';
+    self.time = collectionInfo.time || '';
+
+    self.fill = fill;
+    self.toJSON = toJSON;
+
+    function fill(operator) {
+      self.isCollected = true;
+      self.metadata = "";
+      self.operator = operator.email;
+      self.time = new Date().toISOString();
+    }
+
+    function toJSON() {
+      return {
+        objectType: self.objectType,
+        isCollected: self.isCollected,
+        metadata: self.metadata,
+        operator: self.operator,
+        time: self.time
+      };
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory').factory('otusjs.laboratory.ParticipantAliquotFactory', factory);
+
+  factory.$inject = ['otusjs.laboratory.AliquotCollectionDataFactory', 'otusjs.laboratory.LaboratoryConfigurationService'];
+
+  function factory(AliquotCollectionDataFactory, LaboratoryConfigurationService) {
+    var self = this;
+
+    self.create = create;
+    self.fromJSON = fromJSON;
+    self.buildEmptyAliquots = buildEmptyAliquots;
+
+    function create(aliquotInfo, tubeInfo) {
+      return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
+    }
+
+    function fromJSON(aliquotsArray, tubeInfo) {
+      console.log(JSON.stringify(aliquotsArray));
+      return aliquotsArray.map(function (aliquotInfo) {
+        return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
+      });
+    }
+
+    function buildEmptyAliquots(aliquotConfigArray) {
+      return aliquotConfigArray.map(function (aliquotConfig) {
+        return new EmptyParticipantAliquot(aliquotConfig);
+      });
+    }
+
+    return self;
+  }
+
+  function ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo) {
+    var self = this;
+    var _aliquotDescriptor;
+
+    /* Public Interface*/
+    self.objectType = aliquotInfo.objectType || "Aliquot";
+    self.name = aliquotInfo.name;
+    self.role = aliquotInfo.role;
+
+    // -------
+
+    self.code = aliquotInfo.code || '';
+    self.container = aliquotInfo.container || ''; //TODO get container by aliquot code
+    //TODO check what to do when aliquotInfo is empty
+    self.collectionData = aliquotInfo.collectionData ? AliquotCollectionDataFactory.create(aliquotInfo.collectionData) : {};
+    self.fillFromJson = fillFromJson;
+    // self.toJSON = toJSON;
+
+    //Custom
+    self.tubeCode = tubeInfo.code;
+
+    onInit();
+
+    function onInit() {
+      _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name, tubeInfo.moment, tubeInfo.type, tubeInfo.groupName);
+      _runDescriptors(_aliquotDescriptor);
+    }
+
+    function _runDescriptors(aliquotDescriptor) {
+      self.label = aliquotDescriptor.label;
+    }
+
+    function fillFromJson(jsonAliquot) {
+      // console.log(self);
+      // console.log(jsonAliquot);
+    }
+
+    function toJSON() {
+      var json = {
+        objectType: self.objectType,
+        code: self.code,
+        role: self.role,
+        container: self.container
+      };
+
+      return json;
+    }
+  }
+
+  function EmptyParticipantAliquot(aliquotConfig) {
+    var self = this;
+    var _aliquotDescriptor;
+
+    /* Public Interface*/
+    self.objectType = aliquotConfig.objectType || "Aliquot";
+    self.name = aliquotConfig.name;
+    self.role = aliquotConfig.role;
+    self.collectionData = {};
+    self.toAliquot = toAliquot;
+
+    function onInit() {}
+
+    function _runDescriptors(aliquotDescriptor) {
+      self.label = aliquotDescriptor.label;
+    }
+
+    function toAliquot(tube, code) {
+      self.tubeCode = tube.code;
+      //TODO implement
+      // self.container = LaboratoryConfigurationService.getAliquotContainer(code);
+    }
+
+    function fillAliquotInfo(operator) {}
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory').service('otusjs.laboratory.AliquotManagerService', service);
+
+  service.$inject = ['otusjs.laboratory.ParticipantAliquotFactory', 'otusjs.laboratory.LaboratoryConfigurationService'];
+
+  function service(ParticipantAliquotFactory, LaboratoryConfigurationService) {
+    var self = this;
+    var _momentTypeMap = {};
+    var _momentTypeList = [];
+
+    /* Public Interface*/
+    self.getMomentTypeMap = getMomentTypeMap;
+    self.getMomentTypeList = getMomentTypeList;
+    self.initialize = initialize;
+
+    function initialize(tubeList) {
+      _buildMap(tubeList);
+    }
+
+    function _buildMap(tubeList) {
+      //TODO provide groupName - for now, it will be the cq
+      tubeList.forEach(function (tube) {
+        var moment = tube.moment;
+        var type = tube.type;
+        var avaiableAliquots;
+        var momentType;
+        if (_momentTypeMap.hasOwnProperty(moment)) {
+          if (!_momentTypeMap[moment].hasOwnProperty(type)) {
+            avaiableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(moment, type, tube.groupName);
+            momentType = {
+              type: type,
+              moment: moment,
+              momentLabel: tube.momentLabel,
+              typeLabel: tube.typeLabel,
+              boxColor: tube.boxColor,
+              aliquotsConfig: avaiableAliquots,
+              aliquots: ParticipantAliquotFactory.fromJSON(tube.aliquotes, tube),
+              tubeList: []
+            };
+
+            momentType.aliquots = ParticipantAliquotFactory.buildEmptyAliquots(avaiableAliquots);
+            _momentTypeMap[moment][type] = momentType;
+            _momentTypeList.push({
+              moment: moment,
+              type: type,
+              momentLabel: tube.momentLabel,
+              typeLabel: tube.typeLabel
+            });
+          }
+        } else {
+          _momentTypeMap[moment] = {};
+          avaiableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(moment, type, tube.groupName);
+          momentType = {
+            type: type,
+            moment: moment,
+            momentLabel: tube.momentLabel,
+            typeLabel: tube.typeLabel,
+            boxColor: tube.boxColor,
+            tubeList: []
+          };
+
+          momentType.aliquotsConfig = ParticipantAliquotFactory.buildEmptyAliquots(avaiableAliquots);
+          _momentTypeMap[moment][type] = momentType;
+          _momentTypeList.push({
+            moment: moment,
+            type: type,
+            momentLabel: tube.momentLabel,
+            typeLabel: tube.typeLabel
+          });
+        }
+        _momentTypeMap[moment][type].tubeList.push(tube);
+        // _fillCollecterdAliquots(tube);
+      });
+
+      console.log("_momentTypeList");
+      console.log(_momentTypeList);
+      console.log(_momentTypeMap);
+    }
+
+    function getMomentTypeMap(type, moment) {
+      return _momentTypeMap[moment][type];
+    }
+
+    function getMomentTypeList() {
+      return _momentTypeList;
+    }
+
+    function _fillCollecterdAliquots(tube) {
+      var moment = tube.moment;
+      var type = tube.type;
+      tube.aliquotes.forEach(function (aliquot) {
+        //se entrou no forEach, tem alíquota coletada
+        var desc = _momentTypeMap[moment][type].find(function (mappedAlquot) {
+          return mappedAlquot.name === aliquot.name;
+        });
+        desc.fillFromJson(aliquot);
+      });
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory').factory('otusjs.laboratory.ParticipanTubeFactory', factory);
+
+  factory.$inject = ['otusjs.laboratory.TubeCollectionDataFactory', 'otusjs.laboratory.ParticipantAliquotFactory', 'otusjs.laboratory.LaboratoryConfigurationService'];
+
+  function factory(TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService) {
+    var self = this;
+
+    _onInit();
+
+    function _onInit() {}
+
+    /* Public Methods */
+    self.create = create;
+    self.buildFromArray = buildFromArray;
+
+    function create(tubeInfo, operator) {
+      var tube = new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService);
+      return tube;
+    }
+
+    function buildFromArray(tubeArray, operator) {
+      return tubeArray.map(function (tubeInfo) {
+        return new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService);
+      });
+    }
+
+    return self;
+  }
+
+  function Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService) {
+    var self = this;
+    var _labConfig;
+    var _operator;
+
+    /* Public Interface */
+    self.objectType = "Tube";
+
+    self.code = tubeInfo.code;
+
+    self.type = tubeInfo.type;
+    self.moment = tubeInfo.moment;
+    self.groupName = tubeInfo.groupName;
+
+    //TODO change name to self.aliquots - keep aliquotes on toJSON method
+    console.log(tubeInfo.aliquotes);
+    self.aliquotes = tubeInfo.aliquotes.length ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquotes, self) : [];
+    self.order = tubeInfo.order;
+    self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);
+
+    /* Custom Methods */
+    self.collect = collect;
+    self.toAliquot = toAliquot;
+    self.toJSON = toJSON;
+
+    _onInit();
+
+    function _onInit() {
+      _operator = operator;
+      _labConfig = LaboratoryConfigurationService.getLaboratoryConfiguration();
+      _fillDescriptors();
+      _manageAliquots();
+    }
+
+    function _fillDescriptors() {
+      var tubeDescriptor = LaboratoryConfigurationService.getTubeDescriptor(self.type);
+      var momentDescriptor = LaboratoryConfigurationService.getMomentDescriptor(self.moment);
+
+      self.label = tubeDescriptor ? tubeDescriptor.label : '';
+      self.boxColor = tubeDescriptor ? tubeDescriptor.color : '';
+      self.momentLabel = momentDescriptor.label !== '' ? momentDescriptor.label : 'Nenhum';
+      self.typeLabel = tubeDescriptor.label;
+    }
+
+    function _manageAliquots() {
+      var _avaiableAliquotes = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type, self.groupName);
+    }
+
+    function collect() {
+      self.tubeCollectionData.fill(_operator);
+    }
+
+    function toAliquot(aliquotInfo, code) {
+      //TODO check if code fits
+      self.aliquotes.push(ParticipantAliquotFactory.create(aliquotInfo, code));
+    }
+
+    function unAliquot(code) {
+      var indexToRemove = self.aliquots.findIndex(function (aliquot) {
+        return aliquot.code == code;
+      });
+      self.aliquots.slice(indexToRemove, 1);
+    }
+
+    function toJSON() {
+      var json = {
+        objectType: self.objectType,
+        type: self.type,
+        moment: self.moment,
+        code: self.code,
+        groupName: self.groupName,
+        aliquotes: self.aliquotes,
+        order: self.order,
+        tubeCollectionData: self.tubeCollectionData
+      };
+      return json;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory').factory('otusjs.laboratory.TubeCollectionDataFactory', factory);
+
+  function factory() {
+    var self = this;
+
+    self.create = create;
+
+    function create(collectionInfo) {
+      return new TubeCollectionData(collectionInfo);
+    }
+
+    return self;
+  }
+
+  function TubeCollectionData(collectionInfo) {
+    var self = this;
+
+    self.objectType = 'TubeCollectionData';
+    self.isCollected = collectionInfo.isCollected;
+    self.metadata = collectionInfo.metadata;
+    self.operator = collectionInfo.operator;
+    self.time = collectionInfo.time;
+
+    self.fill = fill;
+    self.toJSON = toJSON;
+
+    function fill(operator) {
+      self.isCollected = true;
+      self.metadata = "";
+      self.operator = operator.email;
+      self.time = new Date().toISOString();
+    }
+
+    function toJSON() {
+      return {
+        objectType: self.objectType,
+        isCollected: self.isCollected,
+        metadata: self.metadata,
+        operator: self.operator,
+        time: self.time
+      };
     }
   }
 })();

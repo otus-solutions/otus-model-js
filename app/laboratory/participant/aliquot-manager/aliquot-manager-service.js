@@ -44,12 +44,14 @@
               aliquots: ParticipantAliquotFactory.fromJSON(tube.aliquotes, tube),
               tubeList: []
             };
-            momentType.tubeList.push(tube);
+
             momentType.aliquots = ParticipantAliquotFactory.buildEmptyAliquots(avaiableAliquots);
             _momentTypeMap[moment][type] = momentType;
             _momentTypeList.push({
               moment: moment,
-              type: type
+              type: type,
+              momentLabel: tube.momentLabel,
+              typeLabel: tube.typeLabel
             });
           }
         } else {
@@ -63,18 +65,23 @@
             boxColor: tube.boxColor,
             tubeList: []
           };
-          momentType.tubeList.push(tube);
+
           momentType.aliquotsConfig = ParticipantAliquotFactory.buildEmptyAliquots(avaiableAliquots);
           _momentTypeMap[moment][type] = momentType;
           _momentTypeList.push({
             moment: moment,
-            type: type
+            type: type,
+            momentLabel: tube.momentLabel,
+            typeLabel: tube.typeLabel
           });
 
         }
+            _momentTypeMap[moment][type].tubeList.push(tube);
         // _fillCollecterdAliquots(tube);
       });
 
+      console.log("_momentTypeList");
+      console.log(_momentTypeList);
       console.log(_momentTypeMap);
     }
 
