@@ -74,7 +74,8 @@
         }
         // _fillCollecterdAliquots(tube);
       });
-
+      console.log('====================');
+      console.log('manager');
       console.log(_momentTypeMap);
     }
 

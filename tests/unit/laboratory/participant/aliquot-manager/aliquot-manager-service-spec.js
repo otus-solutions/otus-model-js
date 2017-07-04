@@ -1,4 +1,4 @@
-fdescribe('the aliquot manager factory', function() {
+fdescribe('the aliquot manager service', function() {
   var Mock = {};
 
   beforeEach(function() {
@@ -14,27 +14,27 @@ fdescribe('the aliquot manager factory', function() {
     inject(function(_$injector_) {
       mockLaboratoryParticipantFactory(_$injector_);
       var injections = {};
-      factory = _$injector_.get('otusjs.laboratory.AliquotManagerService', injections);
+      service = _$injector_.get('otusjs.laboratory.AliquotManagerService', injections);
     });
 
   });
 
   describe('the initialization method', function() {
     beforeEach(function() {
-      spyOn(factory, 'initialize').and.callThrough();
+      spyOn(service, 'initialize').and.callThrough();
     });
 
     it('should be called at ParticipantLaboratory creation', function() {
 
       var _participantLaboratory = Mock.ParticipantLaboratoryFactory.create(Mock.ParticipantLaboratory, Mock.LabDescriptors, Mock.LoggedUser, Mock.SelectedParticipant);
-      expect(factory.initialize).toHaveBeenCalledWith(_participantLaboratory.tubes);
+      expect(service.initialize).toHaveBeenCalledWith(Mock.ParticipantLaboratory.tubes);
     });
 
   });
 
   describe('the tube registration', function() {
     beforeEach(function() {
-      spyOn(factory, 'initialize').and.callThrough();
+      spyOn(service, 'initialize').and.callThrough();
     });
 
     it('should register a tube at tube creation', function() {
