@@ -69,11 +69,6 @@ fdescribe('ParticipantAliquotFactory', function() {
 
     it('should attrib the right label for the given aliquot', function() {
       expect(aliquot.label).toEqual(aliquotDescriptor.label);
-      expect(aliquot.quantity).toEqual(aliquotDescriptor.quantity);
-    });
-
-    it('should attrib the right quantity for the given aliquot', function() {
-      expect(aliquot.quantity).toEqual(aliquotDescriptor.quantity);
     });
 
   });

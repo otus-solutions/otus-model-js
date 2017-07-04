@@ -23,14 +23,14 @@
     self.buildFromArray = buildFromArray;
 
 
-    function create(tubeInfo, operator, aliquotManager) {
-      var tube = new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService, aliquotManager);
+    function create(tubeInfo, operator) {
+      var tube = new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService);
       return tube;
     }
 
-    function buildFromArray(tubeArray, operator, aliquotManager) {
+    function buildFromArray(tubeArray, operator) {
       return tubeArray.map(function(tubeInfo) {
-        return new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService, aliquotManager);
+        return new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService);
       });
     }
 
@@ -38,7 +38,7 @@
     return self;
   }
 
-  function Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService, aliquotManager) {
+  function Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService) {
     var self = this;
     var _labConfig;
     var _operator;

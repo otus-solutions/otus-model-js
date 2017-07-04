@@ -19,22 +19,22 @@ fdescribe('the aliquot manager factory', function() {
 
   });
 
-  describe('the creation method', function() {
+  describe('the initialization method', function() {
     beforeEach(function() {
-      spyOn(factory, 'create').and.callThrough();
+      spyOn(factory, 'initialize').and.callThrough();
     });
 
     it('should be called at ParticipantLaboratory creation', function() {
 
       var _participantLaboratory = Mock.ParticipantLaboratoryFactory.create(Mock.ParticipantLaboratory, Mock.LabDescriptors, Mock.LoggedUser, Mock.SelectedParticipant);
-      expect(factory.create).toHaveBeenCalledWith(Mock.LoggedUser.recruitmentNumber, _participantLaboratory.tubes);
+      expect(factory.initialize).toHaveBeenCalledWith(Mock.LoggedUser.recruitmentNumber, _participantLaboratory.tubes);
     });
 
   });
 
   describe('the tube registration', function() {
     beforeEach(function() {
-      spyOn(factory, 'create').and.callThrough();
+      spyOn(factory, 'initialize').and.callThrough();
     });
 
     it('should register a tube at tube creation', function() {

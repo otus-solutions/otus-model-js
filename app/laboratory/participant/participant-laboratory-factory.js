@@ -36,10 +36,10 @@
     self.objectType = 'ParticipantLaboratory';
     self.recruitmentNumber = labParticipant.recruitmentNumber;
     self.collectGroupName = labParticipant.collectGroupName;
-    //tube handling
 
-    self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, labConfig, loggedUser, aliquotManager);
-    var aliquotManager = AliquotManagetFactory.create(loggedUser.recruitmentNumber, self.tubes);
+    //tube handling
+    self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, labConfig, loggedUser);
+    AliquotManagetFactory.initialize(self.tubes);
     self.exams = labParticipant.exams;
 
     self.reloadTubeList = reloadTubeList;
