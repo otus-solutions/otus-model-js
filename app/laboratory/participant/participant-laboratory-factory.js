@@ -7,7 +7,7 @@
 
   factory.$inject = [
     'otusjs.laboratory.ParticipanTubeFactory',
-    'otusjs.laboratory.AliquotManagerFactory',
+    'otusjs.laboratory.AliquotManagerService',
     'otusjs.laboratory.LaboratoryConfigurationService'
    ];
 

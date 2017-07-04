@@ -14,7 +14,7 @@ fdescribe('the aliquot manager factory', function() {
     inject(function(_$injector_) {
       mockLaboratoryParticipantFactory(_$injector_);
       var injections = {};
-      factory = _$injector_.get('otusjs.laboratory.AliquotManagerFactory', injections);
+      factory = _$injector_.get('otusjs.laboratory.AliquotManagerService', injections);
     });
 
   });
@@ -27,7 +27,7 @@ fdescribe('the aliquot manager factory', function() {
     it('should be called at ParticipantLaboratory creation', function() {
 
       var _participantLaboratory = Mock.ParticipantLaboratoryFactory.create(Mock.ParticipantLaboratory, Mock.LabDescriptors, Mock.LoggedUser, Mock.SelectedParticipant);
-      expect(factory.initialize).toHaveBeenCalledWith(Mock.LoggedUser.recruitmentNumber, _participantLaboratory.tubes);
+      expect(factory.initialize).toHaveBeenCalledWith(_participantLaboratory.tubes);
     });
 
   });

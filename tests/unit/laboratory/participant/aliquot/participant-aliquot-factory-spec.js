@@ -27,8 +27,7 @@ fdescribe('ParticipantAliquotFactory', function() {
     });
 
     it('should generate the same values for this fields', function() {
-      var aliquote = factory.create(Mock.aliquotInfo, Mock.singleTube);
-
+      var aliquote = factory.create(Mock.aliquotInfo, Mock.singleTube);      
       expect(aliquote.objectType).toEqual(Mock.aliquotInfo.objectType);
       expect(aliquote.code).toEqual(Mock.aliquotInfo.code);
       expect(aliquote.name).toEqual(Mock.aliquotInfo.name);

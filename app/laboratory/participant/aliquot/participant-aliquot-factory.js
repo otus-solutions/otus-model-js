@@ -22,6 +22,7 @@
     }
 
     function fromJSON(aliquotsArray, tubeInfo) {
+      console.log(JSON.stringify(aliquotsArray));
       return aliquotsArray.map(function(aliquotInfo) {
         return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
       });
@@ -40,7 +41,6 @@
   function ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo) {
     var self = this;
     var _aliquotDescriptor;
-    console.log(aliquotInfo);
 
     /* Public Interface*/
     self.objectType = aliquotInfo.objectType || "Aliquot";

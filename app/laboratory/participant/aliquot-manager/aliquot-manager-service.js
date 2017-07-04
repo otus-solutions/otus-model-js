@@ -3,7 +3,7 @@
 
     angular
       .module('otusjs.laboratory')
-      .service('otusjs.laboratory.AliquotManagerFactory', service);
+      .service('otusjs.laboratory.AliquotManagerService', service);
 
     service.$inject = [
       'otusjs.laboratory.ParticipantAliquotFactory',
@@ -39,9 +39,9 @@
                 typeLabel: tube.typeLabel,
                 boxColor: tube.boxColor,
                 aliquotsConfig: avaiableAliquots,
-                aliquots: ParticipantAliquotFactory.fromJSON(tube),
+                aliquots: ParticipantAliquotFactory.fromJSON(tube.aliquotes, tube),
                 tubeList: []
-              };
+              };              
               momentType.tubeList.push(tube);
               momentType.aliquots = ParticipantAliquotFactory.buildEmptyAliquots(avaiableAliquots);
               _momentTypeMap[moment][type] = momentType;
