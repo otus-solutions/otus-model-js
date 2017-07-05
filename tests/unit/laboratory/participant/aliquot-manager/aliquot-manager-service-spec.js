@@ -27,7 +27,7 @@ fdescribe('the aliquot manager service', function() {
     it('should be called at ParticipantLaboratory creation', function() {
 
       var _participantLaboratory = Mock.ParticipantLaboratoryFactory.create(Mock.ParticipantLaboratory, Mock.LabDescriptors, Mock.LoggedUser, Mock.SelectedParticipant);
-      expect(service.initialize).toHaveBeenCalledWith(Mock.ParticipantLaboratory.tubes);
+      expect(service.initialize).toHaveBeenCalledWith(_participantLaboratory.tubes);
     });
 
   });

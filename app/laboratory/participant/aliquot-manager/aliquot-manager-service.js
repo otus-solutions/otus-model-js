@@ -7,16 +7,15 @@
 
   service.$inject = [
       'otusjs.laboratory.ParticipantAliquotFactory',
-      'otusjs.laboratory.LaboratoryConfigurationService'
+      'otusjs.laboratory.LaboratoryConfigurationService',
+      'otusjs.laboratory.MomentTypeManagerFactory'
     ];
 
-  function service(ParticipantAliquotFactory, LaboratoryConfigurationService) {
+  function service(ParticipantAliquotFactory, LaboratoryConfigurationService, MomentTypeManagerFactory) {
     var self = this;
-    var _momentTypeMap = {};
     var _momentTypeList = [];
 
     /* Public Interface*/
-    self.getMomentTypeMap = getMomentTypeMap;
     self.getMomentTypeList = getMomentTypeList;
     self.initialize = initialize;
 
@@ -25,82 +24,33 @@
     }
 
     function _buildMap(tubeList) {
-      //TODO provide groupName - for now, it will be the cq
       tubeList.forEach(function(tube) {
         var moment = tube.moment;
         var type = tube.type;
-        var avaiableAliquots;
-        var momentType;
-        if (_momentTypeMap.hasOwnProperty(moment)) {
-          if (!_momentTypeMap[moment].hasOwnProperty(type)) {
-            avaiableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(moment, type, tube.groupName);
-            momentType = {
-              type: type,
-              moment: moment,
-              momentLabel: tube.momentLabel,
-              typeLabel: tube.typeLabel,
-              boxColor: tube.boxColor,
-              aliquotsConfig: avaiableAliquots,
-              aliquots: ParticipantAliquotFactory.fromJSON(tube.aliquotes, tube),
-              tubeList: []
-            };
 
-            momentType.aliquots = ParticipantAliquotFactory.buildEmptyAliquots(avaiableAliquots);
-            _momentTypeMap[moment][type] = momentType;
-            _momentTypeList.push({
-              moment: moment,
-              type: type,
-              momentLabel: tube.momentLabel,
-              typeLabel: tube.typeLabel
-            });
-          }
-        } else {
-          _momentTypeMap[moment] = {};
-          avaiableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(moment, type, tube.groupName);
-          momentType = {
-            type: type,
-            moment: moment,
-            momentLabel: tube.momentLabel,
-            typeLabel: tube.typeLabel,
-            boxColor: tube.boxColor,
-            tubeList: []
-          };
-
-          momentType.aliquotsConfig = ParticipantAliquotFactory.buildEmptyAliquots(avaiableAliquots);
-          _momentTypeMap[moment][type] = momentType;
-          _momentTypeList.push({
-            moment: moment,
-            type: type,
-            momentLabel: tube.momentLabel,
-            typeLabel: tube.typeLabel
-          });
-
+        var momentType = _momentTypeList.find(function(momentType) {
+           return momentType.type == tube.type && momentType.moment == tube.moment;
+        });
+        if (momentType) {
+           momentType.addTube(tube);
+        }else {
+           var newMomentType = _buildMomentType(tube);
+           newMomentType.addTube(tube);
+           _momentTypeList.push(newMomentType);
         }
-            _momentTypeMap[moment][type].tubeList.push(tube);
-        // _fillCollecterdAliquots(tube);
       });
-      console.log('====================');
-      console.log('manager');
-      console.log(_momentTypeMap);
-    }
 
-    function getMomentTypeMap(type, moment) {
-      return _momentTypeMap[moment][type];
+      function _buildMomentType(tube) {
+         var availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(tube.moment, tube.type, tube.groupName);
+
+         var newMomentType = MomentTypeManagerFactory.create(tube);
+         newMomentType.setAvailableAliquots(ParticipantAliquotFactory.buildEmptyAliquots(availableAliquots));
+         return newMomentType;
+      }
     }
 
     function getMomentTypeList() {
       return _momentTypeList;
-    }
-
-    function _fillCollecterdAliquots(tube) {
-      var moment = tube.moment;
-      var type = tube.type;
-      tube.aliquotes.forEach(function(aliquot) { //se entrou no forEach, tem alíquota coletada
-        var desc = _momentTypeMap[moment][type].find(function(mappedAlquot) {
-          return mappedAlquot.name === aliquot.name;
-        });
-        desc.fillFromJson(aliquot);
-      });
     }
 
   }

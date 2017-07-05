@@ -54,7 +54,6 @@
     self.groupName = tubeInfo.groupName;
 
     //TODO change name to self.aliquots - keep aliquotes on toJSON method
-    console.log(tubeInfo.aliquotes);
     self.aliquotes = tubeInfo.aliquotes.length ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquotes, self) : [];
     self.order = tubeInfo.order;
     self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);

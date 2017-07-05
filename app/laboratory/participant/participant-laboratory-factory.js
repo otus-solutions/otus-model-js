@@ -31,9 +31,8 @@
     var self = this;
     var _backupJSON;
 
-    onInit();
 
-    self.objectType = 'ParticipantLaboratory';
+    self.objectType = labParticipant.objectType || 'ParticipantLaboratory';
     self.recruitmentNumber = labParticipant.recruitmentNumber;
     self.collectGroupName = labParticipant.collectGroupName;  //CQ
 
@@ -45,6 +44,8 @@
     self.updateTubeList = updateTubeList;
     self.toJSON = toJSON;
 
+    onInit();
+    
     function onInit() {
       _backupJSON = angular.copy(labParticipant);
       LaboratoryConfigurationService.initialize(labConfig, selectedParticipant);
@@ -58,6 +59,7 @@
 
     function toJSON() {
       var json = {
+        objectType: self.objectType,
         recruitmentNumber: self.recruitmentNumber,
         collectGroupName: self.collectGroupName,
         tubes: self.tubes,
