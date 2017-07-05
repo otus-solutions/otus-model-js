@@ -79,9 +79,8 @@
             _momentTypeMap[moment][type].tubeList.push(tube);
         // _fillCollecterdAliquots(tube);
       });
-
-      console.log("_momentTypeList");
-      console.log(_momentTypeList);
+      console.log('====================');
+      console.log('manager');
       console.log(_momentTypeMap);
     }
 

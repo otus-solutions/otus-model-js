@@ -11,23 +11,23 @@
     'otusjs.laboratory.LaboratoryConfigurationService'
    ];
 
-  function factory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService) {
+  function factory(ParticipanTubeFactory, AliquotManagetService, LaboratoryConfigurationService) {
     var self = this;
 
     self.create = create;
     self.fromJson = fromJson;
 
     function create(labParticipant, labConfig, loggedUser, selectedParticipant) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant);
+      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetService, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant);
     }
     function fromJson(labParticipant, labConfig, loggedUser, selectedParticipant) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser, selectedParticipant);
+      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetService, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser, selectedParticipant);
     }
     return self;
 
   }
 
-  function ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant) {
+  function ParticipantLaboratory(ParticipanTubeFactory, AliquotManagetService, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant) {
     var self = this;
     var _backupJSON;
 
@@ -39,17 +39,16 @@
 
     //tube handling
     self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, labConfig, loggedUser);
-    AliquotManagetFactory.initialize(self.tubes);
     self.exams = labParticipant.exams;
 
     self.reloadTubeList = reloadTubeList;
     self.updateTubeList = updateTubeList;
     self.toJSON = toJSON;
 
-
     function onInit() {
       console.log(selectedParticipant);
       LaboratoryConfigurationService.initialize(labConfig, selectedParticipant);
+      AliquotManagetService.initialize(labParticipant.tubes);
       _backupJSON = angular.copy(labParticipant);
     }
 
