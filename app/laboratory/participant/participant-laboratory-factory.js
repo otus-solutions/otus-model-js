@@ -35,21 +35,25 @@
 
     self.objectType = 'ParticipantLaboratory';
     self.recruitmentNumber = labParticipant.recruitmentNumber;
-    self.collectGroupName = labParticipant.collectGroupName;
+    self.collectGroupName = labParticipant.collectGroupName;  //CQ
 
     //tube handling
-    self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, labConfig, loggedUser);
-    self.exams = labParticipant.exams;
+    self.tubes = [];
+    self.exams = labParticipant.exams;  //not in use yet
 
     self.reloadTubeList = reloadTubeList;
     self.updateTubeList = updateTubeList;
     self.toJSON = toJSON;
 
     function onInit() {
-      console.log(selectedParticipant);
-      LaboratoryConfigurationService.initialize(labConfig, selectedParticipant);
-      AliquotManagetService.initialize(labParticipant.tubes);
       _backupJSON = angular.copy(labParticipant);
+      LaboratoryConfigurationService.initialize(labConfig, selectedParticipant);
+      _tubeHandling();
+    }
+
+    function _tubeHandling() {
+      self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, labConfig, loggedUser);
+      AliquotManagetService.initialize(self.tubes);
     }
 
     function toJSON() {
