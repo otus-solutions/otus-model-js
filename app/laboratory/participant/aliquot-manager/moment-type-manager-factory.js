@@ -12,6 +12,7 @@
 
     function create(tube) {
       var manager = new MomentTypeManager(tube);
+      console.log(manager);
       return manager;
     }
 
@@ -41,7 +42,7 @@
     function onInit() {}
 
     function addTube(tube) {
-      self.collectedAliquots.concat(tube.aliquotes);
+      self.collectedAliquots = self.collectedAliquots.concat(tube.aliquotes);
       self.tubeList.push(tube);
     }
 
