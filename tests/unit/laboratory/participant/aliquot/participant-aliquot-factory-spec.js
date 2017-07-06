@@ -57,20 +57,39 @@ fdescribe('ParticipantAliquotFactory', function() {
   });
 
   describe('the Aliquot descriptor filler', function() {
-     var aliquot;
-     var aliquotDescriptor;
-     beforeEach(function(){
-        aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
-        aliquotDescriptor = Mock.LaboratoryConfigurationService
-                           .getAliquotDescriptor(Mock.aliquotInfo.name, Mock.singleTube.moment,
-                                                Mock.singleTube.type, Mock.singleTube.groupName);
-     });
+    var aliquot;
+    var aliquotDescriptor;
+    beforeEach(function() {
+      aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
+      aliquotDescriptor = Mock.LaboratoryConfigurationService
+        .getAliquotDescriptor(Mock.aliquotInfo.name, Mock.singleTube.moment,
+          Mock.singleTube.type, Mock.singleTube.groupName);
+    });
 
     it('should attrib the right label for the given aliquot', function() {
       expect(aliquot.label).toEqual(aliquotDescriptor.label);
     });
 
   });
+
+  describe('the transformatio from EmptyAliquot to Aliquot', function() {
+    var emptyAliquot;
+    var aliquotDescriptor;
+    beforeEach(function() {
+      aliquotDescriptor = Mock.LaboratoryConfigurationService
+        .getAliquotDescriptor(Mock.aliquotInfo.name, Mock.singleTube.moment,
+          Mock.singleTube.type, Mock.singleTube.groupName);
+      emptyAliquot = factory.buildEmptyAliquots([aliquotDescriptor])[0];
+    });
+
+    it('should be possible to turn an empty aliquot into a new aliquot', function() {
+      var newAliquot = factory.create([emptyAliquot], Mock.singleTube);
+      expect(newAliquot.objectType).toEqual("Aliquot");
+      expect(newAliquot.code).not.toEqual("");  // TODO:
+    });
+
+  });
+
 
   function mockAliquoteCollectionDataFactory(_$injector_) {
     Mock.AliquotCollectionDataFactory = _$injector_.get('otusjs.laboratory.AliquotCollectionDataFactory');
@@ -100,6 +119,6 @@ fdescribe('ParticipantAliquotFactory', function() {
   }
 
   function mockAliquotInfo() {
-     Mock.aliquotInfo = Mock.singleTube.aliquotes[0];
+    Mock.aliquotInfo = Mock.singleTube.aliquotes[0];
   }
 });

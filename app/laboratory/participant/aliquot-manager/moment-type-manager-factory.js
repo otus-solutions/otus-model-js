@@ -11,8 +11,7 @@
     self.create = create;
 
     function create(tube) {
-      var manager = new MomentTypeManager(tube);
-      console.log(manager);
+      var manager = new MomentTypeManager(tube);      
       return manager;
     }
 

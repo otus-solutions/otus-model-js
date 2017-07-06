@@ -22,7 +22,6 @@
     }
 
     function fromJSON(aliquotsArray, tubeInfo) {
-      console.log(JSON.stringify(aliquotsArray));
       return aliquotsArray.map(function(aliquotInfo) {
         return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
       });
@@ -30,9 +29,8 @@
 
     function buildEmptyAliquots(aliquotConfigArray) {
       return aliquotConfigArray.map(function(aliquotConfig) {
-        return new EmptyParticipantAliquot(aliquotConfig);
+        return new EmptyParticipantAliquot(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotConfig);
       });
-
     }
 
     return self;
@@ -43,7 +41,7 @@
     var _aliquotDescriptor;
 
     /* Public Interface*/
-    self.objectType = aliquotInfo.objectType || "Aliquot";
+    self.objectType = "Aliquot";
     self.name = aliquotInfo.name;
     self.role = aliquotInfo.role;
 
@@ -82,12 +80,12 @@
     }
   }
 
-  function EmptyParticipantAliquot(aliquotConfig) {
+  function EmptyParticipantAliquot(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotConfig) {
     var self = this;
     var _aliquotDescriptor;
 
     /* Public Interface*/
-    self.objectType = aliquotConfig.objectType || "Aliquot";
+    self.objectType = aliquotConfig.objectType || "EmptyAliquot";
     self.name = aliquotConfig.name;
     self.role = aliquotConfig.role;
     self.collectionData = {};
