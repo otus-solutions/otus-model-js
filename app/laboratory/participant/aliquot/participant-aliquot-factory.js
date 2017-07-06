@@ -93,12 +93,14 @@
     self.collectionData = {};
     self.toAliquot = toAliquot;
 
-    function onInit() {
+    onInit();
 
+    function onInit() {
+      _runDescriptors();
     }
 
-    function _runDescriptors(aliquotDescriptor) {
-      self.label = aliquotDescriptor.label;
+    function _runDescriptors() {
+      self.label = aliquotConfig.label;
     }
 
     function toAliquot(tube, code) {
