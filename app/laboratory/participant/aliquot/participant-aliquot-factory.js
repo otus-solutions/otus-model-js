@@ -51,9 +51,7 @@
 
     self.code = aliquotInfo.code || '';
     self.container = aliquotInfo.container || ''; //TODO get container by aliquot code
-    //TODO check what to do when aliquotInfo is empty
-    self.collectionData = aliquotInfo.collectionData ? AliquotCollectionDataFactory.create(aliquotInfo.collectionData) : {};
-    self.fillFromJson = fillFromJson;
+    self.collectionData = AliquotCollectionDataFactory.create(aliquotInfo.collectionData);
     // self.toJSON = toJSON;
 
     //Custom
@@ -70,11 +68,6 @@
 
     function _runDescriptors(aliquotDescriptor) {
       self.label = aliquotDescriptor.label;
-    }
-
-    function fillFromJson(jsonAliquot){
-      // console.log(self);
-      // console.log(jsonAliquot);
     }
 
     function toJSON() {
@@ -117,7 +110,5 @@
     function fillAliquotInfo(operator) {
 
     }
-
-
   }
 }());

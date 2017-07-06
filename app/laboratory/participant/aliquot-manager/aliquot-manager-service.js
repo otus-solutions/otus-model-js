@@ -33,7 +33,7 @@
         });
         if (momentType) {
            momentType.addTube(tube);
-        }else {
+        } else {
            var newMomentType = _buildMomentType(tube);
            newMomentType.addTube(tube);
            _momentTypeList.push(newMomentType);

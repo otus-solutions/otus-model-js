@@ -101,7 +101,6 @@
         return aliquot.code == code;
       });
       self.aliquots.slice(indexToRemove, 1);
-
     }
 
     function toJSON() {

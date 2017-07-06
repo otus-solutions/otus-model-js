@@ -11,7 +11,8 @@
     self.create = create;
 
     function create(collectionInfo) {
-      return new AliquotCollectionData(collectionInfo);
+      var _collectionInfo = collectionInfo || {};
+      return new AliquotCollectionData(_collectionInfo);
     }
 
     return self;
