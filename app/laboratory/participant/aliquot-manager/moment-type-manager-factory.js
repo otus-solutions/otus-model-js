@@ -39,6 +39,7 @@
 
     self.addTube = addTube;
     self.setAvailableAliquots = setAvailableAliquots;
+    self.persist = persist;
 
     onInit();
 
@@ -59,7 +60,7 @@
       if (forceResult) {
          defer.resolve(aliquotsArray);
       }else {
-         defer.reject(aliquotsArray);
+         defer.reject(aliquotsArray.slice(1,4));
       }
 
       return defer.promise;
