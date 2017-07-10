@@ -17,14 +17,18 @@
     self.fromJSON = fromJSON;
     self.buildEmptyAliquots = buildEmptyAliquots;
 
-    function create(aliquotInfo, tubeInfo) {
-      return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
-    }
-
     function fromJSON(aliquotsArray, tubeInfo) {
+      //builds the aliquots array that comes along with the tube from base
       return aliquotsArray.map(function(aliquotInfo) {
         return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
       });
+    }
+
+    function create(aliquotInfo, tubeInfo, aliquotCode) {
+      //used to build an filled aliquot
+      var newInfo = angular.copy(aliquotInfo);
+      newInfo.code = aliquotCode;
+      return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, newInfo, tubeInfo);
     }
 
     function buildEmptyAliquots(aliquotConfigArray) {
@@ -49,6 +53,10 @@
 
     self.code = aliquotInfo.code || '';
     self.container = aliquotInfo.container || ''; //TODO get container by aliquot code
+
+    //TODO implement
+    // self.container = LaboratoryConfigurationService.getAliquotContainer(code);
+
     self.collectionData = AliquotCollectionDataFactory.create(aliquotInfo.collectionData);
     // self.toJSON = toJSON;
 
@@ -88,7 +96,7 @@
     self.objectType = aliquotConfig.objectType || "EmptyAliquot";
     self.name = aliquotConfig.name;
     self.role = aliquotConfig.role;
-    self.collectionData = {};
+    self.collectionData = {};  // TODO: check how this comes empty from backend
     self.toAliquot = toAliquot;
 
     onInit();
@@ -99,12 +107,6 @@
 
     function _runDescriptors() {
       self.label = aliquotConfig.label;
-    }
-
-    function toAliquot(tube, code) {
-      self.tubeCode = tube.code;
-      //TODO implement
-      // self.container = LaboratoryConfigurationService.getAliquotContainer(code);
     }
 
     function fillAliquotInfo(operator) {

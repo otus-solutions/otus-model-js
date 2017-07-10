@@ -93,14 +93,14 @@
 
     function toAliquot(aliquotInfo, code) {
       //TODO check if code fits
-      self.aliquotes.push(ParticipantAliquotFactory.create(aliquotInfo, code));
+      self.aliquotes.push(ParticipantAliquotFactory.create(aliquotInfo, code, self));
     }
 
     function unAliquot(code) {
       var indexToRemove = self.aliquots.findIndex(function(aliquot) {
         return aliquot.code == code;
       });
-      self.aliquots.slice(indexToRemove, 1);
+      return self.aliquots.slice(indexToRemove, 1);
     }
 
     function toJSON() {
