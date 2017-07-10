@@ -1,4 +1,4 @@
-fdescribe('ParticipantAliquotFactory', function() {
+describe('ParticipantAliquotFactory', function() {
   var Mock = {};
 
   beforeEach(function() {
@@ -14,7 +14,7 @@ fdescribe('ParticipantAliquotFactory', function() {
 
     mockSelectedParticipant();
     mockLabDescriptors();
-    mockLabParticipant();
+    mockParticipantLaboratory();
     mockSingleTube();
     mockAliquotInfo();
     Mock.LaboratoryConfigurationService.initialize(Mock.LabDescriptors, Mock.SelectedParticipant);
@@ -106,7 +106,7 @@ fdescribe('ParticipantAliquotFactory', function() {
     Mock.SelectedParticipant = angular.copy(Test.utils.data.selectedParticipant); //json-importer.js
   }
 
-  function mockLabParticipant() {
+  function mockParticipantLaboratory() {
     Mock.ParticipantLaboratory = Test.utils.data.participantLaboratory; //json-importer.js
   }
 

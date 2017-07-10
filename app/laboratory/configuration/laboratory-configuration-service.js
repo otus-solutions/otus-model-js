@@ -15,6 +15,7 @@
     self.getAvaiableAliquots = getAvaiableAliquots;
     self.getTubeDescriptor = getTubeDescriptor;
     self.getMomentDescriptor = getMomentDescriptor;
+    self.getAliquotContainer = getAliquotContainer;
 
     function initialize(labDescriptor, selectedParticipant) {
       _laboratoryDescriptor = labDescriptor;
@@ -80,6 +81,28 @@
         .find(function(aliquotDescriptor) {
           return aliquotDescriptor.name === aliquotName;
         });
+    }
+
+    function getAliquotContainer(code) {
+      //given the aliquot code, return the aliquot container
+      // TODO: test
+      var TOKEN_POSITION = 2;
+
+      var stringfiedCode = String(code);
+      var tubeToken = String(_laboratoryDescriptor.codeConfiguration.tubeToken);
+      var palletToken = String(_laboratoryDescriptor.codeConfiguration.palletToken);
+      var cryotubeToken = String(_laboratoryDescriptor.codeConfiguration.cryotubeToken);
+
+      switch (stringfiedCode[TOKEN_POSITION]) {
+        case tubeToken:
+          return 'tube';
+        case palletToken:
+          return 'pallet';
+        case cryotubeToken:
+          return 'cryotube';
+        default:
+          return '';
+      }
     }
 
     return self;

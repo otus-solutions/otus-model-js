@@ -97,7 +97,6 @@
     self.name = aliquotConfig.name;
     self.role = aliquotConfig.role;
     self.collectionData = {};  // TODO: check how this comes empty from backend
-    self.toAliquot = toAliquot;
 
     onInit();
 
