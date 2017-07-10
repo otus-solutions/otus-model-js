@@ -5,13 +5,17 @@
     .module('otusjs.laboratory')
     .factory('otusjs.laboratory.MomentTypeManagerFactory', factory);
 
-  function factory() {
+    factory.$inject = [
+      '$q'
+   ];
+
+  function factory($q) {
     var self = this;
 
     self.create = create;
 
     function create(tube) {
-      var manager = new MomentTypeManager(tube);      
+      var manager = new MomentTypeManager(tube);
       return manager;
     }
 
@@ -49,6 +53,17 @@
       self.availableAliquots = availableAliquots;
     }
 
+
+    function persist(aliquotsArray, forceResult) {
+      var defer = $q.defer();
+      if (forceResult) {
+         defer.resolve(aliquotsArray);
+      }else {
+         defer.reject(aliquotsArray);
+      }
+
+      return defer.promise;
+    }
 
   }
 }());

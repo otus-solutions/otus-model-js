@@ -89,16 +89,18 @@
       var TOKEN_POSITION = 2;
 
       var stringfiedCode = String(code);
-      var tubeToken = String(_laboratoryDescriptor.codeConfiguration.tubeToken);
-      var palletToken = String(_laboratoryDescriptor.codeConfiguration.palletToken);
-      var cryotubeToken = String(_laboratoryDescriptor.codeConfiguration.cryotubeToken);
+      var tubeToken = _laboratoryDescriptor.codeConfiguration.tubeToken;
+      var palletToken = _laboratoryDescriptor.codeConfiguration.palletToken;
+      var cryotubeToken = _laboratoryDescriptor.codeConfiguration.cryotubeToken;
 
-      switch (stringfiedCode[TOKEN_POSITION]) {
-        case tubeToken:
+      var token = stringfiedCode[TOKEN_POSITION];
+
+      switch (true) {
+        case token == tubeToken:
           return 'tube';
-        case palletToken:
+        case token == palletToken:
           return 'pallet';
-        case cryotubeToken:
+        case token == cryotubeToken:
           return 'cryotube';
         default:
           return '';
