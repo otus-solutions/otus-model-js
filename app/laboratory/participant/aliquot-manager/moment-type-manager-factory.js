@@ -5,7 +5,7 @@
     .module('otusjs.laboratory')
     .factory('otusjs.laboratory.MomentTypeManagerFactory', factory);
 
-    factory.$inject = [
+  factory.$inject = [
       '$q'
    ];
 
@@ -15,14 +15,14 @@
     self.create = create;
 
     function create(tube) {
-      var manager = new MomentTypeManager(tube);
+      var manager = new MomentTypeManager($q, tube);
       return manager;
     }
 
     return self;
   }
 
-  function MomentTypeManager(tube) {
+  function MomentTypeManager($q, tube) {
     var self = this;
 
     /* Public Interface */
@@ -57,14 +57,26 @@
 
     function persist(aliquotsArray, forceResult) {
       var defer = $q.defer();
+
+      //generate new TubesArray
+
+      aliquotsArray.forEach(function(aliquot) {
+         var tube = _findTube(aliquot.tubeCode);
+         tube.toAliquot(aliquot);
+      });
+
+      // return new TubesArray
+
       if (forceResult) {
-         defer.resolve(aliquotsArray);
-      }else {
-         defer.reject(aliquotsArray.slice(1,4));
+        defer.resolve(aliquotsArray);
+      } else {
+        defer.reject(aliquotsArray.slice(1, 4));
       }
 
       return defer.promise;
     }
+
+
 
   }
 }());
