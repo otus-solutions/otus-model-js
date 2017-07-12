@@ -31,8 +31,7 @@
     self.toJSON = toJSON;
 
     function fill(operator) {
-      self.isCollected = true;
-      self.metadata = "";
+      self.metadata = "";  // TODO:
       self.operator = operator.email;
       self.time = new Date().toISOString();
     }
@@ -40,7 +39,6 @@
     function toJSON() {
       return {
         objectType: self.objectType,
-        isCollected: self.isCollected,
         metadata: self.metadata,
         operator: self.operator,
         time: self.time

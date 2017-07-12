@@ -6,12 +6,10 @@
     .service('otusjs.laboratory.AliquotManagerService', service);
 
   service.$inject = [
-      'otusjs.laboratory.ParticipantAliquotFactory',
-      'otusjs.laboratory.LaboratoryConfigurationService',
       'otusjs.laboratory.MomentTypeManagerFactory'
     ];
 
-  function service(ParticipantAliquotFactory, LaboratoryConfigurationService, MomentTypeManagerFactory) {
+  function service(MomentTypeManagerFactory) {
     var self = this;
     var _momentTypeList = [];
 
@@ -41,10 +39,9 @@
       });
 
       function _buildMomentType(tube) {
-         var availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(tube.moment, tube.type, tube.groupName);
-
+         var availableAliquots = tube.availableAliquots;
          var newMomentType = MomentTypeManagerFactory.create(tube);
-         newMomentType.setAvailableAliquots(ParticipantAliquotFactory.buildEmptyAliquots(availableAliquots));
+         newMomentType.setAvailableAliquots(availableAliquots);
          return newMomentType;
       }
     }

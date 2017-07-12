@@ -24,13 +24,13 @@
 
 
     function create(tubeInfo, operator) {
-      var tube = new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService);
+      var tube = new Tube(tubeInfo, operator, TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService);
       return tube;
     }
 
     function buildFromArray(tubeArray, operator) {
       return tubeArray.map(function(tubeInfo) {
-        return new Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService);
+        return new Tube(tubeInfo, operator, TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService);
       });
     }
 
@@ -38,7 +38,7 @@
     return self;
   }
 
-  function Tube(tubeInfo, TubeCollectionDataFactory, operator, ParticipantAliquotFactory, LaboratoryConfigurationService) {
+  function Tube(tubeInfo, operator, TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService) {
     var self = this;
     var _labConfig;
     var _operator;
@@ -83,17 +83,20 @@
     }
 
     function _manageAliquots() {
-      var _avaiableAliquotes = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type, self.groupName);
-
+      var availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type, self.groupName);
+      // self.availableAliquots = ParticipantAliquotFactory.buildEmptyAliquots(availableAliquots);
+      self.availableAliquots = availableAliquots;
     }
 
     function collect() {
       self.tubeCollectionData.fill(_operator);
     }
 
-    function toAliquot(aliquotInfo, code) {
+    function toAliquot(aliquotInfo) { // TODO: remove 'code' by improving EmptyParticipantAliquot
       //TODO check if code fits
-      self.aliquotes.push(ParticipantAliquotFactory.create(aliquotInfo, code, self));
+      var newAliquot = ParticipantAliquotFactory.create(aliquotInfo, self);
+      newAliquot.collect(_operator);
+      self.aliquotes.push(newAliquot);
     }
 
     function unAliquot(code) {

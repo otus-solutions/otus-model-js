@@ -15,7 +15,6 @@
 
     self.create = create;
     self.fromJSON = fromJSON;
-    self.buildEmptyAliquots = buildEmptyAliquots;
 
     function fromJSON(aliquotsArray, tubeInfo) {
       //builds the aliquots array that comes along with the tube from base
@@ -24,19 +23,11 @@
       });
     }
 
-    function create(aliquotInfo, tubeInfo, aliquotCode) {
+    function create(aliquotInfo, tubeInfo) {
       //used to build an filled aliquot
       var newInfo = angular.copy(aliquotInfo);
-      newInfo.code = aliquotCode;
       return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, newInfo, tubeInfo);
     }
-
-    function buildEmptyAliquots(aliquotConfigArray) {
-      return aliquotConfigArray.map(function(aliquotConfig) {
-        return new EmptyParticipantAliquot(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotConfig);
-      });
-    }
-
     return self;
   }
 
@@ -48,22 +39,19 @@
     self.objectType = "Aliquot";
     self.name = aliquotInfo.name;
     self.role = aliquotInfo.role;
+    self.code = aliquotInfo.code || aliquotInfo.aliquotCode; //.aliquotCode
+    self.container = aliquotInfo.container; //TODO get container by aliquot code
 
-    // -------
-
-    self.code = aliquotInfo.code || '';
-    self.container = aliquotInfo.container || ''; //TODO get container by aliquot code
 
     //TODO implement
     // self.container = LaboratoryConfigurationService.getAliquotContainer(code);
 
     self.collectionData = AliquotCollectionDataFactory.create(aliquotInfo.collectionData);
+    self.collect = collect;
     // self.toJSON = toJSON;
 
     //Custom
     self.tubeCode = tubeInfo.code;
-
-
 
     onInit();
 
@@ -76,7 +64,12 @@
       self.label = aliquotDescriptor.label;
     }
 
+    function collect(operator) {
+      self.collectionData.fill(operator);
+    }
+
     function toJSON() {
+      // TODO: complete fields
       var json = {
         objectType: self.objectType,
         code: self.code,
@@ -87,30 +80,4 @@
       return json;
     }
   }
-
-  function EmptyParticipantAliquot(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotConfig) {
-    var self = this;
-    var _aliquotDescriptor;
-
-    /* Public Interface*/
-    self.objectType = aliquotConfig.objectType || "EmptyAliquot";
-    self.name = aliquotConfig.name;
-    self.role = aliquotConfig.role;
-    self.collectionData = {};  // TODO: check how this comes empty from backend
-
-    onInit();
-
-    function onInit() {
-      _runDescriptors();
-    }
-
-    function _runDescriptors() {
-      self.label = aliquotConfig.label;
-    }
-
-    function fillAliquotInfo(operator) {
-
-    }
-  }
-  
 }());
