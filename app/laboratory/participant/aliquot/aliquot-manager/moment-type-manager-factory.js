@@ -39,7 +39,7 @@
 
     self.addTube = addTube;
     self.setAvailableAliquots = setAvailableAliquots;
-    self.persist = persist;
+    self.getPersistanceStructure = getPersistanceStructure;
 
     onInit();
 
@@ -55,19 +55,9 @@
     }
 
 
-    function persist(aliquotsArray, forceResult) {
-      var defer = $q.defer();
-
+    function getPersistanceStructure(aliquotsArray, forceResult) {
       var persistanceStructure = _buildPersistanceStructure(aliquotsArray);
-
-      if (forceResult) {
-        defer.resolve(persistanceStructure);
-      } else {
-        defer.reject(persistanceStructure);
-      }
-
-      return defer.promise;
-
+      return persistanceStructure;
     }
 
     function _buildPersistanceStructure(aliquotsArray) {
