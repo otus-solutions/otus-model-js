@@ -57,7 +57,7 @@
 
     function getPersistanceStructure(aliquotsArray, forceResult) {
       var persistanceStructure = _buildPersistanceStructure(aliquotsArray);
-      return persistanceStructure;
+      return JSON.stringify(persistanceStructure);
     }
 
     function _buildPersistanceStructure(aliquotsArray) {

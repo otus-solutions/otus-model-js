@@ -73,10 +73,11 @@
       var json = {
         objectType: self.objectType,
         code: self.code,
+        name : self.name,
+        container: self.container,
         role: self.role,
-        container: self.container
+        collectionData: self.collectionData
       };
-
       return json;
     }
   }
