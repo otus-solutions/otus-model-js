@@ -57,13 +57,10 @@
 
     function getPersistanceStructure(aliquotsArray, forceResult) {
       var persistanceStructure = _buildPersistanceStructure(aliquotsArray);
-      return JSON.stringify(persistanceStructure);
+      return persistanceStructure;
     }
 
     function _buildPersistanceStructure(aliquotsArray) {
-      var dummyCollectedAliquots = getDummyCollectedAliquots();
-      aliquotsArray = angular.copy(dummyCollectedAliquots);
-
       var auxTubeList = angular.copy(self.tubeList);
 
       var tubeMaps = _buildMaps();
@@ -74,7 +71,7 @@
         });
       });
 
-      var returning = {tubes: auxTubeList}; // TODO: build full new structure
+      var returning = {tubes: auxTubeList};
       return JSON.stringify(returning);
 
       function _buildMaps() {
