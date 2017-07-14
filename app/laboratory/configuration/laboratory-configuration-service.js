@@ -33,21 +33,21 @@
     }
 
     function getMomentDescriptor(momentName) {
-      return _laboratoryDescriptor.collectMomentConfiguration.momentDescriptors.find(function(descriptor) {
+      return _laboratoryDescriptor.collectMomentConfiguration.collectMomentDescriptors.find(function(descriptor) {
         return descriptor.name == momentName;
       });
     }
 
     function getAvaiableAliquots(momentName, tubeType, groupName) {
-      return _laboratoryDescriptor.aliquotConfiguration
+      var centerDescriptor = _laboratoryDescriptor.aliquotConfiguration
         .aliquotCenterDescriptors
         .find(function(centerDescriptor) {
           return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
-        })
-        .aliquotGroupDescriptors
-        .find(function(groupDescriptor) {
-          return groupDescriptor.name === groupName;
-        })
+        });
+
+      var groupDescriptor = _getGroupDescriptor();
+
+      return groupDescriptor
         .aliquotMomentDescriptors
         .find(function(momentDescriptor) {
           return momentDescriptor.name === momentName;
@@ -57,6 +57,18 @@
           return typeDescriptor.name === tubeType;
         })
         .aliquots;
+
+      function _getGroupDescriptor() {
+        return centerDescriptor
+          .aliquotGroupDescriptors
+          .find(function(groupDescriptor) {
+            return groupDescriptor.name === groupName;
+          }) || centerDescriptor
+          .aliquotGroupDescriptors
+          .find(function(groupDescriptor) {
+            return groupDescriptor.name === 'DEFAULT';
+          });
+      }
     }
 
     function getAliquotDescriptor(aliquotName, momentName, tubeType, groupName) {
@@ -97,11 +109,11 @@
 
       switch (true) {
         case token == tubeToken:
-          return 'tube';
+          return 'TUBE';
         case token == palletToken:
-          return 'pallet';
+          return 'PALLET';
         case token == cryotubeToken:
-          return 'cryotube';
+          return 'CRYOTUBE';
         default:
           return '';
       }

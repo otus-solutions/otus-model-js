@@ -20,25 +20,25 @@ describe('ParticipantAliquotFactory', function() {
     Mock.LaboratoryConfigurationService.initialize(Mock.LabDescriptors, Mock.SelectedParticipant);
   });
   describe('the creation method', function() {
-    it('should create an aliquote typed object', function() {
-      var aliquote = factory.create(Mock.aliquotInfo, Mock.singleTube);
+    it('should create an aliquot typed object', function() {
+      var aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
 
-      expect(aliquote.objectType).toEqual('Aliquot');
+      expect(aliquot.objectType).toEqual('Aliquot');
     });
 
     it('should generate the same values for this fields', function() {
-      var aliquote = factory.create(Mock.aliquotInfo, Mock.singleTube);
-      expect(aliquote.objectType).toEqual(Mock.aliquotInfo.objectType);
-      expect(aliquote.code).toEqual(Mock.aliquotInfo.code);
-      expect(aliquote.name).toEqual(Mock.aliquotInfo.name);
-      expect(aliquote.container).toEqual(Mock.aliquotInfo.container);
-      expect(aliquote.role).toEqual(Mock.aliquotInfo.role);
+      var aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
+      expect(aliquot.objectType).toEqual(Mock.aliquotInfo.objectType);
+      expect(aliquot.code).toEqual(Mock.aliquotInfo.code);
+      expect(aliquot.name).toEqual(Mock.aliquotInfo.name);
+      expect(aliquot.container).toEqual(Mock.aliquotInfo.container);
+      expect(aliquot.role).toEqual(Mock.aliquotInfo.role);
     });
 
     it('should not call the AliquotCollectionDataFactory when any collectionData is given', function() {
       //TODO check what to do when collectionData comes empty
       Mock.aliquotInfo.collectionData = null;
-      var aliquote = factory.create(Mock.aliquotInfo, Mock.singleTube);
+      var aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
       // expect(Mock.AliquotCollectionDataFactory.create).not.toHaveBeenCalled();
     });
 
@@ -51,7 +51,7 @@ describe('ParticipantAliquotFactory', function() {
         time: '2017-06-26T05:50:19.434Z',
         operator: 'lalala@gmail.com'
       };
-      var aliquote = factory.create(Mock.aliquotInfo, Mock.singleTube);
+      var aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
       expect(Mock.AliquotCollectionDataFactory.create).toHaveBeenCalledWith(Mock.aliquotInfo.collectionData);
     });
   });
@@ -119,6 +119,6 @@ describe('ParticipantAliquotFactory', function() {
   }
 
   function mockAliquotInfo() {
-    Mock.aliquotInfo = Mock.singleTube.aliquotes[0];
+    Mock.aliquotInfo = Mock.singleTube.aliquots[0];
   }
 });

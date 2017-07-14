@@ -40,6 +40,6 @@ fdescribe('a test', function() {
   }
 
   function mockAliquotInfo() {
-    Mock.aliquotInfo = Mock.singleTube.aliquotes[0];
+    Mock.aliquotInfo = Mock.singleTube.aliquots[0];
   }
 });

@@ -46,7 +46,7 @@
     //TODO implement
     // self.container = LaboratoryConfigurationService.getAliquotContainer(code);
 
-    self.collectionData = AliquotCollectionDataFactory.create(aliquotInfo.collectionData);
+    self.aliquotCollectionData = AliquotCollectionDataFactory.create(aliquotInfo.aliquotCollectionData);
     self.collect = collect;
     // self.toJSON = toJSON;
 
@@ -65,7 +65,7 @@
     }
 
     function collect(operator) {
-      self.collectionData.fill(operator);
+      self.aliquotCollectionData.fill(operator);
     }
 
     function toJSON() {
@@ -76,8 +76,9 @@
         name : self.name,
         container: self.container,
         role: self.role,
-        collectionData: self.collectionData
+        aliquotCollectionData: self.aliquotCollectionData
       };
+      console.log(json);
       return json;
     }
   }

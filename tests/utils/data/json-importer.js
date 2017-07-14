@@ -24,6 +24,16 @@ Test.utils.data.selectedParticipant = {
   stringfiedRN: "5003388"
 };
 
+Test.utils.data.otusLoggedUser = {
+  "name": "Fulano",
+  "surname": "Detal",
+  "fieldCenter": {},
+  "phone": "51999999999",
+  "email": "fulanodetal@mail.com",
+  "token": "edasEQW"
+};
+
+
 Test.utils.data.latestSurveyTemplate = {
   "extents": "StudioObject",
   "objectType": "Survey",
@@ -1882,13 +1892,14 @@ Test.utils.data.participantLaboratory = {
     "moment": "FASTING",
     "code": "341002263",
     "groupName": "DEFAULT",
-    "aliquotes": [{
+    "aliquots": [{
       "objectType": "Aliquot",
       "code": 34200252,
       "name": "BIOSORO",
-      "container": "CRIOTUBE",
-      "role": "exam",
+      "container": "CRYOTUBE",
+      "role": "EXAM",
       "collectionData": {
+        "objectType": "AliquotCollectionData",
         "metadata": "",
         "operator": "LALA@GMAIL.COM",
         "time": "2017-06-22T21:43:06.086Z"
@@ -1908,7 +1919,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "FASTING",
     "code": "361009386",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 2,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -1923,7 +1934,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "FASTING",
     "code": "361009389",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 3,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -1938,7 +1949,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "FASTING",
     "code": "361009381",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 4,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -1953,7 +1964,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "FASTING",
     "code": "361009382",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 5,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -1968,7 +1979,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "FASTING",
     "code": "361009383",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 6,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -1983,7 +1994,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "FASTING",
     "code": "361009387",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 7,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -1998,7 +2009,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "FASTING",
     "code": "361009388",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 8,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -2013,7 +2024,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "POST_OVERLOAD",
     "code": "361009390",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 9,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -2028,7 +2039,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "POST_OVERLOAD",
     "code": "361009391",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 10,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -2043,7 +2054,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "POST_OVERLOAD",
     "code": "361009385",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 11,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -2058,7 +2069,7 @@ Test.utils.data.participantLaboratory = {
     "moment": "NONE",
     "code": "361009384",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 12,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -2079,6 +2090,7 @@ Test.utils.data.laboratoryConfiguration = {
     "lastInsertion": 738
   },
   "aliquotConfiguration": {
+    "objectType": "AliquotConfiguration",
     "aliquotCenterDescriptors": [{
       "objectType": "AliquotCenterDescriptor",
       "name": "RS",
@@ -2095,26 +2107,57 @@ Test.utils.data.laboratoryConfiguration = {
               "objectType": "AliquotDescriptor",
               "name": "BIOSORO",
               "label": "Bioquímica Soro",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "PCR",
               "label": "PCR",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "FASTING_INSULINE",
               "label": "Insulina Jejum",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "STORAGE",
               "label": "Armazenamento",
-              "role": "storage",
-              "quantity": 8
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
             }]
           }, {
             "objectType": "AliquotTypesDescriptor",
@@ -2123,26 +2166,42 @@ Test.utils.data.laboratoryConfiguration = {
               "objectType": "AliquotDescriptor",
               "name": "BIOSORO",
               "label": "Bioquímica Soro",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "PCR",
               "label": "PCR",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "FASTING_INSULINE",
               "label": "Insulina Jejum",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "STORAGE",
               "label": "Armazenamento",
-              "role": "storage",
-              "quantity": 8
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
             }]
           }, {
             "objectType": "AliquotTypesDescriptor",
@@ -2151,26 +2210,47 @@ Test.utils.data.laboratoryConfiguration = {
               "objectType": "AliquotDescriptor",
               "name": "BIOSORO",
               "label": "Bioquímica Soro",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "PCR",
               "label": "PCR",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "FASTING_INSULINE",
               "label": "Insulina Jejum",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "STORAGE",
               "label": "Armazenamento",
-              "role": "storage",
-              "quantity": 8
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
             }]
           }]
         }, {
@@ -2183,26 +2263,32 @@ Test.utils.data.laboratoryConfiguration = {
               "objectType": "AliquotDescriptor",
               "name": "BIOSORO",
               "label": "Bioquímica Soro",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "PCR",
               "label": "PCR",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "FASTING_INSULINE",
               "label": "Insulina Jejum",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "STORAGE",
               "label": "Armazenamento",
-              "role": "storage",
-              "quantity": 8
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
             }]
           }, {
             "objectType": "AliquotTypesDescriptor",
@@ -2211,26 +2297,42 @@ Test.utils.data.laboratoryConfiguration = {
               "objectType": "AliquotDescriptor",
               "name": "BIOSORO",
               "label": "Bioquímica Soro",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "PCR",
               "label": "PCR",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "FASTING_INSULINE",
               "label": "Insulina Jejum",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "STORAGE",
               "label": "Armazenamento",
-              "role": "storage",
-              "quantity": 8
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
             }]
           }]
         }, {
@@ -2243,284 +2345,432 @@ Test.utils.data.laboratoryConfiguration = {
               "objectType": "AliquotDescriptor",
               "name": "BIOSORO",
               "label": "Bioquímica Soro",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "PCR",
               "label": "PCR",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "FASTING_INSULINE",
               "label": "Insulina Jejum",
-              "role": "exam",
-              "quantity": 1
+              "role": "exam"
             }, {
               "objectType": "AliquotDescriptor",
               "name": "STORAGE",
               "label": "Armazenamento",
-              "role": "storage",
-              "quantity": 8
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
             }]
           }]
         }]
       }]
+    }, {
+      "objectType": "AliquotCenterDescriptor",
+      "name": "MG",
+      "aliquotGroupDescriptors": [{
+        "objectType": "AliquotGroupDescriptor",
+        "name": "DEFAULT",
+        "aliquotMomentDescriptors": [{
+          "objectType": "AliquotMomentDescriptor",
+          "name": "FASTING",
+          "aliquotTypesDescriptors": [{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "GEL",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }]
+          }, {
+            "objectType": "AliquotTypesDescriptor",
+            "name": "EDTA",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }]
+          }, {
+            "objectType": "AliquotTypesDescriptor",
+            "name": "FLUORIDE",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }]
+          }]
+        }, {
+          "objectType": "AliquotMomentDescriptor",
+          "name": "POST_OVERLOAD",
+          "aliquotTypesDescriptors": [{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "GEL",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }]
+          }, {
+            "objectType": "AliquotTypesDescriptor",
+            "name": "FLUORIDE",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }]
+          }]
+        }, {
+          "objectType": "AliquotMomentDescriptor",
+          "name": "NONE",
+          "aliquotTypesDescriptors": [{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "URINE",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }]
+          }]
+        }]
+      }]
+    }, {
+
+      "objectType": "AliquotCenterDescriptor",
+      "name": "SP",
+      "aliquotGroupDescriptors": [{
+        "objectType": "AliquotGroupDescriptor",
+        "name": "DEFAULT",
+        "aliquotMomentDescriptors": [{
+          "objectType": "AliquotMomentDescriptor",
+          "name": "FASTING",
+          "aliquotTypesDescriptors": [{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "GEL",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }]
+          }, {
+            "objectType": "AliquotTypesDescriptor",
+            "name": "EDTA",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }]
+          }, {
+            "objectType": "AliquotTypesDescriptor",
+            "name": "FLUORIDE",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }]
+          }]
+        }, {
+          "objectType": "AliquotMomentDescriptor",
+          "name": "POST_OVERLOAD",
+          "aliquotTypesDescriptors": [{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "GEL",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }]
+          }, {
+            "objectType": "AliquotTypesDescriptor",
+            "name": "FLUORIDE",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }]
+          }]
+        }, {
+          "objectType": "AliquotMomentDescriptor",
+          "name": "NONE",
+          "aliquotTypesDescriptors": [{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "URINE",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "exam"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "storage"
+            }]
+          }]
+        }]
+      }]
+
+    }],
+    "containerDescriptor": [{
+      "objectType": "ContainerDescriptor",
+      "name": "PALLET",
+      "label": "Palheta"
+    }, {
+      "objectType": "ContainerDescriptor",
+      "name": "CRIOTUBE",
+      "label": "Criotubo"
     }]
   },
-  // "aliquotConfiguration": {
-  //   "objectType": "AliquotConfiguration",
-  //   "aliquotMomentDescriptors": [{
-  //     "objectType": "AliquotMomentDescriptor",
-  //     "name": "FASTING",
-  //     "aliquotTypesDescriptors": [{
-  //       "objectType": "AliquotTypesDescriptor",
-  //       "name": "GEL",
-  //       "aliquotGroupDescriptors": [{
-  //         "objectType": "AliquotGroupDescriptor",
-  //         "name": "DEFAULT",
-  //         "aliquots": [{
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "BIOSORO",
-  //           "label": "Bioquímica Soro",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "PCR",
-  //           "label": "PCR",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "FASTING_INSULINE",
-  //           "label": "Insulina Jejum",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "STORAGE",
-  //           "label": "Armazenamento",
-  //           "role": "storage",
-  //           "quantity": 8
-  //         }]
-  //       }, {
-  //         "objectType": "AliquotGroupDescriptor",
-  //         "name": "CQ1",
-  //         "aliquots": [{
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "BIOSORO",
-  //           "label": "Bioquímica Soro",
-  //           "role": "exam",
-  //           "quantity": 2
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "FASTING_INSULINE",
-  //           "label": "Insulina Jejum",
-  //           "role": "exam",
-  //           "quantity": 2
-  //         }]
-  //       }]
-  //     }, {
-  //       "objectType": "AliquotTypesDescriptor",
-  //       "name": "EDTA",
-  //       "aliquotGroupDescriptors": [{
-  //         "objectType": "AliquotGroupDescriptor",
-  //         "name": "DEFAULT",
-  //         "aliquots": [{
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "BIOSORO",
-  //           "label": "Bioquímica Soro",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "PCR",
-  //           "label": "PCR",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "FASTING_INSULINE",
-  //           "label": "Insulina Jejum",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "STORAGE",
-  //           "label": "Armazenamento",
-  //           "role": "storage",
-  //           "quantity": 8
-  //         }]
-  //       }]
-  //     }, {
-  //       "objectType": "AliquotTypesDescriptor",
-  //       "name": "FLUORIDE",
-  //       "aliquotGroupDescriptors": [{
-  //         "objectType": "AliquotGroupDescriptor",
-  //         "name": "DEFAULT",
-  //         "aliquots": [{
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "BIOSORO",
-  //           "label": "Bioquímica Soro",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "PCR",
-  //           "label": "PCR",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "FASTING_INSULINE",
-  //           "label": "Insulina Jejum",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "STORAGE",
-  //           "label": "Armazenamento",
-  //           "role": "storage",
-  //           "quantity": 8
-  //         }]
-  //       }]
-  //     }]
-  //   }, {
-  //     "objectType": "AliquotMoment",
-  //     "name": "POST_OVERLOAD",
-  //     "aliquotTypesDescriptors": [{
-  //       "objectType": "AliquotTypesDescriptor",
-  //       "name": "GEL",
-  //       "aliquotGroupDescriptors": [{
-  //         "objectType": "AliquotGroupDescriptor",
-  //         "name": "DEFAULT",
-  //         "aliquots": [{
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "BIOSORO",
-  //           "label": "Bioquímica Soro",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "PCR",
-  //           "label": "PCR",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "FASTING_INSULINE",
-  //           "label": "Insulina Jejum",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "STORAGE",
-  //           "label": "Armazenamento",
-  //           "role": "storage",
-  //           "quantity": 8
-  //         }]
-  //       }]
-  //     }, {
-  //       "objectType": "AliquotTypesDescriptor",
-  //       "name": "FLUORIDE",
-  //       "aliquotGroupDescriptors": [{
-  //         "objectType": "AliquotGroupDescriptor",
-  //         "name": "DEFAULT",
-  //         "aliquots": [{
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "BIOSORO",
-  //           "label": "Bioquímica Soro",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "PCR",
-  //           "label": "PCR",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "FASTING_INSULINE",
-  //           "label": "Insulina Jejum",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "STORAGE",
-  //           "label": "Armazenamento",
-  //           "role": "storage",
-  //           "quantity": 8
-  //         }]
-  //       }]
-  //     }]
-  //   }, {
-  //     "objectType": "AliquotMoment",
-  //     "name": "NONE",
-  //     "aliquotTypesDescriptors": [{
-  //       "objectType": "AliquotTypesDescriptor",
-  //       "name": "URINE",
-  //       "aliquotGroupDescriptors": [{
-  //         "objectType": "AliquotGroupDescriptor",
-  //         "name": "DEFAULT",
-  //         "aliquots": [{
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "BIOSORO",
-  //           "label": "Bioquímica Soro",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "PCR",
-  //           "label": "PCR",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "FASTING_INSULINE",
-  //           "label": "Insulina Jejum",
-  //           "role": "exam",
-  //           "quantity": 1
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "STORAGE",
-  //           "label": "Armazenamento",
-  //           "role": "storage",
-  //           "quantity": 8
-  //         }]
-  //       }, {
-  //         "objectType": "AliquotGroupDescriptor",
-  //         "name": "CQ1",
-  //         "aliquots": [{
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "BIOSORO",
-  //           "label": "Bioquímica Soro",
-  //           "role": "exam",
-  //           "quantity": 2
-  //         }, {
-  //           "objectType": "AliquotDescriptor",
-  //           "name": "FASTING_INSULINE",
-  //           "label": "Insulina Jejum",
-  //           "role": "exam",
-  //           "quantity": 2
-  //         }]
-  //       }]
-  //     }]
-  //   }],
-  //   "containerDescriptor": [{
-  //     "objectType": "ContainerDescriptor",
-  //     "name": "PALLET",
-  //     "label": "Palheta"
-  //   }, {
-  //     "objectType": "ContainerDescriptor",
-  //     "name": "CRIOTUBE",
-  //     "label": "Criotubo"
-  //   }]
-  // },
-
-
-
   "tubeConfiguration": {
     "tubeDescriptors": [{
       "name": "FLUORIDE",
@@ -2549,7 +2799,7 @@ Test.utils.data.laboratoryConfiguration = {
     }]
   },
   "collectMomentConfiguration": {
-    "momentDescriptors": [{
+    "collectMomentDescriptors": [{
       "name": "POST_OVERLOAD",
       "label": "Pós"
     }, {
@@ -3087,37 +3337,3 @@ Test.utils.data.laboratoryConfiguration = {
     "label": "Não coletado"
   }]
 };
-
-
-// console.log(Mock.LabDescriptors.aliquotConfiguration.aliquotMomentDescriptors);
-// var aliquotConfiguration = {
-//   "aliquotCenterDescriptors": [{
-//     "objectType": "AliquotCenterDescriptor",
-//     "name": "RS",
-//     "aliquotGroupDescriptors": [{
-//       "objectType": "AliquoteGroupDescriptor",
-//       "name": "DEFAULT",
-//       "aliquotMomentDescriptors": []
-//     }]
-//   }]
-// };
-// var aliquotMomentDescriptors = angular.copy(Mock.LabDescriptors.aliquotConfiguration.aliquotMomentDescriptors);
-// Mock.LabDescriptors.aliquotConfiguration.aliquotMomentDescriptors.forEach(function(moment) {
-//   var momentDesc = {
-//     "objectType": "AliquotMomentDescriptor",
-//     "name": moment.name,
-//     "aliquotTypesDescriptors": []
-//   };
-//     console.log('=======');
-//     console.log(moment.name);
-//     moment.aliquotTypesDescriptors.forEach(function(type) {
-//       var typeDesc = {
-//         "objectType": "AliquotTypesDescriptor",
-//         "name": type.name,
-//         "aliquots": type.aliquoteGroupDescriptors[0].aliquots
-//       };
-//       momentDesc.aliquotTypesDescriptors.push(typeDesc);
-//     });
-//     aliquotConfiguration.aliquotCenterDescriptors[0].aliquotGroupDescriptors[0].aliquotMomentDescriptors.push(momentDesc);
-// });
-// console.log(JSON.stringify(aliquotConfiguration));

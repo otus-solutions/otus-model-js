@@ -4,7 +4,7 @@
   "moment": "FASTING",
   "code": "341002263",
   "groupName": "DEFAULT",
-  "aliquotes": [
+  "aliquots": [
      {
     "objectType": "Aliquote",
     "code": 34200252,

@@ -53,8 +53,8 @@
     self.moment = tubeInfo.moment;
     self.groupName = tubeInfo.groupName;
 
-    //TODO change name to self.aliquots - keep aliquotes on toJSON method
-    self.aliquotes = tubeInfo.aliquotes.length ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquotes, self) : [];
+    //TODO change name to self.aliquots - keep aliquots on toJSON method
+    self.aliquots = tubeInfo.aliquots ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquots, self) : [];
     self.order = tubeInfo.order;
     self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);
 
@@ -96,7 +96,7 @@
       //TODO check if code fits
       var newAliquot = ParticipantAliquotFactory.create(aliquotInfo, self);
       newAliquot.collect(_operator);
-      self.aliquotes.push(newAliquot);
+      self.aliquots.push(newAliquot);
     }
 
     function unAliquot(code) {
@@ -113,7 +113,7 @@
         moment: self.moment,
         code: self.code,
         groupName: self.groupName,
-        aliquotes: self.aliquotes,
+        aliquots: self.aliquots,
         order: self.order,
         tubeCollectionData: self.tubeCollectionData
       };

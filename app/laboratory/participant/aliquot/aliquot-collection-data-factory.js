@@ -31,7 +31,7 @@
     self.toJSON = toJSON;
 
     function fill(operator) {
-      self.metadata = "";  // TODO:
+      self.metadata = "";  // sem aplicação de metadados até o momento
       self.operator = operator.email;
       self.time = new Date().toISOString();
     }
