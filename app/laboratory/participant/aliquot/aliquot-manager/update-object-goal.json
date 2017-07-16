@@ -1,7 +1,6 @@
 {
   "tubes": [
-    {
-      "tubeCode": "2000000",
+    {    
       "newAliquots": [
         {
           "objectType": "Aliquot",

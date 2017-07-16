@@ -23,7 +23,7 @@
       });
     }
 
-    function create(aliquotInfo, tubeInfo) {
+    function create(aliquotInfo) {
       //used to build an filled aliquot
       var newInfo = angular.copy(aliquotInfo);
       return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, newInfo, tubeInfo);
@@ -40,15 +40,11 @@
     self.name = aliquotInfo.name;
     self.role = aliquotInfo.role;
     self.code = aliquotInfo.code || aliquotInfo.aliquotCode; //.aliquotCode
-    self.container = aliquotInfo.container; //TODO get container by aliquot code
-
-
-    //TODO implement
-    // self.container = LaboratoryConfigurationService.getAliquotContainer(code);
+    self.container = aliquotInfo.container;
 
     self.aliquotCollectionData = AliquotCollectionDataFactory.create(aliquotInfo.aliquotCollectionData);
     self.collect = collect;
-    // self.toJSON = toJSON;
+    self.toJSON = toJSON;
 
     //Custom
     self.tubeCode = tubeInfo.code;
@@ -69,7 +65,6 @@
     }
 
     function toJSON() {
-      // TODO: complete fields
       var json = {
         objectType: self.objectType,
         code: self.code,
@@ -78,7 +73,6 @@
         role: self.role,
         aliquotCollectionData: self.aliquotCollectionData
       };
-      console.log(json);
       return json;
     }
   }

@@ -54,7 +54,7 @@
     self.groupName = tubeInfo.groupName;
 
     //TODO change name to self.aliquots - keep aliquots on toJSON method
-    self.aliquots = tubeInfo.aliquots ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquots, self) : [];
+    self.aliquots = tubeInfo.aliquots ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquots, self) : []; //TODO check if tubeInfo.aliquots really fits
     self.order = tubeInfo.order;
     self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);
 
@@ -84,7 +84,6 @@
 
     function _manageAliquots() {
       var availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type, self.groupName);
-      // self.availableAliquots = ParticipantAliquotFactory.buildEmptyAliquots(availableAliquots);
       self.availableAliquots = availableAliquots;
     }
 
@@ -92,8 +91,7 @@
       self.tubeCollectionData.fill(_operator);
     }
 
-    function toAliquot(aliquotInfo) { // TODO: remove 'code' by improving EmptyParticipantAliquot
-      //TODO check if code fits
+    function toAliquot(aliquotInfo) {
       var newAliquot = ParticipantAliquotFactory.create(aliquotInfo, self);
       newAliquot.collect(_operator);
       self.aliquots.push(newAliquot);

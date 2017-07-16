@@ -14,18 +14,15 @@
     var _momentTypeList = [];
 
     /* Public Interface*/
-    self.getMomentTypeList = getMomentTypeList;
     self.initialize = initialize;
+    self.getMomentTypeList = getMomentTypeList;
 
     function initialize(tubeList) {
       _buildMap(tubeList);
     }
 
     function _buildMap(tubeList) {
-      tubeList.forEach(function(tube) {
-        var moment = tube.moment;
-        var type = tube.type;
-
+      tubeList.forEach(function(tube) {       
         var momentType = _momentTypeList.find(function(momentType) {
            return momentType.type == tube.type && momentType.moment == tube.moment;
         });
