@@ -23,7 +23,7 @@
       });
     }
 
-    function create(aliquotInfo) {
+    function create(aliquotInfo, tubeInfo) {
       //used to build an filled aliquot
       var newInfo = angular.copy(aliquotInfo);
       return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, newInfo, tubeInfo);
