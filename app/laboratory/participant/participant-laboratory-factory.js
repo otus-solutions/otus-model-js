@@ -7,38 +7,38 @@
 
   factory.$inject = [
     'otusjs.laboratory.ParticipanTubeFactory',
-    'otusjs.laboratory.AliquotManagerService',
     'otusjs.laboratory.LaboratoryConfigurationService'
    ];
 
-  function factory(ParticipanTubeFactory, AliquotManagerService, LaboratoryConfigurationService) {
+  function factory(ParticipanTubeFactory, LaboratoryConfigurationService) {
     var self = this;
 
     self.create = create;
     self.fromJson = fromJson;
 
     function create(labParticipant, labConfig, loggedUser, selectedParticipant) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagerService, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant);
+      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant);
     }
+
     function fromJson(labParticipant, labConfig, loggedUser, selectedParticipant) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, AliquotManagerService, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser, selectedParticipant);
+      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser, selectedParticipant);
     }
     return self;
 
   }
 
-  function ParticipantLaboratory(ParticipanTubeFactory, AliquotManagerService, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant) {
+  function ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant) {
     var self = this;
     var _backupJSON;
 
 
     self.objectType = labParticipant.objectType || 'ParticipantLaboratory';
     self.recruitmentNumber = labParticipant.recruitmentNumber;
-    self.collectGroupName = labParticipant.collectGroupName;  //CQ
+    self.collectGroupName = labParticipant.collectGroupName; //CQ
 
     //tube handling
     self.tubes = [];
-    self.exams = labParticipant.exams;  //not in use yet
+    self.exams = labParticipant.exams; //not in use yet
 
     self.reloadTubeList = reloadTubeList;
     self.updateTubeList = updateTubeList;
@@ -54,7 +54,6 @@
 
     function _tubeHandling() {
       self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, loggedUser);
-      AliquotManagerService.initialize(self.tubes);
     }
 
     function toJSON() {
@@ -74,10 +73,10 @@
       self.tubes = ParticipanTubeFactory.buildFromArray(angular.copy(_backupJSON.tubes), loggedUser);
     }
 
-    function updateTubeList(){
+    function updateTubeList() {
       delete _backupJSON.tubes;
       _backupJSON.tubes = angular.copy(self.tubes);
-   }
+    }
   }
 
 
