@@ -33,7 +33,7 @@
     }
 
     function getMomentDescriptor(momentName) {
-      return _laboratoryDescriptor.collectMomentConfiguration.collectMomentDescriptors.find(function(descriptor) {
+      return _laboratoryDescriptor.collectMomentConfiguration.momentDescriptors.find(function(descriptor) {
         return descriptor.name == momentName;
       });
     }
