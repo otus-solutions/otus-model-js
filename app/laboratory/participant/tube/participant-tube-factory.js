@@ -30,6 +30,7 @@
 
     function buildFromArray(tubeArray, operator) {
       return tubeArray.map(function(tubeInfo) {
+         tubeInfo.aliquots = tubeInfo.aliquotes || tubeInfo.aliquots; //FIXME: backend gera .aliquotes, por enquanto
         return new Tube(tubeInfo, operator, TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService);
       });
     }
@@ -54,7 +55,7 @@
     self.groupName = tubeInfo.groupName;
 
     //TODO change name to self.aliquots - keep aliquots on toJSON method
-    self.aliquots = tubeInfo.aliquots ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquots, self) : []; //TODO check if tubeInfo.aliquots really fits
+    self.aliquots = tubeInfo.aliquots ? ParticipantAliquotFactory.fromJSON(tubeInfo.aliquots, self) : [];
     self.order = tubeInfo.order;
     self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);
 
@@ -111,7 +112,7 @@
         moment: self.moment,
         code: self.code,
         groupName: self.groupName,
-        aliquots: self.aliquots,
+        aliquotes: self.aliquots,
         order: self.order,
         tubeCollectionData: self.tubeCollectionData
       };
