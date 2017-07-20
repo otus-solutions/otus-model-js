@@ -61,8 +61,13 @@
 
     /* Custom Methods */
     self.collect = collect;
-    self.toAliquot = toAliquot;
     self.toJSON = toJSON;
+
+    //aliquot handling
+    self.toAliquot = toAliquot;
+    self.pushAliquot = pushAliquot;
+    self.toAliquotAndPush = toAliquotAndPush;
+
 
     _onInit();
 
@@ -92,11 +97,22 @@
       self.tubeCollectionData.fill(_operator);
     }
 
+    //aliquot handling
     function toAliquot(aliquotInfo) {
       var newAliquot = ParticipantAliquotFactory.create(aliquotInfo, self);
       newAliquot.collect(_operator);
-      self.aliquots.push(newAliquot);
+      return newAliquot;
     }
+
+    function pushAliquot(aliquot) {
+      self.aliquots.push(aliquot);
+    }
+
+    function toAliquotAndPush(aliquotInfo) {
+      var newAliquot = ParticipantAliquotFactory.create(aliquotInfo, self);
+      newAliquot.collect(_operator);
+      self.aliquots.push(newAliquot);
+   }
 
     function unAliquot(code) {
       var indexToRemove = self.aliquots.findIndex(function(aliquot) {
