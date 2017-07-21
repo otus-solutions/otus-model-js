@@ -60,20 +60,25 @@
           })
           .aliquots;
       } catch (e) {
-         var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + momentName + ' - ' + tubeType + ' - ' + groupName;
-         throw new Error(msg);
+        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + momentName + ' - ' + tubeType + ' - ' + groupName;
+        throw new Error(msg);
       }
 
       function _getGroupDescriptor() {
-        return centerDescriptor
-          .aliquotGroupDescriptors
-          .find(function(groupDescriptor) {
-            return groupDescriptor.name === groupName;
-          }) || centerDescriptor
-          .aliquotGroupDescriptors
-          .find(function(groupDescriptor) {
-            return groupDescriptor.name === 'DEFAULT';
-          });
+        if (groupName == _selectedParticipant.fieldCenter.acronym) {
+           //alguns tubos têm o centro como descritor de grupo. Como o filtro de centro já foi feito, retornamos o grupo default para o centro.
+          return centerDescriptor
+            .aliquotGroupDescriptors
+            .find(function(groupDescriptor) {
+              return groupDescriptor.name === 'DEFAULT';
+            });
+        } else {
+          return centerDescriptor
+            .aliquotGroupDescriptors
+            .find(function(groupDescriptor) {
+              return groupDescriptor.name === groupName;
+            });
+        }
       }
     }
 
