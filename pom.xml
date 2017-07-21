@@ -118,8 +118,7 @@
                   <releaseBranchPrefix>release-</releaseBranchPrefix>
                   <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
                   <versionTagPrefix>v</versionTagPrefix>
-                </flowInitContext>
-                <squash>true</squash>
+                </flowInitContext>                
                 <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
               </configuration>
             </plugin>
