@@ -40,24 +40,29 @@
     }
 
     function getAvaiableAliquots(momentName, tubeType, groupName) {
-      var centerDescriptor = _laboratoryDescriptor.aliquotConfiguration
-        .aliquotCenterDescriptors
-        .find(function(centerDescriptor) {
-          return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
-        });
+      try {
+        var centerDescriptor = _laboratoryDescriptor.aliquotConfiguration
+          .aliquotCenterDescriptors
+          .find(function(centerDescriptor) {
+            return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
+          });
 
-      var groupDescriptor = _getGroupDescriptor();
+        var groupDescriptor = _getGroupDescriptor();
 
-      return groupDescriptor
-        .aliquotMomentDescriptors
-        .find(function(momentDescriptor) {
-          return momentDescriptor.name === momentName;
-        })
-        .aliquotTypesDescriptors
-        .find(function(typeDescriptor) {
-          return typeDescriptor.name === tubeType;
-        })
-        .aliquots;
+        return groupDescriptor
+          .aliquotMomentDescriptors
+          .find(function(momentDescriptor) {
+            return momentDescriptor.name === momentName;
+          })
+          .aliquotTypesDescriptors
+          .find(function(typeDescriptor) {
+            return typeDescriptor.name === tubeType;
+          })
+          .aliquots;
+      } catch (e) {
+         var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + momentName + ' - ' + tubeType + ' - ' + groupName;
+         throw new Error(msg);
+      }
 
       function _getGroupDescriptor() {
         return centerDescriptor
@@ -73,27 +78,33 @@
     }
 
     function getAliquotDescriptor(aliquotName, momentName, tubeType, groupName) {
-      return _laboratoryDescriptor.aliquotConfiguration
-        .aliquotCenterDescriptors
-        .find(function(centerDescriptor) {
-          return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
-        })
-        .aliquotGroupDescriptors
-        .find(function(groupDescriptor) {
-          return groupDescriptor.name === groupName;
-        })
-        .aliquotMomentDescriptors
-        .find(function(momentDescriptor) {
-          return momentDescriptor.name === momentName;
-        })
-        .aliquotTypesDescriptors
-        .find(function(typeDescriptor) {
-          return typeDescriptor.name === tubeType;
-        })
-        .aliquots
-        .find(function(aliquotDescriptor) {
-          return aliquotDescriptor.name === aliquotName;
-        });
+      try {
+        var aliquotDescriptor = _laboratoryDescriptor.aliquotConfiguration
+          .aliquotCenterDescriptors
+          .find(function(centerDescriptor) {
+            return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
+          })
+          .aliquotGroupDescriptors
+          .find(function(groupDescriptor) {
+            return groupDescriptor.name === groupName;
+          })
+          .aliquotMomentDescriptors
+          .find(function(momentDescriptor) {
+            return momentDescriptor.name === momentName;
+          })
+          .aliquotTypesDescriptors
+          .find(function(typeDescriptor) {
+            return typeDescriptor.name === tubeType;
+          })
+          .aliquots
+          .find(function(aliquotDescriptor) {
+            return aliquotDescriptor.name === aliquotName;
+          });
+        return aliquotDescriptor;
+      } catch (e) {
+        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + aliquotName + ' - ' + momentName + ' - ' + tubeType + ' - ' + groupName;
+        throw new Error(msg);
+      }
     }
 
     function validateAliquotWave(aliquotCode) {
