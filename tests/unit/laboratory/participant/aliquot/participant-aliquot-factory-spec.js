@@ -1,4 +1,4 @@
-describe('ParticipantAliquotFactory', function() {
+xdescribe('ParticipantAliquotFactory', function() {
   var Mock = {};
 
   beforeEach(function() {
