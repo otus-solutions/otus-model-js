@@ -1,4 +1,4 @@
-fdescribe('a test', function() {
+describe('the laboratory configuration service', function() {
   var Mock = {};
 
   beforeEach(function() {
@@ -22,7 +22,7 @@ fdescribe('a test', function() {
     var code = 321425120;
     var container = service.getAliquotContainer(code);
 
-    expect(container).toEqual('tube');
+    expect(container).toEqual('TUBE');
   });
 
   //--------

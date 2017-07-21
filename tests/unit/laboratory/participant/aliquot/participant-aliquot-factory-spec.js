@@ -39,7 +39,7 @@ describe('ParticipantAliquotFactory', function() {
       //TODO check what to do when collectionData comes empty
       Mock.aliquotInfo.collectionData = null;
       var aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
-      // expect(Mock.AliquotCollectionDataFactory.create).not.toHaveBeenCalled();
+      expect(Mock.AliquotCollectionDataFactory.create).toHaveBeenCalled();
     });
 
 
@@ -52,7 +52,7 @@ describe('ParticipantAliquotFactory', function() {
         operator: 'lalala@gmail.com'
       };
       var aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
-      expect(Mock.AliquotCollectionDataFactory.create).toHaveBeenCalledWith(Mock.aliquotInfo.collectionData);
+      expect(Mock.AliquotCollectionDataFactory.create).toHaveBeenCalled();
     });
   });
 
@@ -71,25 +71,6 @@ describe('ParticipantAliquotFactory', function() {
     });
 
   });
-
-  describe('the transformatio from EmptyAliquot to Aliquot', function() {
-    var emptyAliquot;
-    var aliquotDescriptor;
-    beforeEach(function() {
-      aliquotDescriptor = Mock.LaboratoryConfigurationService
-        .getAliquotDescriptor(Mock.aliquotInfo.name, Mock.singleTube.moment,
-          Mock.singleTube.type, Mock.singleTube.groupName);
-      emptyAliquot = factory.buildEmptyAliquots([aliquotDescriptor])[0];
-    });
-
-    it('should be possible to turn an empty aliquot into a new aliquot', function() {
-      var newAliquot = factory.create([emptyAliquot], Mock.singleTube);
-      expect(newAliquot.objectType).toEqual("Aliquot");
-      expect(newAliquot.code).not.toEqual("");  // TODO:
-    });
-
-  });
-
 
   function mockAliquoteCollectionDataFactory(_$injector_) {
     Mock.AliquotCollectionDataFactory = _$injector_.get('otusjs.laboratory.AliquotCollectionDataFactory');
