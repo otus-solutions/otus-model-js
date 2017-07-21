@@ -16,6 +16,7 @@
     self.getTubeDescriptor = getTubeDescriptor;
     self.getMomentDescriptor = getMomentDescriptor;
     self.getAliquotContainer = getAliquotContainer;
+    self.validateAliquotWave = validateAliquotWave;
 
     function initialize(labDescriptor, selectedParticipant) {
       _laboratoryDescriptor = labDescriptor;
@@ -95,17 +96,25 @@
         });
     }
 
+    function validateAliquotWave(aliquotCode) {
+      var waveToken = _laboratoryDescriptor.codeConfiguration.waveNumberToken;
+      var WAVE_TOKEN_POSITION = 0;
+      var stringfiedCode = String(aliquotCode);
+      return stringfiedCode[WAVE_TOKEN_POSITION] == waveToken;
+
+    }
+
     function getAliquotContainer(code) {
       //given the aliquot code, return the aliquot container
       // TODO: test
-      var TOKEN_POSITION = 2;
+      var CONTAINER_TOKEN_POSITION = 2;
 
       var stringfiedCode = String(code);
       var tubeToken = _laboratoryDescriptor.codeConfiguration.tubeToken;
       var palletToken = _laboratoryDescriptor.codeConfiguration.palletToken;
       var cryotubeToken = _laboratoryDescriptor.codeConfiguration.cryotubeToken;
 
-      var token = stringfiedCode[TOKEN_POSITION];
+      var token = stringfiedCode[CONTAINER_TOKEN_POSITION];
 
       switch (true) {
         case token == tubeToken:
