@@ -1,4 +1,4 @@
-fdescribe('the laboratory configuration service', function() {
+xdescribe('the laboratory configuration service', function() {
   var Mock = {};
 
   beforeEach(function() {
