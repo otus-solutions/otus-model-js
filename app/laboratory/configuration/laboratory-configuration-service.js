@@ -7,6 +7,7 @@
     var self = this;
     var _laboratoryDescriptor;
     var _selectedParticipant;
+    var _participantCQ;
 
     /* Public Interface */
     self.initialize = initialize;
@@ -18,9 +19,10 @@
     self.getAliquotContainer = getAliquotContainer;
     self.validateAliquotWave = validateAliquotWave;
 
-    function initialize(labDescriptor, selectedParticipant) {
+    function initialize(labDescriptor, selectedParticipant, participantCQ) {
       _laboratoryDescriptor = labDescriptor;
       _selectedParticipant = selectedParticipant;
+      _participantCQ = participantCQ;
     }
 
     function getLaboratoryConfiguration() {
@@ -76,7 +78,7 @@
           return centerDescriptor
             .aliquotGroupDescriptors
             .find(function(groupDescriptor) {
-              return groupDescriptor.name === groupName;
+              return groupDescriptor.name === _participantCQ;
             });
         }
       }
