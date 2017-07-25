@@ -1,4 +1,4 @@
-describe('the laboratory configuration service', function() {
+fdescribe('the laboratory configuration service', function() {
   var Mock = {};
 
   beforeEach(function() {
@@ -11,11 +11,13 @@ describe('the laboratory configuration service', function() {
 
 
     mockLabDescriptors();
+    mockSelectedParticipant();
     mockParticipantLaboratory();
     mockSingleTube();
     mockAliquotInfo();
+    mockLoggedUser();
 
-    service.initialize(Mock.LabDescriptors);
+    service.initialize(Mock.LabDescriptors, Mock.SelectedParticipant, Mock.ParticipantLaboratory.collectGroupName);
   });
 
   it('should get return the right container given an aliquot code', function() {
@@ -23,6 +25,22 @@ describe('the laboratory configuration service', function() {
     var container = service.getAliquotContainer(code);
 
     expect(container).toEqual('TUBE');
+
+    code = 322425120;
+    container = service.getAliquotContainer(code);
+
+    expect(container).toEqual('PALLET');
+
+    code = 323425120;
+    container = service.getAliquotContainer(code);
+
+    expect(container).toEqual('CRYOTUBE');
+  });
+
+  it('should get avaiable aliquots', function() {
+    Mock.SelectedParticipant.fieldCenter.acronym = 'RS';
+    service.initialize(Mock.LabDescriptors, Mock.SelectedParticipant, 'CQ1');
+    service.getAvaiableAliquots('FASTING', 'GEL');
   });
 
   //--------
@@ -33,6 +51,14 @@ describe('the laboratory configuration service', function() {
 
   function mockParticipantLaboratory() {
     Mock.ParticipantLaboratory = Test.utils.data.participantLaboratory; //json-importer.js
+  }
+
+  function mockLoggedUser() {
+    Mock.LoggedUser = Test.utils.data.otusLoggedUser; //json-importer.js
+  }
+
+  function mockSelectedParticipant() {
+    Mock.SelectedParticipant = Test.utils.data.selectedParticipant; //json-importer.js
   }
 
   function mockSingleTube() {

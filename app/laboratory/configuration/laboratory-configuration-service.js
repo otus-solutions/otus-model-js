@@ -41,7 +41,7 @@
       });
     }
 
-    function getAvaiableAliquots(momentName, tubeType, groupName) {
+    function getAvaiableAliquots(momentName, tubeType) {
       try {
         var centerDescriptor = _laboratoryDescriptor.aliquotConfiguration
           .aliquotCenterDescriptors
@@ -49,11 +49,13 @@
             return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
           });
 
-        return centerDescriptor
+        var groupDescriptor = centerDescriptor
           .aliquotGroupDescriptors
           .find(function(groupDescriptor) {
             return groupDescriptor.name === _participantCQ;
-          })
+          });
+
+        return groupDescriptor
           .aliquotMomentDescriptors
           .find(function(momentDescriptor) {
             return momentDescriptor.name === momentName;
@@ -65,31 +67,14 @@
           .aliquots;
 
       } catch (e) {
-        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + momentName + ' - ' + tubeType + ' - ' + _participantCQ;
+        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + _participantCQ + ' - ' + momentName + ' - ' + tubeType;
         throw new Error(msg);
       }
     }
 
-    function getAliquotDescriptor(aliquotName, momentName, tubeType, groupName) {
+    function getAliquotDescriptor(aliquotName, momentName, tubeType) {
       try {
-        var aliquotDescriptor = _laboratoryDescriptor.aliquotConfiguration
-          .aliquotCenterDescriptors
-          .find(function(centerDescriptor) {
-            return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
-          })
-          .aliquotGroupDescriptors
-          .find(function(groupDescriptor) {
-            return groupDescriptor.name === groupName;
-          })
-          .aliquotMomentDescriptors
-          .find(function(momentDescriptor) {
-            return momentDescriptor.name === momentName;
-          })
-          .aliquotTypesDescriptors
-          .find(function(typeDescriptor) {
-            return typeDescriptor.name === tubeType;
-          })
-          .aliquots
+        var aliquotDescriptor = getAvaiableAliquots(momentName, tubeType)
           .find(function(aliquotDescriptor) {
             return aliquotDescriptor.name === aliquotName;
           });

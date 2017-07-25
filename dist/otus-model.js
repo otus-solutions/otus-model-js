@@ -1339,36 +1339,30 @@
       });
     }
 
-    function getAvaiableAliquots(momentName, tubeType, groupName) {
+    function getAvaiableAliquots(momentName, tubeType) {
       try {
         var centerDescriptor = _laboratoryDescriptor.aliquotConfiguration.aliquotCenterDescriptors.find(function (centerDescriptor) {
           return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
         });
 
-        return centerDescriptor.aliquotGroupDescriptors.find(function (groupDescriptor) {
+        var groupDescriptor = centerDescriptor.aliquotGroupDescriptors.find(function (groupDescriptor) {
           return groupDescriptor.name === _participantCQ;
-        }).aliquotMomentDescriptors.find(function (momentDescriptor) {
+        });
+
+        return groupDescriptor.aliquotMomentDescriptors.find(function (momentDescriptor) {
           return momentDescriptor.name === momentName;
         }).aliquotTypesDescriptors.find(function (typeDescriptor) {
           return typeDescriptor.name === tubeType;
         }).aliquots;
       } catch (e) {
-        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + momentName + ' - ' + tubeType + ' - ' + _participantCQ;
+        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + _participantCQ + ' - ' + momentName + ' - ' + tubeType;
         throw new Error(msg);
       }
     }
 
-    function getAliquotDescriptor(aliquotName, momentName, tubeType, groupName) {
+    function getAliquotDescriptor(aliquotName, momentName, tubeType) {
       try {
-        var aliquotDescriptor = _laboratoryDescriptor.aliquotConfiguration.aliquotCenterDescriptors.find(function (centerDescriptor) {
-          return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
-        }).aliquotGroupDescriptors.find(function (groupDescriptor) {
-          return groupDescriptor.name === groupName;
-        }).aliquotMomentDescriptors.find(function (momentDescriptor) {
-          return momentDescriptor.name === momentName;
-        }).aliquotTypesDescriptors.find(function (typeDescriptor) {
-          return typeDescriptor.name === tubeType;
-        }).aliquots.find(function (aliquotDescriptor) {
+        var aliquotDescriptor = getAvaiableAliquots(momentName, tubeType).find(function (aliquotDescriptor) {
           return aliquotDescriptor.name === aliquotName;
         });
         return aliquotDescriptor;
@@ -5039,7 +5033,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     onInit();
 
     function onInit() {
-      _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name, tubeInfo.moment, tubeInfo.type, tubeInfo.groupName);
+      _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name, tubeInfo.moment, tubeInfo.type);
       _runDescriptors(_aliquotDescriptor);
     }
 
@@ -5147,7 +5141,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function _manageAliquots() {
-      var availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type, self.groupName);
+      var availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type);
       self.availableAliquots = availableAliquots;
     }
 
