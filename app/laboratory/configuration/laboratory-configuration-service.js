@@ -49,9 +49,11 @@
             return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
           });
 
-        var groupDescriptor = _getGroupDescriptor();
-
-        return groupDescriptor
+        return centerDescriptor
+          .aliquotGroupDescriptors
+          .find(function(groupDescriptor) {
+            return groupDescriptor.name === _participantCQ;
+          })
           .aliquotMomentDescriptors
           .find(function(momentDescriptor) {
             return momentDescriptor.name === momentName;
@@ -61,26 +63,10 @@
             return typeDescriptor.name === tubeType;
           })
           .aliquots;
-      } catch (e) {
-        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + momentName + ' - ' + tubeType + ' - ' + groupName;
-        throw new Error(msg);
-      }
 
-      function _getGroupDescriptor() {
-        if (groupName == _selectedParticipant.fieldCenter.acronym) {
-           //alguns tubos têm o centro como descritor de grupo. Como o filtro de centro já foi feito, retornamos o grupo default para o centro.
-          return centerDescriptor
-            .aliquotGroupDescriptors
-            .find(function(groupDescriptor) {
-              return groupDescriptor.name === 'DEFAULT';
-            });
-        } else {
-          return centerDescriptor
-            .aliquotGroupDescriptors
-            .find(function(groupDescriptor) {
-              return groupDescriptor.name === _participantCQ;
-            });
-        }
+      } catch (e) {
+        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + momentName + ' - ' + tubeType + ' - ' + _participantCQ;
+        throw new Error(msg);
       }
     }
 
@@ -109,7 +95,7 @@
           });
         return aliquotDescriptor;
       } catch (e) {
-        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + aliquotName + ' - ' + momentName + ' - ' + tubeType + ' - ' + groupName;
+        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + aliquotName + ' - ' + momentName + ' - ' + tubeType + ' - ' + _participantCQ;
         throw new Error(msg);
       }
     }
