@@ -2082,19 +2082,20 @@ Test.utils.data.participantLaboratory = {
   "exams": []
 };
 Test.utils.data.laboratoryConfiguration = {
+    "_id" : ObjectId("58eb99798f252631fe32a0bf"),
     "codeConfiguration" : {
         "waveNumberToken" : 3,
         "tubeToken" : 1,
         "palletToken" : 2,
         "cryotubeToken" : 3,
-        "lastInsertion" : 1755
+        "lastInsertion" : 1367
     },
     "aliquotConfiguration" : {
         "objectType" : "AliquotConfiguration",
         "aliquotCenterDescriptors" : [
             {
                 "objectType" : "AliquotCenterDescriptor",
-                "name" : "SP",
+                "name" : "RS",
                 "aliquotGroupDescriptors" : [
                     {
                         "objectType" : "AliquotGroupDescriptor",
@@ -2112,67 +2113,67 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -2184,49 +2185,49 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -2238,55 +2239,55 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -2304,37 +2305,37 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -2346,49 +2347,49 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -2406,49 +2407,757 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "MIDDLE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ1",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro CQ1",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento Customizado CQ1",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "URINE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "MIDDLE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -2472,49 +3181,67 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCRcq2",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -2526,55 +3253,49 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSOROCQ2",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -2586,157 +3307,55 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "objectType" : "AliquotMomentDescriptor",
-                                "name" : "POST_OVERLOAD",
-                                "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "GEL",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "FLUORIDE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -2746,792 +3365,6 @@ Test.utils.data.laboratoryConfiguration = {
                                 "objectType" : "AliquotMomentDescriptor",
                                 "name" : "NONE",
                                 "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "URINE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "objectType" : "AliquotCenterDescriptor",
-                "name" : "BA",
-                "aliquotGroupDescriptors" : [
-                    {
-                        "objectType" : "AliquotGroupDescriptor",
-                        "name" : "DEFAULT",
-                        "aliquotMomentDescriptors" : [
-                            {
-                                "objectType" : "AliquotMomentDescriptor",
-                                "name" : "FASTING",
-                                "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "GEL",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "EDTA",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "FLUORIDE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "objectType" : "AliquotMomentDescriptor",
-                                "name" : "POST_OVERLOAD",
-                                "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "GEL",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "FLUORIDE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "objectType" : "AliquotMomentDescriptor",
-                                "name" : "NONE",
-                                "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "URINE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "objectType" : "AliquotCenterDescriptor",
-                "name" : "RS",
-                "aliquotGroupDescriptors" : [
-                    {
-                        "objectType" : "AliquotGroupDescriptor",
-                        "name" : "DEFAULT",
-                        "aliquotMomentDescriptors" : [
-                            {
-                                "objectType" : "AliquotMomentDescriptor",
-                                "name" : "FASTING",
-                                "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "GEL",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "EDTA",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "FLUORIDE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "objectType" : "AliquotMomentDescriptor",
-                                "name" : "POST_OVERLOAD",
-                                "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "GEL",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "FLUORIDE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "objectType" : "AliquotMomentDescriptor",
-                                "name" : "NONE",
-                                "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "URINE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
                                     {
                                         "objectType" : "AliquotTypesDescriptor",
                                         "name" : "EDTA_DNA",
@@ -3540,49 +3373,49 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -3594,73 +3427,193 @@ Test.utils.data.laboratoryConfiguration = {
                                 "aliquotTypesDescriptors" : [
                                     {
                                         "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
                                         "name" : "GEL",
                                         "aliquots" : [
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ3",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -3672,49 +3625,871 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "MIDDLE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ4",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "MIDDLE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ5",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "MIDDLE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "objectType" : "AliquotCenterDescriptor",
+                "name" : "MG",
+                "aliquotGroupDescriptors" : [
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "DEFAULT",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -3726,55 +4501,217 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "CITRATE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "URINE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -3798,31 +4735,67 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro CQ1",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
-                                                "label" : "Armazenamento DEFAULT",
-                                                "role" : "storage"
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -3834,19 +4807,49 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -3858,157 +4861,55 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "objectType" : "AliquotMomentDescriptor",
-                                "name" : "POST_OVERLOAD",
-                                "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "GEL",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "FLUORIDE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -4020,317 +4921,119 @@ Test.utils.data.laboratoryConfiguration = {
                                 "aliquotTypesDescriptors" : [
                                     {
                                         "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "URINE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
                                         "name" : "EDTA_DNA",
                                         "aliquots" : [
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "objectType" : "AliquotMomentDescriptor",
-                                "name" : "MIDDLE",
-                                "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "GEL",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
                                     {
                                         "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "EDTA",
+                                        "name" : "CITRATE",
                                         "aliquots" : [
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "FLUORIDE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
                                 ]
                             }
                         ]
-                    }
-                ]
-            },
-            {
-                "objectType" : "AliquotCenterDescriptor",
-                "name" : "MG",
-                "aliquotGroupDescriptors" : [
+                    },
                     {
                         "objectType" : "AliquotGroupDescriptor",
-                        "name" : "DEFAULT",
+                        "name" : "CQ2",
                         "aliquotMomentDescriptors" : [
                             {
                                 "objectType" : "AliquotMomentDescriptor",
@@ -4344,67 +5047,67 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -4416,49 +5119,49 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -4470,157 +5173,55 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "objectType" : "AliquotMomentDescriptor",
-                                "name" : "POST_OVERLOAD",
-                                "aliquotTypesDescriptors" : [
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "GEL",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "FLUORIDE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -4632,109 +5233,55 @@ Test.utils.data.laboratoryConfiguration = {
                                 "aliquotTypesDescriptors" : [
                                     {
                                         "objectType" : "AliquotTypesDescriptor",
-                                        "name" : "URINE",
-                                        "aliquots" : [
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "BIOSORO",
-                                                "label" : "Bioquímica Soro",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "PCR",
-                                                "label" : "PCR",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "FASTING_INSULINE",
-                                                "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "objectType" : "AliquotTypesDescriptor",
                                         "name" : "CITRATE",
                                         "aliquots" : [
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -4746,49 +5293,967 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "MIDDLE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ3",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "CITRATE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "MIDDLE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ4",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "CITRATE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ5",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "CITRATE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -4818,67 +6283,37 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -4890,49 +6325,25 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -4944,55 +6355,31 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -5010,37 +6397,19 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "EXAM"
                                             }
                                         ]
                                     },
@@ -5052,49 +6421,37 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -5112,49 +6469,1489 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ1",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ2",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ3",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ4",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ5",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -5184,37 +7981,37 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -5226,25 +8023,25 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -5256,31 +8053,31 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -5298,19 +8095,19 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             }
                                         ]
                                     },
@@ -5322,37 +8119,37 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -5370,31 +8167,1645 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ1",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ2",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ3",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ4",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ5",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -5406,7 +9817,7 @@ Test.utils.data.laboratoryConfiguration = {
             },
             {
                 "objectType" : "AliquotCenterDescriptor",
-                "name" : "RJ",
+                "name" : "BA",
                 "aliquotGroupDescriptors" : [
                     {
                         "objectType" : "AliquotGroupDescriptor",
@@ -5424,19 +9835,37 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -5448,31 +9877,25 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     },
@@ -5484,37 +9907,31 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -5532,25 +9949,19 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
-                                            },
-                                            {
-                                                "objectType" : "AliquotDescriptor",
-                                                "name" : "STORAGE",
-                                                "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "EXAM"
                                             }
                                         ]
                                     },
@@ -5562,25 +9973,37 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
@@ -5598,43 +10021,2442 @@ Test.utils.data.laboratoryConfiguration = {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "BIOSORO",
                                                 "label" : "Bioquímica Soro",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "PCR",
                                                 "label" : "PCR",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "FASTING_INSULINE",
                                                 "label" : "Insulina Jejum",
-                                                "role" : "exam"
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
                                             },
                                             {
                                                 "objectType" : "AliquotDescriptor",
                                                 "name" : "STORAGE",
                                                 "label" : "Armazenamento",
-                                                "role" : "storage"
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
                                             }
                                         ]
                                     }
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ1",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ2",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ3",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ4",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ5",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA_DNA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "objectType" : "AliquotCenterDescriptor",
+                "name" : "SP",
+                "aliquotGroupDescriptors" : [
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "DEFAULT",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "URINE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ1",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ2",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR CQ2",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento Customizado CQ2",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "NONE",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "URINE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ3",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "POST_OVERLOAD",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "FLUORIDE",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ4",
+                        "aliquotMomentDescriptors" : [
+                            {
+                                "objectType" : "AliquotMomentDescriptor",
+                                "name" : "FASTING",
+                                "aliquotTypesDescriptors" : [
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "GEL",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "objectType" : "AliquotTypesDescriptor",
+                                        "name" : "EDTA",
+                                        "aliquots" : [
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "BIOSORO",
+                                                "label" : "Bioquímica Soro",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "PCR",
+                                                "label" : "PCR",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "FASTING_INSULINE",
+                                                "label" : "Insulina Jejum",
+                                                "role" : "EXAM"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            },
+                                            {
+                                                "objectType" : "AliquotDescriptor",
+                                                "name" : "STORAGE",
+                                                "label" : "Armazenamento",
+                                                "role" : "STORAGE"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "objectType" : "AliquotGroupDescriptor",
+                        "name" : "CQ5",
+                        "aliquotMomentDescriptors" : []
                     }
                 ]
             }
@@ -5643,14 +12465,14 @@ Test.utils.data.laboratoryConfiguration = {
     "tubeConfiguration" : {
         "tubeDescriptors" : [
             {
-                "name" : "FLUORIDE",
-                "label" : "Fluoreto",
-                "color" : "#666666"
+                "name" : "EDTA_DNA",
+                "label" : "EDTA DNA",
+                "color" : "#ffcc00"
             },
             {
-                "name" : "URINE",
-                "label" : "Urina",
-                "color" : "#ffffff"
+                "name" : "EDTA",
+                "label" : "EDTA",
+                "color" : "#660066"
             },
             {
                 "name" : "CITRATE",
@@ -5663,19 +12485,27 @@ Test.utils.data.laboratoryConfiguration = {
                 "color" : "#ffcc00"
             },
             {
-                "name" : "EDTA",
-                "label" : "EDTA",
-                "color" : "#660066"
+                "name" : "FLUORIDE",
+                "label" : "Fluoreto",
+                "color" : "#666666"
             },
             {
-                "name" : "EDTA_DNA",
-                "label" : "EDTA DNA",
-                "color" : "#ffcc00"
+                "name" : "URINE",
+                "label" : "Urina",
+                "color" : "#ffffff"
             }
         ]
     },
     "collectMomentConfiguration" : {
         "momentDescriptors" : [
+            {
+                "name" : "FASTING",
+                "label" : "Jejum"
+            },
+            {
+                "name" : "MIDDLE",
+                "label" : "Meio"
+            },
             {
                 "name" : "POST_OVERLOAD",
                 "label" : "Pós"
@@ -5683,43 +12513,19 @@ Test.utils.data.laboratoryConfiguration = {
             {
                 "name" : "NONE",
                 "label" : ""
-            },
-            {
-                "name" : "MIDDLE",
-                "label" : "Meio"
-            },
-            {
-                "name" : "FASTING",
-                "label" : "Jejum"
             }
         ]
     },
     "collectGroupConfiguration" : {
         "groupDescriptors" : [
             {
-                "name" : "CQ4",
+                "name" : "CQ1",
                 "type" : "QUALITY_CONTROL",
                 "tubeSet" : [
                     {
-                        "count" : 2,
-                        "type" : "EDTA",
-                        "moment" : "FASTING"
-                    },
-                    {
                         "count" : 3,
                         "type" : "GEL",
                         "moment" : "FASTING"
-                    }
-                ]
-            },
-            {
-                "name" : "RJ",
-                "type" : "CENTER",
-                "tubeSet" : [
-                    {
-                        "count" : 1,
-                        "type" : "GEL",
-                        "moment" : "FASTING"
                     },
                     {
                         "count" : 1,
@@ -5728,101 +12534,8 @@ Test.utils.data.laboratoryConfiguration = {
                     },
                     {
                         "count" : 2,
-                        "type" : "EDTA_DNA",
-                        "moment" : "NONE"
-                    },
-                    {
-                        "count" : 1,
-                        "type" : "FLUORIDE",
-                        "moment" : "POST_OVERLOAD"
-                    },
-                    {
-                        "count" : 1,
                         "type" : "EDTA",
                         "moment" : "FASTING"
-                    }
-                ]
-            },
-            {
-                "name" : "DEFAULT",
-                "type" : "DEFAULT",
-                "tubeSet" : [
-                    {
-                        "count" : 1,
-                        "type" : "URINE",
-                        "moment" : "NONE"
-                    },
-                    {
-                        "count" : 2,
-                        "type" : "GEL",
-                        "moment" : "POST_OVERLOAD"
-                    },
-                    {
-                        "count" : 1,
-                        "type" : "FLUORIDE",
-                        "moment" : "FASTING"
-                    },
-                    {
-                        "count" : 3,
-                        "type" : "EDTA",
-                        "moment" : "FASTING"
-                    },
-                    {
-                        "count" : 1,
-                        "type" : "FLUORIDE",
-                        "moment" : "POST_OVERLOAD"
-                    },
-                    {
-                        "count" : 4,
-                        "type" : "GEL",
-                        "moment" : "FASTING"
-                    }
-                ]
-            },
-            {
-                "name" : "ES",
-                "type" : "CENTER",
-                "tubeSet" : [
-                    {
-                        "count" : 1,
-                        "type" : "EDTA",
-                        "moment" : "FASTING"
-                    },
-                    {
-                        "count" : 2,
-                        "type" : "GEL",
-                        "moment" : "FASTING"
-                    },
-                    {
-                        "count" : 2,
-                        "type" : "EDTA_DNA",
-                        "moment" : "NONE"
-                    },
-                    {
-                        "count" : 1,
-                        "type" : "GEL",
-                        "moment" : "POST_OVERLOAD"
-                    }
-                ]
-            },
-            {
-                "name" : "RS",
-                "type" : "CENTER",
-                "tubeSet" : [
-                    {
-                        "count" : 1,
-                        "type" : "FLUORIDE",
-                        "moment" : "MIDDLE"
-                    },
-                    {
-                        "count" : 2,
-                        "type" : "EDTA_DNA",
-                        "moment" : "NONE"
-                    },
-                    {
-                        "count" : 1,
-                        "type" : "GEL",
-                        "moment" : "MIDDLE"
                     }
                 ]
             },
@@ -5843,6 +12556,63 @@ Test.utils.data.laboratoryConfiguration = {
                 ]
             },
             {
+                "name" : "DEFAULT",
+                "type" : "DEFAULT",
+                "tubeSet" : [
+                    {
+                        "count" : 1,
+                        "type" : "FLUORIDE",
+                        "moment" : "FASTING"
+                    },
+                    {
+                        "count" : 4,
+                        "type" : "GEL",
+                        "moment" : "FASTING"
+                    },
+                    {
+                        "count" : 1,
+                        "type" : "URINE",
+                        "moment" : "NONE"
+                    },
+                    {
+                        "count" : 1,
+                        "type" : "FLUORIDE",
+                        "moment" : "POST_OVERLOAD"
+                    },
+                    {
+                        "count" : 2,
+                        "type" : "GEL",
+                        "moment" : "POST_OVERLOAD"
+                    },
+                    {
+                        "count" : 3,
+                        "type" : "EDTA",
+                        "moment" : "FASTING"
+                    }
+                ]
+            },
+            {
+                "name" : "CQ2",
+                "type" : "QUALITY_CONTROL",
+                "tubeSet" : [
+                    {
+                        "count" : 3,
+                        "type" : "EDTA",
+                        "moment" : "FASTING"
+                    },
+                    {
+                        "count" : 3,
+                        "type" : "GEL",
+                        "moment" : "FASTING"
+                    },
+                    {
+                        "count" : 1,
+                        "type" : "FLUORIDE",
+                        "moment" : "FASTING"
+                    }
+                ]
+            },
+            {
                 "name" : "BA",
                 "type" : "CENTER",
                 "tubeSet" : [
@@ -5854,34 +12624,13 @@ Test.utils.data.laboratoryConfiguration = {
                 ]
             },
             {
-                "name" : "CQ2",
-                "type" : "QUALITY_CONTROL",
-                "tubeSet" : [
-                    {
-                        "count" : 3,
-                        "type" : "GEL",
-                        "moment" : "FASTING"
-                    },
-                    {
-                        "count" : 1,
-                        "type" : "FLUORIDE",
-                        "moment" : "FASTING"
-                    },
-                    {
-                        "count" : 3,
-                        "type" : "EDTA",
-                        "moment" : "FASTING"
-                    }
-                ]
-            },
-            {
-                "name" : "CQ1",
+                "name" : "CQ3",
                 "type" : "QUALITY_CONTROL",
                 "tubeSet" : [
                     {
                         "count" : 1,
                         "type" : "FLUORIDE",
-                        "moment" : "FASTING"
+                        "moment" : "POST_OVERLOAD"
                     },
                     {
                         "count" : 3,
@@ -5896,12 +12645,12 @@ Test.utils.data.laboratoryConfiguration = {
                 ]
             },
             {
-                "name" : "CQ3",
-                "type" : "QUALITY_CONTROL",
+                "name" : "RJ",
+                "type" : "CENTER",
                 "tubeSet" : [
                     {
-                        "count" : 3,
-                        "type" : "GEL",
+                        "count" : 1,
+                        "type" : "EDTA",
                         "moment" : "FASTING"
                     },
                     {
@@ -5910,9 +12659,82 @@ Test.utils.data.laboratoryConfiguration = {
                         "moment" : "POST_OVERLOAD"
                     },
                     {
+                        "count" : 1,
+                        "type" : "GEL",
+                        "moment" : "FASTING"
+                    },
+                    {
+                        "count" : 2,
+                        "type" : "EDTA_DNA",
+                        "moment" : "NONE"
+                    },
+                    {
+                        "count" : 1,
+                        "type" : "FLUORIDE",
+                        "moment" : "FASTING"
+                    }
+                ]
+            },
+            {
+                "name" : "CQ4",
+                "type" : "QUALITY_CONTROL",
+                "tubeSet" : [
+                    {
+                        "count" : 3,
+                        "type" : "GEL",
+                        "moment" : "FASTING"
+                    },
+                    {
                         "count" : 2,
                         "type" : "EDTA",
                         "moment" : "FASTING"
+                    }
+                ]
+            },
+            {
+                "name" : "RS",
+                "type" : "CENTER",
+                "tubeSet" : [
+                    {
+                        "count" : 2,
+                        "type" : "EDTA_DNA",
+                        "moment" : "NONE"
+                    },
+                    {
+                        "count" : 1,
+                        "type" : "GEL",
+                        "moment" : "MIDDLE"
+                    },
+                    {
+                        "count" : 1,
+                        "type" : "FLUORIDE",
+                        "moment" : "MIDDLE"
+                    }
+                ]
+            },
+            {
+                "name" : "ES",
+                "type" : "CENTER",
+                "tubeSet" : [
+                    {
+                        "count" : 2,
+                        "type" : "GEL",
+                        "moment" : "FASTING"
+                    },
+                    {
+                        "count" : 1,
+                        "type" : "GEL",
+                        "moment" : "POST_OVERLOAD"
+                    },
+                    {
+                        "count" : 1,
+                        "type" : "EDTA",
+                        "moment" : "FASTING"
+                    },
+                    {
+                        "count" : 2,
+                        "type" : "EDTA_DNA",
+                        "moment" : "NONE"
                     }
                 ]
             }
