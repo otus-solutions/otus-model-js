@@ -95,7 +95,6 @@
 
     function getAliquotContainer(code) {
       //given the aliquot code, return the aliquot container
-      // TODO: test
       var CONTAINER_TOKEN_POSITION = 2;
 
       var stringfiedCode = String(code);
