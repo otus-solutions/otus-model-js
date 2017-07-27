@@ -5,7 +5,11 @@
     .module('otusjs.laboratory.transportation')
     .factory('otusjs.laboratory.transportation.LotFactory', factory);
 
-  function factory() {
+    factory.$inject = [
+      'otusjs.laboratory.transportation.TransportationAliquotFactory'
+   ];
+
+  function factory(TransportationAliquotFactory) {
     var self = this;
     self.create = create;
 

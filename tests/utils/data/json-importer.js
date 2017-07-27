@@ -2082,7 +2082,6 @@ Test.utils.data.participantLaboratory = {
   "exams": []
 };
 Test.utils.data.laboratoryConfiguration = {
-    "_id" : ObjectId("58eb99798f252631fe32a0bf"),
     "codeConfiguration" : {
         "waveNumberToken" : 3,
         "tubeToken" : 1,
