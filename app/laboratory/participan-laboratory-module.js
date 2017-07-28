@@ -2,6 +2,8 @@
     'use strict';
 
     angular
-        .module('otusjs.laboratory', []);
+        .module('otusjs.laboratory', [
+           'otusjs.laboratory.transportation'
+        ]);
 
 }());

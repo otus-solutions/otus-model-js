@@ -12,14 +12,22 @@
 
   function service(LotFactory, $http) {
     var self = this;
+
+    self.createAliquotLot = createAliquotLot;
+    self.buildAliquotLotFromJson = buildAliquotLotFromJson;
+
     onInit();
 
     function onInit() {
-      console.log('a');
-      $http.get('app/laboratory/transportation/aliquot-list.json')
-         .then(function(a) {
-            console.log(a);
-         });
+
+    }
+
+    function createAliquotLot() {
+       return LotFactory.create();
+    }
+
+    function buildAliquotLotFromJson(lotJson) {
+      return LotFactory.fromJson(lotJson);
     }
 
     return self;
