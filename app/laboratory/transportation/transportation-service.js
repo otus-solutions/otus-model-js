@@ -6,11 +6,10 @@
     .service('otusjs.laboratory.transportation.TransportationService', service);
 
   service.$inject = [
-     'otusjs.laboratory.transportation.LotFactory',
-     '$http'
+     'otusjs.laboratory.transportation.LotFactory'
   ];
 
-  function service(LotFactory, $http) {
+  function service(LotFactory) {
     var self = this;
 
     self.createAliquotLot = createAliquotLot;

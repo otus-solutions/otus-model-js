@@ -15,21 +15,21 @@
     self.fromJson = fromJson;
 
     function create() {
-      return new TransportationLot({});
+      return new TransportationLot(TransportationAliquotFactory, {});
     }
 
     function fromJson(lotInfo) {
-      return new TransportationLot(lotInfo);
+      return new TransportationLot(TransportationAliquotFactory, lotInfo);
     }
 
     return self;
   }
 
-  function TransportationLot(lotInfo) {
+  function TransportationLot(TransportationAliquotFactory, lotInfo) {
     var self = this;
 
     self.code = lotInfo.code || '';
-    self.aliquotList = lotInfo.aliquotList || [];
+    self.aliquotList = TransportationAliquotFactory.fromJson(lotInfo.aliquotList || []);
     self.shipmentDate = lotInfo.shipmentDate || '';
     self.processingDate = lotInfo.processingDate || '';
     self.operator = lotInfo.operator || '';
@@ -40,8 +40,9 @@
     self.toJSON = toJSON;
 
 
-    function insertAliquot(aliquot) {
-      self.aliquotList.push(aliquot);
+    function insertAliquot(aliquotInfo) {
+      var newAliquot = TransportationAliquotFactory.create(aliquotInfo);
+      self.aliquotList.push(newAliquot);
     }
 
     function removeAliquotByIndex(index) {

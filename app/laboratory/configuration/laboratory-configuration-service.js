@@ -12,7 +12,11 @@
     /* Public Interface */
     self.initialize = initialize;
     self.getLaboratoryConfiguration = getLaboratoryConfiguration;
+
+    // TODO: review
     self.getAliquotDescriptor = getAliquotDescriptor;
+    self.getAliquotDescriptorNewWay = getAliquotDescriptorNewWay;
+
     self.getAvaiableAliquots = getAvaiableAliquots;
     self.getTubeDescriptor = getTubeDescriptor;
     self.getMomentDescriptor = getMomentDescriptor;
@@ -113,6 +117,18 @@
           return 'CRYOTUBE';
         default:
           return '';
+      }
+    }
+
+    function getAliquotDescriptorNewWay(aliquotName) {
+      var found = _laboratoryDescriptor.aliquotDescriptors.find(function(aliquotDescriptor) {
+         return aliquotDescriptor.name == aliquotName;
+      });
+      if (found) {
+         return found;
+      }else {
+         var msg = 'Configuração incompleta para: ' + aliquotName;
+         throw new Error(msg);
       }
     }
 
