@@ -51,65 +51,81 @@
     }
 
     function getTubeDescriptor(type) {
-      return _laboratoryDescriptor.tubeConfiguration.tubeDescriptors.find(function(descriptor) {
-        return descriptor.name == type;
-      });
+      if (_laboratoryDescriptor) {
+        return _laboratoryDescriptor.tubeConfiguration.tubeDescriptors.find(function(descriptor) {
+          return descriptor.name == type;
+        });
+      } else {
+        _descriptorErrorMessenger('laboratório');
+      }
     }
 
     function getMomentDescriptor(momentName) {
-      return _laboratoryDescriptor.collectMomentConfiguration.momentDescriptors.find(function(descriptor) {
-        return descriptor.name == momentName;
-      });
+      if (_laboratoryDescriptor) {
+        return _laboratoryDescriptor.collectMomentConfiguration.momentDescriptors.find(function(descriptor) {
+          return descriptor.name == momentName;
+        });
+      } else {
+        _descriptorErrorMessenger('laboratório');
+      }
     }
 
     function getAvaiableAliquots(momentName, tubeType) {
-      try {
-        var centerDescriptor = _laboratoryDescriptor.aliquotConfiguration
-          .aliquotCenterDescriptors
-          .find(function(centerDescriptor) {
-            return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
-          });
+      if (_laboratoryDescriptor) {
+        try {
+          var centerDescriptor = _laboratoryDescriptor.aliquotConfiguration
+            .aliquotCenterDescriptors
+            .find(function(centerDescriptor) {
+              return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
+            });
 
-        var groupDescriptor = centerDescriptor
-          .aliquotGroupDescriptors
-          .find(function(groupDescriptor) {
-            return groupDescriptor.name === _participantCQ;
-          });
+          var groupDescriptor = centerDescriptor
+            .aliquotGroupDescriptors
+            .find(function(groupDescriptor) {
+              return groupDescriptor.name === _participantCQ;
+            });
 
-        var aliquotsList = groupDescriptor
-          .aliquotMomentDescriptors
-          .find(function(momentDescriptor) {
-            return momentDescriptor.name === momentName;
-          })
-          .aliquotTypesDescriptors
-          .find(function(typeDescriptor) {
-            return typeDescriptor.name === tubeType;
-          })
-          .aliquots;
+          var aliquotsList = groupDescriptor
+            .aliquotMomentDescriptors
+            .find(function(momentDescriptor) {
+              return momentDescriptor.name === momentName;
+            })
+            .aliquotTypesDescriptors
+            .find(function(typeDescriptor) {
+              return typeDescriptor.name === tubeType;
+            })
+            .aliquots;
 
           return aliquotsList.map(function(avaiableAliquot) {
-             return getAliquotDescriptor(avaiableAliquot.name);
+            return getAliquotDescriptor(avaiableAliquot.name);
           });
 
-      } catch (e) {
-        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + _participantCQ + ' - ' + momentName + ' - ' + tubeType;
-        throw new Error(msg);
+        } catch (e) {
+          var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + _participantCQ + ' - ' + momentName + ' - ' + tubeType;
+          throw new Error(msg);
+        }
+      } else {
+        _descriptorErrorMessenger('laboratório');
       }
     }
 
     function getAliquotDescriptor(aliquotName) {
-      var found = _aliquotsDescriptors.find(function(aliquotDescriptor) {
-        return aliquotDescriptor.name == aliquotName;
-      });
-      if (found) {
-        return found;
-      } else {
-        var msg = 'Configuração incompleta para: ' + aliquotName;
-        throw new Error(msg);
-      }
+      if (_aliquotsDescriptors) {
+        var found = _aliquotsDescriptors.find(function(aliquotDescriptor) {
+          return aliquotDescriptor.name == aliquotName;
+        });
+        if (found) {
+          return found;
+        } else {
+          var msg = 'Configuração incompleta para: ' + aliquotName;
+          throw new Error(msg);
+        }
+     }else {
+        _descriptorErrorMessenger('alíquota');
+     }
     }
 
-    function validateAliquotWave(aliquotCode) {
+    function validateAliquotWave(aliquotCode) {               
       var waveToken = _laboratoryDescriptor.codeConfiguration.waveNumberToken;
       var WAVE_TOKEN_POSITION = 0;
       var stringfiedCode = String(aliquotCode);
@@ -137,6 +153,11 @@
         default:
           return '';
       }
+    }
+
+    function _descriptorErrorMessenger(type) {
+      var msg = 'Descritores de ' + type + ' não inicializados';
+      throw new Error(msg);
     }
     return self;
   }

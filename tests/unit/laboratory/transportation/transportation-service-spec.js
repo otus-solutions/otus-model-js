@@ -1,4 +1,4 @@
-fdescribe('the transportation service', function() {
+xdescribe('the transportation service', function() {
   var Mock = {};
   var service;
   var $httpBackend;
@@ -11,27 +11,26 @@ fdescribe('the transportation service', function() {
 
     inject(function(_$injector_) {
       var injections = {
-        'LotFactory': mockTransportationLotFactory(_$injector_),
-        '$http': _$injector_.get('$http')
+        'LotFactory': mockTransportationLotFactory(_$injector_)
       };
-      $httpBackend = _$injector_.get('$httpBackend');
-      $httpBackend.when('GET', 'app/laboratory/transportation/aliquot-list.json')
-        .respond(Mock.shipmentAliquotsList);
+      // $httpBackend = _$injector_.get('$httpBackend');
+      // $httpBackend.when('GET', 'app/laboratory/transportation/aliquot-list.json')
+      //   .respond(Mock.shipmentAliquotsList);
       service = _$injector_.get('otusjs.laboratory.transportation.TransportationService', injections);
-      $httpBackend.flush(); //run the http request on onInit method
+      // $httpBackend.flush(); //run the http request on onInit method
     });
   });
 
   it('should', function() {
      var lot = Mock.LotFactory.create();
-     lot.code = '30513515';
-     Mock.shipmentAliquotsList.slice(0,3).forEach(function(aliquot) {
-        lot.insertAliquot(aliquot);
-     });
-     lot.operator = 'fulanodetal@gmail.com';
-     lot.processingDate = new Date().toISOString();
-     lot.shipmentDate = new Date().toISOString();
-     console.log(JSON.stringify(lot));
+   //   lot.code = '30513515';
+   //   Mock.shipmentAliquotsList.slice(0,3).forEach(function(aliquot) {
+   //      lot.insertAliquot(aliquot);
+   //   });
+   //   lot.operator = 'fulanodetal@gmail.com';
+   //   lot.processingDate = new Date().toISOString();
+   //   lot.shipmentDate = new Date().toISOString();
+   //   console.log(JSON.stringify(lot));
  });
 
   function mockTransportationLotFactory(_$injector_) {
