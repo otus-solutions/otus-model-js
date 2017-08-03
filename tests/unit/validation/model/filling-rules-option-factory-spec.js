@@ -31,10 +31,6 @@ describe('FillingRulesOptionFactory', function() {
       expect(fillingRulesOption.objectType).toBe("FillingRules");
     });
 
-    it('returned object should have an empty options attribute', function() {
-      expect(fillingRulesOption.options).toEqual({});
-    });
-
   });
 
   describe('fromJsonObject method', function() {
@@ -100,7 +96,17 @@ describe('FillingRulesOptionFactory', function() {
   Mock.jsonObjectWithoutOptions =  {
       extends: 'StudioObject',
       objectType: 'FillingRules',
-      options: {}
+      options: {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        }
+      }
     };
   }
 
