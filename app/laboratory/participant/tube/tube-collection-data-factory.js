@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory')
-    .factory('otusjs.laboratory.TubeCollectionDataFactory', factory);
+    .module('otusjs.laboratory.participant')
+    .factory('otusjs.laboratory.participant.TubeCollectionDataFactory', factory);
 
   function factory() {
     var self = this;

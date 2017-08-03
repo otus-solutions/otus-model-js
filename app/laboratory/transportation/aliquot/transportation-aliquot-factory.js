@@ -6,7 +6,7 @@
     .factory('otusjs.laboratory.transportation.TransportationAliquotFactory', factory);
 
   factory.$inject = [
-        'otusjs.laboratory.LaboratoryConfigurationService'
+        'otusjs.laboratory.configuration.LaboratoryConfigurationService'
      ];
 
   function factory(LaboratoryConfigurationService) {

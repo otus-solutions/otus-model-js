@@ -1,7 +1,7 @@
 (function() {
   angular
-    .module('otusjs.laboratory')
-    .service('otusjs.laboratory.LaboratoryConfigurationService', service);
+    .module('otusjs.laboratory.configuration')
+    .service('otusjs.laboratory.configuration.LaboratoryConfigurationService', service);
 
   function service() {
     var self = this;
@@ -14,7 +14,7 @@
     self.initializeParticipantConfiguration = initializeParticipantConfiguration;
     self.initializeLaboratoryConfiguration = initializeLaboratoryConfiguration;
     self.initializeAliquotsDescriptors = initializeAliquotsDescriptors;
-    
+
     self.getLaboratoryConfiguration = getLaboratoryConfiguration;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
 

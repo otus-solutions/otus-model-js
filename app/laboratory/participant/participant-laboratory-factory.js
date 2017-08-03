@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory')
-    .factory('otusjs.laboratory.ParticipantLaboratoryFactory', factory);
+    .module('otusjs.laboratory.participant')
+    .factory('otusjs.laboratory.participant.ParticipantLaboratoryFactory', factory);
 
   factory.$inject = [
-    'otusjs.laboratory.ParticipanTubeFactory',
-    'otusjs.laboratory.LaboratoryConfigurationService'
+    'otusjs.laboratory.participant.ParticipanTubeFactory',
+    'otusjs.laboratory.configuration.LaboratoryConfigurationService'
    ];
 
   function factory(ParticipanTubeFactory, LaboratoryConfigurationService) {

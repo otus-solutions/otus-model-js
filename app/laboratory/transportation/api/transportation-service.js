@@ -15,12 +15,6 @@
     self.createAliquotLot = createAliquotLot;
     self.buildAliquotLotFromJson = buildAliquotLotFromJson;
 
-    onInit();
-
-    function onInit() {
-
-    }
-
     function createAliquotLot() {
        return LotFactory.create();
     }
