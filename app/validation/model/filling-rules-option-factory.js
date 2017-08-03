@@ -23,7 +23,7 @@
         throw new Error("otusjs.model.misc.model.FillingRulesOptionFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var fillingRules = new FillingRules(RulesFactory);
-      for(var rule in jsonObject.options) {
+      for (var rule in jsonObject.options) {
         fillingRules.options[rule] = RulesFactory.fromJsonObject(jsonObject.options[rule]);
       }
       return fillingRules;
@@ -42,6 +42,12 @@
     /* Public methods */
     self.createOption = createOption;
     self.removeFillingRules = removeFillingRules;
+
+    _init();
+
+    function _init() {
+      self.createOption('mandatory');
+    }
 
     function createOption(type) {
       var option = RulesFactory.create(type);
