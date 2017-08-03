@@ -190,7 +190,17 @@ describe('SingleSelectionQuestionFactory', function() {
       "fillingRules": {
         "extends": "StudioObject",
         "objectType": "FillingRules",
-        "options": {}
+        "options": {
+          "mandatory": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "mandatory",
+            "data": {
+              "canBeIgnored": false,
+              "reference": true
+            }
+          }
+        }
       }
     };
   }
