@@ -20,9 +20,13 @@
     }
 
     function fromJson(aliquotInfoArray) {
-      return aliquotInfoArray.map(function(aliquotInfo) {
-        return new TransportationAliquot(LaboratoryConfigurationService, aliquotInfo);
-      });
+      if (Array.isArray(aliquotInfoArray)) {
+        return aliquotInfoArray.map(function(aliquotInfo) {
+          return new TransportationAliquot(LaboratoryConfigurationService, aliquotInfo);
+        });
+     }else {
+        return [];
+     }
     }
 
     return self;
@@ -45,8 +49,8 @@
     onInit();
 
     function onInit() {
-      // _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptorNewWay(self.name);
-      // _runDescriptors(_aliquotDescriptor);
+      _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptorNewWay(self.name);
+      _runDescriptors(_aliquotDescriptor);
     }
 
     function _runDescriptors(aliquotDescriptor) {

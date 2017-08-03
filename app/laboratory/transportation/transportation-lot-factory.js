@@ -29,7 +29,7 @@
     var self = this;
 
     self.code = lotInfo.code || '';
-    self.aliquotList = TransportationAliquotFactory.fromJson(lotInfo.aliquotList || []);
+    self.aliquotList = TransportationAliquotFactory.fromJson(lotInfo.aliquotList);
     self.shipmentDate = lotInfo.shipmentDate || '';
     self.processingDate = lotInfo.processingDate || '';
     self.operator = lotInfo.operator || '';
@@ -43,6 +43,7 @@
     function insertAliquot(aliquotInfo) {
       var newAliquot = TransportationAliquotFactory.create(aliquotInfo);
       self.aliquotList.push(newAliquot);
+      return newAliquot;
     }
 
     function removeAliquotByIndex(index) {
