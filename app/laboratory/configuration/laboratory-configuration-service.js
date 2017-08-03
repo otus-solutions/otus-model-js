@@ -15,15 +15,10 @@
     self.initializeLaboratoryConfiguration = initializeLaboratoryConfiguration;
     self.initializeAliquotsDescriptors = initializeAliquotsDescriptors;
 
-    self.getLaboratoryConfiguration = getLaboratoryConfiguration;
-    self.getAliquotsDescriptors = getAliquotsDescriptors;
+    self.checkLaboratoryConfiguration = checkLaboratoryConfiguration;
+    self.checkAliquotsDescriptors = checkAliquotsDescriptors;
 
-    // TODO: review
     self.getAliquotDescriptor = getAliquotDescriptor;
-    self.getAliquotDescriptorNewWay = getAliquotDescriptorNewWay;
-
-
-
 
     self.getAvaiableAliquots = getAvaiableAliquots;
     self.getTubeDescriptor = getTubeDescriptor;
@@ -47,12 +42,12 @@
       _aliquotsDescriptors = aliquotsDescriptor;
     }
 
-    function getAliquotsDescriptors(aliquotsDescriptor) {
-      return _aliquotsDescriptors;
+    function checkAliquotsDescriptors(aliquotsDescriptor) {
+      return !!_aliquotsDescriptors;
     }
 
-    function getLaboratoryConfiguration() {
-      return _laboratoryDescriptor;
+    function checkLaboratoryConfiguration() {
+      return !!_laboratoryDescriptor;
     }
 
     function getTubeDescriptor(type) {
@@ -81,7 +76,7 @@
             return groupDescriptor.name === _participantCQ;
           });
 
-        return groupDescriptor
+        var aliquotsList = groupDescriptor
           .aliquotMomentDescriptors
           .find(function(momentDescriptor) {
             return momentDescriptor.name === momentName;
@@ -92,7 +87,9 @@
           })
           .aliquots;
 
-          // TODO: run getAliquotsDescriptors
+          return aliquotsList.map(function(avaiableAliquot) {
+             return getAliquotDescriptor(avaiableAliquot.name);
+          });
 
       } catch (e) {
         var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + _participantCQ + ' - ' + momentName + ' - ' + tubeType;
@@ -100,15 +97,14 @@
       }
     }
 
-    function getAliquotDescriptor(aliquotName, momentName, tubeType) {
-      try {
-        var aliquotDescriptor = getAvaiableAliquots(momentName, tubeType)
-          .find(function(aliquotDescriptor) {
-            return aliquotDescriptor.name === aliquotName;
-          });
-        return aliquotDescriptor;
-      } catch (e) {
-        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + aliquotName + ' - ' + momentName + ' - ' + tubeType + ' - ' + _participantCQ;
+    function getAliquotDescriptor(aliquotName) {
+      var found = _aliquotsDescriptors.find(function(aliquotDescriptor) {
+        return aliquotDescriptor.name == aliquotName;
+      });
+      if (found) {
+        return found;
+      } else {
+        var msg = 'Configuração incompleta para: ' + aliquotName;
         throw new Error(msg);
       }
     }
@@ -118,11 +114,10 @@
       var WAVE_TOKEN_POSITION = 0;
       var stringfiedCode = String(aliquotCode);
       return stringfiedCode[WAVE_TOKEN_POSITION] == waveToken;
-
     }
 
+    //given the aliquot code, return the aliquot container
     function getAliquotContainer(code) {
-      //given the aliquot code, return the aliquot container
       var CONTAINER_TOKEN_POSITION = 2;
 
       var stringfiedCode = String(code);
@@ -143,23 +138,6 @@
           return '';
       }
     }
-
-    function getAliquotDescriptorNewWay(aliquotName) {
-      if (_aliquotsDescriptors) {
-        var found = _aliquotsDescriptors.find(function(aliquotDescriptor) {
-          return aliquotDescriptor.name == aliquotName;
-        });
-        if (found) {
-          return found;
-        } else {
-          var msg = 'Configuração incompleta para: ' + aliquotName;
-          throw new Error(msg);
-        }
-     }else {
-        //fetch aliquotsDescriptors
-     }
-    }
-
     return self;
   }
 }());

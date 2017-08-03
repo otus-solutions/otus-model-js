@@ -41,7 +41,6 @@
 
   function Tube(tubeInfo, operator, TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService) {
     var self = this;
-    var _labConfig;
     var _operator;
 
 
@@ -73,7 +72,6 @@
 
     function _onInit() {
       _operator = operator;
-      _labConfig = LaboratoryConfigurationService.getLaboratoryConfiguration();
       _fillDescriptors();
       _manageAliquots();
     }
