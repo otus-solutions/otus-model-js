@@ -48,7 +48,7 @@
 
     function onInit() {
       _backupJSON = angular.copy(labParticipant);
-      LaboratoryConfigurationService.initialize(labConfig, selectedParticipant, self.collectGroupName);
+      LaboratoryConfigurationService.initializeParticipantConfiguration(selectedParticipant, self.collectGroupName);
       _tubeHandling();
     }
 

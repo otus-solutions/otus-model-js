@@ -6,16 +6,24 @@
   function service() {
     var self = this;
     var _laboratoryDescriptor;
+    var _aliquotsDescriptors;
     var _selectedParticipant;
     var _participantCQ;
 
     /* Public Interface */
-    self.initialize = initialize;
+    self.initializeParticipantConfiguration = initializeParticipantConfiguration;
+    self.initializeLaboratoryConfiguration = initializeLaboratoryConfiguration;
+    self.initializeAliquotsDescriptors = initializeAliquotsDescriptors;
+    
     self.getLaboratoryConfiguration = getLaboratoryConfiguration;
+    self.getAliquotsDescriptors = getAliquotsDescriptors;
 
     // TODO: review
     self.getAliquotDescriptor = getAliquotDescriptor;
     self.getAliquotDescriptorNewWay = getAliquotDescriptorNewWay;
+
+
+
 
     self.getAvaiableAliquots = getAvaiableAliquots;
     self.getTubeDescriptor = getTubeDescriptor;
@@ -23,10 +31,24 @@
     self.getAliquotContainer = getAliquotContainer;
     self.validateAliquotWave = validateAliquotWave;
 
-    function initialize(labDescriptor, selectedParticipant, participantCQ) {
-      _laboratoryDescriptor = labDescriptor;
+    function initializeParticipantConfiguration(selectedParticipant, participantCQ) {
       _selectedParticipant = selectedParticipant;
       _participantCQ = participantCQ;
+    }
+
+    function initializeLaboratoryConfiguration(labDescriptor) {
+      _laboratoryDescriptor = labDescriptor;
+
+      //filling sub-descriptors
+      _aliquotsDescriptors = _laboratoryDescriptor.aliquotsDescriptors;
+    }
+
+    function initializeAliquotsDescriptors(aliquotsDescriptor) {
+      _aliquotsDescriptors = aliquotsDescriptor;
+    }
+
+    function getAliquotsDescriptors(aliquotsDescriptor) {
+      return _aliquotsDescriptors;
     }
 
     function getLaboratoryConfiguration() {
@@ -69,6 +91,8 @@
             return typeDescriptor.name === tubeType;
           })
           .aliquots;
+
+          // TODO: run getAliquotsDescriptors
 
       } catch (e) {
         var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + _participantCQ + ' - ' + momentName + ' - ' + tubeType;
@@ -121,15 +145,19 @@
     }
 
     function getAliquotDescriptorNewWay(aliquotName) {
-      var found = _laboratoryDescriptor.aliquotDescriptors.find(function(aliquotDescriptor) {
-         return aliquotDescriptor.name == aliquotName;
-      });
-      if (found) {
-         return found;
-      }else {
-         var msg = 'Configuração incompleta para: ' + aliquotName;
-         throw new Error(msg);
-      }
+      if (_aliquotsDescriptors) {
+        var found = _aliquotsDescriptors.find(function(aliquotDescriptor) {
+          return aliquotDescriptor.name == aliquotName;
+        });
+        if (found) {
+          return found;
+        } else {
+          var msg = 'Configuração incompleta para: ' + aliquotName;
+          throw new Error(msg);
+        }
+     }else {
+        //fetch aliquotsDescriptors
+     }
     }
 
     return self;
