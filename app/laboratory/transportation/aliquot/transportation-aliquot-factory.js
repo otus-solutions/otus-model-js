@@ -35,6 +35,9 @@
   function TransportationAliquot(LaboratoryConfigurationService, aliquotInfo) {
     var self = this;
     var _aliquotDescriptor;
+    var _participantBirthdate = aliquotInfo.birthdate;
+    var _participantSex = aliquotInfo.sex;
+    var _participantRecruitmentNumber = aliquotInfo.recruitmentNumber;
 
     /* Public Interface*/
     self.objectType = "Transportation Aliquot";
@@ -60,13 +63,19 @@
 
     function toJSON() {
       //TODO add participant info
+      var _participantBirthdate = aliquotInfo.birthdate;
+      var _participantSex = aliquotInfo.sex;
+      var _participantRecruitmentNumber = aliquotInfo.recruitmentNumber;
       var json = {
         objectType: self.objectType,
         code: self.code,
         name: self.name,
         container: self.container,
         role: self.role,
-        aliquotCollectionData: self.aliquotCollectionData
+        aliquotCollectionData: self.aliquotCollectionData,
+        birthdate: _participantBirthdate,
+        sex: _participantSex,
+        recruitmentNumber: _participantRecruitmentNumber
       };
       return json;
     }
