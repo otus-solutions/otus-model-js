@@ -37,12 +37,13 @@
     var _aliquotDescriptor;
 
     /* Public Interface*/
-    self.objectType = "Aliquot";
+    self.objectType = "Transportation Aliquot";
     self.name = aliquotInfo.name;
     self.role = aliquotInfo.role;
-    self.code = aliquotInfo.code; //.aliquotCode
-    self.container = aliquotInfo.container; // || getFromService;
+    self.code = aliquotInfo.code;
+    self.container = aliquotInfo.container;
 
+    // TODO: use collectionFactory?
     self.aliquotCollectionData = aliquotInfo.aliquotCollectionData;
     self.toJSON = toJSON;
 
@@ -58,7 +59,7 @@
     }
 
     function toJSON() {
-      //TODO review
+      //TODO add participant info
       var json = {
         objectType: self.objectType,
         code: self.code,

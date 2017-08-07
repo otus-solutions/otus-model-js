@@ -28,6 +28,7 @@
   function TransportationLot(TransportationAliquotFactory, lotInfo) {
     var self = this;
 
+    self.objectType = 'TransportationLot';
     self.code = lotInfo.code || '';
     self.aliquotList = TransportationAliquotFactory.fromJson(lotInfo.aliquotList);
     self.shipmentDate = lotInfo.shipmentDate || '';
@@ -52,6 +53,7 @@
 
     function toJSON() {
       var json = {
+        objectType: self.objectType,
         code: self.code,
         shipmentDate: self.shipmentDate,
         processingDate: self.processingDate,
