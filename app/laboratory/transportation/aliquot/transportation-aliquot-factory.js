@@ -40,7 +40,7 @@
     var _participantRecruitmentNumber = aliquotInfo.recruitmentNumber;
 
     /* Public Interface*/
-    self.objectType = "Transportation Aliquot";
+    self.objectType = aliquotInfo.objectType;
     self.name = aliquotInfo.name;
     self.role = aliquotInfo.role;
     self.code = aliquotInfo.code;
@@ -62,10 +62,7 @@
     }
 
     function toJSON() {
-      //TODO add participant info
-      var _participantBirthdate = aliquotInfo.birthdate;
-      var _participantSex = aliquotInfo.sex;
-      var _participantRecruitmentNumber = aliquotInfo.recruitmentNumber;
+      // TODO: test if private attributes goes with json
       var json = {
         objectType: self.objectType,
         code: self.code,
