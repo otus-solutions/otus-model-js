@@ -35,7 +35,7 @@
   function TransportationAliquot(LaboratoryConfigurationService, aliquotInfo) {
     var self = this;
     var _aliquotDescriptor;
-    var _participantBirthdate = aliquotInfo.birthdate;
+    var _participantBirthdate = aliquotInfo.birthdate;  //TODO call immutableDate factory
     var _participantSex = aliquotInfo.sex;
     var _participantRecruitmentNumber = aliquotInfo.recruitmentNumber;
 
