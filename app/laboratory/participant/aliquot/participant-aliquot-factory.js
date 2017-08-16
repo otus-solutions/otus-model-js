@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory')
-    .factory('otusjs.laboratory.ParticipantAliquotFactory', factory);
+    .module('otusjs.laboratory.participant')
+    .factory('otusjs.laboratory.participant.ParticipantAliquotFactory', factory);
 
   factory.$inject = [
-      'otusjs.laboratory.AliquotCollectionDataFactory',
-      'otusjs.laboratory.LaboratoryConfigurationService'
+      'otusjs.laboratory.participant.AliquotCollectionDataFactory',
+      'otusjs.laboratory.configuration.LaboratoryConfigurationService'
    ];
 
   function factory(AliquotCollectionDataFactory, LaboratoryConfigurationService) {
@@ -52,7 +52,7 @@
     onInit();
 
     function onInit() {
-      _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name, tubeInfo.moment, tubeInfo.type);
+      _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name);
       _runDescriptors(_aliquotDescriptor);
     }
 

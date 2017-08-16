@@ -1,100 +1,139 @@
 (function() {
   angular
-    .module('otusjs.laboratory')
-    .service('otusjs.laboratory.LaboratoryConfigurationService', service);
+    .module('otusjs.laboratory.configuration')
+    .service('otusjs.laboratory.configuration.LaboratoryConfigurationService', service);
 
   function service() {
     var self = this;
     var _laboratoryDescriptor;
+    var _aliquotsDescriptors;
     var _selectedParticipant;
     var _participantCQ;
 
     /* Public Interface */
-    self.initialize = initialize;
-    self.getLaboratoryConfiguration = getLaboratoryConfiguration;
+    self.initializeParticipantConfiguration = initializeParticipantConfiguration;
+    self.initializeLaboratoryConfiguration = initializeLaboratoryConfiguration;
+    self.initializeAliquotsDescriptors = initializeAliquotsDescriptors;
+
+    self.checkLaboratoryConfiguration = checkLaboratoryConfiguration;
+    self.checkAliquotsDescriptors = checkAliquotsDescriptors;
+
     self.getAliquotDescriptor = getAliquotDescriptor;
+
     self.getAvaiableAliquots = getAvaiableAliquots;
     self.getTubeDescriptor = getTubeDescriptor;
     self.getMomentDescriptor = getMomentDescriptor;
     self.getAliquotContainer = getAliquotContainer;
     self.validateAliquotWave = validateAliquotWave;
 
-    function initialize(labDescriptor, selectedParticipant, participantCQ) {
-      _laboratoryDescriptor = labDescriptor;
+    function initializeParticipantConfiguration(selectedParticipant, participantCQ) {
       _selectedParticipant = selectedParticipant;
       _participantCQ = participantCQ;
     }
 
-    function getLaboratoryConfiguration() {
-      return _laboratoryDescriptor;
+    function initializeLaboratoryConfiguration(labDescriptor) {
+      _laboratoryDescriptor = labDescriptor;
+
+      //filling sub-descriptors
+      _aliquotsDescriptors = _laboratoryDescriptor.aliquotsDescriptors;
+    }
+
+    function initializeAliquotsDescriptors(aliquotsDescriptor) {
+      _aliquotsDescriptors = aliquotsDescriptor;
+    }
+
+    function checkAliquotsDescriptors(aliquotsDescriptor) {
+      return !!_aliquotsDescriptors;
+    }
+
+    function checkLaboratoryConfiguration() {
+      return !!_laboratoryDescriptor;
     }
 
     function getTubeDescriptor(type) {
-      return _laboratoryDescriptor.tubeConfiguration.tubeDescriptors.find(function(descriptor) {
-        return descriptor.name == type;
-      });
+      if (_laboratoryDescriptor) {
+        return _laboratoryDescriptor.tubeConfiguration.tubeDescriptors.find(function(descriptor) {
+          return descriptor.name == type;
+        });
+      } else {
+        _descriptorErrorMessenger('laboratório');
+      }
     }
 
     function getMomentDescriptor(momentName) {
-      return _laboratoryDescriptor.collectMomentConfiguration.momentDescriptors.find(function(descriptor) {
-        return descriptor.name == momentName;
-      });
+      if (_laboratoryDescriptor) {
+        return _laboratoryDescriptor.collectMomentConfiguration.momentDescriptors.find(function(descriptor) {
+          return descriptor.name == momentName;
+        });
+      } else {
+        _descriptorErrorMessenger('laboratório');
+      }
     }
 
     function getAvaiableAliquots(momentName, tubeType) {
-      try {
-        var centerDescriptor = _laboratoryDescriptor.aliquotConfiguration
-          .aliquotCenterDescriptors
-          .find(function(centerDescriptor) {
-            return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
+      if (_laboratoryDescriptor) {
+        try {
+          var centerDescriptor = _laboratoryDescriptor.aliquotConfiguration
+            .aliquotCenterDescriptors
+            .find(function(centerDescriptor) {
+              return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
+            });
+
+          var groupDescriptor = centerDescriptor
+            .aliquotGroupDescriptors
+            .find(function(groupDescriptor) {
+              return groupDescriptor.name === _participantCQ;
+            });
+
+          var aliquotsList = groupDescriptor
+            .aliquotMomentDescriptors
+            .find(function(momentDescriptor) {
+              return momentDescriptor.name === momentName;
+            })
+            .aliquotTypesDescriptors
+            .find(function(typeDescriptor) {
+              return typeDescriptor.name === tubeType;
+            })
+            .aliquots;
+
+          return aliquotsList.map(function(avaiableAliquot) {
+            return getAliquotDescriptor(avaiableAliquot.name);
           });
 
-        var groupDescriptor = centerDescriptor
-          .aliquotGroupDescriptors
-          .find(function(groupDescriptor) {
-            return groupDescriptor.name === _participantCQ;
-          });
-
-        return groupDescriptor
-          .aliquotMomentDescriptors
-          .find(function(momentDescriptor) {
-            return momentDescriptor.name === momentName;
-          })
-          .aliquotTypesDescriptors
-          .find(function(typeDescriptor) {
-            return typeDescriptor.name === tubeType;
-          })
-          .aliquots;
-
-      } catch (e) {
-        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + _participantCQ + ' - ' + momentName + ' - ' + tubeType;
-        throw new Error(msg);
+        } catch (e) {
+          var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + _participantCQ + ' - ' + momentName + ' - ' + tubeType;
+          throw new Error(msg);
+        }
+      } else {
+        _descriptorErrorMessenger('laboratório');
       }
     }
 
-    function getAliquotDescriptor(aliquotName, momentName, tubeType) {
-      try {
-        var aliquotDescriptor = getAvaiableAliquots(momentName, tubeType)
-          .find(function(aliquotDescriptor) {
-            return aliquotDescriptor.name === aliquotName;
-          });
-        return aliquotDescriptor;
-      } catch (e) {
-        var msg = 'Configuração incompleta para: \n' + _selectedParticipant.recruitmentNumber + ' - ' + _selectedParticipant.fieldCenter.acronym + ' - ' + ' - ' + aliquotName + ' - ' + momentName + ' - ' + tubeType + ' - ' + _participantCQ;
-        throw new Error(msg);
-      }
+    function getAliquotDescriptor(aliquotName) {
+      if (_aliquotsDescriptors) {
+        var found = _aliquotsDescriptors.find(function(aliquotDescriptor) {
+          return aliquotDescriptor.name == aliquotName;
+        });
+        if (found) {
+          return found;
+        } else {
+          var msg = 'Configuração incompleta para: ' + aliquotName;
+          throw new Error(msg);
+        }
+     }else {
+        _descriptorErrorMessenger('alíquota');
+     }
     }
 
-    function validateAliquotWave(aliquotCode) {
+    function validateAliquotWave(aliquotCode) {               
       var waveToken = _laboratoryDescriptor.codeConfiguration.waveNumberToken;
       var WAVE_TOKEN_POSITION = 0;
       var stringfiedCode = String(aliquotCode);
       return stringfiedCode[WAVE_TOKEN_POSITION] == waveToken;
-
     }
 
+    //given the aliquot code, return the aliquot container
     function getAliquotContainer(code) {
-      //given the aliquot code, return the aliquot container
       var CONTAINER_TOKEN_POSITION = 2;
 
       var stringfiedCode = String(code);
@@ -116,6 +155,10 @@
       }
     }
 
+    function _descriptorErrorMessenger(type) {
+      var msg = 'Descritores de ' + type + ' não inicializados';
+      throw new Error(msg);
+    }
     return self;
   }
 }());

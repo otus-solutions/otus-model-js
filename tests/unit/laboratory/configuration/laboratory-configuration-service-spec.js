@@ -1,12 +1,15 @@
 xdescribe('the laboratory configuration service', function() {
+   //skipped beacuse phantom-js
+  //if some test fails, try updating the json-importer.js file
   var Mock = {};
+  var service;
 
   beforeEach(function() {
     module('otusjs.laboratory');
 
     inject(function(_$injector_) {
       var injections = {};
-      service = _$injector_.get('otusjs.laboratory.LaboratoryConfigurationService', injections);
+      service = _$injector_.get('otusjs.laboratory.configuration.LaboratoryConfigurationService', injections);
     });
 
 
@@ -17,31 +20,76 @@ xdescribe('the laboratory configuration service', function() {
     mockAliquotInfo();
     mockLoggedUser();
 
-    service.initialize(Mock.LabDescriptors, Mock.SelectedParticipant, Mock.ParticipantLaboratory.collectGroupName);
   });
 
-  it('should get return the right container given an aliquot code', function() {
-    var code = 321425120;
-    var container = service.getAliquotContainer(code);
+  describe('data initialization', function() {
+    beforeEach(function() {
+      service.initializeParticipantConfiguration(Mock.SelectedParticipant, Mock.ParticipantLaboratory.collectGroupName);
+    });
 
-    expect(container).toEqual('TUBE');
+    it('should initialize full descriptors', function() {
+      service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
+      var checkFullDescriptors = service.checkLaboratoryConfiguration();
+      var checkAliquotsDescriptor = service.checkAliquotsDescriptors();
+      expect(checkFullDescriptors).toBe(true);
+      expect(checkAliquotsDescriptor).toBe(true);
+    });
 
-    code = 322425120;
-    container = service.getAliquotContainer(code);
+    it('should initialize aliquots descriptors', function() {
+      service.initializeAliquotsDescriptors(Mock.LabDescriptors.aliquotsDescriptors);
+      var checkFullDescriptors = service.checkLaboratoryConfiguration();
+      var checkAliquotsDescriptor = service.checkAliquotsDescriptors();
+      expect(checkFullDescriptors).toBe(false);
+      expect(checkAliquotsDescriptor).toBe(true);
+    });
 
-    expect(container).toEqual('PALLET');
+    it('should throw error when not initialized', function() {
+      var checkFullDescriptors = service.checkLaboratoryConfiguration();
+      var checkAliquotsDescriptor = service.checkAliquotsDescriptors();
+      expect(checkFullDescriptors).toBe(false);
+      expect(checkAliquotsDescriptor).toBe(false);
 
-    code = 323425120;
-    container = service.getAliquotContainer(code);
+      var expectedError = service.getAliquotDescriptor;
+      expect(expectedError).toThrowError(Error, "Descritores de alíquota não inicializados");
 
-    expect(container).toEqual('CRYOTUBE');
+      var anotherExpectedError = service.getAvaiableAliquots;
+      expect(anotherExpectedError).toThrowError(Error, "Descritores de laboratório não inicializados");
+    });
   });
 
-  it('should get avaiable aliquots', function() {
-    Mock.SelectedParticipant.fieldCenter.acronym = 'RS';
-    service.initialize(Mock.LabDescriptors, Mock.SelectedParticipant, 'CQ1');
-    service.getAvaiableAliquots('FASTING', 'GEL');
+  describe('the descriptor getters', function() {
+
+    beforeEach(function() {
+      service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
+      service.initializeParticipantConfiguration(Mock.SelectedParticipant, Mock.ParticipantLaboratory.collectGroupName);
+    });
+
+    it('should get return the right container given an aliquot code', function() {
+      var code = 321425120;
+      var container = service.getAliquotContainer(code);
+
+      expect(container).toEqual('TUBE');
+
+      code = 322425120;
+      container = service.getAliquotContainer(code);
+
+      expect(container).toEqual('PALLET');
+
+      code = 323425120;
+      container = service.getAliquotContainer(code);
+
+      expect(container).toEqual('CRYOTUBE');
+    });
+
+    it('should get avaiable aliquots', function() {
+      Mock.SelectedParticipant.fieldCenter.acronym = 'RS';
+      service.initializeParticipantConfiguration(Mock.SelectedParticipant, 'CQ1');
+      var avaiableAliquots = service.getAvaiableAliquots('FASTING', 'GEL');
+      expect(avaiableAliquots.length).not.toEqual(0);
+    });
   });
+
+
 
   //--------
   // Mock Functions

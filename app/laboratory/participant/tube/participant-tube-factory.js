@@ -2,13 +2,13 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory')
-    .factory('otusjs.laboratory.ParticipanTubeFactory', factory);
+    .module('otusjs.laboratory.participant')
+    .factory('otusjs.laboratory.participant.ParticipanTubeFactory', factory);
 
   factory.$inject = [
-      'otusjs.laboratory.TubeCollectionDataFactory',
-      'otusjs.laboratory.ParticipantAliquotFactory',
-      'otusjs.laboratory.LaboratoryConfigurationService'
+      'otusjs.laboratory.participant.TubeCollectionDataFactory',
+      'otusjs.laboratory.participant.ParticipantAliquotFactory',
+      'otusjs.laboratory.configuration.LaboratoryConfigurationService'
    ];
 
   function factory(TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService) {
@@ -41,7 +41,6 @@
 
   function Tube(tubeInfo, operator, TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService) {
     var self = this;
-    var _labConfig;
     var _operator;
 
 
@@ -73,7 +72,6 @@
 
     function _onInit() {
       _operator = operator;
-      _labConfig = LaboratoryConfigurationService.getLaboratoryConfiguration();
       _fillDescriptors();
       _manageAliquots();
     }
