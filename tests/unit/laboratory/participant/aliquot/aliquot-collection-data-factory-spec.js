@@ -26,6 +26,11 @@ fdescribe('aliquot collection data factory', function() {
     var object = factory.create(Mock.CollectionInfo);
     expect(JSON.stringify(object)).toEqual(JSON.stringify(Mock.InstanceOfAliquotCollectionDataFull));
   });
+
+  fit('should empty instance of AliquotCollectionData', function() {
+    var object = factory.create({});
+    expect(JSON.stringify(object)).toEqual(JSON.stringify(Mock.InstanceOfAliquotCollectionDataEmpty));
+  });
   //...............
 
 
