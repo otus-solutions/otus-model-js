@@ -36,10 +36,30 @@ fdescribe('participant laboratory factory', function() {
     var object = factory.create(Mock.ParticipantLaboratory, Mock.LabDescriptors, Mock.LoggedUser, Mock.SelectedParticipant);
     object.tubes = [];
     expect(object.tubes.length).toBe(0);
+
     object.updateTubeList();
+
     object.tubes = [1,2,3];
-    object.reloadTubeList();    
+    object.reloadTubeList();
     expect(object.tubes.length).toBe(0);
+  });
+
+  it('should export the right fields', function() {
+     var object = factory.create(Mock.ParticipantLaboratory, Mock.LabDescriptors, Mock.LoggedUser, Mock.SelectedParticipant);
+     spyOn(object, 'toJSON').and.callThrough();
+
+     var json = JSON.stringify(object);
+
+     expect(object.toJSON).toHaveBeenCalled();
+     var parsed = JSON.parse(JSON.parse(json));
+
+     // TODO: find out why we need to parse twice   
+
+     expect(parsed.objectType).toBeDefined();
+     expect(parsed.recruitmentNumber).toBeDefined();
+     expect(parsed.collectGroupName).toBeDefined();
+     expect(parsed.tubes).toBeDefined();
+     expect(parsed.exams).toBeDefined();
   });
 
   function mockLaboratoryConfigurationService(_$injector_) {
