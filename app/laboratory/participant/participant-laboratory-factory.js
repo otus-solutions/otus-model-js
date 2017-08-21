@@ -65,7 +65,7 @@
         exams: self.exams
       };
 
-      return JSON.stringify(json);
+      return json;
     }
 
     function reloadTubeList() {
