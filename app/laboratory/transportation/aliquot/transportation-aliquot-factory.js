@@ -50,6 +50,8 @@
     self.aliquotCollectionData = aliquotInfo.aliquotCollectionData;
     self.toJSON = toJSON;
 
+    self.hasError = false;
+
     onInit();
 
     function onInit() {
