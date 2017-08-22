@@ -25,7 +25,7 @@
         throw new Error("otusjs.model.question.model.GridNumericLine.fromJsonObject() method expects to receive a object instead a String");
       }
       var gridNumericLine = new GridNumericLine(GridNumericFactory);
-      gridNumericLine.loadGridTextListFromJsonObject(jsonObject.gridNumericList)
+      gridNumericLine.loadGridNumericListFromJsonObject(jsonObject.gridNumericList)
 
       return gridNumericLine;
     }
@@ -55,7 +55,7 @@
     function addGridNumeric(templateID) {
       var gridNumeric = GridNumericFactory.create(templateID);
       _gridNumericList.push(gridNumeric);
-      return gridText;
+      return gridNumeric;
     }
 
     function removeGridNumeric(index) {

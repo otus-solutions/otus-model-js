@@ -9,10 +9,10 @@
     'MetadataGroupFactory',
     'FillingRulesOptionFactory',
     'LabelFactory',
-    'otusjs.model.question.LayoutGridNumericFactory'
+    'otusjs.model.question.GridNumericLineFactory'
   ];
 
-  function GridNumericQuestionFactory(MetadataGroupFactory, FillingRulesOptionFactory, LabelFactory, LayoutGridNumericFactory) {
+  function GridNumericQuestionFactory(MetadataGroupFactory, FillingRulesOptionFactory, LabelFactory, GridNumericLineFactory) {
     var self = this;
 
     /* Public interface */
@@ -24,7 +24,7 @@
       var fillingRulesObject = FillingRulesOptionFactory.create();
       var labelObject = LabelFactory.create();
 
-      return new GridNumerictQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, LayoutGridNumericFactory);
+      return new GridNumerictQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory);
     }
 
     function fromJsonObject(jsonObject) {
@@ -37,7 +37,7 @@
 
       var prototype = {};
       prototype.objectType = "SurveyItem";
-      var question = new GridNumerictQuestion(jsonObject.templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, LayoutGridNumericFactory);
+      var question = new GridNumerictQuestion(jsonObject.templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory);
       question.loadFromJsonLinesObject(jsonObject.lines);
       question.customID = jsonObject.customID;
 
@@ -47,7 +47,7 @@
     return self;
   }
 
-  function GridNumerictQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, LayoutGridNumericFactory) {
+  function GridNumerictQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory) {
     var self = this;
     var _lines = [];
 
@@ -74,7 +74,7 @@
     self.toJson = toJson;
 
     function createLine() {
-      var line = LayoutGridNumericFactory.create();
+      var line = GridNumericLineFactory.create();
       _lines.push(line);
       return line;
     }
@@ -116,14 +116,14 @@
 
     function getAllCustomOptionsID() {
       return _lines.map(function(line) {
-        return line.getAllGridTextCustomOptionsID();
+        return line.getAllGridNumericCustomOptionsID();
       });
     }
 
     function loadFromJsonLinesObject(lines) {
       _lines = [];
-      lines.forEach(function(gridTextLine) {
-        _lines.push(LayoutGridNumericFactory.fromJsonObject(gridTextLine));
+      lines.forEach(function(gridNumericLine) {
+        _lines.push(GridNumericLineFactory.fromJsonObject(gridNumericLine));
       });
     }
 
