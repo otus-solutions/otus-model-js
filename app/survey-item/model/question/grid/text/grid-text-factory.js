@@ -8,10 +8,10 @@
   GridTextFactory.$inject = [
     'LabelFactory',
     'UnitFactory',
-    'otusjs.model.question.LayoutGridTextFactory'
+    'otusjs.model.question.LayoutGridFactory'
   ];
 
-  function GridTextFactory(LabelFactory, UnitFactory, LayoutGridTextFactory) {
+  function GridTextFactory(LabelFactory, UnitFactory, LayoutGridFactory) {
     var self = this;
 
     /* Public interface */
@@ -20,7 +20,7 @@
 
     function create(templateID) {
       var labelObject = LabelFactory.create();
-      var layout = LayoutGridTextFactory.create();
+      var layout = LayoutGridFactory.create();
 
       var unitObject = {};
       unitObject.ptBR = UnitFactory.create();
@@ -41,7 +41,7 @@
       unitObject.enUS = UnitFactory.fromJsonObject(jsonObject.unit.enUS);
       unitObject.esES = UnitFactory.fromJsonObject(jsonObject.unit.esES);
 
-      var layout = LayoutGridTextFactory.fromJsonObject(jsonObject.layout);
+      var layout = LayoutGridFactory.fromJsonObject(jsonObject.layout);
       var gridText = new GridText(jsonObject.templateID, labelObject, layout, unitObject);
       gridText.customID = jsonObject.customID;
 

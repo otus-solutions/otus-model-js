@@ -1,4 +1,4 @@
-describe('LayoutGridNumericFactory', function() {
+describe('LayoutGridFactory', function() {
   var layout;
 
   var Mock = {};
@@ -9,7 +9,7 @@ describe('LayoutGridNumericFactory', function() {
     mockJsonObject();
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('otusjs.model.question.LayoutGridNumericFactory');
+      factory = _$injector_.get('otusjs.model.question.LayoutGridFactory');
     });
 
     layout = factory.create(Mock.WIDTH_1);

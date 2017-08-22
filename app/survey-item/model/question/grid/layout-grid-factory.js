@@ -3,11 +3,11 @@
 
   angular
     .module('otusjs.surveyItem')
-    .factory('otusjs.model.question.LayoutGridNumericFactory', LayoutGridNumericFactory);
+    .factory('otusjs.model.question.LayoutGridFactory', LayoutGridFactory);
 
-  LayoutGridNumericFactory.$inject = [];
+  LayoutGridFactory.$inject = [];
 
-  function LayoutGridNumericFactory() {
+  function LayoutGridFactory() {
     var self = this;
 
     /* Public interface */
@@ -15,16 +15,16 @@
     self.fromJsonObject = fromJsonObject;
 
     function create(width) {
-      return new LayoutGridNumeric(width);
+      return new LayoutGrid(width);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.LayoutGridNumericFactory.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.misc.model.LayoutGridFactory.fromJsonObject() method expects to receive a object instead a String");
       }
 
       var width = jsonObject.width;
-      var layoutGridNumeric = new LayoutGridNumeric(width);
+      var layoutGridNumeric = new LayoutGrid(width);
 
       return layoutGridNumeric;
     }
@@ -32,11 +32,11 @@
     return self;
   }
 
-  function LayoutGridNumeric(width) {
+  function LayoutGrid(width) {
     var self = this;
 
     self.extents = 'StudioObject';
-    self.objectType = "LayoutGridNumeric";
+    self.objectType = "LayoutGrid";
     self.width = width || 100;
 
     /* Public methods */

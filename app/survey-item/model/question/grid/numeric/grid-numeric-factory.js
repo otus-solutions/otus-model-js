@@ -8,10 +8,10 @@
   GridNumericFactory.$inject = [
     'LabelFactory',
     'UnitFactory',
-    'otusjs.model.question.LayoutGridNumericFactory'
+    'otusjs.model.question.LayoutGridFactory'
   ];
 
-  function GridNumericFactory(LabelFactory, UnitFactory, LayoutGridNumericFactory) {
+  function GridNumericFactory(LabelFactory, UnitFactory, LayoutGridFactory) {
     var self = this;
 
     /* Public interface */
@@ -20,7 +20,7 @@
 
     function create(templateID) {
       var labelObject = LabelFactory.create();
-      var layout = LayoutGridNumericFactory.create();
+      var layout = LayoutGridFactory.create();
 
       var unitObject = {};
       unitObject.ptBR = UnitFactory.create();
@@ -41,7 +41,7 @@
       unitObject.enUS = UnitFactory.fromJsonObject(jsonObject.unit.enUS);
       unitObject.esES = UnitFactory.fromJsonObject(jsonObject.unit.esES);
 
-      var layout = LayoutGridNumericFactory.fromJsonObject(jsonObject.layout);
+      var layout = LayoutGridFactory.fromJsonObject(jsonObject.layout);
       var gridNumeric = new GridNumeric(jsonObject.templateID, labelObject, layout, unitObject);
       gridNumeric.customID = jsonObject.customID;
 
