@@ -19,6 +19,7 @@
     'AutocompleteQuestionFactory',
     'FileUploadQuestionFactory',
     'otusjs.model.question.GridTextQuestionFactory',
+    'otusjs.model.question.GridNumericQuestionFactory',
     /* Miscelaneous items */
     'TextItemFactory',
     'ImageItemFactory'
@@ -37,6 +38,7 @@
     AutocompleteQuestionFactory,
     FileUploadQuestionFactory,
     GridTextQuestionFactory,
+    GridNumericQuestionFactory,
     TextItemFactory,
     ImageItemFactory) {
 
@@ -56,6 +58,7 @@
       'AutocompleteQuestion': AutocompleteQuestionFactory,
       'FileUploadQuestion': FileUploadQuestionFactory,
       'GridTextQuestion': GridTextQuestionFactory,
+      'GridNumericQuestion': GridNumericQuestionFactory,
       /* Miscelaneous items */
       'TextItem': TextItemFactory,
       'ImageItem': ImageItemFactory
