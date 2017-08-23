@@ -58,7 +58,7 @@
     self.objectType = 'GridNumeric';
     self.templateID = templateID;
     self.customID = templateID;
-    self.dataType = 'Decimal';
+    self.dataType = 'Integer';
     self.label = labelObject;
     self.layout = layout;
     self.unit = unitObject;
