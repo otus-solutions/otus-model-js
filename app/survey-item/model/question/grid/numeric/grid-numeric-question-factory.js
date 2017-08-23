@@ -24,12 +24,12 @@
       var fillingRulesObject = FillingRulesOptionFactory.create();
       var labelObject = LabelFactory.create();
 
-      return new GridNumerictQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory);
+      return new GridNumericQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.question.model.GridNumerictQuestion.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.question.model.GridNumericQuestion.fromJsonObject() method expects to receive a object instead a String");
       }
       var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
       var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
@@ -37,7 +37,7 @@
 
       var prototype = {};
       prototype.objectType = "SurveyItem";
-      var question = new GridNumerictQuestion(jsonObject.templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory);
+      var question = new GridNumericQuestion(jsonObject.templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory);
       question.loadFromJsonLinesObject(jsonObject.lines);
       question.customID = jsonObject.customID;
 
@@ -47,12 +47,12 @@
     return self;
   }
 
-  function GridNumerictQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory) {
+  function GridNumericQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory) {
     var self = this;
     var _lines = [];
 
     self.extents = prototype.objectType;
-    self.objectType = 'GridNumerictQuestion';
+    self.objectType = 'GridNumericQuestion';
     self.templateID = templateID;
     self.customID = templateID;
     self.metadata = metadataGroupObject;
