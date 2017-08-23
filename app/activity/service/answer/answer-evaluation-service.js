@@ -37,7 +37,7 @@
       _evaluators.AutocompleteQuestion = TextRuleTestService;
       _evaluators.FileUploadQuestion = NumericRuleTestService;
       _evaluators.GridTextQuestion = NumericRuleTestService;
-      _evaluators.GridNumericQuestion = NumericRuleTestService;
+      _evaluators.GridIntegerQuestion = NumericRuleTestService;
       _evaluators.CalendarQuestion = CalendarRuleTestService;
     }
   }

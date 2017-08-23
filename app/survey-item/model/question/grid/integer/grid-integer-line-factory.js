@@ -1,4 +1,4 @@
-Integer(function() {
+(function() {
   'use strict';
 
   angular

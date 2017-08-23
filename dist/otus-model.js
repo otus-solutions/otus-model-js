@@ -4124,11 +4124,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   SurveyItemFactory.$inject = [
   /* Question items */
-  'CalendarQuestionFactory', 'IntegerQuestionFactory', 'DecimalQuestionFactory', 'SingleSelectionQuestionFactory', 'CheckboxQuestionFactory', 'TextQuestionFactory', 'TimeQuestionFactory', 'EmailQuestionFactory', 'PhoneQuestionFactory', 'AutocompleteQuestionFactory', 'FileUploadQuestionFactory', 'otusjs.model.question.GridTextQuestionFactory', 'otusjs.model.question.GridNumericQuestionFactory',
+  'CalendarQuestionFactory', 'IntegerQuestionFactory', 'DecimalQuestionFactory', 'SingleSelectionQuestionFactory', 'CheckboxQuestionFactory', 'TextQuestionFactory', 'TimeQuestionFactory', 'EmailQuestionFactory', 'PhoneQuestionFactory', 'AutocompleteQuestionFactory', 'FileUploadQuestionFactory', 'otusjs.model.question.GridTextQuestionFactory', 'otusjs.model.question.GridIntegerQuestionFactory',
   /* Miscelaneous items */
   'TextItemFactory', 'ImageItemFactory'];
 
-  function SurveyItemFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, CheckboxQuestionFactory, TextQuestionFactory, TimeQuestionFactory, EmailQuestionFactory, PhoneQuestionFactory, AutocompleteQuestionFactory, FileUploadQuestionFactory, GridTextQuestionFactory, GridNumericQuestionFactory, TextItemFactory, ImageItemFactory) {
+  function SurveyItemFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, CheckboxQuestionFactory, TextQuestionFactory, TimeQuestionFactory, EmailQuestionFactory, PhoneQuestionFactory, AutocompleteQuestionFactory, FileUploadQuestionFactory, GridTextQuestionFactory, GridIntegerQuestionFactory, TextItemFactory, ImageItemFactory) {
 
     var self = this;
 
@@ -4146,7 +4146,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       'AutocompleteQuestion': AutocompleteQuestionFactory,
       'FileUploadQuestion': FileUploadQuestionFactory,
       'GridTextQuestion': GridTextQuestionFactory,
-      'GridNumericQuestion': GridNumericQuestionFactory,
+      'GridIntegerQuestion': GridIntegerQuestionFactory,
       /* Miscelaneous items */
       'TextItem': TextItemFactory,
       'ImageItem': ImageItemFactory
@@ -4211,7 +4211,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.getItemByID = getItemByID;
     self.getAllCheckboxQuestion = getAllCheckboxQuestion;
     self.getAllGridTextQuestion = getAllGridTextQuestion;
-    self.getAllGridNumericQuestion = getAllGridNumericQuestion;
+    self.getAllGridIntegerQuestion = getAllGridIntegerQuestion;
     self.getItemByPosition = getItemByPosition;
     self.getItemPosition = getItemPosition;
     self.getLastItem = getLastItem;
@@ -4285,10 +4285,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return occurences;
     }
 
-    function getAllGridNumericQuestion() {
+    function getAllGridIntegerQuestion() {
       var occurences = [];
       _itemList.filter(function (item) {
-        if (item.objectType === "GridNumericQuestion") {
+        if (item.objectType === "GridIntegerQuestion") {
           occurences.push(item);
         }
       });
@@ -4430,7 +4430,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var customOptionsID = [];
       var checkboxQuestions = surveyItemContainer.getAllCheckboxQuestion();
       var gridTextQuestions = surveyItemContainer.getAllGridTextQuestion();
-      var gridNumericQuestions = surveyItemContainer.getAllGridNumericQuestion();
+      var gridIntegerQuestions = surveyItemContainer.getAllGridIntegerQuestion();
       if (checkboxQuestions.length > 0) {
         checkboxQuestions.forEach(function (checkboxQuestion) {
           checkboxQuestion.getAllCustomOptionsID().forEach(function (customOptionID) {
@@ -4449,9 +4449,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         });
       }
 
-      if (gridNumericQuestions.length > 0) {
-        gridNumericQuestions.forEach(function (gridNumericQuestion) {
-          gridNumericQuestion.getAllCustomOptionsID().forEach(function (arrayResult) {
+      if (gridIntegerQuestions.length > 0) {
+        gridIntegerQuestions.forEach(function (gridIntegerQuestion) {
+          gridIntegerQuestion.getAllCustomOptionsID().forEach(function (arrayResult) {
             arrayResult.forEach(function (customOptionID) {
               customOptionsID.push(customOptionID);
             });
@@ -4696,7 +4696,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       _evaluators.AutocompleteQuestion = TextRuleTestService;
       _evaluators.FileUploadQuestion = NumericRuleTestService;
       _evaluators.GridTextQuestion = NumericRuleTestService;
-      _evaluators.GridNumericQuestion = NumericRuleTestService;
+      _evaluators.GridIntegerQuestion = NumericRuleTestService;
       _evaluators.CalendarQuestion = CalendarRuleTestService;
     }
   }
@@ -5657,6 +5657,56 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.surveyItem').factory('otusjs.surveyItem.customAnswer.FileUploadAnswerFactory', factory);
+
+  function factory() {
+    var self = this;
+
+    /* Public Interface */
+    self.buildAnswer = buildAnswer;
+    self.buildFromJson = buildFromJson;
+
+    function buildAnswer(fileInfo) {
+      return fileInfo.oid ? new FileUploadAnswer(fileInfo) : null;
+    }
+
+    function buildFromJson(fileArray) {
+      var arrayResult = [];
+      fileArray.forEach(function (jsonFile) {
+        var file = new FileUploadAnswer(jsonFile);
+        file.sentDate = new Date(jsonFile.sentDate);
+        arrayResult.push(file);
+      });
+      return arrayResult;
+    }
+    return self;
+  }
+
+  function FileUploadAnswer(fileInfo) {
+    var self = this;
+
+    self.objectType = 'FileAnswer';
+    self.name = fileInfo.name;
+    self.size = fileInfo.size;
+    self.type = fileInfo.type;
+    self.sentDate = fileInfo.lastModifiedDate ? fileInfo.lastModifiedDate.toISOString() : '';
+    self.oid = fileInfo.oid;
+    self.printableSize = bytesToSize();
+
+    function bytesToSize() {
+      var bytes = self.size;
+      var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+      if (bytes === 0) return '0 Byte';
+      var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+      return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.surveyItem').factory('ImageItemFactory', ImageItemFactory);
 
   ImageItemFactory.$inject = ['LabelFactory'];
@@ -5790,56 +5840,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       json.value = self.value;
 
       return JSON.stringify(json);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('otusjs.surveyItem.customAnswer.FileUploadAnswerFactory', factory);
-
-  function factory() {
-    var self = this;
-
-    /* Public Interface */
-    self.buildAnswer = buildAnswer;
-    self.buildFromJson = buildFromJson;
-
-    function buildAnswer(fileInfo) {
-      return fileInfo.oid ? new FileUploadAnswer(fileInfo) : null;
-    }
-
-    function buildFromJson(fileArray) {
-      var arrayResult = [];
-      fileArray.forEach(function (jsonFile) {
-        var file = new FileUploadAnswer(jsonFile);
-        file.sentDate = new Date(jsonFile.sentDate);
-        arrayResult.push(file);
-      });
-      return arrayResult;
-    }
-    return self;
-  }
-
-  function FileUploadAnswer(fileInfo) {
-    var self = this;
-
-    self.objectType = 'FileAnswer';
-    self.name = fileInfo.name;
-    self.size = fileInfo.size;
-    self.type = fileInfo.type;
-    self.sentDate = fileInfo.lastModifiedDate ? fileInfo.lastModifiedDate.toISOString() : '';
-    self.oid = fileInfo.oid;
-    self.printableSize = bytesToSize();
-
-    function bytesToSize() {
-      var bytes = self.size;
-      var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-      if (bytes === 0) return '0 Byte';
-      var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-      return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     }
   }
 })();
@@ -7582,9 +7582,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       var width = jsonObject.width;
-      var layoutGridNumeric = new LayoutGrid(width);
+      var layoutGrid = new LayoutGrid(width);
 
-      return layoutGridNumeric;
+      return layoutGrid;
     }
 
     return self;
@@ -8098,6 +8098,86 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.validation').factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
+
+  MaxTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
+
+  function MaxTimeValidatorFactory(ImmutableDate) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new MaxTimeValidator(ImmutableDate);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.MaxTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new MaxTimeValidator(ImmutableDate);
+      validator.canBeIgnored = jsonObject.canBeIgnored;
+      validator.reference = jsonObject.reference;
+      return validator;
+    }
+
+    return self;
+  }
+
+  function MaxTimeValidator(ImmutableDate) {
+    var self = this;
+
+    self.canBeIgnored = true;
+    self.reference = { value: '' };
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.validation').factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
+
+  MinTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
+
+  function MinTimeValidatorFactory(ImmutableDate) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new MinTimeValidator(ImmutableDate);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.MinTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new MinTimeValidator(ImmutableDate);
+      validator.canBeIgnored = jsonObject.canBeIgnored;
+      validator.reference = jsonObject.reference;
+      return validator;
+    }
+
+    return self;
+  }
+
+  function MinTimeValidator(ImmutableDate) {
+    var self = this;
+
+    self.canBeIgnored = true;
+    self.reference = { value: '' };
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.validation').factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
 
   function AlphanumericValidatorFactory() {
@@ -8326,91 +8406,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.validation').factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
+  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridIntegerFactory', GridIntegerFactory);
 
-  MaxTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
+  GridIntegerFactory.$inject = ['LabelFactory', 'UnitFactory', 'otusjs.model.question.LayoutGridFactory'];
 
-  function MaxTimeValidatorFactory(ImmutableDate) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MaxTimeValidator(ImmutableDate);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.MaxTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new MaxTimeValidator(ImmutableDate);
-      validator.canBeIgnored = jsonObject.canBeIgnored;
-      validator.reference = jsonObject.reference;
-      return validator;
-    }
-
-    return self;
-  }
-
-  function MaxTimeValidator(ImmutableDate) {
-    var self = this;
-
-    self.canBeIgnored = true;
-    self.reference = { value: '' };
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.validation').factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
-
-  MinTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
-
-  function MinTimeValidatorFactory(ImmutableDate) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MinTimeValidator(ImmutableDate);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.MinTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new MinTimeValidator(ImmutableDate);
-      validator.canBeIgnored = jsonObject.canBeIgnored;
-      validator.reference = jsonObject.reference;
-      return validator;
-    }
-
-    return self;
-  }
-
-  function MinTimeValidator(ImmutableDate) {
-    var self = this;
-
-    self.canBeIgnored = true;
-    self.reference = { value: '' };
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridNumericFactory', GridNumericFactory);
-
-  GridNumericFactory.$inject = ['LabelFactory', 'UnitFactory', 'otusjs.model.question.LayoutGridFactory'];
-
-  function GridNumericFactory(LabelFactory, UnitFactory, LayoutGridFactory) {
+  function GridIntegerFactory(LabelFactory, UnitFactory, LayoutGridFactory) {
     var self = this;
 
     /* Public interface */
@@ -8426,12 +8426,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       unitObject.enUS = UnitFactory.create();
       unitObject.esES = UnitFactory.create();
 
-      return new GridNumeric(templateID, labelObject, layout, unitObject);
+      return new GridInteger(templateID, labelObject, layout, unitObject);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.GridNumericFactory.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.misc.model.GridIntegerFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
 
@@ -8441,20 +8441,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       unitObject.esES = UnitFactory.fromJsonObject(jsonObject.unit.esES);
 
       var layout = LayoutGridFactory.fromJsonObject(jsonObject.layout);
-      var gridNumeric = new GridNumeric(jsonObject.templateID, labelObject, layout, unitObject);
-      gridNumeric.customID = jsonObject.customID;
+      var gridInteger = new GridInteger(jsonObject.templateID, labelObject, layout, unitObject);
+      gridInteger.customID = jsonObject.customID;
 
-      return gridNumeric;
+      return gridInteger;
     }
 
     return self;
   }
 
-  function GridNumeric(templateID, labelObject, layout, unitObject) {
+  function GridInteger(templateID, labelObject, layout, unitObject) {
     var self = this;
 
     self.extents = 'SurveyItem';
-    self.objectType = 'GridNumeric';
+    self.objectType = 'GridInteger';
     self.templateID = templateID;
     self.customID = templateID;
     self.dataType = 'Integer';
@@ -8511,11 +8511,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridNumericLineFactory', GridNumericLineFactory);
+  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridIntegerLineFactory', GridIntegerLineFactory);
 
-  GridNumericLineFactory.$inject = ['otusjs.model.question.GridNumericFactory'];
+  GridIntegerLineFactory.$inject = ['otusjs.model.question.GridIntegerFactory'];
 
-  function GridNumericLineFactory(GridNumericFactory) {
+  function GridIntegerLineFactory(GridIntegerFactory) {
     var self = this;
 
     /* Public interface */
@@ -8523,83 +8523,83 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new GridNumericLine(GridNumericFactory);
+      return new GridIntegerLine(GridIntegerFactory);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.question.model.GridNumericLine.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.question.model.GridIntegerLine.fromJsonObject() method expects to receive a object instead a String");
       }
-      var gridNumericLine = new GridNumericLine(GridNumericFactory);
-      gridNumericLine.loadGridNumericListFromJsonObject(jsonObject.gridNumericList);
+      var gridIntegerLine = new GridIntegerLine(GridIntegerFactory);
+      gridIntegerLine.loadGridIntegerListFromJsonObject(jsonObject.gridIntegerList);
 
-      return gridNumericLine;
+      return gridIntegerLine;
     }
 
     return self;
   }
 
-  function GridNumericLine(GridNumericFactory) {
+  function GridIntegerLine(GridIntegerFactory) {
     var self = this;
-    var _gridNumericList = [];
+    var _gridIntegerList = [];
 
     self.extents = 'StudioObject';
-    self.objectType = 'GridNumericLine';
+    self.objectType = 'GridIntegerLine';
 
     /* Public methods */
-    self.addGridNumeric = addGridNumeric;
-    self.removeGridNumeric = removeGridNumeric;
-    self.removeLastGridNumeric = removeLastGridNumeric;
+    self.addGridInteger = addGridInteger;
+    self.removeGridInteger = removeGridInteger;
+    self.removeLastGridInteger = removeLastGridInteger;
     self.filterItems = filterItems;
-    self.getGridNumericIndex = getGridNumericIndex;
-    self.getGridNumericList = getGridNumericList;
-    self.getGridNumericListSize = getGridNumericListSize;
-    self.getAllGridNumericCustomOptionsID = getAllGridNumericCustomOptionsID;
-    self.loadGridNumericListFromJsonObject = loadGridNumericListFromJsonObject;
+    self.getGridIntegerIndex = getGridIntegerIndex;
+    self.getGridIntegerList = getGridIntegerList;
+    self.getGridIntegerListSize = getGridIntegerListSize;
+    self.getAllGridIntegerCustomOptionsID = getAllGridIntegerCustomOptionsID;
+    self.loadGridIntegerListFromJsonObject = loadGridIntegerListFromJsonObject;
     self.toJson = toJson;
 
-    function addGridNumeric(templateID) {
-      var gridNumeric = GridNumericFactory.create(templateID);
-      _gridNumericList.push(gridNumeric);
-      return gridNumeric;
+    function addGridInteger(templateID) {
+      var gridInteger = GridIntegerFactory.create(templateID);
+      _gridIntegerList.push(gridInteger);
+      return gridInteger;
     }
 
-    function removeGridNumeric(index) {
-      return _gridNumericList.splice(index - 1, 1);
+    function removeGridInteger(index) {
+      return _gridIntegerList.splice(index - 1, 1);
     }
 
-    function removeLastGridNumeric() {
-      return _gridNumericList.splice(-1, 1);
+    function removeLastGridInteger() {
+      return _gridIntegerList.splice(-1, 1);
     }
 
     function filterItems(query) {
-      return _gridNumericList.filter(query);
+      return _gridIntegerList.filter(query);
     }
 
-    function getGridNumericIndex(index) {
-      return _gridNumericList.filter(function (gridNumeric, i) {
-        if (i === index) return gridNumeric;
+    function getGridIntegerIndex(index) {
+      return _gridIntegerList.filter(function (gridInteger, i) {
+        if (i === index) return gridInteger;
       });
     }
 
-    function getGridNumericList() {
-      return _gridNumericList;
+    function getGridIntegerList() {
+      return _gridIntegerList;
     }
 
-    function getGridNumericListSize() {
-      return _gridNumericList.length;
+    function getGridIntegerListSize() {
+      return _gridIntegerList.length;
     }
 
-    function getAllGridNumericCustomOptionsID() {
-      return _gridNumericList.map(function (gridNumeric) {
-        return gridNumeric.customID;
+    function getAllGridIntegerCustomOptionsID() {
+      return _gridIntegerList.map(function (gridInteger) {
+        return gridInteger.customID;
       });
     }
 
-    function loadGridNumericListFromJsonObject(gridNumericList) {
-      _gridNumericList = [];
-      gridNumericList.forEach(function (gridNumeric) {
-        _gridNumericList.push(GridNumericFactory.fromJsonObject(gridNumeric));
+    function loadGridIntegerListFromJsonObject(gridIntegerList) {
+      _gridIntegerList = [];
+      gridIntegerList.forEach(function (gridInteger) {
+        _gridIntegerList.push(GridIntegerFactory.fromJsonObject(gridInteger));
       });
     }
 
@@ -8608,7 +8608,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       json.extents = self.extents;
       json.objectType = self.objectType;
-      json.gridNumericList = _gridNumericList;
+      json.gridIntegerList = _gridIntegerList;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
@@ -8619,11 +8619,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridNumericQuestionFactory', GridNumericQuestionFactory);
+  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridIntegerQuestionFactory', GridIntegerQuestionFactory);
 
-  GridNumericQuestionFactory.$inject = ['MetadataGroupFactory', 'FillingRulesOptionFactory', 'LabelFactory', 'otusjs.model.question.GridNumericLineFactory'];
+  GridIntegerQuestionFactory.$inject = ['MetadataGroupFactory', 'FillingRulesOptionFactory', 'LabelFactory', 'otusjs.model.question.GridIntegerLineFactory'];
 
-  function GridNumericQuestionFactory(MetadataGroupFactory, FillingRulesOptionFactory, LabelFactory, GridNumericLineFactory) {
+  function GridIntegerQuestionFactory(MetadataGroupFactory, FillingRulesOptionFactory, LabelFactory, GridIntegerLineFactory) {
     var self = this;
 
     /* Public interface */
@@ -8635,12 +8635,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var fillingRulesObject = FillingRulesOptionFactory.create();
       var labelObject = LabelFactory.create();
 
-      return new GridNumericQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory);
+      return new GridIntegerQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.question.model.GridNumericQuestion.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.question.model.GridIntegerQuestion.fromJsonObject() method expects to receive a object instead a String");
       }
       var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
       var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
@@ -8648,7 +8648,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       var prototype = {};
       prototype.objectType = "SurveyItem";
-      var question = new GridNumericQuestion(jsonObject.templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory);
+      var question = new GridIntegerQuestion(jsonObject.templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory);
       question.loadFromJsonLinesObject(jsonObject.lines);
       question.customID = jsonObject.customID;
 
@@ -8658,12 +8658,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return self;
   }
 
-  function GridNumericQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory) {
+  function GridIntegerQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory) {
     var self = this;
     var _lines = [];
 
     self.extents = prototype.objectType;
-    self.objectType = 'GridNumericQuestion';
+    self.objectType = 'GridIntegerQuestion';
     self.templateID = templateID;
     self.customID = templateID;
     self.metadata = metadataGroupObject;
@@ -8685,7 +8685,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.toJson = toJson;
 
     function createLine() {
-      var line = GridNumericLineFactory.create();
+      var line = GridIntegerLineFactory.create();
       _lines.push(line);
       return line;
     }
@@ -8725,14 +8725,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function getAllCustomOptionsID() {
       return _lines.map(function (line) {
-        return line.getAllGridNumericCustomOptionsID();
+        return line.getAllGridIntegerCustomOptionsID();
       });
     }
 
     function loadFromJsonLinesObject(lines) {
       _lines = [];
-      lines.forEach(function (gridNumericLine) {
-        _lines.push(GridNumericLineFactory.fromJsonObject(gridNumericLine));
+      lines.forEach(function (gridIntegerLine) {
+        _lines.push(GridIntegerLineFactory.fromJsonObject(gridIntegerLine));
       });
     }
 
