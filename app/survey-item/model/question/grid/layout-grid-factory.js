@@ -24,9 +24,9 @@
       }
 
       var width = jsonObject.width;
-      var layoutGridNumeric = new LayoutGrid(width);
+      var layoutGrid = new LayoutGrid(width);
 
-      return layoutGridNumeric;
+      return layoutGrid;
     }
 
     return self;

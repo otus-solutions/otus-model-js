@@ -79,7 +79,7 @@
       var customOptionsID = [];
       var checkboxQuestions = surveyItemContainer.getAllCheckboxQuestion();
       var gridTextQuestions = surveyItemContainer.getAllGridTextQuestion();
-      var gridNumericQuestions = surveyItemContainer.getAllGridNumericQuestion();
+      var gridIntegerQuestions = surveyItemContainer.getAllGridIntegerQuestion();
       if (checkboxQuestions.length > 0) {
         checkboxQuestions.forEach(function(checkboxQuestion) {
           checkboxQuestion.getAllCustomOptionsID().forEach(function(customOptionID) {
@@ -98,9 +98,9 @@
         });
       }
 
-      if (gridNumericQuestions.length > 0) {
-        gridNumericQuestions.forEach(function(gridNumericQuestion) {
-          gridNumericQuestion.getAllCustomOptionsID().forEach(function(arrayResult) {
+      if (gridIntegerQuestions.length > 0) {
+        gridIntegerQuestions.forEach(function(gridIntegerQuestion) {
+          gridIntegerQuestion.getAllCustomOptionsID().forEach(function(arrayResult) {
             arrayResult.forEach(function(customOptionID){
               customOptionsID.push(customOptionID);
             })

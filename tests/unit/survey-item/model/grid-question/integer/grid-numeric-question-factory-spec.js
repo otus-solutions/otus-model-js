@@ -1,4 +1,4 @@
-describe('GridNumericQuestionFactory', function() {
+describe('GridIntegerQuestionFactory', function() {
   var Mock = {};
   var question;
 
@@ -8,10 +8,10 @@ describe('GridNumericQuestionFactory', function() {
     mockJsonObject();
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('otusjs.model.question.GridNumericQuestionFactory', {
+      factory = _$injector_.get('otusjs.model.question.GridIntegerQuestionFactory', {
         'MetadataGroupFactory': mockMetaGroupFactory(_$injector_),
         'FillingRulesOptionFactory': mockFillingRulesOptionFactory(_$injector_),
-        'GridNumericLineFactory': mockGridNumericLineFactory(_$injector_)
+        'GridIntegerLineFactory': mockGridIntegerLineFactory(_$injector_)
       });
     });
   });
@@ -75,10 +75,10 @@ describe('GridNumericQuestionFactory', function() {
       expect(question.getLinesListSize()).toEqual(1);
     });
 
-    it('should return a object type of GridNumericLine', function() {
+    it('should return a object type of GridIntegerLine', function() {
       var result = question.createLine();
 
-      expect(result.objectType).toEqual('GridNumericLine');
+      expect(result.objectType).toEqual('GridIntegerLine');
     });
 
   });
@@ -149,9 +149,9 @@ describe('GridNumericQuestionFactory', function() {
     return Mock.FillingRulesOptionFactory;
   }
 
-  function mockGridNumericLineFactory($injector) {
-    Mock.GridNumericLineFactory = $injector.get('otusjs.model.question.GridNumericLineFactory');
-    return Mock.GridNumericLineFactory;
+  function mockGridIntegerLineFactory($injector) {
+    Mock.GridIntegerLineFactory = $injector.get('otusjs.model.question.GridIntegerLineFactory');
+    return Mock.GridIntegerLineFactory;
   }
 
   function mockJsonObject() {
@@ -171,7 +171,7 @@ describe('GridNumericQuestionFactory', function() {
 
     Mock.jsonObject = {
       "extents": "SurveyItem",
-      "objectType": "GridNumericQuestion",
+      "objectType": "GridIntegerQuestion",
       "templateID": "QUE1",
       "customID": "PersonalizedID",
       "metadata": Mock.metadata,

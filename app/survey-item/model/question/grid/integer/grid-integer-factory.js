@@ -3,15 +3,15 @@
 
   angular
     .module('otusjs.surveyItem')
-    .factory('otusjs.model.question.GridNumericFactory', GridNumericFactory);
+    .factory('otusjs.model.question.GridIntegerFactory', GridIntegerFactory);
 
-  GridNumericFactory.$inject = [
+  GridIntegerFactory.$inject = [
     'LabelFactory',
     'UnitFactory',
     'otusjs.model.question.LayoutGridFactory'
   ];
 
-  function GridNumericFactory(LabelFactory, UnitFactory, LayoutGridFactory) {
+  function GridIntegerFactory(LabelFactory, UnitFactory, LayoutGridFactory) {
     var self = this;
 
     /* Public interface */
@@ -27,12 +27,12 @@
       unitObject.enUS = UnitFactory.create();
       unitObject.esES = UnitFactory.create();
 
-      return new GridNumeric(templateID, labelObject, layout, unitObject);
+      return new GridInteger(templateID, labelObject, layout, unitObject);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.GridNumericFactory.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.misc.model.GridIntegerFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
 
@@ -42,20 +42,20 @@
       unitObject.esES = UnitFactory.fromJsonObject(jsonObject.unit.esES);
 
       var layout = LayoutGridFactory.fromJsonObject(jsonObject.layout);
-      var gridNumeric = new GridNumeric(jsonObject.templateID, labelObject, layout, unitObject);
-      gridNumeric.customID = jsonObject.customID;
+      var gridInteger = new GridInteger(jsonObject.templateID, labelObject, layout, unitObject);
+      gridInteger.customID = jsonObject.customID;
 
-      return gridNumeric;
+      return gridInteger;
     }
 
     return self;
   }
 
-  function GridNumeric(templateID, labelObject, layout, unitObject) {
+  function GridInteger(templateID, labelObject, layout, unitObject) {
     var self = this;
 
     self.extents = 'SurveyItem';
-    self.objectType = 'GridNumeric';
+    self.objectType = 'GridInteger';
     self.templateID = templateID;
     self.customID = templateID;
     self.dataType = 'Integer';

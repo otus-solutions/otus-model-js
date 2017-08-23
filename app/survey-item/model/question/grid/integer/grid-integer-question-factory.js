@@ -3,16 +3,16 @@
 
   angular
     .module('otusjs.surveyItem')
-    .factory('otusjs.model.question.GridNumericQuestionFactory', GridNumericQuestionFactory);
+    .factory('otusjs.model.question.GridIntegerQuestionFactory', GridIntegerQuestionFactory);
 
-  GridNumericQuestionFactory.$inject = [
+  GridIntegerQuestionFactory.$inject = [
     'MetadataGroupFactory',
     'FillingRulesOptionFactory',
     'LabelFactory',
-    'otusjs.model.question.GridNumericLineFactory'
+    'otusjs.model.question.GridIntegerLineFactory'
   ];
 
-  function GridNumericQuestionFactory(MetadataGroupFactory, FillingRulesOptionFactory, LabelFactory, GridNumericLineFactory) {
+  function GridIntegerQuestionFactory(MetadataGroupFactory, FillingRulesOptionFactory, LabelFactory, GridIntegerLineFactory) {
     var self = this;
 
     /* Public interface */
@@ -24,12 +24,12 @@
       var fillingRulesObject = FillingRulesOptionFactory.create();
       var labelObject = LabelFactory.create();
 
-      return new GridNumericQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory);
+      return new GridIntegerQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.question.model.GridNumericQuestion.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.question.model.GridIntegerQuestion.fromJsonObject() method expects to receive a object instead a String");
       }
       var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
       var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
@@ -37,7 +37,7 @@
 
       var prototype = {};
       prototype.objectType = "SurveyItem";
-      var question = new GridNumericQuestion(jsonObject.templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory);
+      var question = new GridIntegerQuestion(jsonObject.templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory);
       question.loadFromJsonLinesObject(jsonObject.lines);
       question.customID = jsonObject.customID;
 
@@ -47,12 +47,12 @@
     return self;
   }
 
-  function GridNumericQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridNumericLineFactory) {
+  function GridIntegerQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory) {
     var self = this;
     var _lines = [];
 
     self.extents = prototype.objectType;
-    self.objectType = 'GridNumericQuestion';
+    self.objectType = 'GridIntegerQuestion';
     self.templateID = templateID;
     self.customID = templateID;
     self.metadata = metadataGroupObject;
@@ -74,7 +74,7 @@
     self.toJson = toJson;
 
     function createLine() {
-      var line = GridNumericLineFactory.create();
+      var line = GridIntegerLineFactory.create();
       _lines.push(line);
       return line;
     }
@@ -116,14 +116,14 @@
 
     function getAllCustomOptionsID() {
       return _lines.map(function(line) {
-        return line.getAllGridNumericCustomOptionsID();
+        return line.getAllGridIntegerCustomOptionsID();
       });
     }
 
     function loadFromJsonLinesObject(lines) {
       _lines = [];
-      lines.forEach(function(gridNumericLine) {
-        _lines.push(GridNumericLineFactory.fromJsonObject(gridNumericLine));
+      lines.forEach(function(gridIntegerLine) {
+        _lines.push(GridIntegerLineFactory.fromJsonObject(gridIntegerLine));
       });
     }
 

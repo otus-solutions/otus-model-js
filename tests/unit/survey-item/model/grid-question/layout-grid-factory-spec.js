@@ -16,7 +16,7 @@ describe('LayoutGridFactory', function() {
   });
 
   describe('create method', function(){
-    it('expected valid instance of layoutNumeric', function(){
+    it('expected valid instance of layout', function(){
       expect(layout).toBeDefined();
     });
 
