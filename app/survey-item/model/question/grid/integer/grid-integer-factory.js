@@ -3,15 +3,15 @@
 
   angular
     .module('otusjs.surveyItem')
-    .factory('otusjs.model.question.GridTextFactory', GridTextFactory);
+    .factory('otusjs.model.question.GridIntegerFactory', GridIntegerFactory);
 
-  GridTextFactory.$inject = [
+  GridIntegerFactory.$inject = [
     'LabelFactory',
     'UnitFactory',
-    'otusjs.model.question.LayoutGridTextFactory'
+    'otusjs.model.question.LayoutGridFactory'
   ];
 
-  function GridTextFactory(LabelFactory, UnitFactory, LayoutGridTextFactory) {
+  function GridIntegerFactory(LabelFactory, UnitFactory, LayoutGridFactory) {
     var self = this;
 
     /* Public interface */
@@ -20,19 +20,19 @@
 
     function create(templateID) {
       var labelObject = LabelFactory.create();
-      var layout = LayoutGridTextFactory.create();
+      var layout = LayoutGridFactory.create();
 
       var unitObject = {};
       unitObject.ptBR = UnitFactory.create();
       unitObject.enUS = UnitFactory.create();
       unitObject.esES = UnitFactory.create();
 
-      return new GridText(templateID, labelObject, layout, unitObject);
+      return new GridInteger(templateID, labelObject, layout, unitObject);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.GridTextFactory.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.misc.model.GridIntegerFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
 
@@ -41,24 +41,24 @@
       unitObject.enUS = UnitFactory.fromJsonObject(jsonObject.unit.enUS);
       unitObject.esES = UnitFactory.fromJsonObject(jsonObject.unit.esES);
 
-      var layout = LayoutGridTextFactory.fromJsonObject(jsonObject.layout);
-      var gridText = new GridText(jsonObject.templateID, labelObject, layout, unitObject);
-      gridText.customID = jsonObject.customID;
+      var layout = LayoutGridFactory.fromJsonObject(jsonObject.layout);
+      var gridInteger = new GridInteger(jsonObject.templateID, labelObject, layout, unitObject);
+      gridInteger.customID = jsonObject.customID;
 
-      return gridText;
+      return gridInteger;
     }
 
     return self;
   }
 
-  function GridText(templateID, labelObject, layout, unitObject) {
+  function GridInteger(templateID, labelObject, layout, unitObject) {
     var self = this;
 
     self.extents = 'SurveyItem';
-    self.objectType = 'GridText';
+    self.objectType = 'GridInteger';
     self.templateID = templateID;
     self.customID = templateID;
-    self.dataType = 'String';
+    self.dataType = 'Integer';
     self.label = labelObject;
     self.layout = layout;
     self.unit = unitObject;

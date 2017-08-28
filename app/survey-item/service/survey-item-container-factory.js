@@ -33,6 +33,7 @@
     self.getItemByID = getItemByID;
     self.getAllCheckboxQuestion = getAllCheckboxQuestion;
     self.getAllGridTextQuestion = getAllGridTextQuestion;
+    self.getAllGridIntegerQuestion = getAllGridIntegerQuestion;
     self.getItemByPosition = getItemByPosition;
     self.getItemPosition = getItemPosition;
     self.getLastItem = getLastItem;
@@ -100,6 +101,16 @@
       var occurences = [];
       _itemList.filter(function(item) {
         if (item.objectType === "GridTextQuestion") {
+          occurences.push(item);
+        }
+      });
+      return occurences;
+    }
+
+    function getAllGridIntegerQuestion() {
+      var occurences = [];
+      _itemList.filter(function(item) {
+        if (item.objectType === "GridIntegerQuestion") {
           occurences.push(item);
         }
       });
