@@ -36,6 +36,7 @@
     self.saveActivitySurvey = saveActivitySurvey;
     self.getFillingByQuestionID = getFillingByQuestionID;
     self.clearSkippedAnswers = clearSkippedAnswers;
+    self.getNavigationTracker = getNavigationTracker;
 
     function createActivity(template, user, participant) {
       self.surveyActivity = ActivityFactory.create(template, user, participant);
@@ -82,6 +83,10 @@
 
     function clearSkippedAnswers() {
       self.surveyActivity.clearSkippedAnswers();
+    }
+
+    function getNavigationTracker() {
+      return self.surveyActivity.getNavigationTracker();
     }
   }
 }());
