@@ -26,6 +26,7 @@
     self.getAliquotContainer = getAliquotContainer;
     self.validateAliquotWave = validateAliquotWave;
     self.getCodeConfiguration = getCodeConfiguration;
+    self.getAliquotLength = getAliquotLength;
 
     function initializeParticipantConfiguration(selectedParticipant, participantCQ) {
       _selectedParticipant = selectedParticipant;
@@ -189,6 +190,11 @@
       return _laboratoryDescriptor.codeConfiguration;
     }
 
+    // TODO: This implementation is temporary and should return the information contained in the database
+    function getAliquotLength(){
+      return _selectedParticipant.fieldCenter.acronym === "RS" ? 10 : 9;
+    }
+    
     function _descriptorErrorMessenger(type) {
       var msg = 'Descritores de ' + type + ' não inicializados';
       throw new Error(msg);
