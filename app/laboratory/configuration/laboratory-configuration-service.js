@@ -36,6 +36,34 @@
 
       //filling sub-descriptors
       _aliquotsDescriptors = _laboratoryDescriptor.aliquotsDescriptors;
+      // _aliquotsDescriptors = _laboratoryDescriptor.aliquotsDescriptors;
+    }
+
+    function _removeASAP() {
+      var _aliquotsDescriptors = [];
+
+      _laboratoryDescriptor.aliquotConfiguration.aliquotCenterDescriptors.forEach(function(centerDesc) {
+        centerDesc.aliquotGroupDescriptors.forEach(function(groupDesc) {
+          groupDesc.aliquotMomentDescriptors.forEach(function(momentDesc) {
+            momentDesc.aliquotTypesDescriptors.forEach(function(typeDesc) {
+              typeDesc.aliquots.forEach(function(aliquot) {
+                _add(angular.copy(aliquot));
+                delete(aliquot.label);
+                delete(aliquot.role);
+              });
+            });
+          });
+        });
+
+      });
+      function _add(aliquot) {
+        var aliq = newArr.find(function(arrAliq) {
+          return arrAliq.name === aliquot.name;
+        });
+        if (!aliq) {
+          newArr.push(angular.copy(aliquot));
+        }
+      }
     }
 
     function initializeAliquotsDescriptors(aliquotsDescriptor) {
@@ -120,12 +148,12 @@
           var msg = 'Configuração incompleta para: ' + aliquotName;
           throw new Error(msg);
         }
-     }else {
+      } else {
         _descriptorErrorMessenger('alíquota');
-     }
+      }
     }
 
-    function validateAliquotWave(aliquotCode) {               
+    function validateAliquotWave(aliquotCode) {
       var waveToken = _laboratoryDescriptor.codeConfiguration.waveNumberToken;
       var WAVE_TOKEN_POSITION = 0;
       var stringfiedCode = String(aliquotCode);
