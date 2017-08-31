@@ -79,6 +79,7 @@
       var customOptionsID = [];
       var checkboxQuestions = surveyItemContainer.getAllCheckboxQuestion();
       var gridTextQuestions = surveyItemContainer.getAllGridTextQuestion();
+      var gridIntegerQuestions = surveyItemContainer.getAllGridIntegerQuestion();
       if (checkboxQuestions.length > 0) {
         checkboxQuestions.forEach(function(checkboxQuestion) {
           checkboxQuestion.getAllCustomOptionsID().forEach(function(customOptionID) {
@@ -96,6 +97,17 @@
           });
         });
       }
+
+      if (gridIntegerQuestions.length > 0) {
+        gridIntegerQuestions.forEach(function(gridIntegerQuestion) {
+          gridIntegerQuestion.getAllCustomOptionsID().forEach(function(arrayResult) {
+            arrayResult.forEach(function(customOptionID){
+              customOptionsID.push(customOptionID);
+            })
+          });
+        });
+      }
+
       return customOptionsID;
     }
 

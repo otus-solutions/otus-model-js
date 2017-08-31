@@ -25,6 +25,7 @@
     self.getMomentDescriptor = getMomentDescriptor;
     self.getAliquotContainer = getAliquotContainer;
     self.validateAliquotWave = validateAliquotWave;
+    self.getCodeConfiguration = getCodeConfiguration;
 
     function initializeParticipantConfiguration(selectedParticipant, participantCQ) {
       _selectedParticipant = selectedParticipant;
@@ -182,6 +183,10 @@
         default:
           return '';
       }
+    }
+
+    function getCodeConfiguration(){
+      return _laboratoryDescriptor.codeConfiguration;
     }
 
     function _descriptorErrorMessenger(type) {

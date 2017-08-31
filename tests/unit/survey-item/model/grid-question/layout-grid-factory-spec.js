@@ -1,4 +1,4 @@
-describe('LayoutGridTextFactory', function() {
+describe('LayoutGridFactory', function() {
   var layout;
 
   var Mock = {};
@@ -9,14 +9,14 @@ describe('LayoutGridTextFactory', function() {
     mockJsonObject();
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('otusjs.model.question.LayoutGridTextFactory');
+      factory = _$injector_.get('otusjs.model.question.LayoutGridFactory');
     });
 
     layout = factory.create(Mock.WIDTH_1);
   });
 
   describe('create method', function(){
-    it('expected valid instance of layoutText', function(){
+    it('expected valid instance of layout', function(){
       expect(layout).toBeDefined();
     });
 
