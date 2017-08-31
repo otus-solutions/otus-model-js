@@ -18,11 +18,17 @@
     self.getMomentDescriptor = getMomentDescriptor;
     self.getAliquotContainer = getAliquotContainer;
     self.validateAliquotWave = validateAliquotWave;
+    self.getAliquotLength = getAliquotLength;
 
     function initialize(labDescriptor, selectedParticipant, participantCQ) {
       _laboratoryDescriptor = labDescriptor;
       _selectedParticipant = selectedParticipant;
       _participantCQ = participantCQ;
+    }
+
+    // TODO: This implementation is temporary and should return the information contained in the database
+    function getAliquotLength(){
+      return _selectedParticipant.fieldCenter.acronym === "RS" ? 10 : 9;
     }
 
     function getLaboratoryConfiguration() {
