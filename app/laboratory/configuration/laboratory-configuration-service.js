@@ -35,12 +35,12 @@
       _laboratoryDescriptor = labDescriptor;
 
       //filling sub-descriptors
-      _aliquotsDescriptors = _laboratoryDescriptor.aliquotsDescriptors;
+      _aliquotsDescriptors = _removeASAP(); //really really ASAP
       // _aliquotsDescriptors = _laboratoryDescriptor.aliquotsDescriptors;
     }
 
     function _removeASAP() {
-      var _aliquotsDescriptors = [];
+      var newArr = [];
 
       _laboratoryDescriptor.aliquotConfiguration.aliquotCenterDescriptors.forEach(function(centerDesc) {
         centerDesc.aliquotGroupDescriptors.forEach(function(groupDesc) {
@@ -54,8 +54,9 @@
             });
           });
         });
-
       });
+
+      return newArr;
       function _add(aliquot) {
         var aliq = newArr.find(function(arrAliq) {
           return arrAliq.name === aliquot.name;
