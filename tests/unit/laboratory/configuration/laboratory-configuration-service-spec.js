@@ -1,5 +1,5 @@
 xdescribe('the laboratory configuration service', function() {
-   //skipped beacuse phantom-js
+  //skipped beacuse phantom-js
   //if some test fails, try updating the json-importer.js file
   var Mock = {};
   var service;
@@ -57,7 +57,7 @@ xdescribe('the laboratory configuration service', function() {
     });
   });
 
-  describe('the descriptor getters', function() {
+  fdescribe('the descriptor getters', function() {
 
     beforeEach(function() {
       service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
@@ -86,6 +86,68 @@ xdescribe('the laboratory configuration service', function() {
       service.initializeParticipantConfiguration(Mock.SelectedParticipant, 'CQ1');
       var avaiableAliquots = service.getAvaiableAliquots('FASTING', 'GEL');
       expect(avaiableAliquots.length).not.toEqual(0);
+    });
+
+    it('should be a nice script', function() {
+      var newArr = [];
+
+      Mock.LabDescriptors.aliquotConfiguration.aliquotCenterDescriptors.forEach(function(centerDesc) {
+        centerDesc.aliquotGroupDescriptors.forEach(function(groupDesc) {
+          groupDesc.aliquotMomentDescriptors.forEach(function(momentDesc) {
+            momentDesc.aliquotTypesDescriptors.forEach(function(typeDesc) {
+              typeDesc.aliquots.forEach(function(aliquot) {
+                _add(angular.copy(aliquot));
+                delete(aliquot.label);
+                delete(aliquot.role);
+              });
+            });
+          });
+        });
+
+      });
+
+      Mock.LabDescriptors.aliquotConfiguration.aliquotDescriptors = newArr;
+      console.log(JSON.stringify(Mock.LabDescriptors));
+      console.log(JSON.stringify(Mock.LabDescriptors.aliquotConfiguration.aliquotDescriptors[0]));
+
+      function _add(aliquot) {
+        var aliq = newArr.find(function(arrAliq) {
+          return arrAliq.name === aliquot.name;
+        });
+        if (!aliq) {
+          newArr.push(angular.copy(aliquot));
+        }
+      }
+    });
+
+    fit('should be another nice script', function() {
+      Mock.LabDescriptors.aliquotConfiguration.aliquotCenterDescriptors.forEach(function(centerDesc) {
+        centerDesc.aliquotGroupDescriptors.forEach(function(groupDesc) {
+          groupDesc.aliquotMomentDescriptors.forEach(function(momentDesc) {
+            momentDesc.aliquotTypesDescriptors.forEach(function(typeDesc) {
+              var tempArr = [];
+              typeDesc.aliquots.forEach(function(aliquot) {
+                _add(tempArr, aliquot);
+              });
+              delete typeDesc.aliquots;
+              typeDesc.aliquots = tempArr;
+            });
+          });
+        });
+
+      });
+
+      console.log(JSON.stringify(Mock.LabDescriptors));
+      // console.log(JSON.stringify(Mock.LabDescriptors.aliquotConfiguration.aliquotDescriptors[0]));
+
+      function _add(newArr, aliquot) {
+        var aliq = newArr.find(function(arrAliq) {
+          return arrAliq === aliquot.name;
+        });
+        if (!aliq) {
+          newArr.push(angular.copy(aliquot.name));
+        }
+      }
     });
   });
 
