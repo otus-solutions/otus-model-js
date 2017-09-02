@@ -6,6 +6,7 @@
   function service() {
     var self = this;
     var _laboratoryDescriptor;
+    var _aliquotConfiguration;
     var _aliquotsDescriptors;
     var _selectedParticipant;
     var _participantCQ;
@@ -18,9 +19,8 @@
     self.checkLaboratoryConfiguration = checkLaboratoryConfiguration;
     self.checkAliquotsDescriptors = checkAliquotsDescriptors;
 
-    self.getAliquotDescriptor = getAliquotDescriptor;
-
     self.getAvaiableAliquots = getAvaiableAliquots;
+    self.getAliquotDescriptor = getAliquotDescriptor;
     self.getTubeDescriptor = getTubeDescriptor;
     self.getMomentDescriptor = getMomentDescriptor;
     self.getAliquotContainer = getAliquotContainer;
@@ -37,36 +37,8 @@
       _laboratoryDescriptor = labDescriptor;
 
       //filling sub-descriptors
-      _aliquotsDescriptors = _removeASAP(); //really really ASAP
-      // _aliquotsDescriptors = _laboratoryDescriptor.aliquotsDescriptors;
-    }
-
-    function _removeASAP() {
-      var newArr = [];
-
-      _laboratoryDescriptor.aliquotConfiguration.aliquotCenterDescriptors.forEach(function(centerDesc) {
-        centerDesc.aliquotGroupDescriptors.forEach(function(groupDesc) {
-          groupDesc.aliquotMomentDescriptors.forEach(function(momentDesc) {
-            momentDesc.aliquotTypesDescriptors.forEach(function(typeDesc) {
-              typeDesc.aliquots.forEach(function(aliquot) {
-                _add(angular.copy(aliquot));
-                delete(aliquot.label);
-                delete(aliquot.role);
-              });
-            });
-          });
-        });
-      });
-
-      return newArr;
-      function _add(aliquot) {
-        var aliq = newArr.find(function(arrAliq) {
-          return arrAliq.name === aliquot.name;
-        });
-        if (!aliq) {
-          newArr.push(angular.copy(aliquot));
-        }
-      }
+      _aliquotConfiguration = _laboratoryDescriptor.aliquotConfiguration;
+      _aliquotsDescriptors = _aliquotConfiguration.aliquotDescriptors;
     }
 
     function initializeAliquotsDescriptors(aliquotsDescriptor) {
@@ -104,11 +76,7 @@
     function getAvaiableAliquots(momentName, tubeType) {
       if (_laboratoryDescriptor) {
         try {
-          var centerDescriptor = _laboratoryDescriptor.aliquotConfiguration
-            .aliquotCenterDescriptors
-            .find(function(centerDescriptor) {
-              return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
-            });
+          var centerDescriptor = _getCenterDescriptor();
 
           var groupDescriptor = centerDescriptor
             .aliquotGroupDescriptors
@@ -126,9 +94,10 @@
               return typeDescriptor.name === tubeType;
             })
             .aliquots;
-
           return aliquotsList.map(function(avaiableAliquot) {
-            return getAliquotDescriptor(avaiableAliquot.name);
+            var aliqDescriptor = getAliquotDescriptor(avaiableAliquot.name);
+            aliqDescriptor.role = avaiableAliquot.role;
+            return aliqDescriptor;
           });
 
         } catch (e) {
@@ -146,7 +115,8 @@
           return aliquotDescriptor.name == aliquotName;
         });
         if (found) {
-          return found;
+          var completeAliquot = angular.copy(found);
+          return completeAliquot;
         } else {
           var msg = 'Configuração incompleta para: ' + aliquotName;
           throw new Error(msg);
@@ -186,15 +156,23 @@
       }
     }
 
-    function getCodeConfiguration(){
+    function getCodeConfiguration() {
       return _laboratoryDescriptor.codeConfiguration;
     }
 
-    // TODO: This implementation is temporary and should return the information contained in the database
-    function getAliquotLength(){
-      return _selectedParticipant.fieldCenter.acronym === "RS" ? 10 : 9;
+    function getAliquotLength() {
+      var centerDescriptor = _getCenterDescriptor();
+      return centerDescriptor.aliquotCodeSize;
     }
-    
+
+    //private methods
+    function _getCenterDescriptor() {
+      return _aliquotConfiguration.aliquotCenterDescriptors
+        .find(function(centerDescriptor) {
+          return centerDescriptor.name === _selectedParticipant.fieldCenter.acronym;
+        });
+    }
+
     function _descriptorErrorMessenger(type) {
       var msg = 'Descritores de ' + type + ' não inicializados';
       throw new Error(msg);

@@ -1,5 +1,5 @@
-xdescribe('the laboratory configuration service', function() {
-   //skipped beacuse phantom-js
+describe('the laboratory configuration service', function() {
+  //skipped beacuse phantom-js
   //if some test fails, try updating the json-importer.js file
   var Mock = {};
   var service;
@@ -36,7 +36,7 @@ xdescribe('the laboratory configuration service', function() {
     });
 
     it('should initialize aliquots descriptors', function() {
-      service.initializeAliquotsDescriptors(Mock.LabDescriptors.aliquotsDescriptors);
+      service.initializeAliquotsDescriptors(Mock.LabDescriptors.aliquotConfiguration.aliquotDescriptors);
       var checkFullDescriptors = service.checkLaboratoryConfiguration();
       var checkAliquotsDescriptor = service.checkAliquotsDescriptors();
       expect(checkFullDescriptors).toBe(false);
@@ -70,7 +70,7 @@ xdescribe('the laboratory configuration service', function() {
 
       expect(container).toEqual('TUBE');
 
-      code = 322425120;
+      code = 324425120;
       container = service.getAliquotContainer(code);
 
       expect(container).toEqual('PALLET');
@@ -86,7 +86,7 @@ xdescribe('the laboratory configuration service', function() {
       service.initializeParticipantConfiguration(Mock.SelectedParticipant, 'CQ1');
       var avaiableAliquots = service.getAvaiableAliquots('FASTING', 'GEL');
       expect(avaiableAliquots.length).not.toEqual(0);
-    });
+    });    
   });
 
 
