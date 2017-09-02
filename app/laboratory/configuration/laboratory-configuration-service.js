@@ -94,9 +94,10 @@
               return typeDescriptor.name === tubeType;
             })
             .aliquots;
-
           return aliquotsList.map(function(avaiableAliquot) {
-            return getAliquotDescriptor(avaiableAliquot);
+            var aliqDescriptor = getAliquotDescriptor(avaiableAliquot.name);
+            aliqDescriptor.role = avaiableAliquot.role;
+            return aliqDescriptor;
           });
 
         } catch (e) {
@@ -114,7 +115,8 @@
           return aliquotDescriptor.name == aliquotName;
         });
         if (found) {
-          return found;
+          var completeAliquot = angular.copy(found);
+          return completeAliquot;
         } else {
           var msg = 'Configuração incompleta para: ' + aliquotName;
           throw new Error(msg);
