@@ -29,8 +29,8 @@ xdescribe('TimeRuleTestService:', function() {
         Mock.answer = new Mock.ImmutableDate;
         Mock.answer.resetDate();
         Mock.answer.setHours(20);
-        Mock.answer.setMinutes(00);
-        Mock.answer.setSeconds(00);
+        Mock.answer.setMinutes(0);
+        Mock.answer.setSeconds(0);
 
       });
 
@@ -53,9 +53,9 @@ xdescribe('TimeRuleTestService:', function() {
         Mock.answer = new Mock.ImmutableDate;
         Mock.answer.resetDate();
         Mock.answer.setHours(20);
-        Mock.answer.setMinutes(00);
-        Mock.answer.setSeconds(00);
-        Mock.answer.setMilliseconds(00);
+        Mock.answer.setMinutes(0);
+        Mock.answer.setSeconds(0);
+        Mock.answer.setMilliseconds(0);
       });
 
       it('when is metadata should method run called then NumericRuleTestService', function() {
@@ -194,9 +194,9 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer1 = new Mock.ImmutableDate;
     Mock.answer1.resetDate();
     Mock.answer1.setHours(20);
-    Mock.answer1.setMinutes(00);
-    Mock.answer1.setSeconds(00);
-    Mock.answer1.setMilliseconds(00);
+    Mock.answer1.setMinutes(0);
+    Mock.answer1.setSeconds(0);
+    Mock.answer1.setMilliseconds(0);
 
     Mock.rule2 = {};
     Mock.rule2.when = 'CAD1';
@@ -207,9 +207,9 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer2 = new Mock.ImmutableDate;
     Mock.answer2.resetDate();
     Mock.answer2.setHours(20);
-    Mock.answer2.setMinutes(00);
-    Mock.answer2.setSeconds(00);
-    Mock.answer2.setMilliseconds(00);
+    Mock.answer2.setMinutes(0);
+    Mock.answer2.setSeconds(0);
+    Mock.answer2.setMilliseconds(0);
   }
 
   function beforeCaseNotEqual() {
@@ -222,9 +222,9 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer1 = new Mock.ImmutableDate;
     Mock.answer1.resetDate();
     Mock.answer1.setHours(20);
-    Mock.answer1.setMinutes(00);
-    Mock.answer1.setSeconds(00);
-    Mock.answer1.setMilliseconds(00);
+    Mock.answer1.setMinutes(0);
+    Mock.answer1.setSeconds(0);
+    Mock.answer1.setMilliseconds(0);
 
     Mock.rule2 = {};
     Mock.rule2.when = 'CAD1';
@@ -235,9 +235,9 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer2 = new Mock.ImmutableDate;
     Mock.answer2.resetDate();
     Mock.answer2.setHours(20);
-    Mock.answer2.setMinutes(00);
-    Mock.answer2.setSeconds(00);
-    Mock.answer2.setMilliseconds(00);
+    Mock.answer2.setMinutes(0);
+    Mock.answer2.setSeconds(0);
+    Mock.answer2.setMilliseconds(0);
   }
 
   function beforeCaseGreater() {
@@ -251,8 +251,8 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer1.resetDate();
     Mock.answer1.setHours(20);
     Mock.answer1.setMinutes(10);
-    Mock.answer1.setSeconds(00);
-    Mock.answer1.setMilliseconds(00);
+    Mock.answer1.setSeconds(0);
+    Mock.answer1.setMilliseconds(0);
 
     Mock.rule2 = {};
     Mock.rule2.when = 'CAD1';
@@ -263,9 +263,9 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer2 = new Mock.ImmutableDate;
     Mock.answer2.resetDate();
     Mock.answer2.setHours(20);
-    Mock.answer2.setMinutes(00);
-    Mock.answer2.setSeconds(00);
-    Mock.answer2.setMilliseconds(00);
+    Mock.answer2.setMinutes(0);
+    Mock.answer2.setSeconds(0);
+    Mock.answer2.setMilliseconds(0);
   }
 
   function beforeCaseGreaterEqual() {
@@ -279,8 +279,8 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer1.resetDate();
     Mock.answer1.setHours(20);
     Mock.answer1.setMinutes(10);
-    Mock.answer1.setSeconds(00);
-    Mock.answer1.setMilliseconds(00);
+    Mock.answer1.setSeconds(0);
+    Mock.answer1.setMilliseconds(0);
 
     Mock.rule2 = {};
     Mock.rule2.when = 'CAD1';
@@ -291,9 +291,9 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer2 = new Mock.ImmutableDate;
     Mock.answer2.resetDate();
     Mock.answer2.setHours(20);
-    Mock.answer2.setMinutes(00);
-    Mock.answer2.setSeconds(00);
-    Mock.answer2.setMilliseconds(00);
+    Mock.answer2.setMinutes(0);
+    Mock.answer2.setSeconds(0);
+    Mock.answer2.setMilliseconds(0);
 
     Mock.rule3 = {};
     Mock.rule3.when = 'CAD1';
@@ -304,9 +304,9 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer3 = new Mock.ImmutableDate;
     Mock.answer3.resetDate();
     Mock.answer3.setHours(10);
-    Mock.answer3.setMinutes(00);
-    Mock.answer3.setSeconds(00);
-    Mock.answer3.setMilliseconds(00);
+    Mock.answer3.setMinutes(0);
+    Mock.answer3.setSeconds(0);
+    Mock.answer3.setMilliseconds(0);
   }
 
   function beforeCaseLower() {
@@ -320,8 +320,8 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer1.resetDate();
     Mock.answer1.setHours(20);
     Mock.answer1.setMinutes(10);
-    Mock.answer1.setSeconds(00);
-    Mock.answer1.setMilliseconds(00);
+    Mock.answer1.setSeconds(0);
+    Mock.answer1.setMilliseconds(0);
 
     Mock.rule2 = {};
     Mock.rule2.when = 'CAD1';
@@ -332,9 +332,9 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer2 = new Mock.ImmutableDate;
     Mock.answer2.resetDate();
     Mock.answer2.setHours(19);
-    Mock.answer2.setMinutes(00);
-    Mock.answer2.setSeconds(00);
-    Mock.answer2.setMilliseconds(00);
+    Mock.answer2.setMinutes(0);
+    Mock.answer2.setSeconds(0);
+    Mock.answer2.setMilliseconds(0);
   }
 
   function beforeCaselowerEqual() {
@@ -347,9 +347,9 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer1 = new Mock.ImmutableDate;
     Mock.answer1.resetDate();
     Mock.answer1.setHours(19);
-    Mock.answer1.setMinutes(00);
-    Mock.answer1.setSeconds(00);
-    Mock.answer1.setMilliseconds(00);
+    Mock.answer1.setMinutes(0);
+    Mock.answer1.setSeconds(0);
+    Mock.answer1.setMilliseconds(0);
 
     Mock.rule2 = {};
     Mock.rule2.when = 'CAD1';
@@ -360,9 +360,9 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer2 = new Mock.ImmutableDate;
     Mock.answer2.resetDate();
     Mock.answer2.setHours(20);
-    Mock.answer2.setMinutes(00);
-    Mock.answer2.setSeconds(00);
-    Mock.answer2.setMilliseconds(00);
+    Mock.answer2.setMinutes(0);
+    Mock.answer2.setSeconds(0);
+    Mock.answer2.setMilliseconds(0);
 
     Mock.rule3 = {};
     Mock.rule3.when = 'CAD1';
@@ -373,8 +373,8 @@ xdescribe('TimeRuleTestService:', function() {
     Mock.answer3 = new Mock.ImmutableDate;
     Mock.answer3.resetDate();
     Mock.answer3.setHours(21);
-    Mock.answer3.setMinutes(00);
-    Mock.answer3.setSeconds(00);
-    Mock.answer3.setMilliseconds(00);
+    Mock.answer3.setMinutes(0);
+    Mock.answer3.setSeconds(0);
+    Mock.answer3.setMilliseconds(0);
   }
 });
