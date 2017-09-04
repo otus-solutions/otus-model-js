@@ -7,9 +7,10 @@ xdescribe('QuestionFillFactory', function() {
   var METADATA_FILL_TYPE = 'MetadataFill';
   var EMPTY_STRING = '';
   var COMMENT = 'Este é o meu comentário: comentário.';
+  var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       /* Test data */

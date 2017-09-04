@@ -1,10 +1,10 @@
 describe('GridTextLineFactory', function () {
   var gridTextLine;
-
+  var factory;
   var Mock = {};
 
   beforeEach(function () {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

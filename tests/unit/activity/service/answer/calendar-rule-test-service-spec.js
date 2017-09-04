@@ -5,7 +5,7 @@ xdescribe('DateTimeRuleTestService:', function() {
   var service = {};
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       service = _$injector_.get('otusjs.model.activity.CalendarRuleTestService', {
@@ -51,7 +51,7 @@ xdescribe('DateTimeRuleTestService:', function() {
       });
 
       it('should return false when answer is not equal to reference', function() {
-        expect(service.run(Mock.rule, new Date(1993, 01, 22))).toBe(false);
+        expect(service.run(Mock.rule, new Date(1993, 1, 22))).toBe(false);
       });
     });
 
@@ -69,7 +69,7 @@ xdescribe('DateTimeRuleTestService:', function() {
       });
 
       it('should return true when answer is not equal to reference, date not equal', function() {
-        expect(service.run(Mock.rule, new Date(2016, 04, 02))).toBe(true);
+        expect(service.run(Mock.rule, new Date(2016, 4, 2))).toBe(true);
       });
 
       it('should return true when answer is not equal to reference, day not equal', function() {
@@ -77,7 +77,7 @@ xdescribe('DateTimeRuleTestService:', function() {
       });
 
       it('should return true when answer is not equal to reference, month not equal', function() {
-        expect(service.run(Mock.rule, new Date(1993, 01, 22))).toBe(true);
+        expect(service.run(Mock.rule, new Date(1993, 1, 22))).toBe(true);
       });
 
       it('should return true when answer is not equal to reference, year not equal', function() {

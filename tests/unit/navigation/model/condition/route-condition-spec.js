@@ -10,9 +10,10 @@ xdescribe('RouteCondition', function() {
   var EQUAL = 'equal';
   var GREATER = 'greater';
   var ANSWER = 1;
+  var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       mockRules(_$injector_);

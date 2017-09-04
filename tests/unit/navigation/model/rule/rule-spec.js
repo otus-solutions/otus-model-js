@@ -8,9 +8,10 @@ xdescribe('Rule', function() {
   var DIFF_OPERATOR = 'greater';
   var ANSWER = 1;
   var DIFF_ANSWER = 2;
+  var factory;  
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       factory = _$injector_.get('otusjs.model.navigation.RuleFactory');

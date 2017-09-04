@@ -1,9 +1,10 @@
 describe('MetadataAnswerFactory', function() {
   var Mock = {};
   var option;
+  var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

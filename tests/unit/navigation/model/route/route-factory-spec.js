@@ -5,9 +5,10 @@ describe('RouteFactory', function () {
   var ORIGIN = 'ORIGIN';
   var DESTINATION = 'DESTINATION';
   var ROUTE_NAME = 'ORIGIN_DESTINATION';
+  var factory;
 
   beforeEach(function () {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function (_$injector_) {
       mockCondition(_$injector_);

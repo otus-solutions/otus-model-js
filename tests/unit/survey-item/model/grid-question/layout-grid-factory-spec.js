@@ -1,10 +1,10 @@
 describe('LayoutGridFactory', function() {
   var layout;
-
+  var factory;
   var Mock = {};
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

@@ -7,9 +7,10 @@ describe('RuleFactory', function() {
   var WHEN = 'QID';
   var OPERATOR = 'equal';
   var ANSWER = 1;
+  var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       factory = _$injector_.get('otusjs.model.navigation.RuleFactory');

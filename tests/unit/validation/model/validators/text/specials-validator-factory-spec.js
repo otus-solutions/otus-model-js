@@ -1,11 +1,11 @@
 describe('SpecialsValidatorFactory validator suite:', function() {
 
-  var factory;
+  var factory, validator;
   var Mock = {};
 
   /* @BeforeScenario */
   beforeEach(function() {
-    module('otusjs.validation');
+    angular.mock.module('otusjs.validation');
 
     inject(function(_$injector_) {
       factory = _$injector_.get('SpecialsValidatorFactory');

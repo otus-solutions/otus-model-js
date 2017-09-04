@@ -1,11 +1,11 @@
 xdescribe('MaxDateValidatorFactory validator suite:', function() {
 
-  var factory;
+  var factory, validator;
   var Mock = {};
 
   /* @BeforeScenario */
   beforeEach(function() {
-    module('otusjs.validation');
+    angular.mock.module('otusjs.validation');
 
     mockDate();
     mockJsonObject();

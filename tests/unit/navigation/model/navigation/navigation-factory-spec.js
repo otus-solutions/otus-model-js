@@ -6,9 +6,10 @@ describe('NavigationFactory', function() {
   var ORIGIN = 'CAD1';
   var DESTINATION = 'CAD2';
   var INDEX = 1;
+  var factory, nullNavigation;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       factory = _$injector_.get('otusjs.model.navigation.NavigationFactory');

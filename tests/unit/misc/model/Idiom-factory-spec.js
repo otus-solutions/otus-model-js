@@ -1,9 +1,9 @@
 describe('Idiom suite:', function() {
-  var factory;
+  var factory, label;
   var Mock = {};
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

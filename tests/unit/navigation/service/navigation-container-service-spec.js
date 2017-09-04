@@ -5,7 +5,7 @@ describe('NavigationContainer', function() {
   var container;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       /* Test data */
@@ -168,7 +168,7 @@ describe('NavigationContainer', function() {
     });
 
     it('should return null when navigation does not exists', function() {
-      returnedValue = container.getNavigationPositionByOrigin(Mock.questionFour.templateID);
+      var returnedValue = container.getNavigationPositionByOrigin(Mock.questionFour.templateID);
       expect(returnedValue).toBe(null);
     });
 

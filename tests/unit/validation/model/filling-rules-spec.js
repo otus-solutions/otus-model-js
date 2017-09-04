@@ -1,9 +1,10 @@
 describe('FillingRulesOption', function() {
   var Mock = {};
   var fillingRules;
+  var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       factory = _$injector_.get('FillingRulesOptionFactory', {

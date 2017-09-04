@@ -1,9 +1,10 @@
 xdescribe('SurveyFactory', function() {
   var Mock = {};
+  var factory;
   var survey;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     Mock.surveyTemplate = Test.utils.data.latestSurveyTemplate;
 

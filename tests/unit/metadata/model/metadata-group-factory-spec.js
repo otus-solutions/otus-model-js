@@ -3,7 +3,7 @@ describe('MetadataGroupFactory', function() {
   var factory, metadataGroup;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

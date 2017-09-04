@@ -3,7 +3,7 @@ describe('AddFillingRulesService', function () {
   var Mock = {};
 
   beforeEach(function () {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function (_$injector_) {
       mockJson();

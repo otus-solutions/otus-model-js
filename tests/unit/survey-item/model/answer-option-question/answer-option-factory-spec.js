@@ -1,13 +1,14 @@
 describe('AnswerOptionFactory', function() {
   var Mock = {};
   var option;
+  var factory;
 
   Mock.VALUE = 1;
   Mock.EXTRACTION_VALUE = '.extractionValue';
 
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

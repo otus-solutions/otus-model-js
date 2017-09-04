@@ -1,9 +1,10 @@
 describe('CalendarQuestionFactory', function() {
   var Mock = {};
   var question;
+  var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

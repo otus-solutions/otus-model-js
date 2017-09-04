@@ -8,7 +8,7 @@ xdescribe('SurveyItemContainerService', function() {
     var INEXISTENT_ID = 'NOT_FOUND';
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         inject(function(_$injector_) {
             service = _$injector_.get('SurveyItemContainerService', {

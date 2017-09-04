@@ -9,7 +9,7 @@ describe('CreateDefaultRouteTaskService', function() {
   var CAD4 = 'CAD4';
 
   beforeEach(function() {
-    module('otusjs.model.navigation');
+    angular.mock.module('otusjs.model.navigation');
 
     inject(function(_$injector_) {
       mockRoute(_$injector_);

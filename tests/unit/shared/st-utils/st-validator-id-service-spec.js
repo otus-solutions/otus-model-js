@@ -1,8 +1,9 @@
 describe('ValidatorIDService', function() {
     var Mock = {};
+    var service;
 
     beforeEach(function() {
-        module('utils');
+        angular.mock.module('utils');
 
         inject(function(_$injector_) {
             mockSurveyFactory(_$injector_);
