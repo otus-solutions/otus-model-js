@@ -7,7 +7,7 @@ describe('AnswerFillFactory', function() {
   var ANSWER_VALUE = 'Pw1';
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       mockAnswerEvaluationService(_$injector_);

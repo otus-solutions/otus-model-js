@@ -3,7 +3,7 @@ xdescribe('NavigationAddService', function() {
     var service;
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         inject(function(_$injector_) {
             mockSurveyItemContainerService(_$injector_);

@@ -6,7 +6,7 @@ describe("DataSourceDefinition", function() {
   var dataSourceDefinition;
 
   beforeEach(function() {
-    module('otusjs.survey');
+    angular.mock.module('otusjs.survey');
 
     inject(function(_$injector_) {
       dataSourceDefinition = _$injector_.get('otusjs.model.survey.DataSourceDefinitionFactory').create(DATA_SOURCE_NAME);

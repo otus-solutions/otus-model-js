@@ -1,9 +1,9 @@
 describe('MetadataGroup', function() {
   var Mock = {};
-  var factory, metadataGroup;
+  var factory, metadataGroup, createdOption, option;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       factory = _$injector_.get('MetadataGroupFactory', {

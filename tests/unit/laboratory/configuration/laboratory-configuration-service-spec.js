@@ -5,7 +5,7 @@ describe('the laboratory configuration service', function() {
   var service;
 
   beforeEach(function() {
-    module('otusjs.laboratory');
+    angular.mock.module('otusjs.laboratory');
 
     inject(function(_$injector_) {
       var injections = {};

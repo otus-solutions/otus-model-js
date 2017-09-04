@@ -10,7 +10,7 @@ xdescribe("DataSourceDefinitionManager", function() {
   var dataSourceDefinitionManager;
 
   beforeEach(function() {
-    module('otusjs.survey');
+    angular.mock.module('otusjs.survey');
 
     inject(function(_$injector_) {
       var factory = _$injector_.get('otusjs.model.survey.DataSourceDefinitionManagerFactory', {

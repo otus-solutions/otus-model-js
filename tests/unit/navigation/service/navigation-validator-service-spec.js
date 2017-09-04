@@ -1,8 +1,9 @@
 xdescribe('NavigationValidatorService', function() {
   var Mock = {};
+  var service;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
 

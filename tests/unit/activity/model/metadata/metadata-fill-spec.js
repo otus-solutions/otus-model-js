@@ -5,7 +5,7 @@ describe('MetadataFillFactory', function() {
     var factory;
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         mockJson();
 

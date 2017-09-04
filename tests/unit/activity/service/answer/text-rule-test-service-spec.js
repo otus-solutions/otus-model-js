@@ -5,7 +5,7 @@ xdescribe('TextRuleTestService', function() {
   var service = {};
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       service = _$injector_.get('otusjs.model.activity.TextRuleTestService', Injections);

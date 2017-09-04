@@ -5,9 +5,10 @@ describe('RouteConditionFactory', function() {
   var EXTENTS = 'SurveyTemplateObject';
   var OBJECT_TYPE = 'RouteCondition';
   var CONDITION_NAME = 'CONDITION_NAME';
+  var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       mockRule(_$injector_);

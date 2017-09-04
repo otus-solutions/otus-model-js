@@ -1,8 +1,9 @@
 describe('aliquot collection data factory', function() {
   var Mock = {};
+  var factory;
 
   beforeEach(function() {
-    module('otusjs.laboratory.participant');
+    angular.mock.module('otusjs.laboratory.participant');
 
     inject(function(_$injector_) {
       factory = _$injector_.get('otusjs.laboratory.participant.AliquotCollectionDataFactory');

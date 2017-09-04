@@ -1,11 +1,12 @@
 describe('DecimalQuestionFactory', function() {
   var Mock = {};
+  var factory;
   var question,
     TEMPLATE_ID = 'TEMPLATE_ID',
     QUESTION_ID = 'QUESTION_ID';
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

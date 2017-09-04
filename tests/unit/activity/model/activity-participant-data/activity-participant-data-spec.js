@@ -6,9 +6,10 @@ describe('ActivityParticipantData', function() {
     var FIELD_CENTER = 'RS';
     var Mock = {};
     var participantData;
+    var factory;
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         inject(function(_$injector_) {
             mockActivityParticipantData();

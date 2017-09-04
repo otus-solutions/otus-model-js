@@ -6,7 +6,7 @@ describe('InterviewerFactory', function() {
     var INTERVIEWER = 'Interviewer';
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
         mockUser();
 
         inject(function(_$injector_) {

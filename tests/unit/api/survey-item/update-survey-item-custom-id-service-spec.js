@@ -4,7 +4,7 @@ describe('UpdateSurveyItemCustomID', function() {
     var surveyItemFactory;
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         inject(function(_$injector_) {
             service = _$injector_.get('UpdateSurveyItemCustomID');

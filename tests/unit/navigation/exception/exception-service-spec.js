@@ -1,11 +1,12 @@
 describe('ExceptionService', function() {
   var Mock = {};
+  var service;
 
   Mock.ORIGIN = 'Rota que refere-se a si mesma diretamente';
   Mock.NAME = 'InvalidStateError';
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       service = _$injector_.get('otusjs.model.navigation.ExceptionService');

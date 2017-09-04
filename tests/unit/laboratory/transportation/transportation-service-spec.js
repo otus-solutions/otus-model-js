@@ -4,7 +4,7 @@ xdescribe('the transportation service', function() {
   var $httpBackend;
 
   beforeEach(function() {
-    module('otusjs.laboratory.transportation');
+    angular.mock.module('otusjs.laboratory.transportation');
 
     mockParticipantLaboratory();
     mockShipmentAliquot();

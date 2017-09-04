@@ -1,5 +1,6 @@
 xdescribe('Survey', function() {
   var Mock = {};
+  var factory;
   var survey;
 
   var QUESTION_TYPE = 'IntegerQuestion';
@@ -10,7 +11,7 @@ xdescribe('Survey', function() {
   var AVAILABLE_CUSTOM_ID = 'AvailableCustomID';
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockDatetime();
     mockIdentityData();

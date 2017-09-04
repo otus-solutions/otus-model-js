@@ -6,7 +6,7 @@ xdescribe('otusjs.model.navigation.NavigationTrackerFactory', function() {
   var trackerFactory = {};
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
     inject(_inject);
   });
 

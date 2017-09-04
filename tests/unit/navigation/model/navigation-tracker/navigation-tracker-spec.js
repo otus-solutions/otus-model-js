@@ -5,7 +5,7 @@ xdescribe('NavigationTracker', function() {
   var tracker = {};
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
     inject(_setupTest);
   });
 

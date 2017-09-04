@@ -1,8 +1,9 @@
 describe('IntegerQuestion', function() {
     var Mock = {};
+    var factory;
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         inject(function(_$injector_) {
             mockQuestion(_$injector_);

@@ -3,7 +3,7 @@ describe('otusjs.model.utils.AlphabetSuffixIDGenerator', function() {
     var service;
 
     beforeEach(function() {
-        module('utils');
+        angular.mock.module('utils');
 
         inject(function(_$injector_) {
             service = _$injector_.get('otusjs.model.utils.AlphabetSuffixIDGenerator');

@@ -1,13 +1,13 @@
 describe('SurveyIdentity', function() {
   var Mock = {},
-    factory;
+    factory, surveyIdentity;
 
   var NAME = 'Identity Name',
     ACRONYM = 'ACRONYM',
     VERSION = 'A';
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

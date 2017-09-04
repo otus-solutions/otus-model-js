@@ -1,9 +1,9 @@
 describe('FillingRulesOptionFactory', function() {
   var Mock = {};
-  var factory;
+  var factory, fillingRulesOption;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsons();
 

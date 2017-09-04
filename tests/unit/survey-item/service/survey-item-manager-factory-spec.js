@@ -11,7 +11,7 @@ xdescribe('SurveyItemManagerFactory', function() {
   var INEXISTENT_CUSTOM_ID = 'INEXISTENT_CUSTOM_ID';
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       mockItems(_$injector_);

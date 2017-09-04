@@ -1,11 +1,11 @@
 describe('Unit suite:', function() {
 
   var Mock = {};
-  var factory;
+  var factory, unit;
 
   /* @BeforeScenario */
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       factory = _$injector_.get('UnitFactory');

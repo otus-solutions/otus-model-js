@@ -1,9 +1,9 @@
 describe('RulesFactory', function() {
   var Mock = {};
-  var factory;
+  var factory, rule;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockRule();
     mockJsonObject();

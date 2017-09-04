@@ -1,8 +1,9 @@
 xdescribe('participant laboratory factory', function() {
   var Mock = {};
+  var factory;
 
   beforeEach(function() {
-    module('otusjs.laboratory');
+    angular.mock.module('otusjs.laboratory');
 
     inject(function(_$injector_) {
       var injections = {

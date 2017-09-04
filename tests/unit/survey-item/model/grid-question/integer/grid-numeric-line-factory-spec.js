@@ -1,10 +1,11 @@
 describe('GridIntegerLineFactory', function () {
   var gridIntegerLine;
+  var factory;
 
   var Mock = {};
 
   beforeEach(function () {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

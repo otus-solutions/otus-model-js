@@ -5,7 +5,7 @@ xdescribe('StatusHistoryManagerService', function() {
   var baseDate;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       mockUser(_$injector_);

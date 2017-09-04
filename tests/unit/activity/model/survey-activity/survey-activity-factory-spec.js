@@ -8,9 +8,10 @@ xdescribe('ActivitySurveyFactory', function() {
   var GROUP = 'group_test';
   var TEMPLATE_IOD = '123456';
   var ACTIVITY_ID = 1;
+  var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       /* Test data */
