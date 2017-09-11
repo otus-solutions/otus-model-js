@@ -28,6 +28,7 @@
     /* Public interface */
     self.init = init;
     self.loadJsonDataObject = loadJsonDataObject;
+    self.setIncrementalIDValue = setIncrementalIDValue;
     self.getItemList = getItemList;
     self.getItemListSize = getItemListSize;
     self.getItemByTemplateID = getItemByTemplateID;
@@ -116,20 +117,19 @@
     }
 
     function loadItem(itemType, templateID, surveyAcronym) {
-
       var item = surveyItemContainer.createItem(itemType, templateID);
-      _setIncrementalIDValue(parseInt(templateID.split(surveyAcronym)[1]));
+      self.setIncrementalIDValue(parseInt(templateID.split(surveyAcronym)[1]));
       return item;
     }
 
-    function _setIncrementalIDValue(id) {
+    function setIncrementalIDValue(id) {
       incrementalIDValue = id;
     }
 
     function addItem(itemType, templateIDPrefix) {
       var templateID;
       do {
-        templateID = templateIDPrefix + getNextIncrementalGenerator();
+        templateID = templateIDPrefix + _getNextIncrementalGenerator();
       } while (!isAvailableCustomID(templateID));
       var item = surveyItemContainer.createItem(itemType, templateID);
       return item;
@@ -139,7 +139,7 @@
       surveyItemContainer.removeItem(templateID);
     }
 
-    function getNextIncrementalGenerator() {
+    function _getNextIncrementalGenerator() {
       return ++incrementalIDValue;
     }
 
