@@ -26,7 +26,7 @@
     self.getAliquotContainer = getAliquotContainer;
     self.validateAliquotWave = validateAliquotWave;
     self.getCodeConfiguration = getCodeConfiguration;
-    self.getAliquotLength = getAliquotLength;
+    self.getAliquotLengths = getAliquotLengths;
 
     function initializeParticipantConfiguration(selectedParticipant, participantCQ) {
       _selectedParticipant = selectedParticipant;
