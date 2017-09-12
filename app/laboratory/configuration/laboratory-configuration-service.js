@@ -160,9 +160,9 @@
       return _laboratoryDescriptor.codeConfiguration;
     }
 
-    function getAliquotLength() {
+    function getAliquotLengths() {
       var centerDescriptor = _getCenterDescriptor();
-      return centerDescriptor.aliquotCodeSize;
+      return centerDescriptor.aliquotCodeSizes;
     }
 
     //private methods
