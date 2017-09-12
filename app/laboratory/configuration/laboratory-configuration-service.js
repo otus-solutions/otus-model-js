@@ -26,7 +26,7 @@
     self.getAliquotContainer = getAliquotContainer;
     self.validateAliquotWave = validateAliquotWave;
     self.getCodeConfiguration = getCodeConfiguration;
-    self.getAliquotLength = getAliquotLength;
+    self.getAliquotLengths = getAliquotLengths;
 
     function initializeParticipantConfiguration(selectedParticipant, participantCQ) {
       _selectedParticipant = selectedParticipant;
@@ -160,9 +160,9 @@
       return _laboratoryDescriptor.codeConfiguration;
     }
 
-    function getAliquotLength() {
+    function getAliquotLengths() {
       var centerDescriptor = _getCenterDescriptor();
-      return centerDescriptor.aliquotCodeSize;
+      return centerDescriptor.aliquotCodeSizes;
     }
 
     //private methods
