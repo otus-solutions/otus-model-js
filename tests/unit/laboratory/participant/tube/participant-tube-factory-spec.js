@@ -41,6 +41,7 @@ describe('the participantTubeFactory', function() {
 
   it('should build a tube from Array', function() {
     var object = factory.buildFromArray([Mock.singleTube], Mock.LoggedUser);
+    spyOn(factory, 'buildFromArray').and.callThrough();
     expect(object[0].objectType).toEqual("Tube");
   });
 
