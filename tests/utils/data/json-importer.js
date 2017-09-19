@@ -1898,7 +1898,7 @@ Test.utils.data.participantLaboratory = {
       "name": "BIOCHEMICAL_SERUM",
       "container": "CRYOTUBE",
       "role": "EXAM",
-      "collectionData": {
+      "aliquotCollectionData": {
         "objectType": "AliquotCollectionData",
         "metadata": "",
         "operator": "LALA@GMAIL.COM",

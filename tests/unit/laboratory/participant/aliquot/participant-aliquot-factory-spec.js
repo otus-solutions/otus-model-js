@@ -1,4 +1,4 @@
-xdescribe('ParticipantAliquotFactory', function() {
+describe('ParticipantAliquotFactory', function() {
   var Mock = {};
   var factory;
 
@@ -10,7 +10,7 @@ xdescribe('ParticipantAliquotFactory', function() {
         'AliquotCollectionDataFactory': mockAliquoteCollectionDataFactory(_$injector_),
         'LaboratoryConfigurationService': mockLaboratoryConfigurationService(_$injector_)
       };
-      factory = _$injector_.get('otusjs.laboratory.ParticipantAliquotFactory', injections);
+      factory = _$injector_.get('otusjs.laboratory.participant.ParticipantAliquotFactory', injections);
     });
 
     mockSelectedParticipant();
@@ -18,42 +18,44 @@ xdescribe('ParticipantAliquotFactory', function() {
     mockParticipantLaboratory();
     mockSingleTube();
     mockAliquotInfo();
-    Mock.LaboratoryConfigurationService.initialize(Mock.LabDescriptors, Mock.SelectedParticipant);
+    Mock.LaboratoryConfigurationService.initializeLaboratoryConfiguration(Mock.LabDescriptors);
   });
-  describe('the creation method', function() {
-    it('should create an aliquot typed object', function() {
-      var aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
 
-      expect(aliquot.objectType).toEqual('Aliquot');
+  describe('the creation method', function() {
+
+    beforeEach(function() {
+      mockAliquotInfo();
+      mockAliquot();
+    });
+
+    it('should create an aliquot typed object', function() {
+      expect(Mock.aliquot.objectType).toEqual('Aliquot');
     });
 
     it('should generate the same values for this fields', function() {
-      var aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
-      expect(aliquot.objectType).toEqual(Mock.aliquotInfo.objectType);
-      expect(aliquot.code).toEqual(Mock.aliquotInfo.code);
-      expect(aliquot.name).toEqual(Mock.aliquotInfo.name);
-      expect(aliquot.container).toEqual(Mock.aliquotInfo.container);
-      expect(aliquot.role).toEqual(Mock.aliquotInfo.role);
+      expect(Mock.aliquot.objectType).toEqual(Mock.aliquotInfo.objectType);
+      expect(Mock.aliquot.code).toEqual(Mock.aliquotInfo.code);
+      expect(Mock.aliquot.name).toEqual(Mock.aliquotInfo.name);
+      expect(Mock.aliquot.container).toEqual(Mock.aliquotInfo.container);
+      expect(Mock.aliquot.role).toEqual(Mock.aliquotInfo.role);
     });
-
-    it('should not call the AliquotCollectionDataFactory when any collectionData is given', function() {
-      //TODO check what to do when collectionData comes empty
-      Mock.aliquotInfo.collectionData = null;
-      var aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
-      expect(Mock.AliquotCollectionDataFactory.create).toHaveBeenCalled();
-    });
-
-
   });
 
   describe('the fromJSON method', function() {
-    it('should call AliquotCollectionDataFactory.create', function() {
-      Mock.aliquotInfo.collectionData = {
-        time: '2017-06-26T05:50:19.434Z',
-        operator: 'lalala@gmail.com'
-      };
-      var aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
-      expect(Mock.AliquotCollectionDataFactory.create).toHaveBeenCalled();
+    beforeEach(function() {
+      mockAliquotFromJson();
+    });
+
+    it('should create an aliquot typed object', function() {
+      expect(Mock.AliquotFromJson[0].objectType).toEqual('Aliquot');
+    });
+
+    it('should generate the same values for this fields', function() {
+      expect(Mock.AliquotFromJson[0].objectType).toEqual(Mock.aliquotInfo.objectType);
+      expect(Mock.AliquotFromJson[0].code).toEqual(Mock.aliquotInfo.code);
+      expect(Mock.AliquotFromJson[0].name).toEqual(Mock.aliquotInfo.name);
+      expect(Mock.AliquotFromJson[0].container).toEqual(Mock.aliquotInfo.container);
+      expect(Mock.AliquotFromJson[0].role).toEqual(Mock.aliquotInfo.role);
     });
   });
 
@@ -74,16 +76,16 @@ xdescribe('ParticipantAliquotFactory', function() {
   });
 
   function mockAliquoteCollectionDataFactory(_$injector_) {
-    Mock.AliquotCollectionDataFactory = _$injector_.get('otusjs.laboratory.AliquotCollectionDataFactory');
+    Mock.AliquotCollectionDataFactory = _$injector_.get('otusjs.laboratory.participant.AliquotCollectionDataFactory');
     spyOn(Mock.AliquotCollectionDataFactory, 'create').and.callThrough();
     return Mock.AliquotCollectionDataFactory;
   }
 
   function mockLaboratoryConfigurationService(_$injector_) {
-    Mock.LaboratoryConfigurationService = _$injector_.get('otusjs.laboratory.LaboratoryConfigurationService');
+    Mock.LaboratoryConfigurationService = _$injector_.get('otusjs.laboratory.configuration.LaboratoryConfigurationService');
     return Mock.LaboratoryConfigurationService;
   }
-
+ 
   function mockSelectedParticipant() {
     Mock.SelectedParticipant = angular.copy(Test.utils.data.selectedParticipant); //json-importer.js
   }
@@ -103,4 +105,14 @@ xdescribe('ParticipantAliquotFactory', function() {
   function mockAliquotInfo() {
     Mock.aliquotInfo = Mock.singleTube.aliquots[0];
   }
+
+  function mockAliquot() {
+    Mock.aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
+  }
+
+  function mockAliquotFromJson() {
+    var aliquotsArray = [Mock.ParticipantLaboratory.tubes[0].aliquots[0]];
+    Mock.AliquotFromJson = factory.fromJSON(aliquotsArray, Mock.singleTube);
+  }
+
 });
