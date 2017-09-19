@@ -1,4 +1,4 @@
-xdescribe('QuestionFillFactory', function() {
+describe('QuestionFillFactory', function() {
 
   var Mock = {};
   var QUESTION_FILL_TYPE = 'QuestionFill';
@@ -26,44 +26,92 @@ xdescribe('QuestionFillFactory', function() {
 
   describe('create method', function() {
 
-    var questionFill;
-
     beforeEach(function() {
-      questionFill = factory.create(Mock.item, Mock.answer, Mock.metadata);
+      mockQuestionFill();
+      mockQuestionFillWithComment();
     });
 
     it('should return an object of type QuestionFill', function() {
-      expect(questionFill.objectType).toEqual(QUESTION_FILL_TYPE);
+      expect(Mock.questionFill.objectType).toEqual(QUESTION_FILL_TYPE);
     });
 
     it('should return attribute questionID equal to contructor paramenter', function() {
-      expect(questionFill.questionID).toEqual(QID1);
+      expect(Mock.questionFill.questionID).toEqual(QID1);
     });
 
     it('should return an object with answer attribute of type AnswerFill', function() {
-      expect(questionFill.answer.objectType).toEqual(ANSWER_FILL_TYPE);
+      expect(Mock.questionFill.answer.objectType).toEqual(ANSWER_FILL_TYPE);
     });
 
     it('should return an object with metadata attribute of type MetadataFillFactory', function() {
-      expect(questionFill.metadata.objectType).toEqual(METADATA_FILL_TYPE);
+      expect(Mock.questionFill.metadata.objectType).toEqual(METADATA_FILL_TYPE);
     });
 
     it('should return an object with attribute comment equal to empty string', function() {
-      expect(questionFill.comment).toEqual(EMPTY_STRING);
+      expect(Mock.questionFill.comment).toEqual(EMPTY_STRING);
     });
 
     it('should return an object with attribute comment equal to paramenter when is provided', function() {
-      questionFill = factory.create(QID1, Mock.answer, Mock.metadata, COMMENT);
+      expect(Mock.questionFillWithComment.comment).toEqual(COMMENT);
+    });
 
-      expect(questionFill.comment).toEqual(COMMENT);
+  });
+
+  describe('fromJsonObject method', function() {
+
+    beforeEach(function() {
+      mockQuestionFill();
+      mockQuestionFillFromJsonObject(JSON.parse(Mock.questionFill.toJson()));
+      mockQuestionFillWithComment();
+      mockQuestionFillFromJsonObjectWithComment(JSON.parse(Mock.questionFillWithComment.toJson()));
+    });
+
+    it('should return an object of type QuestionFill', function() {
+      expect(Mock.questionFillFromJsonObject.objectType).toEqual(QUESTION_FILL_TYPE);
+    });
+
+    it('should return attribute questionID equal to contructor paramenter', function() {
+      expect(Mock.questionFillFromJsonObject.questionID).toEqual(QID1);
+    });
+
+    it('should return an object with answer attribute of type AnswerFill', function() {
+      expect(Mock.questionFillFromJsonObject.answer.objectType).toEqual(ANSWER_FILL_TYPE);
+    });
+
+    it('should return an object with metadata attribute of type MetadataFillFactory', function() {
+      expect(Mock.questionFillFromJsonObject.metadata.objectType).toEqual(METADATA_FILL_TYPE);
+    });
+
+    it('should return an object with attribute comment equal to empty string', function() {
+      expect(Mock.questionFillFromJsonObject.comment).toEqual(EMPTY_STRING);
+    });
+
+    it('should return an object with attribute comment equal to paramenter when is provided', function() {
+      expect(Mock.questionFillFromJsonObjectWithComment.comment).toEqual(COMMENT);
     });
 
   });
 
   function mockQuestionItem() {
     Mock.item = {};
-    Mock.item.customID = QID1;
+    Mock.item.templateID = QID1;
     Mock.item.objectType = 'IntegerQuestion';
+  }
+
+  function mockQuestionFill(){
+    Mock.questionFill = factory.create(Mock.item, Mock.answer, Mock.metadata);
+  }
+
+  function mockQuestionFillFromJsonObject(jsonObject){
+    Mock.questionFillFromJsonObject = factory.fromJsonObject(jsonObject);
+  }
+
+  function mockQuestionFillFromJsonObjectWithComment(jsonObject){
+    Mock.questionFillFromJsonObjectWithComment = factory.fromJsonObject(jsonObject);
+  }
+
+  function mockQuestionFillWithComment(){
+    Mock.questionFillWithComment = factory.create(QID1, Mock.answer, Mock.metadata, COMMENT);
   }
 
   function mockAnswerFill($injector) {
