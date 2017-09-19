@@ -33,16 +33,22 @@ describe('the participantTubeFactory', function() {
 
   });
 
-  it('should create an ParticipanTubeFactory object ', function() {
-    var object = factory.create(Mock.singleTube, Mock.LoggedUser);
-    expect(object.objectType).toEqual("Tube");
+  describe("create method", function() {
 
+    it('should create an ParticipanTubeFactory object ', function() {
+      var object = factory.create(Mock.singleTube, Mock.LoggedUser);
+      expect(object.objectType).toEqual("Tube");
+
+    });
   });
 
-  it('should build a tube from Array', function() {
-    var object = factory.buildFromArray([Mock.singleTube], Mock.LoggedUser);
-    spyOn(factory, 'buildFromArray').and.callThrough();
-    expect(object[0].objectType).toEqual("Tube");
+  describe("build a tube", function() {
+    it('should build a tube from Array', function() {
+      var object = factory.buildFromArray([Mock.singleTube], Mock.LoggedUser);
+      spyOn(factory, 'buildFromArray').and.callThrough();
+      expect(object[0].objectType).toEqual("Tube");
+    });
+
   });
 
   function mockTubeCollectionDataFactory(_$injector_) {

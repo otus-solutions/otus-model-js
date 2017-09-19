@@ -1,4 +1,4 @@
-xdescribe('the immutable date factory', function() {
+describe('the immutable date factory', function() {
   var Mock = {};
   var ImmutableDate;
 
@@ -20,14 +20,17 @@ xdescribe('the immutable date factory', function() {
       var immutableDate = new ImmutableDate();
       var anotherDate = new ImmutableDate();
       immutableDate.setHours(5);
-      expect(anotherDate.date.getHours()).not.toEqual(immutableDate.date.getHours());
+      expect(anotherDate.date.getHours()).not.toEqual(immutableDate
+        .date.getHours());
     });
 
-    it('should build from target string and return same value for same format', function() {
-      var target = '2017-02-06 19:31:22.000'; //ImmutableDate.toString() result type
-      var immutableDate = new ImmutableDate(target);
-      expect(immutableDate.toString()).toEqual(target);
-    });
+    it(
+      'should build from target string and return same value for same format',
+      function() {
+        var target = '2017-02-06 19:31:22.000'; //ImmutableDate.toString() result type
+        var immutableDate = new ImmutableDate(target);
+        expect(immutableDate.toString()).toEqual(target);
+      });
 
     it('should build a null ImmutableDate for null param', function() {
       var nullImmutableDate = new ImmutableDate(null);
@@ -74,19 +77,22 @@ xdescribe('the immutable date factory', function() {
 
     it('should contain an ImmutableDate objectType', function() {
       var immutableDate = new ImmutableDate();
-      expect(immutableDate.toJSON().objectType).toEqual('ImmutableDate');
+      expect(immutableDate.toJSON().objectType).toEqual(
+        'ImmutableDate');
     });
 
-    it('should produces the same result for value as toString() method', function() {
-      var immutableDate = new ImmutableDate();
-      expect(immutableDate.toJSON().value).toEqual(immutableDate.toString());
-    });
+    it('should produces the same result for value as toString() method',
+      function() {
+        var immutableDate = new ImmutableDate();
+        expect(immutableDate.toJSON().value).toEqual(immutableDate.toString());
+      });
 
     it('should call the toString method when stringfied', function() {
       var immutableDate = new ImmutableDate();
       spyOn(immutableDate, 'toString').and.callThrough();
 
-      JSON.stringify(immutableDate).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+      JSON.stringify(immutableDate).replace(/"{/g, '{').replace(
+        /\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
       expect(immutableDate.toString).toHaveBeenCalled();
 
     });
