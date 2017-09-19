@@ -1,4 +1,4 @@
-xdescribe('QuestionFillFactory', function() {
+describe('QuestionFillFactory', function() {
 
   var Mock = {};
   var QUESTION_FILL_TYPE = 'QuestionFill';
@@ -20,7 +20,8 @@ xdescribe('QuestionFillFactory', function() {
       mockAnswerFill(_$injector_);
       mockMetadataFill(_$injector_);
 
-      factory = _$injector_.get('otusjs.model.activity.QuestionFillFactory');
+      factory = _$injector_.get(
+        'otusjs.model.activity.QuestionFillFactory');
     });
   });
 
@@ -36,33 +37,47 @@ xdescribe('QuestionFillFactory', function() {
       expect(questionFill.objectType).toEqual(QUESTION_FILL_TYPE);
     });
 
-    it('should return attribute questionID equal to contructor paramenter', function() {
-      expect(questionFill.questionID).toEqual(QID1);
-    });
+    it(
+      'should return attribute questionID equal to contructor paramenter',
+      function() {
+        console.log(questionFill);
+        expect(questionFill.questionID).toEqual(QID1);
+      });
 
-    it('should return an object with answer attribute of type AnswerFill', function() {
-      expect(questionFill.answer.objectType).toEqual(ANSWER_FILL_TYPE);
-    });
+    it(
+      'should return an object with answer attribute of type AnswerFill',
+      function() {
+        expect(questionFill.answer.objectType).toEqual(
+          ANSWER_FILL_TYPE);
+      });
 
-    it('should return an object with metadata attribute of type MetadataFillFactory', function() {
-      expect(questionFill.metadata.objectType).toEqual(METADATA_FILL_TYPE);
-    });
+    it(
+      'should return an object with metadata attribute of type MetadataFillFactory',
+      function() {
+        expect(questionFill.metadata.objectType).toEqual(
+          METADATA_FILL_TYPE);
+      });
 
-    it('should return an object with attribute comment equal to empty string', function() {
-      expect(questionFill.comment).toEqual(EMPTY_STRING);
-    });
+    it(
+      'should return an object with attribute comment equal to empty string',
+      function() {
+        expect(questionFill.comment).toEqual(EMPTY_STRING);
+      });
 
-    it('should return an object with attribute comment equal to paramenter when is provided', function() {
-      questionFill = factory.create(QID1, Mock.answer, Mock.metadata, COMMENT);
+    it(
+      'should return an object with attribute comment equal to paramenter when is provided',
+      function() {
+        questionFill = factory.create(QID1, Mock.answer, Mock.metadata,
+          COMMENT);
 
-      expect(questionFill.comment).toEqual(COMMENT);
-    });
+        expect(questionFill.comment).toEqual(COMMENT);
+      });
 
   });
 
   function mockQuestionItem() {
     Mock.item = {};
-    Mock.item.customID = QID1;
+    Mock.item.templateID = QID1;
     Mock.item.objectType = 'IntegerQuestion';
   }
 
@@ -71,7 +86,8 @@ xdescribe('QuestionFillFactory', function() {
   }
 
   function mockMetadataFill($injector) {
-    Mock.metadata = $injector.get('otusjs.model.activity.MetadataFillFactory').create();
+    Mock.metadata = $injector.get(
+      'otusjs.model.activity.MetadataFillFactory').create();
   }
 
 });
