@@ -29,7 +29,6 @@ describe('InterviewFactory', function() {
       function() {
         baseDate = new Date();
         jasmine.clock().mockDate(baseDate);
-        console.log(baseDate);
         mockJson();
 
         expect(interview.toJson()).toEqual(Mock.json);

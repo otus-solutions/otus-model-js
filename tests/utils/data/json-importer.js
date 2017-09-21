@@ -33,6 +33,260 @@ Test.utils.data.otusLoggedUser = {
   "token": "edasEQW"
 };
 
+Test.utils.data.SurveyTemplate = {
+  "extents": "SurveyItem",
+  "objectType": "SingleSelectionQuestion",
+  "templateID": "MEDC9",
+  "customID": "MEDC9c_11",
+  "dataType": "Integer",
+  "label": {
+    "ptBR": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "05c. Unidade de tempo:",
+      "formattedText": "05c. Unidade de tempo:"
+    },
+    "enUS": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "esES": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    }
+  },
+  "options": [{
+    "extents": "StudioObject",
+    "objectType": "AnswerOption",
+    "value": 1,
+    "extractionValue": 1,
+    "dataType": "Integer",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "Dia",
+        "formattedText": "Dia"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    }
+  }, {
+    "extents": "StudioObject",
+    "objectType": "AnswerOption",
+    "value": 2,
+    "extractionValue": 2,
+    "dataType": "Integer",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "Semana",
+        "formattedText": "Semana"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    }
+  }, {
+    "extents": "StudioObject",
+    "objectType": "AnswerOption",
+    "value": 3,
+    "extractionValue": 3,
+    "dataType": "Integer",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "Mês",
+        "formattedText": "Mês"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    }
+  }],
+  "metadata": {
+    "extents": "StudioObject",
+    "objectType": "MetadataGroup",
+    "options": [{
+      "extends": "StudioObject",
+      "objectType": "MetadataAnswer",
+      "dataType": "Integer",
+      "value": 1,
+      "extractionValue": ".Q",
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "Não quer responder",
+          "formattedText": "Não quer responder"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }, {
+      "extends": "StudioObject",
+      "objectType": "MetadataAnswer",
+      "dataType": "Integer",
+      "value": 2,
+      "extractionValue": ".S",
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "Não sabe",
+          "formattedText": "Não sabe"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }, {
+      "extends": "StudioObject",
+      "objectType": "MetadataAnswer",
+      "dataType": "Integer",
+      "value": 3,
+      "extractionValue": ".A",
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "Não se aplica",
+          "formattedText": "Não se aplica"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }, {
+      "extends": "StudioObject",
+      "objectType": "MetadataAnswer",
+      "dataType": "Integer",
+      "value": 4,
+      "extractionValue": ".F",
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "Não há dados",
+          "formattedText": "Não há dados"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }]
+  },
+  "fillingRules": {
+    "extends": "StudioObject",
+    "objectType": "FillingRules",
+    "options": {
+      "mandatory": {
+        "extends": "StudioObject",
+        "objectType": "Rule",
+        "validatorType": "mandatory",
+        "data": {
+          "canBeIgnored": false,
+          "reference": true
+        }
+      }
+    }
+  }
+}
 
 Test.utils.data.latestSurveyTemplate = {
   "extents": "StudioObject",
