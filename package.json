@@ -14,7 +14,8 @@
     "url": "git@github.com:ccem-dev/otus-model-js.git"
   },
   "scripts": {
-    "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome",
+    "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome --reporters progress",
+    "test-crossbrowser": "karma start karma.conf.js --single-run --browsers Chrome,PhantomJS",
     "test": "karma start karma.conf.js --single-run --browsers Chrome",
     "gulp": "gulp",
     "karma": "karma",
