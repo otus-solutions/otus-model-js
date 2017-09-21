@@ -63,7 +63,6 @@ describe('MinDateValidatorFactory validator suite:', function() {
       spyOn(factory, "fromJsonObject").and.callThrough();
     });
     it("should throw a error if the method receive a string", function() {
-      var item = "item"
       expect(function() {
         factory.fromJsonObject(JSON.stringify(Mock.jsonObject))
       }).toThrowError(Error,
