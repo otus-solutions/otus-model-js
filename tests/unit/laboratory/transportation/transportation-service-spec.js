@@ -1,51 +1,44 @@
-xdescribe('the transportation service', function() {
+describe('the transportation service', function() {
   var Mock = {};
-  var service;
-  var $httpBackend;
 
   beforeEach(function() {
     angular.mock.module('otusjs.laboratory.transportation');
+    angular.mock.module('otusjs.laboratory.configuration');
 
-    mockParticipantLaboratory();
-    mockShipmentAliquot();
+    mockTransportationLot();
 
     inject(function(_$injector_) {
-      var injections = {
-        'LotFactory': mockTransportationLotFactory(_$injector_)
-      };
-      // $httpBackend = _$injector_.get('$httpBackend');
-      // $httpBackend.when('GET', 'app/laboratory/transportation/aliquot-list.json')
-      //   .respond(Mock.shipmentAliquotsList);
-      service = _$injector_.get('otusjs.laboratory.transportation.TransportationService', injections);
-      // $httpBackend.flush(); //run the http request on onInit method
+      mockLaboratoryTransportationService(_$injector_);
     });
   });
 
-  it('should', function() {
-     var lot = Mock.LotFactory.create();
-   //   lot.code = '30513515';
-   //   Mock.shipmentAliquotsList.slice(0,3).forEach(function(aliquot) {
-   //      lot.insertAliquot(aliquot);
-   //   });
-   //   lot.operator = 'fulanodetal@gmail.com';
-   //   lot.processingDate = new Date().toISOString();
-   //   lot.shipmentDate = new Date().toISOString();
-   //   console.log(JSON.stringify(lot));
- });
+  it('objectType should be equal TransportationLot', function() {
+    var lot = Mock.LaboratoryTransportationService.createAliquotLot();
+    expect(lot.objectType).toEqual('TransportationLot');
+  });
 
-  function mockTransportationLotFactory(_$injector_) {
-    var injections = {
-      'TransportationAliquotFactory': _$injector_.get('otusjs.laboratory.transportation.TransportationAliquotFactory')
-    };
-    Mock.LotFactory = _$injector_.get('otusjs.laboratory.transportation.LotFactory', injections);
+  it('lot should be equal json', function() {
+    var lot = Mock.LaboratoryTransportationService.buildAliquotLotFromJson(Mock.LotJson);
+    expect(lot.objectType).toEqual(Mock.LotJson.objectType);
+    expect(lot.code).toEqual(Mock.LotJson.code);
+    expect(lot.shipmentDate).toEqual(Mock.LotJson.shipmentDate);
+    expect(lot.processingDate).toEqual(Mock.LotJson.processingDate);
+    expect(lot.operator).toEqual(Mock.LotJson.operator);
+    expect(lot.aliquotList).toEqual(Mock.LotJson.aliquotList);
+  });
+
+  function mockLaboratoryTransportationService(_$injector_) {
+    Mock.LaboratoryTransportationService = _$injector_.get('otusjs.laboratory.transportation.TransportationService');
   }
 
-  function mockParticipantLaboratory() {
-    Mock.ParticipantLaboratory = Test.utils.data.participantLaboratory; //json-importer.js
-  }
-
-  function mockShipmentAliquot() {
-    // this mocks backend role attaching sex and birthdate into aliquots
-    Mock.shipmentAliquotsList = Test.utils.data.shipmentAliquotsList; //json-importer
+  function mockTransportationLot() {
+    Mock.LotJson = {
+      objectType: "TransportationLot",
+      code: "30513515",
+      shipmentDate: "2017-09-21T15:36:56.929Z",
+      processingDate: "2017-09-21T15:36:56.929Z",
+      operator: "teste@email.com",
+      aliquotList: []
+    }
   }
 });
