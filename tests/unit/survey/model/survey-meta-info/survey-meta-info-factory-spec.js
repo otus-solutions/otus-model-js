@@ -1,4 +1,4 @@
-xdescribe('SurveyMetaInfoFactory', function() {
+describe('SurveyMetaInfoFactory', function() {
   var Mock = {};
   var factory;
 
@@ -13,65 +13,54 @@ xdescribe('SurveyMetaInfoFactory', function() {
     });
   });
 
-  describe('Dependencies uses', function() {
-
-    beforeEach(function() {
-      surveyMetaInfo = factory.create();
-    });
-
-    it('Date.now() should be called in create() method', function() {
-      expect(Date.now).toHaveBeenCalled();
-    });
-
-  });
-
   describe('SurveyMetaInfoFactory.create()', function() {
     beforeEach(function() {
-      surveyMetaInfo = factory.create();
+      mockSurveyMetaInfo();
     });
 
     it('should return an SurveyMetaInfo with creation date time equal to now date', function() {
-      expect(surveyMetaInfo.creationDatetime).toEqual(Mock.now);
+      expect(Mock.surveyMetaInfo.creationDatetime).toEqual(new Date());
     });
 
     it('should return an SurveyMetaInfo that extends from StudioObject', function() {
-      expect(surveyMetaInfo.extents).toBe('StudioObject');
+      expect(Mock.surveyMetaInfo.extents).toBe('StudioObject');
     });
 
     it('should return an SurveyMetaInfo object type', function() {
-      expect(surveyMetaInfo.objectType).toBe('SurveyMetaInfo');
+      expect(Mock.surveyMetaInfo.objectType).toBe('SurveyMetaInfo');
     });
 
   });
 
-  describe('SurveyMetaInfoFactory.fromJsonObject', function() {
+  describe('fromJsonObject method', function() {
 
-    beforeEach(function() {
-      surveyMetaInfo = factory.fromJsonObject(Mock.jsonObject);
+    beforeEach(function () {
+      mockSurveyMetaInfoFromJson();
     });
 
-    it("should create an instance with the same values of Mock.jsonObject", function() {
-      expect(surveyMetaInfo.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
+    it('should create a SurveyMetaInfo type object with extents equal to StudioObject', function() {
+      expect(Mock.surveyMetaInfoFromJson.extents).toEqual('StudioObject');
     });
 
-    it("should throw a error if the method receive a string", function() {
-      expect(function() {
+    it('should create a SurveyMetaInfo type object with objectType equal to SurveyMetaInfo', function() {
+      expect(Mock.surveyMetaInfoFromJson.objectType).toEqual('SurveyMetaInfo');
+    });
+
+    it('should create a SurveyMetaInfo type object with creationDatetime equal to 2017-09-22T16:50:28.708Z', function() {
+      expect(Mock.surveyMetaInfoFromJson.creationDatetime).toEqual('2017-09-22T16:50:28.708Z');
+    });
+
+    it('should create a SurveyMetaInfo type object with creationDatetime equal to 2017-09-22T16:50:28.708Z', function() {
+
+      var ERROR_MESSAGE = "otusjs.model.survey.model.SurveyMetaInfoFactory.fromJsonObject() method expects to receive a object instead a String";
+
+      var fromJsonObjectFunction = function() {
         factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
-      }).toThrowError("otusjs.model.survey.model.SurveyMetaInfoFactory.fromJsonObject() method expects to receive a object instead a String");
+      };
+
+      expect(fromJsonObjectFunction).toThrowError(ERROR_MESSAGE);
     });
-
   });
-
-  function mockOIDHashGenerator($injector) {
-    Mock.OIDHashGenerator = $injector.get('OIDHashGenerator');
-
-    /* Overrides original behavior */
-    Mock.OIDHashGenerator.generateHash = function(seed) {
-      return 0;
-    };
-
-    return Mock.OIDHashGenerator;
-  }
 
   function mockDate() {
     Mock.now = Date.now();
@@ -82,9 +71,16 @@ xdescribe('SurveyMetaInfoFactory', function() {
     Mock.jsonObject = {
       "extents": "StudioObject",
       "objectType": "SurveyMetaInfo",
-      "creationDatetime": '20/12/1991',
+      "creationDatetime": '2017-09-22T16:50:28.708Z',
       "otusStudioVersion": ""
     };
   }
 
+  function mockSurveyMetaInfo() {
+    Mock.surveyMetaInfo = factory.create();
+  }
+
+  function mockSurveyMetaInfoFromJson() {
+    Mock.surveyMetaInfoFromJson = factory.fromJsonObject(Mock.jsonObject);
+  }
 });
