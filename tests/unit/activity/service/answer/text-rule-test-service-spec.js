@@ -91,7 +91,7 @@ describe('TextRuleTestService', function() {
 
       });
 
-      xdescribe('notEqual cases', function() {
+      describe('notEqual cases', function() {
 
         beforeEach(function() {
           Mock.rule = {
@@ -120,7 +120,8 @@ describe('TextRuleTestService', function() {
           function() {
 
             it('should should return true', function() {
-              expect(service.run(Mock.rule, 0)).toBe(true);
+              expect(service.run(Mock.rule, 0)).toBe(
+                false);
               expect(service.run(Mock.rule, '0')).toBe(
                 true);
             });
@@ -129,13 +130,14 @@ describe('TextRuleTestService', function() {
 
       });
 
-      xdescribe('within cases', function() {
+      describe('within cases', function() {
 
         beforeEach(function() {
           Mock.rule = {};
           Mock.rule.when = 'CAD1';
           Mock.rule.operator = 'within';
           Mock.rule.answer = [1, 3, 5];
+          Mock.rule.isMetadata = false;
         });
 
         describe('when answer is within in rule answers',
@@ -145,7 +147,7 @@ describe('TextRuleTestService', function() {
               expect(service.run(Mock.rule, 1)).toBe(true);
               expect(service.run(Mock.rule, '1')).toBe(
                 true);
-              expect(service.run(Mock.ruTextRuleTestServicele,
+              expect(service.run(Mock.rule,
                 3)).toBe(true);
               expect(service.run(Mock.rule, '3')).toBe(
                 true);

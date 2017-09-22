@@ -10685,6 +10685,8 @@ Test.utils.data.laboratoryConfiguration = {
     }
   }]
 };
+
+
 Test.utils.data.shipmentAliquotsList = [{
   "objectType": "Aliquot",
   "code": "333000001",

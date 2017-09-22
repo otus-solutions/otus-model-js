@@ -26,9 +26,11 @@ describe("FileUploadFactory", function() {
   describe("build from json", function() {
     it("should build from json", function() {
       spyOn(factory, "buildFromJson").and.callThrough();
+      Mock.file.oid = "";
       factory.buildFromJson(Mock.file);
       expect(factory.buildFromJson).toHaveBeenCalled();
       expect(factory.buildFromJson).toHaveBeenCalledWith(Mock.file);
+      //expect(factory.buildFromJson.calls.all()).toEqual();
     });
   });
 

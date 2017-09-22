@@ -19,7 +19,8 @@
     "test": "karma start karma.conf.js --single-run",
     "gulp": "gulp",
     "karma": "karma",
-    "build": "gulp compress"
+    "build": "gulp compress",
+    "open-reports": "nautilus ./target/test-coverage/"
   },
   "dependencies": {
     "angular": "^1.4.7",
