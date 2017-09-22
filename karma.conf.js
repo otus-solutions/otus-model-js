@@ -16,6 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       /* External dependencies */
+      NODE_MODULES_ROOT_PATH + 'babel-polyfill/dist/polyfill.js',
       NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
       NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
