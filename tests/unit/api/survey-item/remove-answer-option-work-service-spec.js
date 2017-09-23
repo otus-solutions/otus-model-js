@@ -1,4 +1,4 @@
-describe('AddFillingRulesService', function() {
+describe('the RemoveAnswerOptionService', function() {
   var service;
   var Mock = {};
 
@@ -7,26 +7,28 @@ describe('AddFillingRulesService', function() {
 
     inject(function(_$injector_) {
       mockJson();
-      service = _$injector_.get('AddFillingRulesService');
+      service = _$injector_.get('RemoveAnswerOptionService');
     });
   });
 
   describe('execute method', function() {
 
     it('should exist', function() {
-      var container = service.execute(Mock.item, Mock.validatorType);
+      var container = service.execute(Mock.item);
       expect(container).not.toBeDefined();
     });
 
   });
 
   function mockJson() {
-    Mock.item = {
-      fillingRules: {
-        createOption: function() {}
-      }
-    };
     Mock.validatorType = {};
+    Mock.item = {
+
+      removeLastOption: function() {}
+
+    };
+
   }
+
 
 });
