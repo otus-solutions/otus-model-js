@@ -1,9 +1,10 @@
 xdescribe('SurveyMetaInfo', function() {
     var Mock = {};
     var surveyMetainfo;
+    var factory;
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         mockDatetime();
         mockJson();

@@ -5,7 +5,7 @@ describe('MetadataFillFactory', function() {
 
     beforeEach(function() {
 
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         inject(function(_$injector_) {
             factory = _$injector_.get('otusjs.model.activity.MetadataFillFactory');

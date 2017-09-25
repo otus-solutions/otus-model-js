@@ -13,7 +13,7 @@ xdescribe('FillingManagerService', function() {
   var METADATA = 2;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       /* Test data */

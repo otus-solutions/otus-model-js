@@ -22,7 +22,7 @@
       if (typeof jsonObject === 'string') {
         throw new Error("otusjs.model.misc.model.MetadataGroupFactory.fromJsonObject() method expects to receive a object instead a String");
       }
-      var metadaGroup = new MetadataGroup();
+      var metadaGroup = new MetadataGroup(MetadataAnswerFactory);
 
       jsonObject.options.forEach(function(metadataAnswerOption) {
         metadaGroup.options.push(MetadataAnswerFactory.fromJsonObject(metadataAnswerOption));

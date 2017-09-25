@@ -12,7 +12,7 @@ describe('ActivityStatus', function() {
     var baseDate;
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         baseDate = Date.now();
         jasmine.clock().mockDate(baseDate);

@@ -6,7 +6,7 @@ xdescribe('QuestionFill', function() {
   var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       /* Test data */

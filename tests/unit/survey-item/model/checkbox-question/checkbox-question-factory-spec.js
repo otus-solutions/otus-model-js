@@ -1,9 +1,10 @@
 describe('CheckboxQuestionFactory', function() {
   var Mock = {};
   var question;
+  var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 
@@ -16,7 +17,7 @@ describe('CheckboxQuestionFactory', function() {
 
   describe('create method', function() {
 
-    beforeEach(function () {
+    beforeEach(function() {
       question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
     });
 
@@ -51,7 +52,7 @@ describe('CheckboxQuestionFactory', function() {
 
   describe('fromJsonObject method', function() {
 
-    beforeEach(function () {
+    beforeEach(function() {
       question = factory.fromJsonObject(Mock.jsonObject);
     });
 
@@ -198,10 +199,21 @@ describe('CheckboxQuestionFactory', function() {
         "objectType": "MetadataGroup",
         "options": []
       },
+
       "fillingRules": {
         "extends": "StudioObject",
         "objectType": "FillingRules",
-        "options": {}
+        "options": {
+          "mandatory": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "mandatory",
+            "data": {
+              "canBeIgnored": false,
+              "reference": true
+            }
+          }
+        }
       }
     };
   }

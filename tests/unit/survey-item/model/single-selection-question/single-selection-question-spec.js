@@ -1,9 +1,9 @@
 describe('SingleSelectionQuestion', function() {
   var Mock = {};
-  var question;
+  var question, createdOption, option;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       mockQuestion(_$injector_);

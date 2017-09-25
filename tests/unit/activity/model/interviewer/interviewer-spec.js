@@ -6,7 +6,7 @@ describe('InterviewerFactory', function() {
     var interviewer;
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         mockUser();
         mockJson();

@@ -10,7 +10,7 @@ xdescribe('ActivityFacadeService', function() {
   var QUESTION_ID = 'TEST1';
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       /* Test data */

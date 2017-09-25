@@ -3,7 +3,7 @@ xdescribe('the immutable date factory', function() {
   var ImmutableDate;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       ImmutableDate = _$injector_.get('otusjs.utils.ImmutableDate');

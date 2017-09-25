@@ -1,9 +1,10 @@
 describe('TimeQuestionFactory', function() {
   var Mock = {};
+  var factory;
   var question;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 

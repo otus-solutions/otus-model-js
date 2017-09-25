@@ -4,7 +4,7 @@ describe("DataSourceDefinitionFactory", function() {
   var DATA_SOURCE_NAME = "Lista de Medicamentos";
 
   beforeEach(function() {
-    module('otusjs.survey');
+    angular.mock.module('otusjs.survey');
 
     inject(function(_$injector_) {
       factory = _$injector_.get('otusjs.model.survey.DataSourceDefinitionFactory');

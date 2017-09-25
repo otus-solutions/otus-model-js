@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory')
-    .factory('otusjs.laboratory.ParticipantLaboratoryFactory', factory);
+    .module('otusjs.laboratory.participant')
+    .factory('otusjs.laboratory.participant.ParticipantLaboratoryFactory', factory);
 
   factory.$inject = [
-    'otusjs.laboratory.ParticipanTubeFactory',
-    'otusjs.laboratory.LaboratoryConfigurationService'
+    'otusjs.laboratory.participant.ParticipanTubeFactory',
+    'otusjs.laboratory.configuration.LaboratoryConfigurationService'
    ];
 
   function factory(ParticipanTubeFactory, LaboratoryConfigurationService) {
@@ -16,18 +16,18 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(labParticipant, labConfig, loggedUser, selectedParticipant) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant);
+    function create(labParticipant, loggedUser, selectedParticipant) {
+      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, loggedUser, selectedParticipant);
     }
 
-    function fromJson(labParticipant, labConfig, loggedUser, selectedParticipant) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), labConfig, loggedUser, selectedParticipant);
+    function fromJson(labParticipant, loggedUser, selectedParticipant) {
+      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), loggedUser, selectedParticipant);
     }
     return self;
 
   }
 
-  function ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, labConfig, loggedUser, selectedParticipant) {
+  function ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, loggedUser, selectedParticipant) {
     var self = this;
     var _backupJSON;
 
@@ -48,7 +48,7 @@
 
     function onInit() {
       _backupJSON = angular.copy(labParticipant);
-      LaboratoryConfigurationService.initialize(labConfig, selectedParticipant, self.collectGroupName);
+      LaboratoryConfigurationService.initializeParticipantConfiguration(selectedParticipant, self.collectGroupName);
       _tubeHandling();
     }
 
@@ -65,7 +65,7 @@
         exams: self.exams
       };
 
-      return JSON.stringify(json);
+      return json;
     }
 
     function reloadTubeList() {

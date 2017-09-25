@@ -13,7 +13,7 @@ xdescribe('Navigation:', function() {
   var CAD5 = 'CAD5';
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       mockNavigations(_$injector_);

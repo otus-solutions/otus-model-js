@@ -1,8 +1,9 @@
 describe('Studio Utils Test Suite', function() {
     var Mock = {};
+    var service, SurveyUUIDGenerator;
 
     beforeEach(function() {
-        module('utils');
+        angular.mock.module('utils');
 
         inject(function(_$injector_) {
             service = _$injector_.get('UUIDService');

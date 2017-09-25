@@ -5,7 +5,7 @@ xdescribe('AnswerFill', function() {
   var ANSWER_VALUE = 'Pw1';
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJson();
 

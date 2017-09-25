@@ -10,7 +10,7 @@ xdescribe('InitialNodesAddService', function() {
   };
 
   beforeEach(function() {
-    module('otusjs.model.navigation');
+    angular.mock.module('otusjs.model.navigation');
 
     inject(function(_$injector_) {
       mockNavigationContainerService(_$injector_);

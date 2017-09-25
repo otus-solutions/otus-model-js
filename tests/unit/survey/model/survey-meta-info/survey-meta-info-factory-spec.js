@@ -3,7 +3,7 @@ xdescribe('SurveyMetaInfoFactory', function() {
   var factory;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
     mockDate();

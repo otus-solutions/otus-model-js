@@ -28,6 +28,7 @@
     /* Public interface */
     self.init = init;
     self.loadJsonDataObject = loadJsonDataObject;
+    self.setIncrementalIDValue = setIncrementalIDValue;
     self.getItemList = getItemList;
     self.getItemListSize = getItemListSize;
     self.getItemByTemplateID = getItemByTemplateID;
@@ -79,6 +80,7 @@
       var customOptionsID = [];
       var checkboxQuestions = surveyItemContainer.getAllCheckboxQuestion();
       var gridTextQuestions = surveyItemContainer.getAllGridTextQuestion();
+      var gridIntegerQuestions = surveyItemContainer.getAllGridIntegerQuestion();
       if (checkboxQuestions.length > 0) {
         checkboxQuestions.forEach(function(checkboxQuestion) {
           checkboxQuestion.getAllCustomOptionsID().forEach(function(customOptionID) {
@@ -96,6 +98,17 @@
           });
         });
       }
+
+      if (gridIntegerQuestions.length > 0) {
+        gridIntegerQuestions.forEach(function(gridIntegerQuestion) {
+          gridIntegerQuestion.getAllCustomOptionsID().forEach(function(arrayResult) {
+            arrayResult.forEach(function(customOptionID){
+              customOptionsID.push(customOptionID);
+            })
+          });
+        });
+      }
+
       return customOptionsID;
     }
 
@@ -104,20 +117,19 @@
     }
 
     function loadItem(itemType, templateID, surveyAcronym) {
-
       var item = surveyItemContainer.createItem(itemType, templateID);
-      _setIncrementalIDValue(parseInt(templateID.split(surveyAcronym)[1]));
+      self.setIncrementalIDValue(parseInt(templateID.split(surveyAcronym)[1]));
       return item;
     }
 
-    function _setIncrementalIDValue(id) {
+    function setIncrementalIDValue(id) {
       incrementalIDValue = id;
     }
 
     function addItem(itemType, templateIDPrefix) {
       var templateID;
       do {
-        templateID = templateIDPrefix + getNextIncrementalGenerator();
+        templateID = templateIDPrefix + _getNextIncrementalGenerator();
       } while (!isAvailableCustomID(templateID));
       var item = surveyItemContainer.createItem(itemType, templateID);
       return item;
@@ -127,7 +139,7 @@
       surveyItemContainer.removeItem(templateID);
     }
 
-    function getNextIncrementalGenerator() {
+    function _getNextIncrementalGenerator() {
       return ++incrementalIDValue;
     }
 

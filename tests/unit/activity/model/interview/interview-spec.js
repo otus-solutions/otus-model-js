@@ -8,7 +8,7 @@ describe('InterviewFactory', function() {
     var baseDate;
 
     beforeEach(function() {
-        module('otusjs');
+        angular.mock.module('otusjs');
 
         mockUser();
 

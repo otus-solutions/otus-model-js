@@ -4,7 +4,7 @@ xdescribe('NavigationStackFactory', function()  {
   var stack = {};
 
   beforeEach(function()  {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
       /* Test data */

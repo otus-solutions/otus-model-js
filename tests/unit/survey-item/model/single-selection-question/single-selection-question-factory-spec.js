@@ -1,9 +1,10 @@
 describe('SingleSelectionQuestionFactory', function() {
   var Mock = {};
+  var factory;
   var question;
 
   beforeEach(function() {
-    module('otusjs');
+    angular.mock.module('otusjs');
 
     mockJsonObject();
 
@@ -190,7 +191,17 @@ describe('SingleSelectionQuestionFactory', function() {
       "fillingRules": {
         "extends": "StudioObject",
         "objectType": "FillingRules",
-        "options": {}
+        "options": {
+          "mandatory": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "mandatory",
+            "data": {
+              "canBeIgnored": false,
+              "reference": true
+            }
+          }
+        }
       }
     };
   }
