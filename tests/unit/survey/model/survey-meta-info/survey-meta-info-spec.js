@@ -1,4 +1,4 @@
-xdescribe('SurveyMetaInfo', function() {
+describe('SurveyMetaInfo', function() {
     var Mock = {};
     var surveyMetainfo;
     var factory;
@@ -6,9 +6,7 @@ xdescribe('SurveyMetaInfo', function() {
     beforeEach(function() {
         angular.mock.module('otusjs');
 
-        mockDatetime();
-        mockJson();
-
+        mockJsonObject();
         inject(function(_$injector_) {
             factory = _$injector_.get('SurveyMetaInfoFactory');
             surveyMetainfo = factory.create();
@@ -16,25 +14,20 @@ xdescribe('SurveyMetaInfo', function() {
     });
 
     describe('toJson method', function() {
-
         it('should return a well formatted json based on instance of SurveyMetaInfo', function() {
-            expect(surveyMetainfo.toJson()).toEqual(Mock.json);
+          Mock.jsonObject.creationDatetime = new Date();
+          expect(surveyMetainfo.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
         });
-
     });
 
-    function mockJson() {
-        Mock.json = JSON.stringify({
-            extents: 'StudioObject',
-            objectType: 'SurveyMetaInfo',
-            creationDatetime: Mock.now,
-            otusStudioVersion: ''
-        });
+    function mockJsonObject() {
+      Mock.jsonObject = {
+        extents: 'StudioObject',
+        objectType: 'SurveyMetaInfo',
+        creationDatetime: "2017-09-22T16:50:28.708Z",
+        otusStudioVersion: ''
+      }
     }
 
-    function mockDatetime() {
-        Mock.now = Date.now();
-        spyOn(Date, 'now').and.returnValue(Mock.now);
-    }
 
 });

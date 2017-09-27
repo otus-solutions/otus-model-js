@@ -3,7 +3,8 @@
 
   angular
     .module('otusjs.laboratory.participant')
-    .factory('otusjs.laboratory.participant.TubeCollectionDataFactory', factory);
+    .factory('otusjs.laboratory.participant.TubeCollectionDataFactory',
+      factory);
 
   function factory() {
     var self = this;

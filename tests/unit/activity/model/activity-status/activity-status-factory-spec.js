@@ -1,4 +1,4 @@
-xdescribe('ActivityStatusFactory', function() {
+describe('ActivityStatusFactory', function() {
 
     var CREATED = 'CREATED';
     var OPENED = 'OPENED';
@@ -8,16 +8,18 @@ xdescribe('ActivityStatusFactory', function() {
     var INITIALIZED_ONLINE = 'INITIALIZED_ONLINE';
 
     var factory;
+    var userFactory;
     var Mock = {};
 
     beforeEach(function() {
         angular.mock.module('otusjs');
 
-        mockUser();
-
         inject(function(_$injector_) {
             factory = _$injector_.get('otusjs.model.activity.ActivityStatusFactory');
+            userFactory = _$injector_.get('otusjs.model.activity.ActivityUserFactory');
         });
+
+        mockUser();
 
     });
 
@@ -50,7 +52,8 @@ xdescribe('ActivityStatusFactory', function() {
         var status;
 
         beforeEach(function() {
-            status = factory.createInitializedOfflineStatus(Mock.user);
+            mockOfflineData();
+            status = factory.createInitializedOfflineStatus(Mock.offlineData);
         });
 
         it('should return an object of type ActivityStatus', function() {
@@ -172,7 +175,12 @@ xdescribe('ActivityStatusFactory', function() {
     });
 
     function mockUser() {
-        Mock.user = {};
+        Mock.user = userFactory.create('User Name', 'user@email.com');
     }
 
+    function mockOfflineData() {
+        Mock.offlineData = {};
+        Mock.offlineData.checker = Mock.user;
+        Mock.offlineData.realizationDate = '12-04-2017';
+    }
 });

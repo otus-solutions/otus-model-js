@@ -1,7 +1,6 @@
-xdescribe('DateTimeRuleTestService:', function() {
+describe('DateTimeRuleTestService:', function() {
 
   var Mock = {};
-  var Injections = {};
   var service = {};
 
   beforeEach(function() {
@@ -26,6 +25,12 @@ xdescribe('DateTimeRuleTestService:', function() {
       });
 
       it('should call NumericRuleTestService when answer is number', function() {
+        Mock.rule.isMetadata = 0;
+        expect(service.run(Mock.rule, 0)).toBe(false);
+        expect(Mock.NumericRuleTestService.run).not.toHaveBeenCalledWith(Mock.rule, 0);
+      });
+
+      it('should call NumericRuleTestService when answer is number', function() {
         expect(service.run(Mock.rule, 1)).toBe(true);
         expect(Mock.NumericRuleTestService.run).toHaveBeenCalledWith(Mock.rule, 1);
       });
@@ -34,6 +39,7 @@ xdescribe('DateTimeRuleTestService:', function() {
         expect(service.run(Mock.rule, '1')).toBe(true);
         expect(Mock.NumericRuleTestService.run).not.toHaveBeenCalledWith(Mock.rule, 1);
       });
+
     });
 
     describe('equal cases', function() {

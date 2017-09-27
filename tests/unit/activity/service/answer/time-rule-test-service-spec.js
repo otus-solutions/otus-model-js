@@ -1,5 +1,5 @@
 //TODO: Os teste de unidade estão sendo ignorados até o momento de ser resolvido os teste de unidade sobre o ImmutableDate
-xdescribe('TimeRuleTestService:', function() {
+describe('TimeRuleTestService:', function() {
   var Mock = {};
   var Injections = {};
   var service = {};
@@ -10,37 +10,13 @@ xdescribe('TimeRuleTestService:', function() {
     inject(function(_$injector_) {
       service = _$injector_.get('otusjs.model.activity.TimeRuleTestService', {
         NumericRuleTestService: mockNumericRuleTestService(_$injector_),
-        ImmutableDate: mockImmutableDate(_$injector_),
+        ImmutableDate: mockImmutableDate(_$injector_)
       })
     });
 
   });
 
   describe('run method, ', function() {
-
-    xdescribe('test cases on _polyfillIsInteger', function() {
-      beforeEach(function() {
-        Mock.rule = {};
-        Mock.rule.when = 'CAD1';
-        Mock.rule.operator = 'equal';
-        Mock.rule.answer = "20:00";
-        Mock.rule.isMetadata = false;
-
-        Mock.answer = new Mock.ImmutableDate;
-        Mock.answer.resetDate();
-        Mock.answer.setHours(20);
-        Mock.answer.setMinutes(0);
-        Mock.answer.setSeconds(0);
-
-      });
-
-      it('should method run called then _polyfillIsInteger', function() {
-        spyOn(service, '_polyfillIsInteger');
-        service.run(Mock.rule, Mock.answer);
-
-        expect(service._polyfillIsInteger).toHaveBeenCalled();
-      });
-    });
 
     describe('test cases on metadata', function() {
       beforeEach(function() {
@@ -60,12 +36,16 @@ xdescribe('TimeRuleTestService:', function() {
 
       it('when is metadata should method run called then NumericRuleTestService', function() {
         service.run(Mock.rule, 1);
-
         expect(Mock.NumericRuleTestService.run).toHaveBeenCalledWith(Mock.rule, 1);
       });
 
-      it('when it is a metadata and a response is not a number should return false', function() {
+      it('when is metadata should method run called then NumericRuleTestService', function() {
+        Mock.rule.isMetadata = 0;
+        service.run(Mock.rule, 0);
+        expect(Mock.NumericRuleTestService.run).not.toHaveBeenCalledWith(Mock.rule, 1);
+      });
 
+      it('when it is a metadata and a response is not a number should return false', function() {
         expect(service.run(Mock.rule, Mock.answer)).toEqual(false);
       });
     });
