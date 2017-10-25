@@ -6,8 +6,8 @@
     .factory('otusjs.laboratory.transportation.LotFactory', factory);
 
   factory.$inject = [
-      'otusjs.laboratory.transportation.TransportationAliquotFactory'
-   ];
+    'otusjs.laboratory.transportation.TransportationAliquotFactory'
+  ];
 
   function factory(TransportationAliquotFactory) {
     var self = this;
@@ -30,6 +30,7 @@
 
     self.objectType = 'TransportationLot';
     self.code = lotInfo.code || '';
+    self.fieldCenter = lotInfo.fieldCenter || '';
     self.aliquotList = TransportationAliquotFactory.fromJson(lotInfo.aliquotList);
     self.shipmentDate = lotInfo.shipmentDate || '';
     self.processingDate = lotInfo.processingDate || '';
@@ -55,6 +56,7 @@
       var json = {
         objectType: self.objectType,
         code: self.code,
+        fieldCenter: self.fieldCenter,
         shipmentDate: self.shipmentDate,
         processingDate: self.processingDate,
         operator: self.operator,
