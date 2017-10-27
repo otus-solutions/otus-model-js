@@ -2,13 +2,15 @@ describe('the transportation lot factory', function() {
   var Mock = {};
   var service;
 
-  beforeEach(function () {
+  beforeEach(function() {
     angular.mock.module('otusjs.laboratory');
 
     inject(function(_$injector_) {
 
       var injections = {
-        'TransportationAliquotFactory': _$injector_.get('otusjs.laboratory.transportation.TransportationAliquotFactory')
+        'TransportationAliquotFactory': _$injector_.get(
+          'otusjs.laboratory.transportation.TransportationAliquotFactory'
+        )
       };
 
       mockTransportationLotFactory(_$injector_, injections);
@@ -17,9 +19,12 @@ describe('the transportation lot factory', function() {
       mockSelectedParticipant();
       mockTransportationLot();
       mockShipmentAliquot();
-      service = _$injector_.get('otusjs.laboratory.configuration.LaboratoryConfigurationService', {});
+      service = _$injector_.get(
+        'otusjs.laboratory.configuration.LaboratoryConfigurationService', {}
+      );
       service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
-      service.initializeParticipantConfiguration(Mock.SelectedParticipant, Mock.ParticipantLaboratory.collectGroupName);
+      service.initializeParticipantConfiguration(Mock.SelectedParticipant,
+        Mock.ParticipantLaboratory.collectGroupName);
 
     });
 
@@ -27,17 +32,24 @@ describe('the transportation lot factory', function() {
 
   describe('insertAliquot method', function() {
 
-    beforeEach(function () {
+    beforeEach(function() {
       Mock.lot.insertAliquot(Mock.shipmentAliquot);
     });
 
-    it('inserted Aliquot should have objectType equal to Aliquot', function() {
-      expect(Mock.lot.aliquotList[0].objectType).toBe('Aliquot');
-    });
+    it('inserted Aliquot should have objectType equal to Aliquot',
+      function() {
+        expect(Mock.lot.aliquotList[0].objectType).toBe('Aliquot');
+      });
 
-    it('inserted Aliquot should have name equal to BIOCHEMICAL_SERUM', function() {
-      expect(Mock.lot.aliquotList[0].name).toBe('BIOCHEMICAL_SERUM');
-    });
+    it('inserted Aliquot should have name equal to BIOCHEMICAL_SERUM',
+      function() {
+        expect(Mock.lot.aliquotList[0].name).toBe('BIOCHEMICAL_SERUM');
+      });
+
+    it('inserted Aliquot should have fieldCenter name equal to Bahia',
+      function() {
+        expect(Mock.lot.aliquotList[0].fieldCenter.name).toBe('Bahia');
+      });
 
     it('inserted Aliquot should have role equal to EXAM', function() {
       expect(Mock.lot.aliquotList[0].role).toBe('EXAM');
@@ -47,15 +59,16 @@ describe('the transportation lot factory', function() {
       expect(Mock.lot.aliquotList[0].code).toBe('333000001');
     });
 
-    it('inserted Aliquot should have container equal to CRYOTUBE', function() {
-      expect(Mock.lot.aliquotList[0].container).toBe('CRYOTUBE');
-    });
+    it('inserted Aliquot should have container equal to CRYOTUBE',
+      function() {
+        expect(Mock.lot.aliquotList[0].container).toBe('CRYOTUBE');
+      });
 
   });
 
   describe('removeAliquotByIndex method', function() {
 
-    beforeEach(function () {
+    beforeEach(function() {
       mockShipmentAliquot2();
       Mock.lot.insertAliquot(Mock.shipmentAliquot);
       Mock.lot.insertAliquot(Mock.shipmentAliquot2);
@@ -75,14 +88,16 @@ describe('the transportation lot factory', function() {
 
   describe('toJSON method', function() {
 
-    beforeEach(function () {
+    beforeEach(function() {
       mockTransportationLotJson();
       mockTransportationLotFromJson();
     });
 
-    it('expect return from toJson method to equal the mocked JSON', function() {
-      expect(JSON.stringify(Mock.lotFromJson)).toEqual(JSON.stringify(Mock.LotJson));
-    });
+    it('expect return from toJson method to equal the mocked JSON',
+      function() {
+        expect(JSON.stringify(Mock.lotFromJson)).toEqual(JSON.stringify(
+          Mock.LotJson));
+      });
 
   });
 
@@ -90,6 +105,11 @@ describe('the transportation lot factory', function() {
     Mock.LotJson = {
       objectType: "TransportationLot",
       code: "30513515",
+      fieldCenter: {
+        name: "Bahia",
+        acronym: "BA",
+        code: 1
+      },
       shipmentDate: "2017-09-21T15:36:56.929Z",
       processingDate: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
@@ -98,15 +118,16 @@ describe('the transportation lot factory', function() {
   }
 
   function mockTransportationLotFactory(_$injector_, injections) {
-    Mock.LotFactory = _$injector_.get('otusjs.laboratory.transportation.LotFactory', injections);
+    Mock.LotFactory = _$injector_.get(
+      'otusjs.laboratory.transportation.LotFactory', injections);
   }
 
   function mockTransportationLot() {
-    Mock.lot =  Mock.LotFactory.create();
+    Mock.lot = Mock.LotFactory.create();
   }
 
   function mockTransportationLotFromJson() {
-    Mock.lotFromJson =  Mock.LotFactory.fromJson(Mock.LotJson);
+    Mock.lotFromJson = Mock.LotFactory.fromJson(Mock.LotJson);
   }
 
   function mockLabDescriptors() {
