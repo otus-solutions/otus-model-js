@@ -10690,6 +10690,11 @@ Test.utils.data.laboratoryConfiguration = {
 Test.utils.data.shipmentAliquotsList = [{
   "objectType": "Aliquot",
   "code": "333000001",
+  "fieldCenter": {
+    "name": "Bahia",
+    "acronym": "BA",
+    "code": 1
+  },
   "name": "BIOCHEMICAL_SERUM",
   "container": "CRYOTUBE",
   "role": "EXAM",
@@ -10707,6 +10712,11 @@ Test.utils.data.shipmentAliquotsList = [{
 }, {
   "objectType": "Aliquot",
   "code": "333000002",
+  "fieldCenter": {
+    "name": "Bahia",
+    "acronym": "BA",
+    "code": 1
+  },
   "name": "PCR",
   "container": "CRYOTUBE",
   "role": "EXAM",
