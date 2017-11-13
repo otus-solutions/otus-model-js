@@ -1,4 +1,4 @@
-xdescribe('QuestionFill', function() {
+describe('QuestionFill', function() {
 
   var QID1 = 'QID1';
   var COMMENT = 'Este é o meu comentário: comentário.';
@@ -54,24 +54,74 @@ xdescribe('QuestionFill', function() {
 
   });
 
+  describe('isIgnored method', function() {
+
+    var answerFill;
+    var nullAnswer;
+    var unfilledAnswer;
+
+    beforeEach(function() {
+      answerFill = factory.create(QID1, 'Yes', null, null);
+      nullAnswer = factory.create(QID1, null, null, null);
+      unfilledAnswer = factory.create(QID1, '', null, null);
+    });
+
+
+    it('should return false when answer is fill', function() {
+      expect(answerFill.isIgnored()).toEqual(false);
+    });
+
+    it('should return true when answer is null', function() {
+      expect(nullAnswer.isIgnored()).toEqual(true);
+    });
+
+    it('should return true when metadata is not filled', function() {
+      expect(unfilledAnswer.isIgnored()).toEqual(true);
+    });
+
+  });
+
+  describe('clear method', function() {
+
+    beforeEach(function() {
+      mockQuestionFill();
+      Mock.fill.clear();
+    });
+
+    it('should expect answer value to be null', function() {
+      expect(Mock.fill.answer.value).toEqual(null);
+    });
+
+    it('should expect metadata value to be null', function() {
+      expect(Mock.fill.metadata.value).toEqual(null);
+    });
+
+    it('should expect comment value to be empty', function() {
+      expect(Mock.fill.comment).toEqual('');
+    });
+
+  });
+
   describe('toJson method', function() {
 
-    it('should return a well formatted json based on instance of MetadataFill', function() {
-      fill = factory.create(Mock.item, 'Yes', 1, COMMENT);
+    beforeEach(function() {
+      mockQuestionFill();
+    });
 
-      expect(fill.toJson()).toEqual(Mock.json);
+    it('should return a well formatted json based on instance of MetadataFill', function() {
+      expect(Mock.fill.toJson()).toEqual(Mock.json);
     });
 
   });
 
   function mockQuestionItem() {
     Mock.item = {};
-    Mock.item.customID = QID1;
+    Mock.item.templateID = QID1;
     Mock.item.objectType = 'IntegerQuestion';
   }
 
   function mockAnswerFill($injector) {
-    Mock.answer = $injector.get('otusjs.model.activity.AnswerFillFactory').create(Mock.item, 'Yes');
+    Mock.answer = $injector.get('otusjs.model.activity.AnswerFillFactory').create(Mock.item.objectType, 'Yes');
   }
 
   function mockMetadataFill($injector) {
@@ -82,10 +132,14 @@ xdescribe('QuestionFill', function() {
     Mock.json = JSON.stringify({
       objectType: 'QuestionFill',
       questionID: QID1,
-      answer: Mock.answer,
-      metadata: Mock.metadata,
-      comment: COMMENT,
+      forceAnswer: false,
+      answer: JSON.parse(Mock.answer.toJson()),
+      metadata: JSON.parse(Mock.metadata.toJson()),
+      comment: COMMENT
     });
   }
 
+  function mockQuestionFill() {
+    Mock.fill = factory.create(Mock.item, 'Yes', 1, COMMENT);
+  }
 });

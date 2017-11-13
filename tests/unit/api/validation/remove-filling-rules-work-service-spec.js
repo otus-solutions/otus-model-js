@@ -1,4 +1,4 @@
-describe('AddFillingRulesService', function() {
+describe('the RemoveFillingRulesWorkService', function() {
   var service;
   var Mock = {};
 
@@ -7,7 +7,7 @@ describe('AddFillingRulesService', function() {
 
     inject(function(_$injector_) {
       mockJson();
-      service = _$injector_.get('AddFillingRulesService');
+      service = _$injector_.get('RemoveFillingRulesWorkService');
     });
   });
 
@@ -21,12 +21,14 @@ describe('AddFillingRulesService', function() {
   });
 
   function mockJson() {
+    Mock.validatorType = {};
     Mock.item = {
       fillingRules: {
-        createOption: function() {}
+        removeFillingRules: function(fillingRules = null) {}
       }
     };
-    Mock.validatorType = {};
+    // Mock.item.fillingRules.removeFillingRules: function(fillingRules = null) {}
   }
+
 
 });

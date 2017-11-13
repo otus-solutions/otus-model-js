@@ -1,8 +1,7 @@
-xdescribe('ActivityFacadeService', function() {
+describe('the ActivityFacadeService', function() {
 
   var Mock = {};
-  var Injections = {};
-  var factory;
+  var service;
   var ANSWER = 'test_answer';
   var METADATA = 'test_metadata';
   var COMMENT = 'test_comment';
@@ -13,152 +12,205 @@ xdescribe('ActivityFacadeService', function() {
     angular.mock.module('otusjs');
 
     inject(function(_$injector_) {
+      var Injections = {
+        'AnswerFillFactory': mockAnswerFillFactory(_$injector_),
+        'MetadataFillFactory': mockMetadataFillFactory(
+          _$injector_),
+        'QuestionFillFactory': mockQuestionFillFactory(
+          _$injector_),
+        'ActivityFactory': mockActivityFactory(_$injector_),
+        'InterviewFactory': mockInterviewFactory(_$injector_)
+
+
+      };
       /* Test data */
       mockQuestionItem();
       mockSurveyTemplate();
 
       /* Injectable mocks */
-      mockAnswerFillFactory(_$injector_);
-      mockMetadataFillFactory(_$injector_);
-      mockQuestionFillFactory(_$injector_);
-      mockActivitySurveyFactory(_$injector_);
 
-      service = _$injector_.get('otusjs.model.activity.ActivityFacadeService', Injections);
+      service = _$injector_.get(
+        'otusjs.model.activity.ActivityFacadeService', Injections
+      );
+
+
+      mockSelectedParticipant();
+      mockParticipantLaboratory();
+
+
+      mockLoggedUser();
     });
   });
 
-  describe('createActivity method', function() {
+  xdescribe('createActivity method', function() {
 
     it('should call method create', function() {
-      service.createActivity(Mock.surveyTemplate);
+      beforeEach(function() {
 
-      expect(Mock.ActivitySurveyFactory.create).toHaveBeenCalledWith(Mock.surveyTemplate);
+      });
+
+      var factory = service.createActivity(Mock.surveyTemplate,
+        Mock.LoggedUser,
+        Mock.SelectedParticipant);
+
+      expect(factory).not.toBeDefined();
     });
 
-    it('should create new object ActivitySurvey with call method create', function() {
-      service.createActivity(Mock.surveyTemplate);
+    xit(
+      'should create new object ActivitySurvey with call method create',
+      function() {
+        service.createActivity(Mock.surveyTemplate);
 
-      expect(service.surveyActivity.objectType).toEqual('Activity');
-    });
+        expect(service.surveyActivity.objectType).toEqual('Activity');
+      });
 
-    it('should create ActivitySurvey with parameter template', function() {
-      service.createActivity(Mock.surveyTemplate);
+    xit('should create ActivitySurvey with parameter template',
+      function() {
+        service.createActivity(Mock.surveyTemplate);
 
-      expect(service.surveyActivity.surveyForm.surveyTemplate).toEqual(Mock.surveyTemplate);
-    });
+        expect(service.surveyActivity.surveyForm.surveyTemplate).toEqual(
+          Mock.surveyTemplate);
+      });
 
-    it('should create new object ActivitySurvey with call method create used parameter User', function() {
-      service.createActivity(Mock.surveyTemplate);
+    xit(
+      'should create new object ActivitySurvey with call method create used parameter User',
+      function() {
+        service.createActivity(Mock.surveyTemplate);
 
-      expect(Mock.ActivitySurveyFactory.create).toHaveBeenCalledWith(Mock.surveyTemplate);
-    });
+        expect(Mock.ActivityFactory.create).toHaveBeenCalledWith(Mock
+          .surveyTemplate);
+      });
 
   });
 
-  describe('openActivitySurvey method', function() {
+  xdescribe('openActivitySurvey method', function() {
 
     beforeEach(function() {
       service.createActivity(Mock.surveyTemplate);
     });
 
-    it('should call method newOpenedRegistry when method openActivitySurvey called ', function() {
-      spyOn(service.surveyActivity.statusHistory, 'newOpenedRegistry');
-      service.openActivitySurvey();
-      expect(service.surveyActivity.statusHistory.newOpenedRegistry).toHaveBeenCalled();
-    });
+    it(
+      'should call method newOpenedRegistry when method openActivitySurvey called ',
+      function() {
+        spyOn(service.surveyActivity.statusHistory,
+          'newOpenedRegistry');
+        service.openActivitySurvey();
+        expect(service.surveyActivity.statusHistory.newOpenedRegistry)
+          .toHaveBeenCalled();
+      });
 
   });
 
-  describe('initializeActivitySurvey method', function() {
+  xdescribe('initializeActivitySurvey method', function() {
 
     beforeEach(function() {
       service.createActivity(Mock.surveyTemplate);
     });
 
-    it('should call method newInitializedOnlineRegistry when method initializeActivitySurvey called ', function() {
-      spyOn(service.surveyActivity.statusHistory, 'newInitializedOnlineRegistry');
-      service.initializeActivitySurvey();
-      expect(service.surveyActivity.statusHistory.newInitializedOnlineRegistry).toHaveBeenCalled();
-    });
+    it(
+      'should call method newInitializedOnlineRegistry when method initializeActivitySurvey called ',
+      function() {
+        spyOn(service.surveyActivity.statusHistory,
+          'newInitializedOnlineRegistry');
+        service.initializeActivitySurvey();
+        expect(service.surveyActivity.statusHistory.newInitializedOnlineRegistry)
+          .toHaveBeenCalled();
+      });
 
   });
 
-  describe('createQuestionFill method', function() {
+  xdescribe('createQuestionFill method', function() {
 
     beforeEach(function() {
       service.createActivity(Mock.surveyTemplate);
     });
 
-    it('should call method create when method createQuestionFill called', function() {
-      service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+    it(
+      'should call method create when method createQuestionFill called',
+      function() {
+        service.createQuestionFill(Mock.item, ANSWER, METADATA,
+          COMMENT);
 
-      expect(Mock.QuestionFillFactory.create).toHaveBeenCalled();
-    });
+        expect(Mock.QuestionFillFactory.create).toHaveBeenCalled();
+      });
 
-    it('should return object question when method createQuestionFill called', function() {
-      var questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+    it(
+      'should return object question when method createQuestionFill called',
+      function() {
+        var questionFill = service.createQuestionFill(Mock.item,
+          ANSWER, METADATA, COMMENT);
 
-      expect(questionFill.objectType).toEqual('QuestionFill');
-    });
+        expect(questionFill.objectType).toEqual('QuestionFill');
+      });
 
     it('should create QuestionFill with parameter QuestionID', function() {
-      var questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+      var questionFill = service.createQuestionFill(Mock.item,
+        ANSWER, METADATA, COMMENT);
 
       expect(questionFill.questionID).toEqual(QUESTION_ID);
     });
 
     it('should create QuestionFill with parameter ANSWER', function() {
-      var questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+      var questionFill = service.createQuestionFill(Mock.item,
+        ANSWER, METADATA, COMMENT);
 
       expect(questionFill.answer.value).toEqual(ANSWER);
     });
 
     it('should create QuestionFill with parameter METADATA', function() {
-      var questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+      var questionFill = service.createQuestionFill(Mock.item,
+        ANSWER, METADATA, COMMENT);
 
       expect(questionFill.metadata.value).toEqual(METADATA);
     });
 
     it('should create QuestionFill with parameter COMMENT', function() {
-      var questionFill = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+      var questionFill = service.createQuestionFill(Mock.item,
+        ANSWER, METADATA, COMMENT);
 
       expect(questionFill.comment).toEqual(COMMENT);
     });
 
   });
 
-  describe('fillQuestion method', function() {
+  xdescribe('fillQuestion method', function() {
 
     beforeEach(function() {
       service.createActivity(Mock.surveyTemplate);
     });
 
-    it('should call method updateFilling when method createQuestionFill called ', function() {
-      spyOn(service.surveyActivity.fillContainer, 'updateFilling');
+    it(
+      'should call method updateFilling when method createQuestionFill called ',
+      function() {
+        spyOn(service.surveyActivity.fillContainer, 'updateFilling');
 
-      service.fillQuestion(QUESTION_ID, ANSWER, METADATA, COMMENT);
+        service.fillQuestion(QUESTION_ID, ANSWER, METADATA, COMMENT);
 
-      expect(service.surveyActivity.fillContainer.updateFilling).toHaveBeenCalled();
-    });
+        expect(service.surveyActivity.fillContainer.updateFilling).toHaveBeenCalled();
+      });
 
   });
 
-  describe('getFillingByQuestionID method', function() {
+  xdescribe('getFillingByQuestionID method', function() {
 
     var filling = {};
 
     beforeEach(function() {
       service.createActivity(Mock.surveyTemplate);
-      filling = service.createQuestionFill(Mock.item, ANSWER, METADATA, COMMENT);
+      filling = service.createQuestionFill(Mock.item, ANSWER,
+        METADATA, COMMENT);
       service.fillQuestion(filling);
     });
 
     it('should retrieve the filling of a question', function() {
-      spyOn(service.surveyActivity.fillContainer, 'searchFillingByID').and.callThrough();
+      spyOn(service.surveyActivity.fillContainer,
+        'searchFillingByID').and.callThrough();
 
-      var returnedValue = service.getFillingByQuestionID(QUESTION_ID);
+      var returnedValue = service.getFillingByQuestionID(
+        QUESTION_ID);
 
-      expect(service.surveyActivity.fillContainer.searchFillingByID).toHaveBeenCalled();
+      expect(service.surveyActivity.fillContainer.searchFillingByID)
+        .toHaveBeenCalled();
       expect(returnedValue).toEqual(filling);
     });
 
@@ -175,34 +227,72 @@ xdescribe('ActivityFacadeService', function() {
   }
 
   function mockAnswerFillFactory($injector) {
-    Mock.AnswerFillFactory = $injector.get('otusjs.model.activity.AnswerFillFactory');
+    Mock.AnswerFillFactory = $injector.get(
+      'otusjs.model.activity.AnswerFillFactory');
 
     spyOn(Mock.AnswerFillFactory, 'create').and.callThrough();
 
-    Injections.AnswerFillFactory = Mock.AnswerFillFactory;
+    return Mock.AnswerFillFactory;
   }
 
   function mockMetadataFillFactory($injector) {
-    Mock.MetadataFillFactory = $injector.get('otusjs.model.activity.MetadataFillFactory');
+    Mock.MetadataFillFactory = $injector.get(
+      'otusjs.model.activity.MetadataFillFactory');
 
     spyOn(Mock.MetadataFillFactory, 'create').and.callThrough();
 
-    Injections.MetadataFillFactory = Mock.MetadataFillFactory;
+    return Mock.MetadataFillFactory;
   }
 
   function mockQuestionFillFactory($injector) {
-    Mock.QuestionFillFactory = $injector.get('otusjs.model.activity.QuestionFillFactory');
+    Mock.QuestionFillFactory = $injector.get(
+      'otusjs.model.activity.QuestionFillFactory');
 
     spyOn(Mock.QuestionFillFactory, 'create').and.callThrough();
 
-    Injections.QuestionFillFactory = Mock.QuestionFillFactory;
+    return Mock.QuestionFillFactory;
   }
 
-  function mockActivitySurveyFactory($injector) {
-    Mock.ActivitySurveyFactory = $injector.get('otusjs.model.activity.ActivitySurveyFactory');
+  function mockActivityFactory($injector) {
+    Mock.ActivityFactory = $injector.get(
+      'otusjs.model.activity.ActivityFactory');
 
-    spyOn(Mock.ActivitySurveyFactory, 'create').and.callThrough();
+    spyOn(Mock.ActivityFactory, 'create').and.callThrough();
 
-    Injections.ActivitySurveyFactory = Mock.ActivitySurveyFactory;
+    return Mock.ActivityFactory;
+  }
+
+  function mockInterviewFactory($injector) {
+    Mock.InterviewFactory = $injector.get(
+      'otusjs.model.activity.InterviewFactory');
+
+    spyOn(Mock.InterviewFactory, 'create').and.callThrough();
+
+    return Mock.InterviewFactory;
+  }
+
+  function mockTemplate($injector) {
+    var SurveyFormFactory = $injector.get('SurveyFormFactory');
+    Mock.template = SurveyFormFactory.fromJsonObject(Test.utils.data.jsonObject);
+  }
+
+  // Mock Functions
+
+
+  function mockParticipantLaboratory() {
+    Mock.ParticipantLaboratory = Test.utils.data.participantLaboratory; //json-importer.js
+  }
+
+  function mockLoggedUser() {
+    Mock.LoggedUser = Test.utils.data.otusLoggedUser; //json-importer.js
+  }
+
+  function mockSelectedParticipant() {
+    Mock.SelectedParticipant = Test.utils.data.selectedParticipant; //json-importer.js
+  }
+
+
+  function mockAliquotInfo() {
+    Mock.aliquotInfo = Mock.singleTube.aliquots[0];
   }
 });
