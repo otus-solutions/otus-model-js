@@ -34,13 +34,13 @@
     self.createPaperActivity = createPaperActivity;
     self.fromJsonObject = fromJsonObject;
 
-    function create(surveyForm, user, participant, id) {
+    function create(surveyForm, user, participant, id, activityCategory) {
       Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id, activityCategory);
       activity.mode = 'ONLINE';
 
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -48,14 +48,14 @@
       return activity;
     }
 
-    function createPaperActivity(surveyForm, user, participant, paperActivityData, id) {
+    function createPaperActivity(surveyForm, user, participant, paperActivityData, id, activityCategory) {
       Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id, activityCategory);
       activity.mode = 'PAPER';
 
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -95,13 +95,14 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, id) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, id, activityCategory) {
     var self = this;
     var _id = id || null;
 
     self.objectType = 'Activity';
     self.surveyForm = surveyForm;
     self.participantData = participant;
+    self.activityCategory = activityCategory;
     self.interviews = [];
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
