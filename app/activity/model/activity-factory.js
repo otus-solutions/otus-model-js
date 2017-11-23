@@ -40,8 +40,9 @@
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, activityConfiguration, id);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
       activity.mode = 'ONLINE';
+      activity.category = activityConfiguration.category;
 
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
 
@@ -55,8 +56,9 @@
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, activityConfiguration, id);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
       activity.mode = 'PAPER';
+      activity.category = activityConfiguration.category;
 
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
 
@@ -71,6 +73,7 @@
 
       var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, id);
 
+      activity.category = jsonObject.category;
       activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
       activity.isDiscarded = jsonObject.isDiscarded;
       activity.mode = jsonObject.mode;
@@ -95,14 +98,13 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, activityConfiguration, id) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, id) {
     var self = this;
     var _id = id || null;
 
     self.objectType = 'Activity';
     self.surveyForm = surveyForm;
     self.participantData = participant;
-    self.category = activityConfiguration.category;
     self.interviews = [];
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
