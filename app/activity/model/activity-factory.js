@@ -34,13 +34,13 @@
     self.createPaperActivity = createPaperActivity;
     self.fromJsonObject = fromJsonObject;
 
-    function create(surveyForm, user, participant, id, activityCategory) {
+    function create(surveyForm, user, participant, activityCategory, id) {
       Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id, activityCategory);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, activityCategory, id);
       activity.mode = 'ONLINE';
 
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -48,14 +48,14 @@
       return activity;
     }
 
-    function createPaperActivity(surveyForm, user, participant, paperActivityData, id, activityCategory) {
+    function createPaperActivity(surveyForm, user, participant, paperActivityData, activityCategory, id) {
       Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id, activityCategory);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, activityCategory, id);
       activity.mode = 'PAPER';
 
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -95,7 +95,7 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, id, activityCategory) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, activityCategory, id) {
     var self = this;
     var _id = id || null;
 

@@ -39,17 +39,17 @@
     self.getNavigationTracker = getNavigationTracker;
 
     function createActivity(template, user, participant, activityCategory) {
-      self.surveyActivity = ActivityFactory.create(template, user, participant, null, activityCategory);
+      self.surveyActivity = ActivityFactory.create(template, user, participant, activityCategory);
     }
 
-    function createPaperActivity(template, user, participant, activityCategory) {
-      self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, null, activityCategory);
+    function createPaperActivity(template, user, participant, paperActivityData, activityCategory) {
+      self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, activityCategory);
       self.surveyActivity.interviews.push(InterviewFactory.create(paperActivityData));
     }
 
     function getInterviewer(){
       return _user;
-   }
+    }
 
     function openActivitySurvey(user) {
       _user = user;
