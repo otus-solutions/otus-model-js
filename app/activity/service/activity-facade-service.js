@@ -38,12 +38,12 @@
     self.clearSkippedAnswers = clearSkippedAnswers;
     self.getNavigationTracker = getNavigationTracker;
 
-    function createActivity(template, user, participant, activityCategory) {
-      self.surveyActivity = ActivityFactory.create(template, user, participant, activityCategory);
+    function createActivity(template, user, participant, activityConfiguration) {
+      self.surveyActivity = ActivityFactory.create(template, user, participant, activityConfiguration);
     }
 
-    function createPaperActivity(template, user, participant, paperActivityData, activityCategory) {
-      self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, activityCategory);
+    function createPaperActivity(template, user, participant, paperActivityData, activityConfiguration) {
+      self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, activityConfiguration);
       self.surveyActivity.interviews.push(InterviewFactory.create(paperActivityData));
     }
 

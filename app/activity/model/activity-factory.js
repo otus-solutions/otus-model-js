@@ -34,13 +34,13 @@
     self.createPaperActivity = createPaperActivity;
     self.fromJsonObject = fromJsonObject;
 
-    function create(surveyForm, user, participant, activityCategory, id) {
+    function create(surveyForm, user, participant, activityConfiguration, id) {
       Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, activityCategory, id);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, activityConfiguration, id);
       activity.mode = 'ONLINE';
 
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -48,14 +48,14 @@
       return activity;
     }
 
-    function createPaperActivity(surveyForm, user, participant, paperActivityData, activityCategory, id) {
+    function createPaperActivity(surveyForm, user, participant, paperActivityData, activityConfiguration, id) {
       Inject.FillingManager.init();
 
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, activityCategory, id);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, activityConfiguration, id);
       activity.mode = 'PAPER';
 
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -95,14 +95,14 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, activityCategory, id) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, activityConfiguration, id) {
     var self = this;
     var _id = id || null;
 
     self.objectType = 'Activity';
     self.surveyForm = surveyForm;
     self.participantData = participant;
-    self.activityCategory = activityCategory;
+    self.category = activityConfiguration.category;
     self.interviews = [];
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
@@ -199,6 +199,7 @@
       json._id = _id;
       json.surveyForm = JSON.parse(self.surveyForm.toJson());
       json.participantData = self.participantData;
+      json.category = self.category;
       json.mode = self.mode;
       json.interviews = self.interviews.map(function (interview) {
         return JSON.parse(interview.toJson());
