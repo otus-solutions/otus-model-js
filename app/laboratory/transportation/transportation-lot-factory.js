@@ -6,32 +6,32 @@
     .factory('otusjs.laboratory.transportation.LotFactory', factory);
 
   factory.$inject = [
-    'otusjs.laboratory.transportation.TransportationAliquotFactory'
+    'otusjs.laboratory.WorkAliquotFactory'
   ];
 
-  function factory(TransportationAliquotFactory) {
+  function factory(WorkAliquot) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
     function create() {
-      return new TransportationLot(TransportationAliquotFactory, {});
+      return new TransportationLot(WorkAliquot, {});
     }
 
     function fromJson(lotInfo) {
-      return new TransportationLot(TransportationAliquotFactory, lotInfo);
+      return new TransportationLot(WorkAliquot, lotInfo);
     }
 
     return self;
   }
 
-  function TransportationLot(TransportationAliquotFactory, lotInfo) {
+  function TransportationLot(WorkAliquot, lotInfo) {
     var self = this;
 
     self.objectType = 'TransportationLot';
     self.code = lotInfo.code || '';
     self.fieldCenter = lotInfo.fieldCenter || '';
-    self.aliquotList = TransportationAliquotFactory.fromJson(lotInfo.aliquotList);
+    self.aliquotList = WorkAliquot.fromJson(lotInfo.aliquotList);
     self.shipmentDate = lotInfo.shipmentDate || '';
     self.processingDate = lotInfo.processingDate || '';
     self.operator = lotInfo.operator || '';
@@ -43,7 +43,7 @@
 
 
     function insertAliquot(aliquotInfo) {
-      var newAliquot = TransportationAliquotFactory.create(aliquotInfo);
+      var newAliquot = WorkAliquot.create(aliquotInfo);
       self.aliquotList.push(newAliquot);
       return newAliquot;
     }
