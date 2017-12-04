@@ -1,4 +1,4 @@
-describe('the transportation lot factory', function() {
+describe('the exam lot factory', function() {
   var Mock = {};
   var service;
 
@@ -103,7 +103,7 @@ describe('the transportation lot factory', function() {
 
   function mockTransportationLotJson() {
     Mock.LotJson = {
-      objectType: "TransportationLot",
+      objectType: "ExamLot",
       code: "30513515",
       fieldCenter: {
         name: "Bahia",

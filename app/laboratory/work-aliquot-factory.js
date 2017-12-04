@@ -43,12 +43,15 @@
     var _participantRecruitmentNumber = aliquotInfo.recruitmentNumber;
 
     /* Public Interface*/
-    self.objectType = aliquotInfo.objectType;
-    self.name = aliquotInfo.name;
-    self.role = aliquotInfo.role;
-    self.code = aliquotInfo.code;
-    self.container = aliquotInfo.container;
-    self.fieldCenter = aliquotInfo.fieldCenter;
+    self.objectType = aliquotInfo.objectType || 'WorkAliquot';
+    self.name = aliquotInfo.name || '';
+    self.role = aliquotInfo.role || '';
+    self.code = aliquotInfo.code || '';
+    self.container = aliquotInfo.container || '';
+    self.fieldCenter = aliquotInfo.fieldCenter || '';
+
+    self.label = aliquotInfo.label || '';
+    self.containerLabel = aliquotInfo.containerLabel || '';
 
     self.aliquotCollectionData = aliquotInfo.aliquotCollectionData;
     self.toJSON = toJSON;
