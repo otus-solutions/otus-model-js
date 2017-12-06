@@ -10687,8 +10687,8 @@ Test.utils.data.laboratoryConfiguration = {
 };
 
 
-Test.utils.data.shipmentAliquotsList = [{
-  "objectType": "Aliquot",
+Test.utils.data.workAliquotsList = [{
+  "objectType": "WorkAliquot",
   "code": "333000001",
   "fieldCenter": {
     "name": "Bahia",
@@ -10710,7 +10710,7 @@ Test.utils.data.shipmentAliquotsList = [{
     "time": "2017-07-27T17:02:51.417Z"
   }
 }, {
-  "objectType": "Aliquot",
+  "objectType": "WorkAliquot",
   "code": "333000002",
   "fieldCenter": {
     "name": "Bahia",
@@ -10732,8 +10732,13 @@ Test.utils.data.shipmentAliquotsList = [{
     "time": "2017-07-27T17:02:51.417Z"
   }
 }, {
-  "objectType": "Aliquot",
+  "objectType": "WorkAliquot",
   "code": "333000003",
+  "fieldCenter": {
+    "name": "Bahia",
+    "acronym": "BA",
+    "code": 1
+  },
   "name": "FASTING_INSULINE",
   "container": "CRYOTUBE",
   "role": "EXAM",
@@ -10749,8 +10754,13 @@ Test.utils.data.shipmentAliquotsList = [{
     "time": "2017-07-27T17:02:51.417Z"
   }
 }, {
-  "objectType": "Aliquot",
+  "objectType": "WorkAliquot",
   "code": "333025896",
+  "fieldCenter": {
+    "name": "Bahia",
+    "acronym": "BA",
+    "code": 1
+  },
   "name": "BIOCHEMICAL_SERUM",
   "container": "CRYOTUBE",
   "role": "EXAM",
@@ -10766,8 +10776,13 @@ Test.utils.data.shipmentAliquotsList = [{
     "time": "2017-07-27T17:03:10.036Z"
   }
 }, {
-  "objectType": "Aliquot",
+  "objectType": "WorkAliquot",
   "code": "333021476",
+  "fieldCenter": {
+    "name": "Bahia",
+    "acronym": "BA",
+    "code": 1
+  },
   "name": "PCR",
   "container": "CRYOTUBE",
   "role": "EXAM",
@@ -10783,8 +10798,13 @@ Test.utils.data.shipmentAliquotsList = [{
     "time": "2017-07-27T17:03:10.036Z"
   }
 }, {
-  "objectType": "Aliquot",
+  "objectType": "WorkAliquot",
   "code": "332012458",
+  "fieldCenter": {
+    "name": "Bahia",
+    "acronym": "BA",
+    "code": 1
+  },
   "name": "FASTING_INSULINE",
   "container": "PALLET",
   "role": "EXAM",
@@ -10800,8 +10820,13 @@ Test.utils.data.shipmentAliquotsList = [{
     "time": "2017-07-27T17:03:10.036Z"
   }
 }, {
-  "objectType": "Aliquot",
+  "objectType": "WorkAliquot",
   "code": "332021543",
+  "fieldCenter": {
+    "name": "Bahia",
+    "acronym": "BA",
+    "code": 1
+  },
   "name": "BIOCHEMICAL_SERUM",
   "container": "PALLET",
   "role": "EXAM",
@@ -10817,8 +10842,13 @@ Test.utils.data.shipmentAliquotsList = [{
     "time": "2017-07-27T17:03:27.816Z"
   }
 }, {
-  "objectType": "Aliquot",
+  "objectType": "WorkAliquot",
   "code": "333026598",
+  "fieldCenter": {
+    "name": "Bahia",
+    "acronym": "BA",
+    "code": 1
+  },
   "name": "PCR",
   "container": "CRYOTUBE",
   "role": "EXAM",
@@ -10834,8 +10864,13 @@ Test.utils.data.shipmentAliquotsList = [{
     "time": "2017-07-27T17:03:27.816Z"
   }
 }, {
-  "objectType": "Aliquot",
+  "objectType": "WorkAliquot",
   "code": "332026598",
+  "fieldCenter": {
+    "name": "Bahia",
+    "acronym": "BA",
+    "code": 1
+  },
   "name": "STORAGE",
   "container": "PALLET",
   "role": "STORAGE",
@@ -10851,8 +10886,13 @@ Test.utils.data.shipmentAliquotsList = [{
     "time": "2017-07-27T17:03:41.968Z"
   }
 }, {
-  "objectType": "Aliquot",
+  "objectType": "WorkAliquot",
   "code": "333026590",
+  "fieldCenter": {
+    "name": "Bahia",
+    "acronym": "BA",
+    "code": 1
+  },
   "name": "STORAGE",
   "container": "CRYOTUBE",
   "role": "STORAGE",

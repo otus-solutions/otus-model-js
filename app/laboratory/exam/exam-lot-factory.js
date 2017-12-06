@@ -30,14 +30,15 @@
 
     self.objectType = 'ExamLot';
     self.code = lotInfo.code || '';
-    self.examType = lotInfo.examType || '';
+    self.aliquotName = lotInfo.aliquotName || '';
     self.fieldCenter = lotInfo.fieldCenter || '';
     self.aliquotList = WorkAliquot.fromJson(lotInfo.aliquotList);
-    self.currentDate = lotInfo.currentDate || new Date();
+    self.realizationDate = lotInfo.realizationDate || new Date();
     self.operator = lotInfo.operator || '';
 
     self.insertAliquot = insertAliquot;
     self.removeAliquotByIndex = removeAliquotByIndex;
+    self.getAliquotsToCsv = getAliquotsToCsv;
 
     self.toJSON = toJSON;
 
@@ -52,13 +53,19 @@
       return self.aliquotList.splice(index, 1);
     }
 
+    function getAliquotsToCsv() {
+      return aliquotList.map(function(aliquot){
+        return aliquot.getAliquotToCsv();
+      });
+    }
+
     function toJSON() {
       var json = {
         objectType: self.objectType,
         code: self.code,
-        examType: self.examType,
+        aliquotName: self.aliquotName,
         fieldCenter: self.fieldCenter,
-        currentDate: self.currentDate,
+        realizationDate: self.realizationDate,
         operator: self.operator,
         aliquotList: self.aliquotList
       };

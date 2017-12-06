@@ -18,7 +18,7 @@ describe('the transportation lot factory', function() {
       mockParticipantLaboratory();
       mockSelectedParticipant();
       mockTransportationLot();
-      mockShipmentAliquot();
+      mockWorkAliquot();
       service = _$injector_.get(
         'otusjs.laboratory.configuration.LaboratoryConfigurationService', {}
       );
@@ -33,12 +33,12 @@ describe('the transportation lot factory', function() {
   describe('insertAliquot method', function() {
 
     beforeEach(function() {
-      Mock.lot.insertAliquot(Mock.shipmentAliquot);
+      Mock.lot.insertAliquot(Mock.workAliquot);
     });
 
-    it('inserted Aliquot should have objectType equal to Aliquot',
+    it('inserted Aliquot should have objectType equal to WorkAliquot',
       function() {
-        expect(Mock.lot.aliquotList[0].objectType).toBe('Aliquot');
+        expect(Mock.lot.aliquotList[0].objectType).toBe('WorkAliquot');
       });
 
     it('inserted Aliquot should have name equal to BIOCHEMICAL_SERUM',
@@ -69,9 +69,9 @@ describe('the transportation lot factory', function() {
   describe('removeAliquotByIndex method', function() {
 
     beforeEach(function() {
-      mockShipmentAliquot2();
-      Mock.lot.insertAliquot(Mock.shipmentAliquot);
-      Mock.lot.insertAliquot(Mock.shipmentAliquot2);
+      mockWorkAliquot2();
+      Mock.lot.insertAliquot(Mock.workAliquot);
+      Mock.lot.insertAliquot(Mock.workAliquot2);
     });
 
     it('should remove 1 Aliquot from de list', function() {
@@ -134,12 +134,12 @@ describe('the transportation lot factory', function() {
     Mock.LabDescriptors = Test.utils.data.laboratoryConfiguration; //json-importer.js
   }
 
-  function mockShipmentAliquot() {
-    Mock.shipmentAliquot = Test.utils.data.shipmentAliquotsList[0]; //json-importer
+  function mockWorkAliquot() {
+    Mock.workAliquot = Test.utils.data.workAliquotsList[0]; //json-importer
   }
 
-  function mockShipmentAliquot2() {
-    Mock.shipmentAliquot2 = Test.utils.data.shipmentAliquotsList[1]; //json-importer
+  function mockWorkAliquot2() {
+    Mock.workAliquot2 = Test.utils.data.workAliquotsList[1]; //json-importer
   }
 
   function mockParticipantLaboratory() {
