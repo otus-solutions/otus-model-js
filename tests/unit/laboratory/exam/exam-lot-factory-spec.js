@@ -1,0 +1,177 @@
+describe('the exam lot factory', function() {
+  var Mock = {};
+  var service;
+
+  beforeEach(function() {
+    angular.mock.module('otusjs.laboratory');
+
+    inject(function(_$injector_) {
+
+      var injections = {
+        'WorkAliquot': _$injector_.get(
+          'otusjs.laboratory.WorkAliquotFactory'
+        )
+      };
+
+      mockExamLotFactory(_$injector_, injections);
+      mockLabDescriptors();
+      mockParticipantLaboratory();
+      mockSelectedParticipant();
+      mockExamLot();
+      mockWorkAliquot();
+      service = _$injector_.get(
+        'otusjs.laboratory.configuration.LaboratoryConfigurationService', {}
+      );
+      service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
+      service.initializeParticipantConfiguration(Mock.SelectedParticipant,
+        Mock.ParticipantLaboratory.collectGroupName);
+
+    });
+
+  });
+
+  describe('insertAliquot method', function() {
+
+    beforeEach(function() {
+      Mock.ExamLot.insertAliquot(Mock.workAliquot);
+    });
+
+    it('inserted Aliquot should have objectType equal to WorkAliquot',
+      function() {
+        expect(Mock.ExamLot.aliquotList[0].objectType).toBe('WorkAliquot');
+      });
+
+    it('inserted Aliquot should have name equal to BIOCHEMICAL_SERUM',
+      function() {
+        expect(Mock.ExamLot.aliquotList[0].name).toBe('BIOCHEMICAL_SERUM');
+      });
+
+    it('inserted Aliquot should have fieldCenter name equal to Bahia',
+      function() {
+        expect(Mock.ExamLot.aliquotList[0].fieldCenter.name).toBe('Bahia');
+      });
+
+    it('inserted Aliquot should have role equal to EXAM', function() {
+      expect(Mock.ExamLot.aliquotList[0].role).toBe('EXAM');
+    });
+
+    it('inserted Aliquot should have code equal to 333000001', function() {
+      expect(Mock.ExamLot.aliquotList[0].code).toBe('333000001');
+    });
+
+    it('inserted Aliquot should have container equal to CRYOTUBE',
+      function() {
+        expect(Mock.ExamLot.aliquotList[0].container).toBe('CRYOTUBE');
+      });
+
+  });
+
+  describe('removeAliquotByIndex method', function() {
+
+    beforeEach(function() {
+      mockWorkAliquot2();
+      Mock.ExamLot.insertAliquot(Mock.workAliquot);
+      Mock.ExamLot.insertAliquot(Mock.workAliquot2);
+    });
+
+    it('should remove 1 Aliquot from de list', function() {
+      Mock.ExamLot.removeAliquotByIndex(0);
+      expect(Mock.ExamLot.aliquotList.length).toBe(1);
+    });
+
+    it('should remove Aliquot with code equal to 333000002', function() {
+      Mock.ExamLot.removeAliquotByIndex(0);
+      expect(Mock.ExamLot.aliquotList[0].code).toBe('333000002');
+    });
+
+  });
+
+  describe('toJSON method', function() {
+
+    beforeEach(function() {
+      mockExamLotJson();
+      mockExamLotFromJson();
+    });
+
+    it('expect return from toJson method to equal the mocked JSON',
+      function() {
+        expect(JSON.stringify(Mock.ExamLotFromJson)).toEqual(JSON.stringify(
+          Mock.ExamLotJson));
+      });
+
+  });
+
+  //TODO.....
+  describe("method get aliquots structure to csv ", function () {
+    beforeEach(function () {
+      Mock.ExamLot.insertAliquot(Mock.workAliquot);
+      mockAliquotStructuresToCsv();
+    });
+
+    it('should have the aliquota attribute on object ', function () {
+      expect(Mock.AliquotStructuresToCsv[0].aliquota).not.toBeUndefined();
+    });
+    
+    it('should have the sexo attribute on object ', function () {
+      expect(Mock.AliquotStructuresToCsv[0].sexo).not.toBeUndefined();
+    });
+
+    it('should have the nascimento attribute on object ', function () {
+      expect(Mock.AliquotStructuresToCsv[0].nascimento).not.toBeUndefined();
+    });
+  });
+
+
+  function mockExamLotJson() {
+    Mock.ExamLotJson = {
+      objectType: "ExamLot",
+      code: "30513515",
+      aliquotName: "BIOCHEMICAL",
+      fieldCenter: {
+        name: "Bahia",
+        acronym: "BA",
+        code: 1
+      },
+      realizationDate: "2017-09-21T15:36:56.929Z",
+      operator: "teste@email.com",
+      aliquotList: []
+    }
+  }
+
+  function mockExamLotFactory(_$injector_, injections) {
+    Mock.ExamLotFactory = _$injector_.get(
+      'otusjs.laboratory.exam.ExamLotFactory', injections);
+  }
+
+  function mockExamLot() {
+    Mock.ExamLot = Mock.ExamLotFactory.create();
+  }
+
+  function mockExamLotFromJson() {
+    Mock.ExamLotFromJson = Mock.ExamLotFactory.fromJson(Mock.ExamLotJson);
+  }
+
+  function mockLabDescriptors() {
+    Mock.LabDescriptors = Test.utils.data.laboratoryConfiguration; //json-importer.js
+  }
+
+  function mockWorkAliquot() {
+    Mock.workAliquot = Test.utils.data.workAliquotsList[0]; //json-importer
+  }
+
+  function mockWorkAliquot2() {
+    Mock.workAliquot2 = Test.utils.data.workAliquotsList[1]; //json-importer
+  }
+
+  function mockAliquotStructuresToCsv() {
+    Mock.AliquotStructuresToCsv = Mock.ExamLot.getAliquotsToCsv(); //json-importer
+  }
+  
+  function mockParticipantLaboratory() {
+    Mock.ParticipantLaboratory = Test.utils.data.participantLaboratory; //json-importer.js
+  }
+
+  function mockSelectedParticipant() {
+    Mock.SelectedParticipant = Test.utils.data.selectedParticipant; //json-importer.js
+  }
+});

@@ -10703,6 +10703,7 @@ Test.utils.data.workAliquotsList = [{
     "objectType": "ImmutableDate",
     "value": "1970-09-20 00:00:00.000"
   },
+  "recruitmentNumber": "3051442",
   "aliquotCollectionData": {
     "objectType": "AliquotCollectionData",
     "metadata": "",
@@ -10725,6 +10726,7 @@ Test.utils.data.workAliquotsList = [{
     "objectType": "ImmutableDate",
     "value": "1970-09-20 00:00:00.000"
   },
+  "recruitmentNumber": "3051442",
   "aliquotCollectionData": {
     "objectType": "AliquotCollectionData",
     "metadata": "",
@@ -10747,6 +10749,7 @@ Test.utils.data.workAliquotsList = [{
     "objectType": "ImmutableDate",
     "value": "1970-10-20 00:00:00.000"
   },
+  "recruitmentNumber": "3051442",
   "aliquotCollectionData": {
     "objectType": "AliquotCollectionData",
     "metadata": "",
@@ -10769,6 +10772,7 @@ Test.utils.data.workAliquotsList = [{
     "objectType": "ImmutableDate",
     "value": "1954-09-20 00:00:00.000"
   },
+  "recruitmentNumber": "3051442",
   "aliquotCollectionData": {
     "objectType": "AliquotCollectionData",
     "metadata": "",
@@ -10791,6 +10795,7 @@ Test.utils.data.workAliquotsList = [{
     "objectType": "ImmutableDate",
     "value": "1955-09-23 00:00:00.000"
   },
+  "recruitmentNumber": "3051442",
   "aliquotCollectionData": {
     "objectType": "AliquotCollectionData",
     "metadata": "",
@@ -10813,6 +10818,7 @@ Test.utils.data.workAliquotsList = [{
     "objectType": "ImmutableDate",
     "value": "1962-12-12 00:00:00.000"
   },
+  "recruitmentNumber": "3051442",
   "aliquotCollectionData": {
     "objectType": "AliquotCollectionData",
     "metadata": "",
@@ -10835,6 +10841,7 @@ Test.utils.data.workAliquotsList = [{
     "objectType": "ImmutableDate",
     "value": "1954-09-20 00:00:00.000"
   },
+  "recruitmentNumber": "3051442",
   "aliquotCollectionData": {
     "objectType": "AliquotCollectionData",
     "metadata": "",
@@ -10857,6 +10864,7 @@ Test.utils.data.workAliquotsList = [{
     "objectType": "ImmutableDate",
     "value": "1954-09-20 00:00:00.000"
   },
+  "recruitmentNumber": "3051442",
   "aliquotCollectionData": {
     "objectType": "AliquotCollectionData",
     "metadata": "",
@@ -10879,6 +10887,7 @@ Test.utils.data.workAliquotsList = [{
     "objectType": "ImmutableDate",
     "value": "1954-09-20 00:00:00.000"
   },
+  "recruitmentNumber": "3051442",
   "aliquotCollectionData": {
     "objectType": "AliquotCollectionData",
     "metadata": "",
@@ -10901,6 +10910,7 @@ Test.utils.data.workAliquotsList = [{
     "objectType": "ImmutableDate",
     "value": "1954-09-20 00:00:00.000"
   },
+  "recruitmentNumber": "3051442",
   "aliquotCollectionData": {
     "objectType": "AliquotCollectionData",
     "metadata": "",

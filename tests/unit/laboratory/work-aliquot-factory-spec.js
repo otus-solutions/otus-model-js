@@ -1,4 +1,4 @@
-fdescribe('the work aliquot factory', function () {
+describe('the work aliquot factory ', function () {
   var Mock = {};
   var factory;
 
@@ -32,18 +32,49 @@ fdescribe('the work aliquot factory', function () {
       expect(Mock.aliquotWork.objectType).toEqual("WorkAliquot");
     });
 
-    it('label should be created ', function () {
+    it('the label should be created ', function () {
       expect(Mock.aliquotWork.label).not.toBe(null);
       expect(Mock.aliquotWork.label).not.toBe(undefined);
       expect(Mock.aliquotWork.label).not.toBe("");
     });
   });
 
+  describe("method of creating the aliquot structure to csv ", function () {
+    beforeEach(function () {
+      mockAliquotWork();
+      mockAliquotStructureToCsv();
+    });
+
+    it('should have the aliquota attribute on object ', function () {
+      expect(Mock.aliquotStructureToCsv.aliquota).not.toBeUndefined();
+    });
+    
+    it('should have the sexo attribute on object ', function () {
+      expect(Mock.aliquotStructureToCsv.sexo).not.toBeUndefined();
+    });
+
+    it('should have the nascimento attribute on object ', function () {
+      expect(Mock.aliquotStructureToCsv.nascimento).not.toBeUndefined();
+    });
+  });
+
+
+  describe("toJSON method ", function () {
+    beforeEach(function () {
+      mockAliquotWork();
+    });
+
+    it('should have the valid JSON ', function () {
+      expect(JSON.stringify(Mock.aliquotWork)).toBe(JSON.stringify(Mock.aliquotInfo));
+    });
+  });
 
   function mockAliquotWork() {
     Mock.aliquotWork = factory.create(Mock.aliquotInfo);
-    console.log(Mock.aliquotWork.getAliquotToCsv());
-    
+  }
+
+  function mockAliquotStructureToCsv() {
+    Mock.aliquotStructureToCsv = Mock.aliquotWork.getAliquotToCsv();
   }
 
   function mockAliquotInfo() {
@@ -63,6 +94,7 @@ fdescribe('the work aliquot factory', function () {
         "objectType": "ImmutableDate",
         "value": "1970-09-20 00:00:00.000"
       },
+      "recruitmentNumber": "3051442",
       "aliquotCollectionData": {
         "objectType": "AliquotCollectionData",
         "metadata": "",

@@ -74,17 +74,12 @@
     }
 
     function getAliquotToCsv(){
-      var formattedDate = $filter('date')(_participantBirthdate.value, 'dd/MM/yyyy');
-      console.log(formattedDate);
-      var dt =_participantBirthdate.value;
-
-      var formattedDate = dt.substr(8,2) + "/" + dt.substr(5,2) + "/" + dt.substr(0,4);
-      console.log(formattedDate);
-
+      var formattedDate = $filter('date')(new Date(_participantBirthdate.value), 'dd/MM/yyyy');
+      
       return {
         aliquota: self.code,
         sexo: _participantSex,
-        nascimento: typeof formattedDate
+        nascimento: formattedDate
       };
     }
 
@@ -96,10 +91,10 @@
         name: self.name,
         container: self.container,
         role: self.role,
-        aliquotCollectionData: self.aliquotCollectionData,
-        birthdate: _participantBirthdate,
         sex: _participantSex,
-        recruitmentNumber: _participantRecruitmentNumber
+        birthdate: _participantBirthdate,
+        recruitmentNumber: _participantRecruitmentNumber,
+        aliquotCollectionData: self.aliquotCollectionData
       };
       return json;
     }

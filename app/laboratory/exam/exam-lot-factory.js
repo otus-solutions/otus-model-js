@@ -54,7 +54,7 @@
     }
 
     function getAliquotsToCsv() {
-      return aliquotList.map(function(aliquot){
+      return self.aliquotList.map(function(aliquot){
         return aliquot.getAliquotToCsv();
       });
     }
