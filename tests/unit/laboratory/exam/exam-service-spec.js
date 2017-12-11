@@ -11,6 +11,19 @@ describe('the exam service', function() {
       examService = _$injector_.get(
         'otusjs.laboratory.exam.ExamService', {}
       );
+
+
+      mockLabDescriptors();
+      mockParticipantLaboratory();
+      mockSelectedParticipant();
+      var service = _$injector_.get(
+        'otusjs.laboratory.configuration.LaboratoryConfigurationService', {}
+      );
+      service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
+      service.initializeParticipantConfiguration(
+        Mock.SelectedParticipant,
+        Mock.ParticipantLaboratory.collectGroupName
+      );
     });
   });
 
@@ -34,7 +47,7 @@ describe('the exam service', function() {
     Mock.ExamLotJson = {
       objectType: "ExamLot",
       code: "30513515",
-      aliquotName: "BIOCHEMICAL",
+      aliquotName: "BIOCHEMICAL_SERUM",
       fieldCenter: {
         name: "Bahia",
         acronym: "BA",
@@ -49,4 +62,17 @@ describe('the exam service', function() {
   function mockExamLot() {
     Mock.ExamLot = examService.buildAliquotLotFromJson(Mock.ExamLotJson);
   }
+
+  function mockLabDescriptors() {
+    Mock.LabDescriptors = Test.utils.data.laboratoryConfiguration; //json-importer.js
+  }
+
+  function mockParticipantLaboratory() {
+    Mock.ParticipantLaboratory = Test.utils.data.participantLaboratory; //json-importer.js
+  }
+
+  function mockSelectedParticipant() {
+    Mock.SelectedParticipant = Test.utils.data.selectedParticipant; //json-importer.js
+  }
+
 });

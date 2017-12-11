@@ -87,7 +87,6 @@ describe('the exam lot factory', function() {
   });
 
   describe('toJSON method', function() {
-
     beforeEach(function() {
       mockExamLotJson();
       mockExamLotFromJson();
@@ -101,8 +100,42 @@ describe('the exam lot factory', function() {
 
   });
 
-  //TODO.....
-  describe("method get aliquots structure to csv ", function () {
+
+  describe("setAliquotName method ", function () {
+    beforeEach(function () {
+      mockExamLotJson();
+      mockExamLotFromJson();
+    });
+
+    it('aliquotName should be equal BIOCHEMICAL_SERUM ', function () {
+      expect(Mock.ExamLotFromJson.aliquotName).toEqual("BIOCHEMICAL_SERUM");
+    });
+    
+    it('aliquotName should be equal FASTING_SERUM ', function () {
+      Mock.ExamLotFromJson.setAliquotName("FASTING_SERUM");
+      expect(Mock.ExamLotFromJson.aliquotName).toEqual("FASTING_SERUM");
+    });
+  });
+
+
+  describe("_updateAliquotLabel method ", function () {
+    beforeEach(function () {
+      mockExamLotJson();
+      mockExamLotFromJson();
+    });
+
+    it('aliquotLabel should be equal "Bioquímica Soro" ', function () {
+      expect(Mock.ExamLotFromJson.aliquotLabel).toEqual("Bioquímica Soro");
+    });
+    
+    it('aliquotLabel should be equal "Soro Jejum" ', function () {
+      Mock.ExamLotFromJson.setAliquotName("FASTING_SERUM");
+      expect(Mock.ExamLotFromJson.aliquotLabel).toEqual("Soro Jejum");
+    });
+  });
+
+  
+  describe("getAliquotsToCsv method ", function () {
     beforeEach(function () {
       Mock.ExamLot.insertAliquot(Mock.workAliquot);
       mockAliquotStructuresToCsv();
@@ -126,7 +159,7 @@ describe('the exam lot factory', function() {
     Mock.ExamLotJson = {
       objectType: "ExamLot",
       code: "30513515",
-      aliquotName: "BIOCHEMICAL",
+      aliquotName: "BIOCHEMICAL_SERUM",
       fieldCenter: {
         name: "Bahia",
         acronym: "BA",
