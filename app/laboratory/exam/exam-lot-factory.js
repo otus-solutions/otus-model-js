@@ -33,6 +33,7 @@
     self.objectType = 'ExamLot';
     self.code = lotInfo.code || '';
     self.aliquotName = lotInfo.aliquotName || '';
+    self.aliquotLabel = lotInfo.aliquotLabel || '';
     self.fieldCenter = lotInfo.fieldCenter || '';
     self.aliquotList = WorkAliquot.fromJson(lotInfo.aliquotList);
     self.realizationDate = lotInfo.realizationDate || new Date();
