@@ -1,24 +1,26 @@
 describe('the transportation service', function() {
   var Mock = {};
+  var transportationService;
 
   beforeEach(function() {
-    angular.mock.module('otusjs.laboratory.transportation');
-    angular.mock.module('otusjs.laboratory.configuration');
+    angular.mock.module('otusjs.laboratory');
 
     mockTransportationLot();
 
     inject(function(_$injector_) {
-      mockLaboratoryTransportationService(_$injector_);
+      transportationService = _$injector_.get(
+        'otusjs.laboratory.transportation.TransportationService', {}
+      );
     });
   });
 
   it('objectType should be equal TransportationLot', function() {
-    var lot = Mock.LaboratoryTransportationService.createAliquotLot();
+    var lot = transportationService.createAliquotLot();
     expect(lot.objectType).toEqual('TransportationLot');
   });
 
   it('lot should be equal json', function() {
-    var lot = Mock.LaboratoryTransportationService.buildAliquotLotFromJson(Mock.LotJson);
+    var lot = transportationService.buildAliquotLotFromJson(Mock.LotJson);
     expect(lot.objectType).toEqual(Mock.LotJson.objectType);
     expect(lot.code).toEqual(Mock.LotJson.code);
     expect(lot.shipmentDate).toEqual(Mock.LotJson.shipmentDate);
@@ -26,10 +28,6 @@ describe('the transportation service', function() {
     expect(lot.operator).toEqual(Mock.LotJson.operator);
     expect(lot.aliquotList).toEqual(Mock.LotJson.aliquotList);
   });
-
-  function mockLaboratoryTransportationService(_$injector_) {
-    Mock.LaboratoryTransportationService = _$injector_.get('otusjs.laboratory.transportation.TransportationService');
-  }
 
   function mockTransportationLot() {
     Mock.LotJson = {

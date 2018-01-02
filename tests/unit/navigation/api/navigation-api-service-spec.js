@@ -26,7 +26,6 @@ describe('NavigationApiService', function() {
 
       var container = service.resolveNavigation(Mock.CurrentItemService,
         Mock.navigation);
-      console.log(Mock.navigation.routes.length);
       expect(container).not.toBeDefined();
     });
   });
