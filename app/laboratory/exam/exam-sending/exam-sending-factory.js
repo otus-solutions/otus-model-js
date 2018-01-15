@@ -7,38 +7,35 @@
 
   Factory.$inject = [
     'otusjs.laboratory.exam.sending.ExamResultLot',
+    'otusjs.laboratory.exam.sending.ExamResults'
   ];
 
-  function Factory(ExamResultLot) {
+  function Factory(ExamResultLot, ExamResults) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamSending(ExamResultLot, {});
+      return new ExamSending(ExamResultLot, ExamResults, {});
     }
 
     function fromJson(examSendingInfo) {
-      return new ExamSending(ExamResultLot, examSendingInfo);
+      return new ExamSending(ExamResultLot, ExamResults, examSendingInfo);
     }
 
     return self;
   }
 
-  function ExamSending(ExamResultLot, examSendingInfo) {
+  function ExamSending(ExamResultLot, ExamResults, examSendingInfo) {
     var self = this;
 
-    self.operator = examSendingInfo.operator || '';
-    self.fileName = examSendingInfo.fileName || '';
-    self.realizationDate = examSendingInfo.realizationDate || '';
-    self.resultsQuantity = examSendingInfo.resultsQuantity || '';
-    self.fieldCenter = examSendingInfo.fieldCenter || '';
-    self.examResults = ExamResultLot.fromJson(examSendingInfo.examResults);
+    self.examResultLot = ExamResultLot.fromJson(examSendingInfo.examResultLot);
+    self.examResults = ExamResults.fromJson(examSendingInfo.examResults);
 
     /* Public methods */
-    self.toJSON = toJSON;
     self.insertResult = insertResult;
     self.removeResultByIndex = removeResultByIndex;
+    self.toJSON = toJSON;
 
     function insertResult(result) {
       var newResult = ExamResultLot.create(result);
@@ -52,12 +49,8 @@
 
     function toJSON() {
       var json = {
-        operator: self.operator,
-        fileName: self.fileName,
-        realizationDate: self.realizationDate,
-        resultsQuantity: self.resultsQuantity,
-        fieldCenter: self.fieldCenter,
-        examResults: self.examResults
+        examResultLot: self.examResultLot,
+        examResults: self.examResults,
       };
 
       return json;

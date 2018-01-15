@@ -10,48 +10,44 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(result) {
-      return new ExamResultLot(result);
+    function create() {
+      return new ExamResultLot();
     }
 
-    function fromJson(resultInfoArray) {
-      if (Array.isArray(resultInfoArray)) {
-        return resultInfoArray.map(function (result) {
-          return new ExamResultLot(result);
-        });
-      } else {
-        return [];
-      }
+    function fromJson(resultLot) {
+      return new ExamResultLot(resultLot);
     }
+
 
     return self;
   }
 
-  function ExamResultLot(result) {
+  function ExamResultLot(resultLot) {
     var self = this;
 
-    self.aliquotCode = result.aliquotCode || '';
-    self.examName = result.examName || '';
-    self.resultName = result.resultName || '';
-    self.value = result.value || '';
-    self.releaseDate = result.releaseDate || '';
+    self._id = resultLot._id || '';
+    self.operator = resultLot.operator || '';
+    self.fileName = resultLot.fileName || '';
+    self.realizationDate = resultLot.realizationDate || '';
+    self.resultsQuantity = resultLot.resultsQuantity || '';
+    self.fieldCenter = resultLot.fieldCenter || '';
 
     /* Public methods */
     self.toJSON = toJSON;
 
     function toJSON() {
       var json = {
-        aliquotCode: self.aliquotCode,
-        examName: self.examName,
-        resultName: self.resultName,
-        value: self.value,
-        releaseDate: self.releaseDate
+        _id: self._id,
+        operator: self.operator,
+        fileName: self.fileName,
+        realizationDate: self.realizationDate,
+        resultsQuantity: self.resultsQuantity,
+        fieldCenter: self.fieldCenter
       };
 
       return json;
     }
 
   }
-
 
 }());
