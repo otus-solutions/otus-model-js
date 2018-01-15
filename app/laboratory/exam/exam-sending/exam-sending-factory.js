@@ -19,18 +19,18 @@
       return new ExamSending(ExamResultLot, ExamResults, {});
     }
 
-    function fromJson(examSendingInfo) {
-      return new ExamSending(ExamResultLot, ExamResults, examSendingInfo);
+    function fromJson(examResultLot, examResults) {
+      return new ExamSending(ExamResultLot, ExamResults, examResultLot, examResults);
     }
 
     return self;
   }
 
-  function ExamSending(ExamResultLot, ExamResults, examSendingInfo) {
+  function ExamSending(ExamResultLot, ExamResults, examResultLot, examResults) {
     var self = this;
 
-    self.examResultLot = ExamResultLot.fromJson(examSendingInfo.examResultLot);
-    self.examResults = ExamResults.fromJson(examSendingInfo.examResults);
+    self.examResultLot = ExamResultLot.fromJson(examResultLot);
+    self.examResults = ExamResults.fromJson(examResults);
 
     /* Public methods */
     self.insertResult = insertResult;

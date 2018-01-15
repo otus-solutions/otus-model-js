@@ -20,8 +20,8 @@
       return ExamSendingFactory.create();
     }
 
-    function buildExamSendingFromJson(lotJson) {
-      return ExamSendingFactory.fromJson(lotJson);
+    function buildExamSendingFromJson(examResultLot, examResults) {
+      return ExamSendingFactory.fromJson(examResultLot, examResults);
     }
 
     return self;
