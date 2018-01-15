@@ -16,7 +16,7 @@
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamSending(ExamResultLot, ExamResults, {});
+      return new ExamSending(ExamResultLot, ExamResults, {}, {});
     }
 
     function fromJson(examResultLot, examResults) {
