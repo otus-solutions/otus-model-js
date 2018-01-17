@@ -37,13 +37,16 @@
 
     function toJSON() {
       var json = {
-        _id: self._id,
         operator: self.operator,
         fileName: self.fileName,
         realizationDate: self.realizationDate,
         resultsQuantity: self.resultsQuantity,
         fieldCenter: self.fieldCenter
       };
+
+      if(self._id){
+        json._id = self._id
+      }
 
       return json;
     }
