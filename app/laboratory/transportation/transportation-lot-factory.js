@@ -39,10 +39,13 @@
 
     self.chartDataSet = {labels: [], data: [], backgroundColor: []};
 
+    self.insertAliquot = insertAliquot;
+    self.removeAliquotByIndex = removeAliquotByIndex;
+    self.toJSON = toJSON;
+    
     _onInit();
 
     function _onInit() {
-      self.aliquotsInfo = lotInfo.aliquotsInfo || [];
       _fillAliquotInfoLabel();
     }
 
@@ -51,9 +54,15 @@
         var aliquot = self.aliquotList.find(function(aliquot){
           return aliquot.name === aliquotInfo.aliquotName;
         });
-
-        if(aliquot) aliquotInfo.aliquotLabel = aliquotName.label;
+        if(aliquot) aliquotInfo.aliquotLabel = aliquot.label;
       });
+      
+      if(self.aliquotList.length && !self.aliquotsInfo.length){
+        self.aliquotList.forEach(function(aliquot){
+          _addAliquotInfo(aliquot);
+        });
+      }
+
       _generateDataSetForChart();
     }
 
@@ -112,12 +121,6 @@
       self.aliquotsInfo = newAliquotsInfo;
       _generateDataSetForChart();
     }
-
-    self.insertAliquot = insertAliquot;
-    self.removeAliquotByIndex = removeAliquotByIndex;
-
-    self.toJSON = toJSON;
-
 
     function insertAliquot(aliquotInfo) {
       var newAliquot = WorkAliquot.create(aliquotInfo);
