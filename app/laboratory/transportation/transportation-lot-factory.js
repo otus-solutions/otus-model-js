@@ -37,26 +37,46 @@
     self.operator = lotInfo.operator || '';
     self.aliquotsInfo = lotInfo.aliquotsInfo || [];
 
-    self.generateDataSetForChart = generateDatasetForChart;
-    self.dataSetChart = {labels: [],data: [], backgroundColor: []};
+    self.chartDataSet = {labels: [], data: [], backgroundColor: []};
 
-    function generateDataSetForChart(colorArray) {
-      self.dataSetChart.backgroundColor = colorArray || []
+    _onInit();
 
-      self.aliquotsInfo.sort(function (a, b) {
-        if (a.aliquotLabel < b.aliquotLabel)
-          return -1;
-        if (a.aliquotLabel > b.aliquotLabel)
-          return 1;
-        return 0;
-      });
+    function _onInit() {
+      self.aliquotsInfo = lotInfo.aliquotsInfo || [];
+      _fillAliquotInfoLabel();
+    }
 
+    function _fillAliquotInfoLabel(){
       self.aliquotsInfo.forEach(function(aliquotInfo){
-        self.dataSetChart.labels.push(aliquotInfo.aliquotLabel);
-        self.dataSetChart.data.push(aliquotInfo.quantity);
-      });
+        var aliquot = self.aliquotList.find(function(aliquot){
+          return aliquot.name === aliquotInfo.aliquotName;
+        });
 
-      return self.dataSetChart;
+        if(aliquot) aliquotInfo.aliquotLabel = aliquotName.label;
+      });
+      _generateDataSetForChart();
+    }
+
+    function _generateDataSetForChart() {
+      self.chartDataSet.labels = [];
+      self.chartDataSet.data = [];
+
+      if(self.aliquotsInfo.length){
+        self.aliquotsInfo.sort(function (a, b) {
+          if (a.aliquotLabel < b.aliquotLabel)
+            return -1;
+          if (a.aliquotLabel > b.aliquotLabel)
+            return 1;
+          return 0;
+        });
+  
+        self.aliquotsInfo.forEach(function(aliquotInfo){
+          self.chartDataSet.labels.push(aliquotInfo.aliquotLabel);
+          self.chartDataSet.data.push(aliquotInfo.quantity);
+        });
+      }
+
+      return self.chartDataSet;
     }
 
     function _addAliquotInfo(aliquot) {
@@ -73,6 +93,7 @@
       newAliquotsInfo.push(aliquotInfo);
 
       self.aliquotsInfo = newAliquotsInfo;
+      _generateDataSetForChart();
     }
 
     function _removeAliquotInfo(aliquot) {
@@ -89,6 +110,7 @@
       }
 
       self.aliquotsInfo = newAliquotsInfo;
+      _generateDataSetForChart();
     }
 
     self.insertAliquot = insertAliquot;
