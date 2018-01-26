@@ -101,6 +101,68 @@ describe('the transportation lot factory', function() {
 
   });
 
+  describe('_fillAliquotInfoLabel method', function() {
+    beforeEach(function() {
+      mockLotWithAliquotFromJSON();
+    });
+
+    it('aliquotInfo should have aliquotName attribute',function() {
+      expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].aliquotLabel).not.toBeUndefined();
+    });
+  });
+
+  describe('_generateDataSetForChart method', function() {
+    beforeEach(function() {
+      mockLotWithAliquotFromJSON();
+    });
+
+    it('chartDataSet should have labels',function() {
+      expect(Mock.lotWithAliquotFromJSON.chartDataSet.labels[0]).not.toBeUndefined();
+    });
+
+    it('chartDataSet should have data',function() {
+      expect(Mock.lotWithAliquotFromJSON.chartDataSet.data[0]).not.toBeUndefined();
+    });
+  });
+
+  describe('_addAliquotInfo method', function() {
+    beforeEach(function() {
+      mockLotWithAliquotFromJSON();
+      mockWorkAliquot();
+    });
+
+    it('should have BIOCHEMICAL_SERUM whith quantity equal 2 in aliquotsInfo', function() {
+      Mock.lotWithAliquotFromJSON.insertAliquot(Mock.workAliquot);
+      expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].aliquotName).toBe('BIOCHEMICAL_SERUM');
+      expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].quantity).toBe(2);
+    });
+    
+    it('should have BIOCHEMICAL_SERUM whith quantity equal 3 in aliquotsInfo', function() {
+      Mock.lotWithAliquotFromJSON.insertAliquot(Mock.workAliquot);
+      Mock.lotWithAliquotFromJSON.insertAliquot(Mock.workAliquot);
+      expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].aliquotName).toBe('BIOCHEMICAL_SERUM');
+      expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].quantity).toBe(3);
+    });
+  });
+
+  describe('_removeAliquotInfo method', function() {
+    beforeEach(function() {
+      mockLotWithAliquotFromJSON();
+      Mock.lotWithAliquotFromJSON.insertAliquot(Mock.workAliquot);
+    });
+    
+    it('should have BIOCHEMICAL_SERUM whith quantity equal 1 in aliquotsInfo', function() {
+      Mock.lotWithAliquotFromJSON.removeAliquotByIndex(0);
+      expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].quantity).toBe(1);
+    });
+
+    it('not should have aliquotsInfo', function() {
+      Mock.lotWithAliquotFromJSON.removeAliquotByIndex(0);
+      Mock.lotWithAliquotFromJSON.removeAliquotByIndex(0);
+      expect(Mock.lotWithAliquotFromJSON.aliquotsInfo.length).toBe(0);
+    });
+  });
+
   function mockTransportationLotJson() {
     Mock.LotJson = {
       objectType: "TransportationLot",
@@ -113,7 +175,32 @@ describe('the transportation lot factory', function() {
       shipmentDate: "2017-09-21T15:36:56.929Z",
       processingDate: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
-      aliquotList: []
+      aliquotList: [],
+      aliquotsInfo: []
+    }
+  }
+
+  function mockLotWithAliquotJSON() {
+    if(!Mock.workAliquot) mockWorkAliquot();
+    mockAliquotInfo();
+
+    Mock.LotWithAliquotJSON = {
+      objectType: "TransportationLot",
+      code: "30513515",
+      fieldCenter: {
+        name: "Bahia",
+        acronym: "BA",
+        code: 1
+      },
+      shipmentDate: "2017-09-21T15:36:56.929Z",
+      processingDate: "2017-09-21T15:36:56.929Z",
+      operator: "teste@email.com",
+      aliquotList: [
+        Mock.workAliquot
+      ],
+      aliquotsInfo: [
+        Mock.AliquotInfo
+      ]
     }
   }
 
@@ -130,6 +217,11 @@ describe('the transportation lot factory', function() {
     Mock.lotFromJson = Mock.LotFactory.fromJson(Mock.LotJson);
   }
 
+  function mockLotWithAliquotFromJSON() {
+    mockLotWithAliquotJSON();
+    Mock.lotWithAliquotFromJSON = Mock.LotFactory.fromJson(Mock.LotWithAliquotJSON);
+  }
+
   function mockLabDescriptors() {
     Mock.LabDescriptors = Test.utils.data.laboratoryConfiguration; //json-importer.js
   }
@@ -140,6 +232,16 @@ describe('the transportation lot factory', function() {
 
   function mockWorkAliquot2() {
     Mock.workAliquot2 = Test.utils.data.workAliquotsList[1]; //json-importer
+  }
+
+  function mockAliquotInfo() {
+    mockWorkAliquot();
+    Mock.AliquotInfo = { aliquotName: Mock.workAliquot.name, quantity: 1 };
+  }
+
+  function mockAliquotInfo2() {
+    if(!Mock.workAliquot2) mockWorkAliquot2();
+    Mock.AliquotInfo2 = { aliquotName: Mock.workAliquot2.name, quantity: 1 };
   }
 
   function mockParticipantLaboratory() {

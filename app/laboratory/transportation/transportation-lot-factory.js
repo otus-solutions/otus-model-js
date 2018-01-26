@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -35,20 +35,111 @@
     self.shipmentDate = lotInfo.shipmentDate || '';
     self.processingDate = lotInfo.processingDate || '';
     self.operator = lotInfo.operator || '';
+    self.aliquotsInfo = lotInfo.aliquotsInfo || [];
+
+    self.chartDataSet = {
+      labels: [], 
+      data: [], 
+      backgroundColor: [],
+      fieldCenter: self.fieldCenter,
+      chartId: self.code
+    };
 
     self.insertAliquot = insertAliquot;
     self.removeAliquotByIndex = removeAliquotByIndex;
-
     self.toJSON = toJSON;
 
+    _onInit();
+
+    function _onInit() {
+      _fillAliquotInfoLabel();
+    }
+
+    function _fillAliquotInfoLabel(){
+      self.aliquotsInfo.forEach(function(aliquotInfo){
+        var aliquot = self.aliquotList.find(function(aliquot){
+          return aliquot.name === aliquotInfo.aliquotName;
+        });
+        if(aliquot) aliquotInfo.aliquotLabel = aliquot.label;
+      });
+      
+      if(self.aliquotList.length && !self.aliquotsInfo.length){
+        self.aliquotList.forEach(function(aliquot){
+          _addAliquotInfo(aliquot);
+        });
+      }
+
+      _generateDataSetForChart();
+    }
+
+    function _generateDataSetForChart() {
+      self.chartDataSet.labels = [];
+      self.chartDataSet.data = [];
+
+      if(self.aliquotsInfo.length){
+        self.aliquotsInfo.sort(function (a, b) {
+          if (a.aliquotLabel < b.aliquotLabel)
+            return -1;
+          if (a.aliquotLabel > b.aliquotLabel)
+            return 1;
+          return 0;
+        });
+  
+        self.aliquotsInfo.forEach(function(aliquotInfo){
+          self.chartDataSet.labels.push(aliquotInfo.aliquotLabel);
+          self.chartDataSet.data.push(aliquotInfo.quantity);
+        });
+      }
+
+      var tmpDataSet = angular.copy(self.chartDataSet)
+      self.chartDataSet = undefined;
+      self.chartDataSet = angular.copy(tmpDataSet);
+      return self.chartDataSet;
+    }
+
+    function _addAliquotInfo(aliquot) {
+      var aliquotInfo = self.aliquotsInfo.find(function (aliquotInfo) {
+        return aliquotInfo.aliquotName === aliquot.name;
+      });
+      var newAliquotsInfo = self.aliquotsInfo.filter(function (aliquotInfo) {
+        return aliquotInfo.aliquotName !== aliquot.name;
+      });
+
+      aliquotInfo = aliquotInfo || { aliquotName: aliquot.name, aliquotLabel: aliquot.label, quantity: 0 }
+      aliquotInfo.quantity++;
+
+      newAliquotsInfo.push(aliquotInfo);
+
+      self.aliquotsInfo = newAliquotsInfo;
+      _generateDataSetForChart();
+    }
+
+    function _removeAliquotInfo(aliquot) {
+      var aliquotInfo = self.aliquotsInfo.find(function (aliquotInfo) {
+        return aliquotInfo.aliquotName === aliquot.name;
+      });
+      var newAliquotsInfo = self.aliquotsInfo.filter(function (aliquotInfo) {
+        return aliquotInfo.aliquotName !== aliquot.name;
+      });
+
+      if (aliquotInfo && aliquotInfo.quantity > 1) {
+        aliquotInfo.quantity--;
+        newAliquotsInfo.push(aliquotInfo);
+      }
+
+      self.aliquotsInfo = newAliquotsInfo;
+      _generateDataSetForChart();
+    }
 
     function insertAliquot(aliquotInfo) {
       var newAliquot = WorkAliquot.create(aliquotInfo);
       self.aliquotList.push(newAliquot);
+      _addAliquotInfo(newAliquot);
       return newAliquot;
     }
 
     function removeAliquotByIndex(index) {
+      _removeAliquotInfo(self.aliquotList[index]);
       return self.aliquotList.splice(index, 1);
     }
 
@@ -60,7 +151,8 @@
         shipmentDate: self.shipmentDate,
         processingDate: self.processingDate,
         operator: self.operator,
-        aliquotList: self.aliquotList
+        aliquotList: self.aliquotList,
+        aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) { return { aliquotName: aliquotInfo.aliquotName, quantity: aliquotInfo.quantity }; })
       };
 
       return json;
