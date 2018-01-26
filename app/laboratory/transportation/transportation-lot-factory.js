@@ -91,6 +91,9 @@
         });
       }
 
+      var tmpDataSet = angular.copy(self.chartDataSet)
+      self.chartDataSet = undefined;
+      self.chartDataSet = angular.copy(tmpDataSet);
       return self.chartDataSet;
     }
 
