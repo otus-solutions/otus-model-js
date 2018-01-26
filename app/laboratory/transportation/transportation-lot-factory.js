@@ -37,12 +37,18 @@
     self.operator = lotInfo.operator || '';
     self.aliquotsInfo = lotInfo.aliquotsInfo || [];
 
-    self.chartDataSet = {labels: [], data: [], backgroundColor: []};
+    self.chartDataSet = {
+      labels: [], 
+      data: [], 
+      backgroundColor: [],
+      fieldCenter: self.fieldCenter,
+      chartId: self.code
+    };
 
     self.insertAliquot = insertAliquot;
     self.removeAliquotByIndex = removeAliquotByIndex;
     self.toJSON = toJSON;
-    
+
     _onInit();
 
     function _onInit() {
