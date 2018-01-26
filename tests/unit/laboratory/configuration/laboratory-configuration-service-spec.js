@@ -99,7 +99,7 @@ describe('the laboratory configuration service', function() {
     });
   });
 
-  it("should validate Aliquot Wave", function() {
+  xit("should validate Aliquot Wave", function() {
     beforeEach(function() {
       service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
       service.initializeParticipantConfiguration(Mock.SelectedParticipant,

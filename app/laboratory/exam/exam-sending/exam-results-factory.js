@@ -30,22 +30,31 @@
   function ExamResults(result) {
     var self = this;
 
+    self.objectType = 'ExamResults';
     self.aliquotCode = result.aliquotCode || '';
     self.examName = result.examName || '';
-    self.resultName = result.resultName || '';
+    self.label = result.label || '';
     self.value = result.value || '';
     self.releaseDate = result.releaseDate || '';
+    self.requestDate = result.requestDate || '';
+    self.collectionDate = result.collectionDate || '';
+    self.notes = result.notes || '';
 
     /* Public methods */
     self.toJSON = toJSON;
 
     function toJSON() {
       var json = {
+        objectType: self.objectType,
         aliquotCode: self.aliquotCode,
         examName: self.examName,
         resultName: self.resultName,
         value: self.value,
-        releaseDate: self.releaseDate
+        label: self.label,
+        releaseDate: self.releaseDate,
+        requestDate: self.requestDate,
+        collectionDate: self.collectionDate,
+        notes: self.notes
       };
 
       return json;
