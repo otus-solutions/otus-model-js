@@ -7,30 +7,30 @@
 
   Factory.$inject = [
     'otusjs.laboratory.exam.sending.ExamResultLot',
-    'otusjs.laboratory.exam.sending.ExamResults'
+    'otusjs.laboratory.exam.sending.Exams'
   ];
 
-  function Factory(ExamResultLot, ExamResults) {
+  function Factory(ExamResultLot, Exams) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamSending(ExamResultLot, ExamResults, {}, {});
+      return new ExamSending(ExamResultLot, Exams, {}, {});
     }
 
-    function fromJson(examResultLot, examResults) {
-      return new ExamSending(ExamResultLot, ExamResults, examResultLot, examResults);
+    function fromJson(examResultLot, exams) {
+      return new ExamSending(ExamResultLot, Exams, examResultLot, exams);
     }
 
     return self;
   }
 
-  function ExamSending(ExamResultLot, ExamResults, examResultLot, examResults) {
+  function ExamSending(ExamResultLot, Exams, examResultLot, exams) {
     var self = this;
 
     self.examResultLot = ExamResultLot.fromJson(examResultLot);
-    self.examResults = ExamResults.fromJson(examResults);
+    self.exams = Exams.fromJson(exams);
 
     /* Public methods */
     self.insertResult = insertResult;
@@ -39,18 +39,18 @@
 
     function insertResult(result) {
       var newResult = ExamResultLot.create(result);
-      self.examResults.push(newResult);
+      self.exams.push(newResult);
       return newResult;
     }
 
     function removeResultByIndex(index) {
-      return self.examResults.splice(index, 1);
+      return self.exams.splice(index, 1);
     }
 
     function toJSON() {
       var json = {
         examResultLot: self.examResultLot,
-        examResults: self.examResults,
+        exams: self.exams,
       };
 
       return json;

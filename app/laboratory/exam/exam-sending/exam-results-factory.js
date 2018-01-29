@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -16,7 +16,7 @@
 
     function fromJson(resultInfoArray) {
       if (Array.isArray(resultInfoArray)) {
-        return resultInfoArray.map(function (result) {
+        return resultInfoArray.map(function(result) {
           return new ExamResults(result);
         });
       } else {
@@ -32,32 +32,36 @@
 
     self.objectType = 'ExamResults';
     self.aliquotCode = result.aliquotCode || '';
-    self.examName = result.examName || '';
-    self.label = result.label || '';
+    self.resultName = result.resultName || '';
     self.value = result.value || '';
     self.releaseDate = result.releaseDate || '';
-    self.requestDate = result.requestDate || '';
-    self.collectionDate = result.collectionDate || '';
-    self.notes = result.notes || '';
+    self.observations = result.observations || [];
+
 
     /* Public methods */
     self.toJSON = toJSON;
+    self.insertObservations = insertObservations;
 
     function toJSON() {
       var json = {
         objectType: self.objectType,
         aliquotCode: self.aliquotCode,
-        examName: self.examName,
+
         resultName: self.resultName,
         value: self.value,
-        label: self.label,
         releaseDate: self.releaseDate,
-        requestDate: self.requestDate,
-        collectionDate: self.collectionDate,
-        notes: self.notes
+        observations: self.observations
       };
+      if (self.value) {
+        return json;
+      } else {
+        var msg = "Result not found";
+        throw new Error(msg);
+      }
+    }
 
-      return json;
+    function insertObservations(observation) {
+      self.observations.push(observation);
     }
 
   }
