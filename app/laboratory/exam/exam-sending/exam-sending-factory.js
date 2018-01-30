@@ -33,17 +33,17 @@
     self.exams = Exams.fromJson(exams);
 
     /* Public methods */
-    self.insertResult = insertResult;
-    self.removeResultByIndex = removeResultByIndex;
+    self.insertExam = insertExam;
+    self.removeExamByIndex = removeExamByIndex;
     self.toJSON = toJSON;
 
-    function insertResult(result) {
-      var newResult = ExamResultLot.create(result);
-      self.exams.push(newResult);
-      return newResult;
+    function insertExam(exam) {
+      var newExam = ExamResultLot.create(exam);
+      self.exams.push(newExam);
+      return newExam;
     }
 
-    function removeResultByIndex(index) {
+    function removeExamByIndex(index) {
       return self.exams.splice(index, 1);
     }
 

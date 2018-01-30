@@ -6,22 +6,23 @@
     .factory('otusjs.laboratory.exam.sending.Exams', Factory);
 
     Factory.$inject = [
-      'otusjs.laboratory.exam.sending.ExamResults'
+      'otusjs.laboratory.exam.sending.ExamResults',
+      'otusjs.laboratory.exam.sending.Observations'
     ];
 
-  function Factory(ExamResults) {
+  function Factory(ExamResults, Observations) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(exam, ExamResults) {
-      return new Exams(exam, ExamResults);
+    function create(exam, ExamResults, Observations) {
+      return new Exams(exam, ExamResults, Observations);
     }
 
-    function fromJson(examInfoArray) {
+    function fromJson(examInfoArray, ExamResults, Observations) {
       if (Array.isArray(examInfoArray)) {
         return examInfoArray.map(function (exam) {
-          return new Exams(exam);
+          return new Exams(exam, ExamResults);
         });
       } else {
         return [];
@@ -31,20 +32,42 @@
     return self;
   }
 
-  function Exams(exam) {
+  function Exams(exam, ExamResults, Observations) {
     var self = this;
 
-    self.objectType = 'Exams';
+    self.examResults = ExamResults.fromJson(exam.examResults);
+    self.observations = Observations.fromJson(exam.observations);
+
+    self.objectType = 'Exam';
     self.examName = exam.examName || '';
-    self.observations = exam.observations || '';
     self.conversionDate = exam.conversionDate || '';
-
-
 
     /* Public methods */
     self.toJSON = toJSON;
     self.insertObservations = insertObservations;
+    self.insertResult = insertResult;
+    self.removeResultByIndex = removeResultByIndex;
+    self.removeObservationByIndex = removeObservationByIndex;
 
+    function insertObservations(observation) {
+      var newObservation = Observations.create(result);
+      self.observations.push(newObservation);
+      return newObservation;
+    }
+
+    function insertResult(result) {
+      var newResult = ExamResults.create(result);
+      self.examResults.push(newResult);
+      return newResult;
+    }
+
+    function removeResultByIndex(index) {
+      return self.examResults.splice(index, 1);
+    }
+
+    function removeObservationByIndex(index) {
+      return self.observations.splice(index, 1);
+    }
 
     function toJSON() {
       var json = {
@@ -56,20 +79,6 @@
 
       return json;
     }
-    //TODO: Método para criar um resultado de exame
-    // retornando o objeto para inserir as observações
-    function createResult(result) {
-      if(result){
-        var _result = ExamResults.create(result);
-        self.examResults.push(_result);
-        return _result;
-      }
-    }
-
-    function insertObservations(observation) {
-      self.observations.push(observation);
-    }
-
 
   }
 
