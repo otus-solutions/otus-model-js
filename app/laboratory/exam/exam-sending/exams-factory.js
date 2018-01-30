@@ -15,14 +15,14 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(exam, ExamResults, Observations) {
+    function create(exam) {
       return new Exams(exam, ExamResults, Observations);
     }
 
-    function fromJson(examInfoArray, ExamResults, Observations) {
+    function fromJson(examInfoArray) {
       if (Array.isArray(examInfoArray)) {
         return examInfoArray.map(function (exam) {
-          return new Exams(exam, ExamResults);
+          return new Exams(exam, ExamResults, Observations);
         });
       } else {
         return [];
@@ -35,7 +35,7 @@
   function Exams(exam, ExamResults, Observations) {
     var self = this;
 
-    self.examResults = ExamResults.fromJson(exam.examResults);
+    self.examResults = ExamResults.fromJson(exam.examResults, exam.examName);
     self.observations = Observations.fromJson(exam.observations);
 
     self.objectType = 'Exam';
@@ -44,12 +44,12 @@
 
     /* Public methods */
     self.toJSON = toJSON;
-    self.insertObservations = insertObservations;
+    self.insertObservation = insertObservation;
     self.insertResult = insertResult;
     self.removeResultByIndex = removeResultByIndex;
     self.removeObservationByIndex = removeObservationByIndex;
 
-    function insertObservations(observation) {
+    function insertObservation(observation) {
       var newObservation = Observations.create(result);
       self.observations.push(newObservation);
       return newObservation;
