@@ -109,6 +109,10 @@ describe('the transportation lot factory', function() {
     it('aliquotInfo should have aliquotName attribute',function() {
       expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].aliquotLabel).not.toBeUndefined();
     });
+
+    it('aliquotInfo should have roleLabel attribute',function() {
+      expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].roleLabel).not.toBeUndefined();
+    });
   });
 
   describe('_generateDataSetForChart method', function() {
@@ -236,7 +240,7 @@ describe('the transportation lot factory', function() {
 
   function mockAliquotInfo() {
     mockWorkAliquot();
-    Mock.AliquotInfo = { aliquotName: Mock.workAliquot.name, quantity: 1 };
+    Mock.AliquotInfo = { aliquotName: Mock.workAliquot.name, role: "EXAM", quantity: 1 };
   }
 
   function mockAliquotInfo2() {
