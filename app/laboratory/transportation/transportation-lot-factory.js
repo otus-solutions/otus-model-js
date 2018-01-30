@@ -60,7 +60,11 @@
         var aliquot = self.aliquotList.find(function(aliquot){
           return aliquot.name === aliquotInfo.aliquotName;
         });
-        if(aliquot) aliquotInfo.aliquotLabel = aliquot.label;
+        if(aliquot) {
+          aliquotInfo.aliquotLabel = aliquot.label;
+          aliquotInfo.role = aliquot.role;
+          aliquotInfo.roleLabel = aliquot.roleLabel;
+        }
       });
       
       if(self.aliquotList.length && !self.aliquotsInfo.length){
@@ -86,7 +90,7 @@
         });
   
         self.aliquotsInfo.forEach(function(aliquotInfo){
-          self.chartDataSet.labels.push(aliquotInfo.aliquotLabel);
+          self.chartDataSet.labels.push(aliquotInfo.aliquotLabel + " (" + aliquotInfo.roleLabel + ")");
           self.chartDataSet.data.push(aliquotInfo.quantity);
         });
       }
@@ -97,15 +101,35 @@
       return self.chartDataSet;
     }
 
-    function _addAliquotInfo(aliquot) {
-      var aliquotInfo = self.aliquotsInfo.find(function (aliquotInfo) {
-        return aliquotInfo.aliquotName === aliquot.name;
+    function _findAliquotInfo(aliquot){
+      return self.aliquotsInfo.find(function (aliquotInfo) {
+        return (
+          aliquotInfo.aliquotName === aliquot.name
+          && aliquotInfo.role === aliquot.role
+        );
       });
-      var newAliquotsInfo = self.aliquotsInfo.filter(function (aliquotInfo) {
-        return aliquotInfo.aliquotName !== aliquot.name;
-      });
+    }
 
-      aliquotInfo = aliquotInfo || { aliquotName: aliquot.name, aliquotLabel: aliquot.label, quantity: 0 }
+    function _findOthersAliquotInfo(aliquot){
+      return self.aliquotsInfo.filter(function (aliquotInfo) {
+        return (
+          aliquotInfo.aliquotName !== aliquot.name
+          || aliquotInfo.role !== aliquot.role
+        );
+      });
+    }
+
+    function _addAliquotInfo(aliquot) {
+      var aliquotInfo = _findAliquotInfo(aliquot);
+      var newAliquotsInfo = _findOthersAliquotInfo(aliquot);
+
+      aliquotInfo = aliquotInfo || {
+        aliquotName: aliquot.name,
+        aliquotLabel: aliquot.label,
+        role: aliquot.role,
+        roleLabel: aliquot.roleLabel,
+        quantity: 0
+      }
       aliquotInfo.quantity++;
 
       newAliquotsInfo.push(aliquotInfo);
@@ -115,12 +139,8 @@
     }
 
     function _removeAliquotInfo(aliquot) {
-      var aliquotInfo = self.aliquotsInfo.find(function (aliquotInfo) {
-        return aliquotInfo.aliquotName === aliquot.name;
-      });
-      var newAliquotsInfo = self.aliquotsInfo.filter(function (aliquotInfo) {
-        return aliquotInfo.aliquotName !== aliquot.name;
-      });
+      var aliquotInfo = _findAliquotInfo(aliquot);
+      var newAliquotsInfo = _findOthersAliquotInfo(aliquot);
 
       if (aliquotInfo && aliquotInfo.quantity > 1) {
         aliquotInfo.quantity--;
@@ -152,7 +172,7 @@
         processingDate: self.processingDate,
         operator: self.operator,
         aliquotList: self.aliquotList,
-        aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) { return { aliquotName: aliquotInfo.aliquotName, quantity: aliquotInfo.quantity }; })
+        aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) { return { aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity }; })
       };
 
       return json;
