@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -6,39 +6,40 @@
     .factory('otusjs.laboratory.exam.sending.ExamSendingFactory', Factory);
 
   Factory.$inject = [
-    'otusjs.laboratory.exam.sending.ExamResultLot',
-    'otusjs.laboratory.exam.sending.Exams'
+    'otusjs.laboratory.exam.sending.ExamLot',
+    'otusjs.laboratory.exam.sending.Exam'
   ];
 
-  function Factory(ExamResultLot, Exams) {
+  function Factory(ExamLot, Exams) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamSending(ExamResultLot, Exams, {}, {});
+      return new ExamSending(ExamLot, Exams, {}, {});
     }
 
-    function fromJson(examResultLot, exams) {
-      return new ExamSending(ExamResultLot, Exams, examResultLot, exams);
+    function fromJson(examLot, exams) {
+      return new ExamSending(ExamLot, Exams, examLot, exams);
     }
 
     return self;
   }
 
-  function ExamSending(ExamResultLot, Exams, examResultLot, exams) {
+  function ExamSending(ExamLot, Exams, examLot, exams) {
     var self = this;
 
-    self.examResultLot = ExamResultLot.fromJson(examResultLot);
+    self.examLot = ExamLot.fromJson(examLot);
     self.exams = Exams.fromJson(exams);
 
     /* Public methods */
     self.insertExam = insertExam;
     self.removeExamByIndex = removeExamByIndex;
     self.toJSON = toJSON;
+    self.getExamList = getExamList;
 
     function insertExam(exam) {
-      var newExam = ExamResultLot.create(exam);
+      var newExam = ExamLot.create(exam);
       self.exams.push(newExam);
       return newExam;
     }
@@ -49,13 +50,30 @@
 
     function toJSON() {
       var json = {
-        examResultLot: self.examResultLot,
+        examLot: self.examLot,
         exams: self.exams,
       };
 
       return json;
     }
 
+    function getExamList() {
+      var _examList = [];
+      self.exams.forEach(function(exam) {
+        exam.examResults.forEach(function(result) {
+          var _json = {
+            aliquotCode: result.aliquotCode,
+            examName: result.examName,
+            resultName: result.resultName,
+            value: result.value,
+            releaseDate: result.releaseDate
+          };
+          _examList.push(_json);
+        });
+      });
+
+      return _examList;
+    }
   }
 
 }());

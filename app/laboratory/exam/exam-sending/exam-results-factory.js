@@ -6,22 +6,22 @@
     .factory('otusjs.laboratory.exam.sending.ExamResults', Factory);
 
   Factory.$inject = [
-    'otusjs.laboratory.exam.sending.Observations'
+    'otusjs.laboratory.exam.sending.ExamObservation'
   ];
 
-  function Factory(Observations) {
+  function Factory(ExamObservation) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(result, examName) {
-      return new ExamResults(result, examName, Observations);
+    function create() {
+      return new ExamResults(ExamObservation, {});
     }
 
-    function fromJson(resultInfoArray, examName) {
-      if (Array.isArray(resultInfoArray, Observations)) {
+    function fromJson(resultInfoArray) {
+      if (Array.isArray(resultInfoArray)) {
         return resultInfoArray.map(function(result) {
-          return new ExamResults(result, examName, Observations);
+          return new ExamResults(ExamObservation, result);
         });
       } else {
         return [];
@@ -31,17 +31,17 @@
     return self;
   }
 
-  function ExamResults(result, examName, Observations) {
+  function ExamResults(ExamObservation, result) {
     var self = this;
 
-    self.observations = Observations.fromJson(result.observations)
+    self.observations = ExamObservation.fromJson(result.observations)
 
     self.objectType = 'ExamResults';
-    self.examName = examName || '';
+    self.examName = result.examName || '';
     self.aliquotCode = result.aliquotCode || '';
+    self.releaseDate = result.releaseDate || '';
     self.resultName = result.resultName || '';
     self.value = result.value || '';
-    self.releaseDate = result.releaseDate || '';
 
     /* Public methods */
     self.toJSON = toJSON;
@@ -51,11 +51,12 @@
     function toJSON() {
       var json = {
         objectType: self.objectType,
+        examName: self.examName,
         aliquotCode: self.aliquotCode,
         resultName: self.resultName,
-        value: self.value,
         releaseDate: self.releaseDate,
-        observations: self.observations
+        observations: self.observations,
+        value: self.value
       };
 
       if (!self.value) {
@@ -67,7 +68,7 @@
     }
 
     function insertObservation(observation) {
-      var newObservation = Observations.create(result);
+      var newObservation = Observation.create(observation);
       self.observations.push(newObservation);
       return newObservation;
     }

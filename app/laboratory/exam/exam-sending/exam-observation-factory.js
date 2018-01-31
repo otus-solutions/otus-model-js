@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.exam.sending')
-    .factory('otusjs.laboratory.exam.sending.Observations', Factory);
+    .factory('otusjs.laboratory.exam.sending.ExamObservation', Factory);
 
 
   function Factory() {
@@ -11,14 +11,14 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(observation) {
-      return new Observations(observation);
+    function create() {
+      return new ExamObservation({});
     }
 
     function fromJson(observationInfoArray) {
       if (Array.isArray(observationInfoArray)) {
         return observationInfoArray.map(function(observation) {
-          return new Observations(observation);
+          return new ExamObservation(observation);
         });
       } else {
         return [];
@@ -28,7 +28,7 @@
     return self;
   }
 
-  function Observations(observation) {
+  function ExamObservation(observation) {
     var self = this;
 
     self.name = observation.name || '';

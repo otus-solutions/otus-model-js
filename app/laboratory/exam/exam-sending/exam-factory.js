@@ -3,26 +3,26 @@
 
   angular
     .module('otusjs.laboratory.exam.sending')
-    .factory('otusjs.laboratory.exam.sending.Exams', Factory);
+    .factory('otusjs.laboratory.exam.sending.Exam', Factory);
 
     Factory.$inject = [
       'otusjs.laboratory.exam.sending.ExamResults',
-      'otusjs.laboratory.exam.sending.Observations'
+      'otusjs.laboratory.exam.sending.ExamObservation'
     ];
 
-  function Factory(ExamResults, Observations) {
+  function Factory(ExamResults, ExamObservation) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(exam) {
-      return new Exams(exam, ExamResults, Observations);
+    function create() {
+      return new Exam(ExamResults, ExamObservation, {});
     }
 
     function fromJson(examInfoArray) {
       if (Array.isArray(examInfoArray)) {
         return examInfoArray.map(function (exam) {
-          return new Exams(exam, ExamResults, Observations);
+          return new Exam(ExamResults, ExamObservation, exam);
         });
       } else {
         return [];
@@ -32,15 +32,14 @@
     return self;
   }
 
-  function Exams(exam, ExamResults, Observations) {
+  function Exam(ExamResults, ExamObservation, exam){
     var self = this;
 
-    self.examResults = ExamResults.fromJson(exam.examResults, exam.examName);
-    self.observations = Observations.fromJson(exam.observations);
+    self.examResults = ExamResults.fromJson(exam.examResults);
+    self.observations = ExamObservation.fromJson(exam.observations);
 
     self.objectType = 'Exam';
-    self.examName = exam.examName || '';
-    self.conversionDate = exam.conversionDate || '';
+    self.name = exam.name || '';
 
     /* Public methods */
     self.toJSON = toJSON;
@@ -50,7 +49,7 @@
     self.removeObservationByIndex = removeObservationByIndex;
 
     function insertObservation(observation) {
-      var newObservation = Observations.create(result);
+      var newObservation = Observation.create(result);
       self.observations.push(newObservation);
       return newObservation;
     }
@@ -72,7 +71,7 @@
     function toJSON() {
       var json = {
         objectType: self.objectType,
-        examName: self.examName,
+        name: self.name,
         ExamResults: self.examResults,
         observations: self.observations
       };
