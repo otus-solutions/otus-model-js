@@ -72,7 +72,7 @@
       var json = {
         objectType: self.objectType,
         name: self.name,
-        ExamResults: self.examResults,
+        examResults: self.examResults,
         observations: self.observations
       };
 
