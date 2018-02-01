@@ -54,6 +54,7 @@
 
     self.label = aliquotInfo.label || '';
     self.containerLabel = aliquotInfo.containerLabel || '';
+    self.roleLabel = aliquotInfo.roleLabel || '';
 
     self.toJSON = toJSON;
     self.getAliquotToCsv = getAliquotToCsv;
@@ -71,6 +72,7 @@
     function _runDescriptors(aliquotDescriptor) {
       self.label = aliquotDescriptor.label;
       self.containerLabel = self.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
+      self.roleLabel = self.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
     }
 
     function getAliquotToCsv(){
