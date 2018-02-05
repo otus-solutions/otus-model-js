@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.exam.sending')
-    .service('otusjs.laboratory.exam.sending.ExamResultLotSerive', service);
+    .service('otusjs.laboratory.exam.sending.ExamLotService', service);
 
   service.$inject = [
     'otusjs.laboratory.exam.sending.ExamSendingFactory'
@@ -20,8 +20,8 @@
       return ExamSendingFactory.create();
     }
 
-    function buildExamSendingFromJson(examResultLot, examResults) {
-      return ExamSendingFactory.fromJson(examResultLot, examResults);
+    function buildExamSendingFromJson(examLot, exam) {
+      return ExamSendingFactory.fromJson(examLot, exam);
     }
 
     return self;

@@ -32,16 +32,16 @@ describe('Studio Utils Test Suite', function() {
 
     describe('SurveyUUIDGenerator Service when SurveyUUIDGenerator.generateSurveyUUID()', function() {
 
-        it('should returns a encoded UUID', function() {
+        xit('should returns a encoded UUID', function() {
             expect(SurveyUUIDGenerator.generateSurveyUUID()).not.toBeNull();
         });
 
-        it('should returns a encoded UUID with userUUID, repositoryUUID, surveyUUID', function() {
+        xit('should returns a encoded UUID with userUUID, repositoryUUID, surveyUUID', function() {
             var decodedUUID = Base64.decode(SurveyUUIDGenerator.generateSurveyUUID());
             expect(decodedUUID).toContain("userUUID", "repositoryUUID", "surveyUUID");
         });
 
-        it('should calls a base64 encoded function', function() {
+        xit('should calls a base64 encoded function', function() {
             spyOn(Base64, 'encode');
 
             SurveyUUIDGenerator.generateSurveyUUID();

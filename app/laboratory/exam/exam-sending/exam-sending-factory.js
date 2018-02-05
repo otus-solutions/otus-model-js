@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -6,56 +6,74 @@
     .factory('otusjs.laboratory.exam.sending.ExamSendingFactory', Factory);
 
   Factory.$inject = [
-    'otusjs.laboratory.exam.sending.ExamResultLot',
-    'otusjs.laboratory.exam.sending.ExamResults'
+    'otusjs.laboratory.exam.sending.ExamLot',
+    'otusjs.laboratory.exam.sending.Exam'
   ];
 
-  function Factory(ExamResultLot, ExamResults) {
+  function Factory(ExamLot, Exams) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamSending(ExamResultLot, ExamResults, {}, {});
+      return new ExamSending(ExamLot, Exams, {}, {});
     }
 
-    function fromJson(examResultLot, examResults) {
-      return new ExamSending(ExamResultLot, ExamResults, examResultLot, examResults);
+    function fromJson(examLot, exams) {
+      return new ExamSending(ExamLot, Exams, examLot, exams);
     }
 
     return self;
   }
 
-  function ExamSending(ExamResultLot, ExamResults, examResultLot, examResults) {
+  function ExamSending(ExamLot, Exams, examLot, exams) {
     var self = this;
 
-    self.examResultLot = ExamResultLot.fromJson(examResultLot);
-    self.examResults = ExamResults.fromJson(examResults);
+    self.examLot = ExamLot.fromJson(examLot);
+    self.exams = Exams.fromJson(exams);
 
     /* Public methods */
-    self.insertResult = insertResult;
-    self.removeResultByIndex = removeResultByIndex;
+    self.insertExam = insertExam;
+    self.removeExamByIndex = removeExamByIndex;
     self.toJSON = toJSON;
+    self.getExamList = getExamList;
 
-    function insertResult(result) {
-      var newResult = ExamResultLot.create(result);
-      self.examResults.push(newResult);
-      return newResult;
+    function insertExam(exam) {
+      var newExam = ExamLot.create(exam);
+      self.exams.push(newExam);
+      return newExam;
     }
 
-    function removeResultByIndex(index) {
-      return self.examResults.splice(index, 1);
+    function removeExamByIndex(index) {
+      return self.exams.splice(index, 1);
     }
 
     function toJSON() {
       var json = {
-        examResultLot: self.examResultLot,
-        examResults: self.examResults,
+        examLot: self.examLot,
+        exams: self.exams,
       };
 
       return json;
     }
 
+    function getExamList() {
+      var _examList = [];
+      self.exams.forEach(function(exam) {
+        exam.examResults.forEach(function(result) {
+          var _json = {
+            aliquotCode: result.aliquotCode,
+            examName: result.examName,
+            resultName: result.resultName,
+            value: result.value,
+            releaseDate: result.releaseDate
+          };
+          _examList.push(_json);
+        });
+      });
+
+      return _examList;
+    }
   }
 
 }());
