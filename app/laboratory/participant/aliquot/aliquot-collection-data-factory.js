@@ -25,7 +25,7 @@
     self.metadata = collectionInfo.metadata || '';
     self.operator = collectionInfo.operator || '';
     self.time = collectionInfo.time || '';
-    self.customTime = collection.customTime || '';
+    self.processingDate = collection.processingDate || '';
 
 
     self.fill = fill;
@@ -35,7 +35,7 @@
       self.metadata = "";  // sem aplicação de metadados até o momento
       self.operator = operator.email;
       self.time = new Date().toISOString();
-      self.customTime = new Date().toISOString();
+      self.processingDate = new Date().toISOString();
 
     }
 
@@ -45,7 +45,7 @@
         metadata: self.metadata,
         operator: self.operator,
         time: self.time,
-        customTime: self.customTime
+        processingDate: self.processingDate
       };
     }
   }
