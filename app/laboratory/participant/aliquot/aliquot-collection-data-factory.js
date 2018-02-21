@@ -32,11 +32,9 @@
     self.toJSON = toJSON;
 
     function fill(operator) {
-      self.metadata = "";  // sem aplicação de metadados até o momento
+      self.metadata = ""; // sem aplicação de metadados até o momento
       self.operator = operator.email;
       self.time = new Date().toISOString();
-      self.processingDate = new Date().toISOString();
-
     }
 
     function toJSON() {
