@@ -25,7 +25,7 @@
     self.metadata = collectionInfo.metadata || '';
     self.operator = collectionInfo.operator || '';
     self.time = collectionInfo.time || '';
-    self.processingDate = collection.processingDate || '';
+    self.processingDate = collectionInfo.processingDate || '';
 
 
     self.fill = fill;
