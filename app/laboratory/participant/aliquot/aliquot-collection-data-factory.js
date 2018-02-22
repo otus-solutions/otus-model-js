@@ -25,13 +25,13 @@
     self.metadata = collectionInfo.metadata || '';
     self.operator = collectionInfo.operator || '';
     self.time = collectionInfo.time || '';
-
+    self.processing = collectionInfo.processing || '';
 
     self.fill = fill;
     self.toJSON = toJSON;
 
     function fill(operator) {
-      self.metadata = "";  // sem aplicação de metadados até o momento
+      self.metadata = ""; // sem aplicação de metadados até o momento
       self.operator = operator.email;
       self.time = new Date().toISOString();
     }
@@ -41,7 +41,8 @@
         objectType: self.objectType,
         metadata: self.metadata,
         operator: self.operator,
-        time: self.time
+        time: self.time,
+        processing: self.processing
       };
     }
   }
