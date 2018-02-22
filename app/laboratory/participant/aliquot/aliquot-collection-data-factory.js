@@ -25,8 +25,8 @@
     self.metadata = collectionInfo.metadata || '';
     self.operator = collectionInfo.operator || '';
     self.time = collectionInfo.time || '';
-    self.processingDate = collectionInfo.processingDate || '';
-    
+    self.processing = collectionInfo.processing || '';
+
     self.fill = fill;
     self.toJSON = toJSON;
 
@@ -42,7 +42,7 @@
         metadata: self.metadata,
         operator: self.operator,
         time: self.time,
-        processingDate: self.processingDate
+        processing: self.processing
       };
     }
   }

@@ -33,7 +33,7 @@
     self.fieldCenter = lotInfo.fieldCenter || '';
     self.aliquotList = WorkAliquot.fromJson(lotInfo.aliquotList);
     self.shipmentDate = lotInfo.shipmentDate || '';
-    self.processingDate = lotInfo.processingDate || '';
+    self.processing = lotInfo.processing || '';
     self.operator = lotInfo.operator || '';
     self.aliquotsInfo = lotInfo.aliquotsInfo || [];
 
@@ -169,7 +169,7 @@
         code: self.code,
         fieldCenter: self.fieldCenter,
         shipmentDate: self.shipmentDate,
-        processingDate: self.processingDate,
+        processing: self.processing,
         operator: self.operator,
         aliquotList: self.aliquotList,
         aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) { return { aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity }; })

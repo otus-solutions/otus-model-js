@@ -41,7 +41,7 @@ describe('aliquot collection data factory', function() {
       metadata: 'SKIP',
       operator: 'jose@jose.eu',
       time: 'mytime',
-      processingDate: 'myProcessingDate'
+      processing: 'myprocessing'
     };
   }
 
@@ -51,7 +51,7 @@ describe('aliquot collection data factory', function() {
       metadata: 'SKIP',
       operator: 'jose@jose.eu',
       time: 'mytime',
-      processingDate: 'myProcessingDate'
+      processing: 'myprocessing'
     };
   }
 
@@ -61,7 +61,7 @@ describe('aliquot collection data factory', function() {
       metadata: '',
       operator: '',
       time: '',
-      processingDate: ''
+      processing: ''
     };
   }
   //..........................

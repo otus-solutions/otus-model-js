@@ -177,7 +177,7 @@ describe('the transportation lot factory', function() {
         code: 1
       },
       shipmentDate: "2017-09-21T15:36:56.929Z",
-      processingDate: "2017-09-21T15:36:56.929Z",
+      processing: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
       aliquotList: [],
       aliquotsInfo: []
@@ -197,7 +197,7 @@ describe('the transportation lot factory', function() {
         code: 1
       },
       shipmentDate: "2017-09-21T15:36:56.929Z",
-      processingDate: "2017-09-21T15:36:56.929Z",
+      processing: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
       aliquotList: [
         Mock.workAliquot

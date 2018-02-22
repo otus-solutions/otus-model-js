@@ -24,7 +24,7 @@ describe('the transportation service', function() {
     expect(lot.objectType).toEqual(Mock.LotJson.objectType);
     expect(lot.code).toEqual(Mock.LotJson.code);
     expect(lot.shipmentDate).toEqual(Mock.LotJson.shipmentDate);
-    expect(lot.processingDate).toEqual(Mock.LotJson.processingDate);
+    expect(lot.processing).toEqual(Mock.LotJson.processing);
     expect(lot.operator).toEqual(Mock.LotJson.operator);
     expect(lot.aliquotList).toEqual(Mock.LotJson.aliquotList);
   });
@@ -34,7 +34,7 @@ describe('the transportation service', function() {
       objectType: "TransportationLot",
       code: "30513515",
       shipmentDate: "2017-09-21T15:36:56.929Z",
-      processingDate: "2017-09-21T15:36:56.929Z",
+      processing: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
       aliquotList: []
     }
