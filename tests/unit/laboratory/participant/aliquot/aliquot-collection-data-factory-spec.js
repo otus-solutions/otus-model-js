@@ -40,7 +40,8 @@ describe('aliquot collection data factory', function() {
     Mock.CollectionInfo = {
       metadata: 'SKIP',
       operator: 'jose@jose.eu',
-      time: 'mytime'
+      time: 'mytime',
+      processingDate: 'myProcessingDate'
     };
   }
 
@@ -49,7 +50,8 @@ describe('aliquot collection data factory', function() {
       objectType: 'AliquotCollectionData',
       metadata: 'SKIP',
       operator: 'jose@jose.eu',
-      time: 'mytime'
+      time: 'mytime',
+      processingDate: 'myProcessingDate'
     };
   }
 
@@ -58,7 +60,8 @@ describe('aliquot collection data factory', function() {
       objectType: 'AliquotCollectionData',
       metadata: '',
       operator: '',
-      time: ''
+      time: '',
+      processingDate: ''
     };
   }
   //..........................

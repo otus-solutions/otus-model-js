@@ -26,8 +26,7 @@
     self.operator = collectionInfo.operator || '';
     self.time = collectionInfo.time || '';
     self.processingDate = collectionInfo.processingDate || '';
-
-
+    
     self.fill = fill;
     self.toJSON = toJSON;
 
