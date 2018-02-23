@@ -60,8 +60,8 @@
       self.label = aliquotDescriptor.label;
     }
 
-    function collect(operator) {
-      self.aliquotCollectionData.fill(operator);
+    function collect(operator, processing) {
+      self.aliquotCollectionData.fill(operator, processing);
     }
 
     function toJSON() {
