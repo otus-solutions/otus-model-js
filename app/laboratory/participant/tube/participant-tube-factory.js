@@ -98,7 +98,7 @@
     //aliquot handling
     function toAliquot(aliquotInfo) {
       var newAliquot = ParticipantAliquotFactory.create(aliquotInfo, self);
-      newAliquot.collect(_operator);
+      newAliquot.collect(_operator, aliquotInfo.processing);
       return newAliquot;
     }
 

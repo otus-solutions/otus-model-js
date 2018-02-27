@@ -30,10 +30,11 @@
     self.fill = fill;
     self.toJSON = toJSON;
 
-    function fill(operator) {
+    function fill(operator, processing) {
       self.metadata = ""; // sem aplicação de metadados até o momento
       self.operator = operator.email;
       self.time = new Date().toISOString();
+      self.processing = new Date(processing).toISOString();
     }
 
     function toJSON() {
