@@ -31,6 +31,7 @@
   function ExamObservation(observation) {
     var self = this;
 
+    self.objectType = "ExamObservation";
     self.name = observation.name || '';
     self.value = observation.value || '';
 

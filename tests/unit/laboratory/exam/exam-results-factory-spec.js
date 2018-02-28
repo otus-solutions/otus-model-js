@@ -25,7 +25,7 @@ describe('the exam results factory', function() {
      beforeEach(function() {
       spyOn(Mock.ExamResultsFactory, "create");
       Mock.ExamResultsFactory.create();
-
+      mockExamResultsJson();
     });
 
     it("should build a factory", function() {
@@ -41,6 +41,7 @@ describe('the exam results factory', function() {
     beforeEach(function functionName() {
       spyOn(Mock.ExamResultsFactory, "fromJson");
       Mock.ExamResultsFactory.fromJson(jasmine.any(Object));
+      mockExamResultsJson();
     });
 
     it("should call method fromJson", function() {
@@ -92,6 +93,7 @@ describe('the exam results factory', function() {
     Mock.ExamResultsJson = [{
       objectType: 'ExamResults',
       examName: "HEMOGRAMA",
+      observations: Mock.observation,
       aliquotCode: "354005001",
       resultName: "Basofilos",
       releaseDate: "2018-01-10T09:49:50.000Z",
@@ -102,10 +104,10 @@ describe('the exam results factory', function() {
   }
 
   function mockObservation() {
-    Mock.observation = {
+    Mock.observation = [{
       name: "OBS",
       value: 123
-    }
+    }]
   }
 
   function mockExamResultsFactory(_$injector_, injections) {
