@@ -1,11 +1,12 @@
 describe('the exam results factory', function() {
   var Mock = {};
   var injections;
-
+  
+  beforeEach(function() {
+    window.module("otusjs.laboratory.exam.sending");
+  });
 
   beforeEach(function() {
-    angular.mock.module("otusjs.laboratory.exam.sending");
-
     inject(function(_$injector_) {
       var injections = {
         ExamObservation: _$injector_.get("otusjs.laboratory.exam.sending.ExamObservation")
@@ -22,7 +23,7 @@ describe('the exam results factory', function() {
 
   describe("expect method create been called", function() {
     var _obj;
-     beforeEach(function() {
+    beforeEach(function() {
       spyOn(Mock.ExamResultsFactory, "create");
       Mock.ExamResultsFactory.create();
       mockExamResultsJson();
@@ -64,30 +65,30 @@ describe('the exam results factory', function() {
         expect(JSON.stringify(Mock.ExamResultsFromJson)).toEqual(JSON.stringify(Mock.ExamResultsJson));
       });
 
-    });
+  });
 
 
   describe("objectType ExamResults verify ", function() {
     it('objectType should be equal "ExamResults" ', function() {
       expect(Mock.ExamResultsJson[0].objectType).toEqual("ExamResults");
     });
- });
+  });
 
- describe("insert observation method",function() {
-   it("should insert a observation exam", function() {
-     expect(Mock.insertObservation).toBeDefined();
-     expect(Mock.insertObservation).not.toBeNull();
-     expect(Mock.insertObservation).toEqual(jasmine.any(Object));
-   });
- });
+  describe("insert observation method", function() {
+    it("should insert a observation exam", function() {
+      expect(Mock.insertObservation).toBeDefined();
+      expect(Mock.insertObservation).not.toBeNull();
+      expect(Mock.insertObservation).toEqual(jasmine.any(Object));
+    });
+  });
 
- describe("remove observation method",function() {
-   it("should insert a observation exam", function() {
-     expect(Mock.removeObservation).toBeDefined();
-     expect(Mock.removeObservation).not.toBeNull();
-     expect(Mock.removeObservation).toEqual(jasmine.any(Object));
-   });
- });
+  describe("remove observation method", function() {
+    it("should insert a observation exam", function() {
+      expect(Mock.removeObservation).toBeDefined();
+      expect(Mock.removeObservation).not.toBeNull();
+      expect(Mock.removeObservation).toEqual(jasmine.any(Object));
+    });
+  });
 
   function mockExamResultsJson() {
     Mock.ExamResultsJson = [{
