@@ -48,13 +48,12 @@
     self.removeResultByIndex = removeResultByIndex;
     self.removeObservationByIndex = removeObservationByIndex;
 
-    //TODO: AVALIAR
     function insertObservation(observation) {
       var newObservation = ExamObservation.create(observation);
       self.observations.push(newObservation);
       return newObservation;
     }
-    //TODO: avaliar
+
     function insertResult(result) {
       var newResult = ExamResults.create(result);
       self.examResults.push(newResult);

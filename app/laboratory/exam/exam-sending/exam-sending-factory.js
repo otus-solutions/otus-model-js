@@ -38,7 +38,6 @@
     self.toJSON = toJSON;
     self.getExamList = getExamList;
 
-    //TODO: avaliar
     function insertExam(exam) {
       var newExam = ExamLot.create(exam);
       self.exams.push(newExam);
