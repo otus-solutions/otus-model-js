@@ -38,6 +38,7 @@
     self.toJSON = toJSON;
     self.getExamList = getExamList;
 
+    //TODO: avaliar
     function insertExam(exam) {
       var newExam = ExamLot.create(exam);
       self.exams.push(newExam);
@@ -66,7 +67,8 @@
             examName: result.examName,
             resultName: result.resultName,
             value: result.value,
-            releaseDate: result.releaseDate
+            releaseDate: result.releaseDate,
+            aliquotValid: result.aliquotValid
           };
           _examList.push(_json);
         });

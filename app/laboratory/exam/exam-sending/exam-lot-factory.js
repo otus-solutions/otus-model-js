@@ -27,12 +27,14 @@
 
     self._id = examLot._id || '';
 
-    self.objectType = examLot.objectType || '';
+    self.objectType = 'ExamLot';
     self.operator = examLot.operator || '';
     self.fileName = examLot.fileName || '';
     self.realizationDate = examLot.realizationDate || '';
     self.resultsQuantity = examLot.resultsQuantity || '';
     self.fieldCenter = examLot.fieldCenter || '';
+    //TODO: novo atributo
+    self.forcedSave = false;
 
     /* Public methods */
     self.toJSON = toJSON;
@@ -44,7 +46,8 @@
         fileName: self.fileName,
         realizationDate: self.realizationDate,
         resultsQuantity: self.resultsQuantity,
-        fieldCenter: self.fieldCenter
+        fieldCenter: self.fieldCenter,
+        forcedSave: self.forcedSave
       };
 
       if(self._id){

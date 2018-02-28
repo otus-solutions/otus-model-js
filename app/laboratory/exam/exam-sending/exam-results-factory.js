@@ -34,7 +34,7 @@
   function ExamResults(ExamObservation, result) {
     var self = this;
 
-    self.observations = ExamObservation.fromJson(result.observations)
+    self.observations = ExamObservation.fromJson(result.observations);
 
     self.objectType = 'ExamResults';
     self.examName = result.examName || '';
@@ -42,6 +42,8 @@
     self.releaseDate = result.releaseDate || '';
     self.resultName = result.resultName || '';
     self.value = result.value || '';
+    //TODO: novo atributo
+    self.aliquotValid = true;
 
     /* Public methods */
     self.toJSON = toJSON;
@@ -56,19 +58,15 @@
         resultName: self.resultName,
         releaseDate: self.releaseDate,
         observations: self.observations,
-        value: self.value
+        value: self.value,
+        aliquotValid: self.aliquotValid
       };
-
-      if (!self.value) {
-        var msg = "Result not found";
-        throw new Error(msg);
-      }
 
       return json;
     }
 
     function insertObservation(observation) {
-      var newObservation = Observation.create(observation);
+      var newObservation = ExamObservation.create(observation);
       self.observations.push(newObservation);
       return newObservation;
     }
