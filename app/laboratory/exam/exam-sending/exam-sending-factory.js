@@ -6,32 +6,32 @@
     .factory('otusjs.laboratory.exam.sending.ExamSendingFactory', Factory);
 
   Factory.$inject = [
-    'otusjs.laboratory.exam.sending.ExamLot',
+    'otusjs.laboratory.exam.sending.ExamSendingLot',
     'otusjs.laboratory.exam.sending.Exam'
   ];
 
-  function Factory(ExamLot, Exams) {
+  function Factory(ExamSendingLot, Exam) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamSending(ExamLot, Exams, {}, {});
+      return new ExamSending(ExamSendingLot, Exam, {}, {});
     }
 
     function fromJson(examLot, exams) {
-      return new ExamSending(ExamLot, Exams, examLot, exams);
+      return new ExamSending(ExamSendingLot, Exam, examLot, exams);
     }
 
     return self;
   }
 
-  function ExamSending(ExamLot, Exams, examLot, exams) {
+  function ExamSending(ExamSendingLot, Exam, examLot, exams) {
     var self = this;
 
 
-    self.examLot = ExamLot.fromJson(examLot);
-    self.exams = Exams.fromJson(exams);
+    self.examLot = ExamSendingLot.fromJson(examLot);
+    self.exams = Exam.fromJson(exams);
 
     /* Public methods */
     self.insertExam = insertExam;
@@ -40,7 +40,7 @@
     self.getExamList = getExamList;
 
     function insertExam(exam) {
-      var newExam = Exams.create(exam);
+      var newExam = Exam.create(exam);
       self.exams.push(newExam);
       return newExam;
     }
@@ -52,7 +52,7 @@
     function toJSON() {
       var json = {
         examLot: self.examLot,
-        exams: self.exams,
+        exams: self.exams
       };
 
       return json;

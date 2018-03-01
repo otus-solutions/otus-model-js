@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.exam.sending')
-    .factory('otusjs.laboratory.exam.sending.ExamLot', Factory);
+    .factory('otusjs.laboratory.exam.sending.ExamSendingLot', Factory);
 
   function Factory() {
     var self = this;
@@ -11,14 +11,14 @@
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamLot({});
+      return new ExamSendingLot({});
     }
 
     function fromJson(examLot) {
       if(examLot instanceof Object){
-        return new ExamLot(examLot);
+        return new ExamSendingLot(examLot);
       } else {
-        return new ExamLot({});
+        return new ExamSendingLot({});
       }
     }
 
@@ -26,12 +26,12 @@
     return self;
   }
 
-  function ExamLot(examLot) {
+  function ExamSendingLot(examLot) {
     var self = this;
 
     self._id = examLot._id || '';
 
-    self.objectType = 'ExamLot';
+    self.objectType = 'ExamSendingLot';
     self.operator = examLot.operator || '';
     self.fileName = examLot.fileName || '';
     self.realizationDate = examLot.realizationDate || '';
@@ -53,7 +53,7 @@
         forcedSave: self.forcedSave
       };
 
-      if(self._id !== ''){
+      if(self._id){
         json._id = self._id;
       }
 

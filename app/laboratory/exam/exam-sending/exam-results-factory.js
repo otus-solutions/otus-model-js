@@ -42,7 +42,6 @@
     self.releaseDate = result.releaseDate || '';
     self.resultName = result.resultName || '';
     self.value = result.value || '';
-    //TODO: novo atributo
     self.aliquotValid = true;
 
     /* Public methods */

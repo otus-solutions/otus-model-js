@@ -9,8 +9,8 @@ describe('the exam results factory', function() {
       beforeEach(function() {
         inject(function(_$injector_) {
           injections = {
-            ExamLot: _$injector_.get('otusjs.laboratory.exam.sending.ExamLot'),
-            Exams: _$injector_.get('otusjs.laboratory.exam.sending.Exam')
+            ExamSendingLot: _$injector_.get('otusjs.laboratory.exam.sending.ExamSendingLot'),
+            Exam: _$injector_.get('otusjs.laboratory.exam.sending.Exam')
 
           };
           mockExamSendingFactory(_$injector_, injections);
@@ -29,14 +29,10 @@ describe('the exam results factory', function() {
         beforeEach(function() {
           spyOn(Mock.ExamSendingFactory, "create");
           Mock.ExamSendingFactory.create();
-          // mockExamSendingJson();
         });
 
         it("should build a factory", function() {
           expect(Mock.ExamSendingFactory.create).toHaveBeenCalled();
-          // expect(Mock.ExamSendingFactory.create).not.toHaveBeenCalledWith(jasmine.any(Object));
-          // expect(Mock.ExamSendingFactory.create).not.toHaveBeenCalledWith(Mock.ExamSendingJsonNotValue);
-          // expect(Mock.ExamSendingFactory.create).toBeDefined();
           expect(Mock.ExamSendingFactory).toEqual(jasmine.any(Object));
         });
       });
@@ -56,7 +52,6 @@ describe('the exam results factory', function() {
 
       describe('toJSON method', function() {
         beforeEach(function() {
-          // mockExamSendingJson();
           mockExamSendingFromJson();
         });
 
@@ -81,17 +76,6 @@ describe('the exam results factory', function() {
           expect(Mock.removedExamByIndex).not.toBeNull();
           expect(Mock.removedExamByIndex).toEqual(jasmine.any(Object));
         });
-      });
-
-      describe("getExamList method", function() {
-        var examList = [];
-        beforeEach(function() {
-          spyOn(Mock.ExamSendingFromJson, "getExamList");
-          mockExamSendingFromJson();
-          Mock.ExamSendingFromJson.getExamList();
-        });
-        // expect(Mock.ExamSendingFromJson.getExamList).toHaveBeenCalled();
-        // expect(examList).not.toBeNull();
       });
 
       function mockExamSendingJson() {
@@ -120,7 +104,7 @@ describe('the exam results factory', function() {
 
         Mock.ExamSendingJson = {
           "examLot": {
-            "objectType": "ExamLot",
+            "objectType": "ExamSendingLot",
             "operator": "diogo.rosas.ferreira@gmail.com",
             "fileName": "exams-existents.json",
             "realizationDate": "2018-02-01T13:20:59.383Z",
@@ -157,7 +141,7 @@ describe('the exam results factory', function() {
           }
 
           function mockExamSendingFactory(_$injector_, injections) {
-            Mock.ExamLot = _$injector_.get('otusjs.laboratory.exam.sending.ExamLot');
+            Mock.ExamLot = _$injector_.get('otusjs.laboratory.exam.sending.ExamSendingLot');
             Mock.Exams = _$injector_.get('otusjs.laboratory.exam.sending.Exam');
             Mock.ExamSendingFactory = _$injector_.get(
               'otusjs.laboratory.exam.sending.ExamSendingFactory', injections);
