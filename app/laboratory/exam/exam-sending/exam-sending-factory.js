@@ -29,6 +29,7 @@
   function ExamSending(ExamLot, Exams, examLot, exams) {
     var self = this;
 
+
     self.examLot = ExamLot.fromJson(examLot);
     self.exams = Exams.fromJson(exams);
 
@@ -39,7 +40,7 @@
     self.getExamList = getExamList;
 
     function insertExam(exam) {
-      var newExam = ExamLot.create(exam);
+      var newExam = Exams.create(exam);
       self.exams.push(newExam);
       return newExam;
     }

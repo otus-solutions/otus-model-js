@@ -11,11 +11,15 @@
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamLot();
+      return new ExamLot({});
     }
 
     function fromJson(examLot) {
-      return new ExamLot(examLot);
+      if(examLot instanceof Object){
+        return new ExamLot(examLot);
+      } else {
+        return new ExamLot({});
+      }
     }
 
 
@@ -33,7 +37,6 @@
     self.realizationDate = examLot.realizationDate || '';
     self.resultsQuantity = examLot.resultsQuantity || '';
     self.fieldCenter = examLot.fieldCenter || '';
-    //TODO: novo atributo
     self.forcedSave = false;
 
     /* Public methods */
@@ -50,8 +53,8 @@
         forcedSave: self.forcedSave
       };
 
-      if(self._id){
-        json._id = self._id
+      if(self._id !== ''){
+        json._id = self._id;
       }
 
       return json;
