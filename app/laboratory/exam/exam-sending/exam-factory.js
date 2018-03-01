@@ -15,8 +15,8 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(exam) {
-      return new Exam(ExamResults, ExamObservation, exam);
+    function create() {
+      return new Exam(ExamResults, ExamObservation, {});
     }
 
     function fromJson(examInfoArray) {

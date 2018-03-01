@@ -40,8 +40,8 @@
     self.getExamList = getExamList;
 
     function insertExam(exam) {
-      var newExam = Exam.create(exam);
-      self.exams.push(newExam);
+      var newExam = Exam.fromJson([exam]);
+      self.exams.push(newExam[0]);
       return newExam;
     }
 
