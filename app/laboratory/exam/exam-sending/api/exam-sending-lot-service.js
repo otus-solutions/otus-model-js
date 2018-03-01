@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.exam.sending')
-    .service('otusjs.laboratory.exam.sending.ExamLotService', service);
+    .service('otusjs.laboratory.exam.sending.ExamSendingLotService', service);
 
   service.$inject = [
     'otusjs.laboratory.exam.sending.ExamSendingFactory'

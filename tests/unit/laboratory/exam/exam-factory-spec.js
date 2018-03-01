@@ -1,4 +1,4 @@
-xdescribe('the exam results factory', function() {
+describe('the exam results factory', function() {
       var Mock = {};
       var injections;
 
@@ -15,16 +15,15 @@ xdescribe('the exam results factory', function() {
           };
           mockExamFactory(_$injector_, injections);
           mockExam();
-          mockExamFromJson(jasmine.any(Object));
-          mockExamJson();
-          mockExamJson()
-          mockInsertExam();
-          mockGetExamList();
-          mockRemoveExam();
+          // mockExamFromJson(jasmine.any(Object));
+          // mockExamJson();
+          // mockInsertExam();
+          //mockGetExamList();
+          //mockRemoveExam();
         });
       });
 
-      xdescribe("expect method create been called", function() {
+      describe("expect method create been called", function() {
 
         beforeEach(function() {
           spyOn(Mock.ExamFactory, "create");
@@ -141,8 +140,8 @@ xdescribe('the exam results factory', function() {
           }
 
           function mockExamFactory(_$injector_, injections) {
-            Mock.ExamLot = _$injector_.get('otusjs.laboratory.exam.sending.ExamLot');
-            Mock.Exams = _$injector_.get('otusjs.laboratory.exam.sending.Exam');
+            // Mock.ExamLot = _$injector_.get('otusjs.laboratory.exam.sending.ExamLot');
+            // Mock.Exams = _$injector_.get('otusjs.laboratory.exam.sending.Exam');
             Mock.ExamFactory = _$injector_.get(
               'otusjs.laboratory.exam.sending.Exam', injections);
           }
@@ -150,31 +149,31 @@ xdescribe('the exam results factory', function() {
           function mockExam() {
             Mock.Exam = Mock.ExamFactory.create();
           }
+          //
+          // function mockExamFromJson() {
+          //   Mock.ExamFromJson = Mock.ExamFactory.fromJson(Mock.examLot, Mock.exams);
+          // }
 
-          function mockExamFromJson() {
-            Mock.ExamFromJson = Mock.ExamFactory.fromJson(Mock.examLot, Mock.exams);
-          }
+          // function mockInsertExam() {
+          //   Mock.insertedExam = Mock.ExamFromJson.insertExam(Mock.exams);
+          // }
+          //
+          // function mockRemoveExam() {
+          //   Mock.removedExamByIndex = Mock.ExamFromJson.removeExamByIndex(jasmine.any(Number));
+          // }
+          //
+          // function mockGetExamList() {
+          //   mockExamFromJson();
+          //   mockInsertExam();
+          //   Mock.getExams = Mock.ExamFromJson.getExamList();
+          // }
 
-          function mockInsertExam() {
-            Mock.insertedExam = Mock.ExamFromJson.insertExam(Mock.exams);
-          }
-
-          function mockRemoveExam() {
-            Mock.removedExamByIndex = Mock.ExamFromJson.removeExamByIndex(jasmine.any(Number));
-          }
-
-          function mockGetExamList() {
-            mockExamFromJson();
-            mockInsertExam();
-            Mock.getExams = Mock.ExamFromJson.getExamList();
-          }
-
-          function mockExamResults() {
-            var injections = {
-              ExamObservation: _$injector_.get("otusjs.laboratory.exam.sending.ExamObservation")
-            };
-            Mock.ExamResultsFactory = _$injector_.get(
-              'otusjs.laboratory.exam.sending.ExamResults', injections);
-          }
+          // function mockExamResults() {
+          //   var injections = {
+          //     ExamObservation: _$injector_.get("otusjs.laboratory.exam.sending.ExamObservation")
+          //   };
+          //   Mock.ExamResultsFactory = _$injector_.get(
+          //     'otusjs.laboratory.exam.sending.ExamResults', injections);
+          // }
 
         });

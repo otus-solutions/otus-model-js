@@ -79,7 +79,7 @@ describe('the exam results factory', function() {
       });
 
       function mockExamSendingJson() {
-        Mock.ExamLotJson = {
+        Mock.ExamSendingLotJson = {
           _id: "16541321616",
           fieldCenter: {
             acronym: "SP"
@@ -134,14 +134,14 @@ describe('the exam results factory', function() {
           }
 
           function mockExamJson() {
-            var lote = Mock.ExamLot.create();
-            lote = Mock.ExamLot.create();
+            var lote = Mock.ExamSendingLot.create();
+            lote = Mock.ExamSendingLot.create();
             Mock.exams = Mock.Exams.fromJson(Mock.ExamJson);
-            Mock.examLot = Mock.ExamLot.fromJson(Mock.ExamLotJson);
+            Mock.examLot = Mock.ExamSendingLot.fromJson(Mock.ExamSendingLotJson);
           }
 
           function mockExamSendingFactory(_$injector_, injections) {
-            Mock.ExamLot = _$injector_.get('otusjs.laboratory.exam.sending.ExamSendingLot');
+            Mock.ExamSendingLot = _$injector_.get('otusjs.laboratory.exam.sending.ExamSendingLot');
             Mock.Exams = _$injector_.get('otusjs.laboratory.exam.sending.Exam');
             Mock.ExamSendingFactory = _$injector_.get(
               'otusjs.laboratory.exam.sending.ExamSendingFactory', injections);

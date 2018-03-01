@@ -49,14 +49,14 @@
     self.removeObservationByIndex = removeObservationByIndex;
 
     function insertObservation(observation) {
-      var newObservation = ExamObservation.create(observation);
-      self.observations.push(newObservation);
+      var newObservation = ExamObservation.fromJson([observation]);
+      self.observations.push(newObservation[0]);
       return newObservation;
     }
 
     function insertResult(result) {
-      var newResult = ExamResults.create(result);
-      self.examResults.push(newResult);
+      var newResult = ExamResults.fromJson([result]);
+      self.examResults.push(newResult[0]);
       return newResult;
     }
 
