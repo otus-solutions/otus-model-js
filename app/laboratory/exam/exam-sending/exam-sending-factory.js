@@ -19,18 +19,18 @@
       return new ExamSending(ExamSendingLot, Exam, {}, {});
     }
 
-    function fromJson(examLot, exams) {
-      return new ExamSending(ExamSendingLot, Exam, examLot, exams);
+    function fromJson(examSendingLot, exams) {
+      return new ExamSending(ExamSendingLot, Exam, examSendingLot, exams);
     }
 
     return self;
   }
 
-  function ExamSending(ExamSendingLot, Exam, examLot, exams) {
+  function ExamSending(ExamSendingLot, Exam, examSendingLot, exams) {
     var self = this;
 
 
-    self.examLot = ExamSendingLot.fromJson(examLot);
+    self.examSendingLot = ExamSendingLot.fromJson(examSendingLot);
     self.exams = Exam.fromJson(exams);
 
     /* Public methods */
@@ -51,7 +51,7 @@
 
     function toJSON() {
       var json = {
-        examLot: self.examLot,
+        examSendingLot: self.examSendingLot,
         exams: self.exams
       };
 
