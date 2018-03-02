@@ -33,13 +33,13 @@
     self.fieldCenter = lotInfo.fieldCenter || '';
     self.aliquotList = WorkAliquot.fromJson(lotInfo.aliquotList);
     self.shipmentDate = lotInfo.shipmentDate || '';
-    self.processing = lotInfo.processing || '';
+    self.processingDate = lotInfo.processingDate || '';
     self.operator = lotInfo.operator || '';
     self.aliquotsInfo = lotInfo.aliquotsInfo || [];
 
     self.chartDataSet = {
-      labels: [], 
-      data: [], 
+      labels: [],
+      data: [],
       backgroundColor: [],
       fieldCenter: self.fieldCenter,
       chartId: self.code
@@ -66,7 +66,7 @@
           aliquotInfo.roleLabel = aliquot.roleLabel;
         }
       });
-      
+
       if(self.aliquotList.length && !self.aliquotsInfo.length){
         self.aliquotList.forEach(function(aliquot){
           _addAliquotInfo(aliquot);
@@ -88,7 +88,7 @@
             return 1;
           return 0;
         });
-  
+
         self.aliquotsInfo.forEach(function(aliquotInfo){
           self.chartDataSet.labels.push(aliquotInfo.aliquotLabel + " (" + aliquotInfo.roleLabel + ")");
           self.chartDataSet.data.push(aliquotInfo.quantity);
@@ -169,7 +169,7 @@
         code: self.code,
         fieldCenter: self.fieldCenter,
         shipmentDate: self.shipmentDate,
-        processing: self.processing,
+        processingDate: self.processingDate,
         operator: self.operator,
         aliquotList: self.aliquotList,
         aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) { return { aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity }; })
