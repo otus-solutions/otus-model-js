@@ -37,7 +37,7 @@
     self.realizationDate = examLot.realizationDate || '';
     self.resultsQuantity = examLot.resultsQuantity || '';
     self.fieldCenter = examLot.fieldCenter || '';
-    self.forcedSave = false;
+    self.forcedSave = examLot.forcedSave || false;
 
     /* Public methods */
     self.toJSON = toJSON;
