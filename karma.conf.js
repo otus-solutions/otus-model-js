@@ -1,7 +1,8 @@
 // Karma configuration
 
-module.exports = function(config) {
+module.exports = function (config) {
   var APP_ROOT_PATH = 'app/';
+  var TEST_UTILS_ROOT_PATH = 'tests/utils/';
   var NODE_MODULES_ROOT_PATH = 'node_modules/';
   var DEPENDENCIES_ROOT_PATH = 'app/shared/';
 
@@ -31,7 +32,8 @@ module.exports = function(config) {
         pattern: 'tests/**/*-spec.js',
         included: true
       },
-      'tests/utils/data/**/*.js'
+      TEST_UTILS_ROOT_PATH + 'data/latest-survey-template.js',
+      TEST_UTILS_ROOT_PATH + 'data/json-importer.js'
     ],
 
     // preprocess matching files before serving them to the browser

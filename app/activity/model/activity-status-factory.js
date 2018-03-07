@@ -67,7 +67,7 @@
 
       json.objectType = self.objectType;
       json.name = self.name;
-      json.date = self.date.toISOString();
+      json.date = self.date;
       json.user = self.user;
 
       return JSON.stringify(json);
