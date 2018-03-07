@@ -1,13 +1,13 @@
-describe('the laboratory configuration service', function() {
+describe('the laboratory configuration service', function () {
   //skipped beacuse phantom-js
   //if some test fails, try updating the json-importer.js file
   var Mock = {};
   var service;
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('otusjs.laboratory');
 
-    inject(function(_$injector_) {
+    inject(function (_$injector_) {
       var injections = {};
       service = _$injector_.get(
         'otusjs.laboratory.configuration.LaboratoryConfigurationService',
@@ -24,13 +24,13 @@ describe('the laboratory configuration service', function() {
 
   });
 
-  describe('data initialization', function() {
-    beforeEach(function() {
+  describe('data initialization', function () {
+    beforeEach(function () {
       service.initializeParticipantConfiguration(Mock.SelectedParticipant,
         Mock.ParticipantLaboratory.collectGroupName);
     });
 
-    it('should initialize full descriptors', function() {
+    it('should initialize full descriptors', function () {
       service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
       var checkFullDescriptors = service.checkLaboratoryConfiguration();
       var checkAliquotsDescriptor = service.checkAliquotsDescriptors();
@@ -38,7 +38,7 @@ describe('the laboratory configuration service', function() {
       expect(checkAliquotsDescriptor).toBe(true);
     });
 
-    it('should initialize aliquots descriptors', function() {
+    it('should initialize aliquots descriptors', function () {
       service.initializeAliquotsDescriptors(Mock.LabDescriptors.aliquotConfiguration
         .aliquotDescriptors);
       var checkFullDescriptors = service.checkLaboratoryConfiguration();
@@ -47,7 +47,7 @@ describe('the laboratory configuration service', function() {
       expect(checkAliquotsDescriptor).toBe(true);
     });
 
-    it('should throw error when not initialized', function() {
+    it('should throw error when not initialized', function () {
       var checkFullDescriptors = service.checkLaboratoryConfiguration();
       var checkAliquotsDescriptor = service.checkAliquotsDescriptors();
       expect(checkFullDescriptors).toBe(false);
@@ -63,16 +63,16 @@ describe('the laboratory configuration service', function() {
     });
   });
 
-  describe('the descriptor getters', function() {
+  describe('the descriptor getters', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
       service.initializeParticipantConfiguration(Mock.SelectedParticipant,
         Mock.ParticipantLaboratory.collectGroupName);
     });
 
     it('should get return the right container given an aliquot code',
-      function() {
+      function () {
         var code = 321425120;
         var container = service.getAliquotContainer(code);
 
@@ -89,7 +89,7 @@ describe('the laboratory configuration service', function() {
         expect(container).toEqual('CRYOTUBE');
       });
 
-    it('should get avaiable aliquots', function() {
+    it('should get avaiable aliquots', function () {
       Mock.SelectedParticipant.fieldCenter.acronym = 'RS';
       service.initializeParticipantConfiguration(Mock.SelectedParticipant,
         'CQ1');
@@ -99,17 +99,21 @@ describe('the laboratory configuration service', function() {
     });
   });
 
-  xit("should validate Aliquot Wave", function() {
-    beforeEach(function() {
+  describe('the descriptor getters second scenario', function () {
+
+    beforeEach(function () {
       service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
       service.initializeParticipantConfiguration(Mock.SelectedParticipant,
         Mock.ParticipantLaboratory.collectGroupName);
     });
-    spyOn(service, "validateAliquotWave");
-    var code = 321425120;
-    var container = service.validateAliquotWave(code);
-    expect(container).not.toEqual(null);
-    expect(service.validateAliquotWave).toHaveBeenCalledWith(code);
+
+    it("should validate Aliquot Wave", function () {
+      spyOn(service, "validateAliquotWave");
+      var code = 321425120;
+      var container = service.validateAliquotWave(code);
+      expect(container).not.toEqual(null);
+      expect(service.validateAliquotWave).toHaveBeenCalledWith(code);
+    });
   });
 
   //--------
