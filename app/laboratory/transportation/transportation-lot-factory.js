@@ -38,8 +38,8 @@
     self.aliquotsInfo = lotInfo.aliquotsInfo || [];
 
     self.chartDataSet = {
-      labels: [], 
-      data: [], 
+      labels: [],
+      data: [],
       backgroundColor: [],
       fieldCenter: self.fieldCenter,
       chartId: self.code
@@ -66,7 +66,7 @@
           aliquotInfo.roleLabel = aliquot.roleLabel;
         }
       });
-      
+
       if(self.aliquotList.length && !self.aliquotsInfo.length){
         self.aliquotList.forEach(function(aliquot){
           _addAliquotInfo(aliquot);
@@ -88,7 +88,7 @@
             return 1;
           return 0;
         });
-  
+
         self.aliquotsInfo.forEach(function(aliquotInfo){
           self.chartDataSet.labels.push(aliquotInfo.aliquotLabel + " (" + aliquotInfo.roleLabel + ")");
           self.chartDataSet.data.push(aliquotInfo.quantity);

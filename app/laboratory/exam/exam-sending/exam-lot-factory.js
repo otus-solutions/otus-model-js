@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.exam.sending')
-    .factory('otusjs.laboratory.exam.sending.ExamResultLot', Factory);
+    .factory('otusjs.laboratory.exam.sending.ExamLot', Factory);
 
   function Factory() {
     var self = this;
@@ -11,32 +11,35 @@
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamResultLot();
+      return new ExamLot();
     }
 
-    function fromJson(resultLot) {
-      return new ExamResultLot(resultLot);
+    function fromJson(examLot) {
+      return new ExamLot(examLot);
     }
 
 
     return self;
   }
 
-  function ExamResultLot(resultLot) {
+  function ExamLot(examLot) {
     var self = this;
 
-    self._id = resultLot._id || '';
-    self.operator = resultLot.operator || '';
-    self.fileName = resultLot.fileName || '';
-    self.realizationDate = resultLot.realizationDate || '';
-    self.resultsQuantity = resultLot.resultsQuantity || '';
-    self.fieldCenter = resultLot.fieldCenter || '';
+    self._id = examLot._id || '';
+
+    self.objectType = examLot.objectType || '';
+    self.operator = examLot.operator || '';
+    self.fileName = examLot.fileName || '';
+    self.realizationDate = examLot.realizationDate || '';
+    self.resultsQuantity = examLot.resultsQuantity || '';
+    self.fieldCenter = examLot.fieldCenter || '';
 
     /* Public methods */
     self.toJSON = toJSON;
 
     function toJSON() {
       var json = {
+        objectType: self.objectType,
         operator: self.operator,
         fileName: self.fileName,
         realizationDate: self.realizationDate,

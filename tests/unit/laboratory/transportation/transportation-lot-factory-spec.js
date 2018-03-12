@@ -140,7 +140,7 @@ describe('the transportation lot factory', function() {
       expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].aliquotName).toBe('BIOCHEMICAL_SERUM');
       expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].quantity).toBe(2);
     });
-    
+
     it('should have BIOCHEMICAL_SERUM whith quantity equal 3 in aliquotsInfo', function() {
       Mock.lotWithAliquotFromJSON.insertAliquot(Mock.workAliquot);
       Mock.lotWithAliquotFromJSON.insertAliquot(Mock.workAliquot);
@@ -154,7 +154,7 @@ describe('the transportation lot factory', function() {
       mockLotWithAliquotFromJSON();
       Mock.lotWithAliquotFromJSON.insertAliquot(Mock.workAliquot);
     });
-    
+
     it('should have BIOCHEMICAL_SERUM whith quantity equal 1 in aliquotsInfo', function() {
       Mock.lotWithAliquotFromJSON.removeAliquotByIndex(0);
       expect(Mock.lotWithAliquotFromJSON.aliquotsInfo[0].quantity).toBe(1);
