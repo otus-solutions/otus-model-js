@@ -6,31 +6,32 @@
     .factory('otusjs.laboratory.exam.sending.ExamSendingFactory', Factory);
 
   Factory.$inject = [
-    'otusjs.laboratory.exam.sending.ExamLot',
+    'otusjs.laboratory.exam.sending.ExamSendingLot',
     'otusjs.laboratory.exam.sending.Exam'
   ];
 
-  function Factory(ExamLot, Exams) {
+  function Factory(ExamSendingLot, Exam) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamSending(ExamLot, Exams, {}, {});
+      return new ExamSending(ExamSendingLot, Exam, {}, {});
     }
 
-    function fromJson(examLot, exams) {
-      return new ExamSending(ExamLot, Exams, examLot, exams);
+    function fromJson(examSendingLot, exams) {
+      return new ExamSending(ExamSendingLot, Exam, examSendingLot, exams);
     }
 
     return self;
   }
 
-  function ExamSending(ExamLot, Exams, examLot, exams) {
+  function ExamSending(ExamSendingLot, Exam, examSendingLot, exams) {
     var self = this;
 
-    self.examLot = ExamLot.fromJson(examLot);
-    self.exams = Exams.fromJson(exams);
+
+    self.examSendingLot = ExamSendingLot.fromJson(examSendingLot);
+    self.exams = Exam.fromJson(exams);
 
     /* Public methods */
     self.insertExam = insertExam;
@@ -39,8 +40,8 @@
     self.getExamList = getExamList;
 
     function insertExam(exam) {
-      var newExam = ExamLot.create(exam);
-      self.exams.push(newExam);
+      var newExam = Exam.fromJson([exam]);
+      self.exams.push(newExam[0]);
       return newExam;
     }
 
@@ -50,8 +51,8 @@
 
     function toJSON() {
       var json = {
-        examLot: self.examLot,
-        exams: self.exams,
+        examSendingLot: self.examSendingLot,
+        exams: self.exams
       };
 
       return json;
@@ -66,7 +67,8 @@
             examName: result.examName,
             resultName: result.resultName,
             value: result.value,
-            releaseDate: result.releaseDate
+            releaseDate: result.releaseDate,
+            aliquotValid: result.aliquotValid
           };
           _examList.push(_json);
         });

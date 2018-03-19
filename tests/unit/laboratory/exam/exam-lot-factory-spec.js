@@ -110,7 +110,7 @@ describe('the exam lot factory', function() {
     it('aliquotName should be equal BIOCHEMICAL_SERUM ', function () {
       expect(Mock.ExamLotFromJson.aliquotName).toEqual("BIOCHEMICAL_SERUM");
     });
-    
+
     it('aliquotName should be equal FASTING_SERUM ', function () {
       Mock.ExamLotFromJson.setAliquotName("FASTING_SERUM");
       expect(Mock.ExamLotFromJson.aliquotName).toEqual("FASTING_SERUM");
@@ -127,14 +127,14 @@ describe('the exam lot factory', function() {
     it('aliquotLabel should be equal "Bioquímica Soro" ', function () {
       expect(Mock.ExamLotFromJson.aliquotLabel).toEqual("Bioquímica Soro");
     });
-    
+
     it('aliquotLabel should be equal "Soro Jejum" ', function () {
       Mock.ExamLotFromJson.setAliquotName("FASTING_SERUM");
       expect(Mock.ExamLotFromJson.aliquotLabel).toEqual("Soro Jejum");
     });
   });
 
-  
+
   describe("getAliquotsToCsv method ", function () {
     beforeEach(function () {
       Mock.ExamLot.insertAliquot(Mock.workAliquot);
@@ -144,7 +144,7 @@ describe('the exam lot factory', function() {
     it('should have the aliquota attribute on object ', function () {
       expect(Mock.AliquotStructuresToCsv[0].aliquota).not.toBeUndefined();
     });
-    
+
     it('should have the sexo attribute on object ', function () {
       expect(Mock.AliquotStructuresToCsv[0].sexo).not.toBeUndefined();
     });
@@ -199,7 +199,7 @@ describe('the exam lot factory', function() {
   function mockAliquotStructuresToCsv() {
     Mock.AliquotStructuresToCsv = Mock.ExamLot.getAliquotsToCsv(); //json-importer
   }
-  
+
   function mockParticipantLaboratory() {
     Mock.ParticipantLaboratory = Test.utils.data.participantLaboratory; //json-importer.js
   }

@@ -42,7 +42,11 @@
     self.releaseDate = result.releaseDate || '';
     self.resultName = result.resultName || '';
     self.value = result.value || '';
+<<<<<<< HEAD
+    self.aliquotValid = result.aliquotValid || true;
+=======
     self.aliquotValid = result.aliquotValid === false ? false : true;
+>>>>>>> 595143b9e2dad24fc548f30314d8052c91eaaea3
 
     /* Public methods */
     self.toJSON = toJSON;
