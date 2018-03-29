@@ -8,10 +8,11 @@
   TimeQuestionFactory.$inject = [
     'LabelFactory',
     'MetadataGroupFactory',
-    'FillingRulesOptionFactory'
+    'FillingRulesOptionFactory',
+    'QuestionOptionFactory'
   ];
 
-  function TimeQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory) {
+  function TimeQuestionFactory(LabelFactory, MetadataGroupFactory, FillingRulesOptionFactory, QuestionOptionFactory) {
     var self = this;
 
     /* Public interface */
@@ -22,8 +23,9 @@
       var labelObject = LabelFactory.create();
       var metadataGroupObject = MetadataGroupFactory.create();
       var fillingRulesObject = FillingRulesOptionFactory.create();
+      var questionOptionObject = QuestionOptionFactory.create();
 
-      return new TimeQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
+      return new TimeQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject, questionOptionObject);
     }
 
     function fromJsonObject(jsonObject) {
@@ -33,9 +35,10 @@
       var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
       var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
       var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
+      var questionOptionObject = QuestionOptionFactory.fromJsonObject(jsonObject.options);
       var prototype = {};
       prototype.objectType = "SurveyItem";
-      var question = new TimeQuestion(jsonObject.templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject);
+      var question = new TimeQuestion(jsonObject.templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject, questionOptionObject);
       question.customID = jsonObject.customID;
 
       return question;
@@ -44,7 +47,7 @@
     return self;
   }
 
-  function TimeQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject) {
+  function TimeQuestion(templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject, questionOptionObject) {
     var self = this;
 
     self.extents = prototype.objectType;
@@ -55,7 +58,8 @@
     self.label = labelObject;
     self.metadata = metadataGroupObject;
     self.fillingRules = fillingRulesObject;
-
+    self.options = questionOptionObject;
+  
     /* Public methods */
     self.isQuestion = isQuestion;
     self.validators = validators;
@@ -87,6 +91,7 @@
       json.label = self.label;
       json.metadata = self.metadata;
       json.fillingRules = self.fillingRules;
+      json.options = self.options;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
