@@ -24,7 +24,6 @@
       } else {
         return [];
       }
-
     }
 
     return self;
