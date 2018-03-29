@@ -18,7 +18,7 @@
 
     function fromJsonObject(options) {
       if(Array.isArray(options)){
-        return options.data.map(function(option) {
+        return options.map(function(option) {
           return new Option(option.name, option.value);
         });
       } else {

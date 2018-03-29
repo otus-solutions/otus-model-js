@@ -43,11 +43,11 @@
     self.createOption = createOption;
     self.removeOption = removeOption;
 
-    // _init();
-    //
-    // function _init() {
-    //   // self.createOption('mandatory');
-    // }
+    _init();
+
+    function _init() {
+      self.createOption('mandatory', null);
+    }
 
     function createOption(name, value) {
       var option = OptionItemFactory.create(name, value);
