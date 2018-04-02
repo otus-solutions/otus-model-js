@@ -16,11 +16,9 @@
       return new Option(optionName, optionValue);
     }
 
-    function fromJsonObject(options) {
-      if(Array.isArray(options)){
-        return options.map(function(option) {
+    function fromJsonObject(option) {
+      if(option.objectType === 'OptionItem'){
           return new Option(option.name, option.value);
-        });
       } else {
         return [];
       }

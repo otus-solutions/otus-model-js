@@ -23,8 +23,8 @@
         throw new Error("otusjs.model.misc.model.QuestionOptionFactory.fromJsonObject() method expects to receive a object instead a String");
       }
       var options = new QuestionOption(OptionItemFactory);
-      for (var rule in jsonObject) {
-        options.data[rule] = OptionItemFactory.fromJsonObject(jsonObject.data[rule]);
+      for (var object in jsonObject.data) {
+        options.data[object] = OptionItemFactory.fromJsonObject(jsonObject.data[object]);
       }
       return options;
     }
@@ -43,11 +43,6 @@
     self.createOption = createOption;
     self.removeOption = removeOption;
 
-    _init();
-
-    function _init() {
-      self.createOption('mandatory', null);
-    }
 
     function createOption(name, value) {
       var option = OptionItemFactory.create(name, value);
