@@ -23,12 +23,10 @@ describe('the AddOptionItemService', function() {
   function mockJson() {
     Mock.validatorType = {};
     Mock.item = {
-
       options: {
         createOption: function() {}
       }
     };
-    // Mock.item.fillingRules.removeFillingRules: function(fillingRules = null) {}
   }
 
 
