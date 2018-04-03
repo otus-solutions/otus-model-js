@@ -16,7 +16,7 @@ describe('OptionItemFactory', function() {
   describe('create method', function() {
 
     beforeEach(function() {
-      option = factory.create("button", true);
+      option = factory.create(true);
     });
 
     it('should return an option with property reference with value false', function() {

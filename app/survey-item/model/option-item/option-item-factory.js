@@ -12,13 +12,13 @@
     self.create = create;
     self.fromJsonObject = fromJsonObject;
 
-    function create(optionName, optionValue) {
-      return new Option(optionName, optionValue);
+    function create(optionValue) {
+      return new Option(optionValue);
     }
 
     function fromJsonObject(option) {
       if(option.objectType === 'OptionItem'){
-          return new Option(option.name, option.value);
+          return new Option(option.value);
       } else {
         return [];
       }
@@ -27,11 +27,10 @@
     return self;
   }
 
-  function Option(name, value) {
+  function Option(value) {
     var self = this;
     self.extends = 'StudioObject';
     self.objectType = 'OptionItem';
-    self.name = name;
     self.value = value;
   }
 

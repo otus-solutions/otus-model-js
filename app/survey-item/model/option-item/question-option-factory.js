@@ -45,7 +45,7 @@
 
 
     function createOption(name, value) {
-      var option = OptionItemFactory.create(name, value);
+      var option = OptionItemFactory.create(value);
       self.data[name] = option;
       return option;
     }

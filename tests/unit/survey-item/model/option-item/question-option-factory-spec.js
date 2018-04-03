@@ -21,11 +21,14 @@ describe('QuestionOption', function() {
   describe('createOption method', function() {
 
     beforeEach(function() {
+      spyOn(questionOption, "createOption");
       questionOption.createOption("mandatory", null);
+      Mock.OptionItemFactory.create(null);
     });
 
     it("should call Mock.OptionItemFactory.create with mandatory", function() {
-      expect(Mock.OptionItemFactory.create).toHaveBeenCalledWith("mandatory", null);
+      expect(questionOption.createOption).toHaveBeenCalledWith("mandatory", null);
+      expect(Mock.OptionItemFactory.create).toHaveBeenCalledWith(null);
     });
 
     it("should populate options object", function() {
