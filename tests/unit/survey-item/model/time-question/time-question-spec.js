@@ -41,7 +41,8 @@ describe('TimeQuestion', function() {
                 esES: $injector.get('IdiomFactory').create()
             },
             metadata: $injector.get('MetadataGroupFactory').create(),
-            fillingRules: $injector.get('FillingRulesOptionFactory').create()
+            fillingRules: $injector.get('FillingRulesOptionFactory').create(),
+            options: $injector.get('QuestionOptionFactory').create()
         });
     }
 

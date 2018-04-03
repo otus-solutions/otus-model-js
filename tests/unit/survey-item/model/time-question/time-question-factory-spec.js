@@ -14,7 +14,8 @@ describe('TimeQuestionFactory', function() {
       factory = _$injector_.get('TimeQuestionFactory', {
         'LabelFactory': mockLabelFactory(_$injector_),
         'MetadataGroupFactory': mockMetaGroupFactory(_$injector_),
-        'FillingRulesOptionFactory': mockFillingRulesOptionFactory(_$injector_)
+        'FillingRulesOptionFactory': mockFillingRulesOptionFactory(_$injector_),
+        'QuestionOptionFactory': mockQuestionOptionFactory(_$injector_)
       });
     });
   });
@@ -116,6 +117,12 @@ describe('TimeQuestionFactory', function() {
     return Mock.FillingRulesOptionFactory;
   }
 
+  function mockQuestionOptionFactory($injector) {
+    Mock.QuestionOptionFactory = $injector.get('QuestionOptionFactory');
+    spyOn(Mock.QuestionOptionFactory, 'fromJsonObject').and.returnValue(Mock.options);
+    return Mock.QuestionOptionFactory;
+  }
+
   function mockJsonObject() {
     Mock.label = {
       "ptBR": {},
@@ -135,6 +142,12 @@ describe('TimeQuestionFactory', function() {
       "options": {}
     };
 
+    Mock.options = {
+      "extends": "StudiObject",
+      "objectType": "QuestionOption",
+      "data": {}
+    };
+
     Mock.jsonObject = {
       "extents": "SurveyItem",
       "objectType": "TimeQuestion",
@@ -143,7 +156,8 @@ describe('TimeQuestionFactory', function() {
       "dataType": "LocalTime",
       "label": Mock.label,
       "metadata": Mock.metadata,
-      "fillingRules": Mock.fillingRules
+      "fillingRules": Mock.fillingRules,
+      "options": Mock.options
     };
   }
 
