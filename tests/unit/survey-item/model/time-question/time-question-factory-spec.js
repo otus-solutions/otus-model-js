@@ -63,6 +63,15 @@ describe('TimeQuestionFactory', function() {
 
     beforeEach(function() {
       question = factory.fromJsonObject(Mock.jsonObject);
+      var OldQuestion = factory.fromJsonObject(Mock.jsonObjectOld);
+    });
+
+    it("should verify if question object is a Question", function() {
+      expect(question.isQuestion()).toEqual(true);
+    });
+
+    it("should verify validatorsList array", function() {
+      expect(question.validators()).toEqual(Mock.validatorsList);
     });
 
     it("should create an instance with the same values of Mock.jsonObject", function() {
@@ -86,7 +95,7 @@ describe('TimeQuestionFactory', function() {
         "method expects to receive a object instead a String";
 
       var fromJsonObjectFunction = function() {
-        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObjectOld));
       };
 
       expect(fromJsonObjectFunction).toThrowError(ERROR_MESSAGE);
@@ -148,6 +157,12 @@ describe('TimeQuestionFactory', function() {
       "data": {}
     };
 
+    Mock.validatorsList = [
+        'mandatory',
+        'minTime',
+        'maxTime'
+      ];
+
     Mock.jsonObject = {
       "extents": "SurveyItem",
       "objectType": "TimeQuestion",
@@ -158,6 +173,16 @@ describe('TimeQuestionFactory', function() {
       "metadata": Mock.metadata,
       "fillingRules": Mock.fillingRules,
       "options": Mock.options
+    };
+    Mock.jsonObjectOld = {
+      "extents": "SurveyItem",
+      "objectType": "TimeQuestion",
+      "templateID": "QUE1",
+      "customID": "PersonalizedID",
+      "dataType": "LocalTime",
+      "label": Mock.label,
+      "metadata": Mock.metadata,
+      "fillingRules": Mock.fillingRules
     };
   }
 
