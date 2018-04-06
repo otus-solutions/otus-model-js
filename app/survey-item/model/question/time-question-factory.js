@@ -35,7 +35,13 @@
       var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
       var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
       var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
-      var questionOptionObject = QuestionOptionFactory.fromJsonObject(jsonObject.options);
+      var questionOptionObject;
+      if(jsonObject.options == undefined){
+        questionOptionObject = QuestionOptionFactory.create();
+      } else {
+        questionOptionObject = QuestionOptionFactory.fromJsonObject(jsonObject.options);
+      }
+
       var prototype = {};
       prototype.objectType = "SurveyItem";
       var question = new TimeQuestion(jsonObject.templateID, prototype, labelObject, metadataGroupObject, fillingRulesObject, questionOptionObject);
@@ -59,7 +65,7 @@
     self.metadata = metadataGroupObject;
     self.fillingRules = fillingRulesObject;
     self.options = questionOptionObject;
-  
+
     /* Public methods */
     self.isQuestion = isQuestion;
     self.validators = validators;
