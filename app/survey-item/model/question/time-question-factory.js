@@ -35,10 +35,11 @@
       var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
       var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
       var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
+      var questionOptionObject;
       if(jsonObject.options == undefined){
-        var questionOptionObject = QuestionOptionFactory.create();
-      } else {  
-        var questionOptionObject = QuestionOptionFactory.fromJsonObject(jsonObject.options);
+        questionOptionObject = QuestionOptionFactory.create();
+      } else {
+        questionOptionObject = QuestionOptionFactory.fromJsonObject(jsonObject.options);
       }
 
       var prototype = {};
