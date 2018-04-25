@@ -49,10 +49,10 @@
       return survey;
     }
 
-    function create(name, acronym) {
+    function create(name, acronym, version) {
       var UUID = SurveyUUIDGenerator.generateSurveyUUID();
       var metainfo = SurveyMetaInfoFactory.create();
-      var identity = SurveyIdentityFactory.create(name, acronym);
+      var identity = SurveyIdentityFactory.create(name, acronym, version);
 
       var survey = new Survey(metainfo, identity, UUID);
       survey.initialize();

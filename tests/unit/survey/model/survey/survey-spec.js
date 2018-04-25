@@ -30,7 +30,7 @@ xdescribe('Survey', function() {
 
       mockJson();
 
-      survey = factory.create(Mock.NAME, Mock.ACRONYM);
+      survey = factory.create(Mock.NAME, Mock.ACRONYM, Mock.VERSION);
     });
   });
 
@@ -225,7 +225,7 @@ xdescribe('Survey', function() {
   function mockIdentityData() {
     Mock.NAME = 'NAME';
     Mock.ACRONYM = 'ACRONYM';
-    Mock.VERSION = 'VERSION';
+    Mock.VERSION = 1;
   }
 
   function mockDatetime() {
@@ -243,7 +243,7 @@ xdescribe('Survey', function() {
         objectType: 'SurveyIdentity',
         name: Mock.NAME,
         acronym: Mock.ACRONYM,
-        // version: Mock.VERSION,
+        version: Mock.VERSION,
         recommendedTo: '',
         description: '',
         keywords: []

@@ -3,7 +3,7 @@ describe('SurveyIdentity', function() {
   var factory;
   Mock.NAME = 'Identity Name';
   Mock.ACRONYM = 'ACRONYM';
-  Mock.VERSION = 'A';
+  Mock.VERSION = 1;
 
   var surveyIdentity;
 
@@ -33,7 +33,7 @@ describe('SurveyIdentity', function() {
       objectType: 'SurveyIdentity',
       name: Mock.NAME,
       acronym: Mock.ACRONYM,
-      // version: Mock.VERSION,
+      version: Mock.VERSION,
       recommendedTo: '',
       description: '',
       keywords: []
