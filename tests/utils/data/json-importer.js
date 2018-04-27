@@ -292,6 +292,8 @@ Test.utils.data.latestSurveyTemplate = {
   "extents": "StudioObject",
   "objectType": "Survey",
   "oid": "dXNlclVVSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOlsxMjExOWQ0MC05NmRhLTExZTYtOThlMy1lZDc1NDYxYWJlMWNdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==",
+  "version": 1,
+  "isDiscarded": false,
   "identity": {
     "extents": "StudioObject",
     "objectType": "SurveyIdentity",
@@ -301,6 +303,7 @@ Test.utils.data.latestSurveyTemplate = {
     "description": "",
     "keywords": []
   },
+  "dataSources" : [],
   "metainfo": {
     "extents": "StudioObject",
     "objectType": "SurveyMetaInfo",

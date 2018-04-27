@@ -5,10 +5,9 @@ describe('SurveyFormFactory', function() {
   var options = {
     sender: "tiago.matana@gmail.com",
     sendingDate : "2017-09-28T23:25:31.274Z",
-    isDiscarded: true,
     surveyFormType : "FORM_INTERVIEW",
     surveyTemplate : {}
-  }
+  };
 
   beforeEach(function() {
     angular.mock.module('otusjs');
@@ -35,9 +34,7 @@ describe('SurveyFormFactory', function() {
     it('should return a SurveyForm object type', function() {
       expect(surveyForm.objectType).toEqual('SurveyForm');
     });
-    it('should return a SurveyForm isDiscarded value', function() {
-      expect(surveyForm.isDiscarded).toEqual(true);
-    });
+
   });
 
 

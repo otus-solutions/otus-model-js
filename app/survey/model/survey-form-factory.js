@@ -36,7 +36,6 @@
 
     self.extents = 'StudioObject';
     self.objectType = 'SurveyForm';
-    self.isDiscarded = options.isDiscarded || false;
     self.sender = options.sender || null;
     self.sendingDate = options.sendingDate || null;
     self.surveyFormType = options.surveyFormType || null;
@@ -55,7 +54,6 @@
 
       json.extents = self.extents;
       json.objectType = self.objectType;
-      json.isDiscarded = self.isDiscarded;
       json.sender = self.sender;
       json.sendingDate = self.sendingDate;
       json.surveyFormType = self.surveyFormType;
