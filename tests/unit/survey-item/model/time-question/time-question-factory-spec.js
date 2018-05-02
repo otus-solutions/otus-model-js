@@ -14,7 +14,8 @@ describe('TimeQuestionFactory', function() {
       factory = _$injector_.get('TimeQuestionFactory', {
         'LabelFactory': mockLabelFactory(_$injector_),
         'MetadataGroupFactory': mockMetaGroupFactory(_$injector_),
-        'FillingRulesOptionFactory': mockFillingRulesOptionFactory(_$injector_)
+        'FillingRulesOptionFactory': mockFillingRulesOptionFactory(_$injector_),
+        'QuestionOptionFactory': mockQuestionOptionFactory(_$injector_)
       });
     });
   });
@@ -62,6 +63,15 @@ describe('TimeQuestionFactory', function() {
 
     beforeEach(function() {
       question = factory.fromJsonObject(Mock.jsonObject);
+      var OldQuestion = factory.fromJsonObject(Mock.jsonObjectOld);
+    });
+
+    it("should verify if question object is a Question", function() {
+      expect(question.isQuestion()).toEqual(true);
+    });
+
+    it("should verify validatorsList array", function() {
+      expect(question.validators()).toEqual(Mock.validatorsList);
     });
 
     it("should create an instance with the same values of Mock.jsonObject", function() {
@@ -85,7 +95,7 @@ describe('TimeQuestionFactory', function() {
         "method expects to receive a object instead a String";
 
       var fromJsonObjectFunction = function() {
-        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+        factory.fromJsonObject(JSON.stringify(Mock.jsonObjectOld));
       };
 
       expect(fromJsonObjectFunction).toThrowError(ERROR_MESSAGE);
@@ -116,6 +126,12 @@ describe('TimeQuestionFactory', function() {
     return Mock.FillingRulesOptionFactory;
   }
 
+  function mockQuestionOptionFactory($injector) {
+    Mock.QuestionOptionFactory = $injector.get('QuestionOptionFactory');
+    spyOn(Mock.QuestionOptionFactory, 'fromJsonObject').and.returnValue(Mock.options);
+    return Mock.QuestionOptionFactory;
+  }
+
   function mockJsonObject() {
     Mock.label = {
       "ptBR": {},
@@ -135,7 +151,30 @@ describe('TimeQuestionFactory', function() {
       "options": {}
     };
 
+    Mock.options = {
+      "extends": "StudiObject",
+      "objectType": "QuestionOption",
+      "data": {}
+    };
+
+    Mock.validatorsList = [
+        'mandatory',
+        'minTime',
+        'maxTime'
+      ];
+
     Mock.jsonObject = {
+      "extents": "SurveyItem",
+      "objectType": "TimeQuestion",
+      "templateID": "QUE1",
+      "customID": "PersonalizedID",
+      "dataType": "LocalTime",
+      "label": Mock.label,
+      "metadata": Mock.metadata,
+      "fillingRules": Mock.fillingRules,
+      "options": Mock.options
+    };
+    Mock.jsonObjectOld = {
       "extents": "SurveyItem",
       "objectType": "TimeQuestion",
       "templateID": "QUE1",
