@@ -35,15 +35,6 @@ describe('SurveyFactory', function() {
       expect(survey.objectType).toBe('Survey');
     });
 
-    it('should return a Survey version', function() {
-      expect(survey.version).toBeDefined();
-      expect(survey.version).toBeNull();
-    });
-
-    it('should return a Survey isDiscarded', function() {
-      expect(survey.isDiscarded).toBe(false);
-    });
-
     it('should return a Survey with a SurveyMetaInfo object type', function() {
       expect(survey.metainfo.objectType).toBe('SurveyMetaInfo');
     });
@@ -75,16 +66,6 @@ describe('SurveyFactory', function() {
 
     beforeEach(function() {
       survey = factory.fromJsonObject(Mock.surveyTemplate);
-    });
-
-
-    it('should return a Survey version', function() {
-      expect(survey.version).toBeDefined();
-      expect(survey.version).toBe(1);
-    });
-
-    it('should return a Survey isDiscarded', function() {
-      expect(survey.isDiscarded).toBe(false);
     });
 
     xit("should call SurveyMetaInfoFactory.fromJsonObject method with Mock.surveyTemplate.metainfo", function() {

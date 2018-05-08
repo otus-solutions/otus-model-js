@@ -41,11 +41,9 @@
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-      var version = jsonObject.version;
-      var isDiscarded = jsonObject.isDiscarded;
       var itemManager = SurveyItemManagerFactory.create();
 
-      var survey = new Survey(metainfo, identity, UUID, version, isDiscarded, NavigationManagerFactory.create(itemManager), itemManager);
+      var survey = new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
 
       return survey;
@@ -67,10 +65,8 @@
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-      var version = jsonObject.version;
-      var isDiscarded = jsonObject.isDiscarded;
       var itemManager = SurveyItemManagerFactory.create();
-      var survey = new Survey(metainfo, identity, UUID, version, isDiscarded, NavigationManagerFactory.create(itemManager), itemManager);
+      var survey = new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
 
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
@@ -88,8 +84,6 @@
     self.extents = 'StudioObject';
     self.objectType = 'Survey';
     self.oid = uuid;
-    self.version = version;
-    self.isDiscarded = isDiscarded || false;
     self.identity = surveyIdentity;
     self.metainfo = surveyMetainfo;
     self.SurveyItemManager = Inject.SurveyItemManagerFactory.create();
@@ -180,8 +174,6 @@
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.oid = self.oid;
-      json.version = self.version;
-      json.isDiscarded = self.isDiscarded;
       json.identity = self.identity.toJson();
       json.metainfo = self.metainfo.toJson();
       json.dataSources = self.DataSourceManager.toJson();

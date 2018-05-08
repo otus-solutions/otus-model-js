@@ -40,7 +40,8 @@
     self.sendingDate = options.sendingDate || null;
     self.surveyFormType = options.surveyFormType || null;
     self.surveyTemplate = options.surveyTemplate || null;
-
+    self.version = options.version || null;
+    self.isDiscarded = options.isDiscarded || false;
     /* Public methods */
     self.getItems = getItems;
     self.toJson = toJson;
@@ -58,6 +59,8 @@
       json.sendingDate = self.sendingDate;
       json.surveyFormType = self.surveyFormType;
       json.surveyTemplate = self.surveyTemplate.toJson();
+      json.version = self.version;
+      json.isDiscarded = self.isDiscarded;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
     }
