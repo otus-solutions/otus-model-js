@@ -2325,6 +2325,29 @@
 })();
 'use strict';
 
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ExceptionService', service);
+
+  function service() {
+    var self = this;
+
+    self.InvalidStateError = createErrorType('InvalidStateError');
+
+    function createErrorType(name) {
+      function E(message) {
+        this.message = message;
+      }
+      E.prototype = Object.create(Error.prototype);
+      E.prototype.name = name;
+      E.prototype.constructor = E;
+      return E;
+    }
+  }
+})();
+'use strict';
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 (function () {
@@ -3717,29 +3740,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ExceptionService', service);
-
-  function service() {
-    var self = this;
-
-    self.InvalidStateError = createErrorType('InvalidStateError');
-
-    function createErrorType(name) {
-      function E(message) {
-        this.message = message;
-      }
-      E.prototype = Object.create(Error.prototype);
-      E.prototype.name = name;
-      E.prototype.constructor = E;
-      return E;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.model.navigation').factory('otusjs.model.navigation.NavigationContainerFactory', Factory);
 
   Factory.$inject = ['otusjs.model.navigation.NavigationFactory'];
@@ -4179,11 +4179,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-      var version = jsonObject.version;
-      var isDiscarded = jsonObject.isDiscarded;
       var itemManager = SurveyItemManagerFactory.create();
 
-      var survey = new Survey(metainfo, identity, UUID, version, isDiscarded, NavigationManagerFactory.create(itemManager), itemManager);
+      var survey = new Survey(metainfo, identity, UUID);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
 
       return survey;
@@ -4194,7 +4192,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var metainfo = SurveyMetaInfoFactory.create();
       var identity = SurveyIdentityFactory.create(name, acronym);
 
-      var survey = new Survey(metainfo, identity, UUID, null, false);
+      var survey = new Survey(metainfo, identity, UUID);
       survey.initialize();
 
       return survey;
@@ -4204,10 +4202,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-      var version = jsonObject.version;
-      var isDiscarded = jsonObject.isDiscarded;
       var itemManager = SurveyItemManagerFactory.create();
-      var survey = new Survey(metainfo, identity, UUID, version, isDiscarded, NavigationManagerFactory.create(itemManager), itemManager);
+      var survey = new Survey(metainfo, identity, UUID);
 
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
@@ -4219,14 +4215,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return self;
   }
 
-  function Survey(surveyMetainfo, surveyIdentity, uuid, version, isDiscarded) {
+  function Survey(surveyMetainfo, surveyIdentity, uuid) {
     var self = this;
 
     self.extents = 'StudioObject';
     self.objectType = 'Survey';
     self.oid = uuid;
-    self.version = version;
-    self.isDiscarded = isDiscarded || false;
     self.identity = surveyIdentity;
     self.metainfo = surveyMetainfo;
     self.SurveyItemManager = Inject.SurveyItemManagerFactory.create();
@@ -4317,8 +4311,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.oid = self.oid;
-      json.version = self.version;
-      json.isDiscarded = self.isDiscarded;
       json.identity = self.identity.toJson();
       json.metainfo = self.metainfo.toJson();
       json.dataSources = self.DataSourceManager.toJson();
@@ -4377,11 +4369,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     self.extents = 'StudioObject';
     self.objectType = 'SurveyForm';
+    self._id = options._id || undefined;
     self.sender = options.sender || null;
     self.sendingDate = options.sendingDate || null;
     self.surveyFormType = options.surveyFormType || null;
     self.surveyTemplate = options.surveyTemplate || null;
-
+    self.version = options.version || null;
+    self.isDiscarded = options.isDiscarded || false;
     /* Public methods */
     self.getItems = getItems;
     self.toJson = toJson;
@@ -4395,10 +4389,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       json.extents = self.extents;
       json.objectType = self.objectType;
+      json._id = self._id;
       json.sender = self.sender;
       json.sendingDate = self.sendingDate;
       json.surveyFormType = self.surveyFormType;
       json.surveyTemplate = self.surveyTemplate.toJson();
+      json.version = self.version;
+      json.isDiscarded = self.isDiscarded;
 
       return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
     }

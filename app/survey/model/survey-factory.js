@@ -43,7 +43,7 @@
       var UUID = jsonObject.oid;
       var itemManager = SurveyItemManagerFactory.create();
 
-      var survey = new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
+      var survey = new Survey(metainfo, identity, UUID);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
 
       return survey;
@@ -55,7 +55,7 @@
       var identity = SurveyIdentityFactory.create(name, acronym);
 
 
-      var survey = new Survey(metainfo, identity, UUID, null , false);
+      var survey = new Survey(metainfo, identity, UUID);
       survey.initialize();
 
       return survey;
@@ -66,7 +66,7 @@
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
       var itemManager = SurveyItemManagerFactory.create();
-      var survey = new Survey(metainfo, identity, UUID, NavigationManagerFactory.create(itemManager), itemManager);
+      var survey = new Survey(metainfo, identity, UUID);
 
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
@@ -78,7 +78,7 @@
     return self;
   }
 
-  function Survey(surveyMetainfo, surveyIdentity, uuid, version, isDiscarded) {
+  function Survey(surveyMetainfo, surveyIdentity, uuid) {
     var self = this;
 
     self.extents = 'StudioObject';
