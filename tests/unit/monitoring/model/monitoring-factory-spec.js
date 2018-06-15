@@ -1,15 +1,15 @@
-describe('the fieldCenter factory', function() {
+describe('the monitoring factory', function() {
   var Mock = {};
   var injections;
 
   beforeEach(function() {
-    angular.mock.module("otusjs.model.fieldCenter");
+    angular.mock.module("otusjs.model.monitoring");
   });
 
   beforeEach(function() {
     inject(function(_$injector_) {
-      Mock.factory = _$injector_.get('otusjs.model.fieldCenter.FieldCenterFactory');
-      mockFieldCenter();
+      Mock.factory = _$injector_.get('otusjs.model.monitoring.MonitoringFactory');
+      mockMonitoring();
     });
   });
 
@@ -24,21 +24,21 @@ describe('the fieldCenter factory', function() {
       expect(Mock.factory.create).toHaveBeenCalled();
       expect(Mock.factory.create).toBeDefined();
       expect(Mock.factory.create).not.toBeNull();
-      expect(JSON.stringify(Mock.factory.create())).toEqual(JSON.stringify(mockFieldCenterEmpty()));
+      expect(JSON.stringify(Mock.factory.create())).toEqual(JSON.stringify(mockMonitoringEmpty()));
     });
   });
 
   describe("expect method fromJsonObject been called", function() {
     beforeEach(function() {
       spyOn(Mock.factory, "fromJsonObject").and.callThrough();
-      Mock.jsonObject = Mock.factory.fromJsonObject(mockFieldCenter());
+      Mock.jsonObject = Mock.factory.fromJsonObject(mockMonitoring());
     });
 
     it("should build a factory", function() {
-      expect(Mock.factory.fromJsonObject).toHaveBeenCalledWith(mockFieldCenter());
+      expect(Mock.factory.fromJsonObject).toHaveBeenCalledWith(mockMonitoring());
       expect(Mock.factory.fromJsonObject).toBeDefined();
       expect(Mock.factory.fromJsonObject).not.toBeNull();
-      expect(JSON.stringify(Mock.jsonObject)).toEqual(JSON.stringify(mockFieldCenter()));
+      expect(JSON.stringify(Mock.jsonObject)).toEqual(JSON.stringify(mockMonitoring()));
     });
   });
 
@@ -63,36 +63,28 @@ describe('the fieldCenter factory', function() {
     });
 
     it("should build a factory", function() {
-      expect(Mock.json.toJson()).toEqual(JSON.stringify(mockFieldCenterEmpty()));
+      expect(Mock.json.toJson()).toEqual(JSON.stringify(mockMonitoringEmpty()));
     });
 
   });
 
-  function mockFieldCenter() {
+  function mockMonitoring() {
     return [{
-      "name": "Minas Gerais",
-      "code": 3,
-      "acronym": "MG",
-      "country": "Brazil",
-      "state": null,
-      "address": null,
-      "complement": null,
-      "zip": null,
-      "phone": null
+      "acronym": "CISE",
+      "fieldCenter": "BA",
+      "month": 5,
+      "sum": "9337",
+      "year": 2018
     }];
   }
 
-  function mockFieldCenterEmpty() {
+  function mockMonitoringEmpty() {
     return {
-      "name": null,
-      "code": null,
       "acronym": null,
-      "country": null,
-      "state": null,
-      "address": null,
-      "complement": null,
-      "zip": null,
-      "phone": null
+      "fieldCenter": null,
+      "month": null,
+      "sum": null,
+      "year": null
     };
   }
 

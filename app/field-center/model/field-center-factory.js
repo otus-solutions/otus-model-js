@@ -43,8 +43,6 @@
     self.complement = fieldCenter.complement || null;
     self.zip = fieldCenter.zip || null;
     self.phone = fieldCenter.phone || null;
-    self.backgroundColor = fieldCenter.backgroundColor || null;
-    self.borderColor = fieldCenter.borderColor || null;
 
 
     function toJson() {
@@ -59,8 +57,6 @@
       json.complement = self.complement;
       json.zip = self.zip;
       json.phone = self.phone;
-      json.backgroundColor = self.backgroundColor;
-      json.borderColor = self.borderColor;
 
       return JSON.stringify(json);
     }
