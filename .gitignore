@@ -14,3 +14,6 @@
 /**/npm-debug.log.*
 **/.sonar
 package-lock.json
+.classpath
+.project
+.settings/

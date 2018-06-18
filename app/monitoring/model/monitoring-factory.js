@@ -53,6 +53,5 @@
       return JSON.stringify(json);
     }
 
-
   }
 }());
