@@ -13,13 +13,13 @@
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new MonitoringCenter({});
+      return new MonitoringCenter(data);
     }
 
     function fromJsonObject(jsonObject) {
       if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (center) {
-          return new MonitoringCenter(center);
+        return jsonObject.map(function (data) {
+          return new MonitoringCenter(data);
         });
       } else {
         return [];
@@ -29,15 +29,15 @@
     return self;
   }
 
-  function MonitoringCenter(center) {
+  function MonitoringCenter(data) {
     var self = this;
 
     self.toJson = toJson;
 
-    self.name = center.name || null;
-    self.goal = center.goal || null;
-    self.backgroundColor = center.backgroundColor || null;
-    self.borderColor = center.borderColor || null;
+    self.name = data.name || null;
+    self.goal = data.goal || null;
+    self.backgroundColor = data.center.backgroundColor || null;
+    self.borderColor = data.center.borderColor || null;
 
 
     function toJson() {
