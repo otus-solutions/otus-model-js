@@ -34,6 +34,7 @@
 
     self.toJson = toJson;
 
+    self.objectType = 'MonitoringCenter'
     self.name = data.name || null;
     self.goal = data.goal || null;
     self.backgroundColor = data.backgroundColor || null;
@@ -43,6 +44,7 @@
     function toJson() {
       var json = {};
 
+      json.objectType = self.objectType;
       json.name = self.name;
       json.goal = self.goal;
       json.backgroundColor = self.backgroundColor;

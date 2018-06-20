@@ -1,6 +1,7 @@
 describe('the monitoring factory', function() {
   var Mock = {};
   var injections;
+  var monitoringInformation;
 
   beforeEach(function() {
     angular.mock.module("otusjs.model.monitoring");
@@ -68,8 +69,40 @@ describe('the monitoring factory', function() {
 
   });
 
+  describe("expect compare values with factory", function () {
+    beforeEach(function () {
+      monitoringInformation = mockMonitoringEmpty();
+      Mock.MonitoringInformation = Mock.factory.create(mockMonitoringEmpty());
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Information objectType', function () {
+      expect(Mock.MonitoringInformation.objectType).toEqual(monitoringInformation.objectType);
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Information acronym', function () {
+      expect(Mock.MonitoringInformation.acronym).toEqual(monitoringInformation.acronym);
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Information fieldCenter', function () {
+      expect(Mock.MonitoringInformation.fieldCenter).toEqual(monitoringInformation.fieldCenter);
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Information month', function () {
+      expect(Mock.MonitoringInformation.month).toEqual(monitoringInformation.month);
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Information sum', function () {
+      expect(Mock.MonitoringInformation.sum).toEqual(monitoringInformation.sum);
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Information year', function () {
+      expect(Mock.MonitoringInformation.year).toEqual(monitoringInformation.year);
+    });
+  });
+
   function mockMonitoring() {
     return [{
+      "objectType": "MonitoringInformation",
       "acronym": "CISE",
       "fieldCenter": "BA",
       "month": 5,
@@ -80,6 +113,7 @@ describe('the monitoring factory', function() {
 
   function mockMonitoringEmpty() {
     return {
+      "objectType": "MonitoringInformation",
       "acronym": null,
       "fieldCenter": null,
       "month": null,

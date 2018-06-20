@@ -34,6 +34,7 @@
 
     self.toJson = toJson;
 
+    self.objectType = "MonitoringInformation";
     self.acronym = center.acronym || null;
     self.fieldCenter = center.fieldCenter || null;
     self.month = center.month || null;
@@ -44,6 +45,7 @@
     function toJson() {
       var json = {};
 
+      json.objectType = self.objectType;
       json.acronym = self.acronym;
       json.fieldCenter = self.fieldCenter;
       json.month = self.month;

@@ -1,6 +1,7 @@
 describe('the MonitoringCenter factory', function() {
   var Mock = {};
   var injections;
+  var monitoringCenter = {};
 
   beforeEach(function() {
     angular.mock.module("otusjs.model.monitoring");
@@ -59,17 +60,46 @@ describe('the MonitoringCenter factory', function() {
   describe("expect method toJson been called", function() {
     beforeEach(function() {
       spyOn(Mock.factory, "create").and.callThrough();
-      Mock.json = Mock.factory.create(mockMonitoringCenterEmpty());
+      Mock.MonitoringCenter = Mock.factory.create(mockMonitoringCenterEmpty());
     });
 
     it("should build a factory", function() {
-      expect(Mock.json.toJson()).toEqual(JSON.stringify(mockMonitoringCenterEmpty()));
+      expect(Mock.MonitoringCenter.toJson()).toEqual(JSON.stringify(mockMonitoringCenterEmpty()));
+    });
+
+  });
+
+  describe("expect compare values with factory", function() {
+    beforeEach(function() {
+      monitoringCenter = mockMonitoringCenterEmpty();
+      Mock.MonitoringCenter = Mock.factory.create(mockMonitoringCenterEmpty());
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Center objectType', function () {
+      expect(Mock.MonitoringCenter.objectType).toEqual(monitoringCenter.objectType);
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Center name', function () {
+      expect(Mock.MonitoringCenter.name).toEqual(monitoringCenter.name);
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Center goal', function () {
+      expect(Mock.MonitoringCenter.goal).toEqual(monitoringCenter.goal);
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Center backgroundColor', function () {
+      expect(Mock.MonitoringCenter.backgroundColor).toEqual(monitoringCenter.backgroundColor);
+    });
+
+    it('should return an object with name attribute value equal to Monitoring Center borderColor', function () {
+      expect(Mock.MonitoringCenter.borderColor).toEqual(monitoringCenter.borderColor);
     });
 
   });
 
   function mockMonitoringCenter() {
     return [{
+      "objectType": "MonitoringCenter",
       "name": "Minas Gerais",
       "goal": 3025,
       "backgroundColor": "rgba(255, 99, 132, 0.2)",
@@ -79,6 +109,7 @@ describe('the MonitoringCenter factory', function() {
 
   function mockMonitoringCenterEmpty() {
     return {
+      "objectType": "MonitoringCenter",
       "name": null,
       "goal": null,
       "backgroundColor": null,
