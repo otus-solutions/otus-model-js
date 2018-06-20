@@ -78,7 +78,9 @@ describe('the fieldCenter factory', function() {
       "address": null,
       "complement": null,
       "zip": null,
-      "phone": null
+      "phone": null,
+      "backgroundColor": "rgba(255, 99, 132, 0.2)",
+      "borderColor": "rgba(255, 99, 132, 1)"
     }];
   }
 
@@ -92,7 +94,9 @@ describe('the fieldCenter factory', function() {
       "address": null,
       "complement": null,
       "zip": null,
-      "phone": null
+      "phone": null,
+      "backgroundColor": null,
+      "borderColor": null
     };
   }
 

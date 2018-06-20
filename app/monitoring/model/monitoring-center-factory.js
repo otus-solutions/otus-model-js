@@ -12,7 +12,7 @@
     self.create = create;
     self.fromJsonObject = fromJsonObject;
 
-    function create() {
+    function create(data) {
       return new MonitoringCenter(data);
     }
 
@@ -36,8 +36,8 @@
 
     self.name = data.name || null;
     self.goal = data.goal || null;
-    self.backgroundColor = data.center.backgroundColor || null;
-    self.borderColor = data.center.borderColor || null;
+    self.backgroundColor = data.backgroundColor || null;
+    self.borderColor = data.borderColor || null;
 
 
     function toJson() {

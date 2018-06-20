@@ -17,14 +17,14 @@ describe('the MonitoringCenter factory', function() {
 
     beforeEach(function() {
       spyOn(Mock.factory, "create").and.callThrough();
-      Mock.factory.create();
+      Mock.factory.create(mockMonitoringCenterEmpty());
     });
 
     it("should build a factory", function() {
-      expect(Mock.factory.create).toHaveBeenCalled();
+      expect(Mock.factory.create).toHaveBeenCalledWith(mockMonitoringCenterEmpty());
       expect(Mock.factory.create).toBeDefined();
       expect(Mock.factory.create).not.toBeNull();
-      expect(JSON.stringify(Mock.factory.create())).toEqual(JSON.stringify(mockMonitoringCenterEmpty()));
+      expect(JSON.stringify(Mock.factory.create(mockMonitoringCenterEmpty()))).toEqual(JSON.stringify(mockMonitoringCenterEmpty()));
     });
   });
 
@@ -59,7 +59,7 @@ describe('the MonitoringCenter factory', function() {
   describe("expect method toJson been called", function() {
     beforeEach(function() {
       spyOn(Mock.factory, "create").and.callThrough();
-      Mock.json = Mock.factory.create();
+      Mock.json = Mock.factory.create(mockMonitoringCenterEmpty());
     });
 
     it("should build a factory", function() {
