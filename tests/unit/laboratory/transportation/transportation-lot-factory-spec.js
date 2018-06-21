@@ -1,6 +1,36 @@
 describe('the transportation lot factory', function() {
+  var CODE_LIST_EXPECTED = ["363125891", "363125892", "363321321"];
   var Mock = {};
   var service;
+  var selectLotAliquot;
+
+  selectLotAliquot = [{
+    "objectType": "TransportationLot",
+    "code": "300000083",
+    "aliquotList": [{
+      "recruitmentNumber": 1063154,
+      "objectType": "WorkAliquot",
+      "code": "363125891",
+      "name": "FASTING_SERUM",
+      "container": "CRYOTUBE",
+      "role": "STORAGE"
+    }, {
+      "recruitmentNumber": 1063154,
+      "objectType": "WorkAliquot",
+      "code": "363125892",
+      "name": "FASTING_SERUM",
+      "container": "CRYOTUBE",
+      "role": "STORAGE"
+    }, {
+      "recruitmentNumber": 1063154,
+      "objectType": "WorkAliquot",
+      "code": "363321321",
+      "name": "HBA1C",
+      "container": "CRYOTUBE",
+      "role": "EXAM"
+    }]
+  }];
+
 
   beforeEach(function() {
     angular.mock.module('otusjs.laboratory');
@@ -25,9 +55,7 @@ describe('the transportation lot factory', function() {
       service.initializeLaboratoryConfiguration(Mock.LabDescriptors);
       service.initializeParticipantConfiguration(Mock.SelectedParticipant,
         Mock.ParticipantLaboratory.collectGroupName);
-
     });
-
   });
 
   describe('insertAliquot method', function() {
@@ -166,6 +194,17 @@ describe('the transportation lot factory', function() {
       expect(Mock.lotWithAliquotFromJSON.aliquotsInfo.length).toBe(0);
     });
   });
+
+  describe('getAliquotCodeListMethod', function () {
+
+    it('should deliver a code list of aliquots', function () {
+      var aliquotCodeList = [];
+      selectLotAliquot[0].aliquotList.forEach(function (aliquot) {
+        aliquotCodeList.push(aliquot.code);
+      });
+      expect(aliquotCodeList).toEqual(CODE_LIST_EXPECTED);
+    });
+  })
 
   function mockTransportationLotJson() {
     Mock.LotJson = {

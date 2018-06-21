@@ -47,6 +47,7 @@
 
     self.insertAliquot = insertAliquot;
     self.removeAliquotByIndex = removeAliquotByIndex;
+    self.getAliquotCodeList = getAliquotCodeList
     self.toJSON = toJSON;
 
     _onInit();
@@ -161,6 +162,14 @@
     function removeAliquotByIndex(index) {
       _removeAliquotInfo(self.aliquotList[index]);
       return self.aliquotList.splice(index, 1);
+    }
+
+    function getAliquotCodeList() {
+      var aliquotCodeList = [];
+      self.aliquotList.forEach(function(aliquot){
+        aliquotCodeList.push(aliquot.code);
+      });
+      return aliquotCodeList;
     }
 
     function toJSON() {
