@@ -46,8 +46,9 @@
     };
 
     self.insertAliquot = insertAliquot;
+    self.insertAliquotList = insertAliquotList;
     self.removeAliquotByIndex = removeAliquotByIndex;
-    self.getAliquotCodeList = getAliquotCodeList
+    self.getAliquotCodeList = getAliquotCodeList;
     self.toJSON = toJSON;
 
     _onInit();
@@ -56,20 +57,20 @@
       _fillAliquotInfoLabel();
     }
 
-    function _fillAliquotInfoLabel(){
-      self.aliquotsInfo.forEach(function(aliquotInfo){
-        var aliquot = self.aliquotList.find(function(aliquot){
+    function _fillAliquotInfoLabel() {
+      self.aliquotsInfo.forEach(function (aliquotInfo) {
+        var aliquot = self.aliquotList.find(function (aliquot) {
           return aliquot.name === aliquotInfo.aliquotName;
         });
-        if(aliquot) {
+        if (aliquot) {
           aliquotInfo.aliquotLabel = aliquot.label;
           aliquotInfo.role = aliquot.role;
           aliquotInfo.roleLabel = aliquot.roleLabel;
         }
       });
 
-      if(self.aliquotList.length && !self.aliquotsInfo.length){
-        self.aliquotList.forEach(function(aliquot){
+      if (self.aliquotList.length && !self.aliquotsInfo.length) {
+        self.aliquotList.forEach(function (aliquot) {
           _addAliquotInfo(aliquot);
         });
       }
@@ -81,7 +82,7 @@
       self.chartDataSet.labels = [];
       self.chartDataSet.data = [];
 
-      if(self.aliquotsInfo.length){
+      if (self.aliquotsInfo.length) {
         self.aliquotsInfo.sort(function (a, b) {
           if (a.aliquotLabel < b.aliquotLabel)
             return -1;
@@ -90,7 +91,7 @@
           return 0;
         });
 
-        self.aliquotsInfo.forEach(function(aliquotInfo){
+        self.aliquotsInfo.forEach(function (aliquotInfo) {
           self.chartDataSet.labels.push(aliquotInfo.aliquotLabel + " (" + aliquotInfo.roleLabel + ")");
           self.chartDataSet.data.push(aliquotInfo.quantity);
         });
@@ -102,7 +103,7 @@
       return self.chartDataSet;
     }
 
-    function _findAliquotInfo(aliquot){
+    function _findAliquotInfo(aliquot) {
       return self.aliquotsInfo.find(function (aliquotInfo) {
         return (
           aliquotInfo.aliquotName === aliquot.name
@@ -111,7 +112,7 @@
       });
     }
 
-    function _findOthersAliquotInfo(aliquot){
+    function _findOthersAliquotInfo(aliquot) {
       return self.aliquotsInfo.filter(function (aliquotInfo) {
         return (
           aliquotInfo.aliquotName !== aliquot.name
@@ -124,14 +125,9 @@
       var aliquotInfo = _findAliquotInfo(aliquot);
       var newAliquotsInfo = _findOthersAliquotInfo(aliquot);
 
-      aliquotInfo = aliquotInfo || {
-        aliquotName: aliquot.name,
-        aliquotLabel: aliquot.label,
-        role: aliquot.role,
-        roleLabel: aliquot.roleLabel,
-        quantity: 0
-      }
-      aliquotInfo.quantity++;
+      aliquotInfo ?
+        aliquotInfo.quantity++ :
+        aliquotInfo = new AliquotInfoModel(aliquot);
 
       newAliquotsInfo.push(aliquotInfo);
 
@@ -166,11 +162,38 @@
 
     function getAliquotCodeList() {
       var aliquotCodeList = [];
-      self.aliquotList.forEach(function(aliquot){
+      self.aliquotList.forEach(function (aliquot) {
         aliquotCodeList.push(aliquot.code);
       });
       return aliquotCodeList;
     }
+
+    function insertAliquotList(aliquotList) {
+      self.aliquotList.concat(
+        aliquotList.map(function (aliquot) {
+          let workAliquot = WorkAliquot.create(aliquot);
+          let aliquotInfo = _findAliquotInfo(workAliquot);
+
+          //updates info array
+          if (aliquotInfo) {
+            aliquotInfo.quantity++;
+          } else {
+            self.aliquotsInfo.push(new AliquotInfoModel(workAliquot));
+          }
+
+          return workAliquot;
+        }));
+
+      _generateDataSetForChart();
+    }
+
+    let AliquotInfoModel = function (workAliquot) {
+      this.aliquotName = workAliquot.name;
+      this.aliquotLabel = workAliquot.label;
+      this.role = workAliquot.role;
+      this.roleLabel = workAliquot.roleLabel;
+      this.quantity = 1;
+    };
 
     function toJSON() {
       var json = {
@@ -181,7 +204,9 @@
         processingDate: self.processingDate,
         operator: self.operator,
         aliquotList: self.aliquotList,
-        aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) { return { aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity }; })
+        aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) {
+          return {aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity};
+        })
       };
 
       return json;
