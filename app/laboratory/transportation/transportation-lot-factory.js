@@ -169,7 +169,7 @@
     }
 
     function insertAliquotList(aliquotList) {
-      self.aliquotList.concat(
+      self.aliquotList.push(...
         aliquotList.map(function (aliquot) {
           let workAliquot = WorkAliquot.create(aliquot);
           let aliquotInfo = _findAliquotInfo(workAliquot);
