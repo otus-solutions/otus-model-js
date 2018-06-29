@@ -204,7 +204,34 @@ describe('the transportation lot factory', function() {
       });
       expect(aliquotCodeList).toEqual(CODE_LIST_EXPECTED);
     });
-  })
+  });
+
+  describe('the insertAliquotList method', function () {
+    beforeEach(function () {
+      mockWorkAliquot();
+      mockLotWithAliquotFromJSON();
+      Mock.lotWithAliquotFromJSON.aliquotsInfo = [];
+      Mock.lotWithAliquotFromJSON.aliquotList = [];
+
+      Mock.lotWithAliquotFromJSON.insertAliquotList([Mock.workAliquot]);
+    });
+
+    it('should update the aliquotList array', function () {
+
+      expect(Mock.lotWithAliquotFromJSON.aliquotList.length).toEqual(1);
+      expect(Mock.lotWithAliquotFromJSON.aliquotList[0].name).toEqual(Mock.workAliquot.name);
+    });
+
+
+    it('should update the aliquotInfo array', function () {
+
+      var found = Mock.lotWithAliquotFromJSON.aliquotsInfo.find(function (aliquotInfo) {
+        return aliquotInfo.aliquotName === Mock.workAliquot.name;
+      });
+      expect(found).toBeDefined();
+      expect(found.quantity).toEqual(1);
+    });
+  });
 
   function mockTransportationLotJson() {
     Mock.LotJson = {
@@ -280,11 +307,6 @@ describe('the transportation lot factory', function() {
   function mockAliquotInfo() {
     mockWorkAliquot();
     Mock.AliquotInfo = { aliquotName: Mock.workAliquot.name, role: "EXAM", quantity: 1 };
-  }
-
-  function mockAliquotInfo2() {
-    if(!Mock.workAliquot2) mockWorkAliquot2();
-    Mock.AliquotInfo2 = { aliquotName: Mock.workAliquot2.name, quantity: 1 };
   }
 
   function mockParticipantLaboratory() {

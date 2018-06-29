@@ -169,10 +169,10 @@
     }
 
     function insertAliquotList(aliquotList) {
-      self.aliquotList.push(...
+      self.aliquotList.push.apply(self.aliquotList,
         aliquotList.map(function (aliquot) {
-          let workAliquot = WorkAliquot.create(aliquot);
-          let aliquotInfo = _findAliquotInfo(workAliquot);
+          var workAliquot = WorkAliquot.create(aliquot);
+          var aliquotInfo = _findAliquotInfo(workAliquot);
 
           //updates info array
           if (aliquotInfo) {
@@ -187,7 +187,7 @@
       _generateDataSetForChart();
     }
 
-    let AliquotInfoModel = function (workAliquot) {
+    var AliquotInfoModel = function (workAliquot) {
       this.aliquotName = workAliquot.name;
       this.aliquotLabel = workAliquot.label;
       this.role = workAliquot.role;
