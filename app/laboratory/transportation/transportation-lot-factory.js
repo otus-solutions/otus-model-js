@@ -187,7 +187,7 @@
       _generateDataSetForChart();
     }
 
-    var AliquotInfoModel = function (workAliquot) {
+    function AliquotInfoModel(workAliquot) {
       this.aliquotName = workAliquot.name;
       this.aliquotLabel = workAliquot.label;
       this.role = workAliquot.role;
@@ -205,7 +205,7 @@
         operator: self.operator,
         aliquotList: self.aliquotList,
         aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) {
-          return {aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity};
+          return { aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity };
         })
       };
 
