@@ -19,12 +19,6 @@ pipeline {
       }
     }
 
-    stage('Publish Artifact') {
-      steps {
-        sh "npm publish --registry ${repository_npm}"
-      }
-    }
-
     stage('Update Docs') {
       steps {
         sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
