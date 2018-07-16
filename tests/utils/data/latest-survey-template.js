@@ -1,8 +1,6 @@
 var Test = {};
 Test.utils = {};
 Test.utils.data = {};
-
-
 Test.utils.data.latestSurveyTemplate = {
     "extents": "StudioObject",
     "objectType": "Survey",
@@ -16,6 +14,7 @@ Test.utils.data.latestSurveyTemplate = {
         "description": "",
         "keywords": []
     },
+    "dataSources" : [],
     "metainfo": {
         "extents": "StudioObject",
         "objectType": "SurveyMetaInfo",
@@ -1849,4 +1848,14 @@ Test.utils.data.latestSurveyTemplate = {
             "conditions": []
         }]
     }]
+};
+
+Test.utils.data.surveyForm = {
+    "_id" : "dXNlclVVSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOls5N2M4NDVmMC1mODQ3LTExZTYtOGI2NC1iZDIyZTYyYzA4YTJdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==",
+    "objectType" : "SurveyForm",
+    "sender" : "diogo.rosas.ferreira@gmail.com",
+    "sendingDate" : "2017-04-12T02:57:33.873Z",
+    "surveyFormType" : "FORM_INTERVIEW",
+    "version": 1,
+    "isDiscarded": false
 };

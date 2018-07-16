@@ -225,7 +225,6 @@ xdescribe('Survey', function() {
   function mockIdentityData() {
     Mock.NAME = 'NAME';
     Mock.ACRONYM = 'ACRONYM';
-    Mock.VERSION = 'VERSION';
   }
 
   function mockDatetime() {
@@ -243,7 +242,6 @@ xdescribe('Survey', function() {
         objectType: 'SurveyIdentity',
         name: Mock.NAME,
         acronym: Mock.ACRONYM,
-        // version: Mock.VERSION,
         recommendedTo: '',
         description: '',
         keywords: []

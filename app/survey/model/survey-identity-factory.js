@@ -7,7 +7,7 @@
 
   function SurveyIdentityFactory() {
     var self = this;
-    
+
     self.OBJECT_TYPE = 'SurveyIdentity';
 
     /* Public interface */
@@ -27,8 +27,8 @@
       return surveyIdentity;
     }
 
-    function create(name, acronym, version) {
-      return new SurveyIdentity(name, acronym, version);
+    function create(name, acronym) {
+      return new SurveyIdentity(name, acronym);
     }
 
     return self;

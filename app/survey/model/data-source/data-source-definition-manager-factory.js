@@ -68,9 +68,11 @@
     }
 
     function loadJsonData(data) {
-      data.forEach(function(dataSource) {
-        _dataSourcesDefinition.push(self.DataSourceDefinitionFactory.fromJsonObject(dataSource));
-      });
+      if(data instanceof Array){
+        data.forEach(function(dataSource) {
+          _dataSourcesDefinition.push(self.DataSourceDefinitionFactory.fromJsonObject(dataSource));
+        });
+      }
     }
 
     // Private methods

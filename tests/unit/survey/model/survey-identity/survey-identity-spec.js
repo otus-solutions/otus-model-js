@@ -3,7 +3,6 @@ describe('SurveyIdentity', function() {
   var factory;
   Mock.NAME = 'Identity Name';
   Mock.ACRONYM = 'ACRONYM';
-  Mock.VERSION = 'A';
 
   var surveyIdentity;
 
@@ -16,7 +15,7 @@ describe('SurveyIdentity', function() {
       factory = _$injector_.get('SurveyIdentityFactory');
     });
 
-    surveyIdentity = factory.create(Mock.NAME, Mock.ACRONYM, Mock.VERSION);
+    surveyIdentity = factory.create(Mock.NAME, Mock.ACRONYM);
   });
 
   describe('toJson method', function() {
@@ -33,7 +32,6 @@ describe('SurveyIdentity', function() {
       objectType: 'SurveyIdentity',
       name: Mock.NAME,
       acronym: Mock.ACRONYM,
-      // version: Mock.VERSION,
       recommendedTo: '',
       description: '',
       keywords: []
