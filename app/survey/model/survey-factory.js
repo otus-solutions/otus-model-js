@@ -31,12 +31,12 @@
     self.fromJsonObject = fromJsonObject;
 
     /**
-    TODO :
+     TODO :
 
-    Quando for implementado o novo método de carregamento no projeto OTUS-STUDIO,
-    deve-se excluir o método load e usar somente o fromJsonObject.
+     Quando for implementado o novo método de carregamento no projeto OTUS-STUDIO,
+     deve-se excluir o método load e usar somente o fromJsonObject.
 
-    */
+     */
     function load(jsonObject) {
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
@@ -162,7 +162,7 @@
 
     function getAllDataSources(){
       return angular.copy(self.DataSourceManager.list());
-   }
+    }
 
     function isAutocomplete(item) {
       return item.objectType === "AutocompleteQuestion";
@@ -192,7 +192,7 @@
         }
       });
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\":/g, '":').replace(/:\\"/g, ':"').replace(/\\",/g, '",').replace(/,\\"/g, ',"').replace(/{\\"/g, '{"').replace(/\\":\[/g, '":[').replace(/\[\\"/g, '["').replace(/\\"\]/g, '"]').replace(/\\"}/g, '"}').replace(/\\\\"/g, '\"');
     }
   }
 }());
