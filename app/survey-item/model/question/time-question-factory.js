@@ -99,7 +99,7 @@
       json.fillingRules = self.fillingRules;
       json.options = self.options;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
   }
 

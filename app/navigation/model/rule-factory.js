@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -145,7 +145,7 @@
       json.isMetadata = self.isMetadata;
       json.isCustom = self.isCustom;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
   }
 }());

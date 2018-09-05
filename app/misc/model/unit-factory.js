@@ -23,8 +23,8 @@
       var unit = new Unit();
 
       unit.oid = jsonObject.oid;
-      unit.plainText = jsonObject.plainText.replace(/\\"/g, '\"');
-      unit.formattedText = jsonObject.formattedText.replace(/\\"/g, '\"');
+      unit.plainText = jsonObject.plainText;
+      unit.formattedText = jsonObject.formattedText;
 
       return unit;
     }

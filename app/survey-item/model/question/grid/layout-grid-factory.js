@@ -59,7 +59,7 @@
       json.objectType = self.objectType;
       json.width = self.width;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
   }
 

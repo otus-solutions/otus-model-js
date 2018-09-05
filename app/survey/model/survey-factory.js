@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -160,7 +160,7 @@
       return self.DataSourceManager.getDataSourceDefinition(name);
     }
 
-    function getAllDataSources(){
+    function getAllDataSources() {
       return angular.copy(self.DataSourceManager.list());
     }
 
@@ -174,25 +174,29 @@
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.oid = self.oid;
-      json.identity = self.identity.toJson();
-      json.metainfo = self.metainfo.toJson();
-      json.dataSources = self.DataSourceManager.toJson();
+      json.identity = JSON.parse(self.identity.toJson());
+      json.metainfo = JSON.parse(self.metainfo.toJson());
+      if (self.DataSourceManager.toJson().length) {
+        json.dataSources = JSON.parse(self.DataSourceManager.toJson());
+      } else {
+        json.dataSources = [];
+      }
 
       json.itemContainer = [];
-      self.SurveyItemManager.getItemList().forEach(function(item) {
-        json.itemContainer.push(item.toJson());
+      self.SurveyItemManager.getItemList().forEach(function (item) {
+        json.itemContainer.push(JSON.parse(item.toJson()));
       });
 
       json.navigationList = [];
-      self.NavigationManager.getNavigationList().forEach(function(navigation) {
+      self.NavigationManager.getNavigationList().forEach(function (navigation) {
         if (navigation) {
-          json.navigationList.push(navigation.toJson());
+          json.navigationList.push(JSON.parse(navigation.toJson()));
         } else {
           json.navigationList.push({});
         }
       });
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\":/g, '":').replace(/:\\"/g, ':"').replace(/\\",/g, '",').replace(/,\\"/g, ',"').replace(/{\\"/g, '{"').replace(/\\":\[/g, '":[').replace(/\[\\"/g, '["').replace(/\\"\]/g, '"]').replace(/\\"}/g, '"}').replace(/\\\\"/g, '\"');
+      return JSON.stringify(json);
     }
   }
 }());

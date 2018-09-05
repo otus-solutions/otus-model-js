@@ -139,10 +139,10 @@
       json.label = self.label;
       json.lines = [];
       _lines.forEach(function(line) {
-        json.lines.push(line.toJson());
+        json.lines.push(JSON.parse(line.toJson()));
       })
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
   }
 

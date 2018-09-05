@@ -23,8 +23,8 @@
       var label = new Idiom();
 
       label.oid = jsonObject.oid;
-      label.plainText = jsonObject.plainText.replace(/\\"/g, '\"');
-      label.formattedText = jsonObject.formattedText.replace(/\\"/g, '\"');
+      label.plainText = jsonObject.plainText;
+      label.formattedText = jsonObject.formattedText;
 
       return label;
     }

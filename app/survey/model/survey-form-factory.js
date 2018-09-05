@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -60,11 +60,11 @@
       json.sender = self.sender;
       json.sendingDate = self.sendingDate;
       json.surveyFormType = self.surveyFormType;
-      json.surveyTemplate = self.surveyTemplate.toJson();
+      json.surveyTemplate = JSON.parse(self.surveyTemplate.toJson());
       json.version = self.version;
       json.isDiscarded = self.isDiscarded;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\":/g, '":').replace(/:\\"/g, ':"').replace(/\\",/g, '",').replace(/,\\"/g, ',"').replace(/{\\"/g, '{"').replace(/\\":\[/g, '":[').replace(/\[\\"/g, '["').replace(/\\"\]/g, '"]').replace(/\\"}/g, '"}').replace(/\\\\"/g, '\"');
+      return JSON.stringify(json);
     }
   }
 }());

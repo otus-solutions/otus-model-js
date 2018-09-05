@@ -62,7 +62,7 @@
     function toJson() {
       var result = [];
       _dataSourcesDefinition.filter(_bindedDataSources).forEach(function(dataSource) {
-        result.push(dataSource.toJson());
+        result.push(JSON.parse(dataSource.toJson()));
       });
       return result;
     }

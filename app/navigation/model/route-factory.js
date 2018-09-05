@@ -175,10 +175,10 @@
       json.name = self.name;
       json.isDefault = self.isDefault;
       json.conditions = self.conditions.map(function(condition) {
-        return condition.toJson(); 
+        return JSON.parse(condition.toJson()); 
       });
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
 
     function _init() {

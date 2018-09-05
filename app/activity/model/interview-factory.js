@@ -48,9 +48,9 @@
 
       json.objectType = self.objectType;
       json.date = self.date;
-      json.interviewer = self.interviewer.toJson();
+      json.interviewer = JSON.parse(self.interviewer.toJson());
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+      return JSON.stringify(json);
     }
   }
 

@@ -84,7 +84,7 @@
       json.metadata = self.metadata;
       json.fillingRules = self.fillingRules;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
   }
 

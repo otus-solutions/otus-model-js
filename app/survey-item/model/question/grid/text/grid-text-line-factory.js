@@ -104,7 +104,7 @@
       json.objectType = self.objectType;
       json.gridTextList = _gridTextList;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
   }
 

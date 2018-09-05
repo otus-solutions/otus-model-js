@@ -100,10 +100,10 @@
       json.customID = self.customID;
       json.dataType = self.dataType;
       json.label = self.label;
-      json.layout = self.layout.toJson();
+      json.layout = JSON.parse(self.layout.toJson());
       json.unit = self.unit;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
   }
 

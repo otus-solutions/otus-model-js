@@ -66,7 +66,7 @@
       json.url = self.url;
       json.footer = self.footer;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
   }
 

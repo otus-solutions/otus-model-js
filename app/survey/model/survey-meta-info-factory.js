@@ -47,7 +47,7 @@
       json.creationDatetime = self.creationDatetime;
       json.otusStudioVersion = self.otusStudioVersion;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
   }
 

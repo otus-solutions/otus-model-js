@@ -104,7 +104,7 @@
       json.objectType = self.objectType;
       json.gridIntegerList = _gridIntegerList;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return JSON.stringify(json);
     }
   }
 
