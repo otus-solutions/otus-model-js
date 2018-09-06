@@ -64,7 +64,7 @@
       _dataSourcesDefinition.filter(_bindedDataSources).forEach(function(dataSource) {
         result.push(JSON.parse(dataSource.toJson()));
       });
-      return result;
+      return JSON.stringify(result);
     }
 
     function loadJsonData(data) {
