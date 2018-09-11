@@ -174,29 +174,29 @@
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.oid = self.oid;
-      json.identity = JSON.parse(self.identity.toJson());
-      json.metainfo = JSON.parse(self.metainfo.toJson());
+      json.identity = self.identity.toJson();
+      json.metainfo = self.metainfo.toJson();
       if (self.DataSourceManager.toJson().length) {
-        json.dataSources = JSON.parse(self.DataSourceManager.toJson());
+        json.dataSources = self.DataSourceManager.toJson();
       } else {
         json.dataSources = [];
       }
 
       json.itemContainer = [];
       self.SurveyItemManager.getItemList().forEach(function (item) {
-        json.itemContainer.push(JSON.parse(item.toJson()));
+        json.itemContainer.push(item.toJson());
       });
 
       json.navigationList = [];
       self.NavigationManager.getNavigationList().forEach(function (navigation) {
         if (navigation) {
-          json.navigationList.push(JSON.parse(navigation.toJson()));
+          json.navigationList.push(navigation.toJson());
         } else {
           json.navigationList.push({});
         }
       });
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 }());

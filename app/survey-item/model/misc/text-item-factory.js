@@ -62,8 +62,8 @@
       json.customID = self.customID;
       json.dataType = self.dataType;
       json.value = self.value;
-
-      return JSON.stringify(json);
+        console.log('oi')
+      return json;
     }
   }
 

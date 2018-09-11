@@ -36,7 +36,7 @@
       json.name = self.name;
       json.email = self.email;
 
-      return JSON.stringify(json);
+      return json;
     }
 
   }

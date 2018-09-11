@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -47,7 +47,7 @@
       json.creationDatetime = self.creationDatetime;
       json.otusStudioVersion = self.otusStudioVersion;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

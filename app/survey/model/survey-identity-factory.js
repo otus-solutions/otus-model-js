@@ -58,7 +58,7 @@
       json.description = self.description;
       json.keywords = self.keywords;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

@@ -63,7 +63,7 @@
       json.metadata = self.metadata;
       json.parentQuestionID = self.parentQuestionID;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

@@ -66,7 +66,7 @@
       json.value = self.value;
       json.label = self.label;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

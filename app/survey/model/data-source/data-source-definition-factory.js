@@ -95,7 +95,7 @@
       json.name = _name;
       json.bindTo = _bindTo;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

@@ -66,7 +66,7 @@
       json.url = self.url;
       json.footer = self.footer;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

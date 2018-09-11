@@ -308,10 +308,10 @@
       json.index = self.index;
       json.inNavigations = _buildJsonInNavigations();
       json.routes = self.routes.map(function(route) {
-        return JSON.parse(route.toJson()); 
+        return route.toJson(); 
       });
 
-      return JSON.stringify(json);
+      return json;
     }
 
     function _buildJsonInNavigations() {

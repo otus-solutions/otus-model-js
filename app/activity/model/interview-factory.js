@@ -48,9 +48,9 @@
 
       json.objectType = self.objectType;
       json.date = self.date;
-      json.interviewer = JSON.parse(self.interviewer.toJson());
+      json.interviewer = self.interviewer.toJson();
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

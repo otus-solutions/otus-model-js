@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -36,7 +36,7 @@
       var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
       var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
       var questionOptionObject;
-      if(jsonObject.options == undefined){
+      if (jsonObject.options == undefined) {
         questionOptionObject = QuestionOptionFactory.create();
       } else {
         questionOptionObject = QuestionOptionFactory.fromJsonObject(jsonObject.options);
@@ -99,7 +99,7 @@
       json.fillingRules = self.fillingRules;
       json.options = self.options;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

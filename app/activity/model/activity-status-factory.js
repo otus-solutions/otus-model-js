@@ -70,7 +70,7 @@
       json.date = self.date;
       json.user = self.user;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

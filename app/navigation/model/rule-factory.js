@@ -145,7 +145,7 @@
       json.isMetadata = self.isMetadata;
       json.isCustom = self.isCustom;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 }());

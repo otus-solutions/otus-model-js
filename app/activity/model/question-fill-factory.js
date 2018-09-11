@@ -74,12 +74,12 @@
       json.objectType = self.objectType;
       json.questionID = self.questionID;
       json.forceAnswer = self.forceAnswer;
-      json.answer = JSON.parse(self.answer.toJson());
-      json.metadata = JSON.parse(self.metadata.toJson());
+      json.answer = self.answer.toJson();
+      json.metadata = self.metadata.toJson();
       json.comment = self.comment;
       json.accept = self.accept;
       
-      return JSON.stringify(json);
+      return json;
     }
   }
 }());

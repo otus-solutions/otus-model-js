@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -96,7 +96,7 @@
     function listConditions() {
       var clone = [];
 
-      self.conditions.forEach(function(condition) {
+      self.conditions.forEach(function (condition) {
         clone.push(condition);
       });
 
@@ -135,8 +135,8 @@
 
       if (other.conditions.length === self.conditions.length) {
         if (self.conditions.length > 0) {
-          var hasEqualConditions = other.conditions.every(function(otherCondition) {
-            return self.conditions.some(function(selfCondition) {
+          var hasEqualConditions = other.conditions.every(function (otherCondition) {
+            return self.conditions.some(function (selfCondition) {
               return selfCondition.equals(otherCondition);
             });
           });
@@ -174,11 +174,11 @@
       json.destination = self.destination;
       json.name = self.name;
       json.isDefault = self.isDefault;
-      json.conditions = self.conditions.map(function(condition) {
-        return JSON.parse(condition.toJson()); 
+      json.conditions = self.conditions.map(function (condition) {
+        return condition.toJson();
       });
 
-      return JSON.stringify(json);
+      return json;
     }
 
     function _init() {
@@ -188,7 +188,7 @@
     }
 
     function _conditionExists(newCondition) {
-      return self.conditions.some(function(condition) {
+      return self.conditions.some(function (condition) {
         return newCondition.equals(condition);
       });
     }

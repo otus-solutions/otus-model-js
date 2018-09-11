@@ -199,21 +199,21 @@
 
       json.objectType = self.objectType;
       json._id = _id;
-      json.surveyForm = JSON.parse(self.surveyForm.toJson());
+      json.surveyForm = self.surveyForm.toJson();
       json.participantData = self.participantData;
       json.category = self.category;
       json.mode = self.mode;
       json.interviews = self.interviews.map(function (interview) {
-        return JSON.parse(interview.toJson());
+        return interview.toJson();
       });
       json.fillContainer = self.fillContainer.buildJsonToFillContainer();
       json.statusHistory = self.statusHistory.toJson().map(function (statusHistory) {
-        return JSON.parse(statusHistory);
+        return statusHistory;
       });
       json.isDiscarded = self.isDiscarded;
       json.navigationTracker = self.navigationTracker.toJson();
 
-      return JSON.stringify(json);
+      return json;
     }
 
     /**

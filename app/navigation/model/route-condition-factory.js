@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -85,7 +85,7 @@
     function listRules() {
       var clone = [];
 
-      self.rules.forEach(function(rule) {
+      self.rules.forEach(function (rule) {
         clone.push(rule.clone());
       });
 
@@ -107,8 +107,8 @@
 
       if (other.rules.length === self.rules.length) {
         if (self.rules.length > 0) {
-          var hasEqualRules = other.rules.every(function(otherRule) {
-            return self.rules.some(function(selfRule) {
+          var hasEqualRules = other.rules.every(function (otherRule) {
+            return self.rules.some(function (selfRule) {
               return selfRule.equals(otherRule);
             });
           });
@@ -140,11 +140,11 @@
       json.extents = 'StudioObject';
       json.objectType = 'RouteCondition';
       json.name = self.name;
-      json.rules = self.rules.map(function(rule) {
-        return JSON.parse(rule.toJson()); 
+      json.rules = self.rules.map(function (rule) {
+        return rule.toJson();
       });
 
-      return JSON.stringify(json);
+      return json;
     }
 
     function _init() {
@@ -161,7 +161,7 @@
 
     function _findRuleIndex(ruleToSearch) {
       var result = -1;
-      self.rules.some(function(rule, index) {
+      self.rules.some(function (rule, index) {
         if (ruleToSearch.equals(rule)) {
           result = index;
           return true;

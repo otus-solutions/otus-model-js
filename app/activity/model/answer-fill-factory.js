@@ -64,7 +64,7 @@
       json.type = self.type;
       json.value = self.value;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 }());

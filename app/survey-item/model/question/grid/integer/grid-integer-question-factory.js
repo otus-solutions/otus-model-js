@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -115,14 +115,14 @@
     }
 
     function getAllCustomOptionsID() {
-      return _lines.map(function(line) {
+      return _lines.map(function (line) {
         return line.getAllGridIntegerCustomOptionsID();
       });
     }
 
     function loadFromJsonLinesObject(lines) {
       _lines = [];
-      lines.forEach(function(gridIntegerLine) {
+      lines.forEach(function (gridIntegerLine) {
         _lines.push(GridIntegerLineFactory.fromJsonObject(gridIntegerLine));
       });
     }
@@ -138,11 +138,11 @@
       json.fillingRules = self.fillingRules;
       json.label = self.label;
       json.lines = [];
-      _lines.forEach(function(line) {
-        json.lines.push(JSON.parse(line.toJson()));
+      _lines.forEach(function (line) {
+        json.lines.push(line.toJson());
       })
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 }());

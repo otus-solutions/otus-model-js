@@ -104,7 +104,7 @@
       json.fillingRules = self.fillingRules;
 
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 
