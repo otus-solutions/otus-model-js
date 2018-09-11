@@ -24,6 +24,38 @@ Test.utils.data.selectedParticipant = {
   stringfiedRN: "5003388"
 };
 
+Test.utils.data.ImageItem = {
+  "extents": "SurveyItem",
+  "objectType": "ImageItem",
+  "templateID": "DQ2",
+  "customID": "DQ2",
+  "dataType": "String",
+  "url": "",
+  "footer": {
+    "ptBR": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "\"texto\"",
+      "formattedText": "\"texto\""
+    },
+    "enUS": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "esES": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    }
+  }
+}
+
 Test.utils.data.survey = {
     "_id" : "dXNlclVVSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOls5N2M4NDVmMC1mODQ3LTExZTYtOGI2NC1iZDIyZTYyYzA4YTJdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==",
     "objectType" : "SurveyForm",

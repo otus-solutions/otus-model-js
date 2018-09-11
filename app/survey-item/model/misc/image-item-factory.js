@@ -21,11 +21,11 @@
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.ImageItemFactory.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error('otusjs.model.misc.model.ImageItemFactory.fromJsonObject() method expects to receive a object instead a String');
       }
       var labelObject = LabelFactory.fromJsonObject(jsonObject.footer);
       var prototype = {};
-      prototype.objectType = "SurveyItem";
+      prototype.objectType = 'SurveyItem';
       var question = new ImageItem(jsonObject.templateID, prototype, labelObject);
       question.customID = jsonObject.customID;
       question.url = jsonObject.url;
