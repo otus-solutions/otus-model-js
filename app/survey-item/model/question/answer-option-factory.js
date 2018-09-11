@@ -44,14 +44,14 @@
     self.parentQuestionID = parentQuestionID;
 
     /* Public methods */
-    self.toJson = toJson;
+    self.toJSON = toJSON;
     self.setExtractionValue = setExtractionValue;
 
     function setExtractionValue(newExtractionValue) {
       self.extractionValue = newExtractionValue;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;

@@ -71,7 +71,7 @@
     self.validators = validators;
     self.getAllCustomOptionsID = getAllCustomOptionsID;
     self.loadFromJsonLinesObject = loadFromJsonLinesObject;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function createLine() {
       var line = GridIntegerLineFactory.create();
@@ -127,7 +127,7 @@
       });
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -139,7 +139,7 @@
       json.label = self.label;
       json.lines = [];
       _lines.forEach(function (line) {
-        json.lines.push(line.toJson());
+        json.lines.push(line.toJSON());
       })
 
       return json;

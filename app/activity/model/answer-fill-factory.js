@@ -47,7 +47,7 @@
     /* Public methods */
     self.isFilled = isFilled;
     self.clear = clear;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function isFilled() {
       return (self.value !== null) ? true : false;
@@ -57,7 +57,7 @@
       self.value = null;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;

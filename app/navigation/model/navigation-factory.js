@@ -120,7 +120,7 @@
     self.removeRouteByName = removeRouteByName;
     self.selfsame = selfsame;
     self.setupDefaultRoute = setupDefaultRoute;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
     self.updateInNavigation = updateInNavigation;
     self.updateRoute = updateRoute;
 
@@ -299,7 +299,7 @@
       self.routes[0] = route;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -308,7 +308,7 @@
       json.index = self.index;
       json.inNavigations = _buildJsonInNavigations();
       json.routes = self.routes.map(function(route) {
-        return route.toJson(); 
+        return route.toJSON(); 
       });
 
       return json;

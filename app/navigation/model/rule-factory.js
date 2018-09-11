@@ -50,7 +50,7 @@
     self.equals = equals;
     self.selfsame = selfsame;
     self.clone = clone;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function within(arrayValues) {
       defineAnswer('within', arrayValues);
@@ -134,7 +134,7 @@
       return new self.constructor(self.when, self.operator, self.answer, self.isMetadata, self.isCustom);
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {}
 
       json.extents = self.extents;

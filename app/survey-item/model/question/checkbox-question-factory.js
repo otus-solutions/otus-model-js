@@ -76,7 +76,7 @@
     self.isQuestion = isQuestion;
     self.validators = validators;
     self.getAllCustomOptionsID = getAllCustomOptionsID;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function getOptionList() {
       return self.options;
@@ -154,7 +154,7 @@
       return customOptionsID;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;

@@ -69,7 +69,7 @@
     self.setColor = setColor;
     self.getColor = getColor;
     self.isQuestion = isQuestion;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function setWidth(width) {
       self.layout.width = width;
@@ -91,7 +91,7 @@
       return true;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -100,7 +100,7 @@
       json.customID = self.customID;
       json.dataType = self.dataType;
       json.label = self.label;
-      json.layout = self.layout.toJson();
+      json.layout = self.layout.toJSON();
       json.unit = self.unit;
 
       return json;

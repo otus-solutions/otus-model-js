@@ -104,7 +104,7 @@
     self.isAvailableCustomID = isAvailableCustomID;
     self.getDataSource = getDataSource;
     self.getAllDataSources = getAllDataSources;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function initialize() {
       self.SurveyItemManager.init();
@@ -168,29 +168,29 @@
       return item.objectType === "AutocompleteQuestion";
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.oid = self.oid;
-      json.identity = self.identity.toJson();
-      json.metainfo = self.metainfo.toJson();
-      if (self.DataSourceManager.toJson().length) {
-        json.dataSources = self.DataSourceManager.toJson();
+      json.identity = self.identity.toJSON();
+      json.metainfo = self.metainfo.toJSON();
+      if (self.DataSourceManager.toJSON().length) {
+        json.dataSources = self.DataSourceManager.toJSON();
       } else {
         json.dataSources = [];
       }
 
       json.itemContainer = [];
       self.SurveyItemManager.getItemList().forEach(function (item) {
-        json.itemContainer.push(item.toJson());
+        json.itemContainer.push(item.toJSON());
       });
 
       json.navigationList = [];
       self.NavigationManager.getNavigationList().forEach(function (navigation) {
         if (navigation) {
-          json.navigationList.push(navigation.toJson());
+          json.navigationList.push(navigation.toJSON());
         } else {
           json.navigationList.push({});
         }

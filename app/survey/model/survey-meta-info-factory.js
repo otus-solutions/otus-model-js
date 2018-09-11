@@ -37,9 +37,10 @@
     self.creationDatetime = creationDatetime;
     self.otusStudioVersion = '';
 
-    self.toJson = toJson;
+    /* Public methods */
+    self.toJSON = toJSON;
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;

@@ -34,7 +34,7 @@
     self.getDataSourceDefinition = getDataSourceDefinition;
     self.getDataSourcesByItemID = getDataSourcesByItemID;
     self.list = list;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
     self.loadJsonData = loadJsonData;
 
     // Returns a DataSource by name. If the required DataSource was not found then
@@ -59,10 +59,10 @@
       return _dataSourcesDefinition;
     }
 
-    function toJson() {
+    function toJSON() {
       var result = [];
       _dataSourcesDefinition.filter(_bindedDataSources).forEach(function(dataSource) {
-        result.push(dataSource.toJson());
+        result.push(dataSource.toJSON());
       });
       return result;
     }

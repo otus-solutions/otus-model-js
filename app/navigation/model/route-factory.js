@@ -75,7 +75,7 @@
     self.equals = equals;
     self.selfsame = selfsame;
     self.clone = clone;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     _init();
 
@@ -165,7 +165,7 @@
       return clone;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -175,7 +175,7 @@
       json.name = self.name;
       json.isDefault = self.isDefault;
       json.conditions = self.conditions.map(function (condition) {
-        return condition.toJson();
+        return condition.toJSON();
       });
 
       return json;

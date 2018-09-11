@@ -52,7 +52,7 @@
     self.clear = clear;
 
     /* Public methods */
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function isFilled() {
       return self.answer.isFilled() || self.metadata.isFilled() || !!self.comment;
@@ -68,14 +68,14 @@
       self.comment = '';
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;
       json.questionID = self.questionID;
       json.forceAnswer = self.forceAnswer;
-      json.answer = self.answer.toJson();
-      json.metadata = self.metadata.toJson();
+      json.answer = self.answer.toJSON();
+      json.metadata = self.metadata.toJSON();
       json.comment = self.comment;
       json.accept = self.accept;
       

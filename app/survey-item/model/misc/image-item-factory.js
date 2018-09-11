@@ -49,13 +49,13 @@
 
     /* Public methods */
     self.isQuestion = isQuestion;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function isQuestion() {
       return false;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;

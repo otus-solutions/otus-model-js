@@ -56,7 +56,7 @@
     self.isAnswered = isAnswered;
     self.isIgnored = isIgnored;
     self.isSkipped = isSkipped;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     /**
      * Returns the object type of instance.
@@ -124,7 +124,7 @@
       return (_state === SKIPPED) ? true : false;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = _objectType;

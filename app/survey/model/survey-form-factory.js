@@ -43,15 +43,16 @@
     self.surveyTemplate = options.surveyTemplate || null;
     self.version = options.version || null;
     self.isDiscarded = options.isDiscarded || false;
+
     /* Public methods */
     self.getItems = getItems;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function getItems() {
       return self.surveyTemplate.getItems();
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -60,7 +61,7 @@
       json.sender = self.sender;
       json.sendingDate = self.sendingDate;
       json.surveyFormType = self.surveyFormType;
-      json.surveyTemplate = self.surveyTemplate.toJson();
+      json.surveyTemplate = self.surveyTemplate.toJSON();
       json.version = self.version;
       json.isDiscarded = self.isDiscarded;
 

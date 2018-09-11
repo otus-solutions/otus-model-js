@@ -50,7 +50,7 @@
     self.getGridIntegerListSize = getGridIntegerListSize;
     self.getAllGridIntegerCustomOptionsID = getAllGridIntegerCustomOptionsID;
     self.loadGridIntegerListFromJsonObject = loadGridIntegerListFromJsonObject;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function addGridInteger(templateID) {
       var gridInteger = GridIntegerFactory.create(templateID);
@@ -97,7 +97,7 @@
       });
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;

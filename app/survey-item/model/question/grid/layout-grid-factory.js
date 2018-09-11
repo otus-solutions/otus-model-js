@@ -42,7 +42,7 @@
     /* Public methods */
     self.setWidth = setWidth;
     self.getWidth = getWidth;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function setWidth(width) {
       self.width = width;
@@ -52,14 +52,14 @@
       return self.width;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.width = self.width;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

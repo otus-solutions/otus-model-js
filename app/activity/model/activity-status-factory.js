@@ -60,9 +60,10 @@
     self.date = statusDate || new Date();
     self.user = user;
 
-    self.toJson = toJson;
+    /* Public methods */
+    self.toJSON = toJSON;
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;

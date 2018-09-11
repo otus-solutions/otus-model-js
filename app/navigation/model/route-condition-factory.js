@@ -56,7 +56,7 @@
     self.equals = equals;
     self.selfsame = selfsame;
     self.clone = clone;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     _init();
 
@@ -134,14 +134,14 @@
       return new self.constructor(self.name, self.rules);
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = 'StudioObject';
       json.objectType = 'RouteCondition';
       json.name = self.name;
       json.rules = self.rules.map(function (rule) {
-        return rule.toJson();
+        return rule.toJSON();
       });
 
       return json;
