@@ -16,7 +16,7 @@ describe("FileUploadQuestionFactory", function() {
           _$injector_),
         'FillingRulesOptionFactory': mockFillingRulesOptionFactory(
           _$injector_)
-      }
+      };
 
       factory = _$injector_.get('FileUploadQuestionFactory',
         injections);
@@ -56,7 +56,7 @@ describe("FileUploadQuestionFactory", function() {
     });
 
     it('should create an instance with the same values of Mock.jsonObject', function() {
-      expect(survey.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
+      expect(JSON.stringify(survey)).toEqual(JSON.stringify(Mock.jsonObject));
     });
 
   });

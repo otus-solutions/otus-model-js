@@ -59,7 +59,7 @@ describe('TimeQuestionFactory', function() {
 
   });
 
-  describe('fromJsonObject method', function() {
+  describe('fromJSONObject method', function() {
 
     beforeEach(function() {
       question = factory.fromJsonObject(Mock.jsonObject);
@@ -72,10 +72,6 @@ describe('TimeQuestionFactory', function() {
 
     it("should verify validatorsList array", function() {
       expect(question.validators()).toEqual(Mock.validatorsList);
-    });
-
-    it("should create an instance with the same values of Mock.jsonObject", function() {
-      expect(question.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
     });
 
     it("should call LabelFactory.fromJsonObject method with Mock.label", function() {

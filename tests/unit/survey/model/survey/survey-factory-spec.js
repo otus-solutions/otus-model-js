@@ -75,7 +75,7 @@ describe('SurveyFactory', function() {
   xdescribe("should create an instance with the same values of", function() {
 
       beforeEach(function () {
-        stringifiedSurvey = survey.toJson();
+        stringifiedSurvey = survey.toJSON();
         parsedSurvey = JSON.parse(stringifiedSurvey);
       });
 
