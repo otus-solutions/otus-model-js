@@ -1,150 +1,94 @@
 describe('CalendarQuestionFactory', function() {
   var Mock = {};
-  var question;
-  var factory;
+  var calendar, factory;
+  var TEMPLATE_ID = 'TPL_ID';
+  var PROTOTYPE = { "objectType" : "SurveyItem"};
+  var LABEL = {"ptBR": {}};
+  var METADATA = { "extents": "StudioObject", "objectType": "MetadataGroup", "options": []};
+  var FILLING_RULES = { "extends": "StudiObject", "objectType": "FillingRules", "options": {}}
+  var EXPECTED_VALIDATORS_LIST = [ 'mandatory', 'minDate', 'maxDate', 'rangeDate','futureDate', 'pastDate'];
 
   beforeEach(function() {
     angular.mock.module('otusjs');
-
-    mockJsonObject();
-
-    inject(function(_$injector_) {
-      mockQuestion(_$injector_);
-
-      factory = _$injector_.get('CalendarQuestionFactory', {
-        'LabelFactory': mockLabelFactory(_$injector_),
-        'MetadataGroupFactory': mockMetaGroupFactory(_$injector_),
-        'FillingRulesOptionFactory': mockFillingRulesOptionFactory(_$injector_)
-      });
+    angular.mock.inject(function (_$injector_) {
+      factory = _$injector_.get('CalendarQuestionFactory');
+      // otusRestResourceContext = _$injector_.get('OtusRestResourceContext');
+      // headerBuilderFactory = _$injector_.get('otus.client.HeaderBuilderFactory');
+      // spyOn(otusRestResourceContext, 'getRestPrefix').and.callThrough();
+      // spyOn(otusRestResourceContext, 'getSecurityToken');
+      // spyOn(headerBuilderFactory, 'create').and.callThrough();
+      // httpBackend = _$injector_.get('$httpBackend');
+      // httpBackend.when(METHOD_GET_VALUE, REST_PREFIX + SUFFIX + LIST_SX).respond(200, DATA);
     });
+
+    Mock.calendarItemJson = Test.utils.data.calendarItemJson;
+
   });
 
-  describe('create method', function() {
+  it('factoryExistence check', function () {
+    expect(factory).toBeDefined();
+  });
 
-    beforeEach(function() {
-      question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
+  it('methodFactoryExistence check', function () {
+    expect(factory.create).toBeDefined();
+    expect(factory.fromJsonObject).toBeDefined();
+  });
+
+
+  describe('methods of object calendar', function() {
+
+    beforeEach(function () {
+      calendar = factory.create(TEMPLATE_ID, PROTOTYPE, LABEL, METADATA, FILLING_RULES);
     });
 
-    xit('returned object should extends SurveyItem', function() {
-      expect(question.extends).toBe('SurveyItem');
+    it('isQuestionMethod should return positive', function(){
+      expect(calendar.isQuestion()).toBeTruthy();
     });
 
-    it('returned object should have objectType equal to CalendarQuestion', function() {
-      expect(question.objectType).toBe('CalendarQuestion');
+    it('validatorsMethod should return Array', function(){
+      expect(calendar.validators()).toEqual(EXPECTED_VALIDATORS_LIST);
     });
 
-    it('returned object should have a not null templateID', function() {
-      expect(question.templateID).toBe(Mock.TEMPLATE_ID);
-    });
-
-    it('returned object should have dataType equal to LocalDate', function() {
-      expect(question.dataType).toBe('LocalDate');
-    });
-
-    it('returned object should have a label object for ptBR locale', function() {
-      expect(question.label.ptBR).not.toBeNull();
-      expect(question.label.ptBR).not.toBeUndefined();
-    });
-
-    it('returned object should have a label object for enUS locale', function() {
-      expect(question.label.enUS).not.toBeNull();
-      expect(question.label.enUS).not.toBeUndefined();
-    });
-
-    it('returned object should have a label object for enUS locale', function() {
-      expect(question.label.esES).not.toBeNull();
-      expect(question.label.esES).not.toBeUndefined();
+    it('toJsonMethod should return jsonObject', function(){
+      var calendarJson = calendar.toJson();
+      expect(JSON.stringify(calendarJson)).toEqual(JSON.stringify(Mock.calendarItemJson));
     });
 
   });
 
-  describe('fromJsonObject method', function() {
+  describe('methods of object fromJsonObject', function() {
 
-    beforeEach(function() {
-      question = factory.fromJsonObject(Mock.jsonObject);
+    beforeEach(function () {
+      calendar = factory.fromJsonObject(Mock.calendarItemJson);
     });
 
     it("should create an instance with the same values of Mock.jsonObject", function() {
-      expect(JSON.stringify(question)).toEqual(JSON.stringify(Mock.jsonObject));
+      expect(calendar.toJson()).toEqual(Mock.calendarItemJson);
     });
 
-    it("should call LabelFactory.fromJsonObject method with Mock.label", function() {
-      expect(Mock.LabelFactory.fromJsonObject).toHaveBeenCalledWith(Mock.label);
-    });
+    // it("should call LabelFactory.fromJsonObject method with Mock.label", function() {
+    //   expect(Mock.LabelFactory.fromJsonObject).toHaveBeenCalledWith(Mock.label);
+    // });
+    //
+    // it("should call MetadataGroupFactory.fromJsonObject method with Mock.metadata", function() {
+    //   expect(Mock.MetadataGroupFactory.fromJsonObject).toHaveBeenCalledWith(Mock.metadata);
+    // });
+    //
+    // it("should call FillingRulesOptionFactory.fromJsonObject method with Mock.fillingRules", function() {
+    //   expect(Mock.FillingRulesOptionFactory.fromJsonObject).toHaveBeenCalledWith(Mock.fillingRules);
+    // });
 
-    it("should call MetadataGroupFactory.fromJsonObject method with Mock.metadata", function() {
-      expect(Mock.MetadataGroupFactory.fromJsonObject).toHaveBeenCalledWith(Mock.metadata);
-    });
-
-    it("should call FillingRulesOptionFactory.fromJsonObject method with Mock.fillingRules", function() {
-      expect(Mock.FillingRulesOptionFactory.fromJsonObject).toHaveBeenCalledWith(Mock.fillingRules);
-    });
-
-    it("should throw an error when receives a string", function() {
-      var ERROR_MESSAGE = "otusjs.model.misc.model.CalendarQuestionFactory.fromJsonObject() " +
-        "method expects to receive a object instead a String";
-
-      var fromJsonObjectFunction = function() {
-        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
-      };
-
-      expect(fromJsonObjectFunction).toThrowError(ERROR_MESSAGE);
-    });
+    // it("should throw an error when receives a string", function() {
+    //   var ERROR_MESSAGE = "otusjs.model.misc.model.CalendarQuestionFactory.fromJsonObject() " +
+    //     "method expects to receive a object instead a String";
+    //
+    //   function fromJsonObjectFunction() {
+    //     factory.fromJsonObject(JSON.stringify(Mock.calendarItemJson);
+    //   };
+    //
+    //   expect(fromJsonObjectFunction).toThrowError(ERROR_MESSAGE);
+    // });
 
   });
-
-  function mockQuestion($injector) {
-    Mock.TEMPLATE_ID = 'TPL_ID';
-    Mock.Question = $injector.get('SurveyItemFactory').create('CalendarQuestion', Mock.TEMPLATE_ID);
-  }
-
-  function mockLabelFactory($injector) {
-    Mock.LabelFactory = $injector.get('LabelFactory');
-    spyOn(Mock.LabelFactory, 'fromJsonObject').and.returnValue(Mock.label);
-    return Mock.LabelFactory;
-  }
-
-  function mockMetaGroupFactory($injector) {
-    Mock.MetadataGroupFactory = $injector.get('MetadataGroupFactory');
-    spyOn(Mock.MetadataGroupFactory, 'fromJsonObject').and.returnValue(Mock.metadata);
-    return Mock.MetadataGroupFactory;
-  }
-
-  function mockFillingRulesOptionFactory($injector) {
-    Mock.FillingRulesOptionFactory = $injector.get('FillingRulesOptionFactory');
-    spyOn(Mock.FillingRulesOptionFactory, 'fromJsonObject').and.returnValue(Mock.fillingRules);
-    return Mock.FillingRulesOptionFactory;
-  }
-
-  function mockJsonObject() {
-    Mock.label = {
-      "ptBR": {},
-      "enUS": {},
-      "esES": {}
-    };
-
-    Mock.metadata = {
-      "extents": "StudioObject",
-      "objectType": "MetadataGroup",
-      "options": []
-    };
-
-    Mock.fillingRules = {
-      "extends": "StudiObject",
-      "objectType": "FillingRules",
-      "options": {}
-    };
-
-    Mock.jsonObject = {
-      "extents": "SurveyItem",
-      "objectType": "CalendarQuestion",
-      "templateID": "QUE1",
-      "customID": "PersonalizedID",
-      "dataType": "LocalDate",
-      "label": Mock.label,
-      "metadata": Mock.metadata,
-      "fillingRules": Mock.fillingRules
-    };
-  }
 
 });
