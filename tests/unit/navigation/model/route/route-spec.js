@@ -284,7 +284,7 @@ describe('Route', function() {
 
   });
 
-  describe('toJson method', function() {
+  describe('toJSON method', function() {
 
     beforeEach(function() {
       mockJson();
@@ -292,7 +292,7 @@ describe('Route', function() {
     });
 
     it('should return a well formatted json based on Route', function() {
-      expect(route.toJson()).toEqual(Mock.json);
+      expect(route.toJSON()).toEqual(Mock.json);
     });
 
   });
@@ -307,14 +307,14 @@ describe('Route', function() {
   }
 
   function mockJson() {
-    Mock.json = JSON.stringify({
+    Mock.json = {
       extents: 'SurveyTemplateObject',
       objectType: 'Route',
       origin: ORIGIN,
       destination: DESTINATION,
       name: ROUTE_NAME,
       isDefault: false,
-      conditions: [Mock.conditionA.toJson()]
-    }).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      conditions: [Mock.conditionA.toJSON()]
+    };
   }
 });

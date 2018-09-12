@@ -208,7 +208,7 @@ describe('RouteFactory', function () {
     describe('when is a json of alternative route', function () {
 
       beforeEach(function () {
-        route = factory.fromJson(JSON.stringify(Mock.alternativeRouteJson));
+        route = factory.fromJson(Mock.alternativeRouteJson);
       });
 
       it('should return a Route object with extends value equal to "SurveyTemplateObject"', function () {
@@ -253,7 +253,7 @@ describe('RouteFactory', function () {
   }
 
   function mockJson() {
-    Mock.defaultRouteJson = JSON.stringify({
+    Mock.defaultRouteJson = {
       extents: 'SurveyTemplateObject',
       objectType: 'Route',
       name: ROUTE_NAME,
@@ -261,7 +261,7 @@ describe('RouteFactory', function () {
       destination: DESTINATION,
       isDefault: true,
       conditions: []
-    });
+    };
     Mock.alternativeRouteJson = {
       extents: 'SurveyTemplateObject',
       objectType: 'Route',
@@ -269,7 +269,7 @@ describe('RouteFactory', function () {
       origin: ORIGIN,
       destination: DESTINATION,
       isDefault: false,
-      conditions: [Mock.conditionA.toJson()]
+      conditions: [Mock.conditionA.toJSON()]
     };
   }
 });

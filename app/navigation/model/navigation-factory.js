@@ -57,22 +57,21 @@
     }
 
     function fromJson(jsonData) {
-      var jsonObj = _parse(jsonData);
       var navigation;
-      if (jsonObj.origin === 'BEGIN NODE' || jsonObj.origin === 'END NODE') {
-        navigation = createInitial(jsonObj.origin);
+      if (jsonData.origin === 'BEGIN NODE' || jsonData.origin === 'END NODE') {
+        navigation = createInitial(jsonData.origin);
       } else {
-        if (!jsonObj.routes || !jsonObj.routes.length) { //TODO check if needed
+        if (!jsonData.routes || !jsonData.routes.length) { //TODO check if needed
           return createNullNavigation();
         }
-        navigation = create(jsonObj.origin);
+        navigation = create(jsonData.origin);
       }
 
       if (navigation) {
-        navigation.index = jsonObj.index;
-        navigation.inNavigations = jsonObj.inNavigations;
-        navigation.routes = jsonObj.routes.map(function(route) {
-          return RouteFactory.fromJson(JSON.stringify(route));
+        navigation.index = jsonData.index;
+        navigation.inNavigations = jsonData.inNavigations;
+        navigation.routes = jsonData.routes.map(function(route) {
+          return RouteFactory.fromJson(route);
         });
       }
 

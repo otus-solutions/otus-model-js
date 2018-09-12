@@ -540,7 +540,7 @@ describe('Navigation:', function() {
 
   });
 
-  describe('toJson method', function() {
+  describe('toJSON method', function() {
 
     beforeEach(function() {
       navigationA.index = 1;
@@ -548,16 +548,16 @@ describe('Navigation:', function() {
 
     it('should return a well formatted json based on Navigation', function() {
       navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
-      expect(navigationA.toJson()).toEqual(Mock.json);
+      expect(navigationA.toJSON()).toEqual(Mock.json);
     });
 
     it('should return object well defined', function() {
-      expect(navigationA.toJson).toBeDefined();
+      expect(navigationA.toJSON).toBeDefined();
     });
 
-    xit('method toJson should called method _buildJsonInNavigations', function() {
+    xit('method toJSON should called method _buildJsonInNavigations', function() {
       spyOn(navigationA, '_buildJsonInNavigations').and.callThrough();
-      navigationA.toJson();
+      navigationA.toJSON();
 
       expect(navigationA._buildJsonInNavigations).toHaveBeenCalled();
     });
@@ -607,13 +607,13 @@ describe('Navigation:', function() {
   }
 
   function mockJson() {
-    Mock.json = JSON.stringify({
+    Mock.json = {
       extents: EXTENTS,
       objectType: OBJECT_TYPE,
       origin: CAD1,
       index: 1,
       inNavigations: [],
-      routes: [Mock.routeCAD1_CAD2.toJson()]
-    }).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      routes: [Mock.routeCAD1_CAD2.toJSON()]
+    };
   }
 });

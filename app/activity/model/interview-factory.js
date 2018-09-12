@@ -50,7 +50,7 @@
       json.date = self.date;
       json.interviewer = self.interviewer.toJSON();
 
-      return toJSON;
+      return json;
     }
   }
 

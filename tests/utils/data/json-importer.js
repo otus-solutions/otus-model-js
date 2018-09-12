@@ -68,6 +68,57 @@ Test.utils.data.ImageItem = {
   }
 }
 
+Test.utils.data.calendarItemJson = {
+  "extents": "SurveyItem",
+  "objectType": "CalendarQuestion",
+  "templateID": "TPL_ID",
+  "customID": "TPL_ID",
+  "dataType": "LocalDate",
+  "label": {
+    "ptBR": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "enUS": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "esES": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    }
+  },
+  "metadata": {
+    "extents": "StudioObject",
+    "objectType": "MetadataGroup",
+    "options": []
+  },
+  "fillingRules": {
+    "extends": "StudioObject",
+    "objectType": "FillingRules",
+    "options": {
+      "mandatory": {
+        "extends": "StudioObject",
+        "objectType": "Rule",
+        "validatorType": "mandatory",
+        "data": {
+          "canBeIgnored": false,
+          "reference": true
+        }
+      }
+    }
+  }
+}
+
 Test.utils.data.survey = {
   "extents": "StudioObject",
   "objectType": "SurveyForm",
