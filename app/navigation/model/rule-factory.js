@@ -17,8 +17,8 @@
     }
 
     function fromJson(json) {
-      var jsonObj = JSON.parse(json);
-      var rule = new Rule(jsonObj.when, jsonObj.operator, jsonObj.answer, jsonObj.isMetadata, jsonObj.isCustom);
+
+      var rule = new Rule(json.when, json.operator, json.answer, json.isMetadata, json.isCustom);
       return rule;
     }
 
