@@ -68,7 +68,7 @@ describe("DataSourceDefinition", function() {
       });
     });
     it("should return a Json", function () {
-      expect(dataSourceDefinition.toJson()).toBe(json);
+      expect(JSON.stringify(dataSourceDefinition)).toBe(json);
     });
   });
 

@@ -42,7 +42,7 @@ describe('LayoutGridFactory', function() {
     });
 
     it('should return a json valid', function(){
-      var json = JSON.parse(layout.toJson());
+      var json = JSON.parse(JSON.stringify(layout));
       expect(json.width).toEqual(Mock.WIDTH_1);
     });
   });

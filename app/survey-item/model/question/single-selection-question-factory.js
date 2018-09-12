@@ -74,7 +74,7 @@
     self.validators = validators;
     self.isAvailableExtractionValue = isAvailableExtractionValue;
     self.isAvailableValue = isAvailableValue;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function getOptionListSize() {
       return self.options.length;
@@ -141,7 +141,7 @@
       return getOptionByValue(value) ? false : true;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -154,7 +154,7 @@
       json.metadata = self.metadata;
       json.fillingRules = self.fillingRules;
 
-      return JSON.stringify(json);
+      return json;
     }
 
     function _reorderOptionValues() {

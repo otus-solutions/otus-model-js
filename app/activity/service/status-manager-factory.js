@@ -55,7 +55,7 @@
     self.newOpenedRegistry = newOpenedRegistry;
     self.newSavedRegistry = newSavedRegistry;
     self.newFinalizedRegistry = newFinalizedRegistry;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function init(history) {
       _history = history || [];
@@ -111,9 +111,9 @@
       return _history.length;
     }
 
-    function toJson() {
+    function toJSON() {
       return _history.map(function(status) {
-        return status.toJson();
+        return status.toJSON();
       });
     }
   }

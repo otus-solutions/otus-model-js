@@ -77,7 +77,7 @@ describe('CheckboxQuestion', function() {
 
         beforeEach(function() {
             var option = Mock.CheckboxAnswerOptionFactory.create('TPL_IDa');
-            var optionJSON = option.toJson();
+            var optionJSON = JSON.stringify(option);
             question.loadJsonOption(optionJSON);
 
         });
@@ -199,7 +199,7 @@ describe('CheckboxQuestion', function() {
     describe('toJson method', function() {
 
         it('should return a well formatted json based on CheckboxQuestion', function() {
-            expect(question.toJson()).toEqual(Mock.json);
+            expect(JSON.stringify(question)).toEqual(Mock.json);
         });
 
     });

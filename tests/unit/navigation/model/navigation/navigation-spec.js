@@ -1,8 +1,8 @@
-xdescribe('Navigation:', function() {
+describe('Navigation:', function() {
 
   var Mock = {};
   var injections = {};
-  var navigationA, navigationB, navigationC;
+  var navigationA, navigationB, navigationC, navigationD;
   var EXTENTS = 'SurveyTemplateObject';
   var OBJECT_TYPE = 'Navigation';
   var DIFF_OBJECT_TYPE = 'DIFF_OBJECT_TYPE';
@@ -64,6 +64,10 @@ xdescribe('Navigation:', function() {
 
   describe('createAlternativeRoute method', function() {
 
+    beforeEach(function() {
+      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
+    });
+
     it('should put a new route in route list', function() {
       navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
 
@@ -85,6 +89,7 @@ xdescribe('Navigation:', function() {
     });
 
     it('should force the route to not be default', function() {
+
       Mock.routeCAD1_CAD3.isDefault = true;
       navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
 
@@ -127,12 +132,6 @@ xdescribe('Navigation:', function() {
         expect(navigationA.equals(navigationB)).toBe(false);
       });
 
-      it('should return false when two objects have different origins', function() {
-        var navigationB = Mock.NavigationFactory.create(CAD5, CAD2);
-
-        expect(navigationA.equals(navigationB)).toBe(false);
-      });
-
       it('should return false when two objects have different indexes', function() {
         navigationA.index = 0;
         var navigationB = Mock.NavigationFactory.create(CAD1, CAD2);
@@ -165,18 +164,17 @@ xdescribe('Navigation:', function() {
   describe('getRouteByName method', function() {
 
     describe('when route exists', function() {
+      beforeEach(function() {
+        navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
+      });
 
       it('should return a cloned route', function() {
         var clone1 = navigationA.getRouteByName(Mock.routeCAD1_CAD2.name);
         var clone2 = navigationA.getRouteByName(Mock.routeCAD1_CAD2.name);
 
         expect(clone1.equals(clone2)).toBe(true);
-        expect(clone1.selfsame(clone2)).toBe(false);
-
         clone1.isDefault = false;
-
         expect(clone1.equals(clone2)).toBe(false);
-        expect(clone1.selfsame(clone2)).toBe(false);
       });
 
     });
@@ -192,6 +190,9 @@ xdescribe('Navigation:', function() {
   });
 
   describe('hasRoute method', function() {
+    beforeEach(function() {
+      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
+    });
 
     describe('when route exists', function() {
 
@@ -334,6 +335,12 @@ xdescribe('Navigation:', function() {
 
   describe('listRoutes method', function() {
 
+    beforeEach(function() {
+      navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
+      navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
+      Mock.routeCAD1_CAD3.isDefault = true;
+    });
+
     it('should return a list of cloned routes', function() {
       var cloneZero = navigationA.listRoutes()[0];
       cloneZero.name = 'AN_INVALID_NAME';
@@ -475,7 +482,8 @@ xdescribe('Navigation:', function() {
     describe('when updated route is the current default', function() {
 
       it('should do nothing', function() {
-        Mock.routeCAD1_CAD2.isDefault = false;
+        navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
+        Mock.routeCAD1_CAD2.isDefault = true;
         navigationA.updateRoute(Mock.routeCAD1_CAD2);
 
         expect(navigationA.getDefaultRoute().name).toBe(Mock.routeCAD1_CAD2.name);
@@ -489,6 +497,7 @@ xdescribe('Navigation:', function() {
       describe('and updated route is configured to be default', function() {
 
         beforeEach(function() {
+          navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
           navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
           Mock.routeCAD1_CAD3.isDefault = true;
         });
@@ -500,10 +509,11 @@ xdescribe('Navigation:', function() {
         });
 
         it('should replace current default route with updated route data', function() {
+          Mock.routeCAD1_CAD3.isDefault = true;
           navigationA.updateRoute(Mock.routeCAD1_CAD3);
 
           expect(navigationA.listRoutes().length).toBe(1);
-          expect(navigationA.listRoutes()[0].equals(Mock.routeCAD1_CAD3)).toBe(true);
+          expect(navigationA.getDefaultRoute().equals(Mock.routeCAD1_CAD3)).toBe(true);
           expect(navigationA.getDefaultRoute().destination).toEqual(Mock.routeCAD1_CAD3.destination);
         });
 
@@ -512,6 +522,7 @@ xdescribe('Navigation:', function() {
       describe('and updated route is configured to not be default', function() {
 
         beforeEach(function() {
+          navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
           navigationA.createAlternativeRoute(Mock.routeCAD1_CAD3);
         });
 

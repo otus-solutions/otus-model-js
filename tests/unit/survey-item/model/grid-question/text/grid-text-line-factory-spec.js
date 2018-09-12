@@ -150,7 +150,7 @@ describe('GridTextLineFactory', function () {
     it('when called method then return json with structure expected', function () {
       gridTextLine.addGridText(Mock.TEMPLATE_ID_0, Mock.prototype_0);
       gridTextLine.addGridText(Mock.TEMPLATE_ID_1, Mock.prototype_1);
-      var object = JSON.parse(gridTextLine.toJson());
+      var object = JSON.parse(JSON.stringify(gridTextLine));
 
       expect(object.gridTextList[1].templateID).toEqual(Mock.TEMPLATE_ID_1);
     });

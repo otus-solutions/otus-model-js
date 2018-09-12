@@ -50,7 +50,7 @@
     self.getGridTextListSize = getGridTextListSize;
     self.getAllGridTextCustomOptionsID = getAllGridTextCustomOptionsID;
     self.loadGridTextListFromJsonObject = loadGridTextListFromJsonObject;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function addGridText(templateID) {
       var gridText = GridTextFactory.create(templateID);
@@ -97,14 +97,14 @@
       });
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.gridTextList = _gridTextList;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

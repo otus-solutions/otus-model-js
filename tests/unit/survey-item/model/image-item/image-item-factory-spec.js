@@ -46,7 +46,7 @@ describe('ImageItemFactory', function() {
     });
 
     it('Mock.surveyTemplate', function() {
-      expect(survey.toJson()).toEqual(JSON.stringify(Mock.surveyTemplate));
+      expect(JSON.stringify(survey)).toEqual(JSON.stringify(Mock.surveyTemplate));
     });
 
   });

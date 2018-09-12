@@ -48,14 +48,14 @@
     self.label = labelObject;
 
     /* Public methods */
-    self.toJson = toJson;
+    self.toJSON = toJSON;
     self.setCustomOptionID = setCustomOptionID;
 
     function setCustomOptionID(id) {
       self.customOptionID = id;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -66,7 +66,7 @@
       json.value = self.value;
       json.label = self.label;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

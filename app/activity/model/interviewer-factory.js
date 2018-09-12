@@ -35,13 +35,13 @@
 
     /* Public methods */
     self.getFullname = getFullname;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function getFullname() {
       return self.name + ' ' + self.surname;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;
@@ -49,7 +49,7 @@
       json.surname = self.surname;
       json.email = self.email;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

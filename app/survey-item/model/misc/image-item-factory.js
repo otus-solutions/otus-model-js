@@ -49,13 +49,13 @@
 
     /* Public methods */
     self.isQuestion = isQuestion;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function isQuestion() {
       return false;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -66,7 +66,7 @@
       json.url = self.url;
       json.footer = self.footer;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

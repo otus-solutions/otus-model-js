@@ -18,7 +18,7 @@ describe('TextQuestion', function() {
         it('should return a well formatted json based on TextQuestion', function() {
             var question = factory.create('TextQuestion', Mock.TEMPLATE_ID);
 
-            expect(question.toJson()).toEqual(Mock.json);
+            expect(JSON.stringify(question)).toEqual(Mock.json);
         });
 
     });

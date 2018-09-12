@@ -1,4 +1,4 @@
-xdescribe('RouteCondition', function() {
+describe('RouteCondition', function() {
 
   var Mock = {};
   var condition;

@@ -17,7 +17,7 @@ describe('CalendarQuestion', function() {
 
         it('should return a well formatted json based on CalendarQuestion', function() {
             var question = factory.create('CalendarQuestion', Mock.TEMPLATE_ID);
-            expect(question.toJson()).toEqual(Mock.json);
+            expect(JSON.stringify(question)).toEqual(Mock.json);
         });
 
     });

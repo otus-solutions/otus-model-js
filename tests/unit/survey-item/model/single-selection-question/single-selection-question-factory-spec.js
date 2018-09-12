@@ -58,7 +58,7 @@ describe('SingleSelectionQuestionFactory', function() {
     });
 
     it("should reconstruct a question object with Mock.jsonObject data", function() {
-      expect(question.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
+      expect(JSON.stringify(question)).toEqual(JSON.stringify(Mock.jsonObject));
     });
 
   });

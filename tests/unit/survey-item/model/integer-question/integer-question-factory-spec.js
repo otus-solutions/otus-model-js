@@ -55,7 +55,7 @@ describe('IntegerQuestionFactory', function() {
     });
 
     it("should create an instance with the same values of Mock.jsonObject", function() {
-      expect(question.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
+      expect(JSON.stringify(question)).toEqual(JSON.stringify(Mock.jsonObject));
     });
 
     it("should call LabelFactory.fromJsonObject method with Mock.label", function() {

@@ -41,16 +41,16 @@
     self.interviewer = interviewer;
 
     /* Public methods */
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;
       json.date = self.date;
-      json.interviewer = JSON.parse(self.interviewer.toJson());
+      json.interviewer = self.interviewer.toJSON();
 
-      return JSON.stringify(json);
+      return toJSON;
     }
   }
 

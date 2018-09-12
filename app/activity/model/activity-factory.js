@@ -123,7 +123,7 @@
     self.setNavigationTracker = setNavigationTracker;
     self.clearSkippedAnswers = clearSkippedAnswers;
     self.getDataSources = getDataSources;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function getID() {
       return _id;
@@ -194,26 +194,26 @@
       self.navigationTracker = stack;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;
       json._id = _id;
-      json.surveyForm = JSON.parse(self.surveyForm.toJson());
+      json.surveyForm = self.surveyForm.toJSON();
       json.participantData = self.participantData;
       json.category = self.category;
       json.mode = self.mode;
       json.interviews = self.interviews.map(function (interview) {
-        return JSON.parse(interview.toJson());
+        return interview.toJSON();
       });
       json.fillContainer = self.fillContainer.buildJsonToFillContainer();
-      json.statusHistory = self.statusHistory.toJson().map(function (statusHistory) {
-        return JSON.parse(statusHistory);
+      json.statusHistory = self.statusHistory.toJSON().map(function (statusHistory) {
+        return statusHistory;
       });
       json.isDiscarded = self.isDiscarded;
-      json.navigationTracker = self.navigationTracker.toJson();
+      json.navigationTracker = self.navigationTracker.toJSON();
 
-      return JSON.stringify(json);
+      return json;
     }
 
     /**

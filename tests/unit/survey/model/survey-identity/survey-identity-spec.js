@@ -18,10 +18,10 @@ describe('SurveyIdentity', function() {
     surveyIdentity = factory.create(Mock.NAME, Mock.ACRONYM);
   });
 
-  describe('toJson method', function() {
+  describe('toJSON method', function() {
 
     it('should return a well formatted json based on instance of SurveyIdentity', function() {
-      expect(surveyIdentity.toJson()).toEqual(Mock.json);
+      expect(JSON.stringify(surveyIdentity.toJSON())).toEqual(Mock.json);
     });
 
   });
