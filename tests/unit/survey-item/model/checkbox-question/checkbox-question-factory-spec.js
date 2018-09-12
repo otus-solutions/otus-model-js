@@ -57,7 +57,7 @@ describe('CheckboxQuestionFactory', function() {
     });
 
     it("should reconstruct a question object with Mock.jsonObject data", function() {
-      expect(question.toJson()).toBe(JSON.stringify(Mock.jsonObject));
+      expect(JSON.stringify(question)).toBe(JSON.stringify(Mock.jsonObject));
     });
 
   });

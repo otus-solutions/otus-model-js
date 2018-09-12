@@ -66,7 +66,7 @@ describe('CheckboxAnswerOptionFactory', function() {
     });
 
     it("should create an instance with the same values of Mock.jsonObject", function() {
-      expect(option.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
+      expect(JSON.stringify(option)).toEqual(JSON.stringify(Mock.jsonObject));
     });
 
   });

@@ -151,7 +151,7 @@ describe('GridIntegerLineFactory', function () {
     it('when called method then return json with structure expected', function () {
       gridIntegerLine.addGridInteger(Mock.TEMPLATE_ID_0, Mock.prototype_0);
       gridIntegerLine.addGridInteger(Mock.TEMPLATE_ID_1, Mock.prototype_1);
-      var object = JSON.parse(gridIntegerLine.toJson());
+      var object = JSON.parse(JSON.stringify(gridIntegerLine));
 
       expect(object.gridIntegerList[1].templateID).toEqual(Mock.TEMPLATE_ID_1);
     });

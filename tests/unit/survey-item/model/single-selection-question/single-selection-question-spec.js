@@ -163,7 +163,7 @@ describe('SingleSelectionQuestion', function() {
   describe('toJson method', function() {
 
     xit('should return a well formatted json based on SingleSelectionQuestion', function() {
-      expect(question.toJson()).toEqual(Mock.json);
+      expect(JSON.stringify(question)).toEqual(Mock.json);
     });
 
   });

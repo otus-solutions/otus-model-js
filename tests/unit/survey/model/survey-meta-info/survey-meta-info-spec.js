@@ -13,10 +13,10 @@ describe('SurveyMetaInfo', function() {
         });
     });
 
-    describe('toJson method', function() {
+    describe('toJSON method', function() {
         it('should return a well formatted json based on instance of SurveyMetaInfo', function() {
           Mock.jsonObject.creationDatetime = new Date();
-          expect(surveyMetainfo.toJson()).toEqual(JSON.stringify(Mock.jsonObject));
+          expect(JSON.stringify(surveyMetainfo)).toEqual(JSON.stringify(Mock.jsonObject));
         });
     });
 
