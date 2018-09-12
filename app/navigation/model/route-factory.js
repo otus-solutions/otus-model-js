@@ -36,14 +36,13 @@
     }
 
     function fromJson(json) {
-      var jsonObj = JSON.parse(json);
       var route = null;
-      if (jsonObj.isDefault) {
-        route = createDefault(jsonObj.origin, jsonObj.destination);
+      if (json.isDefault) {
+        route = createDefault(json.origin, json.destination);
       } else {
-        route = createAlternative(jsonObj.origin, jsonObj.destination, jsonObj.conditions.map(_rebuildConditions));
+        route = createAlternative(json.origin, json.destination, json.conditions.map(_rebuildConditions));
       }
-      route.isDefault = jsonObj.isDefault;
+      route.isDefault = json.isDefault;
       return route;
     }
 

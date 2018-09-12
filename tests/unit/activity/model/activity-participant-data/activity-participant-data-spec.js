@@ -24,7 +24,7 @@ describe('ActivityParticipantData', function() {
     describe('toJson method', function() {
 
         it('should return a well formatted json based on instance of AnswerFill', function() {
-            expect(participantData.toJson()).toEqual(Mock.json);
+            expect(participantData.toJSON()).toEqual(Mock.json);
         });
 
     });
@@ -38,12 +38,12 @@ describe('ActivityParticipantData', function() {
     }
 
     function mockJson() {
-        Mock.json = JSON.stringify({
+        Mock.json = {
             objectType: 'ActivityParticipantData',
             recruitmentNumber: Mock.participant.recruitmentNumber,
             name: Mock.participant.name,
             fieldCenter: Mock.participant.fieldCenter
-        });
+        };
     }
 
 });

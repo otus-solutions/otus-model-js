@@ -182,10 +182,10 @@ describe('RouteCondition', function() {
 
   });
 
-  describe('toJson method', function() {
+  describe('toJSON method', function() {
 
     it('should return a well formatted json based on RouteCondition', function() {
-      expect(condition.toJson()).toEqual(Mock.json);
+      expect(condition.toJSON()).toEqual(Mock.json);
     });
 
   });
@@ -201,12 +201,12 @@ describe('RouteCondition', function() {
   }
 
   function mockJson() {
-    Mock.json = JSON.stringify({
+    Mock.json = {
       extents: 'StudioObject',
       objectType: 'RouteCondition',
       name: CONDITION_NAME,
-      rules: [Mock.ruleA.toJson()]
-    }).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      rules: [Mock.ruleA.toJSON()]
+    };
   }
 
 });

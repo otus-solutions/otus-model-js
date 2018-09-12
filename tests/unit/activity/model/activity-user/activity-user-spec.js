@@ -15,22 +15,22 @@ describe('ActivityUserF', function() {
         });
     });
 
-    describe('toJson method', function() {
+    describe('toJSON method', function() {
 
         it('should return a well formatted json based on instance of ActivityStatus', function() {
             var user = factory.create(USER_NAME, USER_EMAIL);
 
-            expect(user.toJson()).toEqual(Mock.json);
+            expect(user.toJSON()).toEqual(Mock.json);
         });
 
     });
 
     function mockJson() {
-        Mock.json = JSON.stringify({
+        Mock.json = {
             objectType: 'ActivityUser',
             name: USER_NAME,
             email: USER_EMAIL
-        });
+        };
     }
 
 });

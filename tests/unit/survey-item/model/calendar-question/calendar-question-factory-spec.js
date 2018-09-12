@@ -49,8 +49,8 @@ describe('CalendarQuestionFactory', function() {
       expect(calendar.validators()).toEqual(EXPECTED_VALIDATORS_LIST);
     });
 
-    it('toJsonMethod should return jsonObject', function(){
-      var calendarJson = calendar.toJson();
+    it('toJSONMethod should return jsonObject', function(){
+      var calendarJson = calendar.toJSON();
       expect(JSON.stringify(calendarJson)).toEqual(JSON.stringify(Mock.calendarItemJson));
     });
 
@@ -63,7 +63,7 @@ describe('CalendarQuestionFactory', function() {
     });
 
     it("should create an instance with the same values of Mock.jsonObject", function() {
-      expect(calendar.toJson()).toEqual(Mock.calendarItemJson);
+      expect(calendar.toJSON()).toEqual(Mock.calendarItemJson);
     });
 
     // it("should call LabelFactory.fromJsonObject method with Mock.label", function() {

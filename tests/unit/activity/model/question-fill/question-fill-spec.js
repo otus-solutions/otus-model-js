@@ -102,14 +102,14 @@ describe('QuestionFill', function() {
 
   });
 
-  describe('toJson method', function() {
+  describe('toJSON method', function() {
 
     beforeEach(function() {
       mockQuestionFill();
     });
 
     it('should return a well formatted json based on instance of MetadataFill', function() {
-      expect(Mock.fill.toJson()).toEqual(Mock.json);
+      expect(Mock.fill.toJSON()).toEqual(Mock.json);
     });
 
   });
@@ -129,14 +129,15 @@ describe('QuestionFill', function() {
   }
 
   function mockJson() {
-    Mock.json = JSON.stringify({
+    Mock.json = {
       objectType: 'QuestionFill',
       questionID: QID1,
       forceAnswer: false,
-      answer: JSON.parse(Mock.answer.toJson()),
-      metadata: JSON.parse(Mock.metadata.toJson()),
-      comment: COMMENT
-    });
+      answer: Mock.answer.toJSON(),
+      metadata: Mock.metadata.toJSON(),
+      comment: COMMENT,
+      accept: undefined
+    };
   }
 
   function mockQuestionFill() {

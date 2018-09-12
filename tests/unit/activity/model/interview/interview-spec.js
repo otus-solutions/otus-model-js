@@ -22,26 +22,24 @@ describe('InterviewFactory', function() {
     interview = factory.create(Mock.user);
   });
 
-  describe('toJson method', function() {
+  describe('toJSON method', function() {
 
-    it(
-      'should return a well formatted json based on instance of Interview',
-      function() {
+    it('should return a well formatted json based on instance of Interview', function() {
         baseDate = new Date();
         jasmine.clock().mockDate(baseDate);
         mockJson();
 
-        expect(interview.toJson()).toEqual(Mock.json);
+        expect(JSON.stringify(interview.toJSON())).toEqual(JSON.stringify(Mock.json));
       });
 
   });
 
   function mockJson() {
-    Mock.json = JSON.stringify({
+    Mock.json = {
       objectType: 'Interview',
       date: new Date(),
       interviewer: Mock.InterviewerFactory.create(Mock.user)
-    });
+    };
   }
 
   function mockUser() {
