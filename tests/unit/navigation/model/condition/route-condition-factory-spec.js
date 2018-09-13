@@ -63,7 +63,7 @@ describe('RouteConditionFactory', function() {
       expect(routeCondition.name).toEqual(CONDITION_NAME);
     });
 
-    xit('should return a RouteCondition object with a list of rules', function() {
+    it('should return a RouteCondition object with a list of rules', function() {
       expect(routeCondition.listRules()).toBeDefined();
       expect(routeCondition.listRules().length).toBe(2);
     });

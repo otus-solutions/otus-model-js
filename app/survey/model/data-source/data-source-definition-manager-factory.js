@@ -70,7 +70,7 @@
     function loadJsonData(data) {
       if(data instanceof Array){
         data.forEach(function(dataSource) {
-          _dataSourcesDefinition.push(self.DataSourceDefinitionFactory.fromJsonObject(dataSource));
+          _dataSourcesDefinition.push(self.DataSourceDefinitionFactory.fromJsonObject(dataSource.toJSON()));
         });
       }
     }

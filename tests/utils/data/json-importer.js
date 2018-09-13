@@ -24,6 +24,58 @@ Test.utils.data.selectedParticipant = {
   stringfiedRN: "5003388"
 };
 
+Test.utils.data.autocompleteQuestion = {
+  "extents": "AutocompleteQuestion",
+  "objectType": "AutocompleteQuestion",
+  "templateID": "ID_1",
+  "customID": "ID_1",
+  "dataType": "String",
+  "dataSources": [],
+  "label": {
+    "ptBR": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "enUS": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "esES": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    }
+  },
+  "metadata": {
+    "extents": "StudioObject",
+    "objectType": "MetadataGroup",
+    "options": []
+  },
+  "fillingRules": {
+    "extends": "StudioObject",
+    "objectType": "FillingRules",
+    "options": {
+      "mandatory": {
+        "extends": "StudioObject",
+        "objectType": "Rule",
+        "validatorType": "mandatory",
+        "data": {
+          "canBeIgnored": false,
+          "reference": true
+        }
+      }
+    }
+  }
+}
+
 Test.utils.data.ruleItem = {
   "extents": "SurveyTemplateObject",
   "objectType": "Rule",
