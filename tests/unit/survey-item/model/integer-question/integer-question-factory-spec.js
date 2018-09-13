@@ -55,6 +55,10 @@ describe('IntegerQuestionFactory', function() {
       question = factory.create(TEMPLATE_ID, PROTOTYPE);
     });
 
+    it('returned object should have extends equal to objectType', function() {
+      expect(question.extents).toBe('SurveyItem');
+    });
+
     it('isQuestionMethod should return positive', function(){
       expect(question.isQuestion()).toBeTruthy();
     });
