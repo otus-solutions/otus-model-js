@@ -1,12 +1,9 @@
 describe('CalendarQuestionFactory', function() {
   var Mock = {};
-  var calendar, factory;
-  var TEMPLATE_ID = 'TPL_ID';
-  var PROTOTYPE = {"objectType" : "SurveyItem"};
-  var LABEL = {"ptBR": {}, "enUS": {}, "esES": {}};
-  var METADATA = { "extents": "StudioObject", "objectType": "MetadataGroup", "options": []};
-  var FILLING_RULES = { "extends": "StudiObject", "objectType": "FillingRules", "options": {}}
-  var EXPECTED_VALIDATORS_LIST = [ 'mandatory', 'minDate', 'maxDate', 'rangeDate','futureDate', 'pastDate'];
+  var question, factory,
+    TEMPLATE_ID = 'TPL_ID',
+    PROTOTYPE = { "objectType" : "SurveyItem"},
+    EXPECTED_VALIDATORS_LIST = [ 'mandatory', 'minDate', 'maxDate', 'rangeDate','futureDate', 'pastDate'];
 
   beforeEach(function() {
     angular.mock.module('otusjs');
@@ -14,7 +11,9 @@ describe('CalendarQuestionFactory', function() {
       factory = _$injector_.get('CalendarQuestionFactory');
     });
 
-    Mock.calendarItemJson = Test.utils.data.calendarItemJson;
+    Mock.calendarQuestionItemJson = Test.utils.data.calendarQuestionItem;
+
+    mockJsonObject();
 
   });
 
@@ -30,19 +29,19 @@ describe('CalendarQuestionFactory', function() {
   describe('methods of object fromJsonObject', function() {
 
     beforeEach(function () {
-      calendar = factory.fromJsonObject(Mock.calendarItemJson);
+      question = factory.fromJsonObject(Mock.calendarQuestionItemJson);
     });
 
-    it("should create an instance with the same values of Mock.calendarItemJson", function() {
-      expect(JSON.stringify(calendar.toJSON())).toEqual(JSON.stringify(Mock.calendarItemJson));
+    it('should create an instance with the same values of Mock.calendarItemJson', function() {
+      expect(JSON.stringify(question.toJSON())).toEqual(JSON.stringify(Mock.calendarQuestionItemJson));
     });
 
-    it("should throw an error when receives a string", function() {
-      var ERROR_MESSAGE = "otusjs.model.misc.model.CalendarQuestionFactory.fromJsonObject() " +
-        "method expects to receive a object instead a String";
+    it('should throw an error when receives a string', function() {
+      var ERROR_MESSAGE = 'otusjs.model.misc.model.CalendarQuestionFactory.fromJsonObject() ' +
+        'method expects to receive a object instead a String';
 
       function fromJsonObjectFunction() {
-        factory.fromJsonObject(JSON.stringify(Mock.calendarItemJson));
+        factory.fromJsonObject(JSON.stringify(Mock.calendarQuestionItemJson));
       };
 
       expect(fromJsonObjectFunction).toThrowError(ERROR_MESSAGE);
@@ -53,22 +52,59 @@ describe('CalendarQuestionFactory', function() {
   describe('methods of object calendar', function() {
 
     beforeEach(function () {
-      calendar = factory.create(TEMPLATE_ID, PROTOTYPE, LABEL, METADATA, FILLING_RULES);
+      question = factory.create(TEMPLATE_ID, PROTOTYPE);
+    });
+
+    it('returned object should have extends equal to objectType', function() {
+      expect(question.extents).toBe('SurveyItem');
     });
 
     it('isQuestionMethod should return positive', function(){
-      expect(calendar.isQuestion()).toBeTruthy();
+      expect(question.isQuestion()).toBeTruthy();
     });
 
     it('validatorsMethod should return Array', function(){
-      expect(calendar.validators()).toEqual(EXPECTED_VALIDATORS_LIST);
+      expect(question.validators()).toEqual(EXPECTED_VALIDATORS_LIST);
     });
 
-    it('toJsonMethod should return jsonObject', function(){
-      var calendarJson = calendar.toJSON();
-      expect(JSON.stringify(calendarJson)).toEqual(JSON.stringify(Mock.calendarItemJson));
+    it('toJsonMethod should of create return jsonObject', function(){
+      var calendarJson = question.toJSON();
+      expect(JSON.stringify(calendarJson.label)).toEqual(JSON.stringify(Mock.label));
     });
 
   });
+
+  function mockJsonObject() {
+
+    Mock.ptBR = {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    };
+
+    Mock.enUS = {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    };
+
+    Mock.esES = {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    };
+
+    Mock.label = {
+      "ptBR": Mock.ptBR,
+      "enUS": Mock.enUS,
+      "esES": Mock.esES
+    };
+  }
 
 });

@@ -86,9 +86,81 @@ Test.utils.data.ruleItem = {
   "isCustom": false
 }
 
+Test.utils.data.integerQuestionItem = {
+  "extents": "SurveyItem",
+  "objectType": "IntegerQuestion",
+  "templateID": "TEMPLATE_ID",
+  "customID": "TEMPLATE_ID",
+  "dataType": "Integer",
+  "label": {
+    "ptBR": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "enUS": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "esES": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    }
+  },
+  "metadata": {
+    "extents": "StudioObject",
+    "objectType": "MetadataGroup",
+    "options": []
+  },
+  "unit": {
+    "ptBR": {
+      "extends": "StudioObject",
+      "objectType": "Unit",
+      "oid": "1",
+      "plainText": "Qual sua data de nascimento?",
+      "formattedText": "Qual sua <b>data de nascimento</b>?"
+    },
+    "enUS": {
+      "extends": "StudioObject",
+      "objectType": "Unit",
+      "oid": "2",
+      "plainText": "What is your birth date?",
+      "formattedText": "What is your <b>birth date</b>?"
+    },
+    "esES": {
+      "extends": "StudioObject",
+      "objectType": "Unit",
+      "oid": "",
+      "plainText": "¿Cuál es su fecha de nacimiento?",
+      "formattedText": "¿Cuál es su fecha de <b>nacimiento</b>?"
+    }
+  },
+  "fillingRules": {
+    "extends": "StudioObject",
+    "objectType": "FillingRules",
+    "options": {
+      "mandatory": {
+        "extends": "StudioObject",
+        "objectType": "Rule",
+        "validatorType": "mandatory",
+        "data": {
+          "canBeIgnored": false,
+          "reference": true
+        }
+      }
+    }
+  }
+}
 
-
-Test.utils.data.ImageItem = {
+Test.utils.data.imageItem = {
   "extents": "SurveyItem",
   "objectType": "ImageItem",
   "templateID": "DQ2",
@@ -120,7 +192,58 @@ Test.utils.data.ImageItem = {
   }
 }
 
-Test.utils.data.calendarItemJson = {
+Test.utils.data.textQuestionItem = {
+  "extents": "SurveyItem",
+  "objectType": "TextQuestion",
+  "templateID": "TPL_ID",
+  "customID": "TPL_ID",
+  "dataType": "String",
+  "label": {
+    "ptBR": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "\"texto\"",
+      "formattedText": "\"texto\""
+    },
+    "enUS": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "esES": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    }
+  },
+  "metadata": {
+    "extents": "StudioObject",
+    "objectType": "MetadataGroup",
+    "options": []
+  },
+  "fillingRules": {
+    "extends": "StudioObject",
+    "objectType": "FillingRules",
+    "options": {
+      "mandatory": {
+        "extends": "StudioObject",
+        "objectType": "Rule",
+        "validatorType": "mandatory",
+        "data": {
+          "canBeIgnored": false,
+          "reference": true
+        }
+      }
+    }
+  }
+}
+
+Test.utils.data.calendarQuestionItem = {
   "extents": "SurveyItem",
   "objectType": "CalendarQuestion",
   "templateID": "TPL_ID",
@@ -131,8 +254,8 @@ Test.utils.data.calendarItemJson = {
       "extends": "StudioObject",
       "objectType": "Label",
       "oid": "",
-      "plainText": "",
-      "formattedText": ""
+      "plainText": "\"texto\"",
+      "formattedText": "\"texto\""
     },
     "enUS": {
       "extends": "StudioObject",

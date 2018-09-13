@@ -1,91 +1,47 @@
-describe('TextQuestionFactory', function() {
+describe('CalendarQuestionFactory', function() {
   var Mock = {};
-  var question;
-  var factory;
+  var question, factory,
+    TEMPLATE_ID = 'TPL_ID',
+    PROTOTYPE = { "objectType" : "SurveyItem"},
+    EXPECTED_VALIDATORS_LIST = [ 'mandatory', 'alphanumeric', 'lowerCase', 'minLength', 'maxLength', 'specials', 'upperCase'];
 
   beforeEach(function() {
     angular.mock.module('otusjs');
+    angular.mock.inject(function (_$injector_) {
+      factory = _$injector_.get('TextQuestionFactory');
+    });
+
+    Mock.textQuestionItemJson = Test.utils.data.textQuestionItem;
 
     mockJsonObject();
 
-    inject(function(_$injector_) {
-      mockQuestion(_$injector_);
-
-      factory = _$injector_.get('TextQuestionFactory', {
-        'LabelFactory': mockLabelFactory(_$injector_),
-        'MetadataGroupFactory': mockMetaGroupFactory(_$injector_),
-        'FillingRulesOptionFactory': mockFillingRulesOptionFactory(_$injector_)
-      });
-    });
   });
 
-  describe('create method', function() {
-
-    beforeEach(function() {
-      question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
-    });
-
-    xit('returned object should extends SurveyItem', function() {
-      expect(question.extends).toBe('SurveyItem');
-    });
-
-    it('returned object should have objectType equal to TextQuestion', function() {
-      expect(question.objectType).toBe('TextQuestion');
-    });
-
-    it('returned object should have a not null templateID', function() {
-      expect(question.templateID).toBe(Mock.TEMPLATE_ID);
-    });
-
-    it('returned object should have dataType equal to String', function() {
-      expect(question.dataType).toBe('String');
-    });
-
-    it('returned object should have a label object for ptBR locale', function() {
-      expect(question.label.ptBR).not.toBeNull();
-      expect(question.label.ptBR).not.toBeUndefined();
-    });
-
-    it('returned object should have a label object for enUS locale', function() {
-      expect(question.label.enUS).not.toBeNull();
-      expect(question.label.enUS).not.toBeUndefined();
-    });
-
-    it('returned object should have a label object for enUS locale', function() {
-      expect(question.label.esES).not.toBeNull();
-      expect(question.label.esES).not.toBeUndefined();
-    });
-
+  it('factoryExistence check', function () {
+    expect(factory).toBeDefined();
   });
 
-  describe('fromJsonObject method', function() {
+  it('methodFactoryExistence check', function () {
+    expect(factory.create).toBeDefined();
+    expect(factory.fromJsonObject).toBeDefined();
+  });
 
-    beforeEach(function() {
-      question = factory.fromJsonObject(Mock.jsonObject);
+  describe('methods of object fromJsonObject', function() {
+
+    beforeEach(function () {
+      question = factory.fromJsonObject(Mock.textQuestionItemJson);
     });
 
-    it("should create an instance with the same values of Mock.jsonObject", function() {
-      expect(JSON.stringify(question)).toEqual(JSON.stringify(Mock.jsonObject));
-    });
-
-    it("should call LabelFactory.fromJsonObject method with Mock.label", function() {
-      expect(Mock.LabelFactory.fromJsonObject).toHaveBeenCalledWith(Mock.label);
-    });
-
-    it("should call MetadataGroupFactory.fromJsonObject method with Mock.metadata", function() {
-      expect(Mock.MetadataGroupFactory.fromJsonObject).toHaveBeenCalledWith(Mock.metadata);
-    });
-
-    it("should call FillingRulesOptionFactory.fromJsonObject method with Mock.fillingRules", function() {
-      expect(Mock.FillingRulesOptionFactory.fromJsonObject).toHaveBeenCalledWith(Mock.fillingRules);
+    it('should create an instance with the same values of Mock.textItemJson', function() {
+      expect(JSON.stringify(question.toJSON())).toEqual(JSON.stringify(Mock.textQuestionItemJson));
     });
 
     it("should throw an error when receives a string", function() {
       var ERROR_MESSAGE = "otusjs.model.misc.model.TextQuestionFactory.fromJsonObject() " +
         "method expects to receive a object instead a String";
 
-      var fromJsonObjectFunction = function() {
-        factory.fromJsonObject(JSON.stringify(Mock.jsonObject));
+      function fromJsonObjectFunction() {
+        factory.fromJsonObject(JSON.stringify(Mock.textQuestionItemJson));
       };
 
       expect(fromJsonObjectFunction).toThrowError(ERROR_MESSAGE);
@@ -93,57 +49,61 @@ describe('TextQuestionFactory', function() {
 
   });
 
-  function mockQuestion($injector) {
-    Mock.TEMPLATE_ID = 'TPL_ID';
-    Mock.Question = $injector.get('SurveyItemFactory').create('TextQuestion', Mock.TEMPLATE_ID);
-  }
+  describe('methods of object calendar', function() {
 
-  function mockLabelFactory($injector) {
-    Mock.LabelFactory = $injector.get('LabelFactory');
-    spyOn(Mock.LabelFactory, 'fromJsonObject').and.returnValue(Mock.label);
-    return Mock.LabelFactory;
-  }
+    beforeEach(function () {
+      question = factory.create(TEMPLATE_ID, PROTOTYPE);
+    });
 
-  function mockMetaGroupFactory($injector) {
-    Mock.MetadataGroupFactory = $injector.get('MetadataGroupFactory');
-    spyOn(Mock.MetadataGroupFactory, 'fromJsonObject').and.returnValue(Mock.metadata);
-    return Mock.MetadataGroupFactory;
-  }
+    it('returned object should have extends equal to objectType', function() {
+      expect(question.extents).toBe('SurveyItem');
+    });
 
-  function mockFillingRulesOptionFactory($injector) {
-    Mock.FillingRulesOptionFactory = $injector.get('FillingRulesOptionFactory');
-    spyOn(Mock.FillingRulesOptionFactory, 'fromJsonObject').and.returnValue(Mock.fillingRules);
-    return Mock.FillingRulesOptionFactory;
-  }
+    it('isQuestionMethod should return positive', function(){
+      expect(question.isQuestion()).toBeTruthy();
+    });
+
+    it('validatorsMethod should return Array', function(){
+      expect(question.validators()).toEqual(EXPECTED_VALIDATORS_LIST);
+    });
+
+    it('toJsonMethod should of create return jsonObject', function(){
+      var calendarJson = question.toJSON();
+      expect(JSON.stringify(calendarJson.label)).toEqual(JSON.stringify(Mock.label));
+    });
+
+  });
 
   function mockJsonObject() {
+
+    Mock.ptBR = {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    };
+
+    Mock.enUS = {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    };
+
+    Mock.esES = {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    };
+
     Mock.label = {
-      "ptBR": {},
-      "enUS": {},
-      "esES": {}
-    };
-
-    Mock.metadata = {
-      "extents": "StudioObject",
-      "objectType": "MetadataGroup",
-      "options": []
-    };
-
-    Mock.fillingRules = {
-      "extends": "StudiObject",
-      "objectType": "FillingRules",
-      "options": {}
-    };
-
-    Mock.jsonObject = {
-      "extents": "SurveyItem",
-      "objectType": "TextQuestion",
-      "templateID": "QUE1",
-      "customID": "PersonalizedID",
-      "dataType": "String",
-      "label": Mock.label,
-      "metadata": Mock.metadata,
-      "fillingRules": Mock.fillingRules
+      "ptBR": Mock.ptBR,
+      "enUS": Mock.enUS,
+      "esES": Mock.esES
     };
   }
 

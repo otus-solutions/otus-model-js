@@ -7,7 +7,7 @@ describe('ImageItemFactory', function() {
     angular.mock.module('otusjs.surveyItem');
     angular.mock.module('otusjs.misc');
 
-    Mock.surveyTemplate = Test.utils.data.ImageItem;
+    Mock.surveyTemplate = Test.utils.data.imageItem;
 
     angular.mock.inject(function (_$injector_) {
       factory = _$injector_.get('ImageItemFactory');
