@@ -108,7 +108,7 @@ Test.utils.data.integerQuestionItem = {
   }
 }
 
-Test.utils.data.ImageItem = {
+Test.utils.data.imageItem = {
   "extents": "SurveyItem",
   "objectType": "ImageItem",
   "templateID": "DQ2",

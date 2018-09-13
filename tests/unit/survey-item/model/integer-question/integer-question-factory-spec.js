@@ -40,7 +40,7 @@ describe('IntegerQuestionFactory', function() {
         var ERROR_MESSAGE = 'otusjs.model.misc.model.IntegerQuestionFactory.fromJsonObject() ' +
           'method expects to receive a object instead a String';
 
-        var fromJsonObjectFunction = function() {
+        function fromJsonObjectFunction() {
           factory.fromJsonObject(JSON.stringify(Mock.integerQuestionItemJson));
         };
 
