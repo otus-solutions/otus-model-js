@@ -48,7 +48,7 @@
 
       json.objectType = self.objectType;
       json.date = self.date;
-      json.interviewer = self.interviewer.toJSON();
+      json.interviewer = self.interviewer;
 
       return json;
     }

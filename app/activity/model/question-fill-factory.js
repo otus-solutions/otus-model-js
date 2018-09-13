@@ -74,8 +74,8 @@
       json.objectType = self.objectType;
       json.questionID = self.questionID;
       json.forceAnswer = self.forceAnswer;
-      json.answer = self.answer.toJSON();
-      json.metadata = self.metadata.toJSON();
+      json.answer = self.answer;
+      json.metadata = self.metadata;
       json.comment = self.comment;
       json.accept = self.accept;
       
