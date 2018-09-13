@@ -139,6 +139,141 @@ Test.utils.data.imageItem = {
     }
   }
 }
+Test.utils.data.singleSelectionQuestionItem = {
+  "extents": "SurveyItem",
+  "objectType": "SingleSelectionQuestion",
+  "templateID": "TPL_ID",
+  "customID": "TPL_ID",
+  "dataType": "Integer",
+  "label": {
+    "ptBR": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "Gênero",
+      "formattedText": "Gênero"
+    },
+    "enUS": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "esES": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    }
+  },
+  "options": [{
+    "extents": "StudioObject",
+    "objectType": "AnswerOption",
+    "value": 1,
+    "dataType": "Integer",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "Masculino",
+        "formattedText": "Masculino"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    }
+  }, {
+    "extents": "StudioObject",
+    "objectType": "AnswerOption",
+    "value": 2,
+    "dataType": "Integer",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "Feminino",
+        "formattedText": "Feminino"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    }
+  }],
+  "metadata": {
+    "extents": "StudioObject",
+    "objectType": "MetadataGroup",
+    "options": [{
+      "extends": "StudioObject",
+      "objectType": "MetadataAnswer",
+      "dataType": "Integer",
+      "value": 1,
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "Outro",
+          "formattedText": "Outro"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }]
+  },
+  "fillingRules": {
+    "extends": "StudioObject",
+    "objectType": "FillingRules",
+    "options": {
+      "mandatory": {
+        "extends": "StudioObject",
+        "objectType": "Rule",
+        "validatorType": "mandatory",
+        "data": {
+          "canBeIgnored": false,
+          "reference": true
+        }
+      }
+    }
+  }
+}
 
 Test.utils.data.textQuestionItem = {
   "extents": "SurveyItem",
