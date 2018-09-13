@@ -307,7 +307,7 @@
       json.index = self.index;
       json.inNavigations = _buildJsonInNavigations();
       json.routes = self.routes.map(function(route) {
-        return route.toJSON(); 
+        return route; 
       });
 
       return json;

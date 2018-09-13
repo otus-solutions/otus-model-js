@@ -61,7 +61,7 @@
       json.sender = self.sender;
       json.sendingDate = self.sendingDate;
       json.surveyFormType = self.surveyFormType;
-      json.surveyTemplate = self.surveyTemplate.toJSON();
+      json.surveyTemplate = self.surveyTemplate;
       json.version = self.version;
       json.isDiscarded = self.isDiscarded;
 

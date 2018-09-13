@@ -255,7 +255,7 @@
 
       json.items = [];
       Object.keys(_items).forEach(function(itemID) {
-        json.items.push(_items[itemID].toJSON());
+        json.items.push(_items[itemID]);
       });
 
       return json;

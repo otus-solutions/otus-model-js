@@ -174,7 +174,7 @@
       json.name = self.name;
       json.isDefault = self.isDefault;
       json.conditions = self.conditions.map(function (condition) {
-        return condition.toJSON();
+        return condition;
       });
 
       return json;

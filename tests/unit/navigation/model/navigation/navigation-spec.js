@@ -548,7 +548,7 @@ describe('Navigation:', function() {
 
     it('should return a well formatted json based on Navigation', function() {
       navigationA.setupDefaultRoute(Mock.routeCAD1_CAD2);
-      expect(navigationA.toJSON()).toEqual(Mock.json);
+      expect(JSON.parse(JSON.stringify(navigationA))).toEqual(Mock.json);
     });
 
     it('should return object well defined', function() {
@@ -607,13 +607,13 @@ describe('Navigation:', function() {
   }
 
   function mockJson() {
-    Mock.json = {
+    Mock.json = JSON.parse(JSON.stringify({
       extents: EXTENTS,
       objectType: OBJECT_TYPE,
       origin: CAD1,
       index: 1,
       inNavigations: [],
-      routes: [Mock.routeCAD1_CAD2.toJSON()]
-    };
+      routes: [Mock.routeCAD1_CAD2]
+    }));
   }
 });

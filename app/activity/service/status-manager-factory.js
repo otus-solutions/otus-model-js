@@ -112,9 +112,7 @@
     }
 
     function toJSON() {
-      return _history.map(function(status) {
-        return status.toJSON();
-      });
+      return _history;
     }
   }
 

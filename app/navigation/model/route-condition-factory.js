@@ -140,9 +140,7 @@
       json.extents = 'StudioObject';
       json.objectType = 'RouteCondition';
       json.name = self.name;
-      json.rules = self.rules.map(function (rule) {
-        return rule.toJSON();
-      });
+      json.rules = self.rules;
 
       return json;
     }

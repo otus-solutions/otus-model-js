@@ -100,7 +100,7 @@
       json.customID = self.customID;
       json.dataType = self.dataType;
       json.label = self.label;
-      json.layout = self.layout.toJSON();
+      json.layout = self.layout;
       json.unit = self.unit;
 
       return json;

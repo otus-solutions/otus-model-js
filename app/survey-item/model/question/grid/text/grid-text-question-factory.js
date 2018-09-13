@@ -139,7 +139,7 @@
       json.label = self.label;
       json.lines = [];
       _lines.forEach(function (line) {
-        json.lines.push(line.toJSON());
+        json.lines.push(line);
       })
 
       return json;

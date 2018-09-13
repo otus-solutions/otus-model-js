@@ -174,23 +174,23 @@
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.oid = self.oid;
-      json.identity = self.identity.toJSON();
-      json.metainfo = self.metainfo.toJSON();
+      json.identity = self.identity;
+      json.metainfo = self.metainfo;
       if (self.DataSourceManager.toJSON().length) {
-        json.dataSources = self.DataSourceManager.toJSON();
+        json.dataSources = self.DataSourceManager;
       } else {
         json.dataSources = [];
       }
 
       json.itemContainer = [];
       self.SurveyItemManager.getItemList().forEach(function (item) {
-        json.itemContainer.push(item.toJSON());
+        json.itemContainer.push(item);
       });
 
       json.navigationList = [];
       self.NavigationManager.getNavigationList().forEach(function (navigation) {
         if (navigation) {
-          json.navigationList.push(navigation.toJSON());
+          json.navigationList.push(navigation);
         } else {
           json.navigationList.push({});
         }
