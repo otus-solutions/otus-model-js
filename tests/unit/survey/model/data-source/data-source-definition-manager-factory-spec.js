@@ -41,7 +41,7 @@ describe("DataSourceDefinitionManager", function() {
   describe("toJSON method", function() {
     beforeEach(function() {
       dataSourceDefinition.performBind(ITEM_1);
-      dataSourceDefinitionManager.loadJsonData([dataSourceDefinition]);
+      dataSourceDefinitionManager.loadJsonData([dataSourceDefinition.toJSON()]);
     });
 
     it("should return Array", function() {
