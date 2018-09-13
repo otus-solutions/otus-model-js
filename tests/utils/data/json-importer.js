@@ -24,6 +24,16 @@ Test.utils.data.selectedParticipant = {
   stringfiedRN: "5003388"
 };
 
+Test.utils.data.ruleItem = {
+  "extents": "SurveyTemplateObject",
+  "objectType": "Rule",
+  "when": "today",
+  "operator": "otus",
+  "answer": 1,
+  "isMetadata": false,
+  "isCustom": false
+}
+
 Test.utils.data.integerQuestionItem = {
   "extents": "SurveyItem",
   "objectType": "IntegerQuestion",
