@@ -31,7 +31,7 @@
     }
 
     function _rebuildRules(ruleJson) {
-      return RuleFactory.fromJson(JSON.stringify(ruleJson));
+      return RuleFactory.fromJson(ruleJson);
     }
 
     return self;

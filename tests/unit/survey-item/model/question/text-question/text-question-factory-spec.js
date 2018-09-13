@@ -1,4 +1,4 @@
-describe('CalendarQuestionFactory', function() {
+describe('TextQuestionFactory', function() {
   var Mock = {};
   var question, factory,
     TEMPLATE_ID = 'TPL_ID',
@@ -32,7 +32,7 @@ describe('CalendarQuestionFactory', function() {
       question = factory.fromJsonObject(Mock.textQuestionItemJson);
     });
 
-    it('should create an instance with the same values of Mock.textItemJson', function() {
+    it('should create an instance with the same values of Mock.textQuestionItemJson', function() {
       expect(JSON.stringify(question.toJSON())).toEqual(JSON.stringify(Mock.textQuestionItemJson));
     });
 
@@ -68,8 +68,8 @@ describe('CalendarQuestionFactory', function() {
     });
 
     it('toJsonMethod should of create return jsonObject', function(){
-      var calendarJson = question.toJSON();
-      expect(JSON.stringify(calendarJson.label)).toEqual(JSON.stringify(Mock.label));
+      var questionJson = question.toJSON();
+      expect(JSON.stringify(questionJson.label)).toEqual(JSON.stringify(Mock.label));
     });
 
   });

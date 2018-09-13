@@ -17,8 +17,7 @@ describe('TimeQuestion', function() {
 
         it('should return a well formatted json based on TimeQuestion', function() {
             var question = factory.create('TimeQuestion', Mock.TEMPLATE_ID);
-
-            expect(JSON.stringify(question)).toEqual(Mock.json);
+            expect(JSON.stringify(question.toJSON())).toEqual(JSON.stringify(Mock.json));
         });
 
     });
@@ -29,7 +28,7 @@ describe('TimeQuestion', function() {
     }
 
     function mockJson($injector) {
-        Mock.json = JSON.stringify({
+        Mock.json = {
             extents: 'SurveyItem',
             objectType: 'TimeQuestion',
             templateID: Mock.TEMPLATE_ID,
@@ -43,7 +42,7 @@ describe('TimeQuestion', function() {
             metadata: $injector.get('MetadataGroupFactory').create(),
             fillingRules: $injector.get('FillingRulesOptionFactory').create(),
             options: $injector.get('QuestionOptionFactory').create()
-        });
+        };
     }
 
 });

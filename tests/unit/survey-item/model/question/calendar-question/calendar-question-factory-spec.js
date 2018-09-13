@@ -68,8 +68,8 @@ describe('CalendarQuestionFactory', function() {
     });
 
     it('toJsonMethod should of create return jsonObject', function(){
-      var calendarJson = question.toJSON();
-      expect(JSON.stringify(calendarJson.label)).toEqual(JSON.stringify(Mock.label));
+      var questionJson = question.toJSON();
+      expect(JSON.stringify(questionJson.label)).toEqual(JSON.stringify(Mock.label));
     });
 
   });
