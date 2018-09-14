@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -71,7 +71,7 @@
     self.validators = validators;
     self.getAllCustomOptionsID = getAllCustomOptionsID;
     self.loadFromJsonLinesObject = loadFromJsonLinesObject;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function createLine() {
       var line = GridTextLineFactory.create();
@@ -115,19 +115,19 @@
     }
 
     function getAllCustomOptionsID() {
-      return _lines.map(function(line) {
+      return _lines.map(function (line) {
         return line.getAllGridTextCustomOptionsID();
       });
     }
 
     function loadFromJsonLinesObject(lines) {
       _lines = [];
-      lines.forEach(function(gridTextLine) {
+      lines.forEach(function (gridTextLine) {
         _lines.push(GridTextLineFactory.fromJsonObject(gridTextLine));
       });
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -138,11 +138,11 @@
       json.fillingRules = self.fillingRules;
       json.label = self.label;
       json.lines = [];
-      _lines.forEach(function(line) {
-        json.lines.push(line.toJson());
+      _lines.forEach(function (line) {
+        json.lines.push(line);
       })
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return json;
     }
   }
 

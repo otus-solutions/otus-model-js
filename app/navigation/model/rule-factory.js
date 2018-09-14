@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -17,8 +17,8 @@
     }
 
     function fromJson(json) {
-      var jsonObj = JSON.parse(json);
-      var rule = new Rule(jsonObj.when, jsonObj.operator, jsonObj.answer, jsonObj.isMetadata, jsonObj.isCustom);
+
+      var rule = new Rule(json.when, json.operator, json.answer, json.isMetadata, json.isCustom);
       return rule;
     }
 
@@ -50,7 +50,7 @@
     self.equals = equals;
     self.selfsame = selfsame;
     self.clone = clone;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function within(arrayValues) {
       defineAnswer('within', arrayValues);
@@ -134,7 +134,7 @@
       return new self.constructor(self.when, self.operator, self.answer, self.isMetadata, self.isCustom);
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {}
 
       json.extents = self.extents;
@@ -145,7 +145,7 @@
       json.isMetadata = self.isMetadata;
       json.isCustom = self.isCustom;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return json;
     }
   }
 }());

@@ -2,7 +2,7 @@ describe('SurveyFormFactory', function() {
   var Mock = {};
   var factory;
   var surveyForm;
-  var survey;
+  var surveyJson;
 
   beforeEach(function() {
     angular.mock.module('otusjs');
@@ -60,6 +60,18 @@ describe('SurveyFormFactory', function() {
       expect(surveyForm.objectType).toEqual('SurveyForm');
     });
 
+  });
+
+  describe('SurveyFormFactory.toJSON()', function() {
+
+    beforeEach(function() {
+      surveyForm = factory.fromJsonObject(Mock.surveyTemplate);
+      surveyJson = surveyForm.toJSON();
+    });
+
+    xit('should return a SurveyForm that extends from StudioObject', function() {
+      expect(JSON.stringify(surveyJson)).toEqual(JSON.stringify(Mock.surveyTemplate));
+    });
   });
 
 

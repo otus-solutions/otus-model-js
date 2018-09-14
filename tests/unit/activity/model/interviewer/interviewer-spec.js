@@ -18,10 +18,10 @@ describe('InterviewerFactory', function() {
         interviewer = factory.create(Mock.user);
     });
 
-    describe('toJson method', function() {
+    describe('toJSON method', function() {
 
         it('should return a well formatted json based on instance of Interview', function() {
-            expect(interviewer.toJson()).toEqual(Mock.json);
+            expect(interviewer.toJSON()).toEqual(Mock.json);
         });
 
     });
@@ -34,11 +34,12 @@ describe('InterviewerFactory', function() {
     }
 
     function mockJson() {
-        Mock.json = JSON.stringify({
+        Mock.json = {
             objectType: 'Interviewer',
             name: 'Tex',
-            email: 'tex@tex.com'
-        });
+            email: 'tex@tex.com',
+            surname: undefined
+        };
     }
 
 });

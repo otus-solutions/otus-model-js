@@ -29,9 +29,9 @@
     self.fieldCenter = participant.fieldCenter;
 
     /* Public methods */
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;
@@ -39,7 +39,7 @@
       json.name = self.name;
       json.fieldCenter = self.fieldCenter;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

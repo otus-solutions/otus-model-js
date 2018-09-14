@@ -21,11 +21,11 @@
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.ImageItemFactory.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error('otusjs.model.misc.model.ImageItemFactory.fromJsonObject() method expects to receive a object instead a String');
       }
       var labelObject = LabelFactory.fromJsonObject(jsonObject.footer);
       var prototype = {};
-      prototype.objectType = "SurveyItem";
+      prototype.objectType = 'SurveyItem';
       var question = new ImageItem(jsonObject.templateID, prototype, labelObject);
       question.customID = jsonObject.customID;
       question.url = jsonObject.url;
@@ -49,13 +49,13 @@
 
     /* Public methods */
     self.isQuestion = isQuestion;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function isQuestion() {
       return false;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -66,7 +66,7 @@
       json.url = self.url;
       json.footer = self.footer;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return json;
     }
   }
 

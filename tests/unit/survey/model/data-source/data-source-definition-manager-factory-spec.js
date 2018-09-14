@@ -1,4 +1,4 @@
-xdescribe("DataSourceDefinitionManager", function() {
+describe("DataSourceDefinitionManager", function() {
 
   var DATA_SOURCE_1 = "Lista de Medicamentos";
   var DATA_SOURCE_2 = "Lista de Tubos";
@@ -8,11 +8,13 @@ xdescribe("DataSourceDefinitionManager", function() {
   var ITEM_3 = "ID_3";
   var Mock = {};
   var dataSourceDefinitionManager;
+  var dataSourceDefinition;
 
   beforeEach(function() {
     angular.mock.module('otusjs.survey');
 
     inject(function(_$injector_) {
+      dataSourceDefinition = _$injector_.get('otusjs.model.survey.DataSourceDefinitionFactory').create(DATA_SOURCE_1);
       var factory = _$injector_.get('otusjs.model.survey.DataSourceDefinitionManagerFactory', {
         'otusjs.model.survey.DataSourceDefinitionFactory': mockDataSourceDefinitionFactory(_$injector_)
       });
@@ -36,27 +38,18 @@ xdescribe("DataSourceDefinitionManager", function() {
     });
   });
 
-  describe("getDataSourcesByItemID method", function() {
-
-    var dataSourceDefinition;
-
+  describe("toJSON method", function() {
     beforeEach(function() {
-      dataSourceDefinition_1 = dataSourceDefinitionManager.getDataSourceDefinition(DATA_SOURCE_1);
-      dataSourceDefinition_2 = dataSourceDefinitionManager.getDataSourceDefinition(DATA_SOURCE_2);
-      dataSourceDefinition_3 = dataSourceDefinitionManager.getDataSourceDefinition(DATA_SOURCE_3);
-
-      dataSourceDefinition_1.performBind(ITEM_1);
-      dataSourceDefinition_2.performBind(ITEM_1);
-      dataSourceDefinition_1.performBind(ITEM_2);
+      dataSourceDefinition.performBind(ITEM_1);
+      dataSourceDefinitionManager.loadJsonData([dataSourceDefinition.toJSON()]);
     });
 
-    it("should return the DataSources Definition that contain a passed ItemID", function() {
-      expect(dataSourceDefinitionManager.getDataSourcesByItemID(ITEM_1))
-        .toEqual([dataSourceDefinition_1, dataSourceDefinition_2]);
+    it("should return Array", function() {
+      expect(Array.isArray(dataSourceDefinitionManager.toJSON())).toBe(true);
     });
 
-    it("should return an empty array if a passed ItemID does not binded with none DataSource Definition", function() {
-      expect(dataSourceDefinitionManager.getDataSourcesByItemID(ITEM_3)).toEqual([]);
+    it("should return an existing instance of DataSourceDefinition if exists", function() {
+      expect(JSON.stringify(dataSourceDefinitionManager.toJSON()[0])).toEqual(JSON.stringify(dataSourceDefinition));
     });
   });
 

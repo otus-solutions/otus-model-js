@@ -86,7 +86,7 @@
       var json = {};
 
       json.fillingList = _fillingList.map(function (questionFill) {
-        return JSON.parse(questionFill.toJson());
+        return questionFill.toJSON();
       });
 
       return json; 

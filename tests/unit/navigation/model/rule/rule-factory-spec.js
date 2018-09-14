@@ -1,87 +1,148 @@
-describe('RuleFactory', function() {
+    describe("Rulefactory", function () {
 
-  var Mock = {};
-  var rule = null;
-  var EXTENTS = 'SurveyTemplateObject';
-  var OBJECT_TYPE = 'Rule';
-  var WHEN = 'QID';
-  var OPERATOR = 'equal';
-  var ANSWER = 1;
-  var factory;
+        var Mock = {};
+        var factory, rule, other;
+    
+        var WHEN = "today";
+        var OPERATOR = "otus";
+        var ANSWER = 1;
+        var IS_METADATA = false;
+        var IS_CUSTOM = false;
+        var PARAMETER_TOOL = "for confirmation of use and comparison";
+        var POSITIVE_BOOLEAN = true;
 
-  beforeEach(function() {
-    angular.mock.module('otusjs');
+    
+        beforeEach(function () {
+            angular.mock.module('otusjs');
+    
+            angular.mock.inject(function (_$injector_) {
+                factory = _$injector_.get('otusjs.model.navigation.RuleFactory');
+            });
 
-    inject(function(_$injector_) {
-      factory = _$injector_.get('otusjs.model.navigation.RuleFactory');
+            Mock.ruleItemJson = Test.utils.data.ruleItem;
+        });
+    
+        it('factoryExistence check', function () {
+            expect(factory).toBeDefined();        
+        });
+    
+        it('methodFactoryExistence check', function () {
+            expect(factory.create).toBeDefined();
+            expect(factory.fromJson).toBeDefined();
+        });
+      
+    
+        describe('methods of object Rule', function(){
+            
+            beforeEach(function(){
+                rule = factory.create(WHEN,OPERATOR, ANSWER, IS_METADATA, IS_CUSTOM);
+                other = factory.create(WHEN,OPERATOR, ANSWER, IS_METADATA, IS_CUSTOM);
+            });
+
+          it('fromJsonMethod should return RuleObject', function () {
+            expect(JSON.stringify(factory.fromJson(Mock.ruleItemJson))).toEqual(JSON.stringify(rule));
+          });
+            
+            it('withinMethod should to modify operator and answer attributes', function(){                
+                rule.within([PARAMETER_TOOL]);
+                expect(rule.operator).toBe("within");
+                expect(rule.answer[0]).toBe(PARAMETER_TOOL);
+            });
+
+            it('notEqualMethod should to modify operator and answer attributes', function(){                
+                rule.notEqual(PARAMETER_TOOL);
+                expect(rule.operator).toBe("notEqual");
+                expect(rule.answer).toBe(PARAMETER_TOOL);
+            });
+
+            it('equalMethod should to modify operator and answer attributes', function(){                
+                rule.equal(PARAMETER_TOOL);
+                expect(rule.operator).toBe("equal");
+                expect(rule.answer).toBe(PARAMETER_TOOL);
+            });
+
+            it('greatMethod should to modify operator and answer attributes', function(){                
+                rule.greater(PARAMETER_TOOL);
+                expect(rule.operator).toBe('greater');
+                expect(rule.answer).toBe(PARAMETER_TOOL);
+            });
+
+            it('greaterEqualMethod should to modify operator and answer attributes', function(){                
+                rule.greaterEqual(PARAMETER_TOOL);
+                expect(rule.operator).toBe('greaterEqual');
+                expect(rule.answer).toBe(PARAMETER_TOOL);
+            });
+
+            it('lowerMethod should to modify operator and answer attributes', function(){                
+                rule.lower(PARAMETER_TOOL);
+                expect(rule.operator).toBe('lower');
+                expect(rule.answer).toBe(PARAMETER_TOOL);
+            });
+
+            it('lowerEqualMethod should to modify operator and answer attributes', function(){                
+                rule.lowerEqual(PARAMETER_TOOL);
+                expect(rule.operator).toBe('lowerEqual');
+                expect(rule.answer).toBe(PARAMETER_TOOL);
+            });
+
+            it('betweenMethod should to modify operator and answer attributes if first argument is array', function(){                
+                rule.between([0], 1);
+                expect(rule.operator).toBe('between');
+                expect(rule.answer[0]).toBe(0);
+            });
+
+            it('betweenMethod should to modify operator and answer attributes if first argument is not array', function(){                
+                rule.between(0,1);
+                expect(rule.operator).toBe('between');
+                expect(rule.answer[0]).toBe(0,1);
+            });
+
+            it('containsMethod should to modify operator and answer attributes if first argument is not array', function(){                
+                rule.contains(PARAMETER_TOOL);
+                expect(rule.operator).toBe('contains');
+                expect(rule.answer).toBe(PARAMETER_TOOL);
+            });
+
+            it('equalsMethod should return positive if objectTypeValues are equal', function(){                
+                expect(rule.equals(other)).toBeTruthy();                
+            });
+
+            it('equalsMethod should return negative if objectTypeValues are not equal', function(){                
+                other.objectType = PARAMETER_TOOL;
+                expect(rule.equals(other)).toBeFalsy();                
+            });
+
+            it('equalsMethod should return negative if whenValues are not equal', function(){                
+                other.when = PARAMETER_TOOL;
+                expect(rule.equals(other)).toBeFalsy();                
+            });
+
+            it('equalsMethod should return negative if operatorValues are not equal', function(){                
+                other.operator = PARAMETER_TOOL;
+                expect(rule.equals(other)).toBeFalsy();                
+            });
+
+            it('equalsMethod should return negative if answerValues are not equal', function(){                
+                other.answer = PARAMETER_TOOL;
+                expect(rule.equals(other)).toBeFalsy();                
+            });
+
+            it('equalsMethod should return negative if isCustomValues are not equal', function(){                
+                other.isCustom = POSITIVE_BOOLEAN;
+                expect(rule.equals(other)).toBeFalsy();                
+            });
+
+            it('equalsMethod should return negative if isMetadata are not equal', function(){                
+                other.isMetadata = POSITIVE_BOOLEAN;
+                expect(rule.equals(other)).toBeFalsy();                
+            });
+
+            it('cloneMethod should return clone of Rule instance', function(){                
+                var clone = rule.clone();
+                expect(JSON.stringify(clone)).toEqual(JSON.stringify(Mock.ruleItemJson));
+            });
+            
+        });    
     });
-  });
 
-  describe('create method', function() {
 
-    beforeEach(function() {
-      rule = factory.create(WHEN, OPERATOR,ANSWER);
-    });
-
-    it('should return a Rule object with extends value equal to "SurveyTemplateObject"', function() {
-      expect(rule.extents).toBe(EXTENTS);
-    });
-
-    it('should return a Rule object with objectType value equal to "Rule"', function() {
-      expect(rule.objectType).toBe(OBJECT_TYPE);
-    });
-
-    it('should return a Rule object with a valid when value', function() {
-      expect(rule.when).toEqual(WHEN);
-    });
-
-    it('should return a Rule object with a valid operator value', function() {
-      expect(rule.operator).toEqual(OPERATOR);
-    });
-
-    it('should return a Rule object with a valid answer value', function() {
-      expect(rule.answer).toEqual(ANSWER);
-    });
-
-  });
-
-  describe('fromJson method', function() {
-
-    beforeEach(function() {
-      mockJson();
-      rule = factory.fromJson(Mock.json);
-    });
-
-    it('should return a Rule object with extends value equal to "SurveyTemplateObject"', function() {
-      expect(rule.extents).toBe(EXTENTS);
-    });
-
-    it('should return a Rule object with objectType value equal to "Rule"', function() {
-      expect(rule.objectType).toBe(OBJECT_TYPE);
-    });
-
-    it('should return a Rule object with a valid when value', function() {
-      expect(rule.when).toEqual(WHEN);
-    });
-
-    it('should return a Rule object with a valid when value', function() {
-      expect(rule.operator).toEqual(OPERATOR);
-    });
-
-    it('should return a Rule object with a valid answer', function() {
-      expect(rule.answer).toBe(ANSWER);
-    });
-
-  });
-
-  function mockJson() {
-    Mock.json = JSON.stringify({
-      extents: EXTENTS,
-      objectType: OBJECT_TYPE,
-      when: WHEN,
-      operator: OPERATOR,
-      answer: ANSWER
-    });
-  }
-
-});

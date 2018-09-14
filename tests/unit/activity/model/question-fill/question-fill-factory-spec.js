@@ -61,9 +61,9 @@ describe('QuestionFillFactory', function() {
 
     beforeEach(function() {
       mockQuestionFill();
-      mockQuestionFillFromJsonObject(JSON.parse(Mock.questionFill.toJson()));
+      mockQuestionFillFromJsonObject(Mock.questionFill.toJSON());
       mockQuestionFillWithComment();
-      mockQuestionFillFromJsonObjectWithComment(JSON.parse(Mock.questionFillWithComment.toJson()));
+      mockQuestionFillFromJsonObjectWithComment(Mock.questionFillWithComment.toJSON());
     });
 
     it('should return an object of type QuestionFill', function() {

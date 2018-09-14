@@ -52,7 +52,7 @@
     self.clear = clear;
 
     /* Public methods */
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function isFilled() {
       return self.answer.isFilled() || self.metadata.isFilled() || !!self.comment;
@@ -68,18 +68,18 @@
       self.comment = '';
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;
       json.questionID = self.questionID;
       json.forceAnswer = self.forceAnswer;
-      json.answer = JSON.parse(self.answer.toJson());
-      json.metadata = JSON.parse(self.metadata.toJson());
+      json.answer = self.answer;
+      json.metadata = self.metadata;
       json.comment = self.comment;
       json.accept = self.accept;
       
-      return JSON.stringify(json);
+      return json;
     }
   }
 }());

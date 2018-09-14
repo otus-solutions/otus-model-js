@@ -120,7 +120,7 @@
     self.visitItem = visitItem;
     self.updateCurrentItem = updateCurrentItem;
     self.hasPreviousItem = hasPreviousItem;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     (function constructor() {
       _items = _createNavigationTrackingItemContainer(items);
@@ -242,7 +242,7 @@
      * @returns {JSON}
      * @memberof NavigationTracker
      */
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = _objectType;
@@ -255,7 +255,7 @@
 
       json.items = [];
       Object.keys(_items).forEach(function(itemID) {
-        json.items.push(_items[itemID].toJson());
+        json.items.push(_items[itemID]);
       });
 
       return json;
