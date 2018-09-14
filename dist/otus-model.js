@@ -4802,6 +4802,67 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.surveyItem').factory('SurveyItemFactory', SurveyItemFactory);
+
+  SurveyItemFactory.$inject = [
+  /* Question items */
+  'CalendarQuestionFactory', 'IntegerQuestionFactory', 'DecimalQuestionFactory', 'SingleSelectionQuestionFactory', 'CheckboxQuestionFactory', 'TextQuestionFactory', 'TimeQuestionFactory', 'EmailQuestionFactory', 'PhoneQuestionFactory', 'AutocompleteQuestionFactory', 'FileUploadQuestionFactory', 'otusjs.model.question.GridTextQuestionFactory', 'otusjs.model.question.GridIntegerQuestionFactory',
+  /* Miscelaneous items */
+  'TextItemFactory', 'ImageItemFactory'];
+
+  function SurveyItemFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, CheckboxQuestionFactory, TextQuestionFactory, TimeQuestionFactory, EmailQuestionFactory, PhoneQuestionFactory, AutocompleteQuestionFactory, FileUploadQuestionFactory, GridTextQuestionFactory, GridIntegerQuestionFactory, TextItemFactory, ImageItemFactory) {
+
+    var self = this;
+
+    var factoryMap = {
+      /* Question items */
+      'CalendarQuestion': CalendarQuestionFactory,
+      'IntegerQuestion': IntegerQuestionFactory,
+      'DecimalQuestion': DecimalQuestionFactory,
+      'SingleSelectionQuestion': SingleSelectionQuestionFactory,
+      'CheckboxQuestion': CheckboxQuestionFactory,
+      'TextQuestion': TextQuestionFactory,
+      'TimeQuestion': TimeQuestionFactory,
+      'EmailQuestion': EmailQuestionFactory,
+      'PhoneQuestion': PhoneQuestionFactory,
+      'AutocompleteQuestion': AutocompleteQuestionFactory,
+      'FileUploadQuestion': FileUploadQuestionFactory,
+      'GridTextQuestion': GridTextQuestionFactory,
+      'GridIntegerQuestion': GridIntegerQuestionFactory,
+      /* Miscelaneous items */
+      'TextItem': TextItemFactory,
+      'ImageItem': ImageItemFactory
+    };
+
+    /* Public interface */
+    self.create = create;
+    self.load = load;
+
+    function create(itemType, templateID) {
+      var item = new SurveyItem(templateID);
+      return factoryMap[itemType].create(templateID, item);
+    }
+
+    function load(itemObject) {
+      return factoryMap[itemObject.objectType].fromJsonObject(itemObject);
+    }
+
+    return self;
+  }
+
+  function SurveyItem(templateID) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'SurveyItem';
+    self.templateID = templateID;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.surveyItem').factory('SurveyItemContainerFactory', Factory);
 
   Factory.$inject = ['SurveyItemFactory'];
@@ -5128,67 +5189,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       });
       return getItemByCustomID(id) || foundCustomOptionID ? false : true;
     }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('SurveyItemFactory', SurveyItemFactory);
-
-  SurveyItemFactory.$inject = [
-  /* Question items */
-  'CalendarQuestionFactory', 'IntegerQuestionFactory', 'DecimalQuestionFactory', 'SingleSelectionQuestionFactory', 'CheckboxQuestionFactory', 'TextQuestionFactory', 'TimeQuestionFactory', 'EmailQuestionFactory', 'PhoneQuestionFactory', 'AutocompleteQuestionFactory', 'FileUploadQuestionFactory', 'otusjs.model.question.GridTextQuestionFactory', 'otusjs.model.question.GridIntegerQuestionFactory',
-  /* Miscelaneous items */
-  'TextItemFactory', 'ImageItemFactory'];
-
-  function SurveyItemFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, CheckboxQuestionFactory, TextQuestionFactory, TimeQuestionFactory, EmailQuestionFactory, PhoneQuestionFactory, AutocompleteQuestionFactory, FileUploadQuestionFactory, GridTextQuestionFactory, GridIntegerQuestionFactory, TextItemFactory, ImageItemFactory) {
-
-    var self = this;
-
-    var factoryMap = {
-      /* Question items */
-      'CalendarQuestion': CalendarQuestionFactory,
-      'IntegerQuestion': IntegerQuestionFactory,
-      'DecimalQuestion': DecimalQuestionFactory,
-      'SingleSelectionQuestion': SingleSelectionQuestionFactory,
-      'CheckboxQuestion': CheckboxQuestionFactory,
-      'TextQuestion': TextQuestionFactory,
-      'TimeQuestion': TimeQuestionFactory,
-      'EmailQuestion': EmailQuestionFactory,
-      'PhoneQuestion': PhoneQuestionFactory,
-      'AutocompleteQuestion': AutocompleteQuestionFactory,
-      'FileUploadQuestion': FileUploadQuestionFactory,
-      'GridTextQuestion': GridTextQuestionFactory,
-      'GridIntegerQuestion': GridIntegerQuestionFactory,
-      /* Miscelaneous items */
-      'TextItem': TextItemFactory,
-      'ImageItem': ImageItemFactory
-    };
-
-    /* Public interface */
-    self.create = create;
-    self.load = load;
-
-    function create(itemType, templateID) {
-      var item = new SurveyItem(templateID);
-      return factoryMap[itemType].create(templateID, item);
-    }
-
-    function load(itemObject) {
-      return factoryMap[itemObject.objectType].fromJsonObject(itemObject);
-    }
-
-    return self;
-  }
-
-  function SurveyItem(templateID) {
-    var self = this;
-
-    self.extents = 'StudioObject';
-    self.objectType = 'SurveyItem';
-    self.templateID = templateID;
   }
 })();
 'use strict';
@@ -6784,6 +6784,98 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.surveyItem').factory('OptionItemFactory', OptionItemFactory);
+
+  function OptionItemFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(optionValue) {
+      return new Option(optionValue);
+    }
+
+    function fromJsonObject(option) {
+      if (option.objectType === 'OptionItem') {
+        return new Option(option.value);
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function Option(value) {
+    var self = this;
+    self.extends = 'StudioObject';
+    self.objectType = 'OptionItem';
+    self.value = value;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('QuestionOptionFactory', QuestionOptionFactory);
+
+  QuestionOptionFactory.$inject = ['OptionItemFactory'];
+
+  function QuestionOptionFactory(OptionItemFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new QuestionOption(OptionItemFactory);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.QuestionOptionFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var options = new QuestionOption(OptionItemFactory);
+      for (var object in jsonObject.data) {
+        options.data[object] = OptionItemFactory.fromJsonObject(jsonObject.data[object]);
+      }
+      return options;
+    }
+
+    return self;
+  }
+
+  function QuestionOption(OptionItemFactory) {
+    var self = this;
+
+    self.extends = 'StudioObject';
+    self.objectType = 'QuestionOption';
+    self.data = {};
+
+    /* Public methods */
+    self.createOption = createOption;
+    self.removeOption = removeOption;
+
+    function createOption(name, value) {
+      var option = OptionItemFactory.create(value);
+      self.data[name] = option;
+      return option;
+    }
+
+    function removeOption(name) {
+      delete self.data[name];
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.surveyItem').factory('ImageItemFactory', ImageItemFactory);
 
   ImageItemFactory.$inject = ['LabelFactory'];
@@ -6917,98 +7009,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       json.value = self.value;
 
       return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('OptionItemFactory', OptionItemFactory);
-
-  function OptionItemFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(optionValue) {
-      return new Option(optionValue);
-    }
-
-    function fromJsonObject(option) {
-      if (option.objectType === 'OptionItem') {
-        return new Option(option.value);
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function Option(value) {
-    var self = this;
-    self.extends = 'StudioObject';
-    self.objectType = 'OptionItem';
-    self.value = value;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('QuestionOptionFactory', QuestionOptionFactory);
-
-  QuestionOptionFactory.$inject = ['OptionItemFactory'];
-
-  function QuestionOptionFactory(OptionItemFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new QuestionOption(OptionItemFactory);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.QuestionOptionFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var options = new QuestionOption(OptionItemFactory);
-      for (var object in jsonObject.data) {
-        options.data[object] = OptionItemFactory.fromJsonObject(jsonObject.data[object]);
-      }
-      return options;
-    }
-
-    return self;
-  }
-
-  function QuestionOption(OptionItemFactory) {
-    var self = this;
-
-    self.extends = 'StudioObject';
-    self.objectType = 'QuestionOption';
-    self.data = {};
-
-    /* Public methods */
-    self.createOption = createOption;
-    self.removeOption = removeOption;
-
-    function createOption(name, value) {
-      var option = OptionItemFactory.create(value);
-      self.data[name] = option;
-      return option;
-    }
-
-    function removeOption(name) {
-      delete self.data[name];
     }
   }
 })();

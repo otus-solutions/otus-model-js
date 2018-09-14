@@ -86,6 +86,57 @@ Test.utils.data.ruleItem = {
   "isCustom": false
 }
 
+Test.utils.data.fileUploadQuestionItem = {
+  "extents": "SurveyItem",
+  "objectType": "FileUploadQuestion",
+  "templateID": "DQUOTETWO1",
+  "customID": "DQUOTETWO1",
+  "dataType": "Binary",
+  "label": {
+    "ptBR": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "\"aspas\"",
+      "formattedText": "\"aspas\""
+    },
+    "enUS": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    },
+    "esES": {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    }
+  },
+  "metadata": {
+    "extents": "StudioObject",
+    "objectType": "MetadataGroup",
+    "options": []
+  },
+  "fillingRules": {
+    "extends": "StudioObject",
+    "objectType": "FillingRules",
+    "options": {
+      "mandatory": {
+        "extends": "StudioObject",
+        "objectType": "Rule",
+        "validatorType": "mandatory",
+        "data": {
+          "canBeIgnored": false,
+          "reference": true
+        }
+      }
+    }
+  }
+}
+
 Test.utils.data.integerQuestionItem = {
   "extents": "SurveyItem",
   "objectType": "IntegerQuestion",
