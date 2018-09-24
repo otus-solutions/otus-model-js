@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -36,14 +36,13 @@
     }
 
     function fromJson(json) {
-      var jsonObj = JSON.parse(json);
       var route = null;
-      if (jsonObj.isDefault) {
-        route = createDefault(jsonObj.origin, jsonObj.destination);
+      if (json.isDefault) {
+        route = createDefault(json.origin, json.destination);
       } else {
-        route = createAlternative(jsonObj.origin, jsonObj.destination, jsonObj.conditions.map(_rebuildConditions));
+        route = createAlternative(json.origin, json.destination, json.conditions.map(_rebuildConditions));
       }
-      route.isDefault = jsonObj.isDefault;
+      route.isDefault = json.isDefault;
       return route;
     }
 
@@ -75,7 +74,7 @@
     self.equals = equals;
     self.selfsame = selfsame;
     self.clone = clone;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     _init();
 
@@ -96,7 +95,7 @@
     function listConditions() {
       var clone = [];
 
-      self.conditions.forEach(function(condition) {
+      self.conditions.forEach(function (condition) {
         clone.push(condition);
       });
 
@@ -135,8 +134,8 @@
 
       if (other.conditions.length === self.conditions.length) {
         if (self.conditions.length > 0) {
-          var hasEqualConditions = other.conditions.every(function(otherCondition) {
-            return self.conditions.some(function(selfCondition) {
+          var hasEqualConditions = other.conditions.every(function (otherCondition) {
+            return self.conditions.some(function (selfCondition) {
               return selfCondition.equals(otherCondition);
             });
           });
@@ -165,7 +164,7 @@
       return clone;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -174,11 +173,11 @@
       json.destination = self.destination;
       json.name = self.name;
       json.isDefault = self.isDefault;
-      json.conditions = self.conditions.map(function(condition) {
-        return condition.toJson(); 
+      json.conditions = self.conditions.map(function (condition) {
+        return condition;
       });
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return json;
     }
 
     function _init() {
@@ -188,7 +187,7 @@
     }
 
     function _conditionExists(newCondition) {
-      return self.conditions.some(function(condition) {
+      return self.conditions.some(function (condition) {
         return newCondition.equals(condition);
       });
     }

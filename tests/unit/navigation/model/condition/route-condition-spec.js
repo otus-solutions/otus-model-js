@@ -1,4 +1,4 @@
-xdescribe('RouteCondition', function() {
+describe('RouteCondition', function () {
 
   var Mock = {};
   var condition;
@@ -12,10 +12,10 @@ xdescribe('RouteCondition', function() {
   var ANSWER = 1;
   var factory;
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('otusjs');
 
-    inject(function(_$injector_) {
+    inject(function (_$injector_) {
       mockRules(_$injector_);
 
       factory = _$injector_.get('otusjs.model.navigation.RouteConditionFactory');
@@ -26,15 +26,15 @@ xdescribe('RouteCondition', function() {
     condition = factory.create(CONDITION_NAME, [Mock.ruleA]);
   });
 
-  describe('addRule method', function() {
+  describe('addRule method', function () {
 
-    it('should put a rule in rule list', function() {
+    it('should put a rule in rule list', function () {
       condition.addRule(Mock.ruleB);
 
       expect(condition.listRules().length).toBe(2);
     });
 
-    it('should not put a rule twice', function() {
+    it('should not put a rule twice', function () {
       condition.addRule(Mock.ruleA);
       condition.addRule(Mock.ruleB);
       condition.addRule(Mock.ruleB);
@@ -43,25 +43,25 @@ xdescribe('RouteCondition', function() {
 
   });
 
-  describe('removeRule method', function() {
+  describe('removeRule method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       condition.addRule(Mock.ruleB);
     });
 
-    it('should remove the rule from rule list', function() {
+    it('should remove the rule from rule list', function () {
       condition.removeRule(Mock.ruleA);
 
       expect(condition.listRules().length).toBe(1);
     });
 
-    it('should remove exactly the specified rule from rule list', function() {
+    it('should remove exactly the specified rule from rule list', function () {
       condition.removeRule(Mock.ruleB);
 
       expect(condition.getRuleByIndex(0)).toEqual(Mock.ruleA);
     });
 
-    it('should not remove the rule when list has only one rule', function() {
+    it('should not remove the rule when list has only one rule', function () {
       condition.removeRule(Mock.ruleB);
       condition.removeRule(Mock.ruleA);
 
@@ -70,9 +70,9 @@ xdescribe('RouteCondition', function() {
 
   });
 
-  describe('updateRule method', function() {
+  describe('updateRule method', function () {
 
-    it('should udpate rule data', function() {
+    it('should udpate rule data', function () {
       expect(condition.listRules()[0].answer).toBe(1);
 
       Mock.ruleA.equal(5);
@@ -83,9 +83,9 @@ xdescribe('RouteCondition', function() {
 
   });
 
-  describe('equals method', function() {
+  describe('equals method', function () {
 
-    it('should return true when two objects have the same properties and equal values', function() {
+    it('should return true when two objects have the same properties and equal values', function () {
       var conditionA = factory.create(CONDITION_NAME, [Mock.ruleA]);
       var conditionB = factory.create(CONDITION_NAME, [Mock.ruleA]);
       expect(conditionA.equals(conditionB)).toBe(true);
@@ -93,7 +93,7 @@ xdescribe('RouteCondition', function() {
       expect(conditionA.equals(conditionB)).toBe(true);
     });
 
-    it('should return true when two objects have same rules in the list but in different order', function() {
+    it('should return true when two objects have same rules in the list but in different order', function () {
       var conditionA = factory.create(CONDITION_NAME, [Mock.ruleA]);
       conditionA.addRule(Mock.ruleB);
 
@@ -103,7 +103,7 @@ xdescribe('RouteCondition', function() {
       expect(conditionA.equals(conditionB)).toBe(true);
     });
 
-    it('should return true when two objects have same rules in the list and equal order', function() {
+    it('should return true when two objects have same rules in the list and equal order', function () {
       var conditionA = factory.create(CONDITION_NAME, [Mock.ruleA]);
       conditionA.addRule(Mock.ruleB);
 
@@ -113,7 +113,7 @@ xdescribe('RouteCondition', function() {
       expect(conditionA.equals(conditionB)).toBe(true);
     });
 
-    it('should return false when two objects have different objectType value', function() {
+    it('should return false when two objects have different objectType value', function () {
       var conditionA = factory.create(CONDITION_NAME, [Mock.ruleA]);
       var conditionB = factory.create(CONDITION_NAME, [Mock.ruleA]);
       conditionB.objectType = DIFF_OBJECT_TYPE;
@@ -121,14 +121,14 @@ xdescribe('RouteCondition', function() {
       expect(conditionA.equals(conditionB)).toBe(false);
     });
 
-    it('should return false when two objects have different name value', function() {
+    it('should return false when two objects have different name value', function () {
       var conditionA = factory.create(CONDITION_NAME, [Mock.ruleA]);
       var conditionB = factory.create(DIFF_CONDITION_NAME, [Mock.ruleA]);
 
       expect(conditionA.equals(conditionB)).toBe(false);
     });
 
-    it('should return false when two objects have different size of rule list', function() {
+    it('should return false when two objects have different size of rule list', function () {
       var conditionA = factory.create(CONDITION_NAME, [Mock.ruleA]);
       conditionA.addRule(Mock.ruleB);
 
@@ -137,7 +137,7 @@ xdescribe('RouteCondition', function() {
       expect(conditionA.equals(conditionB)).toBe(false);
     });
 
-    it('should return false when two objects have same size of rule list but not equals rules', function() {
+    it('should return false when two objects have same size of rule list but not equals rules', function () {
       var conditionA = factory.create(CONDITION_NAME, [Mock.ruleA]);
 
       var conditionB = factory.create(CONDITION_NAME, [Mock.ruleB]);
@@ -147,9 +147,9 @@ xdescribe('RouteCondition', function() {
 
   });
 
-  describe('selfsame method', function() {
+  describe('selfsame method', function () {
 
-    it('should call Object.is', function() {
+    it('should call Object.is', function () {
       spyOn(Object, 'is').and.callThrough();
 
       var conditionA = factory.create(CONDITION_NAME, [Mock.ruleA]);
@@ -165,9 +165,9 @@ xdescribe('RouteCondition', function() {
 
   });
 
-  describe('clone method', function() {
+  describe('clone method', function () {
 
-    it('should call Object.assign', function() {
+    it('should call Object.assign', function () {
       var conditionA = factory.create(CONDITION_NAME, [Mock.ruleA]);
       var clone = conditionA.clone();
 
@@ -182,10 +182,10 @@ xdescribe('RouteCondition', function() {
 
   });
 
-  describe('toJson method', function() {
+  describe('toJSON method', function () {
 
-    it('should return a well formatted json based on RouteCondition', function() {
-      expect(condition.toJson()).toEqual(Mock.json);
+    it('should return a well formatted json based on RouteCondition', function () {
+      expect(JSON.parse(JSON.stringify(condition))).toEqual(Mock.json);
     });
 
   });
@@ -201,12 +201,12 @@ xdescribe('RouteCondition', function() {
   }
 
   function mockJson() {
-    Mock.json = JSON.stringify({
+    Mock.json = JSON.parse(JSON.stringify({
       extents: 'StudioObject',
       objectType: 'RouteCondition',
       name: CONDITION_NAME,
-      rules: [Mock.ruleA.toJson()]
-    }).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      rules: [Mock.ruleA]
+    }));
   }
 
 });

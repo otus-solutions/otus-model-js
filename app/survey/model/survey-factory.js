@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -31,12 +31,12 @@
     self.fromJsonObject = fromJsonObject;
 
     /**
-    TODO :
+     TODO :
 
-    Quando for implementado o novo método de carregamento no projeto OTUS-STUDIO,
-    deve-se excluir o método load e usar somente o fromJsonObject.
+     Quando for implementado o novo método de carregamento no projeto OTUS-STUDIO,
+     deve-se excluir o método load e usar somente o fromJsonObject.
 
-    */
+     */
     function load(jsonObject) {
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
@@ -104,7 +104,7 @@
     self.isAvailableCustomID = isAvailableCustomID;
     self.getDataSource = getDataSource;
     self.getAllDataSources = getAllDataSources;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function initialize() {
       self.SurveyItemManager.init();
@@ -160,39 +160,43 @@
       return self.DataSourceManager.getDataSourceDefinition(name);
     }
 
-    function getAllDataSources(){
+    function getAllDataSources() {
       return angular.copy(self.DataSourceManager.list());
-   }
+    }
 
     function isAutocomplete(item) {
       return item.objectType === "AutocompleteQuestion";
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
       json.objectType = self.objectType;
       json.oid = self.oid;
-      json.identity = self.identity.toJson();
-      json.metainfo = self.metainfo.toJson();
-      json.dataSources = self.DataSourceManager.toJson();
+      json.identity = self.identity;
+      json.metainfo = self.metainfo;
+      if (self.DataSourceManager.toJSON().length) {
+        json.dataSources = self.DataSourceManager;
+      } else {
+        json.dataSources = [];
+      }
 
       json.itemContainer = [];
-      self.SurveyItemManager.getItemList().forEach(function(item) {
-        json.itemContainer.push(item.toJson());
+      self.SurveyItemManager.getItemList().forEach(function (item) {
+        json.itemContainer.push(item);
       });
 
       json.navigationList = [];
-      self.NavigationManager.getNavigationList().forEach(function(navigation) {
+      self.NavigationManager.getNavigationList().forEach(function (navigation) {
         if (navigation) {
-          json.navigationList.push(navigation.toJson());
+          json.navigationList.push(navigation);
         } else {
           json.navigationList.push({});
         }
       });
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
+      return json;
     }
   }
 }());

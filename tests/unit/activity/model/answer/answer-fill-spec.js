@@ -38,24 +38,24 @@ describe('AnswerFill', function() {
 
   });
 
-  describe('toJson method', function() {
+  describe('toJSON method', function() {
 
     it(
       'should return a well formatted json based on instance of AnswerFill',
       function() {
         var answer = factory.create('IntegerQuestion', ANSWER_VALUE);
 
-        expect(answer.toJson()).toEqual(Mock.json);
+        expect(answer.toJSON()).toEqual(Mock.json);
       });
 
   });
 
   function mockJson() {
-    Mock.json = JSON.stringify({
+    Mock.json = {
       objectType: 'AnswerFill',
       type: "IntegerQuestion",
       value: ANSWER_VALUE
-    });
+    };
   }
 
 });

@@ -59,7 +59,7 @@
     /* Public methods */
     self.isQuestion = isQuestion;
     self.validators = validators;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function isQuestion() {
       return true;
@@ -72,7 +72,7 @@
       return validatorsList;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -84,7 +84,7 @@
       json.metadata = self.metadata;
       json.fillingRules = self.fillingRules;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return json;
     }
   }
 

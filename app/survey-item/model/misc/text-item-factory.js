@@ -47,13 +47,13 @@
 
     /* Public methods */
     self.isQuestion = isQuestion;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     function isQuestion() {
       return false;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -63,7 +63,7 @@
       json.dataType = self.dataType;
       json.value = self.value;
 
-      return JSON.stringify(json);
+      return json;
     }
   }
 

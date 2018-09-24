@@ -1,62 +1,110 @@
-describe("FileUploadQuestionFactory", function() {
+describe('FileUploadQuestionFactory', function() {
   var Mock = {};
-  var factory;
+  var factory, question,
+    TEMPLATE_ID = 'TEMPLATE_ID',
+    PROTOTYPE = { "objectType" : "SurveyItem"},
+    EXPECTED_VALIDATORS_LIST = [  'mandatory' ];
 
-  /* @BeforeScenario */
   beforeEach(function() {
     angular.mock.module('otusjs');
-    mockParams();
-
-    inject(function(_$injector_) {
-      var injections = {
-        'LabelFactory': mockLabelFactory(_$injector_),
-        'MetadataGroupFactory': mockMetadataGroupFactory(
-          _$injector_),
-        'FillingRulesOptionFactory': mockFillingRulesOptionFactory(
-          _$injector_)
-      }
-
-      factory = _$injector_.get('FileUploadQuestionFactory',
-        injections);
+    angular.mock.inject(function (_$injector_) {
+      factory = _$injector_.get('FileUploadQuestionFactory');
     });
+
+    Mock.fileUploadQuestionItemJson = Test.utils.data.fileUploadQuestionItem;
+
+    mockJsonObject();
+
   });
 
-
-  it("create method", function() {
-
-    spyOn(factory, "create");
-    expect(factory.create.calls.any()).toEqual(false);
-    factory.create(Mock.templateID, Mock.prototype);
-    expect(factory.create.calls.any()).toEqual(true);
-
-    expect(factory.create).toHaveBeenCalled();
-    expect(factory.create).toHaveBeenCalledWith(Mock.templateID, Mock.prototype);
-    expect(factory.create(Mock.templateID, Mock.prototype)).not.toEqual(
-      null);
+  it('factoryExistence check', function () {
+    expect(factory).toBeDefined();
   });
 
+  it('methodFactoryExistence check', function () {
+    expect(factory.create).toBeDefined();
+    expect(factory.fromJsonObject).toBeDefined();
+  });
 
+  describe('methods of object fromJsonObject', function() {
 
-  function mockLabelFactory(_$injector_) {
-    Mock.LabelFactory = _$injector_.get('LabelFactory');
-    return Mock.LabelFactory;
-  }
+    beforeEach(function () {
+      question = factory.fromJsonObject(Mock.fileUploadQuestionItemJson);
+    });
 
-  function mockMetadataGroupFactory(_$injector_) {
-    Mock.MetadataGroupFactory = _$injector_.get('MetadataGroupFactory');
-    return Mock.MetadataGroupFactory;
-  }
+    it('should create an instance with the same values of Mock.fileUploadQuestionItemJson', function() {
+      expect(JSON.stringify(question.toJSON())).toEqual(JSON.stringify(Mock.fileUploadQuestionItemJson));
+    });
 
-  function mockFillingRulesOptionFactory(_$injector_) {
-    Mock.FillingRulesOptionFactory = _$injector_.get(
-      'FillingRulesOptionFactory');
-    return Mock.FillingRulesOptionFactory;
-  }
+    it('should throw an error when receives a string', function() {
+      var ERROR_MESSAGE = 'otusjs.model.misc.model.FileUploadQuestionFactory.fromJsonObject() ' +
+        'method expects to receive a object instead a String';
 
-  function mockParams() {
-    Mock.prototype = {
-      objectType: "TESTE"
+      function fromJsonObjectFunction() {
+        factory.fromJsonObject(JSON.stringify(Mock.fileUploadQuestionItemJson));
+      };
+
+      expect(fromJsonObjectFunction).toThrowError(ERROR_MESSAGE);
+    });
+
+  });
+
+  describe('methods of object integer', function() {
+
+    beforeEach(function () {
+      question = factory.create(TEMPLATE_ID, PROTOTYPE);
+    });
+
+    it('returned object should have extends equal to objectType', function() {
+      expect(question.extents).toBe('SurveyItem');
+    });
+
+    it('isQuestionMethod should return positive', function(){
+      expect(question.isQuestion()).toBeTruthy();
+    });
+
+    it('validatorsMethod should return Array', function(){
+      expect(question.validators()).toEqual(EXPECTED_VALIDATORS_LIST);
+    });
+
+    it('toJsonMethod should of create return jsonObject', function(){
+      var questionJson = question.toJSON();
+      expect(JSON.stringify(questionJson.label)).toEqual(JSON.stringify(Mock.label));
+    });
+
+  });
+
+  function mockJsonObject() {
+
+    Mock.ptBR = {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
     };
-    Mock.templateID = "TST1";
+
+    Mock.enUS = {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    };
+
+    Mock.esES = {
+      "extends": "StudioObject",
+      "objectType": "Label",
+      "oid": "",
+      "plainText": "",
+      "formattedText": ""
+    };
+
+    Mock.label = {
+      "ptBR": Mock.ptBR,
+      "enUS": Mock.enUS,
+      "esES": Mock.esES
+    };
   }
+
 });

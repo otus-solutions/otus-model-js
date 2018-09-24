@@ -28,7 +28,7 @@ describe('ActivityStatus', function() {
 
   });
 
-  describe('toJson method', function() {
+  describe('toJSON method', function() {
 
     it(
       'should return a well formatted json based on instance of ActivityStatus',
@@ -36,18 +36,18 @@ describe('ActivityStatus', function() {
         var status = factory.createCreatedStatus(Mock.user);
         baseDate = new Date();
         jasmine.clock().mockDate(baseDate);
-        expect(status.toJson()).toEqual(Mock.json);
+        expect(status.toJSON()).toEqual(Mock.json);
       });
 
   });
 
   function mockJson() {
-    Mock.json = JSON.stringify({
+    Mock.json = {
       objectType: 'ActivityStatus',
       name: 'CREATED',
       date: new Date(),
       user: Mock.user
-    });
+    };
   }
 
   function mockUser($injector) {

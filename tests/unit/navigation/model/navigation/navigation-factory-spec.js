@@ -108,7 +108,7 @@ describe('NavigationFactory', function() {
   });
 
   function mockJson() {
-    Mock.json = JSON.stringify({
+    Mock.json = {
       extents: EXTENTS,
       objectType: OBJECT_TYPE,
       origin: ORIGIN,
@@ -123,9 +123,9 @@ describe('NavigationFactory', function() {
         isDefault: true,
         conditions: []
       }]
-    });
+    };
 
-    Mock.jsonWithoutOrigin = JSON.stringify({
+    Mock.jsonWithoutOrigin = {
       extents: EXTENTS,
       objectType: OBJECT_TYPE,
       index: INDEX,
@@ -139,9 +139,9 @@ describe('NavigationFactory', function() {
         isDefault: true,
         conditions: []
       }]
-    });
+    };
 
-    Mock.jsonWithoutDestination = JSON.stringify({
+    Mock.jsonWithoutDestination = {
       extents: EXTENTS,
       objectType: OBJECT_TYPE,
       origin: ORIGIN,
@@ -155,16 +155,16 @@ describe('NavigationFactory', function() {
         isDefault: true,
         conditions: []
       }]
-    });
+    };
 
-    Mock.jsonWithoutRoute = JSON.stringify({
+    Mock.jsonWithoutRoute = {
       extents: EXTENTS,
       objectType: OBJECT_TYPE,
       origin: ORIGIN,
       index: INDEX,
       isDefault: true,
       routes: []
-    });
+    };
   }
 
 });

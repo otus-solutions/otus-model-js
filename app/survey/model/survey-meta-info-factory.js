@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -37,9 +37,10 @@
     self.creationDatetime = creationDatetime;
     self.otusStudioVersion = '';
 
-    self.toJson = toJson;
+    /* Public methods */
+    self.toJSON = toJSON;
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = self.extents;
@@ -47,7 +48,7 @@
       json.creationDatetime = self.creationDatetime;
       json.otusStudioVersion = self.otusStudioVersion;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return json;
     }
   }
 

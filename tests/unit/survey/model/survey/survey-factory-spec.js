@@ -3,6 +3,7 @@ describe('SurveyFactory', function() {
   var factory;
   var survey;
   var Injections = {};
+  var jsonSurvey;
 
   beforeEach(function() {
     angular.mock.module('otusjs');
@@ -72,33 +73,15 @@ describe('SurveyFactory', function() {
       expect(Mock.SurveyMetaInfoFactory.fromJsonObject).toHaveBeenCalledWith(Mock.surveyTemplate.metainfo);
     });
 
-  xdescribe("should create an instance with the same values of", function() {
+  describe("should create an instance with the same values of", function() {
 
       beforeEach(function () {
-        stringifiedSurvey = survey.toJson();
-        parsedSurvey = JSON.parse(stringifiedSurvey);
+        jsonSurvey = survey.toJSON();
       });
 
-      xit("Mock.surveyTemplate", function() {
-        expect(JSON.stringify(parsedSurvey)).toEqual(JSON.stringify(Mock.surveyTemplate));
+      it("Mock.surveyTemplate", function() {
+        expect(JSON.stringify(jsonSurvey)).toEqual(JSON.stringify(Mock.surveyTemplate));
       });
-
-      xit("Mock.surveyTemplate.identity", function() {
-        expect(JSON.stringify(parsedSurvey.identity)).toEqual(JSON.stringify(Mock.surveyTemplate.identity));
-      });
-
-      it("Mock.surveyTemplate.metainfo", function() {
-        expect(JSON.stringify(parsedSurvey.metainfo)).toEqual(JSON.stringify(Mock.surveyTemplate.metainfo));
-      });
-
-      it("Mock.surveyTemplate.itemContainer", function() {
-        expect(JSON.stringify(parsedSurvey.itemContainer)).toEqual(JSON.stringify(Mock.surveyTemplate.itemContainer));
-      });
-
-      it("Mock.surveyTemplate.navigationList", function() {
-        expect(JSON.stringify(parsedSurvey.navigationList)).toEqual(JSON.stringify(Mock.surveyTemplate.navigationList));
-      });
-
     });
 
   });

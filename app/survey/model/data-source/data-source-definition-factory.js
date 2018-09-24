@@ -45,7 +45,7 @@
     self.performBind = performBind;
     self.removeBind = removeBind;
     self.getBindedItems = getBindedItems;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     _init();
 
@@ -87,7 +87,7 @@
       return _bindTo;
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = _objectType;
@@ -95,7 +95,7 @@
       json.name = _name;
       json.bindTo = _bindTo;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return json;
     }
   }
 

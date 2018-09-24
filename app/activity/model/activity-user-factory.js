@@ -27,16 +27,17 @@
     self.name = name;
     self.email = email;
 
-    self.toJson = toJson;
+    /* Public methods */
+    self.toJSON = toJSON;
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;
       json.name = self.name;
       json.email = self.email;
 
-      return JSON.stringify(json);
+      return json;
     }
 
   }

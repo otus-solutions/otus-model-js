@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>otus-model-js</artifactId>
 	<groupId>org.ccem.otus</groupId>
-	<version>1.14</version>
+	<version>1.15</version>
 	<packaging>war</packaging>
 	<name>Otus Model Js</name>
 
@@ -19,11 +19,11 @@
 	<repositories>
 		<repository>
 			<id>releases</id>
-			<url>http://ccem.ufrgs.br:8081/nexus/content/repositories/releases</url>
+			<url>http://nexus.inf.otus-solutions.com.br/repository/maven-releases/</url>
 		</repository>
 		<repository>
 			<id>snapshots</id>
-			<url>http://ccem.ufrgs.br:8081/nexus/content/repositories/snapshots</url>
+			<url>http://nexus.inf.otus-solutions.com.br/repository/maven-snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>

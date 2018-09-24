@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -31,7 +31,7 @@
     }
 
     function _rebuildRules(ruleJson) {
-      return RuleFactory.fromJson(JSON.stringify(ruleJson));
+      return RuleFactory.fromJson(ruleJson);
     }
 
     return self;
@@ -56,7 +56,7 @@
     self.equals = equals;
     self.selfsame = selfsame;
     self.clone = clone;
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     _init();
 
@@ -85,7 +85,7 @@
     function listRules() {
       var clone = [];
 
-      self.rules.forEach(function(rule) {
+      self.rules.forEach(function (rule) {
         clone.push(rule.clone());
       });
 
@@ -107,8 +107,8 @@
 
       if (other.rules.length === self.rules.length) {
         if (self.rules.length > 0) {
-          var hasEqualRules = other.rules.every(function(otherRule) {
-            return self.rules.some(function(selfRule) {
+          var hasEqualRules = other.rules.every(function (otherRule) {
+            return self.rules.some(function (selfRule) {
               return selfRule.equals(otherRule);
             });
           });
@@ -134,17 +134,15 @@
       return new self.constructor(self.name, self.rules);
     }
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.extents = 'StudioObject';
       json.objectType = 'RouteCondition';
       json.name = self.name;
-      json.rules = self.rules.map(function(rule) {
-        return rule.toJson(); 
-      });
+      json.rules = self.rules;
 
-      return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+      return json;
     }
 
     function _init() {
@@ -161,7 +159,7 @@
 
     function _findRuleIndex(ruleToSearch) {
       var result = -1;
-      self.rules.some(function(rule, index) {
+      self.rules.some(function (rule, index) {
         if (ruleToSearch.equals(rule)) {
           result = index;
           return true;
