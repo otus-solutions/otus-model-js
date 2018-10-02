@@ -2,6 +2,7 @@ describe('Activity Permission Factory Test', function () {
   var Mock = {};
   var factory;
   var permission = null;
+  var EMAIL = 'otus@gmail.com';
 
   beforeEach(function () {
     angular.mock.module('otusjs.model.activity');
@@ -11,6 +12,7 @@ describe('Activity Permission Factory Test', function () {
       mockValues()
       permission = factory.create(Mock.surveyFormObject);
       spyOn(permission, 'showError').and.callThrough();
+      spyOn(permission, 'isUserExists').and.callThrough();
     });
   });
 
@@ -21,12 +23,16 @@ describe('Activity Permission Factory Test', function () {
     expect(typeof permission.removeUser === "function").toBeDefined();
     expect(permission.showError).toBeDefined();
     expect(typeof permission.showError === "function").toBeDefined();
+    expect(permission.isUserExists).toBeDefined();
+    expect(typeof permission.isUserExists === "function").toBeDefined();
     expect(permission.toJSON()).toEqual(Mock.Permission);
   });
 
   it('should add user in exclusive disjunction', function () {
     expect(permission.exclusiveDisjunction.length).toEqual(0);
-    permission.addUser('otus@gmail.com');
+    permission.addUser(EMAIL);
+    expect(permission.isUserExists).toHaveBeenCalledWith(EMAIL);
+    expect(permission.isUserExists).toHaveBeenCalledTimes(1)
     expect(permission.exclusiveDisjunction.length).toEqual(1);
   });
 
@@ -34,24 +40,30 @@ describe('Activity Permission Factory Test', function () {
     expect(permission.exclusiveDisjunction.length).toEqual(0);
     expect(function () {
       permission.addUser(jasmine.any(String));
+      expect(permission.isUserExists).toHaveBeenCalledWith(EMAIL);
+      expect(permission.isUserExists).toHaveBeenCalledTimes(1)
       expect(permission.showError).toHaveBeenCalledTimes(1);
     }).toThrowError('Email invalid!');
     expect(permission.exclusiveDisjunction.length).toEqual(0);
   });
 
   it('should remove user in exclusive disjunction', function () {
-    permission.addUser('ccem.projects@gmail.com');
+    permission.addUser(EMAIL);
     expect(permission.exclusiveDisjunction.length).toEqual(1);
-    permission.removeUser('ccem.projects@gmail.com');
+    permission.removeUser(EMAIL);
+    expect(permission.isUserExists).toHaveBeenCalledWith(EMAIL);
+    expect(permission.isUserExists).toHaveBeenCalledTimes(2);
     expect(permission.exclusiveDisjunction.length).toEqual(0);
   });
 
   it('should not remove user in exclusive disjunction', function () {
-    permission.addUser('ccem.projects@gmail.com');
+    permission.addUser(EMAIL);
     expect(permission.exclusiveDisjunction.length).toEqual(1);
     expect(function () {
       permission.removeUser(jasmine.any(String));
       expect(permission.showError).toHaveBeenCalledTimes(1);
+      expect(permission.isUserExists).toHaveBeenCalledWith(EMAIL);
+      expect(permission.isUserExists).toHaveBeenCalledTimes(2);
     }).toThrowError('Email invalid!');
     expect(permission.exclusiveDisjunction.length).toEqual(1);
   });

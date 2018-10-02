@@ -46,6 +46,7 @@
     /* Public methods */
     self.addUser = addUser;
     self.removeUser = removeUser;
+    self.isUserExists = isUserExists;
     self.toJSON = toJSON;
 
     function showError (msg) {
@@ -53,7 +54,7 @@
     }
 
     function addUser(email) {
-      if(_validEmail(email)){
+      if(_validEmail(email) && !self.isUserExists(email)){
         self.exclusiveDisjunction.push(email.toLowerCase())
       } else {
         self.showError('Email invalid!');
@@ -61,7 +62,7 @@
     }
 
     function removeUser(email) {
-      if(_validEmail(email)){
+      if(_validEmail(email) && self.isUserExists(email)){
         var index = self.exclusiveDisjunction.indexOf(email.toLowerCase());
         if(index > -1){
           self.exclusiveDisjunction.splice(index, 1);
@@ -69,6 +70,11 @@
       } else {
         self.showError('Email invalid!');
       }
+    }
+
+    function isUserExists(email) {
+      var index = self.exclusiveDisjunction.indexOf(email.toLowerCase());
+      return index > -1 ? true : false;
     }
 
     function _validEmail(email) {
