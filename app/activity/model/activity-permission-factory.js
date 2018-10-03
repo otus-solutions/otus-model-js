@@ -23,6 +23,8 @@
         return jsonObject.map(function (permission) {
           return new ActivityPermission(permission)
         });
+      } else {
+        return new ActivityPermission(jsonObject);
       }
     }
 
@@ -54,22 +56,24 @@
     }
 
     function addUser(email) {
-      if(_validEmail(email) && !self.isUserExists(email)){
-        self.exclusiveDisjunction.push(email.toLowerCase())
-      } else {
+      if (!_validEmail(email)){
         self.showError('Email invalid!');
-      }
+      } else
+          if(!self.isUserExists(email)){
+            self.exclusiveDisjunction.push(email.toLowerCase())
+          }
     }
 
     function removeUser(email) {
-      if(_validEmail(email) && self.isUserExists(email)){
-        var index = self.exclusiveDisjunction.indexOf(email.toLowerCase());
-        if(index > -1){
-          self.exclusiveDisjunction.splice(index, 1);
-        }
-      } else {
+      if (!_validEmail(email)){
         self.showError('Email invalid!');
-      }
+      } else
+          if(self.isUserExists(email)){
+            var index = self.exclusiveDisjunction.indexOf(email.toLowerCase());
+            if(index > -1){
+              self.exclusiveDisjunction.splice(index, 1);
+            }
+          }
     }
 
     function isUserExists(email) {
