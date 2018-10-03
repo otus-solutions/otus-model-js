@@ -84,6 +84,7 @@
 
     function toJSON() {
       var json = {};
+      json._id = self._id;
       json.objectType = self.objectType;
       json.acronym = self.acronym;
       json.version = self.version;

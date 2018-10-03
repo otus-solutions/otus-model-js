@@ -80,6 +80,7 @@ describe('Activity Permission Factory Test', function () {
     };
 
     Mock.Permission = {
+      _id: null,
       objectType: 'ActivityPermission',
       version: 1,
       acronym: 'ACTA',
