@@ -66,10 +66,15 @@
       _updateAliquotLabel();
     }
 
-    function insertAliquot(aliquotInfo) {
-      var newAliquot = WorkAliquot.create(aliquotInfo);
-      self.aliquotList.push(newAliquot);
-      return newAliquot;
+    // function insertAliquot(aliquotInfo) {
+    //   var newAliquot = WorkAliquot.create(aliquotInfo);
+    //   self.aliquotList.push(newAliquot);
+    //   return newAliquot;
+    // }
+
+    function insertAliquot(aliquot) {
+      self.aliquotList.push(aliquot);
+      return aliquot;
     }
 
     function removeAliquotByIndex(index) {
