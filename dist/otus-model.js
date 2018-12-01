@@ -8,6 +8,13 @@
 'use strict';
 
 (function () {
+    'use strict';
+
+    angular.module('otusjs.model.fieldCenter', []);
+})();
+'use strict';
+
+(function () {
    'use strict';
 
    angular.module('otusjs.laboratory', ['otusjs.laboratory.participant', 'otusjs.laboratory.configuration', 'otusjs.laboratory.transportation', 'otusjs.laboratory.exam']);
@@ -18,13 +25,6 @@
     'use strict';
 
     angular.module('otusjs.metadata', []);
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.model.fieldCenter', []);
 })();
 'use strict';
 
@@ -1528,6 +1528,73 @@
 'use strict';
 
 (function () {
+  'use strict';
+
+  angular.module('otusjs.model.fieldCenter').factory('otusjs.model.fieldCenter.FieldCenterFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new FieldCenter({});
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (center) {
+          return new FieldCenter(center);
+        });
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function FieldCenter(fieldCenter) {
+    var self = this;
+
+    self.toJson = toJson;
+
+    self.name = fieldCenter.name || null;
+    self.code = fieldCenter.code || null;
+    self.acronym = fieldCenter.acronym || null;
+    self.country = fieldCenter.country || null;
+    self.state = fieldCenter.state || null;
+    self.address = fieldCenter.address || null;
+    self.complement = fieldCenter.complement || null;
+    self.zip = fieldCenter.zip || null;
+    self.phone = fieldCenter.phone || null;
+    self.backgroundColor = fieldCenter.backgroundColor || null;
+    self.borderColor = fieldCenter.borderColor || null;
+
+    function toJson() {
+      var json = {};
+
+      json.name = self.name;
+      json.code = self.code;
+      json.acronym = self.acronym;
+      json.country = self.country;
+      json.state = self.state;
+      json.address = self.address;
+      json.complement = self.complement;
+      json.zip = self.zip;
+      json.phone = self.phone;
+      json.backgroundColor = self.backgroundColor;
+      json.borderColor = self.borderColor;
+
+      return JSON.stringify(json);
+    }
+  }
+})();
+'use strict';
+
+(function () {
   angular.module('otusjs.laboratory.configuration').service('otusjs.laboratory.configuration.LaboratoryConfigurationService', service);
 
   function service() {
@@ -2287,73 +2354,6 @@
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.fieldCenter').factory('otusjs.model.fieldCenter.FieldCenterFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new FieldCenter({});
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (center) {
-          return new FieldCenter(center);
-        });
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function FieldCenter(fieldCenter) {
-    var self = this;
-
-    self.toJson = toJson;
-
-    self.name = fieldCenter.name || null;
-    self.code = fieldCenter.code || null;
-    self.acronym = fieldCenter.acronym || null;
-    self.country = fieldCenter.country || null;
-    self.state = fieldCenter.state || null;
-    self.address = fieldCenter.address || null;
-    self.complement = fieldCenter.complement || null;
-    self.zip = fieldCenter.zip || null;
-    self.phone = fieldCenter.phone || null;
-    self.backgroundColor = fieldCenter.backgroundColor || null;
-    self.borderColor = fieldCenter.borderColor || null;
-
-    function toJson() {
-      var json = {};
-
-      json.name = self.name;
-      json.code = self.code;
-      json.acronym = self.acronym;
-      json.country = self.country;
-      json.state = self.state;
-      json.address = self.address;
-      json.complement = self.complement;
-      json.zip = self.zip;
-      json.phone = self.phone;
-      json.backgroundColor = self.backgroundColor;
-      json.borderColor = self.borderColor;
-
-      return JSON.stringify(json);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
 
   function IdiomFactory() {
@@ -2644,6 +2644,29 @@
     }
 
     function equal(reference) {}
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ExceptionService', service);
+
+  function service() {
+    var self = this;
+
+    self.InvalidStateError = createErrorType('InvalidStateError');
+
+    function createErrorType(name) {
+      function E(message) {
+        this.message = message;
+      }
+      E.prototype = Object.create(Error.prototype);
+      E.prototype.name = name;
+      E.prototype.constructor = E;
+      return E;
+    }
   }
 })();
 'use strict';
@@ -4028,29 +4051,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       json.isCustom = self.isCustom;
 
       return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ExceptionService', service);
-
-  function service() {
-    var self = this;
-
-    self.InvalidStateError = createErrorType('InvalidStateError');
-
-    function createErrorType(name) {
-      function E(message) {
-        this.message = message;
-      }
-      E.prototype = Object.create(Error.prototype);
-      E.prototype.name = name;
-      E.prototype.constructor = E;
-      return E;
     }
   }
 })();
@@ -5880,34 +5880,36 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.laboratory.exam').factory('otusjs.laboratory.exam.ExamLotFactory', Factory);
 
-  Factory.$inject = ['otusjs.laboratory.WorkAliquotFactory', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
+  Factory.$inject = ['$filter', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
 
-  function Factory(WorkAliquot, LaboratoryConfigurationService) {
+  function Factory($filter, LaboratoryConfigurationService) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamLot(WorkAliquot, LaboratoryConfigurationService, {});
+      return new ExamLot($filter, LaboratoryConfigurationService, {});
     }
 
     function fromJson(lotInfo) {
-      return new ExamLot(WorkAliquot, LaboratoryConfigurationService, lotInfo);
+      lotInfo._id = lotInfo._id ? lotInfo._id.$oid : '';
+      return new ExamLot($filter, LaboratoryConfigurationService, lotInfo);
     }
 
     return self;
   }
 
-  function ExamLot(WorkAliquot, LaboratoryConfigurationService, lotInfo) {
+  function ExamLot($filter, LaboratoryConfigurationService, lotInfo) {
     var self = this;
     var _aliquotDescriptor;
 
     self.objectType = 'ExamLot';
+    self._id = lotInfo._id || '';
     self.code = lotInfo.code || '';
     self.aliquotName = lotInfo.aliquotName || '';
     self.aliquotLabel = lotInfo.aliquotLabel || '';
     self.fieldCenter = lotInfo.fieldCenter || '';
-    self.aliquotList = WorkAliquot.fromJson(lotInfo.aliquotList);
+    self.aliquotList = lotInfo.aliquotList || [];
     self.realizationDate = lotInfo.realizationDate || new Date();
     self.operator = lotInfo.operator || '';
 
@@ -5922,6 +5924,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function onInit() {
       _updateAliquotLabel();
+      _fixAliquots();
+    }
+
+    function _fixAliquots() {
+      if (self.aliquotList.length > 0) {
+        self.aliquotList.map(function (aliquot) {
+          aliquot.label = self.aliquotLabel;
+          aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
+          aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
+        });
+      }
     }
 
     function _updateAliquotLabel() {
@@ -5936,12 +5949,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       _updateAliquotLabel();
     }
 
-    // function insertAliquot(aliquotInfo) {
-    //   var newAliquot = WorkAliquot.create(aliquotInfo);
-    //   self.aliquotList.push(newAliquot);
-    //   return newAliquot;
-    // }
-
     function insertAliquot(aliquot) {
       self.aliquotList.push(aliquot);
       return aliquot;
@@ -5953,13 +5960,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function getAliquotsToCsv() {
       return self.aliquotList.map(function (aliquot) {
-        return aliquot.getAliquotToCsv();
+        var formattedDate = $filter('date')(new Date(aliquot.birthdate.value), 'dd/MM/yyyy');
+
+        return {
+          aliquota: aliquot.code,
+          sexo: aliquot.sex,
+          nascimento: formattedDate
+        };
       });
     }
 
     function toJSON() {
       var json = {
         objectType: self.objectType,
+        _id: self._id,
         code: self.code,
         aliquotName: self.aliquotName,
         fieldCenter: self.fieldCenter,
@@ -6445,32 +6459,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.laboratory.transportation').service('otusjs.laboratory.transportation.TransportationService', service);
-
-  service.$inject = ['otusjs.laboratory.transportation.LotFactory'];
-
-  function service(LotFactory) {
-    var self = this;
-
-    self.createAliquotLot = createAliquotLot;
-    self.buildAliquotLotFromJson = buildAliquotLotFromJson;
-
-    function createAliquotLot() {
-      return LotFactory.create();
-    }
-
-    function buildAliquotLotFromJson(lotJson) {
-      return LotFactory.fromJson(lotJson);
-    }
-
-    return self;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.laboratory.participant').factory('otusjs.laboratory.participant.ParticipanTubeFactory', factory);
 
   factory.$inject = ['otusjs.laboratory.participant.TubeCollectionDataFactory', 'otusjs.laboratory.participant.ParticipantAliquotFactory', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
@@ -6641,6 +6629,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         time: self.time
       };
     }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory.transportation').service('otusjs.laboratory.transportation.TransportationService', service);
+
+  service.$inject = ['otusjs.laboratory.transportation.LotFactory'];
+
+  function service(LotFactory) {
+    var self = this;
+
+    self.createAliquotLot = createAliquotLot;
+    self.buildAliquotLotFromJson = buildAliquotLotFromJson;
+
+    function createAliquotLot() {
+      return LotFactory.create();
+    }
+
+    function buildAliquotLotFromJson(lotJson) {
+      return LotFactory.fromJson(lotJson);
+    }
+
+    return self;
   }
 })();
 'use strict';
