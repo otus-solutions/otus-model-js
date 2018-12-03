@@ -34,9 +34,9 @@
     self._id = lotInfo._id || '';
     self.code = lotInfo.code || '';
     self.aliquotName = lotInfo.aliquotName || '';
+    self.aliquotList = lotInfo.aliquotList || null;
     self.aliquotLabel = lotInfo.aliquotLabel || '';
     self.fieldCenter = lotInfo.fieldCenter || '';
-    self.aliquotList = lotInfo.aliquotList || [];
     self.realizationDate = lotInfo.realizationDate || new Date();
     self.operator = lotInfo.operator || '';
 
@@ -57,12 +57,14 @@
     }
 
     function _fixAliquots() {
-      if(self.aliquotList.length > 0){
-        self.aliquotList.map(aliquot => {
-          aliquot.label = self.aliquotLabel;
-          aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
-          aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
-        })
+      if(self.aliquotList){
+        if(self.aliquotList.length > 0){
+          self.aliquotList.map(aliquot => {
+            aliquot.label = self.aliquotLabel;
+            aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
+            aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
+          })
+        }
       }
     }
 
