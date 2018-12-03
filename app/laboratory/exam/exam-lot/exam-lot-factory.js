@@ -20,7 +20,6 @@
     }
 
     function fromJson(lotInfo) {
-      lotInfo._id = lotInfo._id ? lotInfo._id.$oid : '';
       return new ExamLot($filter, LaboratoryConfigurationService, lotInfo);
     }
 
