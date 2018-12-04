@@ -60,9 +60,7 @@
       if(self.aliquotList){
         if(self.aliquotList.length > 0){
           self.aliquotList.map(aliquot => {
-            aliquot.label = self.aliquotLabel;
-            aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
-            aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
+            _fillAliquotLabels(aliquot);
           })
         }
       }
@@ -82,8 +80,21 @@
 
 
     function insertAliquot(aliquot) {
+      _fillAliquotLabels(aliquot);
       self.aliquotList.push(aliquot);
       return aliquot;
+    }
+
+    function _fillAliquotLabels(aliquot) {
+      aliquot.label = _getAliquotLabel(aliquot.name);
+      aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
+      aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
+    }
+
+    function _getAliquotLabel(aliquotName){
+      let aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
+      if(aliquotDescriptor)
+        return aliquotDescriptor.label;
     }
 
     function removeAliquotByIndex(index) {
