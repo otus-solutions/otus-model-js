@@ -59,7 +59,7 @@
     function _fixAliquots() {
       if(self.aliquotList){
         if(self.aliquotList.length > 0){
-          self.aliquotList.map(aliquot => {
+          self.aliquotList.map(function (aliquot) {
             _fillAliquotLabels(aliquot);
           })
         }
@@ -92,7 +92,7 @@
     }
 
     function _getAliquotLabel(aliquotName){
-      let aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
+      var aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
       if(aliquotDescriptor)
         return aliquotDescriptor.label;
     }
@@ -103,7 +103,7 @@
 
     function getAliquotsToCsv(){
       return self.aliquotList.map(function (aliquot) {
-        let formattedDate = $filter('date')(new Date(aliquot.birthdate.value), 'dd/MM/yyyy');
+        var formattedDate = $filter('date')(new Date(aliquot.birthdate.value), 'dd/MM/yyyy');
 
         return {
           aliquota: aliquot.code,

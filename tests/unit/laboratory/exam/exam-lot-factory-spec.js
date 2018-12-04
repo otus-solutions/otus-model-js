@@ -8,8 +8,8 @@ describe('the exam lot factory', function() {
     inject(function(_$injector_) {
 
       var injections = {
-        'WorkAliquot': _$injector_.get(
-          'otusjs.laboratory.WorkAliquotFactory'
+        '$filter': _$injector_.get(
+          '$filter'
         )
       };
 
@@ -18,7 +18,7 @@ describe('the exam lot factory', function() {
       mockParticipantLaboratory();
       mockSelectedParticipant();
       mockExamLot();
-      mockWorkAliquot();
+      mockAliquot();
       service = _$injector_.get(
         'otusjs.laboratory.configuration.LaboratoryConfigurationService', {}
       );
@@ -33,13 +33,9 @@ describe('the exam lot factory', function() {
   describe('insertAliquot method', function() {
 
     beforeEach(function() {
-      Mock.ExamLot.insertAliquot(Mock.workAliquot);
+      Mock.ExamLot.aliquotList=[];
+      Mock.ExamLot.insertAliquot(Mock.Aliquot);
     });
-
-    it('inserted Aliquot should have objectType equal to WorkAliquot',
-      function() {
-        expect(Mock.ExamLot.aliquotList[0].objectType).toBe('WorkAliquot');
-      });
 
     it('inserted Aliquot should have name equal to BIOCHEMICAL_SERUM',
       function() {
@@ -69,9 +65,10 @@ describe('the exam lot factory', function() {
   describe('removeAliquotByIndex method', function() {
 
     beforeEach(function() {
-      mockWorkAliquot2();
-      Mock.ExamLot.insertAliquot(Mock.workAliquot);
-      Mock.ExamLot.insertAliquot(Mock.workAliquot2);
+      mockAliquot2();
+      Mock.ExamLot.aliquotList=[];
+      Mock.ExamLot.insertAliquot(Mock.Aliquot);
+      Mock.ExamLot.insertAliquot(Mock.Aliquot2);
     });
 
     it('should remove 1 Aliquot from de list', function() {
@@ -137,7 +134,8 @@ describe('the exam lot factory', function() {
 
   describe("getAliquotsToCsv method ", function () {
     beforeEach(function () {
-      Mock.ExamLot.insertAliquot(Mock.workAliquot);
+      Mock.ExamLot.aliquotList=[];
+      Mock.ExamLot.insertAliquot(Mock.Aliquot);
       mockAliquotStructuresToCsv();
     });
 
@@ -158,6 +156,7 @@ describe('the exam lot factory', function() {
   function mockExamLotJson() {
     Mock.ExamLotJson = {
       objectType: "ExamLot",
+      _id: "",
       code: "30513515",
       aliquotName: "BIOCHEMICAL_SERUM",
       fieldCenter: {
@@ -188,12 +187,12 @@ describe('the exam lot factory', function() {
     Mock.LabDescriptors = Test.utils.data.laboratoryConfiguration; //json-importer.js
   }
 
-  function mockWorkAliquot() {
-    Mock.workAliquot = Test.utils.data.workAliquotsList[0]; //json-importer
+  function mockAliquot() {
+    Mock.Aliquot = Test.utils.data.workAliquotsList[0]; //json-importer
   }
 
-  function mockWorkAliquot2() {
-    Mock.workAliquot2 = Test.utils.data.workAliquotsList[1]; //json-importer
+  function mockAliquot2() {
+    Mock.Aliquot2 = Test.utils.data.workAliquotsList[1]; //json-importer
   }
 
   function mockAliquotStructuresToCsv() {
