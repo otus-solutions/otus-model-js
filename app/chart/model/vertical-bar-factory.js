@@ -16,8 +16,8 @@
       waiting : "Aguardando",
       received : "Recebidos",
       transported: "Transportados",
-
-    }
+      orphans: "Orfãos"
+    };
 
     /* Public methods */
     self.create = create;
@@ -36,13 +36,13 @@
           dataset.push(jsonObject.map(function (data) {
             return new MonitoringPending(
               COLUMN_NAMES[keys[i]],
-              AliquotDescriptorsService.getLabel(data[keys[0]]),
+              AliquotDescriptorsService.getLabel(data.title),
               data[keys[i]]).toJSON()
           }));
         }
         return dataset;
       } else {
-        return [];
+        return [[]];
       }
     }
 
@@ -57,7 +57,6 @@
     self.char_title = title || "";
     self.column = column || "";
     self.value = value || 0;
-
 
     function toJSON() {
       var json = {};

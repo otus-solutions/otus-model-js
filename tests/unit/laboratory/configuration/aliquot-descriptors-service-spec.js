@@ -1,4 +1,4 @@
-fdescribe("Aliquot Descriptor Service Test", function () {
+describe("Aliquot Descriptor Service Test", function () {
   var Mock = {};
   var service;
 

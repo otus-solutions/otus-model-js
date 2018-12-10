@@ -31,8 +31,9 @@ describe('Vertical Bar Chart Factory Test', function () {
 
   it('should test factory fromJsonObject method without values', function () {
     var object = factory.fromJsonObject();
-    expect(object.length).toEqual(0);
-    expect(object).toEqual([]);
+    expect(object.length).toEqual(1);
+    expect(object[0].length).toEqual(0);
+    expect(object).toEqual([[]]);
   });
 
 
