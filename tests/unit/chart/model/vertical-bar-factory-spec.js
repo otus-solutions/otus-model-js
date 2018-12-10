@@ -24,7 +24,7 @@ describe('Vertical Bar Chart Factory Test', function () {
   });
 
   it('should test factory fromJsonObject method with values', function () {
-    var object = factory.fromJsonObject(Mock.data);
+    var object = factory.fromJsonObject(Mock.data, Mock.labels);
     expect(object.length).toEqual(2);
     expect(object).toEqual(Mock.json);
   });
@@ -38,6 +38,10 @@ describe('Vertical Bar Chart Factory Test', function () {
 
 
   function mockData() {
+    Mock.labels = {
+      waiting : "Aguardando",
+      received : "Recebidos",
+    };
     Mock.jsonCreated = {char_title: "", column: "", value: 0}
     Mock.json = [
       [

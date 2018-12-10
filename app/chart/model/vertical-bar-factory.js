@@ -12,13 +12,6 @@
   function Factory(AliquotDescriptorsService) {
     var self = this;
 
-    var COLUMN_NAMES = {
-      waiting : "Aguardando",
-      received : "Recebidos",
-      transported: "Transportados",
-      orphans: "Orfãos"
-    };
-
     /* Public methods */
     self.create = create;
     self.fromJsonObject = fromJsonObject;
@@ -27,15 +20,15 @@
       return new MonitoringPending();
     }
 
-    function fromJsonObject(jsonObject) {
+    function fromJsonObject(jsonObject, labels) {
       var dataset = [];
       var keys = [];
-      if (Array.isArray(jsonObject)) {
+      if (Array.isArray(jsonObject) && typeof labels === "object") {
         keys = Object.keys(jsonObject[0]);
         for (var i = 1; i < keys.length; i++) {
           dataset.push(jsonObject.map(function (data) {
             return new MonitoringPending(
-              COLUMN_NAMES[keys[i]],
+              labels[keys[i]],
               AliquotDescriptorsService.getLabel(data.title),
               data[keys[i]]).toJSON()
           }));
