@@ -29,6 +29,12 @@ describe('Vertical Bar Chart Factory Test', function () {
     expect(object).toEqual(Mock.json);
   });
 
+  it('should test factory fromJsonObject method with values', function () {
+    var object = factory.fromJsonObject(Mock.dataOrphans, {orphans: "Orfãos"});
+    expect(object.length).toEqual(1);
+    expect(object[0]).toEqual([{char_title: 'Orfãos', column: 'TESTE', value: 62}]);
+  });
+
   it('should test factory fromJsonObject method without values', function () {
     var object = factory.fromJsonObject();
     expect(object.length).toEqual(1);
@@ -69,6 +75,10 @@ describe('Vertical Bar Chart Factory Test', function () {
         {char_title: "Recebidos", column: "Cálcio Urinário", value: 272}
       ]
     ];
+    Mock.dataOrphans = [{
+      'title': "TESTE",
+      'orphans': 62
+    }]
     Mock.data = [
       {
         'title': "FASTING_HORMONE_LOCAL",

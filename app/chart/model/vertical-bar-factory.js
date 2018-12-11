@@ -27,9 +27,11 @@
         keys = Object.keys(jsonObject[0]);
         for (var i = 1; i < keys.length; i++) {
           dataset.push(jsonObject.map(function (data) {
+            var title = AliquotDescriptorsService.getLabel(data.title);
+            title = title ? title : data[keys[0]];
             return new MonitoringPending(
               labels[keys[i]],
-              AliquotDescriptorsService.getLabel(data.title),
+              title,
               data[keys[i]]).toJSON()
           }));
         }
