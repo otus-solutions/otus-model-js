@@ -5,7 +5,7 @@ module.exports = function (config) {
   var TEST_UTILS_ROOT_PATH = 'tests/utils/';
   var NODE_MODULES_ROOT_PATH = 'node_modules/';
   var DEPENDENCIES_ROOT_PATH = 'app/shared/';
-
+  'use strict';
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
@@ -40,7 +40,7 @@ module.exports = function (config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'app/**/*.js': ['babel','coverage'],
-      'tests/**/*-spec.js': 'browserify'
+      'tests/**/*-spec.js': 'babel'
     },
 
     browserify: {
@@ -49,8 +49,14 @@ module.exports = function (config) {
     },
 
     coverageReporter: {
-      type: 'lcov',
-      dir: 'target/test-coverage/'
+      reporters: [{
+        type: 'html',
+        dir: 'target/test-coverage/'
+      }, {
+        type: 'lcov',
+        dir: 'target/test-coverage/',
+        subdir: 'report-lcov'
+      }]
     },
 
     // test results reporter to use

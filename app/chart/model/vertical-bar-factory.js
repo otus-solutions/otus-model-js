@@ -25,7 +25,7 @@
       var keys = [];
       if (Array.isArray(jsonObject) && typeof labels === "object") {
         keys = Object.keys(jsonObject[0]);
-        for (var i = 1; i < keys.length; i++) {
+        for (let i = 1; i < keys.length; i++) {
           dataset.push(jsonObject.map(function (data) {
             var title = AliquotDescriptorsService.getLabel(data.title);
             title = title ? title : data[keys[0]];
