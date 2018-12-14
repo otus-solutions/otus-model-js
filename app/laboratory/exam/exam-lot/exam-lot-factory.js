@@ -6,36 +6,37 @@
     .factory('otusjs.laboratory.exam.ExamLotFactory', Factory);
 
   Factory.$inject = [
-    'otusjs.laboratory.WorkAliquotFactory',
+    '$filter',
     'otusjs.laboratory.configuration.LaboratoryConfigurationService'
   ];
 
-  function Factory(WorkAliquot, LaboratoryConfigurationService) {
+  function Factory($filter, LaboratoryConfigurationService) {
     var self = this;
     self.create = create;
     self.fromJson = fromJson;
 
     function create() {
-      return new ExamLot(WorkAliquot, LaboratoryConfigurationService, {});
+      return new ExamLot($filter, LaboratoryConfigurationService, {});
     }
 
     function fromJson(lotInfo) {
-      return new ExamLot(WorkAliquot, LaboratoryConfigurationService, lotInfo);
+      return new ExamLot($filter, LaboratoryConfigurationService, lotInfo);
     }
 
     return self;
   }
 
-  function ExamLot(WorkAliquot, LaboratoryConfigurationService, lotInfo) {
+  function ExamLot($filter,LaboratoryConfigurationService, lotInfo) {
     var self = this;
     var _aliquotDescriptor;
 
     self.objectType = 'ExamLot';
+    self._id = lotInfo._id || '';
     self.code = lotInfo.code || '';
     self.aliquotName = lotInfo.aliquotName || '';
+    self.aliquotList = lotInfo.aliquotList || null;
     self.aliquotLabel = lotInfo.aliquotLabel || '';
     self.fieldCenter = lotInfo.fieldCenter || '';
-    self.aliquotList = WorkAliquot.fromJson(lotInfo.aliquotList);
     self.realizationDate = lotInfo.realizationDate || new Date();
     self.operator = lotInfo.operator || '';
 
@@ -52,6 +53,17 @@
 
     function onInit() {
       _updateAliquotLabel();
+      _fixAliquots();
+    }
+
+    function _fixAliquots() {
+      if(self.aliquotList){
+        if(self.aliquotList.length > 0){
+          self.aliquotList.map(function (aliquot) {
+            _fillAliquotLabels(aliquot);
+          })
+        }
+      }
     }
 
     function _updateAliquotLabel(){
@@ -66,25 +78,45 @@
       _updateAliquotLabel();
     }
 
-    function insertAliquot(aliquotInfo) {
-      var newAliquot = WorkAliquot.create(aliquotInfo);
-      self.aliquotList.push(newAliquot);
-      return newAliquot;
+
+    function insertAliquot(aliquot) {
+      _fillAliquotLabels(aliquot);
+      self.aliquotList.push(aliquot);
+      return aliquot;
+    }
+
+    function _fillAliquotLabels(aliquot) {
+      aliquot.label = _getAliquotLabel(aliquot.name);
+      aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
+      aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
+    }
+
+    function _getAliquotLabel(aliquotName){
+      var aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
+      if(aliquotDescriptor)
+        return aliquotDescriptor.label;
     }
 
     function removeAliquotByIndex(index) {
       return self.aliquotList.splice(index, 1);
     }
 
-    function getAliquotsToCsv() {
+    function getAliquotsToCsv(){
       return self.aliquotList.map(function (aliquot) {
-        return aliquot.getAliquotToCsv();
+        var formattedDate = $filter('date')(new Date(aliquot.birthdate.value), 'dd/MM/yyyy');
+
+        return {
+          aliquota: aliquot.code,
+          sexo: aliquot.sex,
+          nascimento: formattedDate
+        };
       });
     }
 
     function toJSON() {
       var json = {
         objectType: self.objectType,
+        _id: self._id,
         code: self.code,
         aliquotName: self.aliquotName,
         fieldCenter: self.fieldCenter,
