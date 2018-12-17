@@ -28,7 +28,7 @@
         for (let i = 1; i < keys.length; i++) {
           dataset.push(jsonObject.map(function (data) {
             var title = AliquotDescriptorsService.getLabel(data.title);
-            title = title ? title : data[keys[0]];
+            title = title ? title : data.title;
             return new MonitoringPending(
               labels[keys[i]],
               title,
