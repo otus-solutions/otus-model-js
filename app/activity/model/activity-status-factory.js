@@ -62,6 +62,14 @@
 
     /* Public methods */
     self.toJSON = toJSON;
+    self.setUser = setUser;
+
+
+    function setUser(user) {
+      if(self.name === 'INITIALIZED_OFFLINE'){
+        self.user = angular.copy(user);
+      }
+    }
 
     function toJSON() {
       var json = {};

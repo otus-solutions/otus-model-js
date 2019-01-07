@@ -174,8 +174,38 @@ describe('ActivityStatusFactory', function() {
 
     });
 
+  describe('updateUserInInitializedOfflineStatus method', function() {
+    var status;
+
+    beforeEach(function() {
+      mockOfflineData();
+    });
+
+    it('should update user in activity status', function () {
+      status = factory.createInitializedOfflineStatus(Mock.offlineData);
+      expect(status.name).toEqual(INITIALIZED_OFFLINE);
+      expect(status.user.name).toEqual(Mock.user.name);
+      expect(status.user.email).toEqual(Mock.user.email);
+      status.setUser(Mock.userNew)
+      expect(status.user.name).toEqual(Mock.userNew.name);
+      expect(status.user.email).toEqual(Mock.userNew.email);
+    });
+
+    it('should update user in activity status', function () {
+      status = factory.createInitializedOnlineStatus(Mock.user);
+      expect(status.name).not.toEqual(INITIALIZED_OFFLINE);
+      expect(status.user.name).toEqual(Mock.user.name);
+      expect(status.user.email).toEqual(Mock.user.email);
+      status.setUser(Mock.userNew)
+      expect(status.user.name).toEqual(Mock.user.name);
+      expect(status.user.email).toEqual(Mock.user.email);
+    });
+
+  });
+
     function mockUser() {
         Mock.user = userFactory.create('User Name', 'user@email.com');
+        Mock.userNew = userFactory.create('New User', 'newuser@email.com');
     }
 
     function mockOfflineData() {

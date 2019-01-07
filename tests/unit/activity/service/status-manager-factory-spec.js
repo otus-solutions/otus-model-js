@@ -1,7 +1,7 @@
-xdescribe('StatusHistoryManagerService', function() {
+describe('StatusHistoryManagerFactory' , function() {
 
   var Mock = {};
-  var service;
+  var factory;
   var baseDate;
 
   beforeEach(function() {
@@ -10,25 +10,33 @@ xdescribe('StatusHistoryManagerService', function() {
     inject(function(_$injector_) {
       mockUser(_$injector_);
 
-      service = _$injector_.get('otusjs.model.activity.StatusHistoryManagerService', {
+      factory = _$injector_.get('otusjs.model.activity.StatusHistoryManagerFactory', {
         ActivityStatusFactory: mockActivityStatusFactory(_$injector_)
       });
     });
   });
 
-  describe('init method', function() {
+  describe('update user in inicialize offline registry', function() {
+    beforeEach(function () {
+      mockOfflineData();
+      factory = factory.create();
+      factory.init();
+    });
 
     it('should reset history', function() {
-      service.newCreatedRegistry(Mock.user);
-
-      service.init();
-
-      expect(service.historySize()).toBe(0);
+      expect(factory.historySize()).toBe(0);
+      factory.newCreatedRegistry(Mock.user);
+      factory.newInitializedOfflineRegistry(Mock.offlineData);
+      expect(factory.historySize()).toBe(2);
+      console.log(factory.getInitializedOfflineRegistry())
+      factory.getInitializedOfflineRegistry().setUser(Mock.userNew)
+      console.log(factory.getInitializedOfflineRegistry())
+      expect(factory.historySize()).toBe(2);
     });
 
   });
 
-  describe('historySize method', function() {
+  xdescribe('historySize method', function() {
 
     it('should return the number of history occurrences', function() {
       service.newCreatedRegistry(Mock.user);
@@ -40,7 +48,7 @@ xdescribe('StatusHistoryManagerService', function() {
 
   });
 
-  describe('getHistory method', function() {
+  xdescribe('getHistory method', function() {
 
     it('should return history list', function() {
       service.newCreatedRegistry(Mock.user);
@@ -53,22 +61,25 @@ xdescribe('StatusHistoryManagerService', function() {
   });
 
   describe('newCreatedRegistry method', function() {
+    beforeEach(function () {
+      mockOfflineData();
+      factory = factory.create();
+      factory.init();
+    });
 
     it('should add a new ActivityStatus in the list', function() {
-      service.newCreatedRegistry(Mock.user);
-
-      expect(service.historySize()).toBe(1);
+      factory.newCreatedRegistry(Mock.user);
+      expect(factory.historySize()).toBe(1);
     });
 
     it('should call ActivityStatusFactory.createCreatedStatus', function() {
-      service.newCreatedRegistry(Mock.user);
-
+      factory.newCreatedRegistry(Mock.user);
       expect(Mock.ActivityStatusFactory.createCreatedStatus).toHaveBeenCalledWith(Mock.user);
     });
 
   });
 
-  describe('newInitializedOfflineRegistry method', function() {
+  xdescribe('newInitializedOfflineRegistry method', function() {
 
     it('should add a new ActivityStatus in the list', function() {
       service.newInitializedOfflineRegistry(Mock.user);
@@ -84,7 +95,7 @@ xdescribe('StatusHistoryManagerService', function() {
 
   });
 
-  describe('newInitializedOnlineRegistry method', function() {
+  xdescribe('newInitializedOnlineRegistry method', function() {
 
     it('should add a new ActivityStatus in the list', function() {
       service.newInitializedOnlineRegistry(Mock.user);
@@ -100,7 +111,7 @@ xdescribe('StatusHistoryManagerService', function() {
 
   });
 
-  describe('newOpenedRegistry method', function() {
+  xdescribe('newOpenedRegistry method', function() {
 
     it('should add a new ActivityStatus in the list', function() {
       service.newOpenedRegistry(Mock.user);
@@ -116,7 +127,7 @@ xdescribe('StatusHistoryManagerService', function() {
 
   });
 
-  describe('newSavedRegistry method', function() {
+  xdescribe('newSavedRegistry method', function() {
 
     it('should add a new ActivityStatus in the list', function() {
       service.newSavedRegistry(Mock.user);
@@ -132,7 +143,7 @@ xdescribe('StatusHistoryManagerService', function() {
 
   });
 
-  describe('newFinalizedRegistry method', function() {
+  xdescribe('newFinalizedRegistry method', function() {
 
     it('should add a new ActivityStatus in the list', function() {
       service.newFinalizedRegistry(Mock.user);
@@ -148,7 +159,7 @@ xdescribe('StatusHistoryManagerService', function() {
 
   });
 
-  describe('toJson method', function() {
+  xdescribe('toJson method', function() {
 
     xit('should return a well formatted json based history list', function() {
       baseDate = Date.now();
@@ -180,6 +191,7 @@ xdescribe('StatusHistoryManagerService', function() {
 
   function mockUser($injector) {
     Mock.user = $injector.get('otusjs.model.activity.ActivityUserFactory').create('User Name', 'user@email.com');
+    Mock.userNew = $injector.get('otusjs.model.activity.ActivityUserFactory').create('Otus', 'otus@email.com');
   }
 
   function mockActivityStatusFactory($injector) {
@@ -193,6 +205,12 @@ xdescribe('StatusHistoryManagerService', function() {
     spyOn(Mock.ActivityStatusFactory, 'createFinalizedStatus').and.callThrough();
 
     return Mock.ActivityStatusFactory;
+  }
+
+  function mockOfflineData() {
+    Mock.offlineData = {};
+    Mock.offlineData.checker = Mock.user;
+    Mock.offlineData.realizationDate = '12-04-2017';
   }
 
 });
