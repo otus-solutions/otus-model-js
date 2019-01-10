@@ -28,9 +28,7 @@ describe('StatusHistoryManagerFactory' , function() {
       factory.newCreatedRegistry(Mock.user);
       factory.newInitializedOfflineRegistry(Mock.offlineData);
       expect(factory.historySize()).toBe(2);
-      console.log(factory.getInitializedOfflineRegistry())
       factory.getInitializedOfflineRegistry().setUser(Mock.userNew)
-      console.log(factory.getInitializedOfflineRegistry())
       expect(factory.historySize()).toBe(2);
     });
 
