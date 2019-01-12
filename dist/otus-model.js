@@ -31,14 +31,14 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.model.monitoring', []);
+    angular.module('otusjs.misc', []);
 })();
 'use strict';
 
 (function () {
     'use strict';
 
-    angular.module('otusjs.misc', []);
+    angular.module('otusjs.model.monitoring', []);
 })();
 'use strict';
 
@@ -286,11 +286,11 @@
 
   angular.module('otusjs.model.activity').factory('otusjs.model.activity.ActivityFactory', Factory);
 
-  Factory.$inject = ['otusjs.model.activity.StatusHistoryManagerFactory', 'otusjs.model.activity.FillingManagerFactory', 'otusjs.model.activity.InterviewFactory', 'otusjs.model.navigation.NavigationTrackerFactory', 'SurveyFormFactory'];
+  Factory.$inject = ['otusjs.model.activity.StatusHistoryManagerFactory', 'otusjs.model.revision.ActivityRevisionFactory', 'otusjs.model.activity.FillingManagerFactory', 'otusjs.model.activity.InterviewFactory', 'otusjs.model.navigation.NavigationTrackerFactory', 'SurveyFormFactory'];
 
   var Inject = {};
 
-  function Factory(StatusHistoryManagerFactory, FillingManagerFactory, InterviewFactory, NavigationTrackerFactory, SurveyFormFactory) {
+  function Factory(StatusHistoryManagerFactory, ActivityRevisionFactory, FillingManagerFactory, InterviewFactory, NavigationTrackerFactory, SurveyFormFactory) {
     Inject.FillingManager = FillingManagerFactory.create();
     Inject.NavigationTrackerFactory = NavigationTrackerFactory;
     Inject.SurveyFormFactory = SurveyFormFactory;
@@ -338,15 +338,17 @@
       var surveyForm = SurveyFormFactory.fromJsonObject(jsonObject.surveyForm);
       var participantData = jsonObject.participantData;
       var statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
+      var revisionHistory = ActivityRevisionFactory.fromJsonObject(jsonObject.revisionHistory);
+
       var id = jsonObject._id;
 
-      var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, id);
-
+      var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, revisionHistory, id);
       activity.category = jsonObject.category;
       activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
       activity.isDiscarded = jsonObject.isDiscarded;
       activity.mode = jsonObject.mode;
       activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
+      activity.revisionHistory = ActivityRevisionFactory.fromJsonObject(jsonObject.revisionHistory);
       activity.interviews = jsonObject.interviews.map(function (interview) {
         return InterviewFactory.fromJsonObject(interview);
       });
@@ -367,7 +369,7 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, id) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, revisionHistory, id) {
     var self = this;
     var _id = id || null;
 
@@ -377,6 +379,7 @@
     self.interviews = [];
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
+    self.revisionHistory = revisionHistory;
     self.isDiscarded = false;
 
     /* Public methods */
@@ -404,10 +407,6 @@
 
     function getNavigations() {
       return getTemplate().NavigationManager.getNavigationList();
-    }
-
-    function getDatasources() {
-      return getTemplate().getAllDataSources();
     }
 
     function getExportableList() {
@@ -2361,118 +2360,6 @@
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringCenterFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(monitoringCenter) {
-      return new MonitoringCenter(monitoringCenter);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (monitoringCenter) {
-          return new MonitoringCenter(monitoringCenter);
-        });
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function MonitoringCenter(monitoringCenter) {
-    var self = this;
-
-    self.toJson = toJson;
-
-    self.objectType = 'MonitoringCenter';
-    self.name = monitoringCenter.name || null;
-    self.goal = monitoringCenter.goal || null;
-    self.backgroundColor = monitoringCenter.backgroundColor || null;
-    self.borderColor = monitoringCenter.borderColor || null;
-
-    function toJson() {
-      var json = {};
-
-      json.objectType = self.objectType;
-      json.name = self.name;
-      json.goal = self.goal;
-      json.backgroundColor = self.backgroundColor;
-      json.borderColor = self.borderColor;
-
-      return JSON.stringify(json);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MonitoringInformation({});
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (center) {
-          return new MonitoringInformation(center);
-        });
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function MonitoringInformation(center) {
-    var self = this;
-
-    self.toJson = toJson;
-
-    self.objectType = "MonitoringInformation";
-    self.acronym = center.acronym || null;
-    self.fieldCenter = center.fieldCenter || null;
-    self.month = center.month || null;
-    self.sum = center.sum || null;
-    self.year = center.year || null;
-
-    function toJson() {
-      var json = {};
-
-      json.objectType = self.objectType;
-      json.acronym = self.acronym;
-      json.fieldCenter = self.fieldCenter;
-      json.month = self.month;
-      json.sum = self.sum;
-      json.year = self.year;
-
-      return JSON.stringify(json);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
 
   function IdiomFactory() {
@@ -2596,6 +2483,118 @@
     self.oid = '';
     self.plainText = '';
     self.formattedText = '';
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringCenterFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(monitoringCenter) {
+      return new MonitoringCenter(monitoringCenter);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (monitoringCenter) {
+          return new MonitoringCenter(monitoringCenter);
+        });
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function MonitoringCenter(monitoringCenter) {
+    var self = this;
+
+    self.toJson = toJson;
+
+    self.objectType = 'MonitoringCenter';
+    self.name = monitoringCenter.name || null;
+    self.goal = monitoringCenter.goal || null;
+    self.backgroundColor = monitoringCenter.backgroundColor || null;
+    self.borderColor = monitoringCenter.borderColor || null;
+
+    function toJson() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.name = self.name;
+      json.goal = self.goal;
+      json.backgroundColor = self.backgroundColor;
+      json.borderColor = self.borderColor;
+
+      return JSON.stringify(json);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new MonitoringInformation({});
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (center) {
+          return new MonitoringInformation(center);
+        });
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function MonitoringInformation(center) {
+    var self = this;
+
+    self.toJson = toJson;
+
+    self.objectType = "MonitoringInformation";
+    self.acronym = center.acronym || null;
+    self.fieldCenter = center.fieldCenter || null;
+    self.month = center.month || null;
+    self.sum = center.sum || null;
+    self.year = center.year || null;
+
+    function toJson() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.acronym = self.acronym;
+      json.fieldCenter = self.fieldCenter;
+      json.month = self.month;
+      json.sum = self.sum;
+      json.year = self.year;
+
+      return JSON.stringify(json);
+    }
   }
 })();
 'use strict';
@@ -4537,18 +4536,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new ActivityRevision();
+      return new ActivityRevision({});
     }
 
-    function fromJsonObject(activityId, revisionList) {
+    function fromJsonObject(json) {
       var history = [];
-      if (Array.isArray(revisionList)) {
-        revisionList.map(function (revision) {
+      if (Array.isArray(json.revisionHistory)) {
+        json.revisionHistory.map(function (revision) {
           history.push(RevisionFactory.fromJsonObject(revision));
         });
       }
 
-      var statusHistoryManager = new ActivityRevision(activityId);
+      var statusHistoryManager = new ActivityRevision(json);
       statusHistoryManager.init(history);
       return statusHistoryManager;
     }
@@ -4556,17 +4555,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return self;
   }
 
-  function ActivityRevision(activityId) {
+  function ActivityRevision(json) {
     var self = this;
 
     var REVISION = "Revision";
     self.objectType = 'ActivityRevision';
-    self.activityId = activityId || "";
+    self.activityId = json.activityId || "";
 
     /* Public methods */
     self.toJSON = toJSON;
     self.init = init;
     self.setRevision = setRevision;
+    self.size = size;
+    self.last = last;
+    self.setActivity = setActivity;
 
     self.revisionHistory = self.revisionHistory ? self.revisionHistory : [];
 
@@ -4574,10 +4576,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       self.revisionHistory = history || [];
     }
 
+    function size() {
+      return self.revisionHistory.length;
+    }
+
+    function last() {
+      if (self.size()) {
+        return self.revisionHistory[self.size() - 1];
+      } else {
+        return {};
+      }
+    }
+
     function setRevision(revision) {
       if (revision.objectType === REVISION) {
         self.revisionHistory.push(revision);
       }
+    }
+    function setActivity(id) {
+      self.activityId = id;
     }
 
     function toJSON() {
@@ -8707,6 +8724,162 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ContainerInitializationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.InitialNodesCreationTaskService'];
+
+  function Service(InitialNodesCreationTask) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute() {
+      _container.resetData();
+      InitialNodesCreationTask.execute();
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.InitialNodesCreationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.DefaultRouteCreationTaskService'];
+
+  function Service(DefaultRouteCreationTaskService) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(navigationContainer) {
+      _container.setInitialNodes();
+
+      var routeData = {
+        'origin': _container.getNavigationList()[0].origin,
+        'destination': _container.getNavigationList()[1].origin
+      };
+
+      DefaultRouteCreationTaskService.execute(routeData, _container.getNavigationList()[0]);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationCreationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService', 'otusjs.model.navigation.DefaultRouteCreationTaskService'];
+
+  function Service(RouteUpdateTaskService, DefaultRouteCreationTaskService) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(originItem) {
+      var _newNavigation = _container.createNavigationTo(originItem.templateID);
+      var _previousNavigation;
+
+      if (_newNavigation.index === 2) {
+        _previousNavigation = _container.getPreviousOf(_newNavigation.index - 1);
+      } else {
+        _previousNavigation = _container.getPreviousOf(_newNavigation.index);
+      }
+
+      var routeData = {
+        'origin': _newNavigation.origin,
+        'destination': _previousNavigation.getDefaultRoute().destination
+      };
+
+      DefaultRouteCreationTaskService.execute(routeData, _newNavigation);
+
+      var updateRouteData = {
+        'origin': _previousNavigation.origin,
+        'destination': _newNavigation.origin,
+        'isDefault': true
+      };
+
+      RouteUpdateTaskService.execute(updateRouteData, _previousNavigation);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationRemovalTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService'];
+
+  function Service(RouteUpdateTaskService) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(templateID) {
+      var navigationToRecicle = _container.getNavigationByOrigin(templateID);
+      var navigationPosition = _container.getNavigationPosition(navigationToRecicle);
+      var navigationToUpdate = _container.getPreviousOf(navigationPosition);
+
+      if (navigationToRecicle.inNavigations.indexOf(navigationToUpdate) > -1) {
+        var routeData = _getRouteData(navigationToUpdate, navigationToRecicle);
+        RouteUpdateTaskService.execute(routeData, navigationToUpdate);
+      }
+
+      _container.removeNavigationOf(templateID);
+    }
+
+    function _getRouteData(navigationToUpdate, navigationToRecicle) {
+      var routeData = {};
+      routeData.isDefault = true;
+      routeData.origin = navigationToUpdate.routes[0].origin;
+      routeData.destination = navigationToRecicle.routes[0].destination;
+      return routeData;
+    }
+
+    function _updateRoutes(navigationToUpdate, navigationToRecicle) {
+      navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
+      navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.AlternativeRouteCreationTaskService', service);
 
   service.$inject = ['otusjs.model.navigation.RouteFactory', 'otusjs.model.navigation.RouteConditionFactory', 'otusjs.model.navigation.RuleFactory'];
@@ -8885,162 +9058,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (nextNavigation) {
         nextNavigation.updateInNavigation(navigation);
       }
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ContainerInitializationTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.InitialNodesCreationTaskService'];
-
-  function Service(InitialNodesCreationTask) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute() {
-      _container.resetData();
-      InitialNodesCreationTask.execute();
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.InitialNodesCreationTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.DefaultRouteCreationTaskService'];
-
-  function Service(DefaultRouteCreationTaskService) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(navigationContainer) {
-      _container.setInitialNodes();
-
-      var routeData = {
-        'origin': _container.getNavigationList()[0].origin,
-        'destination': _container.getNavigationList()[1].origin
-      };
-
-      DefaultRouteCreationTaskService.execute(routeData, _container.getNavigationList()[0]);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationCreationTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService', 'otusjs.model.navigation.DefaultRouteCreationTaskService'];
-
-  function Service(RouteUpdateTaskService, DefaultRouteCreationTaskService) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(originItem) {
-      var _newNavigation = _container.createNavigationTo(originItem.templateID);
-      var _previousNavigation;
-
-      if (_newNavigation.index === 2) {
-        _previousNavigation = _container.getPreviousOf(_newNavigation.index - 1);
-      } else {
-        _previousNavigation = _container.getPreviousOf(_newNavigation.index);
-      }
-
-      var routeData = {
-        'origin': _newNavigation.origin,
-        'destination': _previousNavigation.getDefaultRoute().destination
-      };
-
-      DefaultRouteCreationTaskService.execute(routeData, _newNavigation);
-
-      var updateRouteData = {
-        'origin': _previousNavigation.origin,
-        'destination': _newNavigation.origin,
-        'isDefault': true
-      };
-
-      RouteUpdateTaskService.execute(updateRouteData, _previousNavigation);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationRemovalTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService'];
-
-  function Service(RouteUpdateTaskService) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(templateID) {
-      var navigationToRecicle = _container.getNavigationByOrigin(templateID);
-      var navigationPosition = _container.getNavigationPosition(navigationToRecicle);
-      var navigationToUpdate = _container.getPreviousOf(navigationPosition);
-
-      if (navigationToRecicle.inNavigations.indexOf(navigationToUpdate) > -1) {
-        var routeData = _getRouteData(navigationToUpdate, navigationToRecicle);
-        RouteUpdateTaskService.execute(routeData, navigationToUpdate);
-      }
-
-      _container.removeNavigationOf(templateID);
-    }
-
-    function _getRouteData(navigationToUpdate, navigationToRecicle) {
-      var routeData = {};
-      routeData.isDefault = true;
-      routeData.origin = navigationToUpdate.routes[0].origin;
-      routeData.destination = navigationToRecicle.routes[0].destination;
-      return routeData;
-    }
-
-    function _updateRoutes(navigationToUpdate, navigationToRecicle) {
-      navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
-      navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;
     }
   }
 })();

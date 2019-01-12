@@ -21,6 +21,10 @@ describe("Tests activity revision factory", function () {
     revisionList.push(REVISION_2);
     Mock.fakeRevision = {objectType: null};
     Mock.activityId = "65as4dfas4a8sd";
+    Mock.json = {
+      activityId: "",
+      revisionHistory: []
+    };
 
     spyOn(Injections.RevisionFactory, "create").and.callThrough();
   });
@@ -30,7 +34,7 @@ describe("Tests activity revision factory", function () {
   });
 
   it('should create an activity revision', function () {
-    activityRevision = factory.create();
+    activityRevision = factory.create(Mock.json);
     expect(activityRevision).toBeDefined();
     expect(activityRevision.objectType).toEqual(OBJECT_TYPE);
     expect(activityRevision.activityId).toBeDefined();
@@ -68,19 +72,29 @@ describe("Tests activity revision factory", function () {
   });
 
   it('should fromJsonObject an activity revision with activityId without revisionList', function () {
-    activityRevision = factory.fromJsonObject(Mock.activityId);
-    expect(activityRevision.activityId).toEqual(Mock.activityId);
-    expect(activityRevision.toJSON().activityId).toEqual(Mock.activityId);
-    expect(activityRevision.revisionHistory.length).toEqual(0);
-    expect(activityRevision.toJSON().revisionHistory.length).toEqual(0);
+    activityRevision = factory.fromJsonObject(Mock.json);
+    expect(activityRevision.activityId).toEqual(Mock.json.activityId);
+    expect(activityRevision.toJSON().activityId).toEqual(Mock.json.activityId);
+    expect(activityRevision.revisionHistory.length).toEqual(activityRevision.size());
+    expect(activityRevision.toJSON().revisionHistory.length).toEqual(activityRevision.size());
   });
 
   it('should fromJsonObject an activity revision with activityId with revisionList', function () {
-    activityRevision = factory.fromJsonObject(Mock.activityId, revisionList);
+    activityRevision = factory.fromJsonObject(Mock.json);
+    activityRevision.init(revisionList);
+    expect(activityRevision.activityId).toEqual(Mock.json.activityId);
+    expect(activityRevision.toJSON().activityId).toEqual(Mock.json.activityId);
+    expect(activityRevision.revisionHistory.length).toEqual(activityRevision.size());
+    expect(activityRevision.toJSON().revisionHistory.length).toEqual(activityRevision.size());
+    expect(activityRevision.last()).toEqual(revisionList[1]);
+  });
+
+  it('should set activityId method', function () {
+    activityRevision = factory.create();
+    expect(activityRevision.activityId).toEqual("");
+    activityRevision.setActivity(Mock.activityId);
     expect(activityRevision.activityId).toEqual(Mock.activityId);
-    expect(activityRevision.toJSON().activityId).toEqual(Mock.activityId);
-    expect(activityRevision.revisionHistory.length).toEqual(2);
-    expect(activityRevision.toJSON().revisionHistory.length).toEqual(2);
+
   });
 
 });

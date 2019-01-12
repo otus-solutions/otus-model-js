@@ -7,6 +7,7 @@
 
   Factory.$inject = [
     'otusjs.model.activity.StatusHistoryManagerFactory',
+    'otusjs.model.revision.ActivityRevisionFactory',
     'otusjs.model.activity.FillingManagerFactory',
     'otusjs.model.activity.InterviewFactory',
     'otusjs.model.navigation.NavigationTrackerFactory',
@@ -17,6 +18,7 @@
 
   function Factory(
     StatusHistoryManagerFactory,
+    ActivityRevisionFactory,
     FillingManagerFactory,
     InterviewFactory,
     NavigationTrackerFactory,
@@ -69,15 +71,17 @@
       var surveyForm = SurveyFormFactory.fromJsonObject(jsonObject.surveyForm);
       var participantData = jsonObject.participantData;
       var statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
+      var revisionHistory = ActivityRevisionFactory.fromJsonObject(jsonObject.revisionHistory);
+
       var id = jsonObject._id;
 
-      var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, id);
-
+      var activity = new ActivitySurvey(surveyForm, participantData, statusHistory,revisionHistory, id);
       activity.category = jsonObject.category;
       activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
       activity.isDiscarded = jsonObject.isDiscarded;
       activity.mode = jsonObject.mode;
       activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
+      activity.revisionHistory = ActivityRevisionFactory.fromJsonObject(jsonObject.revisionHistory);
       activity.interviews = jsonObject.interviews.map(function (interview) {
         return InterviewFactory.fromJsonObject(interview);
       });
@@ -98,7 +102,7 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, id) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, revisionHistory, id) {
     var self = this;
     var _id = id || null;
 
@@ -108,6 +112,7 @@
     self.interviews = [];
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
+    self.revisionHistory = revisionHistory;
     self.isDiscarded = false;
 
     /* Public methods */
@@ -135,10 +140,6 @@
 
     function getNavigations() {
       return getTemplate().NavigationManager.getNavigationList();
-    }
-
-    function getDatasources() {
-      return getTemplate().getAllDataSources();
     }
 
     function getExportableList() {

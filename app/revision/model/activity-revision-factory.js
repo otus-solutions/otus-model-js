@@ -18,19 +18,19 @@
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new ActivityRevision();
+      return new ActivityRevision({});
     }
 
 
-    function fromJsonObject(activityId, revisionList) {
+    function fromJsonObject(json) {
       var history = [];
-      if(Array.isArray(revisionList)){
-        revisionList.map(function(revision) {
+      if(Array.isArray(json.revisionHistory)){
+        json.revisionHistory.map(function(revision) {
           history.push(RevisionFactory.fromJsonObject(revision));
         });
       }
 
-      var statusHistoryManager = new ActivityRevision(activityId);
+      var statusHistoryManager = new ActivityRevision(json);
       statusHistoryManager.init(history);
       return statusHistoryManager;
     }
@@ -38,18 +38,21 @@
     return self;
   }
 
-  function ActivityRevision(activityId) {
+  function ActivityRevision(json) {
     var self = this;
 
     var REVISION = "Revision";
     self.objectType = 'ActivityRevision';
-    self.activityId = activityId || "";
+    self.activityId = json.activityId || "";
 
 
     /* Public methods */
     self.toJSON = toJSON;
     self.init = init;
     self.setRevision = setRevision;
+    self.size = size;
+    self.last = last;
+    self.setActivity = setActivity;
 
     self.revisionHistory = self.revisionHistory ? self.revisionHistory : [];
     
@@ -57,10 +60,25 @@
       self.revisionHistory = history || [];
     }
 
+    function size() {
+      return self.revisionHistory.length;
+    }
+
+    function last() {
+      if (self.size()){
+        return self.revisionHistory[self.size()-1];
+      } else {
+        return {};
+      }
+    }
+
     function setRevision(revision) {
       if(revision.objectType === REVISION){
         self.revisionHistory.push(revision);
       }
+    }
+    function setActivity(id) {
+      self.activityId = id;
     }
 
     function toJSON() {
