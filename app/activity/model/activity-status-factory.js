@@ -63,11 +63,18 @@
     /* Public methods */
     self.toJSON = toJSON;
     self.setUser = setUser;
+    self.setDate = setDate;
 
 
     function setUser(user) {
       if(self.name === 'INITIALIZED_OFFLINE'){
         self.user = angular.copy(user);
+      }
+    }
+
+    function setDate(date) {
+      if(self.name === 'INITIALIZED_OFFLINE'){
+        self.date = angular.copy(date);
       }
     }
 
