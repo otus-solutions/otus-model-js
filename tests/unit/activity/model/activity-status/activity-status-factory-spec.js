@@ -183,12 +183,16 @@ describe('ActivityStatusFactory', function() {
 
     it('should update user in activity status', function () {
       status = factory.createInitializedOfflineStatus(Mock.offlineData);
+      status.date = Mock.date;
       expect(status.name).toEqual(INITIALIZED_OFFLINE);
       expect(status.user.name).toEqual(Mock.user.name);
       expect(status.user.email).toEqual(Mock.user.email);
-      status.setUser(Mock.userNew)
+      expect(status.date).toEqual(Mock.date);
+      status.setUser(Mock.userNew);
+      status.setDate(Mock.dateNew);
       expect(status.user.name).toEqual(Mock.userNew.name);
       expect(status.user.email).toEqual(Mock.userNew.email);
+      expect(status.date).toEqual(Mock.dateNew);
     });
 
     it('should update user in activity status', function () {
@@ -196,7 +200,7 @@ describe('ActivityStatusFactory', function() {
       expect(status.name).not.toEqual(INITIALIZED_OFFLINE);
       expect(status.user.name).toEqual(Mock.user.name);
       expect(status.user.email).toEqual(Mock.user.email);
-      status.setUser(Mock.userNew)
+      status.setUser(Mock.userNew);
       expect(status.user.name).toEqual(Mock.user.name);
       expect(status.user.email).toEqual(Mock.user.email);
     });
@@ -205,7 +209,10 @@ describe('ActivityStatusFactory', function() {
 
     function mockUser() {
         Mock.user = userFactory.create('User Name', 'user@email.com');
+        Mock.date = "2017-04-12T02:57:33.873Z";
         Mock.userNew = userFactory.create('New User', 'newuser@email.com');
+        Mock.dateNew = "2018-04-12T02:57:33.873Z";
+
     }
 
     function mockOfflineData() {
