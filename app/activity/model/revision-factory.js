@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.model.revision')
-    .factory('otusjs.model.revision.RevisionFactory', Factory);
+    .module('otusjs.model.activity')
+    .factory('otusjs.model.activity.RevisionFactory', Factory);
 
   function Factory() {
     var self = this;
@@ -33,7 +33,7 @@
     self.user = user || null;
 
     if(!self.user){
-      throw new Error("Inválid user for revision.");
+      throw new Error("Invalid user for revision.");
     }
 
     /* Public methods */
@@ -48,6 +48,6 @@
 
       return json;
     }
-  }
+   }
 
 }());

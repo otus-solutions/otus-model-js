@@ -5,7 +5,6 @@
     .module('otusjs', [
       'otusjs.survey',
       'otusjs.model.activity',
-      'otusjs.model.revision',
       'otusjs.model.participant',
       'otusjs.model.fieldCenter',
       'otusjs.model.monitoring',
