@@ -12,7 +12,7 @@ describe("Tests activity revision factory", function () {
 
     inject(function (_$injector_) {
       Injections.RevisionFactory = _$injector_.get('otusjs.model.revision.RevisionFactory');
-      factory = _$injector_.get('otusjs.model.revision.ActivityRevisionFactory', Injections);
+      factory = _$injector_.get('otusjs.model.revision.ActivityRevisionHistoryFactory', Injections);
     });
     revisionList = [];
     REVISION_1 = Injections.RevisionFactory.create(EMAIL_USER_1);

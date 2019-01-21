@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.model.revision')
-    .factory('otusjs.model.revision.ActivityRevisionFactory', Factory);
+    .factory('otusjs.model.revision.ActivityRevisionHistoryFactory', Factory);
   
   Factory.$inject = [
     'otusjs.model.revision.RevisionFactory'
