@@ -13,28 +13,25 @@
 
     self.fromJsonObject = fromJsonObject;
 
-    function create(user) {
-      return new Revision(user);
+    function create(activityID, revisionDate) {
+      return new Revision(activityID, revisionDate);
     }
 
     function fromJsonObject(jsonObject) {
-      var revision = new Revision(jsonObject.user, jsonObject.date);
+      var revision = new Revision(jsonObject.activityID, jsonObject.revisionDate, jsonObject.user);
       return revision;
     }
 
     return self;
   }
 
-  function Revision(user, statusDate) {
+  function Revision(activityID, statusDate, user) {
     var self = this;
 
     self.objectType = 'Revision';
-    self.date = statusDate || new Date();
+    self.activityID = activityID || '';
+    self.revisionDate = statusDate || new Date();
     self.user = user || null;
-
-    if(!self.user){
-      throw new Error("Invalid user for revision.");
-    }
 
     /* Public methods */
     self.toJSON = toJSON;
@@ -43,8 +40,8 @@
       var json = {};
 
       json.objectType = self.objectType;
-      json.date = self.date;
-      json.user = self.user;
+      json.activityID = self.activityID;
+      json.revisionDate = self.revisionDate;
 
       return json;
     }

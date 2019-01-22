@@ -10,7 +10,8 @@
     'otusjs.model.activity.MetadataFillFactory',
     'otusjs.model.activity.QuestionFillFactory',
     'otusjs.model.activity.ActivityFactory',
-    'otusjs.model.activity.InterviewFactory'
+    'otusjs.model.activity.InterviewFactory',
+    'otusjs.model.activity.RevisionFactory'
   ];
 
   function ActivityFacadeService(
@@ -18,7 +19,8 @@
     MetadataFillFactory,
     QuestionFillFactory,
     ActivityFactory,
-    InterviewFactory
+    InterviewFactory,
+    ActivityRevisionFactory
   ) {
     var self = this;
     var _user = null;
@@ -37,6 +39,8 @@
     self.getFillingByQuestionID = getFillingByQuestionID;
     self.clearSkippedAnswers = clearSkippedAnswers;
     self.getNavigationTracker = getNavigationTracker;
+    self.createActivityRevision = createActivityRevision;
+    self.createActivityRevisionFromJson = createActivityRevisionFromJson;
 
     function createActivity(template, user, participant, activityConfiguration) {
       self.surveyActivity = ActivityFactory.create(template, user, participant, activityConfiguration);
@@ -87,6 +91,14 @@
 
     function getNavigationTracker() {
       return self.surveyActivity.getNavigationTracker();
+    }
+
+    function createActivityRevision(activityId, revisionDate) {
+      return ActivityRevisionFactory.create(activityId, revisionDate);
+    }
+
+    function createActivityRevisionFromJson(jsonObject) {
+      return ActivityRevisionFactory.fromJson(jsonObject);
     }
   }
 }());
