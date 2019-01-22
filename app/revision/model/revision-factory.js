@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.model.activity')
-    .factory('otusjs.model.activity.RevisionFactory', Factory);
+    .module('otusjs.model.revision')
+    .factory('otusjs.model.revision.RevisionFactory', Factory);
 
   function Factory() {
     var self = this;
@@ -13,8 +13,8 @@
 
     self.fromJsonObject = fromJsonObject;
 
-    function create(activityId, user, revisionDate) {
-      return new Revision(activityId, user, revisionDate);
+    function create(user) {
+      return new Revision(user);
     }
 
     function fromJsonObject(jsonObject) {
@@ -25,16 +25,15 @@
     return self;
   }
 
-  function Revision(activityId, user, revisionDate) {
+  function Revision(user, statusDate) {
     var self = this;
 
     self.objectType = 'Revision';
-    self.activityId = activityId;
-    self.date = revisionDate;
-    self.user = user;
+    self.date = statusDate || new Date();
+    self.user = user || null;
 
     if(!self.user){
-      throw new Error("Invalid user for revision.");
+      throw new Error("Inválid user for revision.");
     }
 
     /* Public methods */
@@ -49,6 +48,6 @@
 
       return json;
     }
-   }
+  }
 
 }());
