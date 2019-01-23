@@ -10,17 +10,31 @@
 
     /* Public methods */
     self.create = create;
-
+    self.fromJson = fromJson;
     self.fromJsonObject = fromJsonObject;
 
     function create(activityID, revisionDate) {
       return new Revision(activityID, revisionDate);
     }
 
+
+    function fromJson(json) {
+      var revisions = [];
+      if (Array.isArray(json)) {
+        json.map(function (revision) {
+          revisions.push(self.fromJsonObject(revision));
+        });
+      }
+      return revisions;
+    }
+
     function fromJsonObject(jsonObject) {
       var revision = new Revision(jsonObject.activityID, jsonObject.revisionDate, jsonObject.user);
       return revision;
     }
+
+
+
 
     function validateRevision(activityID) {
       if(!activityID){
