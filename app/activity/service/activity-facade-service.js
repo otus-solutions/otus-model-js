@@ -97,8 +97,8 @@
       return ActivityRevisionFactory.create(activityId, revisionDate);
     }
 
-    function createActivityRevisionFromJson(jsonObject) {
-      return ActivityRevisionFactory.fromJson(jsonObject);
+    function createActivityRevisionFromJson(jsonArray) {
+      return ActivityRevisionFactory.fromJson(jsonArray);
     }
   }
 }());

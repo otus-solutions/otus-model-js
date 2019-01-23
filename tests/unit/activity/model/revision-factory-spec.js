@@ -2,7 +2,9 @@ describe("Tests revision factory", function () {
   var factory, revision;
   var Mock = {};
   var EMAIL_USER = "otus@email.com";
-  var OBJECT_TYPE = "Revision";
+  var OBJECT_TYPE = "ActivityRevision";
+  var ACTIVITY_ID = 'someID';
+  var DATE = new Date(2019,1, 11);
 
   beforeEach(function () {
     angular.mock.module("otusjs.model.activity");
@@ -12,8 +14,9 @@ describe("Tests revision factory", function () {
     });
 
     Mock.jsonObject = {
-      user: "otus@email.com",
-      date : new Date(2019,1, 11)
+      user: EMAIL_USER,
+      revisionDate : DATE,
+      activityID: ACTIVITY_ID
     }
   });
 
@@ -22,25 +25,27 @@ describe("Tests revision factory", function () {
   });
 
   it('should create a revision', function () {
-    revision = factory.create(EMAIL_USER);
+    revision = factory.create(ACTIVITY_ID, DATE);
+    console.log(revision);
     expect(revision).toBeDefined();
     expect(revision.objectType).toEqual(OBJECT_TYPE);
     expect(revision.revisionDate instanceof Date).toEqual(true);
-    expect(revision.user).toEqual(EMAIL_USER);
-    expect(revision.toJSON).toBeDefined();
-    expect(function () {
-      factory.create();
-    }).toThrowError("Invalid user for revision.");
+    expect(revision.user).toEqual(null);
 
     expect(revision.toJSON().objectType).toBeDefined();
     expect(revision.toJSON().revisionDate).toBeDefined();
-    expect(revision.toJSON().user).toBeDefined();
   });
 
   it('should fromJsonObject', function () {
     revision = factory.fromJsonObject(Mock.jsonObject);
     expect(revision.user).toEqual(EMAIL_USER);
-    expect(revision.revisionDate).toEqual(new Date(2019,1, 11));
+    expect(revision.revisionDate).toEqual(DATE);
+  });
+
+  it('should ensure the activityId', function () {
+    expect(function () {
+      factory.create();
+    }).toThrowError("Validation error: Activity ID not found");
   });
 
 });

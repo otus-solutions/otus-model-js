@@ -14,26 +14,26 @@
     self.fromJsonObject = fromJsonObject;
 
     function create(activityID, revisionDate) {
+      validateRevision(activityID);
       return new Revision(activityID, revisionDate);
     }
 
 
     function fromJson(json) {
-      var revisions = [];
       if (Array.isArray(json)) {
-        json.map(function (revision) {
+        return json.map(function (revision) {
           revisions.push(self.fromJsonObject(revision));
         });
+      } else {
+        throw new Error("Validation error: Malformed array");
       }
-      return revisions;
+
     }
 
     function fromJsonObject(jsonObject) {
-      var revision = new Revision(jsonObject.activityID, jsonObject.revisionDate, jsonObject.user);
-      return revision;
+      validateRevision(jsonObject.activityID);
+      return new Revision(jsonObject.activityID, jsonObject.revisionDate, jsonObject.user);
     }
-
-
 
 
     function validateRevision(activityID) {
@@ -48,7 +48,7 @@
   function Revision(activityID, statusDate, user) {
     var self = this;
 
-    self.objectType = 'Revision';
+    self.objectType = 'ActivityRevision';
     self.activityID = activityID || '';
     self.revisionDate = statusDate || new Date();
     self.user = user || null;
