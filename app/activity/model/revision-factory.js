@@ -22,6 +22,12 @@
       return revision;
     }
 
+    function validateRevision(activityID) {
+      if(!activityID){
+        throw new Error("Validation error: Activity ID not found");
+      }
+    }
+
     return self;
   }
 
