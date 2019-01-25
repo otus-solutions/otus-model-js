@@ -19,10 +19,10 @@
     }
 
 
-    function fromJson(json) {
-      if (Array.isArray(json)) {
-        return json.map(function (revision) {
-          revisions.push(self.fromJsonObject(revision));
+    function fromJson(jsonArray) {
+      if (Array.isArray(jsonArray)) {
+        return jsonArray.map(function (revision) {
+          return self.fromJsonObject(revision);
         });
       } else {
         throw new Error("Validation error: Malformed array");
