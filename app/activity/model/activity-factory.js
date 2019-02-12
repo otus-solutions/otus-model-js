@@ -69,10 +69,10 @@
       var surveyForm = SurveyFormFactory.fromJsonObject(jsonObject.surveyForm);
       var participantData = jsonObject.participantData;
       var statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
+
       var id = jsonObject._id;
 
       var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, id);
-
       activity.category = jsonObject.category;
       activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
       activity.isDiscarded = jsonObject.isDiscarded;
@@ -135,10 +135,6 @@
 
     function getNavigations() {
       return getTemplate().NavigationManager.getNavigationList();
-    }
-
-    function getDatasources() {
-      return getTemplate().getAllDataSources();
     }
 
     function getExportableList() {
