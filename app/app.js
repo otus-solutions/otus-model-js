@@ -8,6 +8,7 @@
       'otusjs.model.participant',
       'otusjs.model.fieldCenter',
       'otusjs.model.monitoring',
+      'otusjs.model.chart',
       'otusjs.surveyItem',
       'otusjs.metadata',
       'otusjs.misc',
