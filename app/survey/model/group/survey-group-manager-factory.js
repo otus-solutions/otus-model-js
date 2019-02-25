@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusjs.survey.GroupManagerFactory')
+    .module('otusjs.survey')
     .factory('otusjs.survey.GroupManagerFactory', Factory);
 
   Factory.$inject = [
