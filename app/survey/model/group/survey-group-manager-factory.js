@@ -2,11 +2,11 @@
   'use strict';
 
   angular
-    .module('otusjs.survey')
+    .module('otusjs.survey.GroupManagerFactory')
     .factory('otusjs.survey.GroupManagerFactory', Factory);
 
   Factory.$inject = [
-    'otusjs.model.survey.GroupFactory'
+    'otusjs.survey.GroupFactory'
   ];
 
   function Factory(GroupFactory) {
@@ -16,7 +16,7 @@
     self.create = create;
 
     function create(GroupFactory, groupList) {
-      return new SurveyGroupManager(groupList);
+      return new SurveyGroupManager(GroupFactory, groupList);
     }
 
 

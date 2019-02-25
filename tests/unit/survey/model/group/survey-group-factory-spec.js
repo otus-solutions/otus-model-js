@@ -1,4 +1,4 @@
-fdescribe("GroupFactory", function() {
+describe("GroupFactory", function() {
   var factory;
 
   var NAME = "name";
