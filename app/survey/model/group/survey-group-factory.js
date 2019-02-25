@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.survey')
-    .factory('otusjs.survey.BlockFactory', Factory);
+    .factory('otusjs.survey.GroupFactory', Factory);
 
   function Factory() {
     var self = this;
@@ -12,16 +12,24 @@
     self.create = create;
 
     function create(name, surveyAcronyms) {
-      return new SurveyBlock(name, surveyAcronyms);
+      if (typeof name !== "string") {
+        throw Error("Name should be a string");
+      }
+
+      if (surveyAcronyms && !Array.isArray(surveyAcronyms)) {
+        throw Error("surveyAcronyms should be an array");
+      }
+
+      return new SurveyGroup(name, surveyAcronyms);
     }
 
     return self;
   }
 
-  function SurveyBlock(name, surveyAcronyms) {
+  function SurveyGroup(name, surveyAcronyms) {
     var self = this;
 
-    self.objectType = 'SurveyBlock';
+    self.objectType = 'SurveyGroup';
     self.name = name;
     self.surveys = surveyAcronyms || [];
 
@@ -40,24 +48,24 @@
     }
 
     function getSurveys() {
-      return surveys;
+      return self.surveys;
     }
 
     function addSurvey(acronym) {
-      if (surveys.indexOf(acronym) !== -1) {
-        throw new Error("Survey already in the block");
+      if (self.surveys.indexOf(acronym) !== -1) {
+        throw new Error("Survey already in the group");
       }
       self.surveys.push(acronym);
       return self;
     }
 
     function removeSurvey(acronym) {
-      let index = surveys.indexOf(acronym);
+      let index = self.surveys.indexOf(acronym);
 
       if (index === -1) {
-        throw new Error("Survey not found in the block");
+        throw new Error("Survey not found in the group");
       }
-      self.surveys.splice(acronym);
+      self.surveys.splice(acronym, 1);
 
       return self;
     }
