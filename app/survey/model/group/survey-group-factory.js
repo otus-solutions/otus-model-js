@@ -31,7 +31,7 @@
 
     self.objectType = 'SurveyGroup';
     self.name = name;
-    self.surveys = surveyAcronyms || [];
+    self.surveyAcronyms = surveyAcronyms || [];
 
     if (!self.name) {
       throw new Error("Name should be provided");
@@ -48,24 +48,24 @@
     }
 
     function getSurveys() {
-      return self.surveys;
+      return self.surveyAcronyms;
     }
 
     function addSurvey(acronym) {
-      if (self.surveys.indexOf(acronym) !== -1) {
+      if (self.surveyAcronyms.indexOf(acronym) !== -1) {
         throw new Error("Survey already in the group");
       }
-      self.surveys.push(acronym);
+      self.surveyAcronyms.push(acronym);
       return self;
     }
 
     function removeSurvey(acronym) {
-      let index = self.surveys.indexOf(acronym);
+      let index = self.surveyAcronyms.indexOf(acronym);
 
       if (index === -1) {
         throw new Error("Survey not found in the group");
       }
-      self.surveys.splice(acronym, 1);
+      self.surveyAcronyms.splice(acronym, 1);
 
       return self;
     }

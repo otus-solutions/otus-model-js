@@ -15,7 +15,7 @@
     /* Public methods */
     self.create = create;
 
-    function create(GroupFactory, groupList) {
+    function create(groupList) {
       return new SurveyGroupManager(GroupFactory, groupList);
     }
 

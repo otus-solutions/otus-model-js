@@ -18,11 +18,5 @@ fdescribe("GroupFactory", function() {
     });
   });
 
-  describe(" the ccreate method", function() {
-    it("should return a new instance", function() {
-      expect(factory.create(json)).toBeDefined();
-    });
-
-  });
 
 });
