@@ -80,10 +80,13 @@
     function _buildGroupStructure(groups) {
       let json = {};
 
-      groups.forEach(jsonGroup => {
-        let group = new GroupFactory(jsonGroup);
-        json[group.getName()] = group;
-      });
+
+      if (groups) {
+        groups.forEach(groupJson => {
+          let group = GroupFactory.fromJson(groupJson);
+          json[group.getName()] = group;
+        });
+      }
 
       return json;
     }

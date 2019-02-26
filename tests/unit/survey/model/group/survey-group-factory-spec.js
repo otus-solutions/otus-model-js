@@ -2,7 +2,7 @@ describe("GroupFactory", function() {
   var factory;
 
   var NAME = "name";
-  var SURVEYS = [
+  var SURVEY_ACRONYMS = [
     "ACTA"
   ];
 
@@ -16,11 +16,11 @@ describe("GroupFactory", function() {
 
   describe(" the create method", function() {
     it("should return a new instance", function() {
-      expect(factory.create(NAME, SURVEYS)).toBeDefined();
+      expect(factory.create(NAME, SURVEY_ACRONYMS)).toBeDefined();
     });
 
     it("should create a well formed object", function () {
-      let group = factory.create(NAME, SURVEYS);
+      let group = factory.create(NAME, SURVEY_ACRONYMS);
       expect(group.getName()).toEqual(NAME);
       expect(group.getSurveys().length).toEqual(1);
 

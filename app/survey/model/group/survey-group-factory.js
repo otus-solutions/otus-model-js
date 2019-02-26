@@ -10,6 +10,7 @@
 
     /* Public methods */
     self.create = create;
+    self.fromJson = fromJson;
 
     function create(name, surveyAcronyms) {
       if (typeof name !== "string") {
@@ -21,6 +22,10 @@
       }
 
       return new SurveyGroup(name, surveyAcronyms);
+    }
+
+    function fromJson(groupJson) {
+      return create(groupJson.name, groupJson.surveyAcronyms)
     }
 
     return self;

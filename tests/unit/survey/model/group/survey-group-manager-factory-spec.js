@@ -12,9 +12,11 @@ fdescribe("GroupFactory", function() {
 
     inject(function(_$injector_) {
       factory = _$injector_.get('otusjs.survey.GroupManagerFactory', {
-        "otusjs.model.survey.GroupFactory":  _$injector_.get('otusjs.survey.GroupFactory')
+        "otusjs.survey.GroupFactory":  _$injector_.get('otusjs.survey.GroupFactory')
 
       });
+
+      console.log(factory)
     });
   });
 
