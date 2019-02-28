@@ -31,15 +31,15 @@
 
     /* Public methods */
     self.createGroup = createGroup;
+    self.getGroup = getGroup;
     self.getGroupList = getGroupList;
     self.getGroupNames = getGroupNames;
     self.getGroupSurveys = getGroupSurveys;
     self.getSurveyGroups = getSurveyGroups;
     self.toJSON = toJSON;
 
-    //should create a new group and add it to structure
     function createGroup(name, surveys) {
-      if (groupStructure.getName()) {
+      if (getGroup(name)) {
         throw new Error("Group already exists");
       }
       let group = GroupFactory.create(name, surveys);
@@ -47,48 +47,48 @@
       return group;
     }
 
-    //should return grouplist
     function getGroupList() {
       return Object.values(groupStructure);
+    }
+
+    function getGroup(name) {
+      return groupStructure[name];
     }
 
     function getGroupNames() {
       return Object.keys(groupStructure);
     }
 
-    //should return the groups survey array
     function getGroupSurveys(name) {
-      let found = groupStructure[name];
-      if (found) {
-        return found.getSurveys();
+      let found = getGroup(name);
+      if (!found) {
+        throw new Error("Group not found");
       }
-
-      return []; //todo: should this throw error?
+      return found.getSurveys();
     }
 
-    //given survey, get groups in which is present
     function getSurveyGroups(surveyAcronym) {
       return getGroupList().filter(group => {
         return group.getSurveys().includes(surveyAcronym)
-      });
+      }).map(group => group.getName());
     }
 
     function toJSON() {
-      return getGroupList();
+      return self.getGroupList();
     }
 
     function _buildGroupStructure(groups) {
-      let json = {};
+      let structure = {};
 
 
       if (groups) {
         groups.forEach(groupJson => {
           let group = GroupFactory.fromJson(groupJson);
-          json[group.getName()] = group;
+          structure[group.getName()] = group;
         });
       }
 
-      return json;
+      return structure;
     }
   }
 
