@@ -47,6 +47,8 @@
     self.getSurveys = getSurveys;
     self.addSurvey = addSurvey;
     self.removeSurvey = removeSurvey;
+    self.toJSON = toJSON;
+
 
     function getName() {
       return self.name;
@@ -73,6 +75,13 @@
       self.surveyAcronyms.splice(acronym, 1);
 
       return self;
+    }
+
+    function toJSON() {
+      return {
+        name: self.name,
+        surveyAcronyms: self.surveyAcronyms
+      };
     }
 
   }
