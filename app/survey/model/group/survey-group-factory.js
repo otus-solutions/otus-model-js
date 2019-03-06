@@ -72,7 +72,7 @@
       if (index === -1) {
         throw new Error("Survey not found in the group");
       }
-      self.surveyAcronyms.splice(acronym, 1);
+      self.surveyAcronyms.splice(index, 1);
 
       return self;
     }
