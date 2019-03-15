@@ -14,11 +14,30 @@
     self.create = create;
 
 
-    let UserPermission = {
+    let UserPermissions = [
+      {
+        "_id" : ObjectId("5c8be4998a1a6b6f60cef893"),
+        "objectType" : "SurveyGroupPermission",
+        "groups" : [
+          "G1",
+          "G2"
+        ]
+      },
+      {
+        "_id" : ObjectId("5c8be4998a1a6b6f60cef893"),
+        "objectType" : "LaboratoryPermission",
+        value:false
+      }
+    ];
 
+    let SurveyGroupPermission = {
+      "_id" : "5c8be4998a1a6b6f60cef893",
+      "objectType" : "SurveyGroupPermission",
+      "groups" : [
+        "G1",
+        "G2"
+      ]
     };
-
-    let ActivityGroupPermission = {};
 
 
     function create() {
@@ -29,21 +48,44 @@
     return self;
   }
 
-  function ActivityGroupPermission(info) {
+
+  function UserPermissionManager(permissions) {
+    let self = this;
+    let groupStructure = [];
+
+    self.objectType = 'UserPermissionManager';
+
+    /* Public methods */
+
+
+
+    function _resolvePermissions(permissions) {
+
+    }
+
+  }
+
+  function SurveyGroupPermission(permissioJson) {
     var self = this;
 
 
-    self.objectType = "ActivityGroupPermission"; // ||info.objectType todo: decide??
-
+    self.objectType = "SurveyGroupPermission";
 
     return self;
   }
 
 
-  //this should be a service?
+  //this should be a service!
   function PermissionMapper(permissionJson) {
+    let map = {
+      "SurveyGroupPermission": SurveyGroupPermissionFactory;
+    }
+
+    let objectType = "SurveyGroupPermission";
+
     switch (permissionJson.objectType) {
-      case "ActivityGroupPermission":
+      case "SurveyGroupPermission":
+        return SurveyGroupPermissionFactory;
         break;
 
       default:
@@ -51,63 +93,5 @@
     }
   }
 
-  function UserPermissionManager(permissions) {
-    let self = this;
-    let groupStructure = _buildGroupStructure(permissions);
-
-    self.objectType = 'UserPermissionManager';
-
-    /* Public methods */
-    self.getGroup = getGroup;
-    self.getGroupList = getGroupList;
-    self.getGroupNames = getGroupNames;
-    self.getGroupSurveys = getGroupSurveys;
-    self.getSurveyGroups = getSurveyGroups;
-    self.toJSON = toJSON;
-
-    function getGroupList() {
-      return Object.values(groupStructure);
-    }
-
-    function getGroup(name) {
-      return groupStructure[name];
-    }
-
-    function getGroupNames() {
-      return Object.keys(groupStructure);
-    }
-
-    function getGroupSurveys(name) {
-      let found = getGroup(name);
-      if (!found) {
-        throw new Error("Group not found");
-      }
-      return found.getSurveys();
-    }
-
-    function getSurveyGroups(surveyAcronym) {
-      return getGroupList().filter(group => {
-        return group.getSurveys().includes(surveyAcronym)
-      }).map(group => group.getName());
-    }
-
-    function toJSON() {
-      return self.getGroupList();
-    }
-
-    function _buildGroupStructure(groups) {
-      let structure = {};
-
-
-      if (groups) {
-        groups.forEach(groupJson => {
-          let group = GroupFactory.fromJson(groupJson);
-          structure[group.getName()] = group;
-        });
-      }
-
-      return structure;
-    }
-  }
 
 }());
