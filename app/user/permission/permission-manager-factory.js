@@ -13,26 +13,23 @@
     /* Public methods */
     self.create = create;
 
-    function create(permissions) {
-      return new UserPermissionManager(PermissionMapper, permissions);
+    function create(permissions, userEmail) {
+      return new UserPermissionManager(PermissionMapper, permissions, userEmail);
     }
 
     return self;
   }
 
 
-  function UserPermissionManager(PermissionMapper, permissions) {
+  function UserPermissionManager(PermissionMapper, permissions, userEmail) {
     let self = this;
+    let email = userEmail;
 
     self.objectType = 'UserPermissionManager';
     self.permissionList =  _resolvePermissions(permissions) || [];
-
-    /* Public methods */
-
-
-
+    
     function _resolvePermissions(permissions) {
-      return permissions.map(permission => PermissionMapper.resolve(permission));
+      return permissions.map(permission => PermissionMapper.create(permission, email));
     }
   }
 }());

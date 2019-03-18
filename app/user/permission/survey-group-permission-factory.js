@@ -2,26 +2,67 @@
   'use strict';
 
   angular
-    .module('otusjs.user.permission')
-    .factory('otusjs.user.permission.SurveyGroupPermissionFactory', Factory);
+    .module("otusjs.user.permission")
+    .factory("otusjs.user.permission.SurveyGroupPermissionFactory", Factory);
 
   function Factory() {
     let self = this;
 
     self.create = create;
 
-    function create(permissionJson) {
-      return new SurveyGroupPermission(permissionJson);
+    function create(permissionJson, userEmail) {
+      return new SurveyGroupPermission(permissionJson, userEmail);
     }
 
     return self;
 
-    function SurveyGroupPermission(permissionJson) {
+    function SurveyGroupPermission(permissionJson, userEmail) {
       let self = this;
+      let _email = permissionJson.email || userEmail;
 
-      self.objectType = permissionJson.objectType;
-      self.email = permissionJson.email;
+      validate();
+
+      self.objectType = "SurveyGroupPermission";
       self.groups = permissionJson.groups;
+
+      /* Public Methods */
+      self.addGroup = addGroup;
+      self.removeGroupByName = removeGroupByName;
+      self.removeGroupByPosition = removeGroupByPosition;
+      self.toJson = toJson;
+
+      function addGroup(groupName) {
+        self.groups.push(groupName);
+      }
+
+      function removeGroupByName(groupName) {
+        let index = self.groups.indexOf(groupName);
+        removeGroupByPosition(index);
+        return self;
+      }
+
+      function removeGroupByPosition(index) {
+        if (index === -1) {
+          throw new Error("Group not found");
+        }
+        self.groups.splice(index, 1);
+
+        return self;
+      }
+
+      function toJson() {
+        let json = {};
+        json.objectType = self.objectType;
+        json.email = _email;
+        json.groups = self.groups;
+      }
+
+      function validate() {
+        if (!_email) {
+          throw new Error("Invalid user email");
+        }
+      }
+
 
       return self;
     }

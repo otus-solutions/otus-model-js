@@ -10,20 +10,16 @@
   function Service(SurveyGroupPermissionFactory) {
     var self = this;
 
-    self.resolve = resolve;
+    self.create = create;
 
-    function resolve(permissionJson) {
+    function create(permissionJson, userEmail) {
       switch (permissionJson.objectType) {
         case "SurveyGroupPermission":
-          return SurveyGroupPermissionFactory.create(permissionJson);
-          break;
-
+          return SurveyGroupPermissionFactory.create(permissionJson, userEmail);
         default:
-          throw Error("undefined object type"); //todo rewrite
+          throw Error("Undefined object type"); //todo rewrite
       }
     }
-
-
 
   }
 
