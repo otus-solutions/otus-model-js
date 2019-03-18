@@ -29,7 +29,7 @@
       self.addGroup = addGroup;
       self.removeGroupByName = removeGroupByName;
       self.removeGroupByPosition = removeGroupByPosition;
-      self.toJson = toJson;
+      self.toJSON = toJSON;
 
       function addGroup(groupName) {
         self.groups.push(groupName);
@@ -50,11 +50,18 @@
         return self;
       }
 
-      function toJson() {
+      function setGroupList(list) {
+        self.groups = list;
+        return self;
+      }
+
+      function toJSON() {
         let json = {};
         json.objectType = self.objectType;
         json.email = _email;
         json.groups = self.groups;
+
+        return json;
       }
 
       function validate() {
