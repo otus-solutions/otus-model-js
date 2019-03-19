@@ -26,8 +26,20 @@
     let email = userEmail;
 
     self.objectType = 'UserPermissionManager';
-    self.permissionList =  _resolvePermissions(permissions) || [];
-    
+    self.permissionList = _resolvePermissions(permissions) || [];
+
+    /* Public Methods */
+    self.findByType = findByType;
+
+    function findByType(objectType) {
+      let permission = self.permissionList.find(permission => permission.objectType === objectType);
+      if (!permission) {
+        throw new Error("Permission not found: " + objectType);
+      }
+
+      return permission;
+    }
+
     function _resolvePermissions(permissions) {
       return permissions.map(permission => PermissionMapper.create(permission, email));
     }
