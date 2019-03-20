@@ -23,7 +23,7 @@
       validate();
 
       self.objectType = "SurveyGroupPermission";
-      self.groups = permissionJson.groups;
+      self.groups = permissionJson.groups || [];
 
       /* Public Methods */
       self.addGroup = addGroup;
