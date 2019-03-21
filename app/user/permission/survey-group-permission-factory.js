@@ -20,8 +20,6 @@
       let self = this;
       let _email = permissionJson.email || userEmail;
 
-      validate();
-
       self.objectType = "SurveyGroupPermission";
       self.groups = permissionJson.groups || [];
 
@@ -62,12 +60,6 @@
         json.groups = self.groups;
 
         return json;
-      }
-
-      function validate() {
-        if (!_email) {
-          throw new Error("Invalid user email");
-        }
       }
 
 

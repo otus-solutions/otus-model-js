@@ -14,6 +14,10 @@
     self.create = create;
 
     function create(permissions, userEmail) {
+      if (!userEmail) {
+        throw new Error("Undefined user email");
+      }
+
       return new UserPermissionManager(PermissionMapper, permissions, userEmail);
     }
 
