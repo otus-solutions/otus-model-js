@@ -17,7 +17,7 @@
         case "SurveyGroupPermission":
           return SurveyGroupPermissionFactory.create(permissionJson, userEmail);
         default:
-          throw Error("Undefined object type"); //todo rewrite
+          throw Error("Undefined object type");
       }
     }
 
