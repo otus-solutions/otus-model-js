@@ -1,7 +1,6 @@
-describe("PermissionManagerFactory", function () {
+describe("PermissionMapper service", function () {
   let Mock = {};
   let service;
-  let permissionManager;
 
   const USER_EMAIL = "email@provider.com";
 

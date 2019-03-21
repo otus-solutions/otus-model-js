@@ -18,7 +18,7 @@
 
     function SurveyGroupPermission(permissionJson, userEmail) {
       let self = this;
-      let _email = permissionJson.email || userEmail;
+      let _email = userEmail || permissionJson.email;
 
       self.objectType = "SurveyGroupPermission";
       self.groups = permissionJson.groups || [];
@@ -45,11 +45,6 @@
         }
         self.groups.splice(index, 1);
 
-        return self;
-      }
-
-      function setGroupList(list) {
-        self.groups = list;
         return self;
       }
 

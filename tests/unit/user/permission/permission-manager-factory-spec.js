@@ -1,4 +1,4 @@
-fdescribe("PermissionManagerFactory", function () {
+describe("PermissionManagerFactory", function () {
   let Mock = {};
   let factory;
   let permissionManager;
