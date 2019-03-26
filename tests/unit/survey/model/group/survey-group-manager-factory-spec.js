@@ -1,4 +1,4 @@
-describe("GroupFactory", function () {
+describe("GroupManagerFactory", function () {
   let factory;
   let groupManager;
 

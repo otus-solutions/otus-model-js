@@ -1,4 +1,3 @@
-//TODO: Os teste de unidade estão sendo ignorados até o momento de ser resolvido os teste de unidade sobre o ImmutableDate
 describe('TimeRuleTestService:', function() {
   var Mock = {};
   var Injections = {};
