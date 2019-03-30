@@ -139,6 +139,10 @@
       surveyItemContainer.removeItem(templateID);
     }
 
+    function moveItem (templateID) {
+
+    }
+
     function _getNextIncrementalGenerator() {
       return ++incrementalIDValue;
     }

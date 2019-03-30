@@ -98,6 +98,7 @@
     self.loadItem = loadItem;
     self.getItems = getItems;
     self.getItemByTemplateID = getItemByTemplateID;
+    self.getTemplateIDbyCustomID = getTemplateIDbyCustomID;
     self.getItemByCustomID = getItemByCustomID;
     self.getItemByID = getItemByID;
     self.isAvailableID = isAvailableID;
@@ -122,6 +123,11 @@
       self.NavigationManager.removeNavigation(templateID);
     }
 
+    function moveItem(customID) {
+      self.SurveyItemManager.moveItem(customID);
+      self.NavigationManager.removeNavigation(getItemByCustomID(customID));
+    }
+
     function updateItem(item) {
       self.navigationList[item.templateID] = item;
     }
@@ -142,6 +148,10 @@
 
     function getItemByCustomID(customID) {
       return self.SurveyItemManager.getItemByCustomID(customID);
+    }
+
+    function getTemplateIDbyCustomID(customID) {
+      return self.SurveyItemManager.getItemByCustomID(customID).customID;
     }
 
     function getItemByID(id) {

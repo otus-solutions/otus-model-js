@@ -1,4 +1,4 @@
-fdescribe('SurveyItemContainerFactory', function() {
+fdescribe('SurveyItemContainerFactory', function () {
   var Mock = {};
   var factory;
   var container;
@@ -8,10 +8,10 @@ fdescribe('SurveyItemContainerFactory', function() {
   var INEXISTENT_CUSTOM_ID = 'Q5';
   var INEXISTENT_ID = 'NOT_FOUND';
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('otusjs');
 
-    inject(function(_$injector_) {
+    inject(function (_$injector_) {
       factory = _$injector_.get('SurveyItemContainerFactory', {
         SurveyItemFactory: mockSurveyItemFactory(_$injector_),
         UpdateSurveyItemCustomID: mockUpdateSurveyItemCustomID(
@@ -25,9 +25,9 @@ fdescribe('SurveyItemContainerFactory', function() {
     container = factory.create();
   });
 
-  describe('manage method', function() {
+  describe('manage method', function () {
 
-    it('should initialize the array of items', function() {
+    it('should initialize the array of items', function () {
       expect(container.getItemListSize()).toBe(0);
 
       container.manageItems(Mock.itemsToManage);
@@ -36,9 +36,9 @@ fdescribe('SurveyItemContainerFactory', function() {
 
   });
 
-  describe('getItemList method', function() {
+  describe('getItemList method', function () {
 
-    it('should return an array', function() {
+    it('should return an array', function () {
       var returnedValue = container.getItemList();
 
       expect(Array.isArray(returnedValue)).toBe(true);
@@ -46,13 +46,13 @@ fdescribe('SurveyItemContainerFactory', function() {
 
   });
 
-  describe('getItemListSize method', function() {
+  describe('getItemListSize method', function () {
 
-    it('should return zero when item Array is empty', function() {
+    it('should return zero when item Array is empty', function () {
       expect(container.getItemListSize()).toBe(0);
     });
 
-    it('should return the number of added items', function() {
+    it('should return the number of added items', function () {
       container.manageItems(Mock.itemsToManage);
       expect(container.getItemListSize()).toBe(4);
 
@@ -62,27 +62,27 @@ fdescribe('SurveyItemContainerFactory', function() {
 
   });
 
-  describe('getItemByTemplateID method', function() {
+  describe('getItemByTemplateID method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
-    it('should return the item when exists', function() {
+    it('should return the item when exists', function () {
       var returnedItem = container.getItemByTemplateID(Mock.itemOne.templateID);
 
       expect(returnedItem.templateID).toEqual(Mock.itemOne.templateID);
     });
 
     it('should return the item when exists ignoring the camelcase',
-      function() {
+      function () {
         var returnedItem = container.getItemByTemplateID(Mock.itemOne.templateID
           .toLowerCase());
 
         expect(returnedItem.templateID).toEqual(Mock.itemOne.templateID);
       });
 
-    it('should return undefined when item not exists', function() {
+    it('should return undefined when item not exists', function () {
       var returnedItem = container.getItemByTemplateID(
         INEXISTENT_TEMPLATE_ID);
 
@@ -91,13 +91,13 @@ fdescribe('SurveyItemContainerFactory', function() {
 
   });
 
-  describe('getItemByCustomID method', function() {
+  describe('getItemByCustomID method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
-    it('should return the item when exists', function() {
+    it('should return the item when exists', function () {
       var returnedItemCustomID = container.getItemByCustomID(Mock.itemOne
         .customID);
 
@@ -105,14 +105,14 @@ fdescribe('SurveyItemContainerFactory', function() {
     });
 
     it('should return the item when exists ignoring camel case',
-      function() {
+      function () {
         var returnedItemCustomID = container.getItemByCustomID(Mock.itemOne
           .customID.toUpperCase());
 
         expect(returnedItemCustomID.customID).toEqual(Mock.itemOne.customID);
       });
 
-    it('should return undefined when item not exists', function() {
+    it('should return undefined when item not exists', function () {
       var returnedItemCustomID = container.getItemByCustomID(
         INEXISTENT_CUSTOM_ID);
 
@@ -121,23 +121,23 @@ fdescribe('SurveyItemContainerFactory', function() {
 
   });
 
-  describe('getItemByID method', function() {
+  describe('getItemByID method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
     describe(
       'should verify between the both properties of the item and return it when exists',
-      function() {
+      function () {
 
-        it('criteria by templateID - UNCHANGED CUSTOM_ID', function() {
+        it('criteria by templateID - UNCHANGED CUSTOM_ID', function () {
           var returnedItem = container.getItemByID("Q1");
 
           expect(returnedItem).toEqual(Mock.itemOne);
         });
 
-        it('criteria by templateID - CHANGED CUSTOM_ID', function() {
+        it('criteria by templateID - CHANGED CUSTOM_ID', function () {
           Mock.UpdateSurveyItemCustomID.execute(Mock.itemOne,
             'MyCustomID_1');
           var returnedItem = container.getItemByID("Q1");
@@ -145,7 +145,7 @@ fdescribe('SurveyItemContainerFactory', function() {
           expect(returnedItem).toEqual(Mock.itemOne);
         });
 
-        it('criteria by customID - CHANGED CUSTOM_ID', function() {
+        it('criteria by customID - CHANGED CUSTOM_ID', function () {
           Mock.UpdateSurveyItemCustomID.execute(Mock.itemOne,
             'MyCustomID_1');
           var returnedItem = container.getItemByID("MyCustomID_1");
@@ -153,7 +153,7 @@ fdescribe('SurveyItemContainerFactory', function() {
           expect(returnedItem).toEqual(Mock.itemOne);
         });
 
-        it('should return undefined when item not exists', function() {
+        it('should return undefined when item not exists', function () {
           var returnedItemCustomID = container.getItemByID(
             INEXISTENT_ID);
 
@@ -163,33 +163,33 @@ fdescribe('SurveyItemContainerFactory', function() {
 
   });
 
-  describe('getAllCheckboxQuestion method', function() {
+  describe('getAllCheckboxQuestion method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       mockCheckboxQuestions();
       mockCheckboxQuestionToItemToManage();
       container.manageItems(Mock.checkboxQuestionToManage);
     });
 
-    it('should return all Checkbox question', function() {
+    it('should return all Checkbox question', function () {
       expect(container.getAllCheckboxQuestion()).toEqual(Mock.checkboxQuestionToManage);
     });
 
   });
 
-  describe('getItemByPosition method', function() {
+  describe('getItemByPosition method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
-    it('should return the item when exists', function() {
+    it('should return the item when exists', function () {
       var returnedItem = container.getItemByPosition(0);
 
       expect(returnedItem.templateID).toEqual(Mock.itemOne.templateID);
     });
 
-    it('should return undefined when item not exists', function() {
+    it('should return undefined when item not exists', function () {
       var returnedItem = container.getItemByPosition(10);
 
       expect(returnedItem).toBeUndefined();
@@ -197,14 +197,14 @@ fdescribe('SurveyItemContainerFactory', function() {
 
   });
 
-  describe('getItemPosition method', function() {
+  describe('getItemPosition method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
     it('should return an integer that represents the index of item',
-      function() {
+      function () {
         var returnedValue = container.getItemPosition(Mock.itemOne.templateID);
         expect(returnedValue).toBe(0);
 
@@ -215,7 +215,7 @@ fdescribe('SurveyItemContainerFactory', function() {
         expect(returnedValue).toBe(2);
       });
 
-    it('should return null when item does not exists', function() {
+    it('should return null when item does not exists', function () {
       var returnedValue = container.getItemPosition(
         INEXISTENT_TEMPLATE_ID);
       expect(returnedValue).toBe(null);
@@ -223,60 +223,60 @@ fdescribe('SurveyItemContainerFactory', function() {
 
   });
 
-  describe('existsItem method', function() {
+  describe('existsItem method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
-    it('should return true when item exists', function() {
+    it('should return true when item exists', function () {
       expect(container.existsItem(Mock.itemOne.templateID)).toBe(true);
     });
 
-    it('should return false when item not exists', function() {
+    it('should return false when item not exists', function () {
       expect(container.existsItem(INEXISTENT_TEMPLATE_ID)).toBe(false);
     });
 
   });
 
-  describe('createItem method', function() {
+  describe('createItem method', function () {
 
     var item;
 
-    beforeEach(function() {
+    beforeEach(function () {
       spyOn(Mock.SurveyItemFactory, 'create').and.callThrough();
 
       item = container.createItem(QUESTION_TYPE, Mock.itemOne.templateID);
     });
 
-    it('should call SurveyItemFactory.create', function() {
+    it('should call SurveyItemFactory.create', function () {
       expect(Mock.SurveyItemFactory.create).toHaveBeenCalledWith(
         QUESTION_TYPE, Mock.itemOne.templateID);
     });
 
-    it('should add a new Navigation in the itemList', function() {
+    it('should add a new Navigation in the itemList', function () {
       expect(container.getItemListSize()).toBeGreaterThan(0);
     });
 
-    it('should return the new item created', function() {
+    it('should return the new item created', function () {
       expect(item).toBeDefined();
     });
 
   });
 
-  describe('removeItem method', function() {
+  describe('removeItem method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
-    it('should remove a item of itemList', function() {
+    it('should remove a item of itemList', function () {
       container.removeItem(Mock.itemOne.templateID);
 
       expect(container.getItemListSize()).toBe(3);
     });
 
-    it('should remove the correct item of itemList', function() {
+    it('should remove the correct item of itemList', function () {
       container.removeItem(Mock.itemOne.templateID);
 
       expect(container.getItemListSize()).toBe(3);
@@ -285,13 +285,13 @@ fdescribe('SurveyItemContainerFactory', function() {
 
   });
 
-  describe('removeItemByPosition method', function() {
+  describe('removeItemByPosition method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
-    it('should remove a item of index', function() {
+    it('should remove a item of index', function () {
       container.removeItemByPosition(0);
 
       expect(container.getItemListSize()).toBe(3);
@@ -302,13 +302,13 @@ fdescribe('SurveyItemContainerFactory', function() {
 
   });
 
-  describe('removeCurrentLastItem method', function() {
+  describe('removeCurrentLastItem method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
-    it('should remove the last item present in item list', function() {
+    it('should remove the last item present in item list', function () {
       container.removeCurrentLastItem();
 
       expect(container.getItemListSize()).toBe(3);
@@ -320,6 +320,23 @@ fdescribe('SurveyItemContainerFactory', function() {
         false);
     });
 
+  });
+
+  describe("the item movement methods", function () {
+    beforeEach(function () {
+      container.manageItems(Mock.itemsToManage);
+    });
+
+    it("should move from origin index to destination index", function () {
+      let origin = 0;
+      let destination = 3;
+
+      let itemToMove = container.getItemList()[origin];
+      container.moveItem(origin, destination);
+
+      expect(container.getItemList()[destination].templateID).toEqual(itemToMove.templateID);
+
+    });
   });
 
   function mockSurveyItemFactory($injector) {

@@ -42,6 +42,7 @@
     self.removeItem = removeItem;
     self.removeItemByPosition = removeItemByPosition;
     self.removeCurrentLastItem = removeCurrentLastItem;
+    self.moveItem = moveItem;
 
     function loadFromItemContainerObject(itemContainerObject) {
       _itemList = [];
@@ -161,6 +162,14 @@
 
     function removeCurrentLastItem() {
       _itemList.splice(-1, 1);
+    }
+
+    function moveItem(origin, destination) {
+      _itemList.splice(destination, 0, _itemList.splice(origin, 1)[0]);
+    }
+
+    function moveI() {
+
     }
 
     /* Private methods */
