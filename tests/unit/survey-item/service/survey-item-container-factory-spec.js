@@ -1,4 +1,4 @@
-fdescribe('SurveyItemContainerFactory', function () {
+describe('SurveyItemContainerFactory', function () {
   var Mock = {};
   var factory;
   var container;
@@ -332,7 +332,7 @@ fdescribe('SurveyItemContainerFactory', function () {
       let destination = 3;
 
       let itemToMove = container.getItemList()[origin];
-      container.moveItem(origin, destination);
+      container.moveItem(itemToMove.templateID, destination);
 
       expect(container.getItemList()[destination].templateID).toEqual(itemToMove.templateID);
 

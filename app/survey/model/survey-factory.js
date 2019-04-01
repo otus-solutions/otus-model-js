@@ -94,6 +94,7 @@
     self.initialize = initialize;
     self.addItem = addItem;
     self.removeItem = removeItem;
+    self.moveItem = moveItem;
     self.updateItem = updateItem;
     self.loadItem = loadItem;
     self.getItems = getItems;
@@ -123,9 +124,9 @@
       self.NavigationManager.removeNavigation(templateID);
     }
 
-    function moveItem(customID) {
-      self.SurveyItemManager.moveItem(customID);
-      self.NavigationManager.removeNavigation(getItemByCustomID(customID));
+    function moveItem(item, position) {
+      self.SurveyItemManager.moveItem(item, position);
+      // self.NavigationManager.removeNavigation(getItemByCustomID(customID)); todo
     }
 
     function updateItem(item) {

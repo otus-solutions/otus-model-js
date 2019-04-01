@@ -39,10 +39,11 @@
     self.getLastItem = getLastItem;
     self.existsItem = existsItem;
     self.createItem = createItem;
+    self.moveItem = moveItem;
     self.removeItem = removeItem;
     self.removeItemByPosition = removeItemByPosition;
     self.removeCurrentLastItem = removeCurrentLastItem;
-    self.moveItem = moveItem;
+
 
     function loadFromItemContainerObject(itemContainerObject) {
       _itemList = [];
@@ -164,12 +165,13 @@
       _itemList.splice(-1, 1);
     }
 
-    function moveItem(origin, destination) {
+    function _moveItem(origin, destination) {
       _itemList.splice(destination, 0, _itemList.splice(origin, 1)[0]);
     }
 
-    function moveI() {
-
+    function moveItem(templateID, destination) {  //todo rename one of them
+      let origin = _itemList.findIndex(item => findByTemplateID(item, templateID));
+      _moveItem(origin, destination);
     }
 
     /* Private methods */

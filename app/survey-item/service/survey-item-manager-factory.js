@@ -40,6 +40,7 @@
     self.addItem = addItem;
     self.loadItem = loadItem;
     self.removeItem = removeItem;
+    self.moveItem = moveItem;
     self.existsItem = existsItem;
     self.isAvailableCustomID = isAvailableCustomID;
 
@@ -139,8 +140,8 @@
       surveyItemContainer.removeItem(templateID);
     }
 
-    function moveItem (templateID) {
-
+    function moveItem (item, destination) {
+      surveyItemContainer.moveItem(item.templateID, destination);
     }
 
     function _getNextIncrementalGenerator() {
