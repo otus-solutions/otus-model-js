@@ -15,6 +15,7 @@
       'otusjs.model.navigation',
       'otusjs.validation',
       'otusjs.laboratory',
+      'otusjs.user',
       'utils'
     ]);
 
