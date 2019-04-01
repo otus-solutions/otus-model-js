@@ -167,7 +167,12 @@
 
     function _moveItem(origin, destination) {
       let itemToBeMoved = _itemList.splice(origin, 1)[0];
-      _itemList.splice(destination, 0, itemToBeMoved);
+
+      if (origin >= destination) {
+        _itemList.splice(destination, 0, itemToBeMoved);
+      } else {
+        _itemList.splice(destination -1, 0, itemToBeMoved);
+      }
     }
 
     function moveItem(templateID, destination) {  //todo rename one of them
