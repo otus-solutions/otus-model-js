@@ -10,8 +10,8 @@
 
     self.execute = execute;
 
-    function execute(item, position) {
-      survey.moveItem(item.templateID);
+    function execute(survey, item, position) {
+      survey.moveItem(item, position);
     }
   }
 
