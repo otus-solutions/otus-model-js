@@ -1,4 +1,4 @@
-describe('SurveyItemContainerFactory', function () {
+fdescribe('SurveyItemContainerFactory', function () {
   var Mock = {};
   var factory;
   var container;
@@ -322,21 +322,47 @@ describe('SurveyItemContainerFactory', function () {
 
   });
 
-  describe("the item movement methods", function () {
+  fdescribe("the item movement methods", function () {
     beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
-    it("should move from origin index to destination index", function () {
+    it("should move from origin index to destination index - moving forward", function () { //todo: test it better
       let origin = 0;
       let destination = 3;
 
       let itemToMove = container.getItemList()[origin];
+
       container.moveItem(itemToMove.templateID, destination);
 
       expect(container.getItemList()[destination].templateID).toEqual(itemToMove.templateID);
 
     });
+
+    it("should move from origin index to destination index - moving back", function () { //todo: test it better
+      let origin = 3;
+      let destination = 1;
+
+      let itemToMove = container.getItemList()[origin];
+
+      container.moveItem(itemToMove.templateID, destination);
+
+      expect(container.getItemList()[destination].templateID).toEqual(itemToMove.templateID);
+
+    });
+
+    it("should move from origin index to destination index - moving to the same position", function () { //todo: test it better
+      let origin = 2;
+      let destination = 2;
+
+      let itemToMove = container.getItemList()[origin];
+
+      container.moveItem(itemToMove.templateID, destination);
+
+      expect(container.getItemList()[destination].templateID).toEqual(itemToMove.templateID);
+
+    });
+
   });
 
   function mockSurveyItemFactory($injector) {
