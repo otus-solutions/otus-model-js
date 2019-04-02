@@ -1,4 +1,4 @@
-fdescribe('SurveyItemContainerFactory', function () {
+describe('SurveyItemContainerFactory', function () {
   var Mock = {};
   var factory;
   var container;
@@ -322,20 +322,20 @@ fdescribe('SurveyItemContainerFactory', function () {
 
   });
 
-  fdescribe("the item movement methods", function () {
+  describe("the item movement methods", function () {
     beforeEach(function () {
       container.manageItems(Mock.itemsToManage);
     });
 
     it("should move from origin index to destination index - moving forward", function () { //todo: test it better
       let origin = 0;
-      let destination = 3;
+      let destination = 4;
 
       let itemToMove = container.getItemList()[origin];
 
       container.moveItem(itemToMove.templateID, destination);
 
-      expect(container.getItemList()[destination].templateID).toEqual(itemToMove.templateID);
+      expect(container.getItemList()[destination -1].templateID).toEqual(itemToMove.templateID);
 
     });
 
@@ -344,7 +344,6 @@ fdescribe('SurveyItemContainerFactory', function () {
       let destination = 1;
 
       let itemToMove = container.getItemList()[origin];
-
       container.moveItem(itemToMove.templateID, destination);
 
       expect(container.getItemList()[destination].templateID).toEqual(itemToMove.templateID);
