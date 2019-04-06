@@ -117,10 +117,12 @@
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
     self.removeRouteByName = removeRouteByName;
+    self.removeRouteByDestination = removeRouteByDestination;
     self.selfsame = selfsame;
     self.setupDefaultRoute = setupDefaultRoute;
     self.toJSON = toJSON;
     self.updateInNavigation = updateInNavigation;
+    self.isDefaultRoute = isDefaultRoute;
     self.updateRoute = updateRoute;
 
     function addInNavigation(navigation) {
@@ -284,6 +286,10 @@
       });
     }
 
+    function removeRouteByDestination(destinationID) {
+      self.routes = self.routes.filter(route => route.destination !== destinationID); //todo does this alter order?
+    }
+
     function selfsame(other) {
       return Object.is(self, other);
     }
@@ -340,6 +346,11 @@
       if (!wasUpdated) {
         self.inNavigations.push(navigation);
       }
+    }
+
+    function isDefaultRoute(templateID) {
+      let found = self.routes.find(route => route.destination === templateID);
+      return found && found.isDefault
     }
 
     function updateRoute(routeToUpdate) {

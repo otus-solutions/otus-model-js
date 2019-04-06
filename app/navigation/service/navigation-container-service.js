@@ -82,10 +82,10 @@
     }
 
     function getNavigationByOrigin(origin) {
-      var filter = _navigationList.filter(function(navigation) {
+      var found = _navigationList.find(function(navigation) {
         return findByOrigin(navigation, origin);
       });
-      return filter[0];
+      return found;
     }
 
     function getEmptyNavigation(indexToRemove) {
@@ -107,7 +107,7 @@
 
     function getPreviousOf(index) {
       if (index === 2) {
-        index = 1;
+        return getNavigationByPosition(0);  //begin node todo: remove comment
       }
       return getNavigationByPosition(index - 1);
     }
@@ -169,13 +169,13 @@
     }
 
     function removeNavigationOf(questionID) {
-      var navigationToRemove = _navigationList.filter(function(navigation) {
+      var navigationToRemove = _navigationList.find(function(navigation) {
         return findByOrigin(navigation, questionID);
       });
-      var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
+      var indexToRemove = _navigationList.indexOf(navigationToRemove);
       if (indexToRemove > -1) {
         _navigationList.splice(indexToRemove, 1);
-        _removeFromInNavigations(indexToRemove, navigationToRemove[0]);
+        _removeFromInNavigations(indexToRemove, navigationToRemove);
       }
     }
 
