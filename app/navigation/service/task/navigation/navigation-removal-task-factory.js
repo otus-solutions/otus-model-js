@@ -23,14 +23,13 @@
 
     function execute(templateID) {
       var navigationToRecycle = _container.getNavigationByOrigin(templateID);
-      // var navigationPosition = _container.getNavigationPosition(navigationToRecycle);
-
       let inNavigations = navigationToRecycle.inNavigations;
 
-      console.log(inNavigations);
       angular.copy(inNavigations).forEach(inNavigation => {
         console.log(inNavigation.origin);
+
         let navigationToUpdate = _container.getNavigationByOrigin(inNavigation.origin);
+
         if (navigationToUpdate) {
           if (navigationToUpdate.isDefaultRoute(templateID)) {
             updateRoute(navigationToUpdate, navigationToRecycle)
@@ -49,24 +48,6 @@
         let navigation = _container.getNavigationByOrigin(inNavigation.origin);
         navigation.removeRouteByDestination(templateID);
       }
-
-
-      // var navigationToUpdate = _container.getPreviousOf(navigationPosition); //should be all that are default to navigationToRecycle
-      //
-      // if (inNavigations.indexOf(navigationToUpdate) > -1) {
-      //   var routeData = _getRouteData(navigationToUpdate, navigationToRecycle);
-      //   RouteUpdateTaskService.execute(routeData, navigationToUpdate);
-      // }
-
-      //todo delete routes that lead to given navigationToRecycle
-      //maybe remove to a task service
-
-      // if (inNavigations.length) {
-      //   inNavigations.forEach(inNavigation => {
-      //     let navigation = _container.getNavigationByOrigin(inNavigation.origin);
-      //     navigation.removeRouteByDestination(templateID);
-      //   });
-      // }
 
       //todo remove conditions that take navigationToRecycle into account
 

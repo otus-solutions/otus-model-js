@@ -126,7 +126,7 @@
 
     function moveItem(item, position) {
       self.SurveyItemManager.moveItem(item, position);
-      // self.NavigationManager.removeNavigation(getItemByCustomID(customID)); todo
+      self.NavigationManager.moveNavigation(item.templateID, position);
     }
 
     function updateItem(item) {

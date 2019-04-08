@@ -11,6 +11,7 @@
     'otusjs.model.navigation.InitialNodesCreationTaskService',
     'otusjs.model.navigation.NavigationCreationTaskService',
     'otusjs.model.navigation.NavigationRemovalTaskService',
+    'otusjs.model.navigation.NavigationMovementTaskService',
     'otusjs.model.navigation.DefaultRouteCreationTaskService',
     'otusjs.model.navigation.AlternativeRouteCreationTaskService',
     'otusjs.model.navigation.RouteRemovalTaskService',
@@ -25,6 +26,7 @@
     InitialNodesCreationTask,
     NavigationCreationTask,
     NavigationRemovalTask,
+    NavigationMovementTaskService,
     DefaultRouteCreationTaskService,
     AlternativeRouteCreationTaskService,
     RouteRemovalTaskService,
@@ -45,6 +47,7 @@
       ContainerInitializationTask.setContainer(container);
       NavigationCreationTask.setContainer(container);
       NavigationRemovalTask.setContainer(container);
+      NavigationMovementTaskService.setContainer(container);
       DefaultRouteCreationTaskService.setContainer(container);
       AlternativeRouteCreationTaskService.setContainer(container);
       RouteRemovalTaskService.setContainer(container);
@@ -54,6 +57,7 @@
       Inject.ContainerInitializationTask = ContainerInitializationTask;
       Inject.NavigationCreationTask = NavigationCreationTask;
       Inject.NavigationRemovalTask = NavigationRemovalTask;
+      Inject.NavigationMovementTaskService = NavigationMovementTaskService;
       Inject.DefaultRouteCreationTaskService = DefaultRouteCreationTaskService;
       Inject.AlternativeRouteCreationTaskService = AlternativeRouteCreationTaskService;
       Inject.RouteRemovalTaskService = RouteRemovalTaskService;
@@ -73,6 +77,7 @@
     self.loadJsonData = loadJsonData;
     self.addNavigation = addNavigation;
     self.removeNavigation = removeNavigation;
+    self.moveNavigation = moveNavigation;
     self.applyRoute = applyRoute;
     self.deleteRoute = deleteRoute;
     self.getNavigationList = getNavigationList;
@@ -94,6 +99,10 @@
     function addNavigation() {
       _ensuresInitialNodes();
       _selectedNavigation = Inject.NavigationCreationTask.execute(surveyTemplate.SurveyItemManager.getLastItem());
+    }
+
+    function moveNavigation(templateID, position) {
+      Inject.NavigationMovementTaskService.execute(templateID, position);
     }
 
     function removeNavigation(templateID) {

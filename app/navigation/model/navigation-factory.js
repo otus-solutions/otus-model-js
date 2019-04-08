@@ -116,6 +116,7 @@
     self.hasOrphanRoot = hasOrphanRoot;
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
+    self.clearNavigation = clearNavigation;
     self.removeRouteByName = removeRouteByName;
     self.removeRouteByDestination = removeRouteByDestination;
     self.selfsame = selfsame;
@@ -272,6 +273,11 @@
           return true;
         }
       });
+    }
+
+    function clearNavigation() {
+      self.inNavigations = [];
+      self.routes = [];
     }
 
     function removeRouteByName(name) {
