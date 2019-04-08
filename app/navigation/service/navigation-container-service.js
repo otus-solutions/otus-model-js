@@ -35,6 +35,9 @@
     self.getNavigationPositionByOrigin = getNavigationPositionByOrigin;
     self.getNavigationList = getNavigationList;
     self.getNavigationListSize = getNavigationListSize;
+    self.getBeginNode = getBeginNode;
+    self.getBeginNode = getBeginNode;
+    self.getEndNode = getEndNode;
     self.getOrphanNavigations = getOrphanNavigations;
     self.getLastNavigation = getLastNavigation;
     self.existsNavigationTo = existsNavigationTo;
@@ -42,8 +45,10 @@
     self.removeNavigationOf = removeNavigationOf;
     self.removeNavigationByIndex = removeNavigationByIndex;
     self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+    self.insertNavigation = insertNavigation;
     self.setInitialNodes = setInitialNodes;
     self.getPreviousOf = getPreviousOf;
+    self.getNextOf = getNextOf;
     self.getEmptyNavigation = getEmptyNavigation;
 
     function resetData() {
@@ -105,11 +110,26 @@
       return _navigationList.length;
     }
 
+    function getBeginNode() {
+      return _navigationList[0];
+    }
+
+    function getEndNode() {
+      return _navigationList[1];
+    }
+
     function getPreviousOf(index) {
       if (index === 2) {
-        return getNavigationByPosition(0);  //begin node todo: remove comment
+        return getNavigationByPosition(0);
       }
       return getNavigationByPosition(index - 1);
+    }
+
+    function getNextOf(index) {
+      if (index === _navigationList.length) {
+        return getNavigationByPosition(2);
+      }
+      return getNavigationByPosition(index + 1);
     }
 
     function getNavigationByPosition(position) {
@@ -199,6 +219,10 @@
 
     function removeCurrentLastNavigation() {
       _navigationList.splice(-1, 1);
+    }
+
+    function insertNavigation(navigation, position) {
+      _navigationList.splice(position + 2, 0, navigation);
     }
 
     /* Private methods */
