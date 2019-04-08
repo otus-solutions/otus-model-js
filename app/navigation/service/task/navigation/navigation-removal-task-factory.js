@@ -27,7 +27,9 @@
 
       let inNavigations = navigationToRecycle.inNavigations;
 
-      inNavigations.forEach(inNavigation => {
+      console.log(inNavigations);
+      angular.copy(inNavigations).forEach(inNavigation => {
+        console.log(inNavigation.origin);
         let navigationToUpdate = _container.getNavigationByOrigin(inNavigation.origin);
         if (navigationToUpdate) {
           if (navigationToUpdate.isDefaultRoute(templateID)) {

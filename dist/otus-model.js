@@ -38,13 +38,6 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.model.monitoring', []);
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
     angular.module('otusjs.misc', []);
 })();
 'use strict';
@@ -60,6 +53,13 @@
     'use strict';
 
     angular.module('otusjs.model.participant', []);
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.model.monitoring', []);
 })();
 'use strict';
 
@@ -2599,118 +2599,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringCenterFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(monitoringCenter) {
-      return new MonitoringCenter(monitoringCenter);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (monitoringCenter) {
-          return new MonitoringCenter(monitoringCenter);
-        });
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function MonitoringCenter(monitoringCenter) {
-    var self = this;
-
-    self.toJson = toJson;
-
-    self.objectType = 'MonitoringCenter';
-    self.name = monitoringCenter.name || null;
-    self.goal = monitoringCenter.goal || null;
-    self.backgroundColor = monitoringCenter.backgroundColor || null;
-    self.borderColor = monitoringCenter.borderColor || null;
-
-    function toJson() {
-      var json = {};
-
-      json.objectType = self.objectType;
-      json.name = self.name;
-      json.goal = self.goal;
-      json.backgroundColor = self.backgroundColor;
-      json.borderColor = self.borderColor;
-
-      return JSON.stringify(json);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MonitoringInformation({});
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (center) {
-          return new MonitoringInformation(center);
-        });
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function MonitoringInformation(center) {
-    var self = this;
-
-    self.toJson = toJson;
-
-    self.objectType = "MonitoringInformation";
-    self.acronym = center.acronym || null;
-    self.fieldCenter = center.fieldCenter || null;
-    self.month = center.month || null;
-    self.sum = center.sum || null;
-    self.year = center.year || null;
-
-    function toJson() {
-      var json = {};
-
-      json.objectType = self.objectType;
-      json.acronym = self.acronym;
-      json.fieldCenter = self.fieldCenter;
-      json.month = self.month;
-      json.sum = self.sum;
-      json.year = self.year;
-
-      return JSON.stringify(json);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
 
   function IdiomFactory() {
@@ -4778,6 +4666,118 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringCenterFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(monitoringCenter) {
+      return new MonitoringCenter(monitoringCenter);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (monitoringCenter) {
+          return new MonitoringCenter(monitoringCenter);
+        });
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function MonitoringCenter(monitoringCenter) {
+    var self = this;
+
+    self.toJson = toJson;
+
+    self.objectType = 'MonitoringCenter';
+    self.name = monitoringCenter.name || null;
+    self.goal = monitoringCenter.goal || null;
+    self.backgroundColor = monitoringCenter.backgroundColor || null;
+    self.borderColor = monitoringCenter.borderColor || null;
+
+    function toJson() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.name = self.name;
+      json.goal = self.goal;
+      json.backgroundColor = self.backgroundColor;
+      json.borderColor = self.borderColor;
+
+      return JSON.stringify(json);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new MonitoringInformation({});
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (center) {
+          return new MonitoringInformation(center);
+        });
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function MonitoringInformation(center) {
+    var self = this;
+
+    self.toJson = toJson;
+
+    self.objectType = "MonitoringInformation";
+    self.acronym = center.acronym || null;
+    self.fieldCenter = center.fieldCenter || null;
+    self.month = center.month || null;
+    self.sum = center.sum || null;
+    self.year = center.year || null;
+
+    function toJson() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.acronym = self.acronym;
+      json.fieldCenter = self.fieldCenter;
+      json.month = self.month;
+      json.sum = self.sum;
+      json.year = self.year;
+
+      return JSON.stringify(json);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.survey').factory('SurveyFactory', SurveyFactory);
 
   SurveyFactory.$inject = ['SurveyIdentityFactory', 'SurveyMetaInfoFactory', 'SurveyUUIDGenerator', 'otusjs.model.navigation.NavigationManagerFactory', 'SurveyItemManagerFactory', 'otusjs.model.survey.DataSourceDefinitionManagerFactory'];
@@ -5169,6 +5169,67 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.surveyItem').factory('SurveyItemFactory', SurveyItemFactory);
+
+  SurveyItemFactory.$inject = [
+  /* Question items */
+  'CalendarQuestionFactory', 'IntegerQuestionFactory', 'DecimalQuestionFactory', 'SingleSelectionQuestionFactory', 'CheckboxQuestionFactory', 'TextQuestionFactory', 'TimeQuestionFactory', 'EmailQuestionFactory', 'PhoneQuestionFactory', 'AutocompleteQuestionFactory', 'FileUploadQuestionFactory', 'otusjs.model.question.GridTextQuestionFactory', 'otusjs.model.question.GridIntegerQuestionFactory',
+  /* Miscelaneous items */
+  'TextItemFactory', 'ImageItemFactory'];
+
+  function SurveyItemFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, CheckboxQuestionFactory, TextQuestionFactory, TimeQuestionFactory, EmailQuestionFactory, PhoneQuestionFactory, AutocompleteQuestionFactory, FileUploadQuestionFactory, GridTextQuestionFactory, GridIntegerQuestionFactory, TextItemFactory, ImageItemFactory) {
+
+    var self = this;
+
+    var factoryMap = {
+      /* Question items */
+      'CalendarQuestion': CalendarQuestionFactory,
+      'IntegerQuestion': IntegerQuestionFactory,
+      'DecimalQuestion': DecimalQuestionFactory,
+      'SingleSelectionQuestion': SingleSelectionQuestionFactory,
+      'CheckboxQuestion': CheckboxQuestionFactory,
+      'TextQuestion': TextQuestionFactory,
+      'TimeQuestion': TimeQuestionFactory,
+      'EmailQuestion': EmailQuestionFactory,
+      'PhoneQuestion': PhoneQuestionFactory,
+      'AutocompleteQuestion': AutocompleteQuestionFactory,
+      'FileUploadQuestion': FileUploadQuestionFactory,
+      'GridTextQuestion': GridTextQuestionFactory,
+      'GridIntegerQuestion': GridIntegerQuestionFactory,
+      /* Miscelaneous items */
+      'TextItem': TextItemFactory,
+      'ImageItem': ImageItemFactory
+    };
+
+    /* Public interface */
+    self.create = create;
+    self.load = load;
+
+    function create(itemType, templateID) {
+      var item = new SurveyItem(templateID);
+      return factoryMap[itemType].create(templateID, item);
+    }
+
+    function load(itemObject) {
+      return factoryMap[itemObject.objectType].fromJsonObject(itemObject);
+    }
+
+    return self;
+  }
+
+  function SurveyItem(templateID) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = 'SurveyItem';
+    self.templateID = templateID;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.surveyItem').factory('SurveyItemContainerFactory', Factory);
 
   Factory.$inject = ['SurveyItemFactory'];
@@ -5519,67 +5580,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       });
       return getItemByCustomID(id) || foundCustomOptionID ? false : true;
     }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('SurveyItemFactory', SurveyItemFactory);
-
-  SurveyItemFactory.$inject = [
-  /* Question items */
-  'CalendarQuestionFactory', 'IntegerQuestionFactory', 'DecimalQuestionFactory', 'SingleSelectionQuestionFactory', 'CheckboxQuestionFactory', 'TextQuestionFactory', 'TimeQuestionFactory', 'EmailQuestionFactory', 'PhoneQuestionFactory', 'AutocompleteQuestionFactory', 'FileUploadQuestionFactory', 'otusjs.model.question.GridTextQuestionFactory', 'otusjs.model.question.GridIntegerQuestionFactory',
-  /* Miscelaneous items */
-  'TextItemFactory', 'ImageItemFactory'];
-
-  function SurveyItemFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, CheckboxQuestionFactory, TextQuestionFactory, TimeQuestionFactory, EmailQuestionFactory, PhoneQuestionFactory, AutocompleteQuestionFactory, FileUploadQuestionFactory, GridTextQuestionFactory, GridIntegerQuestionFactory, TextItemFactory, ImageItemFactory) {
-
-    var self = this;
-
-    var factoryMap = {
-      /* Question items */
-      'CalendarQuestion': CalendarQuestionFactory,
-      'IntegerQuestion': IntegerQuestionFactory,
-      'DecimalQuestion': DecimalQuestionFactory,
-      'SingleSelectionQuestion': SingleSelectionQuestionFactory,
-      'CheckboxQuestion': CheckboxQuestionFactory,
-      'TextQuestion': TextQuestionFactory,
-      'TimeQuestion': TimeQuestionFactory,
-      'EmailQuestion': EmailQuestionFactory,
-      'PhoneQuestion': PhoneQuestionFactory,
-      'AutocompleteQuestion': AutocompleteQuestionFactory,
-      'FileUploadQuestion': FileUploadQuestionFactory,
-      'GridTextQuestion': GridTextQuestionFactory,
-      'GridIntegerQuestion': GridIntegerQuestionFactory,
-      /* Miscelaneous items */
-      'TextItem': TextItemFactory,
-      'ImageItem': ImageItemFactory
-    };
-
-    /* Public interface */
-    self.create = create;
-    self.load = load;
-
-    function create(itemType, templateID) {
-      var item = new SurveyItem(templateID);
-      return factoryMap[itemType].create(templateID, item);
-    }
-
-    function load(itemObject) {
-      return factoryMap[itemObject.objectType].fromJsonObject(itemObject);
-    }
-
-    return self;
-  }
-
-  function SurveyItem(templateID) {
-    var self = this;
-
-    self.extents = 'StudioObject';
-    self.objectType = 'SurveyItem';
-    self.templateID = templateID;
   }
 })();
 'use strict';
@@ -9507,7 +9507,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       var inNavigations = navigationToRecycle.inNavigations;
 
-      inNavigations.forEach(function (inNavigation) {
+      console.log(inNavigations);
+      angular.copy(inNavigations).forEach(function (inNavigation) {
+        console.log(inNavigation.origin);
         var navigationToUpdate = _container.getNavigationByOrigin(inNavigation.origin);
         if (navigationToUpdate) {
           if (navigationToUpdate.isDefaultRoute(templateID)) {
