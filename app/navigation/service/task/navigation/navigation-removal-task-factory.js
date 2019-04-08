@@ -29,18 +29,21 @@
 
       inNavigations.forEach(inNavigation => {
         let navigationToUpdate = _container.getNavigationByOrigin(inNavigation.origin);
-        if (navigationToUpdate.isDefaultRoute(templateID)) {
-          updateRoute (navigationToUpdate, navigationToRecycle)
-        } else {
-          deleteRoute(inNavigation, templateID);
+        if (navigationToUpdate) {
+          if (navigationToUpdate.isDefaultRoute(templateID)) {
+            updateRoute(navigationToUpdate, navigationToRecycle)
+          } else {
+            deleteRoute(inNavigation, templateID);
+          }
         }
       });
 
-      function updateRoute (navigationToUpdate, navigationToRecycle){
+      function updateRoute(navigationToUpdate, navigationToRecycle) {
         let routeData = _getRouteData(navigationToUpdate, navigationToRecycle);
         RouteUpdateTaskService.execute(routeData, navigationToUpdate);
       }
-      function deleteRoute (inNavigation, templateID) {
+
+      function deleteRoute(inNavigation, templateID) {
         let navigation = _container.getNavigationByOrigin(inNavigation.origin);
         navigation.removeRouteByDestination(templateID);
       }
