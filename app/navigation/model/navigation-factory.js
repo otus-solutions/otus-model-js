@@ -282,7 +282,7 @@
 
     function removeRouteByName(name) {
       self.routes.some(function(route, index) {
-        if (route.name === name) {
+        if (route && route.name === name) {
           self.routes.splice(index, 1);
           if (route.isDefault) {
             self.routes[0] = null;

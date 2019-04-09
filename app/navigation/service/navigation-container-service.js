@@ -126,8 +126,8 @@
     }
 
     function getNextOf(index) {
-      if (index === _navigationList.length) {
-        return getNavigationByPosition(2);
+      if (index === _navigationList.length - 1) {
+        return getNavigationByPosition(1);
       }
       return getNavigationByPosition(index + 1);
     }
