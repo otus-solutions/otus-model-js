@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -62,12 +62,12 @@
 
       /* FIX IN NAVIGATIONS */
       var nullNavigation = NavigationFactory.createNullNavigation();
-      _navigationList.forEach(function(navigation) {
+      _navigationList.forEach(function (navigation) {
         var replacer = [];
-        navigation.inNavigations.forEach(function(inNav) {
+        navigation.inNavigations.forEach(function (inNav) {
           if (inNav && inNav.origin in navMap) {
             replacer.push(navMap[inNav.origin]);
-          }else {
+          } else {
             replacer.push(nullNavigation);
           }
         });
@@ -78,7 +78,7 @@
     function _loadNavigations(jsonData) {
       var navMap = {};
       var navigation;
-      jsonData.forEach(function(newNavigation) {
+      jsonData.forEach(function (newNavigation) {
         navigation = NavigationFactory.fromJson(newNavigation);
         _navigationList.push(navigation);
         navMap[navigation.origin] = navigation;
@@ -87,8 +87,8 @@
     }
 
     function getNavigationByOrigin(origin) {
-      var found = _navigationList.find(function(navigation) {
-        return findByOrigin(navigation, origin);
+      var found = _navigationList.find(function (navigation) {
+        return _findByOrigin(navigation, origin);
       });
       return found;
     }
@@ -154,7 +154,7 @@
     }
 
     function getOrphanNavigations() {
-      var orphans = _navigationList.filter(function(navigation) {
+      var orphans = _navigationList.filter(function (navigation) {
         return navigation.isOrphan();
       });
 
@@ -189,8 +189,8 @@
     }
 
     function removeNavigationOf(questionID) {
-      var navigationToRemove = _navigationList.find(function(navigation) {
-        return findByOrigin(navigation, questionID);
+      var navigationToRemove = _navigationList.find(function (navigation) {
+        return _findByOrigin(navigation, questionID);
       });
       var indexToRemove = _navigationList.indexOf(navigationToRemove);
       if (indexToRemove > -1) {
@@ -207,7 +207,7 @@
       }
       for (var i = indexToRemove; i < _navigationList.length; i++) {
         var inIndex = _navigationList[i].inNavigations.indexOf(navigationToRemove);
-        if(inIndex > -1){
+        if (inIndex > -1) {
           _navigationList[i].inNavigations[inIndex] = nullNavigation;
         }
       }
@@ -225,8 +225,7 @@
       _navigationList.splice(position + 2, 0, navigation);
     }
 
-    /* Private methods */
-    function findByOrigin(navigation, questionID) {
+    function _findByOrigin(navigation, questionID) {
       return navigation.origin === questionID;
     }
   }

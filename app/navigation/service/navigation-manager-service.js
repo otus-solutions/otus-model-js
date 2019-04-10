@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -107,6 +107,7 @@
 
     function removeNavigation(templateID) {
       Inject.NavigationRemovalTask.execute(templateID);
+      // TODO: deve utilizar o mecanismo para reordenar a questões  
     }
 
     function applyRoute(routeData) {
@@ -137,7 +138,7 @@
       var currentPathState = navigations[0];
       var defaultPath = [currentPathState];
 
-      navigations.forEach(function(navigation) {
+      navigations.forEach(function (navigation) {
         if (navigation.origin === currentPathState.getDefaultRoute().destination) {
           defaultPath.push(navigation);
           currentPathState = navigation;
@@ -151,7 +152,7 @@
       var referenceItemIndex = surveyTemplate.SurveyItemManager.getItemPosition(referenceItemID);
       var allItems = surveyTemplate.SurveyItemManager.getItemList();
 
-      var avaiableItems = allItems.filter(function(item, index) {
+      var avaiableItems = allItems.filter(function (item, index) {
         return index <= referenceItemIndex;
       });
 
