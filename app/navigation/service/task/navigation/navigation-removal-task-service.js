@@ -59,6 +59,12 @@
       routeData.isDefault = true;
       routeData.origin = navigationToUpdate.routes[0].origin;
       routeData.destination = navigationToRecicle.routes[0].destination;
+
+      if (navigationToUpdate.origin === "BEGIN NODE") {
+        let newDestination = _container.getNextOf(_container.getNavigationPosition(navigationToRecicle));
+        routeData.destination = newDestination.origin;
+      }
+
       return routeData;
     }
 

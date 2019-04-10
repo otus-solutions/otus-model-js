@@ -26,8 +26,15 @@
     function execute(templateID, destination) {
       let navigationToMove = _container.getNavigationByOrigin(templateID);
       let originalPosition = _container.getNavigationPosition(navigationToMove);
+
+      if (originalPosition === destination + 2 ) {
+        return;
+      }
+
       NavigationRemovalTaskService.execute(templateID);
+
       navigationToMove.clearNavigation();
+
       _container.insertNavigation(navigationToMove, destination);
       let newPosition = _container.getNavigationPosition(navigationToMove);
       let navigationToUpdate = _container.getNextOf(newPosition);

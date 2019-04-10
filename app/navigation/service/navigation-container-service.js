@@ -222,7 +222,9 @@
     }
 
     function insertNavigation(navigation, position) {
-      _navigationList.splice(position + 2, 0, navigation);
+      let actualPosition = position === 0 ?  2 : position + 1 ;
+
+      _navigationList.splice(actualPosition, 0, navigation);
     }
 
     function _findByOrigin(navigation, questionID) {
