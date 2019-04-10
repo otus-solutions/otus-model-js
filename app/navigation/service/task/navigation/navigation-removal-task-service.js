@@ -49,14 +49,14 @@
       }
     }
 
-    function _getRouteData(navigationToUpdate, navigationToRecicle) {
+    function _getRouteData(navigationToUpdate, navigationToRecycle) {
       var routeData = {};
       routeData.isDefault = true;
       routeData.origin = navigationToUpdate.routes[0].origin;
-      routeData.destination = navigationToRecicle.routes[0].destination;
+      routeData.destination = navigationToRecycle.routes[0].destination;
 
       if (navigationToUpdate.origin === "BEGIN NODE") {
-        let newDestination = _container.getNextOf(_container.getNavigationPosition(navigationToRecicle));
+        let newDestination = _container.getNextOf(_container.getNavigationPosition(navigationToRecycle));
         routeData.destination = newDestination.origin;
       }
 
