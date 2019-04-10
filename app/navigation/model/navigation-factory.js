@@ -354,8 +354,8 @@
       }
     }
 
-    function isDefaultRoute(templateID) {
-      let found = self.routes.find(route => route.destination === templateID);
+    function isDefaultRoute(destination) {
+      let found = self.routes.find(route => route.destination === destination);
       return found && found.isDefault
     }
 

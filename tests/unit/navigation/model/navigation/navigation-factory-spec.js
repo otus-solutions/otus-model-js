@@ -1,4 +1,4 @@
-describe('NavigationFactory', function() {
+fdescribe('NavigationFactory', function() {
 
   var Mock = {};
   var EXTENTS = 'SurveyTemplateObject';
@@ -42,6 +42,33 @@ describe('NavigationFactory', function() {
       navigation = factory.create(null);
 
       expect(navigation.origin).toBe('NULL NAVIGATION');
+    });
+
+    it('should clear navigations', function () {
+      mockJson();
+
+      navigation = factory.fromJson(Mock.json);
+      navigation.clearNavigation();
+
+      expect(navigation.inNavigations).toEqual([]);
+      expect(navigation.routes).toEqual([]);
+    });
+
+    it('should remove a route with given destination', function () {
+      mockJson();
+
+      navigation = factory.fromJson(Mock.json);
+      navigation.removeRouteByDestination(DESTINATION);
+
+      expect(navigation.routes).toEqual([]);
+    });
+
+    it('should inform if giver destination is default route', function () {
+      mockJson();
+
+      navigation = factory.fromJson(Mock.json);
+
+      expect(navigation.isDefaultRoute(DESTINATION)).toBe(true);
     });
   });
 
