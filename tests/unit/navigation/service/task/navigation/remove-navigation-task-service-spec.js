@@ -1,4 +1,4 @@
-xdescribe('NavigationRemove', function() {
+describe('NavigationRemove', function() {
     var Mock = {};
     var service;
 

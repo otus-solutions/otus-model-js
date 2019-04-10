@@ -1,19 +1,19 @@
-describe('the MoveSurveyItemService', function() {
+describe('the MoveSurveyItemService', function () {
   var service;
   var Mock = {};
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('otusjs');
 
-    inject(function(_$injector_) {
+    inject(function (_$injector_) {
       mockJson();
       service = _$injector_.get('MoveSurveyItemService');
     });
   });
 
-  describe('execute method', function() {
+  describe('execute method', function () {
 
-    it('should exist', function() {
+    it('should exist', function () {
       const POSITION = 2;
 
       let container = service.execute(Mock.survey, Mock.item, POSITION);
@@ -31,7 +31,7 @@ describe('the MoveSurveyItemService', function() {
       templateID: "TEM1"
     };
     Mock.survey = {
-      moveItem: function(item, position) {}
+      moveItem: function (item, position) { }
     };
     spyOn(Mock.survey, "moveItem");
 
