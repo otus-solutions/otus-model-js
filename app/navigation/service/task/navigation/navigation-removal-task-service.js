@@ -23,6 +23,7 @@
 
     function execute(templateID) {
       var navigationToRecycle = _container.getNavigationByOrigin(templateID);
+      let position = _container.getNavigationPosition(navigationToRecycle);
       let inNavigations = navigationToRecycle.inNavigations;
 
       angular.copy(inNavigations).forEach(inNavigation => {
@@ -52,6 +53,13 @@
       //todo remove conditions that take navigationToRecycle into account
 
       _container.removeNavigationOf(templateID);
+      _reorderIndexInNavigation(position);
+    }
+
+    function _reorderIndexInNavigation(position) {
+      for (var i = position; i < _container.getNavigationList().length; i++) {
+        _container.getNavigationList()[i].index = i;
+      }
     }
 
     function _getRouteData(navigationToUpdate, navigationToRecicle) {
