@@ -22,39 +22,33 @@
     }
 
     function execute(templateID) {
-      var navigationToRecycle = _container.getNavigationByOrigin(templateID);
-      let position = _container.getNavigationPosition(navigationToRecycle);
-      let inNavigations = navigationToRecycle.inNavigations;
+      let navigationToRemove = _container.getNavigationByOrigin(templateID);
+      let position = _container.getNavigationPosition(navigationToRemove);
+      let inNavigations = angular.copy(navigationToRemove.inNavigations);
 
-      angular.copy(inNavigations).forEach(inNavigation => {
-        console.log(inNavigation.origin);
+      inNavigations.forEach(inNavigation => _updateInRoutes(inNavigation));
 
+      //TODO remove conditions that take navigationToRemove into account
+
+      _container.removeNavigationOf(templateID);
+      _reorderIndexInNavigation(position);
+
+
+      function _updateInRoutes(inNavigation) {
         let navigationToUpdate = _container.getNavigationByOrigin(inNavigation.origin);
 
         if (navigationToUpdate) {
           if (navigationToUpdate.isDefaultRoute(templateID)) {
-            updateRoute(navigationToUpdate, navigationToRecycle)
+            let routeData = _getRouteData(navigationToUpdate, navigationToRemove);
+            RouteUpdateTaskService.execute(routeData, navigationToUpdate);
           } else {
-            deleteRoute(inNavigation, templateID);
+            let navigation = _container.getNavigationByOrigin(inNavigation.origin);
+            navigation.removeRouteByDestination(templateID);
           }
         }
-      });
-
-      function updateRoute(navigationToUpdate, navigationToRecycle) {
-        let routeData = _getRouteData(navigationToUpdate, navigationToRecycle);
-        RouteUpdateTaskService.execute(routeData, navigationToUpdate);
       }
-
-      function deleteRoute(inNavigation, templateID) {
-        let navigation = _container.getNavigationByOrigin(inNavigation.origin);
-        navigation.removeRouteByDestination(templateID);
-      }
-
-      //todo remove conditions that take navigationToRecycle into account
-
-      _container.removeNavigationOf(templateID);
-      _reorderIndexInNavigation(position);
     }
+
 
     function _reorderIndexInNavigation(position) {
       for (var i = position; i < _container.getNavigationList().length; i++) {
@@ -74,11 +68,6 @@
       }
 
       return routeData;
-    }
-
-    function _updateRoutes(navigationToUpdate, navigationToRecicle) {
-      navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
-      navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;
     }
   }
 }());

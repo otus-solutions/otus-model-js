@@ -30,7 +30,6 @@
       } else if (routeData.isDefault) {
         DefaultRouteCreationTaskService.execute(routeData, navigation);
       } else {
-        //todo check if this is ever reached
         var conditions = routeData.conditions.map(_setupConditions);
         var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, conditions);
         navigation.updateRoute(route);

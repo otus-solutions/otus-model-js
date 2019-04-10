@@ -225,6 +225,8 @@
       let actualPosition = position === 0 ?  2 : position + 1 ;
 
       _navigationList.splice(actualPosition, 0, navigation);
+
+      return actualPosition;
     }
 
     function _findByOrigin(navigation, questionID) {

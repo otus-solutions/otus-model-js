@@ -12,6 +12,7 @@
     'otusjs.model.navigation.NavigationCreationTaskService',
     'otusjs.model.navigation.NavigationRemovalTaskService',
     'otusjs.model.navigation.NavigationMovementTaskService',
+    'otusjs.model.navigation.NavigationInsertionTask',
     'otusjs.model.navigation.DefaultRouteCreationTaskService',
     'otusjs.model.navigation.AlternativeRouteCreationTaskService',
     'otusjs.model.navigation.RouteRemovalTaskService',
@@ -27,6 +28,7 @@
     NavigationCreationTask,
     NavigationRemovalTask,
     NavigationMovementTaskService,
+    NavigationInsertionTask,
     DefaultRouteCreationTaskService,
     AlternativeRouteCreationTaskService,
     RouteRemovalTaskService,
@@ -48,6 +50,7 @@
       NavigationCreationTask.setContainer(container);
       NavigationRemovalTask.setContainer(container);
       NavigationMovementTaskService.setContainer(container);
+      NavigationInsertionTask.setContainer(container);
       DefaultRouteCreationTaskService.setContainer(container);
       AlternativeRouteCreationTaskService.setContainer(container);
       RouteRemovalTaskService.setContainer(container);
@@ -58,6 +61,7 @@
       Inject.NavigationCreationTask = NavigationCreationTask;
       Inject.NavigationRemovalTask = NavigationRemovalTask;
       Inject.NavigationMovementTaskService = NavigationMovementTaskService;
+      Inject.NavigationInsertionTask = NavigationMovementTaskService;
       Inject.DefaultRouteCreationTaskService = DefaultRouteCreationTaskService;
       Inject.AlternativeRouteCreationTaskService = AlternativeRouteCreationTaskService;
       Inject.RouteRemovalTaskService = RouteRemovalTaskService;
