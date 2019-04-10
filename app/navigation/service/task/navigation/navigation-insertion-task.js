@@ -50,15 +50,10 @@
     }
 
     function _reorderIndexInNavigation(originalPosition, newPosition) {
-      let i;
       if (originalPosition > newPosition) {
-        for (i = newPosition; i <= originalPosition; i++) {
-          _container.getNavigationList()[i].index = i;
-        }
+        _container.reorderNavigationIndex(newPosition, originalPosition)
       } else {
-        for (i = originalPosition; i < _container.getNavigationList().length; i++) {
-          _container.getNavigationList()[i].index = i;
-        }
+        _container.reorderNavigationIndex(originalPosition, newPosition)
       }
     }
 

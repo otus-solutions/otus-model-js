@@ -31,7 +31,7 @@
       //TODO remove conditions that take navigationToRemove into account
 
       _container.removeNavigationOf(templateID);
-      _reorderIndexInNavigation(position);
+      _container.reorderNavigationIndex(position, _container.getNavigationListSize());
 
 
       function _updateInRoutes(inNavigation) {
@@ -46,13 +46,6 @@
             navigation.removeRouteByDestination(templateID);
           }
         }
-      }
-    }
-
-
-    function _reorderIndexInNavigation(position) {
-      for (var i = position; i < _container.getNavigationList().length; i++) {
-        _container.getNavigationList()[i].index = i;
       }
     }
 

@@ -46,6 +46,7 @@
     self.removeNavigationByIndex = removeNavigationByIndex;
     self.removeCurrentLastNavigation = removeCurrentLastNavigation;
     self.insertNavigation = insertNavigation;
+    self.reorderNavigationIndex = reorderNavigationIndex;
     self.setInitialNodes = setInitialNodes;
     self.getPreviousOf = getPreviousOf;
     self.getNextOf = getNextOf;
@@ -154,7 +155,7 @@
     }
 
     function getOrphanNavigations() {
-      var orphans = _navigationList.filter(function (navigation) {
+      let orphans = _navigationList.filter(function (navigation) {
         return navigation.isOrphan();
       });
 
@@ -227,6 +228,13 @@
       _navigationList.splice(actualPosition, 0, navigation);
 
       return actualPosition;
+    }
+
+
+    function reorderNavigationIndex(start, end) {
+      for (var i = start; i < end; i++) {
+        _navigationList[i].index = i;
+      }
     }
 
     function _findByOrigin(navigation, questionID) {
