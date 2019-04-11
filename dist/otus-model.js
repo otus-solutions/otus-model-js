@@ -17,7 +17,7 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.misc', []);
+    angular.module('otusjs.model.fieldCenter', []);
 })();
 'use strict';
 
@@ -31,21 +31,14 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.model.fieldCenter', []);
+    angular.module('otusjs.metadata', []);
 })();
 'use strict';
 
 (function () {
     'use strict';
 
-    angular.module('otusjs.metadata', []);
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation', []);
+    angular.module('otusjs.misc', []);
 })();
 'use strict';
 
@@ -53,6 +46,13 @@
     'use strict';
 
     angular.module('otusjs.model.monitoring', []);
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation', []);
 })();
 'use strict';
 
@@ -94,6 +94,13 @@
 (function () {
     'use strict';
 
+    angular.module('otusjs.laboratory.configuration', []);
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
     angular.module('otusjs.laboratory.exam', ['otusjs.laboratory.exam.lot', 'otusjs.laboratory.exam.sending']);
 })();
 'use strict';
@@ -102,13 +109,6 @@
     'use strict';
 
     angular.module('otusjs.laboratory.participant', []);
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.laboratory.configuration', []);
 })();
 'use strict';
 
@@ -1500,6 +1500,40 @@
 (function () {
     'use strict';
 
+    angular.module('otusjs.validation').service('AddFillingRulesService', AddFillingRulesService);
+
+    function AddFillingRulesService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, validatorType) {
+            return item.fillingRules.createOption(validatorType);
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.validation').service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
+
+    function RemoveFillingRulesWorkService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, fillingRuleType) {
+            item.fillingRules.removeFillingRules(fillingRuleType);
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
     angular.module('otusjs.surveyItem').service('AddAnswerOptionService', AddAnswerOptionService);
 
     function AddAnswerOptionService() {
@@ -1600,40 +1634,6 @@
 })();
 'use strict';
 
-(function () {
-    'use strict';
-
-    angular.module('otusjs.validation').service('AddFillingRulesService', AddFillingRulesService);
-
-    function AddFillingRulesService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, validatorType) {
-            return item.fillingRules.createOption(validatorType);
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.validation').service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
-
-    function RemoveFillingRulesWorkService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, fillingRuleType) {
-            item.fillingRules.removeFillingRules(fillingRuleType);
-        }
-    }
-})();
-'use strict';
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 (function () {
@@ -1704,347 +1704,65 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
+  angular.module('otusjs.model.fieldCenter').factory('otusjs.model.fieldCenter.FieldCenterFactory', Factory);
 
-  function IdiomFactory() {
+  function Factory() {
     var self = this;
 
-    /* Public interface */
+    /* Public methods */
     self.create = create;
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new Idiom();
+      return new FieldCenter({});
     }
 
     function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.IdiomFactory.fromJsonObject() method expects to receive a object instead a String");
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (center) {
+          return new FieldCenter(center);
+        });
+      } else {
+        return [];
       }
-      var label = new Idiom();
-
-      label.oid = jsonObject.oid;
-      label.plainText = jsonObject.plainText;
-      label.formattedText = jsonObject.formattedText;
-
-      return label;
     }
 
     return self;
   }
 
-  function Idiom() {
+  function FieldCenter(fieldCenter) {
     var self = this;
 
-    self.extends = "StudioObject";
-    self.objectType = "Label";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.misc').factory('LabelFactory', LabelFactory);
-
-  LabelFactory.$inject = ['IdiomFactory'];
-
-  function LabelFactory(IdiomFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      var labelObject = {};
-
-      labelObject.ptBR = IdiomFactory.create();
-      labelObject.enUS = IdiomFactory.create();
-      labelObject.esES = IdiomFactory.create();
-
-      return labelObject;
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.LabelFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var labelObject = {};
-
-      labelObject.ptBR = IdiomFactory.fromJsonObject(jsonObject.ptBR);
-      labelObject.enUS = IdiomFactory.fromJsonObject(jsonObject.enUS);
-      labelObject.esES = IdiomFactory.fromJsonObject(jsonObject.esES);
-
-      return labelObject;
-    }
-
-    return self;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.misc').factory('UnitFactory', UnitFactory);
-
-  function UnitFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new Unit();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.UnitFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var unit = new Unit();
-
-      unit.oid = jsonObject.oid;
-      unit.plainText = jsonObject.plainText;
-      unit.formattedText = jsonObject.formattedText;
-
-      return unit;
-    }
-
-    return self;
-  }
-
-  function Unit() {
-    var self = this;
-
-    self.extends = "StudioObject";
-    self.objectType = "Unit";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.laboratory.participant').factory('otusjs.laboratory.participant.ParticipantLaboratoryFactory', factory);
-
-  factory.$inject = ['otusjs.laboratory.participant.ParticipanTubeFactory', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
-
-  function factory(ParticipanTubeFactory, LaboratoryConfigurationService) {
-    var self = this;
-
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create(labParticipant, loggedUser, selectedParticipant) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, loggedUser, selectedParticipant);
-    }
-
-    function fromJson(labParticipant, loggedUser, selectedParticipant) {
-      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), loggedUser, selectedParticipant);
-    }
-    return self;
-  }
-
-  function ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, loggedUser, selectedParticipant) {
-    var self = this;
-    var _backupJSON;
-
-    self.objectType = labParticipant.objectType || 'ParticipantLaboratory';
-    self.recruitmentNumber = labParticipant.recruitmentNumber;
-    self.collectGroupName = labParticipant.collectGroupName; //CQ
-
-    //tube handling
-    self.tubes = [];
-    self.exams = labParticipant.exams; //not in use yet
-
-    self.reloadTubeList = reloadTubeList;
-    self.updateTubeList = updateTubeList;
-    self.toJSON = toJSON;
-
-    onInit();
-
-    function onInit() {
-      _backupJSON = angular.copy(labParticipant);
-      LaboratoryConfigurationService.initializeParticipantConfiguration(selectedParticipant, self.collectGroupName);
-      _tubeHandling();
-    }
-
-    function _tubeHandling() {
-      self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, loggedUser);
-    }
-
-    function toJSON() {
-      var json = {
-        objectType: self.objectType,
-        recruitmentNumber: self.recruitmentNumber,
-        collectGroupName: self.collectGroupName,
-        tubes: self.tubes,
-        exams: self.exams
-      };
-
-      return json;
-    }
-
-    function reloadTubeList() {
-      delete self.tubes;
-      self.tubes = ParticipanTubeFactory.buildFromArray(angular.copy(_backupJSON.tubes), loggedUser);
-    }
-
-    function updateTubeList() {
-      delete _backupJSON.tubes;
-      _backupJSON.tubes = angular.copy(self.tubes);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.laboratory').factory('otusjs.laboratory.ParticipanTubeFactory', factory);
-
-  factory.$inject = ['otusjs.laboratory.TubeCollectionDataFactory'];
-
-  function factory(TubeCollectionDataFactory) {
-    var self = this;
-
-    _onInit();
-
-    function _onInit() {}
-
-    /* Public Methods */
-    self.create = create;
-    self.buildFromArray = buildFromArray;
-
-    function create(tubeInfo, laboratoryConfiguration, operator) {
-      var tube = new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator);
-      return tube;
-    }
-
-    function buildFromArray(tubeArray, laboratoryConfiguration, operator) {
-      return tubeArray.map(function (tubeInfo) {
-        return new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator);
-      });
-    }
-
-    return self;
-  }
-
-  function Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator) {
-    var self = this;
-    var _labConfig;
-    var _operator;
-
-    /* Public Interface */
-    self.objectType = "Tube";
-
-    self.type = tubeInfo.type;
-    self.code = tubeInfo.code;
-    self.moment = tubeInfo.moment;
-    self.groupName = tubeInfo.groupName;
-    self.aliquotes = tubeInfo.aliquotes;
-    self.order = tubeInfo.order;
-    self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);
-
-    self.collect = collect;
-    self.toJSON = toJSON;
-
-    _onInit();
-
-    function _onInit() {
-      _operator = operator;
-      _labConfig = laboratoryConfiguration;
-      _fillDescriptors();
-    }
-
-    function _fillDescriptors() {
-      var tubeDescriptor = _labConfig.tubeConfiguration.tubeDescriptors.find(function (descriptor) {
-        return descriptor.name == self.type;
-      });
-
-      var momentDescriptor = _labConfig.collectMomentConfiguration.collectMomentDescriptors.find(function (descriptor) {
-        return descriptor.name == self.moment;
-      });
-
-      self.label = tubeDescriptor ? tubeDescriptor.label : '';
-      self.boxColor = tubeDescriptor ? tubeDescriptor.color : '';
-      self.momentLabel = momentDescriptor.label !== '' ? momentDescriptor.label : 'Nenhum';
-    }
-
-    function collect() {
-      self.tubeCollectionData.fill(_operator);
-    }
-
-    function toJSON() {
-      var json = {
-        objectType: self.objectType,
-        type: self.type,
-        moment: self.moment,
-        code: self.code,
-        groupName: self.groupName,
-        aliquotes: self.aliquotes,
-        order: self.order,
-        tubeCollectionData: self.tubeCollectionData
-      };
-      return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.laboratory').factory('otusjs.laboratory.TubeCollectionDataFactory', factory);
-
-  function factory() {
-    var self = this;
-
-    self.create = create;
-
-    function create(collectionInfo) {
-      return new TubeCollectionData(collectionInfo);
-    }
-
-    return self;
-  }
-
-  function TubeCollectionData(collectionInfo) {
-    var self = this;
-
-    self.objectType = 'TubeCollectionData';
-    self.isCollected = collectionInfo.isCollected;
-    self.metadata = collectionInfo.metadata;
-    self.operator = collectionInfo.operator;
-    self.time = collectionInfo.time;
-
-    self.fill = fill;
-    self.toJSON = toJSON;
-
-    function fill(operator) {
-      self.isCollected = true;
-      self.metadata = "";
-      self.operator = operator.email;
-      self.time = new Date().toISOString();
-    }
-
-    function toJSON() {
-      return {
-        objectType: self.objectType,
-        isCollected: self.isCollected,
-        metadata: self.metadata,
-        operator: self.operator,
-        time: self.time
-      };
+    self.toJson = toJson;
+
+    self.name = fieldCenter.name || null;
+    self.code = fieldCenter.code || null;
+    self.acronym = fieldCenter.acronym || null;
+    self.country = fieldCenter.country || null;
+    self.state = fieldCenter.state || null;
+    self.address = fieldCenter.address || null;
+    self.complement = fieldCenter.complement || null;
+    self.zip = fieldCenter.zip || null;
+    self.phone = fieldCenter.phone || null;
+    self.backgroundColor = fieldCenter.backgroundColor || null;
+    self.borderColor = fieldCenter.borderColor || null;
+
+    function toJson() {
+      var json = {};
+
+      json.name = self.name;
+      json.code = self.code;
+      json.acronym = self.acronym;
+      json.country = self.country;
+      json.state = self.state;
+      json.address = self.address;
+      json.complement = self.complement;
+      json.zip = self.zip;
+      json.phone = self.phone;
+      json.backgroundColor = self.backgroundColor;
+      json.borderColor = self.borderColor;
+
+      return JSON.stringify(json);
     }
   }
 })();
@@ -2280,6 +1998,225 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.laboratory.participant').factory('otusjs.laboratory.participant.ParticipantLaboratoryFactory', factory);
+
+  factory.$inject = ['otusjs.laboratory.participant.ParticipanTubeFactory', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
+
+  function factory(ParticipanTubeFactory, LaboratoryConfigurationService) {
+    var self = this;
+
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create(labParticipant, loggedUser, selectedParticipant) {
+      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, loggedUser, selectedParticipant);
+    }
+
+    function fromJson(labParticipant, loggedUser, selectedParticipant) {
+      return new ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, JSON.parse(labParticipant), loggedUser, selectedParticipant);
+    }
+    return self;
+  }
+
+  function ParticipantLaboratory(ParticipanTubeFactory, LaboratoryConfigurationService, labParticipant, loggedUser, selectedParticipant) {
+    var self = this;
+    var _backupJSON;
+
+    self.objectType = labParticipant.objectType || 'ParticipantLaboratory';
+    self.recruitmentNumber = labParticipant.recruitmentNumber;
+    self.collectGroupName = labParticipant.collectGroupName; //CQ
+
+    //tube handling
+    self.tubes = [];
+    self.exams = labParticipant.exams; //not in use yet
+
+    self.reloadTubeList = reloadTubeList;
+    self.updateTubeList = updateTubeList;
+    self.toJSON = toJSON;
+
+    onInit();
+
+    function onInit() {
+      _backupJSON = angular.copy(labParticipant);
+      LaboratoryConfigurationService.initializeParticipantConfiguration(selectedParticipant, self.collectGroupName);
+      _tubeHandling();
+    }
+
+    function _tubeHandling() {
+      self.tubes = ParticipanTubeFactory.buildFromArray(labParticipant.tubes, loggedUser);
+    }
+
+    function toJSON() {
+      var json = {
+        objectType: self.objectType,
+        recruitmentNumber: self.recruitmentNumber,
+        collectGroupName: self.collectGroupName,
+        tubes: self.tubes,
+        exams: self.exams
+      };
+
+      return json;
+    }
+
+    function reloadTubeList() {
+      delete self.tubes;
+      self.tubes = ParticipanTubeFactory.buildFromArray(angular.copy(_backupJSON.tubes), loggedUser);
+    }
+
+    function updateTubeList() {
+      delete _backupJSON.tubes;
+      _backupJSON.tubes = angular.copy(self.tubes);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory').factory('otusjs.laboratory.ParticipanTubeFactory', factory);
+
+  factory.$inject = ['otusjs.laboratory.TubeCollectionDataFactory'];
+
+  function factory(TubeCollectionDataFactory) {
+    var self = this;
+
+    _onInit();
+
+    function _onInit() {}
+
+    /* Public Methods */
+    self.create = create;
+    self.buildFromArray = buildFromArray;
+
+    function create(tubeInfo, laboratoryConfiguration, operator) {
+      var tube = new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator);
+      return tube;
+    }
+
+    function buildFromArray(tubeArray, laboratoryConfiguration, operator) {
+      return tubeArray.map(function (tubeInfo) {
+        return new Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator);
+      });
+    }
+
+    return self;
+  }
+
+  function Tube(tubeInfo, laboratoryConfiguration, TubeCollectionDataFactory, operator) {
+    var self = this;
+    var _labConfig;
+    var _operator;
+
+    /* Public Interface */
+    self.objectType = "Tube";
+
+    self.type = tubeInfo.type;
+    self.code = tubeInfo.code;
+    self.moment = tubeInfo.moment;
+    self.groupName = tubeInfo.groupName;
+    self.aliquotes = tubeInfo.aliquotes;
+    self.order = tubeInfo.order;
+    self.tubeCollectionData = TubeCollectionDataFactory.create(tubeInfo.tubeCollectionData, operator);
+
+    self.collect = collect;
+    self.toJSON = toJSON;
+
+    _onInit();
+
+    function _onInit() {
+      _operator = operator;
+      _labConfig = laboratoryConfiguration;
+      _fillDescriptors();
+    }
+
+    function _fillDescriptors() {
+      var tubeDescriptor = _labConfig.tubeConfiguration.tubeDescriptors.find(function (descriptor) {
+        return descriptor.name == self.type;
+      });
+
+      var momentDescriptor = _labConfig.collectMomentConfiguration.collectMomentDescriptors.find(function (descriptor) {
+        return descriptor.name == self.moment;
+      });
+
+      self.label = tubeDescriptor ? tubeDescriptor.label : '';
+      self.boxColor = tubeDescriptor ? tubeDescriptor.color : '';
+      self.momentLabel = momentDescriptor.label !== '' ? momentDescriptor.label : 'Nenhum';
+    }
+
+    function collect() {
+      self.tubeCollectionData.fill(_operator);
+    }
+
+    function toJSON() {
+      var json = {
+        objectType: self.objectType,
+        type: self.type,
+        moment: self.moment,
+        code: self.code,
+        groupName: self.groupName,
+        aliquotes: self.aliquotes,
+        order: self.order,
+        tubeCollectionData: self.tubeCollectionData
+      };
+      return json;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory').factory('otusjs.laboratory.TubeCollectionDataFactory', factory);
+
+  function factory() {
+    var self = this;
+
+    self.create = create;
+
+    function create(collectionInfo) {
+      return new TubeCollectionData(collectionInfo);
+    }
+
+    return self;
+  }
+
+  function TubeCollectionData(collectionInfo) {
+    var self = this;
+
+    self.objectType = 'TubeCollectionData';
+    self.isCollected = collectionInfo.isCollected;
+    self.metadata = collectionInfo.metadata;
+    self.operator = collectionInfo.operator;
+    self.time = collectionInfo.time;
+
+    self.fill = fill;
+    self.toJSON = toJSON;
+
+    function fill(operator) {
+      self.isCollected = true;
+      self.metadata = "";
+      self.operator = operator.email;
+      self.time = new Date().toISOString();
+    }
+
+    function toJSON() {
+      return {
+        objectType: self.objectType,
+        isCollected: self.isCollected,
+        metadata: self.metadata,
+        operator: self.operator,
+        time: self.time
+      };
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.laboratory.transportation').factory('otusjs.laboratory.transportation.LotFactory', factory);
 
   factory.$inject = ['otusjs.laboratory.WorkAliquotFactory'];
@@ -2482,73 +2419,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.fieldCenter').factory('otusjs.model.fieldCenter.FieldCenterFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new FieldCenter({});
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (center) {
-          return new FieldCenter(center);
-        });
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function FieldCenter(fieldCenter) {
-    var self = this;
-
-    self.toJson = toJson;
-
-    self.name = fieldCenter.name || null;
-    self.code = fieldCenter.code || null;
-    self.acronym = fieldCenter.acronym || null;
-    self.country = fieldCenter.country || null;
-    self.state = fieldCenter.state || null;
-    self.address = fieldCenter.address || null;
-    self.complement = fieldCenter.complement || null;
-    self.zip = fieldCenter.zip || null;
-    self.phone = fieldCenter.phone || null;
-    self.backgroundColor = fieldCenter.backgroundColor || null;
-    self.borderColor = fieldCenter.borderColor || null;
-
-    function toJson() {
-      var json = {};
-
-      json.name = self.name;
-      json.code = self.code;
-      json.acronym = self.acronym;
-      json.country = self.country;
-      json.state = self.state;
-      json.address = self.address;
-      json.complement = self.complement;
-      json.zip = self.zip;
-      json.phone = self.phone;
-      json.backgroundColor = self.backgroundColor;
-      json.borderColor = self.borderColor;
-
-      return JSON.stringify(json);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.metadata').factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
   MetadataAnswerFactory.$inject = ['LabelFactory'];
@@ -2704,6 +2574,248 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function isAvailableValue(value) {
       return getOptionByValue(value) ? false : true;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
+
+  function IdiomFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new Idiom();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.IdiomFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var label = new Idiom();
+
+      label.oid = jsonObject.oid;
+      label.plainText = jsonObject.plainText;
+      label.formattedText = jsonObject.formattedText;
+
+      return label;
+    }
+
+    return self;
+  }
+
+  function Idiom() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Label";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.misc').factory('LabelFactory', LabelFactory);
+
+  LabelFactory.$inject = ['IdiomFactory'];
+
+  function LabelFactory(IdiomFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.create();
+      labelObject.enUS = IdiomFactory.create();
+      labelObject.esES = IdiomFactory.create();
+
+      return labelObject;
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.LabelFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.fromJsonObject(jsonObject.ptBR);
+      labelObject.enUS = IdiomFactory.fromJsonObject(jsonObject.enUS);
+      labelObject.esES = IdiomFactory.fromJsonObject(jsonObject.esES);
+
+      return labelObject;
+    }
+
+    return self;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.misc').factory('UnitFactory', UnitFactory);
+
+  function UnitFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new Unit();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.UnitFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var unit = new Unit();
+
+      unit.oid = jsonObject.oid;
+      unit.plainText = jsonObject.plainText;
+      unit.formattedText = jsonObject.formattedText;
+
+      return unit;
+    }
+
+    return self;
+  }
+
+  function Unit() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Unit";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringCenterFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(monitoringCenter) {
+      return new MonitoringCenter(monitoringCenter);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (monitoringCenter) {
+          return new MonitoringCenter(monitoringCenter);
+        });
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function MonitoringCenter(monitoringCenter) {
+    var self = this;
+
+    self.toJson = toJson;
+
+    self.objectType = 'MonitoringCenter';
+    self.name = monitoringCenter.name || null;
+    self.goal = monitoringCenter.goal || null;
+    self.backgroundColor = monitoringCenter.backgroundColor || null;
+    self.borderColor = monitoringCenter.borderColor || null;
+
+    function toJson() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.name = self.name;
+      json.goal = self.goal;
+      json.backgroundColor = self.backgroundColor;
+      json.borderColor = self.borderColor;
+
+      return JSON.stringify(json);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new MonitoringInformation({});
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (center) {
+          return new MonitoringInformation(center);
+        });
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function MonitoringInformation(center) {
+    var self = this;
+
+    self.toJson = toJson;
+
+    self.objectType = "MonitoringInformation";
+    self.acronym = center.acronym || null;
+    self.fieldCenter = center.fieldCenter || null;
+    self.month = center.month || null;
+    self.sum = center.sum || null;
+    self.year = center.year || null;
+
+    function toJson() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.acronym = self.acronym;
+      json.fieldCenter = self.fieldCenter;
+      json.month = self.month;
+      json.sum = self.sum;
+      json.year = self.year;
+
+      return JSON.stringify(json);
     }
   }
 })();
@@ -4167,118 +4279,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       json.isCustom = self.isCustom;
 
       return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringCenterFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(monitoringCenter) {
-      return new MonitoringCenter(monitoringCenter);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (monitoringCenter) {
-          return new MonitoringCenter(monitoringCenter);
-        });
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function MonitoringCenter(monitoringCenter) {
-    var self = this;
-
-    self.toJson = toJson;
-
-    self.objectType = 'MonitoringCenter';
-    self.name = monitoringCenter.name || null;
-    self.goal = monitoringCenter.goal || null;
-    self.backgroundColor = monitoringCenter.backgroundColor || null;
-    self.borderColor = monitoringCenter.borderColor || null;
-
-    function toJson() {
-      var json = {};
-
-      json.objectType = self.objectType;
-      json.name = self.name;
-      json.goal = self.goal;
-      json.backgroundColor = self.backgroundColor;
-      json.borderColor = self.borderColor;
-
-      return JSON.stringify(json);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.MonitoringFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MonitoringInformation({});
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (center) {
-          return new MonitoringInformation(center);
-        });
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function MonitoringInformation(center) {
-    var self = this;
-
-    self.toJson = toJson;
-
-    self.objectType = "MonitoringInformation";
-    self.acronym = center.acronym || null;
-    self.fieldCenter = center.fieldCenter || null;
-    self.month = center.month || null;
-    self.sum = center.sum || null;
-    self.year = center.year || null;
-
-    function toJson() {
-      var json = {};
-
-      json.objectType = self.objectType;
-      json.acronym = self.acronym;
-      json.fieldCenter = self.fieldCenter;
-      json.month = self.month;
-      json.sum = self.sum;
-      json.year = self.year;
-
-      return JSON.stringify(json);
     }
   }
 })();
@@ -7461,98 +7461,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.surveyItem').factory('OptionItemFactory', OptionItemFactory);
-
-  function OptionItemFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(optionValue) {
-      return new Option(optionValue);
-    }
-
-    function fromJsonObject(option) {
-      if (option.objectType === 'OptionItem') {
-        return new Option(option.value);
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function Option(value) {
-    var self = this;
-    self.extends = 'StudioObject';
-    self.objectType = 'OptionItem';
-    self.value = value;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('QuestionOptionFactory', QuestionOptionFactory);
-
-  QuestionOptionFactory.$inject = ['OptionItemFactory'];
-
-  function QuestionOptionFactory(OptionItemFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new QuestionOption(OptionItemFactory);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.QuestionOptionFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var options = new QuestionOption(OptionItemFactory);
-      for (var object in jsonObject.data) {
-        options.data[object] = OptionItemFactory.fromJsonObject(jsonObject.data[object]);
-      }
-      return options;
-    }
-
-    return self;
-  }
-
-  function QuestionOption(OptionItemFactory) {
-    var self = this;
-
-    self.extends = 'StudioObject';
-    self.objectType = 'QuestionOption';
-    self.data = {};
-
-    /* Public methods */
-    self.createOption = createOption;
-    self.removeOption = removeOption;
-
-    function createOption(name, value) {
-      var option = OptionItemFactory.create(value);
-      self.data[name] = option;
-      return option;
-    }
-
-    function removeOption(name) {
-      delete self.data[name];
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.surveyItem').factory('ImageItemFactory', ImageItemFactory);
 
   ImageItemFactory.$inject = ['LabelFactory'];
@@ -7686,6 +7594,98 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       json.value = self.value;
 
       return json;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('OptionItemFactory', OptionItemFactory);
+
+  function OptionItemFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(optionValue) {
+      return new Option(optionValue);
+    }
+
+    function fromJsonObject(option) {
+      if (option.objectType === 'OptionItem') {
+        return new Option(option.value);
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function Option(value) {
+    var self = this;
+    self.extends = 'StudioObject';
+    self.objectType = 'OptionItem';
+    self.value = value;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('QuestionOptionFactory', QuestionOptionFactory);
+
+  QuestionOptionFactory.$inject = ['OptionItemFactory'];
+
+  function QuestionOptionFactory(OptionItemFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new QuestionOption(OptionItemFactory);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.QuestionOptionFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var options = new QuestionOption(OptionItemFactory);
+      for (var object in jsonObject.data) {
+        options.data[object] = OptionItemFactory.fromJsonObject(jsonObject.data[object]);
+      }
+      return options;
+    }
+
+    return self;
+  }
+
+  function QuestionOption(OptionItemFactory) {
+    var self = this;
+
+    self.extends = 'StudioObject';
+    self.objectType = 'QuestionOption';
+    self.data = {};
+
+    /* Public methods */
+    self.createOption = createOption;
+    self.removeOption = removeOption;
+
+    function createOption(name, value) {
+      var option = OptionItemFactory.create(value);
+      self.data[name] = option;
+      return option;
+    }
+
+    function removeOption(name) {
+      delete self.data[name];
     }
   }
 })();
