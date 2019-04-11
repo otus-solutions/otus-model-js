@@ -16,6 +16,10 @@
     function run(rule, answer) {
       _polyfillIsInteger();
 
+      if(answer == null){
+        return false;
+      }
+
       if (answer && !!answer['replace']) {
         answer = answer.replace(/,/, '.');
       }
