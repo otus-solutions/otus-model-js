@@ -1,4 +1,4 @@
-xdescribe('SurveyItemManagerFactory', function() {
+describe('SurveyItemManagerFactory', function() {
 
   var Mock = {};
   var factory = {};
@@ -6,9 +6,8 @@ xdescribe('SurveyItemManagerFactory', function() {
 
   var QUESTION_TYPE = 'IntegerQuestion';
   var CHECKBOX_TYPE = 'CheckboxQuestion';
-  var TEMPLATE_ID_PREFIX = 'TPL';
-  var CUSTOM_ID_PREFIX = 'TPL';
-  var INEXISTENT_CUSTOM_ID = 'INEXISTENT_CUSTOM_ID';
+  var GRID_TEXT_TYPE = 'GridTextQuestion';
+  var GRID_INTEGER_TYPE = 'GridIntegerQuestion';
 
   beforeEach(function() {
     angular.mock.module('otusjs');
@@ -17,24 +16,24 @@ xdescribe('SurveyItemManagerFactory', function() {
       mockItems(_$injector_);
       mockSurveyItemContainer(_$injector_);
 
-      factory = _$injector_.get('SurveyItemManagerFactory', injections).create();
+      factory = _$injector_.get('SurveyItemManagerFactory', injections);
     });
   });
 
   describe('getItemList method', function() {
 
-    it('should be defined in factory', function() {
-      expect(factory.getItemList).toBeDefined();
+    beforeEach(function () {
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q1');
+      spyOn(factory, 'create').and.callThrough();
     });
 
     it('should call SurveyItemContainer.getItemList method', function() {
-      factory.getItemList();
-
-      expect(Mock.SurveyItemContainer.getItemList).toHaveBeenCalled();
+      expect(Mock.SurveyItemManager.getItemList().length).toEqual(1);
     });
 
     it('should return an array', function() {
-      var returnedValue = factory.getItemList();
+      var returnedValue = Mock.SurveyItemManager.getItemList();
 
       expect(returnedValue).toEqual(jasmine.any(Array));
     });
@@ -43,10 +42,15 @@ xdescribe('SurveyItemManagerFactory', function() {
 
   describe('getItemListSize method', function() {
 
-    it('should call SurveyItemContainer.getItemListSize method', function() {
-      factory.getItemListSize();
+    beforeEach(function() {
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q1');
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q2');
+      spyOn(factory, 'create').and.callThrough();
+    });
 
-      expect(Mock.SurveyItemContainer.getItemListSize).toHaveBeenCalled();
+    it('should call SurveyItemContainer.getItemListSize method', function() {
+      expect(Mock.SurveyItemManager.getItemListSize()).toEqual(2);
     });
 
   });
@@ -54,28 +58,23 @@ xdescribe('SurveyItemManagerFactory', function() {
   describe('getItemByTemplateID method', function() {
 
     beforeEach(function() {
-      Mock.SurveyItemContainer.manageItems([Mock.itemOne, Mock.itemTwo, Mock.itemThree]);
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
     });
 
     it('should be defined in factory', function() {
-      expect(factory.getItemByTemplateID).toBeDefined();
-    });
-
-    it('should call SurveyItemContainer.getItemByTemplateID method with origin', function() {
-      factory.getItemByTemplateID(Mock.itemOne.templateID);
-
-      expect(Mock.SurveyItemContainer.getItemByTemplateID).toHaveBeenCalledWith(Mock.itemOne.templateID);
+      expect(Mock.SurveyItemManager.getItemByTemplateID).toBeDefined();
     });
 
     it('should return a item when exists', function() {
-      var returnedValue = factory.getItemByTemplateID(Mock.itemOne.templateID);
-
+      var returnedValue = Mock.SurveyItemManager.getItemByTemplateID('Q1');
       expect(returnedValue).toBeDefined();
     });
 
     it('should return undefined when navigation not exists', function() {
-      var returnedValue = factory.getItemByTemplateID('Q5');
-
+      var returnedValue = Mock.SurveyItemManager.getItemByTemplateID('Q5');
       expect(returnedValue).toBeUndefined();
     });
 
@@ -84,27 +83,22 @@ xdescribe('SurveyItemManagerFactory', function() {
   describe('getItemByCustomID method', function() {
 
     beforeEach(function() {
-      Mock.SurveyItemContainer.manageItems([Mock.itemOne, Mock.itemTwo, Mock.itemThree]);
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
     });
 
     it('should be defined in factory', function() {
-      expect(factory.getItemByCustomID).toBeDefined();
-    });
-
-    it('should call SurveyItemContainer.getItemByCustomID method with origin', function() {
-      factory.getItemByCustomID(Mock.itemOne.customID);
-
-      expect(Mock.SurveyItemContainer.getItemByCustomID).toHaveBeenCalledWith(Mock.itemOne.customID);
+      expect(Mock.SurveyItemManager.getItemByCustomID).toBeDefined();
     });
 
     it('should return a item when exists', function() {
-      var returnedValue = factory.getItemByCustomID(Mock.itemOne.customID);
+      var returnedValue = Mock.SurveyItemManager.getItemByCustomID("Q1");
 
       expect(returnedValue).toBeDefined();
     });
 
     it('should return undefined when navigation not exists', function() {
-      var returnedValue = factory.getItemByCustomID('Q5');
+      var returnedValue = Mock.SurveyItemManager.getItemByCustomID('Q5');
 
       expect(returnedValue).toBeUndefined();
     });
@@ -114,142 +108,189 @@ xdescribe('SurveyItemManagerFactory', function() {
   describe('getItemByID method', function() {
 
     beforeEach(function() {
-      Mock.SurveyItemContainer.manageItems([Mock.itemOne, Mock.itemTwo, Mock.itemThree]);
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
     });
 
     it('should be defined in factory', function() {
-      expect(factory.getItemByID).toBeDefined();
+      expect(Mock.SurveyItemManager.getItemByID).toBeDefined();
     });
 
-    it('should call SurveyItemContainer.getItemByID method with origin', function() {
-      factory.getItemByID('Q1');
-
-      expect(Mock.SurveyItemContainer.getItemByID).toHaveBeenCalledWith('Q1');
+    it('should call SurveyItemContainer.getItemByID method with customID', function() {
+      Mock.SurveyItemManager.getItemList()[0].customID = "Custom1";
+      var returnedValue = Mock.SurveyItemManager.getItemByID('Custom1');
+      expect(returnedValue).toEqual(Mock.SurveyItemManager.getItemList()[0]);
     });
 
-    it('should return a item when exists', function() {
-      var returnedValue = factory.getItemByID('Q1');
-
-      expect(returnedValue).toBeDefined();
+    it('should call SurveyItemContainer.getItemByID method with templateID', function() {
+      var returnedValue = Mock.SurveyItemManager.getItemByID('Q2');
+      expect(returnedValue).toEqual(Mock.SurveyItemManager.getItemList()[1]);
     });
 
-    it('should return undefined when navigation not exists', function() {
-      var returnedValue = factory.getItemByID('Q5');
+  });
 
-      expect(returnedValue).toBeUndefined();
+  describe('getItemPosition method', function() {
+
+    beforeEach(function() {
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
     });
 
+    it('should return correct position of item', function() {
+      expect(Mock.SurveyItemManager.getItemPosition('Q3')).toEqual(2);
+    });
+
+  });
+
+  describe('existsItem method', function() {
+
+    beforeEach(function() {
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(QUESTION_TYPE, 'Q');
+    });
+
+    it('should return true', function() {
+      expect(Mock.SurveyItemManager.existsItem('Q3')).toEqual(true);
+    });
+
+    it('should return false', function() {
+      expect(Mock.SurveyItemManager.existsItem('Q6')).toEqual(false);
+    });
   });
 
   describe('getAllCustomOptionID method', function() {
 
     beforeEach(function() {
-      Mock.SurveyItemContainer.manageItems([Mock.itemFour, Mock.itemFive]);
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(CHECKBOX_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(GRID_TEXT_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(GRID_INTEGER_TYPE, 'Q');
     });
 
     it('should return a empty array if there are no options', function() {
-      expect(factory.getAllCustomOptionsID()).toEqual([]);
+      expect(Mock.SurveyItemManager.getAllCustomOptionsID()).toEqual([]);
     });
 
     it('should return all customOptionID of all Checkbox Questions', function() {
-      Mock.itemFour.createOption('Q4a');
-      Mock.itemFour.createOption('Q4b');
-      Mock.itemFive.createOption('Q5a');
-      Mock.itemFive.createOption('Q5b');
-      expect(factory.getAllCustomOptionsID()).toEqual(['Q4a', 'Q4b', 'Q5a', 'Q5b']);
+      Mock.SurveyItemManager.getItemList()[0].createOption('Q4a');
+      Mock.SurveyItemManager.getItemList()[0].createOption('Q4b');
+      Mock.SurveyItemManager.getItemList()[1].createLine().addGridText('Q5a');
+      Mock.SurveyItemManager.getItemList()[1].createLine().addGridText('Q5b');
+      Mock.SurveyItemManager.getItemList()[2].createLine().addGridInteger('Q6a');
+      Mock.SurveyItemManager.getItemList()[2].createLine().addGridInteger('Q6b');
+      expect(Mock.SurveyItemManager.getAllCustomOptionsID()).toEqual(['Q4a', 'Q4b', 'Q5a', 'Q5b', 'Q6a', 'Q6b']);
     });
 
   });
 
   describe('addItem method', function() {
 
-    it('should call SurveyItemContainer.createItem method with item type', function() {
-      factory.addItem(QUESTION_TYPE, TEMPLATE_ID_PREFIX);
-
-      expect(Mock.SurveyItemContainer.createItem).toHaveBeenCalledWith(QUESTION_TYPE, TEMPLATE_ID_PREFIX + 1);
+    beforeEach(function() {
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(CHECKBOX_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(GRID_TEXT_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(GRID_INTEGER_TYPE, 'Q');
     });
 
-    it('should call SurveyItemContainer.createItem method with templateID', function() {
-      factory.addItem(QUESTION_TYPE, TEMPLATE_ID_PREFIX);
-
-      expect(Mock.SurveyItemContainer.createItem).toHaveBeenCalledWith(QUESTION_TYPE, TEMPLATE_ID_PREFIX + 1);
+    it('should add CHECKBOX_TYPE item', function() {
+      expect(Mock.SurveyItemManager.getItemList()[0].objectType).toEqual(CHECKBOX_TYPE);
+      expect(Mock.SurveyItemManager.getItemList()[0].templateID).toEqual("Q1");
     });
 
-    it('should return the new item created', function() {
-      var item = factory.addItem(QUESTION_TYPE, TEMPLATE_ID_PREFIX);
-
-      expect(item).toBeDefined();
+    it('should add GRID_TEXT_TYPE item with valid ID', function() {
+      expect(Mock.SurveyItemManager.getItemList()[1].objectType).toEqual(GRID_TEXT_TYPE);
+      expect(Mock.SurveyItemManager.getItemList()[1].templateID).toEqual("Q2");
     });
 
-    describe('in case of already exists a item with a templateID', function() {
-
-      it('should increment correctly - the added item must have the templateID Q2', function() {
-        Mock.SurveyItemContainer.manageItems([Mock.itemOne]);
-        var item = factory.addItem(QUESTION_TYPE, 'Q');
-        expect(item.templateID).not.toBe('Q1');
-        expect(item.templateID).toBe('Q2');
-      });
-
-      it('should increment correctly - the added item must have the templateID Q3', function() {
-        Mock.SurveyItemContainer.manageItems([Mock.itemOne, Mock.itemTwo]);
-        var item = factory.addItem(QUESTION_TYPE, 'Q');
-        expect(item.templateID).toBe('Q3');
-      });
-
-      it('should increment correctly - the added item must have the templateID Q4', function() {
-        Mock.SurveyItemContainer.manageItems([Mock.itemOne, Mock.itemTwo, Mock.itemThree]);
-        var item = factory.addItem(QUESTION_TYPE, 'Q');
-        expect(item.templateID).toBe('Q4');
-      });
-
+    it('should add GRID_INTEGER_TYPE item with valid ID', function() {
+      expect(Mock.SurveyItemManager.getItemList()[2].objectType).toEqual(GRID_INTEGER_TYPE);
+      expect(Mock.SurveyItemManager.getItemList()[2].templateID).toEqual("Q3");
     });
 
+  });
+
+  describe('getLastItem method', function() {
+
+    beforeEach(function() {
+      var result;
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(CHECKBOX_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(GRID_TEXT_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(GRID_INTEGER_TYPE, 'Q');
+    });
+
+    it('should return GRID_INTEGER_TYPE item', function() {
+      var result;
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(CHECKBOX_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(GRID_TEXT_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(GRID_INTEGER_TYPE, 'Q');
+      result = Mock.SurveyItemManager.getLastItem();
+      expect(result.objectType).toEqual(GRID_INTEGER_TYPE);
+      expect(result.templateID).toEqual("Q3");
+    });
+
+  });
+
+  describe('loadItem method', function() {
+
+    beforeEach(function() {
+      Mock.SurveyItemManager = factory.create();
+    });
+
+    it('should add CHECKBOX_TYPE item with id 4', function() {
+      Mock.SurveyItemManager.loadItem(CHECKBOX_TYPE, 'Q3', 'Q');
+      Mock.SurveyItemManager.addItem(CHECKBOX_TYPE, 'Q');
+      expect(Mock.SurveyItemManager.getLastItem().templateID).toEqual('Q4');
+    });
+
+  });
+
+  describe('setIncrementalIDValue method', function() {
+    beforeEach(function() {
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.setIncrementalIDValue(9);
+    });
+
+    it('should add CHECKBOX_TYPE item with id 10', function() {
+      Mock.SurveyItemManager.addItem(CHECKBOX_TYPE, 'Q');
+      expect(Mock.SurveyItemManager.getLastItem().templateID).toEqual('Q10');
+    });
   });
 
   describe('removeItem method', function() {
+    beforeEach(function() {
+      Mock.SurveyItemManager = factory.create();
+    });
 
-    it('should call SurveyItemContainer.removeItem method with template id', function() {
-      Mock.SurveyItemContainer.manageItems([Mock.itemOne, Mock.itemTwo, Mock.itemThree]);
-
-      factory.removeItem(Mock.itemOne.templateID);
-
-      expect(Mock.SurveyItemContainer.removeItem).toHaveBeenCalledWith(Mock.itemOne.templateID);
+    it('should add CHECKBOX_TYPE item with id 10', function() {
+      Mock.SurveyItemManager.addItem(CHECKBOX_TYPE, 'Q');
+      expect(Mock.SurveyItemManager.getLastItem().templateID).toEqual('Q1');
+      Mock.SurveyItemManager.removeItem('Q1');
+      expect(Mock.SurveyItemManager.getItemListSize()).toEqual(0);
     });
 
   });
 
-  describe('exists method', function() {
-    beforeEach(function() {
-      var item = factory.addItem(QUESTION_TYPE, CUSTOM_ID_PREFIX);
-    });
-
-    it('should return true when item exists', function() {
-      expect(factory.existsItem("TPL1")).toBe(true);
-    });
-
-    it('should return false when item not exists', function() {
-      expect(factory.existsItem(INEXISTENT_CUSTOM_ID)).toBe(false);
-    });
-
-  });
-
-  describe('isAvailableCustomID method', function() {
+  describe('moveItem method', function() {
 
     beforeEach(function() {
-      Mock.SurveyItemContainer.manageItems([Mock.itemFour, Mock.itemFive]);
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(CHECKBOX_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(GRID_TEXT_TYPE, 'Q');
+      Mock.SurveyItemManager.addItem(GRID_INTEGER_TYPE, 'Q');
     });
 
-    it("should return true if does not exists a item or a checkboxAnswerOption with a passed id", function() {
-      expect(factory.isAvailableCustomID('NOT_USED_ID')).toBe(true);
-    });
-
-    it("should return false if exists a item", function() {
-      expect(factory.isAvailableCustomID('Q4')).toBe(false);
-    });
-
-    it("should return false if exists a checkboxAnswerOption with a passed id", function() {
-      Mock.itemFive.createOption('Q5a');
-      expect(factory.isAvailableCustomID('Q5a')).toBe(false);
+    it('should add CHECKBOX_TYPE item', function() {
+      Mock.SurveyItemManager.moveItem(Mock.SurveyItemManager.getItemList()[0],3);
+      expect(Mock.SurveyItemManager.getItemList()[2].objectType).toEqual(CHECKBOX_TYPE);
+      expect(Mock.SurveyItemManager.getItemList()[2].templateID).toEqual("Q1");
     });
 
   });
@@ -257,11 +298,22 @@ xdescribe('SurveyItemManagerFactory', function() {
   describe('isAvailableCustomID method', function() {
 
     beforeEach(function() {
-      Mock.SurveyItemContainer.manageItems([Mock.itemOne, Mock.itemTwo, Mock.itemThree, Mock.itemFour, Mock.itemFive]);
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.addItem(CHECKBOX_TYPE, 'Q');
+      Mock.SurveyItemManager.getItemList()[0].createOption('Q4a');
+      Mock.SurveyItemManager.getItemList()[0].createOption('Q4b');
     });
 
-    it('should return true if does not exists a item or a checkboxAnswerOption with a passed id', function() {
-      expect(factory.getItemPosition('Q3')).toBe(2);
+    it('should return true', function() {
+      expect(Mock.SurveyItemManager.isAvailableCustomID("Q2")).toEqual(true);
+    });
+
+    it('should return false on id found in question', function() {
+      expect(Mock.SurveyItemManager.isAvailableCustomID("Q1")).toEqual(false);
+    });
+
+    it('should return false on id found in option', function() {
+      expect(Mock.SurveyItemManager.isAvailableCustomID("Q4a")).toEqual(false);
     });
 
   });
@@ -276,19 +328,17 @@ xdescribe('SurveyItemManagerFactory', function() {
 
   function mockSurveyItemContainer($injector) {
     Mock.SurveyItemContainerFactory = $injector.get('SurveyItemContainerFactory');
-    Mock.SurveyItemContainer = $injector.get('SurveyItemContainerFactory').create();
-
-    spyOn(Mock.SurveyItemContainerFactory, 'create').and.returnValue(Mock.SystemItemContainer);
+    Mock.SurveyItemContainer = Mock.SurveyItemContainerFactory.create();
     spyOn(Mock.SurveyItemContainer, 'createItem').and.callThrough();
     spyOn(Mock.SurveyItemContainer, 'removeItem').and.callThrough();
-    spyOn(Mock.SurveyItemContainer, 'getItemList').and.callThrough();
     spyOn(Mock.SurveyItemContainer, 'getItemListSize').and.callThrough();
     spyOn(Mock.SurveyItemContainer, 'getItemByTemplateID').and.callThrough();
     spyOn(Mock.SurveyItemContainer, 'getItemByCustomID').and.callThrough();
     spyOn(Mock.SurveyItemContainer, 'getItemByID').and.callThrough();
     spyOn(Mock.SurveyItemContainer, 'getItemPosition').and.callThrough();
+    spyOn(Mock.SurveyItemContainer, 'moveItem').and.callThrough();
 
-    injections.SurveyItemContainer = Mock.SurveyItemContainer;
+    injections.SurveyItemContainerFactory = Mock.SurveyItemContainerFactory;
   }
 
 });
