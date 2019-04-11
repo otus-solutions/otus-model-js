@@ -293,7 +293,7 @@
     }
 
     function removeRouteByDestination(destinationID) {
-      self.routes = self.routes.filter(route => route.destination !== destinationID); //todo does this alter order?
+      self.routes = self.routes.filter(route => route.destination !== destinationID);
     }
 
     function selfsame(other) {

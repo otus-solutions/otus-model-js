@@ -111,7 +111,6 @@
 
     function removeNavigation(templateID) {
       Inject.NavigationRemovalTask.execute(templateID);
-      // TODO: deve utilizar o mecanismo para reordenar a questões  
     }
 
     function applyRoute(routeData) {

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -47,7 +47,7 @@
 
     function loadFromItemContainerObject(itemContainerObject) {
       _itemList = [];
-      itemContainerObject.forEach(function(item) {
+      itemContainerObject.forEach(function (item) {
         _itemList.push(SurveyItemFactory.load(item));
       });
     }
@@ -65,16 +65,16 @@
     }
 
     function getItemByTemplateID(templateID) {
-      var filter = _itemList.filter(function(item) {
-        return findByTemplateID(item, templateID);
+      var filter = _itemList.filter(function (item) {
+        return _findByTemplateID(item, templateID);
       });
 
       return filter[0];
     }
 
     function getItemByCustomID(customID) {
-      var filter = _itemList.filter(function(item) {
-        return findByCustomID(item, customID);
+      var filter = _itemList.filter(function (item) {
+        return _findByCustomID(item, customID);
       });
 
       return filter[0];
@@ -91,7 +91,7 @@
 
     function getAllCheckboxQuestion() {
       var occurences = [];
-      _itemList.filter(function(item) {
+      _itemList.filter(function (item) {
         if (item.objectType === "CheckboxQuestion") {
           occurences.push(item);
         }
@@ -101,7 +101,7 @@
 
     function getAllGridTextQuestion() {
       var occurences = [];
-      _itemList.filter(function(item) {
+      _itemList.filter(function (item) {
         if (item.objectType === "GridTextQuestion") {
           occurences.push(item);
         }
@@ -111,7 +111,7 @@
 
     function getAllGridIntegerQuestion() {
       var occurences = [];
-      _itemList.filter(function(item) {
+      _itemList.filter(function (item) {
         if (item.objectType === "GridIntegerQuestion") {
           occurences.push(item);
         }
@@ -147,8 +147,8 @@
     }
 
     function removeItem(templateID) {
-      var itemToRemove = _itemList.filter(function(item) {
-        return findByTemplateID(item, templateID);
+      var itemToRemove = _itemList.filter(function (item) {
+        return _findByTemplateID(item, templateID);
       });
 
       var indexToRemove = _itemList.indexOf(itemToRemove[0]);
@@ -165,27 +165,26 @@
       _itemList.splice(-1, 1);
     }
 
-    function _moveItem(origin, destination) {
+    function moveItem(templateID, destination) {
+      let origin = _itemList.findIndex(item => _findByTemplateID(item, templateID));
+      _reorder(origin, destination);
+    }
+
+    function _reorder(origin, destination) {
       let itemToBeMoved = _itemList.splice(origin, 1)[0];
 
       if (origin >= destination) {
         _itemList.splice(destination, 0, itemToBeMoved);
       } else {
-        _itemList.splice(destination -1, 0, itemToBeMoved);
+        _itemList.splice(destination - 1, 0, itemToBeMoved);
       }
     }
 
-    function moveItem(templateID, destination) {  //todo rename one of them
-      let origin = _itemList.findIndex(item => findByTemplateID(item, templateID));
-      _moveItem(origin, destination);
-    }
-
-    /* Private methods */
-    function findByTemplateID(item, templateID) {
+    function _findByTemplateID(item, templateID) {
       return item.templateID.toLowerCase() === templateID.toLowerCase();
     }
 
-    function findByCustomID(item, customID) {
+    function _findByCustomID(item, customID) {
       return item.customID.toLowerCase() === customID.toLowerCase();
     }
   }

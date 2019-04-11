@@ -97,7 +97,6 @@
     self.loadItem = loadItem;
     self.getItems = getItems;
     self.getItemByTemplateID = getItemByTemplateID;
-    self.getTemplateIDbyCustomID = getTemplateIDbyCustomID;
     self.getItemByCustomID = getItemByCustomID;
     self.getItemByID = getItemByID;
     self.isAvailableID = isAvailableID;
@@ -147,10 +146,6 @@
 
     function getItemByCustomID(customID) {
       return self.SurveyItemManager.getItemByCustomID(customID);
-    }
-
-    function getTemplateIDbyCustomID(customID) {
-      return self.SurveyItemManager.getItemByCustomID(customID).customID;
     }
 
     function getItemByID(id) {

@@ -36,7 +36,6 @@
     self.getNavigationList = getNavigationList;
     self.getNavigationListSize = getNavigationListSize;
     self.getBeginNode = getBeginNode;
-    self.getBeginNode = getBeginNode;
     self.getEndNode = getEndNode;
     self.getOrphanNavigations = getOrphanNavigations;
     self.getLastNavigation = getLastNavigation;
