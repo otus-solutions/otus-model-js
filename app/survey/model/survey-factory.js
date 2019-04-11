@@ -41,7 +41,6 @@
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-      var itemManager = SurveyItemManagerFactory.create();
 
       var survey = new Survey(metainfo, identity, UUID);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
@@ -65,12 +64,11 @@
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-      var itemManager = SurveyItemManagerFactory.create();
       var survey = new Survey(metainfo, identity, UUID);
 
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
-      survey.DataSourceManager.loadJsonData(jsonObject.dataSources);  //TODO sometimes jsonObject.dataSources comes null
+      survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
 
       return survey;
     }

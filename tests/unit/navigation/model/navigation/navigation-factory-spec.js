@@ -1,4 +1,4 @@
-fdescribe('NavigationFactory', function() {
+describe('NavigationFactory', function() {
 
   var Mock = {};
   var EXTENTS = 'SurveyTemplateObject';
