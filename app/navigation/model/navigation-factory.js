@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -51,8 +51,8 @@
       navigation.inNavigations = [];
       navigation.outNavigations = [];
       navigation.routes = [];
-      navigation.isOrphan = function(){return true;};
-      navigation.hasOrphanRoot = function(){return true;};
+      navigation.isOrphan = function () { return true; };
+      navigation.hasOrphanRoot = function () { return true; };
       return navigation;
     }
 
@@ -70,7 +70,7 @@
       if (navigation) {
         navigation.index = jsonData.index;
         navigation.inNavigations = jsonData.inNavigations;
-        navigation.routes = jsonData.routes.map(function(route) {
+        navigation.routes = jsonData.routes.map(function (route) {
           return RouteFactory.fromJson(route);
         });
       }
@@ -122,6 +122,7 @@
     self.toJSON = toJSON;
     self.updateInNavigation = updateInNavigation;
     self.updateRoute = updateRoute;
+    self.setRoutes = setRoutes;
 
     function addInNavigation(navigation) {
       navigation.addOutNavigation(self);
@@ -132,6 +133,7 @@
       self.outNavigations.push(navigation);
     }
 
+    // this method does not seem to be working!
     function clone() {
       var clone = new self.constructor(self.origin, self.routes[0]);
       self.inNavigations.map(clone.addInNavigation);
@@ -177,8 +179,8 @@
       if (other.routes.length === self.routes.length) {
 
         if (self.routes.length > 0) {
-          var hasEqualRoutes = other.routes.every(function(otherRoute) {
-            return self.routes.some(function(selfRoute) {
+          var hasEqualRoutes = other.routes.every(function (otherRoute) {
+            return self.routes.some(function (selfRoute) {
               return selfRoute.equals(otherRoute);
             });
           });
@@ -211,7 +213,7 @@
     function getRouteByName(name) {
       var routeToReturn = null;
 
-      self.routes.some(function(route) {
+      self.routes.some(function (route) {
         if (route.name === name) {
           routeToReturn = route.clone();
           return true;
@@ -222,7 +224,7 @@
     }
 
     function hasRoute(routeData) {
-      return self.routes.some(function(route) {
+      return self.routes.some(function (route) {
         return (getRouteByName(routeData.name) || route.origin === routeData.origin && route.destination === routeData.destination);
       });
     }
@@ -238,7 +240,7 @@
         return result;
       }
 
-      result = self.inNavigations.every(function(navigation) {
+      result = self.inNavigations.every(function (navigation) {
         return navigation.isOrphan() || navigation.hasOrphanRoot();
       });
 
@@ -256,15 +258,19 @@
     function listRoutes() {
       var clones = [];
 
-      clones = self.routes.map(function(route) {
+      clones = self.routes.map(function (route) {
         return route.clone();
       });
 
       return clones;
     }
 
+    function setRoutes(routes) {
+      self.routes = routes;
+    }
+
     function removeInNavigation(navigationToRemove) {
-      self.inNavigations.some(function(navigation, index) {
+      self.inNavigations.some(function (navigation, index) {
         if (navigation.origin === navigationToRemove.origin) {
           self.inNavigations.splice(index, 1);
           return true;
@@ -273,7 +279,7 @@
     }
 
     function removeRouteByName(name) {
-      self.routes.some(function(route, index) {
+      self.routes.some(function (route, index) {
         if (route.name === name) {
           self.routes.splice(index, 1);
           if (route.isDefault) {
@@ -306,15 +312,15 @@
       json.origin = self.origin;
       json.index = self.index;
       json.inNavigations = _buildJsonInNavigations();
-      json.routes = self.routes.map(function(route) {
-        return route; 
+      json.routes = self.routes.map(function (route) {
+        return route;
       });
 
       return json;
     }
 
     function _buildJsonInNavigations() {
-      return self.inNavigations.map(function(element) {
+      return self.inNavigations.map(function (element) {
         if (element.origin !== 'NULL NAVIGATION') {
           return {
             origin: element.origin,
@@ -330,7 +336,7 @@
     }
 
     function updateInNavigation(navigation) {
-      var wasUpdated = self.inNavigations.some(function(inNavigation, index) {
+      var wasUpdated = self.inNavigations.some(function (inNavigation, index) {
         if (inNavigation.origin === navigation.origin) {
           self.inNavigations[index] = navigation;
           return true;
@@ -353,7 +359,7 @@
     }
 
     function _updateRoute(routeToUpdate) {
-      self.routes.some(function(route, index) {
+      self.routes.some(function (route, index) {
         if (route.name === routeToUpdate.name) {
           self.routes[index] = routeToUpdate;
           return true;
