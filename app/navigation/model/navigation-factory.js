@@ -125,6 +125,7 @@
     self.updateInNavigation = updateInNavigation;
     self.isDefaultRoute = isDefaultRoute;
     self.updateRoute = updateRoute;
+    self.setRoutes = setRoutes;
 
     function addInNavigation(navigation) {
       navigation.addOutNavigation(self);
@@ -264,6 +265,10 @@
       });
 
       return clones;
+    }
+
+    function setRoutes(routes) {
+      self.routes = routes;
     }
 
     function removeInNavigation(navigationToRemove) {

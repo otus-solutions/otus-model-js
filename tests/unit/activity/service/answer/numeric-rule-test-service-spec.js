@@ -26,6 +26,18 @@ describe('NumericRuleTestService', function() {
 
     });
 
+    describe('when inputed answer is a null', function() {
+
+      beforeEach(function() {
+        Mock.rule = {};
+      });
+
+      it('should return false', function() {
+        expect(service.run(Mock.rule, null)).toBe(false);
+      });
+
+    });
+
     describe('when inputed answer is not an Integer', function() {
 
       beforeEach(function() {
