@@ -221,8 +221,8 @@
       _navigationList.splice(-1, 1);
     }
 
-    function insertNavigation(navigation, position) {
-      let actualPosition = position === 0 ?  2 : position + 1 ;
+    function insertNavigation(navigation, originalPosition, position) {
+      let actualPosition = originalPosition > position ?   position + 2 : position + 1 ;
 
       _navigationList.splice(actualPosition, 0, navigation);
 

@@ -25,7 +25,7 @@
     function execute(navigationToMove, originalPosition, destination) {
 
       navigationToMove.clearNavigation();
-      let newPosition = _container.insertNavigation(navigationToMove, destination);
+      let newPosition = _container.insertNavigation(navigationToMove, originalPosition,  destination);
 
       let navigationToUpdate = _container.getNextOf(newPosition);
       let routeData = _getRouteData(navigationToMove.origin, navigationToUpdate.origin);
