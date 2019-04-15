@@ -41,7 +41,6 @@
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-      var itemManager = SurveyItemManagerFactory.create();
 
       var survey = new Survey(metainfo, identity, UUID);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
@@ -65,12 +64,11 @@
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-      var itemManager = SurveyItemManagerFactory.create();
       var survey = new Survey(metainfo, identity, UUID);
 
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
-      survey.DataSourceManager.loadJsonData(jsonObject.dataSources);  //TODO sometimes jsonObject.dataSources comes null
+      survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
 
       return survey;
     }
@@ -94,6 +92,7 @@
     self.initialize = initialize;
     self.addItem = addItem;
     self.removeItem = removeItem;
+    self.moveItem = moveItem;
     self.updateItem = updateItem;
     self.loadItem = loadItem;
     self.getItems = getItems;
@@ -120,6 +119,11 @@
     function removeItem(templateID) {
       self.SurveyItemManager.removeItem(templateID);
       self.NavigationManager.removeNavigation(templateID);
+    }
+
+    function moveItem(item, position) {
+      self.SurveyItemManager.moveItem(item, position);
+      self.NavigationManager.moveNavigation(item.templateID, position);
     }
 
     function updateItem(item) {

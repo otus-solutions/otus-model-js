@@ -52,36 +52,29 @@ describe('SurveyFactory', function() {
       expect(Mock.SurveyUUIDGenerator.generateSurveyUUID).toHaveBeenCalled();
     });
 
-    xit('should call SurveyItemManagerFactory.init()', function() {
-      spyOn(Mock.SurveyItemManagerFactory, 'init');
+    it("should move a SurveyItem by calling SurveyItemManager and NavigationManager", function () {
+      spyOn(survey.SurveyItemManager,'moveItem');
+      spyOn(survey.NavigationManager,'moveNavigation');
+      let mockSurveyItem = {templateID: "ID", customID:"customID"};
 
-      factory.create(jasmine.any(String), jasmine.any(String));
 
-      expect(Mock.SurveyItemManagerFactory.init).toHaveBeenCalled();
+      survey.moveItem(mockSurveyItem, 5);
+      expect(survey.SurveyItemManager.moveItem).toHaveBeenCalled();
+      expect(survey.NavigationManager.moveNavigation).toHaveBeenCalled();
+
     });
-
   });
 
   describe("SurveyFactory.fromJsonObject(jsonObject)", function() {
     var json = {};
 
     beforeEach(function() {
+      spyOn(Mock.SurveyMetaInfoFactory,'fromJsonObject');
       survey = factory.fromJsonObject(Mock.surveyTemplate);
     });
 
-    xit("should call SurveyMetaInfoFactory.fromJsonObject method with Mock.surveyTemplate.metainfo", function() {
+    it("should call SurveyMetaInfoFactory.fromJsonObject method with Mock.surveyTemplate.metainfo", function() {
       expect(Mock.SurveyMetaInfoFactory.fromJsonObject).toHaveBeenCalledWith(Mock.surveyTemplate.metainfo);
-    });
-
-  describe("should create an instance with the same values of", function() {
-
-      beforeEach(function () {
-        jsonSurvey = survey.toJSON();
-      });
-
-      it("Mock.surveyTemplate", function() {
-        expect(JSON.stringify(jsonSurvey)).toEqual(JSON.stringify(Mock.surveyTemplate));
-      });
     });
 
   });

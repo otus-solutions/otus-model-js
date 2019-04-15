@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -35,6 +35,8 @@
     self.getNavigationPositionByOrigin = getNavigationPositionByOrigin;
     self.getNavigationList = getNavigationList;
     self.getNavigationListSize = getNavigationListSize;
+    self.getBeginNode = getBeginNode;
+    self.getEndNode = getEndNode;
     self.getOrphanNavigations = getOrphanNavigations;
     self.getLastNavigation = getLastNavigation;
     self.existsNavigationTo = existsNavigationTo;
@@ -42,8 +44,11 @@
     self.removeNavigationOf = removeNavigationOf;
     self.removeNavigationByIndex = removeNavigationByIndex;
     self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+    self.insertNavigation = insertNavigation;
+    self.reorderNavigationIndex = reorderNavigationIndex;
     self.setInitialNodes = setInitialNodes;
     self.getPreviousOf = getPreviousOf;
+    self.getNextOf = getNextOf;
     self.getEmptyNavigation = getEmptyNavigation;
 
     function resetData() {
@@ -57,12 +62,12 @@
 
       /* FIX IN NAVIGATIONS */
       var nullNavigation = NavigationFactory.createNullNavigation();
-      _navigationList.forEach(function(navigation) {
+      _navigationList.forEach(function (navigation) {
         var replacer = [];
-        navigation.inNavigations.forEach(function(inNav) {
+        navigation.inNavigations.forEach(function (inNav) {
           if (inNav && inNav.origin in navMap) {
             replacer.push(navMap[inNav.origin]);
-          }else {
+          } else {
             replacer.push(nullNavigation);
           }
         });
@@ -73,7 +78,7 @@
     function _loadNavigations(jsonData) {
       var navMap = {};
       var navigation;
-      jsonData.forEach(function(newNavigation) {
+      jsonData.forEach(function (newNavigation) {
         navigation = NavigationFactory.fromJson(newNavigation);
         _navigationList.push(navigation);
         navMap[navigation.origin] = navigation;
@@ -82,10 +87,10 @@
     }
 
     function getNavigationByOrigin(origin) {
-      var filter = _navigationList.filter(function(navigation) {
-        return findByOrigin(navigation, origin);
+      var found = _navigationList.find(function (navigation) {
+        return _findByOrigin(navigation, origin);
       });
-      return filter[0];
+      return found;
     }
 
     function getEmptyNavigation(indexToRemove) {
@@ -105,11 +110,26 @@
       return _navigationList.length;
     }
 
+    function getBeginNode() {
+      return _navigationList[0];
+    }
+
+    function getEndNode() {
+      return _navigationList[1];
+    }
+
     function getPreviousOf(index) {
       if (index === 2) {
-        index = 1;
+        return getNavigationByPosition(0);
       }
       return getNavigationByPosition(index - 1);
+    }
+
+    function getNextOf(index) {
+      if (index === _navigationList.length - 1) {
+        return getNavigationByPosition(1);
+      }
+      return getNavigationByPosition(index + 1);
     }
 
     function getNavigationByPosition(position) {
@@ -134,7 +154,7 @@
     }
 
     function getOrphanNavigations() {
-      var orphans = _navigationList.filter(function(navigation) {
+      let orphans = _navigationList.filter(function (navigation) {
         return navigation.isOrphan();
       });
 
@@ -169,13 +189,13 @@
     }
 
     function removeNavigationOf(questionID) {
-      var navigationToRemove = _navigationList.filter(function(navigation) {
-        return findByOrigin(navigation, questionID);
+      var navigationToRemove = _navigationList.find(function (navigation) {
+        return _findByOrigin(navigation, questionID);
       });
-      var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
+      var indexToRemove = _navigationList.indexOf(navigationToRemove);
       if (indexToRemove > -1) {
         _navigationList.splice(indexToRemove, 1);
-        _removeFromInNavigations(indexToRemove, navigationToRemove[0]);
+        _removeFromInNavigations(indexToRemove, navigationToRemove);
       }
     }
 
@@ -187,7 +207,7 @@
       }
       for (var i = indexToRemove; i < _navigationList.length; i++) {
         var inIndex = _navigationList[i].inNavigations.indexOf(navigationToRemove);
-        if(inIndex > -1){
+        if (inIndex > -1) {
           _navigationList[i].inNavigations[inIndex] = nullNavigation;
         }
       }
@@ -201,8 +221,22 @@
       _navigationList.splice(-1, 1);
     }
 
-    /* Private methods */
-    function findByOrigin(navigation, questionID) {
+    function insertNavigation(navigation, originalPosition, position) {
+      let actualPosition = originalPosition > position ?   position + 2 : position + 1 ;
+
+      _navigationList.splice(actualPosition, 0, navigation);
+
+      return actualPosition;
+    }
+
+
+    function reorderNavigationIndex(start, end) {
+      for (var i = start; i < end; i++) {
+        _navigationList[i].index = i;
+      }
+    }
+
+    function _findByOrigin(navigation, questionID) {
       return navigation.origin === questionID;
     }
   }

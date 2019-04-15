@@ -3,13 +3,13 @@
 
   angular
     .module('otusjs.model.navigation')
-    .service('otusjs.model.navigation.DefaultRouteCreationTaskService', service);
+    .service('otusjs.model.navigation.DefaultRouteCreationTaskService', Service);
 
-  service.$inject = [
+  Service.$inject = [
     'otusjs.model.navigation.RouteFactory'
   ];
 
-  function service(RouteFactory) {
+  function Service(RouteFactory) {
     var self = this;
     var _container = null;
 
