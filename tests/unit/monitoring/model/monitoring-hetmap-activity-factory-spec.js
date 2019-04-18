@@ -18,6 +18,7 @@ fdescribe("HeatMap Activity Factory Tests", function () {
   });
 
   it('should test', function () {
+    factory.setStatus(['CREATED','SAVED','FINALIZED','DOES_NOT_APPLY','UNDEFINED','MULTIPLE','AMBIGUITY']);
     var STATUS = factory.getStatus();
     expect(factory.create(Mock.activityCreated).toJSON().status).toEqual(STATUS.CREATED);
     expect(factory.create(Mock.activitySaved).toJSON().status).toEqual(STATUS.SAVED);

@@ -9,20 +9,13 @@
   function Factory($filter) {
     var self = this;
 
-    const STATUS = {
-      CREATED : 'Criado',
-      SAVED : 'Salvo',
-      FINALIZED : 'Finalizado',
-      DOES_NOT_APPLY : 'DOES_NOT_APPLY',
-      UNDEFINED : 'UNDEFINED',
-      MULTIPLE : 'MULTIPLE',
-      AMBIGUITY : 'AMBIGUITY'
-    };
+    self.STATUS = {}
 
     /* Public methods */
     self.create = create;
     self.fromJsonObject = fromJsonObject;
     self.getStatus = getStatus;
+    self.setStatus = setStatus;
 
     function create(json) {
       return new HeatMapActivityFactory($filter, self.getStatus(), json);
@@ -31,15 +24,25 @@
     function fromJsonObject(jsonObject) {
       if (Array.isArray(jsonObject)) {
         return jsonObject.map(function (activity) {
-          return new HeatMapActivityFactory($filter, self.getStatus(), activity);
+          return new HeatMapActivityFactory($filter, self.getStatus(), activity).toJSON();
         });
       } else {
         return [];
       }
     }
 
+    function setStatus(status) {
+      if(status && !Array.isArray(status)){
+        self.STATUS[status] = status;
+      } else if (status && Array.isArray(status)){
+        status.forEach(function (statusName) {
+          self.STATUS[statusName] = statusName;
+        })
+      }
+    }
+
     function getStatus() {
-      return STATUS;
+      return self.STATUS;
     }
 
     return self;
@@ -56,7 +59,11 @@
     self.date = jsonData.activities.length> 0 ? $filter('date')(jsonData.activities[0].statusHistory.date, 'dd/MM/yyyy') : null;
     self.information = null;
     self.observation = null;
-    _buildStatus(jsonData);
+    if(jsonData.status){
+      self.status = jsonData.status;
+    }else {
+      _buildStatus(jsonData);
+    }
 
     function _buildStatus(data) {
       if (data.doesNotApply) {
@@ -68,7 +75,7 @@
           self.observation = data.doesNotApply ? data.doesNotApply.observation : undefined;
         }
       } else if (data.activities.length == 0) {
-          self.status = STATUS.UNDEFINED
+        self.status = STATUS.UNDEFINED
       } else if (data.activities.length > 1) {
         var information = [];
         data.activities.filter(function (activity) {
@@ -77,8 +84,8 @@
             'date': $filter('date')(activity.statusHistory.date, 'dd/MM/yyyy')
           });
         });
-          self.status = STATUS.MULTIPLE;
-          self.information = information;
+        self.status = STATUS.MULTIPLE;
+        self.information = information;
 
       } else if (data.activities.length == 1) {
         self.status = STATUS[data.activities[0].statusHistory.name];
@@ -93,12 +100,8 @@
       json.name = self.name;
       json.status = self.status;
       json.date = self.date;
-      if (self.information){
-        json.information = self.information;
-      }
-      if (self.observation){
-        json.observation = self.observation;
-      }
+      json.information = self.information;
+      json.observation = self.observation;
 
       return json;
     }
