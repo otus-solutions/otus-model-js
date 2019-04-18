@@ -3,7 +3,6 @@ fdescribe("HeatMap Activity Factory Tests", function () {
   var Injections = {};
   var factory;
 
-
   beforeEach(function () {
     mockData();
     angular.mock.module('otusjs.model.monitoring');
@@ -17,8 +16,8 @@ fdescribe("HeatMap Activity Factory Tests", function () {
     });
   });
 
-  it('should test', function () {
-    factory.setStatus(['CREATED','SAVED','FINALIZED','DOES_NOT_APPLY','UNDEFINED','MULTIPLE','AMBIGUITY']);
+  it('should test status of activities created', function () {
+    factory.setStatus(Mock.status);
     var STATUS = factory.getStatus();
     expect(factory.create(Mock.activityCreated).toJSON().status).toEqual(STATUS.CREATED);
     expect(factory.create(Mock.activitySaved).toJSON().status).toEqual(STATUS.SAVED);
@@ -27,11 +26,65 @@ fdescribe("HeatMap Activity Factory Tests", function () {
     expect(factory.create(Mock.activityMultiple).toJSON().status).toEqual(STATUS.MULTIPLE);
     expect(factory.create(Mock.activityNotApply).toJSON().status).toEqual(STATUS.DOES_NOT_APPLY);
     expect(factory.create(Mock.activityUndefined).toJSON().status).toEqual(STATUS.UNDEFINED);
-    var mapa = factory.fromJsonObject(Mock.activities);
   });
 
+  it('should return status', function () {
+    expect(factory.getStatus()).toEqual(jasmine.any(Object));
+    factory.setStatus(Mock.status);
+    expect(factory.getStatus()).toEqual(Mock.statusModel);
+  });
+
+  it('should set a status', function () {
+    expect(factory.getStatus()).toEqual(jasmine.any(Object));
+    factory.setStatus("TEST");
+    expect(factory.getStatus()).toEqual({TEST: "TEST"});
+    factory.setStatus();
+    expect(factory.getStatus()).toEqual(jasmine.any(Object));
+  });
+
+  it('should build map activities for heatmap', function () {
+    factory.setStatus(Mock.status);
+    var STATUS = factory.getStatus();
+    expect(factory.fromJsonObject()).toEqual(jasmine.any(Array));
+    var activities = factory.fromJsonObject(Mock.activities);
+    expect(activities.length).toEqual(7);
+    expect(activities[0].status).toEqual(STATUS.UNDEFINED);
+    expect(activities[1].status).toEqual(STATUS.DOES_NOT_APPLY);
+    expect(activities[2].status).toEqual(STATUS.MULTIPLE);
+    expect(activities[3].status).toEqual(STATUS.AMBIGUITY);
+    expect(activities[4].status).toEqual(STATUS.CREATED);
+    expect(activities[5].status).toEqual(STATUS.SAVED);
+    expect(activities[6].status).toEqual(STATUS.FINALIZED);
+  });
+
+  it('should create method', function () {
+    expect(factory.create().toJSON().objectType).toEqual('HeatMapActivity');
+    expect(factory.create().toJSON().acronym).toEqual(null);
+    expect(factory.create().toJSON().name).toEqual(null);
+    expect(factory.create().toJSON().date).toEqual(null);
+    expect(factory.create().toJSON().information).toEqual(null);
+    expect(factory.create().toJSON().observation).toEqual(null);
+    expect(factory.create().toJSON().status).toEqual(null);
+    expect(factory.create(Mock.activity).toJSON().status).toEqual(Mock.activity.status);
+    delete Mock.activity.status;
+    expect(factory.create(Mock.activity).toJSON().status).toBeUndefined();
+  });
 
   function mockData() {
+    Mock.activity = {
+      activities : {},
+      status: "TEST"
+    };
+    Mock.status = ['CREATED','SAVED','FINALIZED','DOES_NOT_APPLY','UNDEFINED','MULTIPLE','AMBIGUITY'];
+    Mock.statusModel = {
+      'CREATED': 'CREATED',
+      'SAVED': 'SAVED',
+      'FINALIZED': 'FINALIZED',
+      'DOES_NOT_APPLY': 'DOES_NOT_APPLY',
+      'UNDEFINED': 'UNDEFINED',
+      'MULTIPLE': 'MULTIPLE',
+      'AMBIGUITY': 'AMBIGUITY'
+    };
     Mock.activityAmbiguity = {
       acronym: "DSOC",
       name: "DIÁRIO DO SONO",
@@ -77,7 +130,7 @@ fdescribe("HeatMap Activity Factory Tests", function () {
 
       ],
       doesNotApply: null
-    }
+    };
 
     Mock.activityCreated = {
       acronym: "DSOC",
@@ -175,8 +228,6 @@ fdescribe("HeatMap Activity Factory Tests", function () {
       ],
       doesNotApply: null
     };
-
     Mock.activities = [Mock.activityUndefined, Mock.activityNotApply, Mock.activityMultiple, Mock.activityAmbiguity, Mock.activityCreated, Mock.activitySaved, Mock.activityFinalized]
-
   }
 });

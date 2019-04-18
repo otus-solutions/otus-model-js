@@ -22,13 +22,6 @@
 'use strict';
 
 (function () {
-    'use strict';
-
-    angular.module('otusjs.metadata', []);
-})();
-'use strict';
-
-(function () {
    'use strict';
 
    angular.module('otusjs.laboratory', ['otusjs.laboratory.participant', 'otusjs.laboratory.configuration', 'otusjs.laboratory.transportation', 'otusjs.laboratory.exam']);
@@ -38,7 +31,7 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.misc', []);
+    angular.module('otusjs.metadata', []);
 })();
 'use strict';
 
@@ -53,6 +46,13 @@
   'use strict';
 
   angular.module('otusjs.model.navigation', []);
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.misc', []);
 })();
 'use strict';
 
@@ -129,14 +129,14 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.laboratory.exam.sending', []);
+    angular.module('otusjs.laboratory.exam.lot', []);
 })();
 'use strict';
 
 (function () {
     'use strict';
 
-    angular.module('otusjs.laboratory.exam.lot', []);
+    angular.module('otusjs.laboratory.exam.sending', []);
 })();
 'use strict';
 
@@ -1786,169 +1786,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 'use strict';
 
 (function () {
-  'use strict';
-
-  angular.module('otusjs.metadata').factory('MetadataAnswerFactory', MetadataAnswerFactory);
-
-  MetadataAnswerFactory.$inject = ['LabelFactory'];
-
-  function MetadataAnswerFactory(LabelFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(value, extractionValue) {
-      var labelObject = LabelFactory.create();
-      return new MetadataAnswer(value, extractionValue, labelObject);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.MetadataAnswerFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
-      return new MetadataAnswer(jsonObject.value, jsonObject.extractionValue, labelObject);
-    }
-
-    return self;
-  }
-
-  function MetadataAnswer(value, extractionValue, labelObject) {
-    var self = this;
-
-    self.extends = 'StudioObject';
-    self.objectType = 'MetadataAnswer';
-    self.dataType = 'Integer';
-    self.value = value;
-    self.extractionValue = extractionValue;
-    self.label = labelObject;
-
-    self.setExtractionValue = setExtractionValue;
-
-    function setExtractionValue(newExtractionValue) {
-      self.extractionValue = newExtractionValue;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.metadata').factory('MetadataGroupFactory', MetadataGroupFactory);
-
-  MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
-
-  function MetadataGroupFactory(MetadataAnswerFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MetadataGroup(MetadataAnswerFactory);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.MetadataGroupFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var metadaGroup = new MetadataGroup(MetadataAnswerFactory);
-
-      jsonObject.options.forEach(function (metadataAnswerOption) {
-        metadaGroup.options.push(MetadataAnswerFactory.fromJsonObject(metadataAnswerOption));
-      });
-
-      return metadaGroup;
-    }
-
-    return self;
-  }
-
-  function MetadataGroup(MetadataAnswerFactory) {
-    var self = this;
-
-    self.extents = 'StudioObject';
-    self.objectType = 'MetadataGroup';
-    self.options = [];
-
-    /* Public methods */
-    self.getOptionListSize = getOptionListSize;
-    self.getOptionByValue = getOptionByValue;
-    self.getOptionByExtractionValue = getOptionByExtractionValue;
-    self.createOption = createOption;
-    self.removeOption = removeOption;
-    self.removeLastOption = removeLastOption;
-    self.isAvailableExtractionValue = isAvailableExtractionValue;
-    self.isAvailableValue = isAvailableValue;
-
-    function getOptionListSize() {
-      return self.options.length;
-    }
-
-    function getOptionByValue(value) {
-      var filter = self.options.filter(function (option) {
-        if (option.value === value) {
-          return option;
-        }
-      });
-
-      return filter[0];
-    }
-
-    function getOptionByExtractionValue(extractionValue) {
-      var filter = self.options.filter(function (option) {
-        if (option.extractionValue.toString() === extractionValue.toString()) {
-          return option;
-        }
-      });
-
-      return filter[0];
-    }
-
-    function createOption() {
-      var value = self.options.length;
-
-      do {
-        value++;
-      } while (!(isAvailableExtractionValue(value) && isAvailableValue(value)));
-
-      var option = MetadataAnswerFactory.create(value, value);
-      self.options.push(option);
-
-      return option;
-    }
-
-    function removeOption(value) {
-      self.options.splice(value - 1, 1);
-      reorderOptionValues();
-    }
-
-    function removeLastOption() {
-      self.options.splice(-1, 1);
-    }
-
-    function reorderOptionValues() {
-      self.options.forEach(function (option, index) {
-        option.value = ++index;
-      });
-    }
-
-    function isAvailableExtractionValue(newValue) {
-      return getOptionByExtractionValue(newValue) ? false : true;
-    }
-
-    function isAvailableValue(value) {
-      return getOptionByValue(value) ? false : true;
-    }
-  }
-})();
-'use strict';
-
-(function () {
   angular.module('otusjs.laboratory.configuration').service('otusjs.laboratory.configuration.AliquotDescriptorsService', Service);
 
   function Service() {
@@ -2599,43 +2436,48 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
+  angular.module('otusjs.metadata').factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
-  function IdiomFactory() {
+  MetadataAnswerFactory.$inject = ['LabelFactory'];
+
+  function MetadataAnswerFactory(LabelFactory) {
     var self = this;
 
     /* Public interface */
     self.create = create;
     self.fromJsonObject = fromJsonObject;
 
-    function create() {
-      return new Idiom();
+    function create(value, extractionValue) {
+      var labelObject = LabelFactory.create();
+      return new MetadataAnswer(value, extractionValue, labelObject);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.IdiomFactory.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.misc.model.MetadataAnswerFactory.fromJsonObject() method expects to receive a object instead a String");
       }
-      var label = new Idiom();
-
-      label.oid = jsonObject.oid;
-      label.plainText = jsonObject.plainText;
-      label.formattedText = jsonObject.formattedText;
-
-      return label;
+      var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
+      return new MetadataAnswer(jsonObject.value, jsonObject.extractionValue, labelObject);
     }
 
     return self;
   }
 
-  function Idiom() {
+  function MetadataAnswer(value, extractionValue, labelObject) {
     var self = this;
 
-    self.extends = "StudioObject";
-    self.objectType = "Label";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
+    self.extends = 'StudioObject';
+    self.objectType = 'MetadataAnswer';
+    self.dataType = 'Integer';
+    self.value = value;
+    self.extractionValue = extractionValue;
+    self.label = labelObject;
+
+    self.setExtractionValue = setExtractionValue;
+
+    function setExtractionValue(newExtractionValue) {
+      self.extractionValue = newExtractionValue;
+    }
   }
 })();
 'use strict';
@@ -2643,11 +2485,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.misc').factory('LabelFactory', LabelFactory);
+  angular.module('otusjs.metadata').factory('MetadataGroupFactory', MetadataGroupFactory);
 
-  LabelFactory.$inject = ['IdiomFactory'];
+  MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
 
-  function LabelFactory(IdiomFactory) {
+  function MetadataGroupFactory(MetadataAnswerFactory) {
     var self = this;
 
     /* Public interface */
@@ -2655,73 +2497,101 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      var labelObject = {};
-
-      labelObject.ptBR = IdiomFactory.create();
-      labelObject.enUS = IdiomFactory.create();
-      labelObject.esES = IdiomFactory.create();
-
-      return labelObject;
+      return new MetadataGroup(MetadataAnswerFactory);
     }
 
     function fromJsonObject(jsonObject) {
       if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.LabelFactory.fromJsonObject() method expects to receive a object instead a String");
+        throw new Error("otusjs.model.misc.model.MetadataGroupFactory.fromJsonObject() method expects to receive a object instead a String");
       }
-      var labelObject = {};
+      var metadaGroup = new MetadataGroup(MetadataAnswerFactory);
 
-      labelObject.ptBR = IdiomFactory.fromJsonObject(jsonObject.ptBR);
-      labelObject.enUS = IdiomFactory.fromJsonObject(jsonObject.enUS);
-      labelObject.esES = IdiomFactory.fromJsonObject(jsonObject.esES);
+      jsonObject.options.forEach(function (metadataAnswerOption) {
+        metadaGroup.options.push(MetadataAnswerFactory.fromJsonObject(metadataAnswerOption));
+      });
 
-      return labelObject;
-    }
-
-    return self;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.misc').factory('UnitFactory', UnitFactory);
-
-  function UnitFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new Unit();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.UnitFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var unit = new Unit();
-
-      unit.oid = jsonObject.oid;
-      unit.plainText = jsonObject.plainText;
-      unit.formattedText = jsonObject.formattedText;
-
-      return unit;
+      return metadaGroup;
     }
 
     return self;
   }
 
-  function Unit() {
+  function MetadataGroup(MetadataAnswerFactory) {
     var self = this;
 
-    self.extends = "StudioObject";
-    self.objectType = "Unit";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
+    self.extents = 'StudioObject';
+    self.objectType = 'MetadataGroup';
+    self.options = [];
+
+    /* Public methods */
+    self.getOptionListSize = getOptionListSize;
+    self.getOptionByValue = getOptionByValue;
+    self.getOptionByExtractionValue = getOptionByExtractionValue;
+    self.createOption = createOption;
+    self.removeOption = removeOption;
+    self.removeLastOption = removeLastOption;
+    self.isAvailableExtractionValue = isAvailableExtractionValue;
+    self.isAvailableValue = isAvailableValue;
+
+    function getOptionListSize() {
+      return self.options.length;
+    }
+
+    function getOptionByValue(value) {
+      var filter = self.options.filter(function (option) {
+        if (option.value === value) {
+          return option;
+        }
+      });
+
+      return filter[0];
+    }
+
+    function getOptionByExtractionValue(extractionValue) {
+      var filter = self.options.filter(function (option) {
+        if (option.extractionValue.toString() === extractionValue.toString()) {
+          return option;
+        }
+      });
+
+      return filter[0];
+    }
+
+    function createOption() {
+      var value = self.options.length;
+
+      do {
+        value++;
+      } while (!(isAvailableExtractionValue(value) && isAvailableValue(value)));
+
+      var option = MetadataAnswerFactory.create(value, value);
+      self.options.push(option);
+
+      return option;
+    }
+
+    function removeOption(value) {
+      self.options.splice(value - 1, 1);
+      reorderOptionValues();
+    }
+
+    function removeLastOption() {
+      self.options.splice(-1, 1);
+    }
+
+    function reorderOptionValues() {
+      self.options.forEach(function (option, index) {
+        option.value = ++index;
+      });
+    }
+
+    function isAvailableExtractionValue(newValue) {
+      return getOptionByExtractionValue(newValue) ? false : true;
+    }
+
+    function isAvailableValue(value) {
+      return getOptionByValue(value) ? false : true;
+    }
   }
 })();
 'use strict';
@@ -2844,6 +2714,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.HeatMapActivityFactory', Factory);
 
   Factory.$inject = ['$filter'];
+
   function Factory($filter) {
     var self = this;
 
@@ -2876,6 +2747,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         status.forEach(function (statusName) {
           self.STATUS[statusName] = statusName;
         });
+      } else {
+        self.STATUS = {};
       }
     }
 
@@ -2886,21 +2759,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return self;
   }
 
-  function HeatMapActivityFactory($filter, STATUS, jsonData) {
+  function HeatMapActivityFactory($filter, STATUS) {
+    var jsonData = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
     var self = this;
 
     self.toJSON = toJSON;
 
-    self.objectType = "HeatMapActivityFactory";
+    self.objectType = "HeatMapActivity";
     self.acronym = jsonData.acronym || null;
     self.name = jsonData.name || null;
-    self.date = jsonData.activities.length > 0 ? $filter('date')(jsonData.activities[0].statusHistory.date, 'dd/MM/yyyy') : null;
+    self.date = jsonData.activities ? jsonData.activities.length > 0 ? $filter('date')(jsonData.activities[0].statusHistory.date, 'dd/MM/yyyy') : null : null;
     self.information = null;
     self.observation = null;
     if (jsonData.status) {
       self.status = jsonData.status;
     } else {
-      _buildStatus(jsonData);
+      if (jsonData.activities) _buildStatus(jsonData);else self.status = null;
     }
 
     function _buildStatus(data) {
@@ -2914,6 +2789,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       } else if (data.activities.length == 0) {
         self.status = STATUS.UNDEFINED;
+      } else if (data.activities.length == 1) {
+        self.status = STATUS[data.activities[0].statusHistory.name];
       } else if (data.activities.length > 1) {
         var information = [];
         data.activities.filter(function (activity) {
@@ -2924,10 +2801,126 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         });
         self.status = STATUS.MULTIPLE;
         self.information = information;
-      } else if (data.activities.length == 1) {
-        self.status = STATUS[data.activities[0].statusHistory.name];
+      } else {
+        self.status = STATUS.UNDEFINED;
       }
     }
+
+    function toJSON() {
+      var json = {};
+
+      json.objectType = self.objectType;
+      json.acronym = self.acronym;
+      json.name = self.name;
+      json.status = self.status;
+      json.date = self.date;
+      json.information = self.information;
+      json.observation = self.observation;
+
+      return json;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.monitoring').factory('otusjs.model.monitoring.HeatMapExamFactory', Factory);
+
+  Factory.$inject = ['$filter'];
+  function Factory($filter) {
+    var self = this;
+
+    self.STATUS = {};
+
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+    self.getStatus = getStatus;
+    self.setStatus = setStatus;
+
+    function create(json) {
+      return new HeatMapExamFactory($filter, self.getStatus(), json);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (activity) {
+          return new HeatMapExamFactory($filter, self.getStatus(), activity).toJSON();
+        });
+      } else {
+        return [];
+      }
+    }
+
+    function setStatus(status) {
+      if (status && !Array.isArray(status)) {
+        self.STATUS[status] = status;
+      } else if (status && Array.isArray(status)) {
+        status.forEach(function (statusName) {
+          self.STATUS[statusName] = statusName;
+        });
+      } else {
+        self.STATUS = {};
+      }
+    }
+
+    function getStatus() {
+      return self.STATUS;
+    }
+
+    return self;
+  }
+
+  function HeatMapExamFactory($filter, STATUS) {
+    var jsonData = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    var self = this;
+
+    self.toJSON = toJSON;
+
+    self.objectType = "HeatMapExam";
+    self.name = jsonData.name || null;
+    self.quantity = jsonData.exams.length;
+    // self.date = jsonData.activities ? jsonData.activities.length> 0 ? $filter('date')(jsonData.activities[0].statusHistory.date, 'dd/MM/yyyy') : null : null;
+    // self.information = null;
+    self.observation = null;
+    if (jsonData.status) {
+      self.status = jsonData.status;
+    } else {
+      if (jsonData.activities) _buildStatus(jsonData);else self.status = null;
+    }
+
+    //TODO: verificar necessidade (Tiago)
+    // function _buildStatus(data) {
+    //   if (data.doesNotApply) {
+    //     if (data.activities.length == 0) {
+    //       self.status = STATUS.DOES_NOT_APPLY;
+    //       self.observation = data.doesNotApply ? data.doesNotApply.observation : undefined;
+    //     } else {
+    //       self.status = STATUS.AMBIGUITY;
+    //       self.observation = data.doesNotApply ? data.doesNotApply.observation : undefined;
+    //     }
+    //   } else if (data.activities.length == 0) {
+    //     self.status = STATUS.UNDEFINED
+    //   } else if (data.activities.length == 1) {
+    //     self.status = STATUS[data.activities[0].statusHistory.name];
+    //   } else if (data.activities.length > 1) {
+    //     var information = [];
+    //     data.activities.filter(function (activity) {
+    //       information.push({
+    //         'status': STATUS[activity.statusHistory.name],
+    //         'date': $filter('date')(activity.statusHistory.date, 'dd/MM/yyyy')
+    //       });
+    //     });
+    //     self.status = STATUS.MULTIPLE;
+    //     self.information = information;
+    //
+    //   }  else {
+    //     self.status = STATUS.UNDEFINED;
+    //   }
+    // }
 
     function toJSON() {
       var json = {};
@@ -4890,6 +4883,136 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
+
+  function IdiomFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new Idiom();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.IdiomFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var label = new Idiom();
+
+      label.oid = jsonObject.oid;
+      label.plainText = jsonObject.plainText;
+      label.formattedText = jsonObject.formattedText;
+
+      return label;
+    }
+
+    return self;
+  }
+
+  function Idiom() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Label";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.misc').factory('LabelFactory', LabelFactory);
+
+  LabelFactory.$inject = ['IdiomFactory'];
+
+  function LabelFactory(IdiomFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.create();
+      labelObject.enUS = IdiomFactory.create();
+      labelObject.esES = IdiomFactory.create();
+
+      return labelObject;
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.LabelFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.fromJsonObject(jsonObject.ptBR);
+      labelObject.enUS = IdiomFactory.fromJsonObject(jsonObject.enUS);
+      labelObject.esES = IdiomFactory.fromJsonObject(jsonObject.esES);
+
+      return labelObject;
+    }
+
+    return self;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.misc').factory('UnitFactory', UnitFactory);
+
+  function UnitFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new Unit();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.UnitFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var unit = new Unit();
+
+      unit.oid = jsonObject.oid;
+      unit.plainText = jsonObject.plainText;
+      unit.formattedText = jsonObject.formattedText;
+
+      return unit;
+    }
+
+    return self;
+  }
+
+  function Unit() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Unit";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.model.participant').factory('otusjs.model.participant.ParticipantFactory', Factory);
 
   function Factory() {
@@ -6470,6 +6593,130 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.laboratory.exam').factory('otusjs.laboratory.exam.ExamLotFactory', Factory);
+
+  Factory.$inject = ['$filter', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
+
+  function Factory($filter, LaboratoryConfigurationService) {
+    var self = this;
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create() {
+      return new ExamLot($filter, LaboratoryConfigurationService, {});
+    }
+
+    function fromJson(lotInfo) {
+      return new ExamLot($filter, LaboratoryConfigurationService, lotInfo);
+    }
+
+    return self;
+  }
+
+  function ExamLot($filter, LaboratoryConfigurationService, lotInfo) {
+    var self = this;
+    var _aliquotDescriptor;
+
+    self.objectType = 'ExamLot';
+    self._id = lotInfo._id || '';
+    self.code = lotInfo.code || '';
+    self.aliquotName = lotInfo.aliquotName || '';
+    self.aliquotList = lotInfo.aliquotList || null;
+    self.aliquotLabel = lotInfo.aliquotLabel || '';
+    self.fieldCenter = lotInfo.fieldCenter || '';
+    self.realizationDate = lotInfo.realizationDate || new Date();
+    self.operator = lotInfo.operator || '';
+
+    self.setAliquotName = setAliquotName;
+    self.insertAliquot = insertAliquot;
+    self.removeAliquotByIndex = removeAliquotByIndex;
+    self.getAliquotsToCsv = getAliquotsToCsv;
+
+    self.toJSON = toJSON;
+
+    onInit();
+
+    function onInit() {
+      _updateAliquotLabel();
+      _fixAliquots();
+    }
+
+    function _fixAliquots() {
+      if (self.aliquotList) {
+        if (self.aliquotList.length > 0) {
+          self.aliquotList.map(function (aliquot) {
+            _fillAliquotLabels(aliquot);
+          });
+        }
+      }
+    }
+
+    function _updateAliquotLabel() {
+      if (self.aliquotName.length) {
+        _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.aliquotName);
+        self.aliquotLabel = _aliquotDescriptor.label;
+      }
+    }
+
+    function setAliquotName(aliquotName) {
+      self.aliquotName = aliquotName;
+      _updateAliquotLabel();
+    }
+
+    function insertAliquot(aliquot) {
+      _fillAliquotLabels(aliquot);
+      self.aliquotList.push(aliquot);
+      return aliquot;
+    }
+
+    function _fillAliquotLabels(aliquot) {
+      aliquot.label = _getAliquotLabel(aliquot.name);
+      aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
+      aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
+    }
+
+    function _getAliquotLabel(aliquotName) {
+      var aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
+      if (aliquotDescriptor) return aliquotDescriptor.label;
+    }
+
+    function removeAliquotByIndex(index) {
+      return self.aliquotList.splice(index, 1);
+    }
+
+    function getAliquotsToCsv() {
+      return self.aliquotList.map(function (aliquot) {
+        var formattedDate = $filter('date')(new Date(aliquot.birthdate.value), 'dd/MM/yyyy');
+
+        return {
+          aliquota: aliquot.code,
+          sexo: aliquot.sex,
+          nascimento: formattedDate
+        };
+      });
+    }
+
+    function toJSON() {
+      var json = {
+        objectType: self.objectType,
+        _id: self._id,
+        code: self.code,
+        aliquotName: self.aliquotName,
+        fieldCenter: self.fieldCenter,
+        realizationDate: self.realizationDate,
+        operator: self.operator,
+        aliquotList: self.aliquotList
+      };
+
+      return json;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.laboratory.exam.sending').factory('otusjs.laboratory.exam.sending.Exam', Factory);
 
   Factory.$inject = ['otusjs.laboratory.exam.sending.ExamResults', 'otusjs.laboratory.exam.sending.ExamObservation'];
@@ -6802,130 +7049,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (self._id) {
         json._id = self._id;
       }
-
-      return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.laboratory.exam').factory('otusjs.laboratory.exam.ExamLotFactory', Factory);
-
-  Factory.$inject = ['$filter', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
-
-  function Factory($filter, LaboratoryConfigurationService) {
-    var self = this;
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create() {
-      return new ExamLot($filter, LaboratoryConfigurationService, {});
-    }
-
-    function fromJson(lotInfo) {
-      return new ExamLot($filter, LaboratoryConfigurationService, lotInfo);
-    }
-
-    return self;
-  }
-
-  function ExamLot($filter, LaboratoryConfigurationService, lotInfo) {
-    var self = this;
-    var _aliquotDescriptor;
-
-    self.objectType = 'ExamLot';
-    self._id = lotInfo._id || '';
-    self.code = lotInfo.code || '';
-    self.aliquotName = lotInfo.aliquotName || '';
-    self.aliquotList = lotInfo.aliquotList || null;
-    self.aliquotLabel = lotInfo.aliquotLabel || '';
-    self.fieldCenter = lotInfo.fieldCenter || '';
-    self.realizationDate = lotInfo.realizationDate || new Date();
-    self.operator = lotInfo.operator || '';
-
-    self.setAliquotName = setAliquotName;
-    self.insertAliquot = insertAliquot;
-    self.removeAliquotByIndex = removeAliquotByIndex;
-    self.getAliquotsToCsv = getAliquotsToCsv;
-
-    self.toJSON = toJSON;
-
-    onInit();
-
-    function onInit() {
-      _updateAliquotLabel();
-      _fixAliquots();
-    }
-
-    function _fixAliquots() {
-      if (self.aliquotList) {
-        if (self.aliquotList.length > 0) {
-          self.aliquotList.map(function (aliquot) {
-            _fillAliquotLabels(aliquot);
-          });
-        }
-      }
-    }
-
-    function _updateAliquotLabel() {
-      if (self.aliquotName.length) {
-        _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.aliquotName);
-        self.aliquotLabel = _aliquotDescriptor.label;
-      }
-    }
-
-    function setAliquotName(aliquotName) {
-      self.aliquotName = aliquotName;
-      _updateAliquotLabel();
-    }
-
-    function insertAliquot(aliquot) {
-      _fillAliquotLabels(aliquot);
-      self.aliquotList.push(aliquot);
-      return aliquot;
-    }
-
-    function _fillAliquotLabels(aliquot) {
-      aliquot.label = _getAliquotLabel(aliquot.name);
-      aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
-      aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
-    }
-
-    function _getAliquotLabel(aliquotName) {
-      var aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
-      if (aliquotDescriptor) return aliquotDescriptor.label;
-    }
-
-    function removeAliquotByIndex(index) {
-      return self.aliquotList.splice(index, 1);
-    }
-
-    function getAliquotsToCsv() {
-      return self.aliquotList.map(function (aliquot) {
-        var formattedDate = $filter('date')(new Date(aliquot.birthdate.value), 'dd/MM/yyyy');
-
-        return {
-          aliquota: aliquot.code,
-          sexo: aliquot.sex,
-          nascimento: formattedDate
-        };
-      });
-    }
-
-    function toJSON() {
-      var json = {
-        objectType: self.objectType,
-        _id: self._id,
-        code: self.code,
-        aliquotName: self.aliquotName,
-        fieldCenter: self.fieldCenter,
-        realizationDate: self.realizationDate,
-        operator: self.operator,
-        aliquotList: self.aliquotList
-      };
 
       return json;
     }
@@ -7680,6 +7803,98 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.surveyItem').factory('OptionItemFactory', OptionItemFactory);
+
+  function OptionItemFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(optionValue) {
+      return new Option(optionValue);
+    }
+
+    function fromJsonObject(option) {
+      if (option.objectType === 'OptionItem') {
+        return new Option(option.value);
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function Option(value) {
+    var self = this;
+    self.extends = 'StudioObject';
+    self.objectType = 'OptionItem';
+    self.value = value;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('QuestionOptionFactory', QuestionOptionFactory);
+
+  QuestionOptionFactory.$inject = ['OptionItemFactory'];
+
+  function QuestionOptionFactory(OptionItemFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new QuestionOption(OptionItemFactory);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.QuestionOptionFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var options = new QuestionOption(OptionItemFactory);
+      for (var object in jsonObject.data) {
+        options.data[object] = OptionItemFactory.fromJsonObject(jsonObject.data[object]);
+      }
+      return options;
+    }
+
+    return self;
+  }
+
+  function QuestionOption(OptionItemFactory) {
+    var self = this;
+
+    self.extends = 'StudioObject';
+    self.objectType = 'QuestionOption';
+    self.data = {};
+
+    /* Public methods */
+    self.createOption = createOption;
+    self.removeOption = removeOption;
+
+    function createOption(name, value) {
+      var option = OptionItemFactory.create(value);
+      self.data[name] = option;
+      return option;
+    }
+
+    function removeOption(name) {
+      delete self.data[name];
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.surveyItem').factory('ImageItemFactory', ImageItemFactory);
 
   ImageItemFactory.$inject = ['LabelFactory'];
@@ -7813,98 +8028,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       json.value = self.value;
 
       return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('OptionItemFactory', OptionItemFactory);
-
-  function OptionItemFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(optionValue) {
-      return new Option(optionValue);
-    }
-
-    function fromJsonObject(option) {
-      if (option.objectType === 'OptionItem') {
-        return new Option(option.value);
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function Option(value) {
-    var self = this;
-    self.extends = 'StudioObject';
-    self.objectType = 'OptionItem';
-    self.value = value;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('QuestionOptionFactory', QuestionOptionFactory);
-
-  QuestionOptionFactory.$inject = ['OptionItemFactory'];
-
-  function QuestionOptionFactory(OptionItemFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new QuestionOption(OptionItemFactory);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.QuestionOptionFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var options = new QuestionOption(OptionItemFactory);
-      for (var object in jsonObject.data) {
-        options.data[object] = OptionItemFactory.fromJsonObject(jsonObject.data[object]);
-      }
-      return options;
-    }
-
-    return self;
-  }
-
-  function QuestionOption(OptionItemFactory) {
-    var self = this;
-
-    self.extends = 'StudioObject';
-    self.objectType = 'QuestionOption';
-    self.data = {};
-
-    /* Public methods */
-    self.createOption = createOption;
-    self.removeOption = removeOption;
-
-    function createOption(name, value) {
-      var option = OptionItemFactory.create(value);
-      self.data[name] = option;
-      return option;
-    }
-
-    function removeOption(name) {
-      delete self.data[name];
     }
   }
 })();

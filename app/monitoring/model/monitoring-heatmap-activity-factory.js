@@ -5,11 +5,12 @@
     .module('otusjs.model.monitoring')
     .factory('otusjs.model.monitoring.HeatMapActivityFactory', Factory);
 
-  Factory.$inject = ['$filter']
+  Factory.$inject = ['$filter'];
+
   function Factory($filter) {
     var self = this;
 
-    self.STATUS = {}
+    self.STATUS = {};
 
     /* Public methods */
     self.create = create;
@@ -38,6 +39,8 @@
         status.forEach(function (statusName) {
           self.STATUS[statusName] = statusName;
         })
+      } else {
+        self.STATUS = {};
       }
     }
 
@@ -48,21 +51,22 @@
     return self;
   }
 
-  function HeatMapActivityFactory($filter, STATUS, jsonData) {
+  function HeatMapActivityFactory($filter, STATUS, jsonData = {}) {
     var self = this;
 
     self.toJSON = toJSON;
 
-    self.objectType = "HeatMapActivityFactory";
+    self.objectType = "HeatMapActivity";
     self.acronym = jsonData.acronym || null;
     self.name = jsonData.name || null;
-    self.date = jsonData.activities.length> 0 ? $filter('date')(jsonData.activities[0].statusHistory.date, 'dd/MM/yyyy') : null;
+    self.date = jsonData.activities ? jsonData.activities.length> 0 ? $filter('date')(jsonData.activities[0].statusHistory.date, 'dd/MM/yyyy') : null : null;
     self.information = null;
     self.observation = null;
     if(jsonData.status){
       self.status = jsonData.status;
     }else {
-      _buildStatus(jsonData);
+      if(jsonData.activities) _buildStatus(jsonData);
+      else self.status = null;
     }
 
     function _buildStatus(data) {
@@ -76,6 +80,8 @@
         }
       } else if (data.activities.length == 0) {
         self.status = STATUS.UNDEFINED
+      } else if (data.activities.length == 1) {
+        self.status = STATUS[data.activities[0].statusHistory.name];
       } else if (data.activities.length > 1) {
         var information = [];
         data.activities.filter(function (activity) {
@@ -87,8 +93,8 @@
         self.status = STATUS.MULTIPLE;
         self.information = information;
 
-      } else if (data.activities.length == 1) {
-        self.status = STATUS[data.activities[0].statusHistory.name];
+      }  else {
+        self.status = STATUS.UNDEFINED;
       }
     }
 
