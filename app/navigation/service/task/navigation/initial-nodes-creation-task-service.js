@@ -25,8 +25,8 @@
       _container.setInitialNodes();
 
       var routeData = {
-        'origin': _container.getNavigationList()[0].origin,
-        'destination': _container.getNavigationList()[1].origin
+        'origin': _container.getBeginNode().origin,
+        'destination': _container.getEndNode().origin
       };
 
       DefaultRouteCreationTaskService.execute(routeData, _container.getNavigationList()[0]);

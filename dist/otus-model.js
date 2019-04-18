@@ -31,14 +31,14 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.metadata', []);
+    angular.module('otusjs.misc', []);
 })();
 'use strict';
 
 (function () {
     'use strict';
 
-    angular.module('otusjs.misc', []);
+    angular.module('otusjs.metadata', []);
 })();
 'use strict';
 
@@ -292,6 +292,160 @@
       return json;
     }
   }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.surveyItem').service('AddAnswerOptionService', AddAnswerOptionService);
+
+    function AddAnswerOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            return item.createOption();
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.surveyItem').service('AddSurveyItemService', AddSurveyItemService);
+
+    function AddSurveyItemService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(itemType, survey) {
+            return survey.addItem(itemType);
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.surveyItem').service('LoadSurveyItemService', LoadSurveyItemService);
+
+    function LoadSurveyItemService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, survey) {
+            return survey.loadItem(item.objectType, item.templateID);
+        }
+    }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').service('MoveSurveyItemService', MoveSurveyItemService);
+
+  function MoveSurveyItemService() {
+    var self = this;
+
+    self.execute = execute;
+
+    function execute(survey, item, position) {
+      survey.moveItem(item, position);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.surveyItem').service('RemoveAnswerOptionService', RemoveAnswerOptionService);
+
+    function RemoveAnswerOptionService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item) {
+            item.removeLastOption();
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.surveyItem').service('RemoveSurveyItemService', RemoveSurveyItemService);
+
+    function RemoveSurveyItemService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, survey) {
+            survey.removeItem(item.templateID);
+        }
+    }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').service('UpdateSurveyItemCustomID', UpdateSurveyItemCustomID);
+
+  function UpdateSurveyItemCustomID() {
+    var self = this;
+
+    self.execute = execute;
+
+    function execute(item, id, survey) {
+      // it needs a service to validate if is a valid or available id
+      item.customID = id;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.validation').service('AddFillingRulesService', AddFillingRulesService);
+
+    function AddFillingRulesService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, validatorType) {
+            return item.fillingRules.createOption(validatorType);
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.validation').service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
+
+    function RemoveFillingRulesWorkService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, fillingRuleType) {
+            item.fillingRules.removeFillingRules(fillingRuleType);
+        }
+    }
 })();
 'use strict';
 
@@ -1497,143 +1651,6 @@
 })();
 'use strict';
 
-(function () {
-    'use strict';
-
-    angular.module('otusjs.validation').service('AddFillingRulesService', AddFillingRulesService);
-
-    function AddFillingRulesService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, validatorType) {
-            return item.fillingRules.createOption(validatorType);
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.validation').service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
-
-    function RemoveFillingRulesWorkService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, fillingRuleType) {
-            item.fillingRules.removeFillingRules(fillingRuleType);
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.surveyItem').service('AddAnswerOptionService', AddAnswerOptionService);
-
-    function AddAnswerOptionService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            return item.createOption();
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.surveyItem').service('AddSurveyItemService', AddSurveyItemService);
-
-    function AddSurveyItemService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(itemType, survey) {
-            return survey.addItem(itemType);
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.surveyItem').service('LoadSurveyItemService', LoadSurveyItemService);
-
-    function LoadSurveyItemService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, survey) {
-            return survey.loadItem(item.objectType, item.templateID);
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.surveyItem').service('RemoveAnswerOptionService', RemoveAnswerOptionService);
-
-    function RemoveAnswerOptionService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item) {
-            item.removeLastOption();
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.surveyItem').service('RemoveSurveyItemService', RemoveSurveyItemService);
-
-    function RemoveSurveyItemService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, survey) {
-            survey.removeItem(item.templateID);
-        }
-    }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').service('UpdateSurveyItemCustomID', UpdateSurveyItemCustomID);
-
-  function UpdateSurveyItemCustomID() {
-    var self = this;
-
-    self.execute = execute;
-
-    function execute(item, id, survey) {
-      // it needs a service to validate if is a valid or available id
-      item.customID = id;
-    }
-  }
-})();
-'use strict';
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 (function () {
@@ -2419,6 +2436,136 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
+
+  function IdiomFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new Idiom();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.IdiomFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var label = new Idiom();
+
+      label.oid = jsonObject.oid;
+      label.plainText = jsonObject.plainText;
+      label.formattedText = jsonObject.formattedText;
+
+      return label;
+    }
+
+    return self;
+  }
+
+  function Idiom() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Label";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.misc').factory('LabelFactory', LabelFactory);
+
+  LabelFactory.$inject = ['IdiomFactory'];
+
+  function LabelFactory(IdiomFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.create();
+      labelObject.enUS = IdiomFactory.create();
+      labelObject.esES = IdiomFactory.create();
+
+      return labelObject;
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.LabelFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var labelObject = {};
+
+      labelObject.ptBR = IdiomFactory.fromJsonObject(jsonObject.ptBR);
+      labelObject.enUS = IdiomFactory.fromJsonObject(jsonObject.enUS);
+      labelObject.esES = IdiomFactory.fromJsonObject(jsonObject.esES);
+
+      return labelObject;
+    }
+
+    return self;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.misc').factory('UnitFactory', UnitFactory);
+
+  function UnitFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new Unit();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.UnitFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var unit = new Unit();
+
+      unit.oid = jsonObject.oid;
+      unit.plainText = jsonObject.plainText;
+      unit.formattedText = jsonObject.formattedText;
+
+      return unit;
+    }
+
+    return self;
+  }
+
+  function Unit() {
+    var self = this;
+
+    self.extends = "StudioObject";
+    self.objectType = "Unit";
+    self.oid = '';
+    self.plainText = '';
+    self.formattedText = '';
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.metadata').factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
   MetadataAnswerFactory.$inject = ['LabelFactory'];
@@ -2575,136 +2722,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     function isAvailableValue(value) {
       return getOptionByValue(value) ? false : true;
     }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.misc').factory('IdiomFactory', IdiomFactory);
-
-  function IdiomFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new Idiom();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.IdiomFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var label = new Idiom();
-
-      label.oid = jsonObject.oid;
-      label.plainText = jsonObject.plainText;
-      label.formattedText = jsonObject.formattedText;
-
-      return label;
-    }
-
-    return self;
-  }
-
-  function Idiom() {
-    var self = this;
-
-    self.extends = "StudioObject";
-    self.objectType = "Label";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.misc').factory('LabelFactory', LabelFactory);
-
-  LabelFactory.$inject = ['IdiomFactory'];
-
-  function LabelFactory(IdiomFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      var labelObject = {};
-
-      labelObject.ptBR = IdiomFactory.create();
-      labelObject.enUS = IdiomFactory.create();
-      labelObject.esES = IdiomFactory.create();
-
-      return labelObject;
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.LabelFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var labelObject = {};
-
-      labelObject.ptBR = IdiomFactory.fromJsonObject(jsonObject.ptBR);
-      labelObject.enUS = IdiomFactory.fromJsonObject(jsonObject.enUS);
-      labelObject.esES = IdiomFactory.fromJsonObject(jsonObject.esES);
-
-      return labelObject;
-    }
-
-    return self;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.misc').factory('UnitFactory', UnitFactory);
-
-  function UnitFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new Unit();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.UnitFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var unit = new Unit();
-
-      unit.oid = jsonObject.oid;
-      unit.plainText = jsonObject.plainText;
-      unit.formattedText = jsonObject.formattedText;
-
-      return unit;
-    }
-
-    return self;
-  }
-
-  function Unit() {
-    var self = this;
-
-    self.extends = "StudioObject";
-    self.objectType = "Unit";
-    self.oid = '';
-    self.plainText = '';
-    self.formattedText = '';
   }
 })();
 'use strict';
@@ -3020,12 +3037,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.hasOrphanRoot = hasOrphanRoot;
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
+    self.clearNavigation = clearNavigation;
     self.removeRouteByName = removeRouteByName;
+    self.removeRouteByDestination = removeRouteByDestination;
     self.selfsame = selfsame;
     self.setupDefaultRoute = setupDefaultRoute;
     self.toJSON = toJSON;
     self.updateInNavigation = updateInNavigation;
+    self.isDefaultRoute = isDefaultRoute;
     self.updateRoute = updateRoute;
+    self.setRoutes = setRoutes;
 
     function addInNavigation(navigation) {
       navigation.addOutNavigation(self);
@@ -3167,6 +3188,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return clones;
     }
 
+    function setRoutes(routes) {
+      self.routes = routes;
+    }
+
     function removeInNavigation(navigationToRemove) {
       self.inNavigations.some(function (navigation, index) {
         if (navigation.origin === navigationToRemove.origin) {
@@ -3176,15 +3201,26 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       });
     }
 
+    function clearNavigation() {
+      self.inNavigations = [];
+      self.routes = [];
+    }
+
     function removeRouteByName(name) {
       self.routes.some(function (route, index) {
-        if (route.name === name) {
+        if (route && route.name === name) {
           self.routes.splice(index, 1);
           if (route.isDefault) {
             self.routes[0] = null;
           }
           return true;
         }
+      });
+    }
+
+    function removeRouteByDestination(destinationID) {
+      self.routes = self.routes.filter(function (route) {
+        return route.destination !== destinationID;
       });
     }
 
@@ -3244,6 +3280,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (!wasUpdated) {
         self.inNavigations.push(navigation);
       }
+    }
+
+    function isDefaultRoute(destination) {
+      var found = self.routes.find(function (route) {
+        return route.destination === destination;
+      });
+      return found && found.isDefault;
     }
 
     function updateRoute(routeToUpdate) {
@@ -4317,6 +4360,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.getNavigationPositionByOrigin = getNavigationPositionByOrigin;
     self.getNavigationList = getNavigationList;
     self.getNavigationListSize = getNavigationListSize;
+    self.getBeginNode = getBeginNode;
+    self.getEndNode = getEndNode;
     self.getOrphanNavigations = getOrphanNavigations;
     self.getLastNavigation = getLastNavigation;
     self.existsNavigationTo = existsNavigationTo;
@@ -4324,8 +4369,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.removeNavigationOf = removeNavigationOf;
     self.removeNavigationByIndex = removeNavigationByIndex;
     self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+    self.insertNavigation = insertNavigation;
+    self.reorderNavigationIndex = reorderNavigationIndex;
     self.setInitialNodes = setInitialNodes;
     self.getPreviousOf = getPreviousOf;
+    self.getNextOf = getNextOf;
     self.getEmptyNavigation = getEmptyNavigation;
 
     function resetData() {
@@ -4364,10 +4412,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function getNavigationByOrigin(origin) {
-      var filter = _navigationList.filter(function (navigation) {
-        return findByOrigin(navigation, origin);
+      var found = _navigationList.find(function (navigation) {
+        return _findByOrigin(navigation, origin);
       });
-      return filter[0];
+      return found;
     }
 
     function getEmptyNavigation(indexToRemove) {
@@ -4387,11 +4435,26 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return _navigationList.length;
     }
 
+    function getBeginNode() {
+      return _navigationList[0];
+    }
+
+    function getEndNode() {
+      return _navigationList[1];
+    }
+
     function getPreviousOf(index) {
       if (index === 2) {
-        index = 1;
+        return getNavigationByPosition(0);
       }
       return getNavigationByPosition(index - 1);
+    }
+
+    function getNextOf(index) {
+      if (index === _navigationList.length - 1) {
+        return getNavigationByPosition(1);
+      }
+      return getNavigationByPosition(index + 1);
     }
 
     function getNavigationByPosition(position) {
@@ -4451,13 +4514,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function removeNavigationOf(questionID) {
-      var navigationToRemove = _navigationList.filter(function (navigation) {
-        return findByOrigin(navigation, questionID);
+      var navigationToRemove = _navigationList.find(function (navigation) {
+        return _findByOrigin(navigation, questionID);
       });
-      var indexToRemove = _navigationList.indexOf(navigationToRemove[0]);
+      var indexToRemove = _navigationList.indexOf(navigationToRemove);
       if (indexToRemove > -1) {
         _navigationList.splice(indexToRemove, 1);
-        _removeFromInNavigations(indexToRemove, navigationToRemove[0]);
+        _removeFromInNavigations(indexToRemove, navigationToRemove);
       }
     }
 
@@ -4483,8 +4546,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       _navigationList.splice(-1, 1);
     }
 
-    /* Private methods */
-    function findByOrigin(navigation, questionID) {
+    function insertNavigation(navigation, originalPosition, position) {
+      var actualPosition = originalPosition > position ? position + 2 : position + 1;
+
+      _navigationList.splice(actualPosition, 0, navigation);
+
+      return actualPosition;
+    }
+
+    function reorderNavigationIndex(start, end) {
+      for (var i = start; i < end; i++) {
+        _navigationList[i].index = i;
+      }
+    }
+
+    function _findByOrigin(navigation, questionID) {
       return navigation.origin === questionID;
     }
   }
@@ -4496,11 +4572,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.model.navigation').factory('otusjs.model.navigation.NavigationManagerFactory', Factory);
 
-  Factory.$inject = ['otusjs.model.navigation.NavigationContainerFactory', 'otusjs.model.navigation.ContainerInitializationTaskService', 'otusjs.model.navigation.InitialNodesCreationTaskService', 'otusjs.model.navigation.NavigationCreationTaskService', 'otusjs.model.navigation.NavigationRemovalTaskService', 'otusjs.model.navigation.DefaultRouteCreationTaskService', 'otusjs.model.navigation.AlternativeRouteCreationTaskService', 'otusjs.model.navigation.RouteRemovalTaskService', 'otusjs.model.navigation.RouteUpdateTaskService'];
+  Factory.$inject = ['otusjs.model.navigation.NavigationContainerFactory', 'otusjs.model.navigation.ContainerInitializationTaskService', 'otusjs.model.navigation.InitialNodesCreationTaskService', 'otusjs.model.navigation.NavigationCreationTaskService', 'otusjs.model.navigation.NavigationRemovalTaskService', 'otusjs.model.navigation.NavigationMovementTaskService', 'otusjs.model.navigation.NavigationInsertionTask', 'otusjs.model.navigation.DefaultRouteCreationTaskService', 'otusjs.model.navigation.AlternativeRouteCreationTaskService', 'otusjs.model.navigation.RouteRemovalTaskService', 'otusjs.model.navigation.RouteUpdateTaskService'];
 
   var Inject = {};
 
-  function Factory(NavigationContainerFactory, ContainerInitializationTask, InitialNodesCreationTask, NavigationCreationTask, NavigationRemovalTask, DefaultRouteCreationTaskService, AlternativeRouteCreationTaskService, RouteRemovalTaskService, RouteUpdateTaskService) {
+  function Factory(NavigationContainerFactory, ContainerInitializationTask, InitialNodesCreationTask, NavigationCreationTask, NavigationRemovalTask, NavigationMovementTaskService, NavigationInsertionTask, DefaultRouteCreationTaskService, AlternativeRouteCreationTaskService, RouteRemovalTaskService, RouteUpdateTaskService) {
     var self = this;
 
     self.create = create;
@@ -4516,6 +4592,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       ContainerInitializationTask.setContainer(container);
       NavigationCreationTask.setContainer(container);
       NavigationRemovalTask.setContainer(container);
+      NavigationMovementTaskService.setContainer(container);
+      NavigationInsertionTask.setContainer(container);
       DefaultRouteCreationTaskService.setContainer(container);
       AlternativeRouteCreationTaskService.setContainer(container);
       RouteRemovalTaskService.setContainer(container);
@@ -4525,6 +4603,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       Inject.ContainerInitializationTask = ContainerInitializationTask;
       Inject.NavigationCreationTask = NavigationCreationTask;
       Inject.NavigationRemovalTask = NavigationRemovalTask;
+      Inject.NavigationMovementTaskService = NavigationMovementTaskService;
+      Inject.NavigationInsertionTask = NavigationMovementTaskService;
       Inject.DefaultRouteCreationTaskService = DefaultRouteCreationTaskService;
       Inject.AlternativeRouteCreationTaskService = AlternativeRouteCreationTaskService;
       Inject.RouteRemovalTaskService = RouteRemovalTaskService;
@@ -4544,6 +4624,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.loadJsonData = loadJsonData;
     self.addNavigation = addNavigation;
     self.removeNavigation = removeNavigation;
+    self.moveNavigation = moveNavigation;
     self.applyRoute = applyRoute;
     self.deleteRoute = deleteRoute;
     self.getNavigationList = getNavigationList;
@@ -4565,6 +4646,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     function addNavigation() {
       _ensuresInitialNodes();
       _selectedNavigation = Inject.NavigationCreationTask.execute(surveyTemplate.SurveyItemManager.getLastItem());
+    }
+
+    function moveNavigation(templateID, position) {
+      Inject.NavigationMovementTaskService.execute(templateID, position);
     }
 
     function removeNavigation(templateID) {
@@ -4775,7 +4860,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-      var itemManager = SurveyItemManagerFactory.create();
 
       var survey = new Survey(metainfo, identity, UUID);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
@@ -4798,12 +4882,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
       var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
       var UUID = jsonObject.oid;
-      var itemManager = SurveyItemManagerFactory.create();
       var survey = new Survey(metainfo, identity, UUID);
 
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
-      survey.DataSourceManager.loadJsonData(jsonObject.dataSources); //TODO sometimes jsonObject.dataSources comes null
+      survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
 
       return survey;
     }
@@ -4827,6 +4910,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.initialize = initialize;
     self.addItem = addItem;
     self.removeItem = removeItem;
+    self.moveItem = moveItem;
     self.updateItem = updateItem;
     self.loadItem = loadItem;
     self.getItems = getItems;
@@ -4853,6 +4937,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     function removeItem(templateID) {
       self.SurveyItemManager.removeItem(templateID);
       self.NavigationManager.removeNavigation(templateID);
+    }
+
+    function moveItem(item, position) {
+      self.SurveyItemManager.moveItem(item, position);
+      self.NavigationManager.moveNavigation(item.templateID, position);
     }
 
     function updateItem(item) {
@@ -5223,6 +5312,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.getLastItem = getLastItem;
     self.existsItem = existsItem;
     self.createItem = createItem;
+    self.moveItem = moveItem;
     self.removeItem = removeItem;
     self.removeItemByPosition = removeItemByPosition;
     self.removeCurrentLastItem = removeCurrentLastItem;
@@ -5248,7 +5338,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function getItemByTemplateID(templateID) {
       var filter = _itemList.filter(function (item) {
-        return findByTemplateID(item, templateID);
+        return _findByTemplateID(item, templateID);
       });
 
       return filter[0];
@@ -5256,7 +5346,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function getItemByCustomID(customID) {
       var filter = _itemList.filter(function (item) {
-        return findByCustomID(item, customID);
+        return _findByCustomID(item, customID);
       });
 
       return filter[0];
@@ -5330,7 +5420,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function removeItem(templateID) {
       var itemToRemove = _itemList.filter(function (item) {
-        return findByTemplateID(item, templateID);
+        return _findByTemplateID(item, templateID);
       });
 
       var indexToRemove = _itemList.indexOf(itemToRemove[0]);
@@ -5347,12 +5437,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       _itemList.splice(-1, 1);
     }
 
-    /* Private methods */
-    function findByTemplateID(item, templateID) {
+    function moveItem(templateID, destination) {
+      var origin = _itemList.findIndex(function (item) {
+        return _findByTemplateID(item, templateID);
+      });
+      _reorder(origin, destination);
+    }
+
+    function _reorder(origin, destination) {
+      var itemToBeMoved = _itemList.splice(origin, 1)[0];
+
+      if (origin >= destination) {
+        _itemList.splice(destination, 0, itemToBeMoved);
+      } else {
+        _itemList.splice(destination - 1, 0, itemToBeMoved);
+      }
+    }
+
+    function _findByTemplateID(item, templateID) {
       return item.templateID.toLowerCase() === templateID.toLowerCase();
     }
 
-    function findByCustomID(item, customID) {
+    function _findByCustomID(item, customID) {
       return item.customID.toLowerCase() === customID.toLowerCase();
     }
   }
@@ -5397,6 +5503,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.addItem = addItem;
     self.loadItem = loadItem;
     self.removeItem = removeItem;
+    self.moveItem = moveItem;
     self.existsItem = existsItem;
     self.isAvailableCustomID = isAvailableCustomID;
 
@@ -5494,6 +5601,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function removeItem(templateID) {
       surveyItemContainer.removeItem(templateID);
+    }
+
+    function moveItem(item, destination) {
+      surveyItemContainer.moveItem(item.templateID, destination);
     }
 
     function _getNextIncrementalGenerator() {
@@ -5809,6 +5920,40 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.validatorType = validatorType;
     self.data = validator;
   }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.surveyItem').service('AddOptionItemService', AddOptionItemService);
+
+    function AddOptionItemService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, optionName, optionValue) {
+            return item.options.createOption(optionName, optionValue);
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.surveyItem').service('RemoveOptionItemService', RemoveOptionItemService);
+
+    function RemoveOptionItemService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, optionName) {
+            item.options.removeOption(optionName);
+        }
+    }
 })();
 'use strict';
 
@@ -6215,40 +6360,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 'use strict';
 
 (function () {
-    'use strict';
-
-    angular.module('otusjs.surveyItem').service('AddOptionItemService', AddOptionItemService);
-
-    function AddOptionItemService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, optionName, optionValue) {
-            return item.options.createOption(optionName, optionValue);
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.surveyItem').service('RemoveOptionItemService', RemoveOptionItemService);
-
-    function RemoveOptionItemService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, optionName) {
-            item.options.removeOption(optionName);
-        }
-    }
-})();
-'use strict';
-
-(function () {
   'use strict';
 
   angular.module('otusjs.laboratory.exam').factory('otusjs.laboratory.exam.ExamLotFactory', Factory);
@@ -6366,132 +6477,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         aliquotList: self.aliquotList
       };
 
-      return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.laboratory.participant').factory('otusjs.laboratory.participant.AliquotCollectionDataFactory', factory);
-
-  function factory() {
-    var self = this;
-
-    self.create = create;
-
-    function create(collectionInfo) {
-      var _collectionInfo = collectionInfo || {};
-      return new AliquotCollectionData(_collectionInfo);
-    }
-
-    return self;
-  }
-
-  function AliquotCollectionData(collectionInfo) {
-    var self = this;
-
-    self.objectType = 'AliquotCollectionData';
-    self.metadata = collectionInfo.metadata || '';
-    self.operator = collectionInfo.operator || '';
-    self.time = collectionInfo.time || '';
-    self.processing = collectionInfo.processing || '';
-
-    self.fill = fill;
-    self.toJSON = toJSON;
-
-    function fill(operator, processing) {
-      self.metadata = ""; // sem aplicação de metadados até o momento
-      self.operator = operator.email;
-      self.time = new Date().toISOString();
-      self.processing = new Date(processing).toISOString();
-    }
-
-    function toJSON() {
-      return {
-        objectType: self.objectType,
-        metadata: self.metadata,
-        operator: self.operator,
-        time: self.time,
-        processing: self.processing
-      };
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.laboratory.participant').factory('otusjs.laboratory.participant.ParticipantAliquotFactory', factory);
-
-  factory.$inject = ['otusjs.laboratory.participant.AliquotCollectionDataFactory', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
-
-  function factory(AliquotCollectionDataFactory, LaboratoryConfigurationService) {
-    var self = this;
-
-    self.create = create;
-    self.fromJSON = fromJSON;
-
-    function fromJSON(aliquotsArray, tubeInfo) {
-      //builds the aliquots array that comes along with the tube from base
-      return aliquotsArray.map(function (aliquotInfo) {
-        return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
-      });
-    }
-
-    function create(aliquotInfo, tubeInfo) {
-      //used to build an filled aliquot
-      var newInfo = angular.copy(aliquotInfo);
-      return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, newInfo, tubeInfo);
-    }
-    return self;
-  }
-
-  function ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo) {
-    var self = this;
-    var _aliquotDescriptor;
-
-    /* Public Interface*/
-    self.objectType = "Aliquot";
-    self.name = aliquotInfo.name;
-    self.role = aliquotInfo.role;
-    self.code = aliquotInfo.code || aliquotInfo.aliquotCode; //.aliquotCode
-    self.container = aliquotInfo.container;
-
-    self.aliquotCollectionData = AliquotCollectionDataFactory.create(aliquotInfo.aliquotCollectionData);
-    self.collect = collect;
-    self.toJSON = toJSON;
-
-    //Custom
-    self.tubeCode = tubeInfo.code;
-
-    onInit();
-
-    function onInit() {
-      _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name);
-      _runDescriptors(_aliquotDescriptor);
-    }
-
-    function _runDescriptors(aliquotDescriptor) {
-      self.label = aliquotDescriptor.label;
-    }
-
-    function collect(operator, processing) {
-      self.aliquotCollectionData.fill(operator, processing);
-    }
-
-    function toJSON() {
-      var json = {
-        objectType: self.objectType,
-        code: self.code,
-        name: self.name,
-        container: self.container,
-        role: self.role,
-        aliquotCollectionData: self.aliquotCollectionData
-      };
       return json;
     }
   }
@@ -7012,6 +6997,132 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         operator: self.operator,
         time: self.time
       };
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory.participant').factory('otusjs.laboratory.participant.AliquotCollectionDataFactory', factory);
+
+  function factory() {
+    var self = this;
+
+    self.create = create;
+
+    function create(collectionInfo) {
+      var _collectionInfo = collectionInfo || {};
+      return new AliquotCollectionData(_collectionInfo);
+    }
+
+    return self;
+  }
+
+  function AliquotCollectionData(collectionInfo) {
+    var self = this;
+
+    self.objectType = 'AliquotCollectionData';
+    self.metadata = collectionInfo.metadata || '';
+    self.operator = collectionInfo.operator || '';
+    self.time = collectionInfo.time || '';
+    self.processing = collectionInfo.processing || '';
+
+    self.fill = fill;
+    self.toJSON = toJSON;
+
+    function fill(operator, processing) {
+      self.metadata = ""; // sem aplicação de metadados até o momento
+      self.operator = operator.email;
+      self.time = new Date().toISOString();
+      self.processing = new Date(processing).toISOString();
+    }
+
+    function toJSON() {
+      return {
+        objectType: self.objectType,
+        metadata: self.metadata,
+        operator: self.operator,
+        time: self.time,
+        processing: self.processing
+      };
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory.participant').factory('otusjs.laboratory.participant.ParticipantAliquotFactory', factory);
+
+  factory.$inject = ['otusjs.laboratory.participant.AliquotCollectionDataFactory', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
+
+  function factory(AliquotCollectionDataFactory, LaboratoryConfigurationService) {
+    var self = this;
+
+    self.create = create;
+    self.fromJSON = fromJSON;
+
+    function fromJSON(aliquotsArray, tubeInfo) {
+      //builds the aliquots array that comes along with the tube from base
+      return aliquotsArray.map(function (aliquotInfo) {
+        return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
+      });
+    }
+
+    function create(aliquotInfo, tubeInfo) {
+      //used to build an filled aliquot
+      var newInfo = angular.copy(aliquotInfo);
+      return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, newInfo, tubeInfo);
+    }
+    return self;
+  }
+
+  function ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo) {
+    var self = this;
+    var _aliquotDescriptor;
+
+    /* Public Interface*/
+    self.objectType = "Aliquot";
+    self.name = aliquotInfo.name;
+    self.role = aliquotInfo.role;
+    self.code = aliquotInfo.code || aliquotInfo.aliquotCode; //.aliquotCode
+    self.container = aliquotInfo.container;
+
+    self.aliquotCollectionData = AliquotCollectionDataFactory.create(aliquotInfo.aliquotCollectionData);
+    self.collect = collect;
+    self.toJSON = toJSON;
+
+    //Custom
+    self.tubeCode = tubeInfo.code;
+
+    onInit();
+
+    function onInit() {
+      _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name);
+      _runDescriptors(_aliquotDescriptor);
+    }
+
+    function _runDescriptors(aliquotDescriptor) {
+      self.label = aliquotDescriptor.label;
+    }
+
+    function collect(operator, processing) {
+      self.aliquotCollectionData.fill(operator, processing);
+    }
+
+    function toJSON() {
+      var json = {
+        objectType: self.objectType,
+        code: self.code,
+        name: self.name,
+        container: self.container,
+        role: self.role,
+        aliquotCollectionData: self.aliquotCollectionData
+      };
+      return json;
     }
   }
 })();
@@ -9075,32 +9186,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.laboratory.exam').service('otusjs.laboratory.exam.ExamService', Service);
-
-  Service.$inject = ['otusjs.laboratory.exam.ExamLotFactory'];
-
-  function Service(ExamLotFactory) {
-    var self = this;
-
-    self.createAliquotLot = createAliquotLot;
-    self.buildAliquotLotFromJson = buildAliquotLotFromJson;
-
-    function createAliquotLot() {
-      return ExamLotFactory.create();
-    }
-
-    function buildAliquotLotFromJson(lotJson) {
-      return ExamLotFactory.fromJson(lotJson);
-    }
-
-    return self;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.laboratory.exam.sending').service('otusjs.laboratory.exam.sending.ExamSendingLotService', service);
 
   service.$inject = ['otusjs.laboratory.exam.sending.ExamSendingFactory'];
@@ -9118,6 +9203,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function buildExamSendingFromJson(examSendingLot, exam) {
       return ExamSendingFactory.fromJson(examSendingLot, exam);
+    }
+
+    return self;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory.exam').service('otusjs.laboratory.exam.ExamService', Service);
+
+  Service.$inject = ['otusjs.laboratory.exam.ExamLotFactory'];
+
+  function Service(ExamLotFactory) {
+    var self = this;
+
+    self.createAliquotLot = createAliquotLot;
+    self.buildAliquotLotFromJson = buildAliquotLotFromJson;
+
+    function createAliquotLot() {
+      return ExamLotFactory.create();
+    }
+
+    function buildAliquotLotFromJson(lotJson) {
+      return ExamLotFactory.fromJson(lotJson);
     }
 
     return self;
@@ -9175,8 +9286,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       _container.setInitialNodes();
 
       var routeData = {
-        'origin': _container.getNavigationList()[0].origin,
-        'destination': _container.getNavigationList()[1].origin
+        'origin': _container.getBeginNode().origin,
+        'destination': _container.getEndNode().origin
       };
 
       DefaultRouteCreationTaskService.execute(routeData, _container.getNavigationList()[0]);
@@ -9236,6 +9347,107 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationInsertionTask', Service);
+
+  Service.$inject = ['otusjs.model.navigation.DefaultRouteCreationTaskService', 'otusjs.model.navigation.RouteRemovalTaskService'];
+
+  function Service(DefaultRouteCreationTaskService, RouteRemovalTaskService) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(navigationToMove, originalPosition, destination) {
+
+      navigationToMove.clearNavigation();
+      var newPosition = _container.insertNavigation(navigationToMove, originalPosition, destination);
+
+      var navigationToUpdate = _container.getNextOf(newPosition);
+      var routeData = _getRouteData(navigationToMove.origin, navigationToUpdate.origin);
+      DefaultRouteCreationTaskService.execute(routeData, navigationToMove);
+
+      if (destination === 0) {
+        _adjustToFirstPosition(navigationToUpdate, navigationToMove);
+      }
+
+      _reorderIndexInNavigation(originalPosition, newPosition);
+    }
+
+    function _adjustToFirstPosition(navigationToUpdate, navigationToMove) {
+      var beginNodeOriginName = "BEGIN NODE";
+
+      var beginNode = _container.getNavigationByOrigin(beginNodeOriginName);
+      var beginNodeRoute = _getRouteData(beginNodeOriginName, navigationToUpdate.origin);
+      RouteRemovalTaskService.execute(beginNodeRoute, beginNode);
+
+      var newBeginNodeRoute = _getRouteData(beginNodeOriginName, navigationToMove.origin);
+      DefaultRouteCreationTaskService.execute(newBeginNodeRoute, beginNode);
+    }
+
+    function _reorderIndexInNavigation(originalPosition, newPosition) {
+      if (originalPosition > newPosition) {
+        _container.reorderNavigationIndex(newPosition, originalPosition);
+      } else {
+        _container.reorderNavigationIndex(originalPosition, newPosition);
+      }
+    }
+
+    function _getRouteData(origin, destination) {
+      var routeData = {};
+
+      routeData.isDefault = true;
+      routeData.name = origin + "_" + destination;
+      routeData.origin = origin;
+      routeData.destination = destination;
+      return routeData;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationMovementTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.DefaultRouteCreationTaskService', 'otusjs.model.navigation.NavigationRemovalTaskService', 'otusjs.model.navigation.RouteRemovalTaskService', 'otusjs.model.navigation.NavigationInsertionTask'];
+
+  function Service(DefaultRouteCreationTaskService, NavigationRemovalTaskService, RouteRemovalTaskService, NavigationInsertionTask) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(templateID, destination) {
+      var navigationToMove = _container.getNavigationByOrigin(templateID);
+      var originalPosition = _container.getNavigationPosition(navigationToMove);
+
+      if (originalPosition === destination + 2) {
+        return;
+      }
+
+      NavigationRemovalTaskService.execute(templateID);
+      NavigationInsertionTask.execute(navigationToMove, originalPosition, destination);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.NavigationRemovalTaskService', Service);
 
   Service.$inject = ['otusjs.model.navigation.RouteUpdateTaskService'];
@@ -9253,29 +9465,46 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function execute(templateID) {
-      var navigationToRecicle = _container.getNavigationByOrigin(templateID);
-      var navigationPosition = _container.getNavigationPosition(navigationToRecicle);
-      var navigationToUpdate = _container.getPreviousOf(navigationPosition);
+      var navigationToRemove = _container.getNavigationByOrigin(templateID);
+      var position = _container.getNavigationPosition(navigationToRemove);
+      var inNavigations = angular.copy(navigationToRemove.inNavigations);
 
-      if (navigationToRecicle.inNavigations.indexOf(navigationToUpdate) > -1) {
-        var routeData = _getRouteData(navigationToUpdate, navigationToRecicle);
-        RouteUpdateTaskService.execute(routeData, navigationToUpdate);
-      }
+      inNavigations.forEach(function (inNavigation) {
+        return _updateInRoutes(inNavigation);
+      });
+
+      //TODO remove conditions that take navigationToRemove into account
 
       _container.removeNavigationOf(templateID);
+      _container.reorderNavigationIndex(position, _container.getNavigationListSize());
+
+      function _updateInRoutes(inNavigation) {
+        var navigationToUpdate = _container.getNavigationByOrigin(inNavigation.origin);
+
+        if (navigationToUpdate) {
+          if (navigationToUpdate.isDefaultRoute(templateID)) {
+            var routeData = _getRouteData(navigationToUpdate, navigationToRemove);
+            RouteUpdateTaskService.execute(routeData, navigationToUpdate);
+          } else {
+            var navigation = _container.getNavigationByOrigin(inNavigation.origin);
+            navigation.removeRouteByDestination(templateID);
+          }
+        }
+      }
     }
 
-    function _getRouteData(navigationToUpdate, navigationToRecicle) {
+    function _getRouteData(navigationToUpdate, navigationToRecycle) {
       var routeData = {};
       routeData.isDefault = true;
       routeData.origin = navigationToUpdate.routes[0].origin;
-      routeData.destination = navigationToRecicle.routes[0].destination;
-      return routeData;
-    }
+      routeData.destination = navigationToRecycle.routes[0].destination;
 
-    function _updateRoutes(navigationToUpdate, navigationToRecicle) {
-      navigationToUpdate.routes[0].destination = navigationToRecicle.routes[0].destination;
-      navigationToUpdate.routes[0].name = navigationToUpdate.routes[0].origin + '_' + navigationToUpdate.routes[0].destination;
+      if (navigationToUpdate.origin === "BEGIN NODE") {
+        var newDestination = _container.getNextOf(_container.getNavigationPosition(navigationToRecycle));
+        routeData.destination = newDestination.origin;
+      }
+
+      return routeData;
     }
   }
 })();
@@ -9284,11 +9513,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.AlternativeRouteCreationTaskService', service);
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.AlternativeRouteCreationTaskService', Service);
 
-  service.$inject = ['otusjs.model.navigation.RouteFactory', 'otusjs.model.navigation.RouteConditionFactory', 'otusjs.model.navigation.RuleFactory'];
+  Service.$inject = ['otusjs.model.navigation.RouteFactory', 'otusjs.model.navigation.RouteConditionFactory', 'otusjs.model.navigation.RuleFactory'];
 
-  function service(RouteFactory, RouteConditionFactory, RuleFactory) {
+  function Service(RouteFactory, RouteConditionFactory, RuleFactory) {
     var self = this;
     var _container = null;
 
@@ -9336,11 +9565,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.DefaultRouteCreationTaskService', service);
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.DefaultRouteCreationTaskService', Service);
 
-  service.$inject = ['otusjs.model.navigation.RouteFactory'];
+  Service.$inject = ['otusjs.model.navigation.RouteFactory'];
 
-  function service(RouteFactory) {
+  function Service(RouteFactory) {
     var self = this;
     var _container = null;
 

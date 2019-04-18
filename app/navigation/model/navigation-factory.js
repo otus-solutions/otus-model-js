@@ -116,12 +116,16 @@
     self.hasOrphanRoot = hasOrphanRoot;
     self.listRoutes = listRoutes;
     self.removeInNavigation = removeInNavigation;
+    self.clearNavigation = clearNavigation;
     self.removeRouteByName = removeRouteByName;
+    self.removeRouteByDestination = removeRouteByDestination;
     self.selfsame = selfsame;
     self.setupDefaultRoute = setupDefaultRoute;
     self.toJSON = toJSON;
     self.updateInNavigation = updateInNavigation;
+    self.isDefaultRoute = isDefaultRoute;
     self.updateRoute = updateRoute;
+    self.setRoutes = setRoutes;
 
     function addInNavigation(navigation) {
       navigation.addOutNavigation(self);
@@ -263,6 +267,10 @@
       return clones;
     }
 
+    function setRoutes(routes) {
+      self.routes = routes;
+    }
+
     function removeInNavigation(navigationToRemove) {
       self.inNavigations.some(function(navigation, index) {
         if (navigation.origin === navigationToRemove.origin) {
@@ -272,9 +280,14 @@
       });
     }
 
+    function clearNavigation() {
+      self.inNavigations = [];
+      self.routes = [];
+    }
+
     function removeRouteByName(name) {
       self.routes.some(function(route, index) {
-        if (route.name === name) {
+        if (route && route.name === name) {
           self.routes.splice(index, 1);
           if (route.isDefault) {
             self.routes[0] = null;
@@ -282,6 +295,10 @@
           return true;
         }
       });
+    }
+
+    function removeRouteByDestination(destinationID) {
+      self.routes = self.routes.filter(route => route.destination !== destinationID);
     }
 
     function selfsame(other) {
@@ -340,6 +357,11 @@
       if (!wasUpdated) {
         self.inNavigations.push(navigation);
       }
+    }
+
+    function isDefaultRoute(destination) {
+      let found = self.routes.find(route => route.destination === destination);
+      return found && found.isDefault
     }
 
     function updateRoute(routeToUpdate) {

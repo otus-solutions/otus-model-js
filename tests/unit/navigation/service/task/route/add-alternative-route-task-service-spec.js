@@ -1,4 +1,4 @@
-describe('CreateDefaultRouteTaskService', function() {
+describe('AlternativeRouteCreationTaskService', function() {
 
   var Mock = {};
   var service = {};
@@ -14,16 +14,17 @@ describe('CreateDefaultRouteTaskService', function() {
     inject(function(_$injector_) {
       mockRoute(_$injector_);
       mockNavigation(_$injector_);
-      mockNavigationContainerService(_$injector_);
+      mockNavigationContainerFactory(_$injector_);
 
       service = _$injector_.get('otusjs.model.navigation.AlternativeRouteCreationTaskService', injections);
+      service.setContainer(Mock.NavigationContainer);
     });
   });
 
   describe('execute method', function() {
 
-    xit('should create an alternative route based on route data', function() {
-      spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
+    it('should create an alternative route based on route data', function() {
+      spyOn(Mock.NavigationContainer, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
       spyOn(Mock.RouteFactory, 'createAlternative').and.callThrough();
 
       service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
@@ -31,8 +32,8 @@ describe('CreateDefaultRouteTaskService', function() {
       expect(Mock.RouteFactory.createAlternative).toHaveBeenCalled();
     });
 
-    xit('should create an alternative route on navigation', function() {
-      spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
+    it('should create an alternative route on navigation', function() {
+      spyOn(Mock.NavigationContainer, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
       spyOn(Mock.navigationA, 'createAlternativeRoute').and.callThrough();
 
       service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
@@ -40,8 +41,8 @@ describe('CreateDefaultRouteTaskService', function() {
       expect(Mock.navigationA.createAlternativeRoute).toHaveBeenCalled();
     });
 
-    xit('should notify new alternative navigation', function() {
-      spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
+    it('should notify new alternative navigation', function() {
+      spyOn(Mock.NavigationContainer, 'getNavigationByOrigin').and.returnValue(Mock.navigationB);
       spyOn(Mock.navigationB, 'updateInNavigation');
 
       service.execute(Mock.routeCAD1_CAD3, Mock.navigationA);
@@ -73,9 +74,13 @@ describe('CreateDefaultRouteTaskService', function() {
     Mock.routeCAD2_CAD4 = Mock.RouteFactory.createAlternative(CAD2, CAD4, [Mock.condition]);
 
     Mock.routeCAD3_CAD4 = Mock.RouteFactory.createDefault(CAD3, CAD4);
+
+    injections.RouteFactory  = Mock.RouteFactory;
+    injections.RouteConditionFactory  = Mock.RouteConditionFactory;
+    injections.RuleFactory  = Mock.RuleFactory;
   }
 
-  function mockNavigationContainerService($injector) {
-    Mock.NavigationContainerService = $injector.get('otusjs.model.navigation.NavigationContainerService');
+  function mockNavigationContainerFactory($injector) {
+    Mock.NavigationContainer = $injector.get('otusjs.model.navigation.NavigationContainerFactory').create(Mock.NavigationFactory);
   }
 });

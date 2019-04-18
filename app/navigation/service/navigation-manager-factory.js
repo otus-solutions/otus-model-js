@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -11,6 +11,8 @@
     'otusjs.model.navigation.InitialNodesCreationTaskService',
     'otusjs.model.navigation.NavigationCreationTaskService',
     'otusjs.model.navigation.NavigationRemovalTaskService',
+    'otusjs.model.navigation.NavigationMovementTaskService',
+    'otusjs.model.navigation.NavigationInsertionTask',
     'otusjs.model.navigation.DefaultRouteCreationTaskService',
     'otusjs.model.navigation.AlternativeRouteCreationTaskService',
     'otusjs.model.navigation.RouteRemovalTaskService',
@@ -25,6 +27,8 @@
     InitialNodesCreationTask,
     NavigationCreationTask,
     NavigationRemovalTask,
+    NavigationMovementTaskService,
+    NavigationInsertionTask,
     DefaultRouteCreationTaskService,
     AlternativeRouteCreationTaskService,
     RouteRemovalTaskService,
@@ -45,6 +49,8 @@
       ContainerInitializationTask.setContainer(container);
       NavigationCreationTask.setContainer(container);
       NavigationRemovalTask.setContainer(container);
+      NavigationMovementTaskService.setContainer(container);
+      NavigationInsertionTask.setContainer(container);
       DefaultRouteCreationTaskService.setContainer(container);
       AlternativeRouteCreationTaskService.setContainer(container);
       RouteRemovalTaskService.setContainer(container);
@@ -54,6 +60,8 @@
       Inject.ContainerInitializationTask = ContainerInitializationTask;
       Inject.NavigationCreationTask = NavigationCreationTask;
       Inject.NavigationRemovalTask = NavigationRemovalTask;
+      Inject.NavigationMovementTaskService = NavigationMovementTaskService;
+      Inject.NavigationInsertionTask = NavigationMovementTaskService;
       Inject.DefaultRouteCreationTaskService = DefaultRouteCreationTaskService;
       Inject.AlternativeRouteCreationTaskService = AlternativeRouteCreationTaskService;
       Inject.RouteRemovalTaskService = RouteRemovalTaskService;
@@ -73,6 +81,7 @@
     self.loadJsonData = loadJsonData;
     self.addNavigation = addNavigation;
     self.removeNavigation = removeNavigation;
+    self.moveNavigation = moveNavigation;
     self.applyRoute = applyRoute;
     self.deleteRoute = deleteRoute;
     self.getNavigationList = getNavigationList;
@@ -94,6 +103,10 @@
     function addNavigation() {
       _ensuresInitialNodes();
       _selectedNavigation = Inject.NavigationCreationTask.execute(surveyTemplate.SurveyItemManager.getLastItem());
+    }
+
+    function moveNavigation(templateID, position) {
+      Inject.NavigationMovementTaskService.execute(templateID, position);
     }
 
     function removeNavigation(templateID) {
@@ -128,7 +141,7 @@
       var currentPathState = navigations[0];
       var defaultPath = [currentPathState];
 
-      navigations.forEach(function(navigation) {
+      navigations.forEach(function (navigation) {
         if (navigation.origin === currentPathState.getDefaultRoute().destination) {
           defaultPath.push(navigation);
           currentPathState = navigation;
@@ -142,7 +155,7 @@
       var referenceItemIndex = surveyTemplate.SurveyItemManager.getItemPosition(referenceItemID);
       var allItems = surveyTemplate.SurveyItemManager.getItemList();
 
-      var avaiableItems = allItems.filter(function(item, index) {
+      var avaiableItems = allItems.filter(function (item, index) {
         return index <= referenceItemIndex;
       });
 
