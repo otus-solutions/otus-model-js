@@ -9,30 +9,6 @@
   function Factory($filter) {
     var self = this;
 
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(json) {
-      return new HeatMapActivityFactory($filter,json);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (activity) {
-          return new HeatMapActivityFactory($filter,activity);
-        });
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function HeatMapActivityFactory($filter, json) {
-    var self = this;
-
     const STATUS = {
       CREATED : 'Criado',
       SAVED : 'Salvo',
@@ -43,15 +19,44 @@
       AMBIGUITY : 'AMBIGUITY'
     };
 
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+    self.getStatus = getStatus;
+
+    function create(json) {
+      return new HeatMapActivityFactory($filter, self.getStatus(), json);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (activity) {
+          return new HeatMapActivityFactory($filter, self.getStatus(), activity);
+        });
+      } else {
+        return [];
+      }
+    }
+
+    function getStatus() {
+      return STATUS;
+    }
+
+    return self;
+  }
+
+  function HeatMapActivityFactory($filter, STATUS, jsonData) {
+    var self = this;
+
     self.toJSON = toJSON;
 
     self.objectType = "HeatMapActivityFactory";
-    self.acronym = json.acronym || null;
-    self.name = json.name || null;
-    self.date = json.activities.length> 0 ? $filter('date')(json.activities[0].statusHistory.date, 'dd/MM/yyyy') : null;
+    self.acronym = jsonData.acronym || null;
+    self.name = jsonData.name || null;
+    self.date = jsonData.activities.length> 0 ? $filter('date')(jsonData.activities[0].statusHistory.date, 'dd/MM/yyyy') : null;
     self.information = null;
     self.observation = null;
-    _buildStatus(json);
+    _buildStatus(jsonData);
 
     function _buildStatus(data) {
       if (data.doesNotApply) {
@@ -80,45 +85,24 @@
       }
     }
 
-
     function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;
       json.acronym = self.acronym;
       json.name = self.name;
+      json.status = self.status;
       json.date = self.date;
-      json.information = self.information;
-      json.observation = self.observation;
+      if (self.information){
+        json.information = self.information;
+      }
+      if (self.observation){
+        json.observation = self.observation;
+      }
 
       return json;
     }
 
   }
 
-
-  var response = {
-    acronym: "DSOC",
-    name: "DIÁRIO DO SONO",
-    activities: [
-      {
-        statusHistory:{
-          objectType: "ActivityStatus",
-          name:"CREATED",
-          date: "2018-10-22T14:59:02.227Z",
-          user:{
-            email: "otus@otus-solutions.com",
-            name: "Otus",
-            phone: "5151515151",
-            surname: "Solutions"
-          }
-        }
-      }
-    ],
-    doesNotApply: {
-      acronym: "DSOC",
-      observation: "",
-      recruitmentNumber: 9015648
-    }
-  }
 }());

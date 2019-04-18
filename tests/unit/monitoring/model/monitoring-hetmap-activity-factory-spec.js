@@ -3,6 +3,7 @@ fdescribe("HeatMap Activity Factory Tests", function () {
   var Injections = {};
   var factory;
 
+
   beforeEach(function () {
     mockData();
     angular.mock.module('otusjs.model.monitoring');
@@ -17,7 +18,15 @@ fdescribe("HeatMap Activity Factory Tests", function () {
   });
 
   it('should test', function () {
-    console.log(factory.create(Mock.activity))
+    var STATUS = factory.getStatus();
+    expect(factory.create(Mock.activityCreated).toJSON().status).toEqual(STATUS.CREATED);
+    expect(factory.create(Mock.activitySaved).toJSON().status).toEqual(STATUS.SAVED);
+    expect(factory.create(Mock.activityFinalized).toJSON().status).toEqual(STATUS.FINALIZED);
+    expect(factory.create(Mock.activityAmbiguity).toJSON().status).toEqual(STATUS.AMBIGUITY);
+    expect(factory.create(Mock.activityMultiple).toJSON().status).toEqual(STATUS.MULTIPLE);
+    expect(factory.create(Mock.activityNotApply).toJSON().status).toEqual(STATUS.DOES_NOT_APPLY);
+    expect(factory.create(Mock.activityUndefined).toJSON().status).toEqual(STATUS.UNDEFINED);
+    var mapa = factory.fromJsonObject(Mock.activities);
   });
 
 
@@ -165,6 +174,8 @@ fdescribe("HeatMap Activity Factory Tests", function () {
       ],
       doesNotApply: null
     };
+
+    Mock.activities = [Mock.activityUndefined, Mock.activityNotApply, Mock.activityMultiple, Mock.activityAmbiguity, Mock.activityCreated, Mock.activitySaved, Mock.activityFinalized]
 
   }
 });
