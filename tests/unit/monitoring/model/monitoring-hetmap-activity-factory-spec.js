@@ -1,4 +1,4 @@
-fdescribe("HeatMap Activity Factory Tests", function () {
+describe("HeatMap Activity Factory Tests", function () {
   var Mock = {};
   var Injections = {};
   var factory;
@@ -17,7 +17,6 @@ fdescribe("HeatMap Activity Factory Tests", function () {
   });
 
   it('should test status of activities created', function () {
-    factory.setStatus(Mock.status);
     var STATUS = factory.getStatus();
     expect(factory.create(Mock.activityCreated).toJSON().status).toEqual(STATUS.CREATED);
     expect(factory.create(Mock.activitySaved).toJSON().status).toEqual(STATUS.SAVED);
@@ -28,22 +27,7 @@ fdescribe("HeatMap Activity Factory Tests", function () {
     expect(factory.create(Mock.activityUndefined).toJSON().status).toEqual(STATUS.UNDEFINED);
   });
 
-  it('should return status', function () {
-    expect(factory.getStatus()).toEqual(jasmine.any(Object));
-    factory.setStatus(Mock.status);
-    expect(factory.getStatus()).toEqual(Mock.statusModel);
-  });
-
-  it('should set a status', function () {
-    expect(factory.getStatus()).toEqual(jasmine.any(Object));
-    factory.setStatus("TEST");
-    expect(factory.getStatus()).toEqual({TEST: "TEST"});
-    factory.setStatus();
-    expect(factory.getStatus()).toEqual(jasmine.any(Object));
-  });
-
   it('should build map activities for heatmap', function () {
-    factory.setStatus(Mock.status);
     var STATUS = factory.getStatus();
     expect(factory.fromJsonObject()).toEqual(jasmine.any(Array));
     var activities = factory.fromJsonObject(Mock.activities);
@@ -67,7 +51,7 @@ fdescribe("HeatMap Activity Factory Tests", function () {
     expect(factory.create().toJSON().status).toEqual(null);
     expect(factory.create(Mock.activity).toJSON().status).toEqual(Mock.activity.status);
     delete Mock.activity.status;
-    expect(factory.create(Mock.activity).toJSON().status).toBeUndefined();
+    expect(factory.create(Mock.activity).toJSON().status).toEqual('UNDEFINED');
   });
 
   function mockData() {

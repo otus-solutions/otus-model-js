@@ -10,13 +10,20 @@
   function Factory($filter) {
     var self = this;
 
-    self.STATUS = {};
+    self.STATUS = {
+      'CREATED': 'CREATED',
+      'SAVED': 'SAVED',
+      'FINALIZED': 'FINALIZED',
+      'DOES_NOT_APPLY': 'DOES_NOT_APPLY',
+      'UNDEFINED': 'UNDEFINED',
+      'MULTIPLE': 'MULTIPLE',
+      'AMBIGUITY': 'AMBIGUITY'
+    };
 
     /* Public methods */
     self.create = create;
     self.fromJsonObject = fromJsonObject;
     self.getStatus = getStatus;
-    self.setStatus = setStatus;
 
     function create(json) {
       return new HeatMapActivityFactory($filter, self.getStatus(), json);
@@ -29,18 +36,6 @@
         });
       } else {
         return [];
-      }
-    }
-
-    function setStatus(status) {
-      if(status && !Array.isArray(status)){
-        self.STATUS[status] = status;
-      } else if (status && Array.isArray(status)){
-        status.forEach(function (statusName) {
-          self.STATUS[statusName] = statusName;
-        })
-      } else {
-        self.STATUS = {};
       }
     }
 
