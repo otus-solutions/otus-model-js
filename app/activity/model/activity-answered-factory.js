@@ -10,21 +10,28 @@
     'otusjs.model.activity.FillingManagerFactory',
     'otusjs.model.activity.InterviewFactory',
     'otusjs.model.navigation.NavigationTrackerFactory',
-    'SurveyFormFactory'
+    'SurveyFormFactory',
+    'ElementRegisterFactory',
+    'otusjs.validation.api.ValidationService',
   ];
 
   var Inject = {};
+  var _elementRegister = null;
+  var _item = null;
 
   function Factory(
     StatusHistoryManagerFactory,
     FillingManagerFactory,
     InterviewFactory,
     NavigationTrackerFactory,
-    SurveyFormFactory
-  ) {
+    SurveyFormFactory,
+    ElementRegisterFactory,
+    ValidationService) {
     Inject.FillingManager = FillingManagerFactory.create();
     Inject.NavigationTrackerFactory = NavigationTrackerFactory;
     Inject.SurveyFormFactory = SurveyFormFactory;
+    Inject.ElementRegisterFactory = ElementRegisterFactory;
+    Inject.ValidationService = ValidationService;
 
     var self = this;
     self.OBJECT_TYPE = 'Activity';
@@ -202,6 +209,7 @@
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
     self.isDiscarded = false;
+    self.isValid = true;
     self.setAnswers(answers);
 
     /* Public methods */
@@ -286,7 +294,7 @@
 
     function _getQuestionsIdsMap() {
       let _mapId = {};
-      self.surveyForm.surveyTemplate.itemContainer.forEach(function (item) {
+      self.getTemplate().itemContainer.forEach(function (item) {
         _mapId[item.templateID] = item.customID;
       });
       return _mapId;
@@ -299,7 +307,51 @@
         question.answer.value = answers[IDS[question.questionID]].value;
         question.answer.metadada = answers[IDS[question.questionID]]._metadada;
         question.answer.comment = answers[IDS[question.questionID]]._comment;
-      })
+        _validateActivity(question.questionID, question.answer, question.forceAnswer);
+      });
+    }
+
+    function _validateActivity(templateID, answer, forceAnswer) {
+      if (self.isValid) {
+        self.isValid = answer.value != "" && answer.metadada != "" ? false : true;
+        if (self.isValid) {
+          _elementRegister = Inject.ElementRegisterFactory.create(templateID, answer);
+          _item = self.getTemplate().getItemByTemplateID(templateID);
+          _setupValidation(forceAnswer);
+          Inject.validateElement(templateID, function (response) {
+            console.log(response)
+          });
+        }
+      }
+    }
+
+    function _setupValidation(forceAnswer) {
+      if (forceAnswer) {
+        Object.keys(_item.fillingRules.options).filter(function(validator) {
+          if (!_item.fillingRules.options[validator].data.canBeIgnored) {
+            _addValidator(validator, _item);
+          }
+        });
+      } else {
+        Object.keys(_item.fillingRules.options).map(function(validator) {
+          _addValidator(validator, _item);
+        });
+        _setupImmutableDateValidation(_item);
+      }
+
+      Inject.ValidationService.unregisterElement(_elementRegister.id);
+      Inject.ValidationService.registerElement(_elementRegister);
+    }
+
+    function _addValidator(validator) {
+      var reference = _item.fillingRules.options[validator].data;
+      _elementRegister.addValidator(validator, reference);
+    }
+    function _setupImmutableDateValidation() {
+      var currentItemItemType = _item.objectType;
+      if(currentItemItemType === "TimeQuestion" || currentItemItemType === "CalendarQuestion") {
+        _elementRegister.addValidator("ImmutableDate", currentItemService);
+      }
     }
 
     function toJSON() {
