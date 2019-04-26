@@ -35,7 +35,7 @@
         _adjustToFirstPosition(navigationToUpdate, navigationToMove)
       }
 
-      _reorderIndexInNavigation();
+      _container.reorderNavigationIndex();
     }
 
     function _adjustToFirstPosition(navigationToUpdate, navigationToMove) {
@@ -47,10 +47,6 @@
 
       let newBeginNodeRoute = _getRouteData(beginNodeOriginName, navigationToMove.origin);
       DefaultRouteCreationTaskService.execute(newBeginNodeRoute, beginNode);
-    }
-
-    function _reorderIndexInNavigation() {
-        _container.reorderNavigationIndex(origin,destination);
     }
 
     function _getRouteData(origin, destination) {
