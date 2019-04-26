@@ -35,7 +35,7 @@
         _adjustToFirstPosition(navigationToUpdate, navigationToMove)
       }
 
-      _reorderIndexInNavigation(originalPosition, newPosition);
+      _reorderIndexInNavigation();
     }
 
     function _adjustToFirstPosition(navigationToUpdate, navigationToMove) {
@@ -49,12 +49,8 @@
       DefaultRouteCreationTaskService.execute(newBeginNodeRoute, beginNode);
     }
 
-    function _reorderIndexInNavigation(originalPosition, newPosition) {
-      if (originalPosition > newPosition) {
-        _container.reorderNavigationIndex(newPosition, originalPosition)
-      } else {
-        _container.reorderNavigationIndex(originalPosition, newPosition)
-      }
+    function _reorderIndexInNavigation() {
+        _container.reorderNavigationIndex(origin,destination);
     }
 
     function _getRouteData(origin, destination) {
@@ -66,6 +62,5 @@
       routeData.destination = destination;
       return routeData;
     }
-
   }
 }());
