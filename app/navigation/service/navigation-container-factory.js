@@ -229,9 +229,8 @@
       return actualPosition;
     }
 
-
-    function reorderNavigationIndex(start, end) {
-      for (var i = start; i < end; i++) {
+    function reorderNavigationIndex() {
+      for (var i = 0; i < _navigationList.length; i++) {
         _navigationList[i].index = i;
       }
     }

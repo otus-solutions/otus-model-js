@@ -23,7 +23,6 @@
 
     function execute(templateID) {
       let navigationToRemove = _container.getNavigationByOrigin(templateID);
-      let position = _container.getNavigationPosition(navigationToRemove);
       let inNavigations = angular.copy(navigationToRemove.inNavigations);
 
       inNavigations.forEach(inNavigation => _updateInRoutes(inNavigation));
@@ -31,8 +30,7 @@
       //TODO remove conditions that take navigationToRemove into account
 
       _container.removeNavigationOf(templateID);
-      _container.reorderNavigationIndex(position, _container.getNavigationListSize());
-
+      _container.reorderNavigationIndex();
 
       function _updateInRoutes(inNavigation) {
         let navigationToUpdate = _container.getNavigationByOrigin(inNavigation.origin);
