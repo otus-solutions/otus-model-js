@@ -37,17 +37,6 @@ describe('NavigationRemovalTaskService', function() {
       expect(Mock.container.getNavigationByOrigin).toHaveBeenCalledTimes(3);
     });
 
-    it('should navigationToRemove Position', function () {
-      spyOn(Mock.container, 'getNavigationByOrigin').and.returnValue(Mock.navigationToManage[1]);
-      spyOn(Mock.container, 'getNavigationPosition');
-
-      service.setContainer(Mock.container);
-
-      service.execute(Mock.questionTwo.templateID);
-
-      expect(Mock.container.getNavigationPosition).toHaveBeenCalledTimes(1);
-    });
-
     it('should removeNavigationOf', function () {
       spyOn(Mock.container, 'getNavigationByOrigin').and.returnValue(Mock.navigationToManage[1]);
       spyOn(Mock.container, 'getNavigationPosition');
