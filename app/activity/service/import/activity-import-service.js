@@ -95,15 +95,50 @@
       }
     }
 
-    function execute(surveyForm, jsonObject) {
+    function execute(surveyForm, jsonObject, user) {
       var _activities = [];
       if(Array.isArray(jsonObject)){
         jsonObject.forEach(function (json) {
           var _activity;
-          if (jsonObject.mode === "PAPER" && jsonObject.offlineData){
-            _activity = ActivityFactory.createPaperActivity(surveyForm, json.user, json.participant, json.offlineData, json.activityConfiguration, json.id)
+          if (json.mode === "PAPER" && json.offlineData){
+            _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id)
+            switch (json.status) {
+              case 'OPENED':
+                _activity.statusHistory.newOpenedRegistry(json.user);
+                break;
+              case 'SAVED':
+                _activity.statusHistory.newOpenedRegistry(json.user);
+                _activity.statusHistory.newSavedRegistry(json.user);
+                break;
+              case 'FINALIZED':
+                _activity.statusHistory.newOpenedRegistry(json.user);
+                _activity.statusHistory.newFinalizedRegistry(json.user);
+                break;
+            }
           } else {
-            _activity = ActivityFactory.create(surveyForm, json.user, json.participant, json.activityConfiguration, json.id)
+            _activity = ActivityFactory.create(surveyForm, user, json.participant, json.activityConfiguration, json.id);
+            switch (json.status) {
+              case 'INITIALIZED_ONLINE':
+                _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+                break;
+              case 'OPENED':
+                _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+                _activity.statusHistory.newOpenedRegistry(json.user);
+                break;
+              case 'SAVED':
+                _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+                _activity.statusHistory.newOpenedRegistry(json.user);
+                _activity.statusHistory.newSavedRegistry(json.user);
+                break;
+              case 'FINALIZED':
+                _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+                _activity.statusHistory.newOpenedRegistry(json.user);
+                _activity.statusHistory.newFinalizedRegistry(json.user);
+                break;
+            }
+            console.log(_activity.surveyForm.toJSON().surveyTemplate)
+
+
           }
           _activities.push(self.setAnswers(_activity.toJSON(), json.answers));
 
@@ -112,7 +147,6 @@
 
       return _activities;
     }
-
 
   }
 

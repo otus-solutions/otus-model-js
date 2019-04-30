@@ -18,8 +18,8 @@ fdescribe('ActivityImportService Tests', function () {
       Injections['ElementRegisterFactory'] = _$injector_.get('ElementRegisterFactory');
       Injections['ValidationService'] = _$injector_.get('otusjs.validation.api.ValidationService');
       Injections['ActivityFactory'] = _$injector_.get('otusjs.model.activity.ActivityFactory');
-      surveyFactory = _$injector_.get('SurveyFactory');
-      surveyForm = surveyFactory.fromJsonObject(Test.utils.data.activityPASC.surveyForm.surveyTemplate);
+      surveyFactory = _$injector_.get('SurveyFormFactory');
+      surveyForm = surveyFactory.fromJsonObject(Test.utils.data.activityPASC.surveyForm);
       service = _$injector_.get('otusjs.model.activity.ActivityImportService', Injections);
     });
   });
@@ -31,14 +31,36 @@ fdescribe('ActivityImportService Tests', function () {
   });
 
 
-  it('should create activities', function () {
-    var _activities = service.execute(surveyForm, Test.utils.data.jsonObjectImport);
-    expect(_activities.length).toBeGreaterThan(0);
+  it('should create activities in execute method', function () {
+    var user = {
+      name: 'otus',
+      surname: 'solutions',
+      phone: 654897566,
+      email: 'user@gmail.com'
+    };
+    var _activities = service.execute(surveyForm, Test.utils.data.jsonObjectImport, user);
     expect(_activities.length).toBe(2);
     expect(_activities[0].isValid).toBeFalsy();
     expect(_activities[1].isValid).toBeTruthy();
-    console.log(service.execute(surveyForm, Test.utils.data.jsonObjectImport)[1].surveyForm.toJSON());
-    console.log(Test.utils.data.activityPASC.surveyForm)
+    expect(_activities[0].statusHistory.getLastStatus().name).toEqual('FINALIZED');
+    expect(_activities[0].statusHistory.historySize()).toEqual(4);
+    expect(_activities[1].statusHistory.getLastStatus().name).toEqual('SAVED');
+    expect(_activities[1].statusHistory.historySize()).toEqual(4);
+
+
+  });
+
+  it('should test fail', function () {
+    var user = {
+      name: 'otus',
+      surname: 'solutions',
+      phone: 654897566,
+      email: 'user@gmail.com'
+    };
+    var DSOC = surveyFactory.fromJsonObject(Test.utils.data.surveyFormDSOC);
+    var _activities = [];
+    _activities = service.execute(DSOC, Test.utils.data.jsonImportDSOC, user);
+    console.log(_activities)
   });
 
 });
