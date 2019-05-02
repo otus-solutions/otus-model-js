@@ -31,7 +31,7 @@ fdescribe('ActivityImportService Tests', function () {
   });
 
 
-  it('should create activities in execute method', function () {
+  it('should create activities PASC in execute method', function () {
     var user = {
       name: 'otus',
       surname: 'solutions',
@@ -50,7 +50,7 @@ fdescribe('ActivityImportService Tests', function () {
 
   });
 
-  it('should test fail', function () {
+  it('should create activities DSOC in execute method', function () {
     var user = {
       name: 'otus',
       surname: 'solutions',
@@ -58,9 +58,11 @@ fdescribe('ActivityImportService Tests', function () {
       email: 'user@gmail.com'
     };
     var DSOC = surveyFactory.fromJsonObject(Test.utils.data.surveyFormDSOC);
-    var _activities = [];
-    _activities = service.execute(DSOC, Test.utils.data.jsonImportDSOC, user);
-    console.log(_activities)
+    var _activities = service.execute(DSOC, Test.utils.data.jsonImportDSOC, user);
+    expect(_activities.length).toBe(1);
+    expect(_activities[0].isValid).toBeTruthy();
+    expect(_activities[0].statusHistory.getLastStatus().name).toEqual('FINALIZED');
+    expect(_activities[0].statusHistory.historySize()).toEqual(4);
   });
 
 });
