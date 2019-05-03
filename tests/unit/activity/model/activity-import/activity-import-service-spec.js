@@ -1,4 +1,4 @@
-fdescribe('ActivityImportService Tests', function () {
+describe('ActivityImportService Tests', function () {
   var Mock = {};
   var Injections = {};
   var service;
@@ -27,7 +27,6 @@ fdescribe('ActivityImportService Tests', function () {
   it('should defined service', function () {
     expect(service).toBeDefined();
     expect(service.execute).toBeDefined();
-    expect(service.setAnswers).toBeDefined();
   });
 
 
