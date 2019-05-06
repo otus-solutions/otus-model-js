@@ -45,7 +45,21 @@ describe('ActivityImportService Tests', function () {
     expect(_activities[0].statusHistory.historySize()).toEqual(4);
     expect(_activities[1].statusHistory.getLastStatus().name).toEqual('SAVED');
     expect(_activities[1].statusHistory.historySize()).toEqual(4);
+  });
 
+  it('should return valid activities method', function () {
+    var user = {
+      name: 'otus',
+      surname: 'solutions',
+      phone: 654897566,
+      email: 'user@gmail.com'
+    };
+    var _activities = service.execute(surveyForm, Test.utils.data.jsonObjectImport, user);
+    expect(_activities.length).toBe(2);
+    expect(_activities[0].isValid).toBeFalsy();
+    expect(_activities[1].isValid).toBeTruthy();
+    expect(service.getValidActivities().length).toEqual(1);
+    expect(service.getValidActivities()[0]).toEqual(_activities[1]);
 
   });
 

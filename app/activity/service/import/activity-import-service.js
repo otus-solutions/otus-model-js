@@ -17,12 +17,17 @@
 
   function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory) {
     var self = this;
-    self.execute = execute;
     self.isValid = true;
+
     var _fillingList = [];
     var _elementRegister = null;
     var _item = null;
     var _activity;
+    var _activities = [];
+
+    //Public methods
+    self.execute = execute;
+    self.getValidActivities = getValidActivities;
 
     function _setQuestionFill(answers, item) {
       if(answers[item.customID]){
@@ -135,9 +140,15 @@
       _activity.interviews.push(InterviewFactory.create(user));
     }
 
+    function getValidActivities() {
+      return _activities.filter(function (activity) {
+        return activity.isValid === true;
+      })
+    }
+
 
     function execute(surveyForm, jsonObject, user) {
-      var _activities = [];
+      _activities = [];
       if(Array.isArray(jsonObject)){
         if (jsonObject.length > 0) {
           jsonObject.forEach(function (json) {
