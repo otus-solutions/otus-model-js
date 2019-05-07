@@ -81,7 +81,7 @@
     }
 
     function _setupValidation(_item) {
-      Object.keys(_item.fillingRules.options).map(function(validator) {
+      Object.keys(_item.fillingRules.options).forEach(function(validator) {
         _addValidator(validator, _item);
       });
 
