@@ -22,6 +22,7 @@ module.exports = function (config) {
       NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
       NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
       NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
+      NODE_MODULES_ROOT_PATH + 'otus-validation-js/dist/otus-validation-min.js',
 
       DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
       DEPENDENCIES_ROOT_PATH + 'st-utils/**/*.js',
