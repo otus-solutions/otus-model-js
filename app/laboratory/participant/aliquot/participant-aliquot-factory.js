@@ -11,7 +11,7 @@
     'otusjs.laboratory.configuration.LaboratoryConfigurationService'
   ];
 
-  function factory(AliquotCollectionDataFactory, HistoryFactory, LaboratoryConfigurationService) {
+  function factory(AliquotCollectionDataFactory, HistoryRoleFactory, LaboratoryConfigurationService) {
     var self = this;
 
     self.create = create;
@@ -20,19 +20,19 @@
     function fromJSON(aliquotsArray, tubeInfo) {
       //builds the aliquots array that comes along with the tube from base
       return aliquotsArray.map(function(aliquotInfo) {
-        return new ParticipantAliquot(AliquotCollectionDataFactory, HistoryFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
+        return new ParticipantAliquot(AliquotCollectionDataFactory, HistoryRoleFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
       });
     }
 
     function create(aliquotInfo, tubeInfo) {
       //used to build an filled aliquot
       var newInfo = angular.copy(aliquotInfo);
-      return new ParticipantAliquot(AliquotCollectionDataFactory, HistoryFactory, LaboratoryConfigurationService, newInfo, tubeInfo);
+      return new ParticipantAliquot(AliquotCollectionDataFactory, HistoryRoleFactory, LaboratoryConfigurationService, newInfo, tubeInfo);
     }
     return self;
   }
 
-  function ParticipantAliquot(AliquotCollectionDataFactory, HistoryFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo) {
+  function ParticipantAliquot(AliquotCollectionDataFactory, HistoryRoleFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo) {
     var self = this;
     var _aliquotDescriptor;
 
@@ -44,7 +44,7 @@
     self.container = aliquotInfo.container;
 
     self.aliquotCollectionData = AliquotCollectionDataFactory.create(aliquotInfo.aliquotCollectionData);
-    self.history = HistoryFactory.fromHistoryArray(aliquotInfo.history);
+    self.history = HistoryRoleFactory.createHistoryArray(aliquotInfo.history);
 
     self.collect = collect;
     self.toJSON = toJSON;

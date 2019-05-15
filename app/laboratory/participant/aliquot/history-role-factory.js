@@ -10,19 +10,19 @@
     var self = this;
 
     self.create = create;
-    self.fromHistoryArray = fromHistoryArray;
+    self.createHistoryArray = createHistoryArray;
 
     function create(historyInfo) {
       return new HistoryData(historyInfo);
     }
 
-    function fromHistoryArray(historyArray) {
+    function createHistoryArray(historyArray) {
       if (Array.isArray(historyArray)) {
         return historyArray.map(function (history) {
           return new HistoryData(history).toJSON();
         });
       } else {
-        return [];
+        return [new HistoryData(historyArray)];
       }
     }
     return self;
