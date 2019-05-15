@@ -5,9 +5,12 @@
     .module('otusjs.user.permission')
     .service('otusjs.user.permission.PermissionMapper', Service);
 
-  Service.$inject = ['otusjs.user.permission.SurveyGroupPermissionFactory'];
+  Service.$inject = [
+    'otusjs.user.permission.SurveyGroupPermissionFactory',
+    'otusjs.user.permission.LaboratoryPermissionFactory'
+  ];
 
-  function Service(SurveyGroupPermissionFactory) {
+  function Service(SurveyGroupPermissionFactory, LaboratoryPermissionFactory) {
     var self = this;
 
     self.create = create;
@@ -16,6 +19,10 @@
       switch (permissionJson.objectType) {
         case "SurveyGroupPermission":
           return SurveyGroupPermissionFactory.create(permissionJson, userEmail);
+
+        case "LaboratoryPermission":
+          return LaboratoryPermissionFactory.create(permissionJson, userEmail);
+
         default:
           throw Error("Undefined object type");
       }
