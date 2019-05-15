@@ -22,7 +22,7 @@
           return new HistoryData(history).toJSON();
         });
       } else {
-        return [new HistoryData(historyArray)];
+        return [new HistoryData(historyArray).toJSON()];
       }
     }
     return self;
