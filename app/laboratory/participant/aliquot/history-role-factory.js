@@ -10,19 +10,19 @@
     var self = this;
 
     self.create = create;
-    self.createHistoryArray = createHistoryArray;
+    self.fromArray = fromArray;
 
     function create(historyInfo) {
       return new HistoryData(historyInfo);
     }
 
-    function createHistoryArray(historyArray) {
+    function fromArray(historyArray) {
       if (Array.isArray(historyArray)) {
         return historyArray.map(function (history) {
           return new HistoryData(history).toJSON();
         });
       } else {
-        return [new HistoryData(historyArray).toJSON()];
+        return [];
       }
     }
     return self;
@@ -34,7 +34,7 @@
     self.toJSON = toJSON;
 
     self.objectType = 'AliquotHistory';
-    self.type = historyInfo.type || '';
+    self.type = historyInfo.type || 'CONVERTED_STORAGE';
     self.userEmail = historyInfo.userEmail || '';
     self.description = historyInfo.description || '';
     self.date = historyInfo.date || new Date().toISOString();

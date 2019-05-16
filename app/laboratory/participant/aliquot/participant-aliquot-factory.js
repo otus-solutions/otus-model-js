@@ -44,7 +44,7 @@
     self.container = aliquotInfo.container;
 
     self.aliquotCollectionData = AliquotCollectionDataFactory.create(aliquotInfo.aliquotCollectionData);
-    self.history = HistoryRoleFactory.createHistoryArray(aliquotInfo.history);
+    self.aliquotHistory = HistoryRoleFactory.fromArray(aliquotInfo.aliquotHistory);
 
     self.collect = collect;
     self.toJSON = toJSON;
@@ -57,6 +57,7 @@
     function onInit() {
       _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name);
       _runDescriptors(_aliquotDescriptor);
+      _convertHistory();
     }
 
     function _runDescriptors(aliquotDescriptor) {
@@ -67,6 +68,12 @@
       self.aliquotCollectionData.fill(operator, processing);
     }
 
+    function _convertHistory() {
+      self.isConverted = self.aliquotHistory.filter(function (history) {
+        return history.type === "CONVERTED_STORAGE"
+      }).length > 0
+    }
+
     function toJSON() {
       var json = {
         objectType: self.objectType,
@@ -75,7 +82,7 @@
         container: self.container,
         role: self.role,
         aliquotCollectionData: self.aliquotCollectionData,
-        history: self.history
+        aliquotHistory: self.aliquotHistory
       };
       return json;
     }

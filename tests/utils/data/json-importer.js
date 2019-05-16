@@ -3386,7 +3386,8 @@ Test.utils.data.participantLaboratory = {
         "metadata": "",
         "operator": "LALA@GMAIL.COM",
         "time": "2017-06-22T21:43:06.086Z"
-      }
+      },
+      "aliquotHistory": []
     }],
     "order": 1,
     "tubeCollectionData": {
