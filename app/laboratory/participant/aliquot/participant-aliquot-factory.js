@@ -47,6 +47,7 @@
     self.aliquotHistory = HistoryRoleFactory.fromArray(aliquotInfo.aliquotHistory);
 
     self.collect = collect;
+    self.convertStorage = convertStorage
     self.toJSON = toJSON;
 
     //Custom
@@ -66,6 +67,10 @@
 
     function collect(operator, processing) {
       self.aliquotCollectionData.fill(operator, processing);
+    }
+
+    function convertStorage(operator,description) {
+      self.aliquotHistory.push(HistoryRoleFactory.create(operator,description))
     }
 
     function _convertHistory() {

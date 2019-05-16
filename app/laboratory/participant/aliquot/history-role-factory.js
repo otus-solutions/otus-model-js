@@ -12,14 +12,14 @@
     self.create = create;
     self.fromArray = fromArray;
 
-    function create(historyInfo) {
-      return new HistoryData(historyInfo);
+    function create(operator,description) {
+      return new HistoryData(operator,description);
     }
 
     function fromArray(historyArray) {
       if (Array.isArray(historyArray)) {
         return historyArray.map(function (history) {
-          return new HistoryData(history).toJSON();
+          return new HistoryData(history.operator,history.description,history.type,history.date).toJSON();
         });
       } else {
         return [];
@@ -28,16 +28,16 @@
     return self;
   }
 
-  function HistoryData(historyInfo) {
+  function HistoryData(operator, description, type, date) {
     var self = this;
 
     self.toJSON = toJSON;
 
     self.objectType = 'AliquotHistory';
-    self.type = historyInfo.type || 'CONVERTED_STORAGE';
-    self.userEmail = historyInfo.userEmail || '';
-    self.description = historyInfo.description || '';
-    self.date = historyInfo.date || new Date().toISOString();
+    self.type = type || 'CONVERTED_STORAGE';
+    self.userEmail = operator || '';
+    self.description = description || '';
+    self.date = date || new Date().toISOString();
 
     function toJSON() {
       return {
