@@ -8,7 +8,7 @@ describe('ParticipantAliquotFactory', function() {
 
     inject(function(_$injector_) {
       Injections.AliquotCollectionDataFactory = _$injector_.get('otusjs.laboratory.participant.AliquotCollectionDataFactory');
-      Injections.HistoryRoleFactory = _$injector_.get('otusjs.laboratory.participant.aliquot.HistoryRoleFactory');
+      Injections.AliquotHistoryFactory = _$injector_.get('otusjs.laboratory.participant.aliquot.AliquotHistoryFactory');
       Injections.LaboratoryConfigurationService = _$injector_.get('otusjs.laboratory.configuration.LaboratoryConfigurationService');
 
     factory = _$injector_.get('otusjs.laboratory.participant.ParticipantAliquotFactory', Injections);
@@ -22,7 +22,8 @@ describe('ParticipantAliquotFactory', function() {
   Injections.LaboratoryConfigurationService.initializeLaboratoryConfiguration(Mock.LabDescriptors);
 
   spyOn(Injections.AliquotCollectionDataFactory, 'create').and.callThrough();
-  spyOn(Injections.HistoryRoleFactory, 'fromArray').and.callThrough();
+  spyOn(Injections.AliquotHistoryFactory, 'create').and.callThrough();
+  spyOn(Injections.AliquotHistoryFactory, 'fromArray').and.callThrough();
 });
 
   it('fatoryExistence check',function () {
@@ -45,12 +46,17 @@ describe('the creation method', function() {
     expect(Mock.aliquot.objectType).toEqual('Aliquot');
   });
 
-  it('createMethod injection should have been evoked', function () {
+  it('createMethod injection AliquotCollectionDataFactory should have been evoked', function () {
     expect(Injections.AliquotCollectionDataFactory.create).toHaveBeenCalledTimes(1);
   });
 
-  it('fromArrayMethod injection should have been evoked', function () {
-    expect(Injections.HistoryRoleFactory.fromArray).toHaveBeenCalledTimes(1);
+  it('createMethod injection AliquotHistoryFactory should have been evoked', function () {
+    Mock.aliquot.convertStorage(Mock.testOperator,Mock.testDescription);
+    expect(Injections.AliquotHistoryFactory.create).toHaveBeenCalledTimes(1);
+  });
+
+  it('fromArrayMethod injection AliquotHistoryFactory should have been evoked', function () {
+    expect(Injections.AliquotHistoryFactory.fromArray).toHaveBeenCalledTimes(1);
   });
 
   it('should generate the same values for this fields', function() {
@@ -62,6 +68,10 @@ describe('the creation method', function() {
     expect(Mock.aliquot.isConverted).toBeFalsy();
     expect(Mock.aliquot.history).toEqual(Mock.aliquotInfo.history);
   });
+
+  it('toJSONMethod should compare', function () {
+    expect(JSON.stringify(Mock.aliquot.toJSON())).toEqual(JSON.stringify(Mock.aliquotInfo));
+  })
 });
 
 describe('the fromJSON method', function() {
@@ -120,6 +130,8 @@ function mockAliquotInfo() {
 
 function mockAliquot() {
   Mock.aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
+  Mock.testOperator = "";
+  Mock.testDescription = "";
 }
 
 function mockAliquotFromJson() {

@@ -6,7 +6,7 @@ describe(' HistoryRoleFactory_UnitTest_Suite', function () {
     angular.mock.module('otusjs.laboratory');
 
     angular.mock.inject(function (_$injector_) {
-      factory = _$injector_.get('otusjs.laboratory.participant.aliquot.HistoryRoleFactory');
+      factory = _$injector_.get('otusjs.laboratory.participant.aliquot.AliquotHistoryFactory');
     });
 
     mockHistoryData();
@@ -22,7 +22,7 @@ describe(' HistoryRoleFactory_UnitTest_Suite', function () {
   });
 
   it('create_method_should_return_object', function () {
-    var historyInfo = factory.create(Mock.test);
+    var historyInfo = factory.create(Mock.testOperator,Mock.testDescription);
     expect(JSON.stringify(historyInfo)).toEqual(JSON.stringify(Mock.historyDataEmpty));
   });
 
@@ -37,7 +37,8 @@ describe(' HistoryRoleFactory_UnitTest_Suite', function () {
   });
 
   function mockHistoryData(){
-    Mock.test = {};
+    Mock.testOperator = "";
+    Mock.testDescription = "";
 
     Mock.historyDataEmpty = {
       objectType : "AliquotHistory",

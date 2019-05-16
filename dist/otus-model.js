@@ -7296,7 +7296,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.laboratory.participant').factory('otusjs.laboratory.participant.ParticipantAliquotFactory', factory);
 
-  factory.$inject = ['otusjs.laboratory.participant.AliquotCollectionDataFactory', 'otusjs.laboratory.participant.aliquot.HistoryRoleFactory', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
+  factory.$inject = ['otusjs.laboratory.participant.AliquotCollectionDataFactory', 'otusjs.laboratory.participant.aliquot.AliquotHistoryFactory', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
 
   function factory(AliquotCollectionDataFactory, HistoryRoleFactory, LaboratoryConfigurationService) {
     var self = this;
