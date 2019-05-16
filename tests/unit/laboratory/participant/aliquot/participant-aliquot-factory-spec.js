@@ -25,8 +25,13 @@ describe('ParticipantAliquotFactory', function() {
   spyOn(Injections.HistoryRoleFactory, 'fromArray').and.callThrough();
 });
 
-  it('checkMethod fatory',function () {
+  it('fatoryExistence check',function () {
     expect(factory).toBeDefined();
+  });
+
+  it('factoryMethodsExistence_check', function () {
+    expect(factory.create).toBeDefined();
+    expect(factory.fromJSON).toBeDefined();
   });
 
 describe('the creation method', function() {
@@ -40,11 +45,11 @@ describe('the creation method', function() {
     expect(Mock.aliquot.objectType).toEqual('Aliquot');
   });
 
-  it('createMethod injection should have been executed', function () {
+  it('createMethod injection should have been evoked', function () {
     expect(Injections.AliquotCollectionDataFactory.create).toHaveBeenCalledTimes(1);
   });
 
-  it('fromArrayMethod injection should have been executed', function () {
+  it('fromArrayMethod injection should have been evoked', function () {
     expect(Injections.HistoryRoleFactory.fromArray).toHaveBeenCalledTimes(1);
   });
 
@@ -56,7 +61,6 @@ describe('the creation method', function() {
     expect(Mock.aliquot.role).toEqual(Mock.aliquotInfo.role);
     expect(Mock.aliquot.isConverted).toBeFalsy();
     expect(Mock.aliquot.history).toEqual(Mock.aliquotInfo.history);
-    console.log(Mock.aliquot);
   });
 });
 
