@@ -27,8 +27,8 @@ describe(' HistoryRoleFactory_UnitTest_Suite', function () {
   });
 
   it('fromArray_method_should_return_the_array_of_objects', function () {
-    var historyInfo = factory.fromArray([Mock.historyDataFull,Mock.historyDataFull]);
-    expect(JSON.stringify(historyInfo)).toEqual(JSON.stringify([Mock.historyDataFull,Mock.historyDataFull]));
+    var historyInfo = factory.fromArray([Mock.historyDataFull,Mock.historyDataEmpty]);
+    expect(JSON.stringify(historyInfo)).toEqual(JSON.stringify([Mock.historyDataFull,Mock.historyDataEmpty]));
   });
 
   it('fromArray_method_should_not_return_the_array_of_objects', function () {
