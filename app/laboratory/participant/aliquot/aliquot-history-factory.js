@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.participant')
-    .factory('otusjs.laboratory.participant.aliquot.HistoryRoleFactory', factory);
+    .factory('otusjs.laboratory.participant.aliquot.AliquotHistoryFactory', factory);
 
   function factory() {
 
@@ -19,7 +19,7 @@
     function fromArray(historyArray) {
       if (Array.isArray(historyArray)) {
         return historyArray.map(function (history) {
-          return new HistoryData(history.operator,history.description,history.type,history.date).toJSON();
+          return new HistoryData(history.userEmail,history.description,history.type,history.date).toJSON();
         });
       } else {
         return [];
@@ -33,7 +33,7 @@
 
     self.toJSON = toJSON;
 
-    self.objectType = 'AliquotHistory';
+    self.objectType = 'AliquotEvent';
     self.type = type || 'CONVERTED_STORAGE';
     self.userEmail = operator || '';
     self.description = description || '';

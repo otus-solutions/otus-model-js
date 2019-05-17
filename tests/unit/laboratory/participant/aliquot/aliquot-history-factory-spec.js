@@ -6,7 +6,7 @@ describe(' HistoryRoleFactory_UnitTest_Suite', function () {
     angular.mock.module('otusjs.laboratory');
 
     angular.mock.inject(function (_$injector_) {
-      factory = _$injector_.get('otusjs.laboratory.participant.aliquot.HistoryRoleFactory');
+      factory = _$injector_.get('otusjs.laboratory.participant.aliquot.AliquotHistoryFactory');
     });
 
     mockHistoryData();
@@ -22,13 +22,13 @@ describe(' HistoryRoleFactory_UnitTest_Suite', function () {
   });
 
   it('create_method_should_return_object', function () {
-    var historyInfo = factory.create(Mock.test);
+    var historyInfo = factory.create(Mock.testOperator,Mock.testDescription);
     expect(JSON.stringify(historyInfo)).toEqual(JSON.stringify(Mock.historyDataEmpty));
   });
 
   it('fromArray_method_should_return_the_array_of_objects', function () {
-    var historyInfo = factory.fromArray([Mock.historyDataFull,Mock.historyDataFull]);
-    expect(JSON.stringify(historyInfo)).toEqual(JSON.stringify([Mock.historyDataFull,Mock.historyDataFull]));
+    var historyInfo = factory.fromArray([Mock.historyDataFull,Mock.historyDataEmpty]);
+    expect(JSON.stringify(historyInfo)).toEqual(JSON.stringify([Mock.historyDataFull,Mock.historyDataEmpty]));
   });
 
   it('fromArray_method_should_not_return_the_array_of_objects', function () {
@@ -37,10 +37,11 @@ describe(' HistoryRoleFactory_UnitTest_Suite', function () {
   });
 
   function mockHistoryData(){
-    Mock.test = {};
+    Mock.testOperator = "";
+    Mock.testDescription = "";
 
     Mock.historyDataEmpty = {
-      objectType : "AliquotHistory",
+      objectType : "AliquotEvent",
       type : "CONVERTED_STORAGE",
       userEmail : "",
       description : "",
@@ -48,7 +49,7 @@ describe(' HistoryRoleFactory_UnitTest_Suite', function () {
     };
 
     Mock.historyDataFull = {
-      objectType : 'AliquotHistory',
+      objectType : 'AliquotEvent',
       type : 'CONVERTED_STORAGE',
       userEmail : 'LALA@GMAIL.COM',
       description : 'teste',
