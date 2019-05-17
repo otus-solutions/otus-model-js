@@ -69,9 +69,10 @@
       self.aliquotCollectionData.fill(operator, processing);
     }
 
-    function convertStorage(operator,description) {
+    function convertStorage(operator, description, type) {
       self.aliquotHistory.push(AliquotHistoryFactory.create(operator,description))
       self.role = "EXAM";
+      self.name = type;
       self.isConverted = true;
     }
 
