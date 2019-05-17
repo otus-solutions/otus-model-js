@@ -70,7 +70,9 @@
     }
 
     function convertStorage(operator,description) {
-      self.aliquotHistory.push(HistoryRoleFactory.create(operator,description))
+      self.aliquotHistory.push(HistoryRoleFactory.create(operator,description));
+      self.role = "EXAM";
+      self.isConverted = true;
     }
 
     function _convertHistory() {
