@@ -33,7 +33,7 @@
 
     self.toJSON = toJSON;
 
-    self.objectType = 'AliquotHistory';
+    self.objectType = 'AliquotEvent';
     self.type = type || 'CONVERTED_STORAGE';
     self.userEmail = operator || '';
     self.description = description || '';

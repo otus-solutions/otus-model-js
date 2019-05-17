@@ -41,7 +41,7 @@ describe(' HistoryRoleFactory_UnitTest_Suite', function () {
     Mock.testDescription = "";
 
     Mock.historyDataEmpty = {
-      objectType : "AliquotHistory",
+      objectType : "AliquotEvent",
       type : "CONVERTED_STORAGE",
       userEmail : "",
       description : "",
@@ -49,7 +49,7 @@ describe(' HistoryRoleFactory_UnitTest_Suite', function () {
     };
 
     Mock.historyDataFull = {
-      objectType : 'AliquotHistory',
+      objectType : 'AliquotEvent',
       type : 'CONVERTED_STORAGE',
       userEmail : 'LALA@GMAIL.COM',
       description : 'teste',
