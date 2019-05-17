@@ -29,9 +29,12 @@
     "gulp-minify": "0.0.11",
     "gulp-sonar": "2.1.0",
     "js-base64": "^2.1.9",
-    "node-uuid": "^1.4.7"
+    "jsonfile": "^5.0.0",
+    "node-uuid": "^1.4.7",
+    "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#v1.0"
   },
   "devDependencies": {
+    "fs": "0.0.1-security",
     "angular-mocks": "^1.4.9",
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
