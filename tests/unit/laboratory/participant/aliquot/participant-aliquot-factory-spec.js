@@ -51,12 +51,26 @@ describe('the creation method', function() {
   });
 
   it('createMethod injection AliquotHistoryFactory should have been evoked', function () {
-    Mock.aliquot.convertStorage(Mock.testOperator,Mock.testDescription);
+    Mock.aliquot.convertStorage(Mock.testOperator, Mock.testDescription, Mock.testType);
     expect(Injections.AliquotHistoryFactory.create).toHaveBeenCalledTimes(1);
   });
 
   it('fromArrayMethod injection AliquotHistoryFactory should have been evoked', function () {
     expect(Injections.AliquotHistoryFactory.fromArray).toHaveBeenCalledTimes(1);
+  });
+
+  it('collectMethod function of ParticipantAliquot should have been evoked',function () {
+    spyOn(Mock.aliquot, 'collect').and.callThrough();
+
+    Mock.aliquot.collect(Mock.testOperator,Mock.testProcesing);
+    expect(Mock.aliquot.collect).toHaveBeenCalledTimes(1);
+  });
+
+  it('getHistoryByTypeMethod function of ParticipantAliquot should have been evoked',function () {
+    spyOn(Mock.aliquot, 'getHistoryByType').and.callThrough();
+
+    expect(Mock.aliquot.getHistoryByType(Mock.testType)).toEqual(Mock.aliquotInfo.aliquotHistory);
+    expect(Mock.aliquot.getHistoryByType).toHaveBeenCalledTimes(1);
   });
 
   it('should generate the same values for this fields', function() {
@@ -65,7 +79,7 @@ describe('the creation method', function() {
     expect(Mock.aliquot.name).toEqual(Mock.aliquotInfo.name);
     expect(Mock.aliquot.container).toEqual(Mock.aliquotInfo.container);
     expect(Mock.aliquot.role).toEqual(Mock.aliquotInfo.role);
-    expect(Mock.aliquot.isConverted).toBeFalsy();
+    expect(Mock.aliquot.isConverted).toBeTruthy();
     expect(Mock.aliquot.history).toEqual(Mock.aliquotInfo.history);
   });
 
@@ -132,6 +146,8 @@ function mockAliquot() {
   Mock.aliquot = factory.create(Mock.aliquotInfo, Mock.singleTube);
   Mock.testOperator = "";
   Mock.testDescription = "";
+  Mock.testType = "CONVERTED_STORAGE";
+  Mock.testProcesing = "2018-06-20T18:58:10.942Z";
 }
 
 function mockAliquotFromJson() {
