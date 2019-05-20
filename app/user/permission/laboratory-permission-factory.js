@@ -21,7 +21,6 @@
       let _email = userEmail || permissionJson.email;
 
       self.objectType = "LaboratoryPermission";
-      self.email = permissionJson.email;
       self.access = permissionJson.access || false;
 
 
