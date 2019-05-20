@@ -33,7 +33,7 @@
           item,
           answers[item.customID].value,
           answers[item.customID].metadada,
-          answers[item.customID].comment))
+          answers[item.customID].comment));
       }
     }
 

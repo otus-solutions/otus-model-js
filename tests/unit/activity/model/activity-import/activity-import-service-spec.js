@@ -25,10 +25,9 @@ describe('ActivityImportFactory Tests', function () {
   });
 
   it('should defined service', function () {
-    console.log(service);
     expect(service).toBeDefined();
-    // expect(service.fromJsonObject).toBeDefined();
-    // expect(service.create).toBeDefined();
+    expect(service.fromJsonObject).toBeDefined();
+    expect(service.create).toBeDefined();
   });
 
 
