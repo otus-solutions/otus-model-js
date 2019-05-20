@@ -15,16 +15,16 @@
 'use strict';
 
 (function () {
-    'use strict';
+   'use strict';
 
-    angular.module('otusjs.model.fieldCenter', []);
+   angular.module('otusjs.laboratory', ['otusjs.laboratory.participant', 'otusjs.laboratory.configuration', 'otusjs.laboratory.transportation', 'otusjs.laboratory.exam']);
 })();
 'use strict';
 
 (function () {
-   'use strict';
+    'use strict';
 
-   angular.module('otusjs.laboratory', ['otusjs.laboratory.participant', 'otusjs.laboratory.configuration', 'otusjs.laboratory.transportation', 'otusjs.laboratory.exam']);
+    angular.module('otusjs.model.fieldCenter', []);
 })();
 'use strict';
 
@@ -94,14 +94,14 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.laboratory.configuration', []);
+    angular.module('otusjs.laboratory.exam', ['otusjs.laboratory.exam.lot', 'otusjs.laboratory.exam.sending']);
 })();
 'use strict';
 
 (function () {
     'use strict';
 
-    angular.module('otusjs.laboratory.exam', ['otusjs.laboratory.exam.lot', 'otusjs.laboratory.exam.sending']);
+    angular.module('otusjs.laboratory.configuration', []);
 })();
 'use strict';
 
@@ -1497,73 +1497,6 @@
 })();
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.chart').factory('otusjs.model.chart.VerticalBarFactory', Factory);
-
-  Factory.$inject = ['otusjs.laboratory.configuration.AliquotDescriptorsService'];
-
-  function Factory(AliquotDescriptorsService) {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MonitoringPending();
-    }
-
-    function fromJsonObject(jsonObject, labels) {
-      var dataset = [];
-      var keys = [];
-      if (Array.isArray(jsonObject) && (typeof labels === 'undefined' ? 'undefined' : _typeof(labels)) === "object") {
-        keys = Object.keys(jsonObject[0]);
-
-        var _loop = function _loop(i) {
-          dataset.push(jsonObject.map(function (data) {
-            var title = AliquotDescriptorsService.getLabel(data.title);
-            title = title ? title : data.title;
-            return new MonitoringPending(labels[keys[i]], title, data[keys[i]]).toJSON();
-          }));
-        };
-
-        for (var i = 1; i < keys.length; i++) {
-          _loop(i);
-        }
-        return dataset;
-      } else {
-        return [[]];
-      }
-    }
-
-    return self;
-  }
-
-  function MonitoringPending(title, column, value) {
-    var self = this;
-
-    self.toJSON = toJSON;
-
-    self.char_title = title || "";
-    self.column = column || "";
-    self.value = value || 0;
-
-    function toJSON() {
-      var json = {};
-      json.char_title = self.char_title;
-      json.column = self.column;
-      json.value = self.value;
-
-      return json;
-    }
-  }
-})();
-'use strict';
-
 (function () {
     'use strict';
 
@@ -1718,12 +1651,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 })();
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.fieldCenter').factory('otusjs.model.fieldCenter.FieldCenterFactory', Factory);
+  angular.module('otusjs.model.chart').factory('otusjs.model.chart.VerticalBarFactory', Factory);
 
-  function Factory() {
+  Factory.$inject = ['otusjs.laboratory.configuration.AliquotDescriptorsService'];
+
+  function Factory(AliquotDescriptorsService) {
     var self = this;
 
     /* Public methods */
@@ -1731,55 +1668,51 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new FieldCenter({});
+      return new MonitoringPending();
     }
 
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (center) {
-          return new FieldCenter(center);
-        });
+    function fromJsonObject(jsonObject, labels) {
+      var dataset = [];
+      var keys = [];
+      if (Array.isArray(jsonObject) && (typeof labels === 'undefined' ? 'undefined' : _typeof(labels)) === "object") {
+        keys = Object.keys(jsonObject[0]);
+
+        var _loop = function _loop(i) {
+          dataset.push(jsonObject.map(function (data) {
+            var title = AliquotDescriptorsService.getLabel(data.title);
+            title = title ? title : data.title;
+            return new MonitoringPending(labels[keys[i]], title, data[keys[i]]).toJSON();
+          }));
+        };
+
+        for (var i = 1; i < keys.length; i++) {
+          _loop(i);
+        }
+        return dataset;
       } else {
-        return [];
+        return [[]];
       }
     }
 
     return self;
   }
 
-  function FieldCenter(fieldCenter) {
+  function MonitoringPending(title, column, value) {
     var self = this;
 
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
-    self.name = fieldCenter.name || null;
-    self.code = fieldCenter.code || null;
-    self.acronym = fieldCenter.acronym || null;
-    self.country = fieldCenter.country || null;
-    self.state = fieldCenter.state || null;
-    self.address = fieldCenter.address || null;
-    self.complement = fieldCenter.complement || null;
-    self.zip = fieldCenter.zip || null;
-    self.phone = fieldCenter.phone || null;
-    self.backgroundColor = fieldCenter.backgroundColor || null;
-    self.borderColor = fieldCenter.borderColor || null;
+    self.char_title = title || "";
+    self.column = column || "";
+    self.value = value || 0;
 
-    function toJson() {
+    function toJSON() {
       var json = {};
+      json.char_title = self.char_title;
+      json.column = self.column;
+      json.value = self.value;
 
-      json.name = self.name;
-      json.code = self.code;
-      json.acronym = self.acronym;
-      json.country = self.country;
-      json.state = self.state;
-      json.address = self.address;
-      json.complement = self.complement;
-      json.zip = self.zip;
-      json.phone = self.phone;
-      json.backgroundColor = self.backgroundColor;
-      json.borderColor = self.borderColor;
-
-      return JSON.stringify(json);
+      return json;
     }
   }
 })();
@@ -2428,6 +2361,73 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       return json;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.fieldCenter').factory('otusjs.model.fieldCenter.FieldCenterFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new FieldCenter({});
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (center) {
+          return new FieldCenter(center);
+        });
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function FieldCenter(fieldCenter) {
+    var self = this;
+
+    self.toJson = toJson;
+
+    self.name = fieldCenter.name || null;
+    self.code = fieldCenter.code || null;
+    self.acronym = fieldCenter.acronym || null;
+    self.country = fieldCenter.country || null;
+    self.state = fieldCenter.state || null;
+    self.address = fieldCenter.address || null;
+    self.complement = fieldCenter.complement || null;
+    self.zip = fieldCenter.zip || null;
+    self.phone = fieldCenter.phone || null;
+    self.backgroundColor = fieldCenter.backgroundColor || null;
+    self.borderColor = fieldCenter.borderColor || null;
+
+    function toJson() {
+      var json = {};
+
+      json.name = self.name;
+      json.code = self.code;
+      json.acronym = self.acronym;
+      json.country = self.country;
+      json.state = self.state;
+      json.address = self.address;
+      json.complement = self.complement;
+      json.zip = self.zip;
+      json.phone = self.phone;
+      json.backgroundColor = self.backgroundColor;
+      json.borderColor = self.borderColor;
+
+      return JSON.stringify(json);
     }
   }
 })();
@@ -6130,6 +6130,180 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityImportService', Service);
+
+  Service.$inject = ['ElementRegisterFactory', 'otusjs.validation.api.ValidationService', 'otusjs.model.activity.ActivityFactory', 'otusjs.model.activity.QuestionFillFactory', 'otusjs.model.activity.InterviewFactory'];
+
+  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory) {
+    var self = this;
+
+    var _isValid = true;
+    var _fillingList = [];
+    var _elementRegister = null;
+    var _item = null;
+    var _activity;
+    var _activities = [];
+
+    //Public methods
+    self.fromJsonObject = fromJsonObject;
+    self.create = create;
+
+    function _setQuestionFill(answers, item) {
+      if (answers[item.customID]) {
+        _fillingList.push(QuestionFillFactory.create(item, answers[item.customID].value, answers[item.customID].metadada, answers[item.customID].comment));
+      }
+    }
+
+    function _getQuestionsIdsMap(answers) {
+      var _mapId = {};
+      _activity.surveyForm.surveyTemplate.toJSON().itemContainer.forEach(function (item) {
+        _mapId[item.templateID] = item.customID;
+        _setQuestionFill(answers, item);
+      });
+
+      return _mapId;
+    }
+
+    function _setAnswersValues(answers) {
+      var IDS = _getQuestionsIdsMap(answers);
+      _activity.fillContainer.fillingList = _fillingList;
+      _activity.fillContainer.fillingList.forEach(function (question) {
+        question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : '';
+        question.answer.metadada = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].metadada : '';
+        question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
+        _validateActivity(question.questionID, question.answer);
+      });
+      _activity.isValid = _isValid;
+      _isValid = true;
+    }
+
+    function _validateActivity(templateID, answer) {
+      if (_isValid) {
+        _isValid = answer.value != "" && answer.metadada != "" ? false : true;
+        if (_isValid) {
+          _elementRegister = ElementRegisterFactory.create(templateID, { data: answer.value });
+          _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(templateID);
+          _setupValidation(_item);
+          ValidationService.validateElement(templateID, function (response) {
+            response.forEach(function (validation) {
+              validation.validatorsResponse.forEach(function (validator) {
+                _isValid = validator.result;
+              });
+            });
+          });
+        }
+      }
+    }
+
+    function _setupValidation(_item) {
+      Object.keys(_item.fillingRules.options).forEach(function (validator) {
+        _addValidator(validator, _item);
+      });
+
+      ValidationService.unregisterElement(_elementRegister.id);
+      ValidationService.registerElement(_elementRegister);
+    }
+
+    function _addValidator(validator, _item) {
+      var reference = _item.fillingRules.options[validator].data;
+      if (_item.objectType === "TimeQuestion" || _item.objectType === "CalendarQuestion") {
+        _elementRegister.addValidator("ImmutableDate", reference);
+      } else {
+        _elementRegister.addValidator(validator, reference);
+      }
+    }
+
+    function _createStatusHistoryPaper(json) {
+      switch (json.status) {
+        case 'OPENED':
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          break;
+        case 'SAVED':
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newSavedRegistry(json.user);
+          break;
+        case 'FINALIZED':
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newFinalizedRegistry(json.user);
+          break;
+      }
+    }
+
+    function _createStatusHistoryOnline(json) {
+      switch (json.status) {
+        case 'INITIALIZED_ONLINE':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          break;
+        case 'OPENED':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          break;
+        case 'SAVED':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newSavedRegistry(json.user);
+          break;
+        case 'FINALIZED':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newFinalizedRegistry(json.user);
+          break;
+      }
+    }
+
+    function _setInterview(user) {
+      _activity.interviews.push(InterviewFactory.create(user));
+    }
+
+    function _isValidSurveys(acronym, json) {
+      var _valid = true;
+      json.forEach(function (activity) {
+        if (_valid) {
+          _valid = acronym == activity.acronym;
+        }
+      });
+      return _valid;
+    }
+
+    function fromJsonObject(surveyForm, jsonObject, user) {
+      _activities = [];
+      if (Array.isArray(jsonObject)) {
+        if (jsonObject.length > 0) {
+          if (_isValidSurveys(surveyForm.surveyTemplate.identity.acronym, jsonObject)) {
+            jsonObject.forEach(function (json) {
+              _activities.push(self.create(surveyForm, json, user));
+            });
+          }
+        }
+      }
+
+      return _activities;
+    }
+
+    function create(surveyForm, json, user) {
+      _activity = null;
+      if (json.acronym == surveyForm.surveyTemplate.identity.acronym) {
+        if (json.mode === "PAPER" && json.offlineData) {
+          _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id);
+          _createStatusHistoryPaper(json);
+        } else if (json.mode === "ONLINE") {
+          _activity = ActivityFactory.create(surveyForm, user, json.participant, json.activityConfiguration, json.id);
+          _createStatusHistoryOnline(json);
+        }
+        _setAnswersValues(json.answers);
+        _setInterview(user);
+        _activity.surveyForm.acronym = _activity.surveyForm.surveyTemplate.identity.acronym;
+      }
+
+      return _activity;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.model.activity').service('otusjs.model.activity.AnswerEvaluationService', Service);
 
   Service.$inject = ['otusjs.model.activity.NumericRuleTestService', 'otusjs.model.activity.TextRuleTestService', 'otusjs.model.activity.CalendarRuleTestService', 'otusjs.model.activity.TimeRuleTestService', 'otusjs.model.activity.CheckboxRuleTestService'];
@@ -6524,166 +6698,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       immutableDate.setSeconds(resultRegex[2] != undefined ? resultRegex[2] : 0);
       immutableDate.setMilliseconds(resultRegex[3] != undefined ? resultRegex[3] : 0);
       return immutableDate;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityImportService', Service);
-
-  Service.$inject = ['ElementRegisterFactory', 'otusjs.validation.api.ValidationService', 'otusjs.model.activity.ActivityFactory', 'otusjs.model.activity.QuestionFillFactory', 'otusjs.model.activity.InterviewFactory'];
-
-  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory) {
-    var self = this;
-    self.isValid = true;
-
-    var _fillingList = [];
-    var _elementRegister = null;
-    var _item = null;
-    var _activity;
-    var _activities = [];
-
-    //Public methods
-    self.execute = execute;
-    self.getValidActivities = getValidActivities;
-
-    function _setQuestionFill(answers, item) {
-      if (answers[item.customID]) {
-        _fillingList.push(QuestionFillFactory.create(item, answers[item.customID].value, answers[item.customID].metadada, answers[item.customID].comment));
-      }
-    }
-
-    function _getQuestionsIdsMap(answers) {
-      var _mapId = {};
-      _activity.surveyForm.surveyTemplate.toJSON().itemContainer.forEach(function (item) {
-        _mapId[item.templateID] = item.customID;
-        _setQuestionFill(answers, item);
-      });
-
-      return _mapId;
-    }
-
-    function _setAnswersValues(answers) {
-      var IDS = _getQuestionsIdsMap(answers);
-      _activity.fillContainer.fillingList = _fillingList;
-      _activity.fillContainer.fillingList.forEach(function (question) {
-        question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : '';
-        question.answer.metadada = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].metadada : '';
-        question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
-        _validateActivity(question.questionID, question.answer);
-      });
-      _activity.isValid = self.isValid;
-      self.isValid = true;
-    }
-
-    function _validateActivity(templateID, answer) {
-      if (self.isValid) {
-        self.isValid = answer.value != "" && answer.metadada != "" ? false : true;
-        if (self.isValid) {
-          _elementRegister = ElementRegisterFactory.create(templateID, { data: answer.value });
-          _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(templateID);
-          _setupValidation(_item);
-          ValidationService.validateElement(templateID, function (response) {
-            response.forEach(function (validation) {
-              validation.validatorsResponse.forEach(function (validator) {
-                self.isValid = validator.result;
-              });
-            });
-          });
-        }
-      }
-    }
-
-    function _setupValidation(_item) {
-      Object.keys(_item.fillingRules.options).forEach(function (validator) {
-        _addValidator(validator, _item);
-      });
-
-      ValidationService.unregisterElement(_elementRegister.id);
-      ValidationService.registerElement(_elementRegister);
-    }
-
-    function _addValidator(validator, _item) {
-      var reference = _item.fillingRules.options[validator].data;
-      if (_item.objectType === "TimeQuestion" || _item.objectType === "CalendarQuestion") {
-        _elementRegister.addValidator("ImmutableDate", reference);
-      } else {
-        _elementRegister.addValidator(validator, reference);
-      }
-    }
-
-    function _createStatusHistoryPaper(json) {
-      switch (json.status) {
-        case 'OPENED':
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          break;
-        case 'SAVED':
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newSavedRegistry(json.user);
-          break;
-        case 'FINALIZED':
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newFinalizedRegistry(json.user);
-          break;
-      }
-    }
-
-    function _createStatusHistoryOnline(json) {
-      switch (json.status) {
-        case 'INITIALIZED_ONLINE':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          break;
-        case 'OPENED':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          break;
-        case 'SAVED':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newSavedRegistry(json.user);
-          break;
-        case 'FINALIZED':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newFinalizedRegistry(json.user);
-          break;
-      }
-    }
-
-    function _setInterview(user) {
-      _activity.interviews.push(InterviewFactory.create(user));
-    }
-
-    function getValidActivities() {
-      return _activities.filter(function (activity) {
-        return activity.isValid === true;
-      });
-    }
-
-    function execute(surveyForm, jsonObject, user) {
-      _activities = [];
-      if (Array.isArray(jsonObject)) {
-        if (jsonObject.length > 0) {
-          jsonObject.forEach(function (json) {
-            _activity = null;
-            if (json.mode === "PAPER" && json.offlineData) {
-              _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id);
-              _createStatusHistoryPaper(json);
-            } else if (json.mode === "ONLINE") {
-              _activity = ActivityFactory.create(surveyForm, user, json.participant, json.activityConfiguration, json.id);
-              _createStatusHistoryOnline(json);
-            }
-            _setAnswersValues(json.answers);
-            _setInterview(user);
-            _activities.push(_activity);
-          });
-        }
-      }
-
-      return _activities;
     }
   }
 })();
@@ -9550,32 +9564,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.laboratory.exam').service('otusjs.laboratory.exam.ExamService', Service);
-
-  Service.$inject = ['otusjs.laboratory.exam.ExamLotFactory'];
-
-  function Service(ExamLotFactory) {
-    var self = this;
-
-    self.createAliquotLot = createAliquotLot;
-    self.buildAliquotLotFromJson = buildAliquotLotFromJson;
-
-    function createAliquotLot() {
-      return ExamLotFactory.create();
-    }
-
-    function buildAliquotLotFromJson(lotJson) {
-      return ExamLotFactory.fromJson(lotJson);
-    }
-
-    return self;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.laboratory.exam.sending').service('otusjs.laboratory.exam.sending.ExamSendingLotService', service);
 
   service.$inject = ['otusjs.laboratory.exam.sending.ExamSendingFactory'];
@@ -9593,6 +9581,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function buildExamSendingFromJson(examSendingLot, exam) {
       return ExamSendingFactory.fromJson(examSendingLot, exam);
+    }
+
+    return self;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.laboratory.exam').service('otusjs.laboratory.exam.ExamService', Service);
+
+  Service.$inject = ['otusjs.laboratory.exam.ExamLotFactory'];
+
+  function Service(ExamLotFactory) {
+    var self = this;
+
+    self.createAliquotLot = createAliquotLot;
+    self.buildAliquotLotFromJson = buildAliquotLotFromJson;
+
+    function createAliquotLot() {
+      return ExamLotFactory.create();
+    }
+
+    function buildAliquotLotFromJson(lotJson) {
+      return ExamLotFactory.fromJson(lotJson);
     }
 
     return self;
@@ -10591,86 +10605,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.validation').factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
-
-  MaxTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
-
-  function MaxTimeValidatorFactory(ImmutableDate) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MaxTimeValidator(ImmutableDate);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.MaxTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new MaxTimeValidator(ImmutableDate);
-      validator.canBeIgnored = jsonObject.canBeIgnored;
-      validator.reference = jsonObject.reference;
-      return validator;
-    }
-
-    return self;
-  }
-
-  function MaxTimeValidator(ImmutableDate) {
-    var self = this;
-
-    self.canBeIgnored = true;
-    self.reference = { value: '' };
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.validation').factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
-
-  MinTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
-
-  function MinTimeValidatorFactory(ImmutableDate) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new MinTimeValidator(ImmutableDate);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.MinTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new MinTimeValidator(ImmutableDate);
-      validator.canBeIgnored = jsonObject.canBeIgnored;
-      validator.reference = jsonObject.reference;
-      return validator;
-    }
-
-    return self;
-  }
-
-  function MinTimeValidator(ImmutableDate) {
-    var self = this;
-
-    self.canBeIgnored = true;
-    self.reference = { value: '' };
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.validation').factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
 
   function AlphanumericValidatorFactory() {
@@ -10892,6 +10826,86 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     self.canBeIgnored = true;
     self.reference = true;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.validation').factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
+
+  MaxTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
+
+  function MaxTimeValidatorFactory(ImmutableDate) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new MaxTimeValidator(ImmutableDate);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.MaxTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new MaxTimeValidator(ImmutableDate);
+      validator.canBeIgnored = jsonObject.canBeIgnored;
+      validator.reference = jsonObject.reference;
+      return validator;
+    }
+
+    return self;
+  }
+
+  function MaxTimeValidator(ImmutableDate) {
+    var self = this;
+
+    self.canBeIgnored = true;
+    self.reference = { value: '' };
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.validation').factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
+
+  MinTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
+
+  function MinTimeValidatorFactory(ImmutableDate) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new MinTimeValidator(ImmutableDate);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.MinTimeValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new MinTimeValidator(ImmutableDate);
+      validator.canBeIgnored = jsonObject.canBeIgnored;
+      validator.reference = jsonObject.reference;
+      return validator;
+    }
+
+    return self;
+  }
+
+  function MinTimeValidator(ImmutableDate) {
+    var self = this;
+
+    self.canBeIgnored = true;
+    self.reference = { value: '' };
   }
 })();
 'use strict';

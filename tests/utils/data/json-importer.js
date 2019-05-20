@@ -29233,6 +29233,7 @@ Test.utils.data.jsonObject = {
 //in array, first object is invalid.
 Test.utils.data.jsonObjectImport = [{
   id: '',
+  acronym: 'PASC',
   participant: '1234567',
   user: {
     name: 'otus',
@@ -29330,6 +29331,7 @@ Test.utils.data.jsonObjectImport = [{
 },
   {
     id: '',
+    acronym: 'PASC',
     participant: '1234567', //recruitment_number
     user: { //get interviewer data
       name: 'otus',
@@ -33065,6 +33067,7 @@ Test.utils.data.activityPASC = {
 
 Test.utils.data.jsonImportDSOC = [{
   id: '',
+  acronym: 'DSOC',
   participant: '7654321',
   user: {
     name: 'otus',

@@ -13,12 +13,10 @@
     'otusjs.model.activity.InterviewFactory'
   ];
 
-
-
   function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory) {
     var self = this;
-    self.isValid = true;
 
+    var _isValid = true;
     var _fillingList = [];
     var _elementRegister = null;
     var _item = null;
@@ -26,8 +24,8 @@
     var _activities = [];
 
     //Public methods
-    self.execute = execute;
-    self.getValidActivities = getValidActivities;
+    self.fromJsonObject = fromJsonObject;
+    self.create = create;
 
     function _setQuestionFill(answers, item) {
       if(answers[item.customID]){
@@ -58,21 +56,21 @@
         question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
         _validateActivity(question.questionID, question.answer);
       });
-      _activity.isValid = self.isValid;
-      self.isValid = true;
+      _activity.isValid = _isValid;
+      _isValid = true;
     }
 
     function _validateActivity(templateID, answer) {
-      if (self.isValid) {
-        self.isValid = answer.value != "" && answer.metadada != "" ? false : true;
-        if (self.isValid) {
+      if (_isValid) {
+        _isValid = answer.value != "" && answer.metadada != "" ? false : true;
+        if (_isValid) {
           _elementRegister = ElementRegisterFactory.create(templateID, {data:answer.value});
           _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(templateID);
           _setupValidation(_item);
           ValidationService.validateElement(templateID, function (response) {
             response.forEach(function (validation) {
               validation.validatorsResponse.forEach(function (validator) {
-                self.isValid = validator.result;
+                _isValid = validator.result;
               })
             })
           });
@@ -140,34 +138,47 @@
       _activity.interviews.push(InterviewFactory.create(user));
     }
 
-    function getValidActivities() {
-      return _activities.filter(function (activity) {
-        return activity.isValid === true;
-      })
+    function _isValidSurveys(acronym, json){
+      var _valid = true;
+      json.forEach(activity => {
+        if (_valid){
+          _valid = acronym == activity.acronym
+        }
+      });
+      return _valid;
     }
 
-
-    function execute(surveyForm, jsonObject, user) {
+    function fromJsonObject(surveyForm, jsonObject, user) {
       _activities = [];
       if(Array.isArray(jsonObject)){
         if (jsonObject.length > 0) {
-          jsonObject.forEach(function (json) {
-            _activity = null;
-            if (json.mode === "PAPER" && json.offlineData){
-              _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id)
-              _createStatusHistoryPaper(json);
-            } else if(json.mode === "ONLINE"){
-              _activity = ActivityFactory.create(surveyForm, user, json.participant, json.activityConfiguration, json.id);
-              _createStatusHistoryOnline(json);
-            }
-            _setAnswersValues(json.answers);
-            _setInterview(user);
-            _activities.push(_activity);
-          });
+          if(_isValidSurveys(surveyForm.surveyTemplate.identity.acronym, jsonObject)){
+            jsonObject.forEach(function (json) {
+              _activities.push(self.create(surveyForm, json, user));
+            });
+          }
         }
       }
 
       return _activities;
+    }
+
+    function create(surveyForm, json, user) {
+      _activity = null;
+      if (json.acronym == surveyForm.surveyTemplate.identity.acronym){
+        if (json.mode === "PAPER" && json.offlineData) {
+          _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id)
+          _createStatusHistoryPaper(json);
+        } else if (json.mode === "ONLINE") {
+          _activity = ActivityFactory.create(surveyForm, user, json.participant, json.activityConfiguration, json.id);
+          _createStatusHistoryOnline(json);
+        }
+        _setAnswersValues(json.answers);
+        _setInterview(user);
+        _activity.surveyForm.acronym = _activity.surveyForm.surveyTemplate.identity.acronym;
+      }
+
+      return _activity;
     }
 
   }
