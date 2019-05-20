@@ -48,6 +48,7 @@
 
     self.collect = collect;
     self.convertStorage = convertStorage;
+    self.getHistoryByType = getHistoryByType;
     self.toJSON = toJSON;
 
     //Custom
@@ -59,6 +60,12 @@
       _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name);
       _runDescriptors(_aliquotDescriptor);
       _convertHistory();
+    }
+
+    function getHistoryByType(type){
+      return self.aliquotHistory.filter(function (history) {
+        return history.type === type
+      })
     }
 
     function _runDescriptors(aliquotDescriptor) {
