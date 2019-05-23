@@ -32,7 +32,7 @@
         _fillingList.push(QuestionFillFactory.create(
           item,
           answers[item.customID].value,
-          answers[item.customID].metadada,
+          answers[item.customID].metadata,
           answers[item.customID].comment));
       }
     }
@@ -51,8 +51,8 @@
       const IDS = _getQuestionsIdsMap(answers);
       _activity.fillContainer.fillingList = _fillingList;
       _activity.fillContainer.fillingList.forEach(function (question) {
-        question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : '';
-        question.answer.metadada = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].metadada : '';
+        question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
+        question.answer.metadata = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].metadata : null;
         question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
         _validateActivity(question.questionID, question.answer);
       });
@@ -62,7 +62,7 @@
 
     function _validateActivity(templateID, answer) {
       if (_isValid) {
-        _isValid = answer.value != "" && answer.metadada != "" ? false : true;
+        _isValid = answer.value && answer.metadata ? false : true;
         if (_isValid) {
           _elementRegister = ElementRegisterFactory.create(templateID, {data:answer.value});
           _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(templateID);
