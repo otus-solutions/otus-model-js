@@ -3385,8 +3385,18 @@ Test.utils.data.participantLaboratory = {
         "objectType": "AliquotCollectionData",
         "metadata": "",
         "operator": "LALA@GMAIL.COM",
-        "time": "2017-06-22T21:43:06.086Z"
-      }
+        "time": "2017-06-22T21:43:06.086Z",
+        "processing":"2018-06-20T18:58:10.942Z"
+      },
+      "aliquotHistory": [
+        {
+          "objectType": "AliquotEvent",
+          "type": "CONVERTED_STORAGE",
+          "userEmail": "otus@gmail.com",
+          "description": "Falta de material para completar os exames",
+          "date": "2019-05-14T12:36:23.631Z"
+        }
+      ]
     }],
     "order": 1,
     "tubeCollectionData": {
