@@ -49,12 +49,16 @@
 
     function _setAnswersValues(answers) {
       const IDS = _getQuestionsIdsMap(answers);
+      var customID = "";
       _activity.fillContainer.fillingList = _fillingList;
       _activity.fillContainer.fillingList.forEach(function (question) {
-        question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
-        question.answer.metadata = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].metadata : null;
-        question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
-        _validateActivity(question.questionID, question.answer);
+        if(_isValid){
+          question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
+          question.answer.metadata = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].metadata : null;
+          question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
+          _validateActivity(question.questionID, question.answer);
+          if(!_isValid) _activity.error = "Questão {" + IDS[question.questionID] + "} contém uma resposta inválida!"
+        }
       });
       _activity.isValid = _isValid;
       _isValid = true;
