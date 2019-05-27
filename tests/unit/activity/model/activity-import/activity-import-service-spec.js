@@ -1,4 +1,4 @@
-describe('ActivityImportService Tests', function () {
+describe('ActivityImportFactory Tests', function () {
   var Mock = {};
   var Injections = {};
   var service;
@@ -26,18 +26,19 @@ describe('ActivityImportService Tests', function () {
 
   it('should defined service', function () {
     expect(service).toBeDefined();
-    expect(service.execute).toBeDefined();
+    expect(service.fromJsonObject).toBeDefined();
+    expect(service.create).toBeDefined();
   });
 
 
-  it('should create activities PASC in execute method', function () {
+  it('should create activities PASC in fromJsonObject method', function () {
     var user = {
       name: 'otus',
       surname: 'solutions',
       phone: 654897566,
       email: 'user@gmail.com'
     };
-    var _activities = service.execute(surveyForm, Test.utils.data.jsonObjectImport, user);
+    var _activities = service.fromJsonObject(surveyForm, Test.utils.data.jsonObjectImport, user);
     expect(_activities.length).toBe(2);
     expect(_activities[0].isValid).toBeFalsy();
     expect(_activities[1].isValid).toBeTruthy();
@@ -47,23 +48,7 @@ describe('ActivityImportService Tests', function () {
     expect(_activities[1].statusHistory.historySize()).toEqual(4);
   });
 
-  it('should return valid activities method', function () {
-    var user = {
-      name: 'otus',
-      surname: 'solutions',
-      phone: 654897566,
-      email: 'user@gmail.com'
-    };
-    var _activities = service.execute(surveyForm, Test.utils.data.jsonObjectImport, user);
-    expect(_activities.length).toBe(2);
-    expect(_activities[0].isValid).toBeFalsy();
-    expect(_activities[1].isValid).toBeTruthy();
-    expect(service.getValidActivities().length).toEqual(1);
-    expect(service.getValidActivities()[0]).toEqual(_activities[1]);
-
-  });
-
-  it('should create activities DSOC in execute method', function () {
+  xit('should create activities DSOC in fromJsonObject method', function () {
     var user = {
       name: 'otus',
       surname: 'solutions',
@@ -71,7 +56,7 @@ describe('ActivityImportService Tests', function () {
       email: 'user@gmail.com'
     };
     var DSOC = surveyFactory.fromJsonObject(Test.utils.data.surveyFormDSOC);
-    var _activities = service.execute(DSOC, Test.utils.data.jsonImportDSOC, user);
+    var _activities = service.fromJsonObject(DSOC, Test.utils.data.jsonImportDSOC, user);
     expect(_activities.length).toBe(1);
     expect(_activities[0].isValid).toBeTruthy();
     expect(_activities[0].statusHistory.getLastStatus().name).toEqual('FINALIZED');

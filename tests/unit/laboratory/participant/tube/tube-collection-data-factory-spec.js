@@ -97,7 +97,7 @@ describe('the TubeCollectionDataFactory', function() {
     // Mock.singleTube = Mock.ParticipantLaboratory.tubes[0];
     Mock.singleTube = {
       isCollected: false,
-      metadada: "",
+      metadata: "",
       operator: {
         email: "a@a.com.br"
       },
