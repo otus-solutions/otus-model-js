@@ -13,12 +13,6 @@ describe("PermissionManagerFactory", function () {
     }
   ];
 
-  const PERMISSION_JSON = {
-    objectType: "SurveyGroupPermission",
-    email: "email@provider.com",
-    groups: ["Centro de Investigação", "Controle de qualidade"]
-  };
-
   beforeEach(function () {
     angular.mock.module('otusjs.user.permission');
 
