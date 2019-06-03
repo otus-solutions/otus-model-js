@@ -1,5 +1,6 @@
 describe('SurveyFormFactory', function() {
   var Mock = {};
+  var Injections = {};
   var factory;
   var surveyForm;
   var surveyJson;
@@ -7,12 +8,11 @@ describe('SurveyFormFactory', function() {
   beforeEach(function() {
     angular.mock.module('otusjs');
 
-    Mock.surveyTemplate = Test.utils.data.survey;
+    Mock.survey = Test.utils.data.survey;
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('SurveyFormFactory', {
-        'SurveyFactory': _$injector_.get('SurveyFactory')
-      });
+      Injections.SurveyFactory = _$injector_.get('SurveyFactory')
+      factory = _$injector_.get('SurveyFormFactory', Injections);
     });
   });
 
@@ -25,12 +25,21 @@ describe('SurveyFormFactory', function() {
     it('should return a SurveyForm that extends from StudioObject', function() {
       expect(surveyForm.extents).toEqual('StudioObject');
     });
-    xit('should return a SurveyForm that version value', function() {
-      expect(typeof surveyForm.version).toEqual("number");
+
+    it('should return a SurveyForm that version value', function() {
       expect(surveyForm.version).toEqual(null);
     });
+
     it('should return a SurveyForm that isDiscarded value', function() {
       expect(surveyForm.isDiscarded).toEqual(false);
+    });
+
+    it('should return a SurveyForm that acronym value', function() {
+      expect(surveyForm.acronym).toEqual(null);
+    });
+
+    it('should return a SurveyForm that name value', function() {
+      expect(surveyForm.name).toEqual(null);
     });
 
     it('should return a SurveyForm object type', function() {
@@ -39,19 +48,30 @@ describe('SurveyFormFactory', function() {
 
   });
 
-  describe('SurveyFormFactory.fromJsonObject()', function() {
+  describe('SurveyFormFactory.fromJsonObject() with surveyTemplate', function() {
 
     beforeEach(function() {
-      surveyForm = factory.fromJsonObject(Mock.surveyTemplate);
+      spyOn(Injections.SurveyFactory, "fromJsonObject").and.callThrough();
+      surveyForm = factory.fromJsonObject(Mock.survey);
     });
 
     it('should return a SurveyForm that extends from StudioObject', function() {
       expect(surveyForm.extents).toEqual('StudioObject');
     });
+
     it('should return a SurveyForm that version value', function() {
       expect(typeof surveyForm.version).toEqual("number");
       expect(surveyForm.version).toEqual(1);
     });
+
+    it('should return a SurveyForm that acronym value', function() {
+      expect(surveyForm.acronym).toEqual('ANTC');
+    });
+
+    it('should return a SurveyForm that name value', function() {
+      expect(surveyForm.name).toEqual('ANTROPOMETRIA');
+    });
+
     it('should return a SurveyForm that isDiscarded value', function() {
       expect(surveyForm.isDiscarded).toEqual(true);
     });
@@ -60,17 +80,61 @@ describe('SurveyFormFactory', function() {
       expect(surveyForm.objectType).toEqual('SurveyForm');
     });
 
+    it('should call SurveyFactory.fromJsonObject method', function () {
+      expect(Injections.SurveyFactory.fromJsonObject).toHaveBeenCalledTimes(1);
+    });
+
+  });
+
+  describe('SurveyFormFactory.fromJsonObject() without surveyTemplate', function() {
+
+    beforeEach(function() {
+      delete Mock.survey.surveyTemplate;
+      surveyForm = factory.fromJsonObject(Mock.survey);
+      spyOn(Injections.SurveyFactory, "fromJsonObject").and.callThrough();
+
+    });
+
+    it('should return a SurveyForm that extends from StudioObject', function() {
+      expect(surveyForm.extents).toEqual('StudioObject');
+    });
+
+    it('should return a SurveyForm that version value', function() {
+      expect(typeof surveyForm.version).toEqual("number");
+      expect(surveyForm.version).toEqual(1);
+    });
+
+    it('should return a SurveyForm that isDiscarded value', function() {
+      expect(surveyForm.isDiscarded).toEqual(true);
+    });
+
+    it('should return a SurveyForm that acronym value', function() {
+      expect(surveyForm.acronym).toEqual('ANTC');
+    });
+
+    it('should return a SurveyForm that name value', function() {
+      expect(surveyForm.name).toEqual('ANTROPOMETRIA');
+    });
+
+    it('should return a SurveyForm object type', function() {
+      expect(surveyForm.objectType).toEqual('SurveyForm');
+    });
+
+    it('should call SurveyFactory.fromJsonObject method', function () {
+      expect(Injections.SurveyFactory.fromJsonObject).toHaveBeenCalledTimes(0);
+    });
+
   });
 
   describe('SurveyFormFactory.toJSON()', function() {
 
     beforeEach(function() {
-      surveyForm = factory.fromJsonObject(Mock.surveyTemplate);
+      surveyForm = factory.fromJsonObject(Mock.survey);
       surveyJson = surveyForm.toJSON();
     });
 
     xit('should return a SurveyForm that extends from StudioObject', function() {
-      expect(JSON.stringify(surveyJson)).toEqual(JSON.stringify(Mock.surveyTemplate));
+      expect(JSON.stringify(surveyJson)).toEqual(JSON.stringify(Mock.survey));
     });
   });
 
