@@ -6,11 +6,12 @@
     .factory('otusjs.laboratory.participant.ParticipantAliquotFactory', factory);
 
   factory.$inject = [
-      'otusjs.laboratory.participant.AliquotCollectionDataFactory',
-      'otusjs.laboratory.configuration.LaboratoryConfigurationService'
-   ];
+    'otusjs.laboratory.participant.AliquotCollectionDataFactory',
+    'otusjs.laboratory.participant.aliquot.AliquotHistoryFactory',
+    'otusjs.laboratory.configuration.LaboratoryConfigurationService'
+  ];
 
-  function factory(AliquotCollectionDataFactory, LaboratoryConfigurationService) {
+  function factory(AliquotCollectionDataFactory, AliquotHistoryFactory, LaboratoryConfigurationService) {
     var self = this;
 
     self.create = create;
@@ -19,19 +20,19 @@
     function fromJSON(aliquotsArray, tubeInfo) {
       //builds the aliquots array that comes along with the tube from base
       return aliquotsArray.map(function(aliquotInfo) {
-        return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
+        return new ParticipantAliquot(AliquotCollectionDataFactory, AliquotHistoryFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo);
       });
     }
 
     function create(aliquotInfo, tubeInfo) {
       //used to build an filled aliquot
       var newInfo = angular.copy(aliquotInfo);
-      return new ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, newInfo, tubeInfo);
+      return new ParticipantAliquot(AliquotCollectionDataFactory, AliquotHistoryFactory, LaboratoryConfigurationService, newInfo, tubeInfo);
     }
     return self;
   }
 
-  function ParticipantAliquote(AliquotCollectionDataFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo) {
+  function ParticipantAliquot(AliquotCollectionDataFactory, AliquotHistoryFactory, LaboratoryConfigurationService, aliquotInfo, tubeInfo) {
     var self = this;
     var _aliquotDescriptor;
 
@@ -43,7 +44,11 @@
     self.container = aliquotInfo.container;
 
     self.aliquotCollectionData = AliquotCollectionDataFactory.create(aliquotInfo.aliquotCollectionData);
+    self.aliquotHistory = AliquotHistoryFactory.fromArray(aliquotInfo.aliquotHistory);
+
     self.collect = collect;
+    self.convertStorage = convertStorage;
+    self.getHistoryByType = getHistoryByType;
     self.toJSON = toJSON;
 
     //Custom
@@ -54,6 +59,13 @@
     function onInit() {
       _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.name);
       _runDescriptors(_aliquotDescriptor);
+      _convertHistory();
+    }
+
+    function getHistoryByType(type){
+      return self.aliquotHistory.filter(function (history) {
+        return history.type === type
+      })
     }
 
     function _runDescriptors(aliquotDescriptor) {
@@ -64,6 +76,19 @@
       self.aliquotCollectionData.fill(operator, processing);
     }
 
+    function convertStorage(operator,description, type) {
+      self.aliquotHistory.push(AliquotHistoryFactory.create(operator,description));
+      self.role = "EXAM";
+      self.name = type;
+      self.isConverted = true;
+    }
+
+    function _convertHistory() {
+      self.isConverted = self.aliquotHistory.filter(function (history) {
+        return history.type === "CONVERTED_STORAGE"
+      }).length > 0
+    }
+
     function toJSON() {
       var json = {
         objectType: self.objectType,
@@ -71,7 +96,8 @@
         name : self.name,
         container: self.container,
         role: self.role,
-        aliquotCollectionData: self.aliquotCollectionData
+        aliquotCollectionData: self.aliquotCollectionData,
+        aliquotHistory: self.aliquotHistory
       };
       return json;
     }

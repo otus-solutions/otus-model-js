@@ -3385,8 +3385,18 @@ Test.utils.data.participantLaboratory = {
         "objectType": "AliquotCollectionData",
         "metadata": "",
         "operator": "LALA@GMAIL.COM",
-        "time": "2017-06-22T21:43:06.086Z"
-      }
+        "time": "2017-06-22T21:43:06.086Z",
+        "processing":"2018-06-20T18:58:10.942Z"
+      },
+      "aliquotHistory": [
+        {
+          "objectType": "AliquotEvent",
+          "type": "CONVERTED_STORAGE",
+          "userEmail": "otus@gmail.com",
+          "description": "Falta de material para completar os exames",
+          "date": "2019-05-14T12:36:23.631Z"
+        }
+      ]
     }],
     "order": 1,
     "tubeCollectionData": {
@@ -29233,6 +29243,7 @@ Test.utils.data.jsonObject = {
 //in array, first object is invalid.
 Test.utils.data.jsonObjectImport = [{
   id: '',
+  acronym: 'PASC',
   participant: '1234567',
   user: {
     name: 'otus',
@@ -29254,72 +29265,72 @@ Test.utils.data.jsonObjectImport = [{
   answers: {
     "PASC3brs": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC1": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC3mets": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC1m": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC3a": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC4a": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC5a": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC3b": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC4b": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC5b": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC3c": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC4c": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASC5c": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "PASCalt": {
       value: "answer",
-      metadada: "",
+      metadata: "",
       comment: ""
     }
   },
@@ -29330,6 +29341,7 @@ Test.utils.data.jsonObjectImport = [{
 },
   {
     id: '',
+    acronym: 'PASC',
     participant: '1234567', //recruitment_number
     user: { //get interviewer data
       name: 'otus',
@@ -29351,72 +29363,72 @@ Test.utils.data.jsonObjectImport = [{
     answers: { // Mount response structure
       "PASC3brs": {
         value: "1",
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC1": {
         value: 37.2,
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC3mets": {
         value: "1",
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC1m": {
         value: "3",
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC3a": {
         value: 130,
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC4a": {
         value: 85,
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC5a": {
         value: 51,
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC3b": {
         value: 135,
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC4b": {
         value: 85,
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC5b": {
         value: 53,
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC3c": {
         value: 138,
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC4c": {
         value: 90,
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASC5c": {
         value: 56,
-        metadada: "",
+        metadata: "",
         comment: ""
       },
       "PASCalt": {
         value: "2",
-        metadada: "",
+        metadata: "",
         comment: ""
       }
     },
@@ -33065,6 +33077,7 @@ Test.utils.data.activityPASC = {
 
 Test.utils.data.jsonImportDSOC = [{
   id: '',
+  acronym: 'DSOC',
   participant: '7654321',
   user: {
     name: 'otus',
@@ -33086,582 +33099,582 @@ Test.utils.data.jsonImportDSOC = [{
   answers: {
     "DSOC0a": {
       value: 8,
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC1_1": {
       value: '2018-04-05T00:00:00',
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC7_1": {
       value: "1970-01-01T22:30:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC8_1": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC9_1": {
       value: "",
-      metadada: ".A",
+      metadata: ".A",
       comment: ""
     },
     "DSOC10_1": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC11_1": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC12_1": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC13_1": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC14_1": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC15_1": {
       value: 1,
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC1_2": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC2_2": {
       value: "1970-01-01T08:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC3_2": {
       value: "11",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC4_2": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC5_2": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC6_2": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC7_2": {
       value: "1970-01-01T01:07:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC8_2": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC9_2": {
       value: "",
-      metadada: ".A",
+      metadata: ".A",
       comment: ""
     },
     "DSOC10_2": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC11_2": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC12_2": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC13_2": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC14_2": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC15_2": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC1_3": {
       value: "2018-04-07T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC2_3": {
       value: "1970-01-01T06:50:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC3_3": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC4_3": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC5_3": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC6_3": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC7_3": {
       value: "1970-01-01T02:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC8_3": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC9_3": {
       value: "",
-      metadada: ".A",
+      metadata: ".A",
       comment: ""
     },
     "DSOC10_3": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC11_3": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC12_3": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC13_3": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC14_3": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC15_3": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC1_4": {
       value: "2018-04-08T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC2_4": {
       value: "1970-01-01T07:45:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC3_4": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC4_4": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC5_4": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC6_4": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC7_4": {
       value: "1970-01-01T00:15:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC8_4": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC9_4": {
       value: "",
-      metadada: ".A",
+      metadata: ".A",
       comment: ""
     },
     "DSOC10_4": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC11_4": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC12_4": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC13_4": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC14_4": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC15_4": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC1_5": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC2_5": {
       value: "1970-01-01T08:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC3_5": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC4_5": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC5_5": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC6_5": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC7_5": {
       value: "1970-01-01T01:07:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC8_5": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC9_5": {
       value: "",
-      metadada: ".A",
+      metadata: ".A",
       comment: ""
     },
     "DSOC10_5": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC11_5": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC12_5": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC13_5": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC14_5": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC15_5": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC1_6": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC2_6": {
       value: "1970-01-01T08:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC3_6": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC4_6": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC5_6": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC6_6": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC7_6": {
       value: "1970-01-01T01:07:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC8_6": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC9_6": {
       value: "",
-      metadada: ".A",
+      metadata: ".A",
       comment: ""
     },
     "DSOC10_6": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC11_6": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC12_6": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC13_6": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC14_6": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC15_6": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC1_7": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC2_7": {
       value: "1970-01-01T08:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC3_7": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC4_7": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC5_7": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC6_7": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC7_7": {
       value: "1970-01-01T01:07:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC8_7": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC9_7": {
       value: "",
-      metadada: ".A",
+      metadata: ".A",
       comment: ""
     },
     "DSOC10_7": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC11_7": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC12_7": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC13_7": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC14_7": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC15_7": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC1_8": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC2_8": {
       value: "1970-01-01T08:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC3_8": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC4_8": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC5_8": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC6_8": {
       value: "2018-04-06T00:00:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC7_8": {
       value: "1970-01-01T01:07:00",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC8_8": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC9_8": {
       value: "",
-      metadada: ".A",
+      metadata: ".A",
       comment: ""
     },
     "DSOC10_8": {
       value: "",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC11_8": {
       value: "1",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
     "DSOC12_8": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC13_8": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC14_8": {
       value: "",
-      metadada: ".P",
+      metadata: ".P",
       comment: ""
     },
     "DSOC15_8": {
       value: "2",
-      metadada: "",
+      metadata: "",
       comment: ""
     },
 
