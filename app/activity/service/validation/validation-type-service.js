@@ -8,37 +8,46 @@
   function Service() {
     var self = this;
 
+    const STRING = "String";
+    const INTEGER = "Integer";
+    const LOCAL_DATE = "LocalDate";
+    const LOCAL_TIME = "LocalTime";
+    const BINARY = "Binary";
+    const BOOLEAN = "Boolean";
+    const DECIMAL = "Decimal";
+    const ARRAY = "Array";
+
     self.isValid = isValid;
 
     function isValid(dataType, value) {
       var _validation = false;
       switch (dataType) {
-        case "String":
+        case STRING:
           let dateInvalid = new Date(value);
           _validation = typeof value === "string" && Number.isNaN(dateInvalid.getDate());
           break;
-        case "Integer":
+        case INTEGER:
           let numberInt = new Number(value);
           _validation = typeof value === "number" && Number.isInteger(numberInt.valueOf()) && !Number.isNaN(numberInt);
           break;
-        case "Boolean":
+        case BOOLEAN:
           _validation = typeof value === "boolean";
           break;
-        case "Array":
+        case ARRAY:
           _validation = Array.isArray(value);
           break;
-        case "LocalDate":
-        case "LocalTime":
+        case LOCAL_DATE:
+        case LOCAL_TIME:
           let anyNumber = typeof value === "number" && !Number.isNaN(new Number(value));
           let isBoolean = typeof value === "boolean";
           let date = new Date(value);
           _validation = !Number.isNaN(date.getDate()) && date instanceof Date && typeof date === "object" && !anyNumber && !isBoolean;
           break;
-        case "Decimal":
+        case DECIMAL:
           let numberDecimal = new Number(value);
           _validation = typeof value === "number" && !Number.isInteger(numberDecimal.valueOf()) && !Number.isNaN(numberDecimal);
           break;
-        case "Binary":
+        case BINARY:
           _validation = true;
           break;
         default:

@@ -68,7 +68,6 @@
           ValidationService.validateElement(templateID, function (response) {
             response.forEach(function (validation) {
               validation.validatorsResponse.forEach(function (validator) {
-                // _isValid = validator.result;
                 _isValid = validator.result && ValidationTypeService.isValid(_item.dataType, answer.value);
               });
             });
