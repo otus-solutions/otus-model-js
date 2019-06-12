@@ -3,9 +3,15 @@
 
   angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityImportService', Service);
 
-  Service.$inject = ['ElementRegisterFactory', 'otusjs.validation.api.ValidationService', 'otusjs.model.activity.ActivityFactory', 'otusjs.model.activity.QuestionFillFactory', 'otusjs.model.activity.InterviewFactory'];
+  Service.$inject = [
+    'ElementRegisterFactory',
+    'otusjs.validation.api.ValidationService',
+    'otusjs.model.activity.ActivityFactory',
+    'otusjs.model.activity.QuestionFillFactory',
+    'otusjs.model.activity.InterviewFactory',
+    'otusjs.model.activity.ValidationTypeService'];
 
-  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory) {
+  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory, ValidationTypeService) {
     var self = this;
 
     var _isValid = true;
@@ -62,7 +68,8 @@
           ValidationService.validateElement(templateID, function (response) {
             response.forEach(function (validation) {
               validation.validatorsResponse.forEach(function (validator) {
-                _isValid = validator.result;
+                // _isValid = validator.result;
+                _isValid = validator.result && ValidationTypeService.isValid(_item.dataType, answer.value);
               });
             });
           });

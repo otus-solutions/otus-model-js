@@ -41,14 +41,14 @@ describe('ActivityImportFactory Tests', function () {
     var _activities = service.fromJsonObject(surveyForm, Test.utils.data.jsonObjectImport, user);
     expect(_activities.length).toBe(2);
     expect(_activities[0].isValid).toBeFalsy();
-    expect(_activities[1].isValid).toBeTruthy();
+    expect(_activities[1].isValid).toBeFalsy();
     expect(_activities[0].statusHistory.getLastStatus().name).toEqual('FINALIZED');
     expect(_activities[0].statusHistory.historySize()).toEqual(4);
     expect(_activities[1].statusHistory.getLastStatus().name).toEqual('SAVED');
     expect(_activities[1].statusHistory.historySize()).toEqual(4);
   });
 
-  xit('should create activities DSOC in fromJsonObject method', function () {
+  it('should create activities DSOC in fromJsonObject method', function () {
     var user = {
       name: 'otus',
       surname: 'solutions',
@@ -58,7 +58,7 @@ describe('ActivityImportFactory Tests', function () {
     var DSOC = surveyFactory.fromJsonObject(Test.utils.data.surveyFormDSOC);
     var _activities = service.fromJsonObject(DSOC, Test.utils.data.jsonImportDSOC, user);
     expect(_activities.length).toBe(1);
-    expect(_activities[0].isValid).toBeTruthy();
+    expect(_activities[0].isValid).toBeFalsy();
     expect(_activities[0].statusHistory.getLastStatus().name).toEqual('FINALIZED');
     expect(_activities[0].statusHistory.historySize()).toEqual(4);
   });
