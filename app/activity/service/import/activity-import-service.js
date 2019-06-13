@@ -1,23 +1,21 @@
 (function () {
   'use strict';
 
-  angular
-    .module('otusjs.model.activity')
-    .service('otusjs.model.activity.ActivityImportService', Service);
+  angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityImportService', Service);
 
   Service.$inject = [
     'ElementRegisterFactory',
     'otusjs.validation.api.ValidationService',
     'otusjs.model.activity.ActivityFactory',
     'otusjs.model.activity.QuestionFillFactory',
-    'otusjs.model.activity.InterviewFactory'
-  ];
+    'otusjs.model.activity.InterviewFactory',
+    'otusjs.model.activity.ValidationTypeService',
+    'otusjs.model.activity.FillingManagerFactory'];
 
-  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory) {
+  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory, ValidationTypeService, FillingManagerFactory) {
     var self = this;
 
     var _isValid = true;
-    var _fillingList = [];
     var _elementRegister = null;
     var _item = null;
     var _activity;
@@ -28,17 +26,14 @@
     self.create = create;
 
     function _setQuestionFill(answers, item) {
-      if(answers[item.customID]){
-        _fillingList.push(QuestionFillFactory.create(
-          item,
-          answers[item.customID].value,
-          answers[item.customID].metadata,
-          answers[item.customID].comment));
+      if (answers[item.customID]) {
+        _activity.fillContainer.updateFilling(QuestionFillFactory.create(item, answers[item.customID].value, answers[item.customID].metadata, answers[item.customID].comment));
       }
     }
 
     function _getQuestionsIdsMap(answers) {
-      let _mapId = {};
+      var _mapId = {};
+      _activity.fillContainer = FillingManagerFactory.create();
       _activity.surveyForm.surveyTemplate.toJSON().itemContainer.forEach(function (item) {
         _mapId[item.templateID] = item.customID;
         _setQuestionFill(answers, item);
@@ -48,16 +43,14 @@
     }
 
     function _setAnswersValues(answers) {
-      const IDS = _getQuestionsIdsMap(answers);
-      var customID = "";
-      _activity.fillContainer.fillingList = _fillingList;
-      _activity.fillContainer.fillingList.forEach(function (question) {
-        if(_isValid){
+      var IDS = _getQuestionsIdsMap(answers);
+      _activity.fillContainer.buildJsonToFillContainer().fillingList.forEach(function (question) {
+        if (_isValid) {
           question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
           question.answer.metadata = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].metadata : null;
           question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
           _validateActivity(question.questionID, question.answer);
-          if(!_isValid) _activity.error = "Questão {" + IDS[question.questionID] + "} contém uma resposta inválida!"
+          if (!_isValid) _activity.error = "Questão {" + IDS[question.questionID] + "} contém uma resposta inválida!";
         }
       });
       _activity.isValid = _isValid;
@@ -68,22 +61,22 @@
       if (_isValid) {
         _isValid = answer.value && answer.metadata ? false : true;
         if (_isValid) {
-          _elementRegister = ElementRegisterFactory.create(templateID, {data:answer.value});
+          _elementRegister = ElementRegisterFactory.create(templateID, { data: answer.value });
           _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(templateID);
           _setupValidation(_item);
           ValidationService.validateElement(templateID, function (response) {
             response.forEach(function (validation) {
               validation.validatorsResponse.forEach(function (validator) {
-                _isValid = validator.result;
-              })
-            })
+                _isValid = validator.result && ValidationTypeService.isValid(_item.dataType, answer.value);
+              });
+            });
           });
         }
       }
     }
 
     function _setupValidation(_item) {
-      Object.keys(_item.fillingRules.options).forEach(function(validator) {
+      Object.keys(_item.fillingRules.options).forEach(function (validator) {
         _addValidator(validator, _item);
       });
 
@@ -93,7 +86,7 @@
 
     function _addValidator(validator, _item) {
       var reference = _item.fillingRules.options[validator].data;
-      if(_item.objectType === "TimeQuestion" || _item.objectType === "CalendarQuestion") {
+      if (_item.objectType === "TimeQuestion" || _item.objectType === "CalendarQuestion") {
         _elementRegister.addValidator("ImmutableDate", reference);
       } else {
         _elementRegister.addValidator(validator, reference);
@@ -142,11 +135,11 @@
       _activity.interviews.push(InterviewFactory.create(user));
     }
 
-    function _isValidSurveys(acronym, json){
+    function _isValidSurveys(acronym, json) {
       var _valid = true;
-      json.forEach(activity => {
-        if (_valid){
-          _valid = acronym == activity.acronym
+      json.forEach(function (activity) {
+        if (_valid) {
+          _valid = acronym == activity.acronym;
         }
       });
       return _valid;
@@ -154,10 +147,11 @@
 
     function fromJsonObject(surveyForm, jsonObject, user) {
       _activities = [];
-      if(Array.isArray(jsonObject)){
+      if (Array.isArray(jsonObject)) {
         if (jsonObject.length > 0) {
-          if(_isValidSurveys(surveyForm.surveyTemplate.identity.acronym, jsonObject)){
+          if (_isValidSurveys(surveyForm.surveyTemplate.identity.acronym, jsonObject)) {
             jsonObject.forEach(function (json) {
+
               _activities.push(self.create(surveyForm, json, user));
             });
           }
@@ -168,10 +162,11 @@
     }
 
     function create(surveyForm, json, user) {
+      self = this;
       _activity = null;
-      if (json.acronym == surveyForm.surveyTemplate.identity.acronym){
+      if (json.acronym == surveyForm.surveyTemplate.identity.acronym) {
         if (json.mode === "PAPER" && json.offlineData) {
-          _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id)
+          _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id);
           _createStatusHistoryPaper(json);
         } else if (json.mode === "ONLINE") {
           _activity = ActivityFactory.create(surveyForm, user, json.participant, json.activityConfiguration, json.id);
@@ -182,9 +177,7 @@
         _activity.surveyForm.acronym = _activity.surveyForm.surveyTemplate.identity.acronym;
       }
 
-      return _activity;
+      return angular.copy(_activity);
     }
-
   }
-
-}());
+})();
