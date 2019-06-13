@@ -41,6 +41,13 @@
     self.sendingDate = options.sendingDate || null;
     self.surveyFormType = options.surveyFormType || null;
     self.surveyTemplate = options.surveyTemplate || null;
+    if (self.surveyTemplate){
+      self.acronym = self.surveyTemplate.identity.acronym;
+      self.name = self.surveyTemplate.identity.name;
+    } else {
+      self.acronym = options.acronym || null;
+      self.name = options.name || null;
+    }
     self.version = options.version || null;
     self.isDiscarded = options.isDiscarded || false;
 
@@ -63,6 +70,8 @@
       json.surveyFormType = self.surveyFormType;
       json.surveyTemplate = self.surveyTemplate;
       json.version = self.version;
+      json.acronym = self.acronym;
+      json.name = self.name;
       json.isDiscarded = self.isDiscarded;
 
       return json;

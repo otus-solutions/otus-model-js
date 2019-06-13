@@ -9,13 +9,13 @@
     'otusjs.model.activity.ActivityFactory',
     'otusjs.model.activity.QuestionFillFactory',
     'otusjs.model.activity.InterviewFactory',
-    'otusjs.model.activity.ValidationTypeService'];
+    'otusjs.model.activity.ValidationTypeService',
+    'otusjs.model.activity.FillingManagerFactory'];
 
-  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory, ValidationTypeService) {
+  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory, ValidationTypeService, FillingManagerFactory) {
     var self = this;
 
     var _isValid = true;
-    var _fillingList = [];
     var _elementRegister = null;
     var _item = null;
     var _activity;
@@ -27,12 +27,13 @@
 
     function _setQuestionFill(answers, item) {
       if (answers[item.customID]) {
-        _fillingList.push(QuestionFillFactory.create(item, answers[item.customID].value, answers[item.customID].metadata, answers[item.customID].comment));
+        _activity.fillContainer.updateFilling(QuestionFillFactory.create(item, answers[item.customID].value, answers[item.customID].metadata, answers[item.customID].comment));
       }
     }
 
     function _getQuestionsIdsMap(answers) {
       var _mapId = {};
+      _activity.fillContainer = FillingManagerFactory.create();
       _activity.surveyForm.surveyTemplate.toJSON().itemContainer.forEach(function (item) {
         _mapId[item.templateID] = item.customID;
         _setQuestionFill(answers, item);
@@ -43,8 +44,6 @@
 
     function _setAnswersValues(answers) {
       var IDS = _getQuestionsIdsMap(answers);
-      var customID = "";
-      _activity.fillContainer.init(_fillingList);
       _activity.fillContainer.buildJsonToFillContainer().fillingList.forEach(function (question) {
         if (_isValid) {
           question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
@@ -163,8 +162,8 @@
     }
 
     function create(surveyForm, json, user) {
+      self = this;
       _activity = null;
-      _fillingList = [];
       if (json.acronym == surveyForm.surveyTemplate.identity.acronym) {
         if (json.mode === "PAPER" && json.offlineData) {
           _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id);
