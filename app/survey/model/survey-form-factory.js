@@ -24,7 +24,9 @@
 
     function fromJsonObject(jsonObject) {
       var surveyForm = new SurveyForm(jsonObject);
-      surveyForm.surveyTemplate = SurveyFactory.fromJsonObject(jsonObject.surveyTemplate);
+      if(jsonObject.surveyTemplate){
+        surveyForm.surveyTemplate = SurveyFactory.fromJsonObject(jsonObject.surveyTemplate);
+      }
       return surveyForm;
     }
 
