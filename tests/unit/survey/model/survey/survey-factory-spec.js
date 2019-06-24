@@ -3,7 +3,7 @@ describe('SurveyFactory', function() {
   var factory;
   var survey;
   var Injections = {};
-  var jsonSurvey;
+  var jsonObject = {};
 
   beforeEach(function() {
     angular.mock.module('otusjs');
@@ -57,7 +57,6 @@ describe('SurveyFactory', function() {
       spyOn(survey.NavigationManager,'moveNavigation');
       let mockSurveyItem = {templateID: "ID", customID:"customID"};
 
-
       survey.moveItem(mockSurveyItem, 5);
       expect(survey.SurveyItemManager.moveItem).toHaveBeenCalled();
       expect(survey.NavigationManager.moveNavigation).toHaveBeenCalled();
@@ -78,6 +77,18 @@ describe('SurveyFactory', function() {
     });
 
   });
+
+  describe("SurveyFactory.createDictionary", function () {
+    beforeEach(function () {
+      jsonObject = Test.utils.data.surveyDIC;
+    });
+
+    it('createDictionaryMethod_should ', function () {
+      var dictionary = factory.createDictionary(jsonObject);
+      console.log(dictionary);
+    });
+
+  })
 
   function mockSurveyIdentityFactory($injector) {
     Mock.SurveyIdentityFactory = $injector.get('SurveyIdentityFactory');

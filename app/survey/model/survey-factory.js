@@ -25,10 +25,11 @@
     Inject.NavigationManagerFactory = NavigationManagerFactory;
     Inject.DataSourceDefinitionManagerFactory = DataSourceDefinitionManagerFactory;
 
-    /* Public interdace */
+    /* Public interface */
     self.create = create;
     self.load = load;
     self.fromJsonObject = fromJsonObject;
+    self.createDictionary = createDictionary;
 
     /**
      TODO :
@@ -71,6 +72,28 @@
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
 
       return survey;
+    }
+
+    function createDictionary(jsonObject){
+      var dictionary = [];
+      jsonObject.itemContainer.forEach(item =>{
+        var json = {};
+        json.metadata = [];
+        json.acronym = jsonObject.identity.acronym;
+        json.extractionID = item.customID;
+        json.label = item.label.ptBR.formattedText;
+        json.dataType = item.dataType;
+
+        item.metadata.options.forEach(md =>{
+          var customMetadata = {};
+          customMetadata.extractionValue = md.extractionValue;
+          customMetadata.label = md.label.ptBR.formattedText;
+          json.metadata.push(customMetadata)
+        });
+
+        dictionary.push(json);
+      });
+      return dictionary;
     }
 
     return self;
@@ -202,5 +225,7 @@
 
       return json;
     }
+
+
   }
 }());
