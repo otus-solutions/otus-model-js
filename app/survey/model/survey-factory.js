@@ -74,30 +74,35 @@
       return survey;
     }
 
-    function createDictionary(jsonObject){
-      var dictionary = [];
-      jsonObject.itemContainer.forEach(item =>{
-        var json = {};
-        json.metadata = [];
-        json.acronym = jsonObject.identity.acronym;
-        json.extractionID = item.customID;
-        json.label = item.label.ptBR.formattedText;
-        json.dataType = item.dataType;
-
-        item.metadata.options.forEach(md =>{
-          var customMetadata = {};
-          customMetadata.extractionValue = md.extractionValue;
-          customMetadata.label = md.label.ptBR.formattedText;
-          json.metadata.push(customMetadata)
-        });
-
-        dictionary.push(json);
-      });
-      return dictionary;
+    function createDictionary(jsonObject) {
+      return _mountDictionaryInstances(jsonObject);
     }
 
     return self;
   }
+
+  function _mountDictionaryInstances(jsonObject) {
+    var dictionary = [];
+    jsonObject.itemContainer.forEach(item => {
+      var json = {};
+      json.metadata = [];
+      json.acronym = jsonObject.identity.acronym;
+      json.extractionID = item.customID;
+      json.label = item.label.ptBR.formattedText;
+      json.dataType = item.dataType;
+
+      item.metadata.options.forEach(md => {
+        var customMetadata = {};
+        customMetadata.extractionValue = md.extractionValue;
+        customMetadata.label = md.label.ptBR.formattedText;
+        json.metadata.push(customMetadata)
+      });
+
+      dictionary.push(json);
+    });
+    return dictionary;
+  }
+
 
   function Survey(surveyMetainfo, surveyIdentity, uuid) {
     var self = this;
