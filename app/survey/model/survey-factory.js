@@ -77,7 +77,6 @@
     function createDictionary(jsonObject) {
       return _mountDictionaryInstances(jsonObject);
     }
-
     return self;
   }
 
@@ -85,24 +84,48 @@
     var dictionary = [];
     jsonObject.itemContainer.forEach(item => {
       var json = {};
-      json.metadata = [];
       json.acronym = jsonObject.identity.acronym;
       json.extractionID = item.customID;
       json.label = item.label.ptBR.formattedText;
       json.dataType = item.dataType;
-
-      item.metadata.options.forEach(md => {
-        var customMetadata = {};
-        customMetadata.extractionValue = md.extractionValue;
-        customMetadata.label = md.label.ptBR.formattedText;
-        json.metadata.push(customMetadata)
-      });
-
+      json.extractionValues = _itemContainerCaptureValues(item);
+      json.metadata = _itemContainerCaptureMetadata(item);
+      json.acceptAnswer = [true, false];
       dictionary.push(json);
     });
     return dictionary;
   }
 
+  function _itemContainerCaptureMetadata(item){
+    var metadataList = []
+    item.metadata.options.forEach(md => {
+      var valuesMetadataMap = new Map();
+      valuesMetadataMap
+        .set(md.extractionValue, md.label.ptBR.formattedText);
+
+      // var metadata = {};
+      // metadata.extractionValue = md.extractionValue;
+      // metadata.label = md.label.ptBR.formattedText;
+      metadataList.push(valuesMetadataMap);
+    });
+    return metadataList;
+  }
+
+  function _itemContainerCaptureValues(item) {
+    var values = [];
+
+    if (item.options){
+      item.options.forEach(option => {
+        var valuesExtractionMap = new Map();
+        valuesExtractionMap
+          .set(option.extractionValue, option.label.ptBR.formattedText);
+        values.push(valuesExtractionMap);
+      });
+    }
+    if(item.unit) values.push("Integer");
+
+    return values;
+  }
 
   function Survey(surveyMetainfo, surveyIdentity, uuid) {
     var self = this;

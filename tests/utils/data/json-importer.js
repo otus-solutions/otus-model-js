@@ -59411,8 +59411,8 @@ Test.utils.data.surveyDIC = {
           "extends": "StudioObject",
           "objectType": "Label",
           "oid": "",
-          "plainText": "autorizou consentimento para o estudo?",
-          "formattedText": "autorizou consentimento para o estudo?"
+          "plainText": "singleSelect: autorizou consentimento para o estudo?",
+          "formattedText": "singleSelect: autorizou consentimento para o estudo?"
         },
         "enUS": {
           "extends": "StudioObject",
@@ -59640,6 +59640,487 @@ Test.utils.data.surveyDIC = {
           }
         }
       }
+    },
+    {
+      "extents": "SurveyItem",
+      "objectType": "IntegerQuestion",
+      "templateID": "DIC2",
+      "customID": "DIC2",
+      "dataType": "Integer",
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "integer: qual o número",
+          "formattedText": "integer: qual o número"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      },
+      "metadata": {
+        "extents": "StudioObject",
+        "objectType": "MetadataGroup",
+        "options": [
+          {
+            "extends": "StudioObject",
+            "objectType": "MetadataAnswer",
+            "dataType": "Integer",
+            "value": 1,
+            "extractionValue": 1,
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "MDA",
+                "formattedText": "MDA"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            }
+          },
+          {
+            "extends": "StudioObject",
+            "objectType": "MetadataAnswer",
+            "dataType": "Integer",
+            "value": 2,
+            "extractionValue": 2,
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "MDB",
+                "formattedText": "MDB"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            }
+          },
+          {
+            "extends": "StudioObject",
+            "objectType": "MetadataAnswer",
+            "dataType": "Integer",
+            "value": 3,
+            "extractionValue": 3,
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "MDC",
+                "formattedText": "MDC"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            }
+          },
+          {
+            "extends": "StudioObject",
+            "objectType": "MetadataAnswer",
+            "dataType": "Integer",
+            "value": 4,
+            "extractionValue": 4,
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "MDD",
+                "formattedText": "MDD"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            }
+          }
+        ]
+      },
+      "unit": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Unit",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Unit",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Unit",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      },
+      "fillingRules": {
+        "extends": "StudioObject",
+        "objectType": "FillingRules",
+        "options": {
+          "mandatory": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "mandatory",
+            "data": {
+              "canBeIgnored": false,
+              "reference": true
+            }
+          },
+          "lowerLimit": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "lowerLimit",
+            "data": {
+              "canBeIgnored": true,
+              "reference": 1
+            }
+          },
+          "upperLimit": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "upperLimit",
+            "data": {
+              "canBeIgnored": true,
+              "reference": 4
+            }
+          },
+          "accept": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "accept",
+            "data": {
+              "reference": true
+            }
+          },
+          "distinct": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "distinct",
+            "data": {
+              "canBeIgnored": true,
+              "reference": 3
+            }
+          },
+          "precision": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "precision",
+            "data": {
+              "canBeIgnored": true,
+              "reference": 1
+            }
+          },
+          "in": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "in",
+            "data": {
+              "canBeIgnored": true,
+              "reference": {
+                "initial": 1,
+                "end": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "extents": "SurveyItem",
+      "objectType": "CalendarQuestion",
+      "templateID": "DIC3",
+      "customID": "DIC3",
+      "dataType": "LocalDate",
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "date: qual a data?",
+          "formattedText": "date: qual a data?"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      },
+      "metadata": {
+        "extents": "StudioObject",
+        "objectType": "MetadataGroup",
+        "options": [
+          {
+            "extends": "StudioObject",
+            "objectType": "MetadataAnswer",
+            "dataType": "Integer",
+            "value": 1,
+            "extractionValue": 1,
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "MDA",
+                "formattedText": "MDA"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            }
+          },
+          {
+            "extends": "StudioObject",
+            "objectType": "MetadataAnswer",
+            "dataType": "Integer",
+            "value": 2,
+            "extractionValue": 2,
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "MDB",
+                "formattedText": "MDB"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            }
+          },
+          {
+            "extends": "StudioObject",
+            "objectType": "MetadataAnswer",
+            "dataType": "Integer",
+            "value": 3,
+            "extractionValue": 3,
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "MDC",
+                "formattedText": "MDC"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            }
+          },
+          {
+            "extends": "StudioObject",
+            "objectType": "MetadataAnswer",
+            "dataType": "Integer",
+            "value": 4,
+            "extractionValue": 4,
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "MDD",
+                "formattedText": "MDD"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            }
+          }
+        ]
+      },
+      "fillingRules": {
+        "extends": "StudioObject",
+        "objectType": "FillingRules",
+        "options": {
+          "mandatory": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "mandatory",
+            "data": {
+              "canBeIgnored": false,
+              "reference": true
+            }
+          },
+          "minDate": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "minDate",
+            "data": {
+              "canBeIgnored": true,
+              "reference": {
+                "objectType": "ImmutableDate",
+                "value": null
+              }
+            }
+          },
+          "maxDate": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "maxDate",
+            "data": {
+              "canBeIgnored": true,
+              "reference": {
+                "objectType": "ImmutableDate",
+                "value": null
+              }
+            }
+          },
+          "futureDate": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "futureDate",
+            "data": {
+              "canBeIgnored": true,
+              "reference": false
+            }
+          },
+          "pastDate": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "pastDate",
+            "data": {
+              "canBeIgnored": true,
+              "reference": false
+            }
+          },
+          "rangeDate": {
+            "extends": "StudioObject",
+            "objectType": "Rule",
+            "validatorType": "rangeDate",
+            "data": {
+              "canBeIgnored": true,
+              "reference": {
+                "initial": {
+                  "objectType": "ImmutableDate",
+                  "value": null
+                },
+                "end": {
+                  "objectType": "ImmutableDate",
+                  "value": null
+                }
+              }
+            }
+          }
+        }
+      }
     }
   ],
   "navigationList": [
@@ -59668,8 +60149,8 @@ Test.utils.data.surveyDIC = {
       "index": 1,
       "inNavigations": [
         {
-          "origin": "DIC1",
-          "index": 2
+          "origin": "DIC3",
+          "index": 4
         }
       ],
       "routes": []
@@ -59690,8 +60171,54 @@ Test.utils.data.surveyDIC = {
           "extents": "SurveyTemplateObject",
           "objectType": "Route",
           "origin": "DIC1",
+          "destination": "DIC2",
+          "name": "DIC1_DIC2",
+          "isDefault": true,
+          "conditions": []
+        }
+      ]
+    },
+    {
+      "extents": "SurveyTemplateObject",
+      "objectType": "Navigation",
+      "origin": "DIC2",
+      "index": 3,
+      "inNavigations": [
+        {
+          "origin": "DIC1",
+          "index": 2
+        }
+      ],
+      "routes": [
+        {
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DIC2",
+          "destination": "DIC3",
+          "name": "DIC2_DIC3",
+          "isDefault": true,
+          "conditions": []
+        }
+      ]
+    },
+    {
+      "extents": "SurveyTemplateObject",
+      "objectType": "Navigation",
+      "origin": "DIC3",
+      "index": 4,
+      "inNavigations": [
+        {
+          "origin": "DIC2",
+          "index": 3
+        }
+      ],
+      "routes": [
+        {
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DIC3",
           "destination": "END NODE",
-          "name": "DIC1_END NODE",
+          "name": "DIC3_END NODE",
           "isDefault": true,
           "conditions": []
         }
