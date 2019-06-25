@@ -24,7 +24,7 @@
 
     function fromJsonObject(jsonObject) {
       var surveyForm = new SurveyForm(jsonObject);
-      if(jsonObject.surveyTemplate){
+      if (jsonObject.surveyTemplate) {
         surveyForm.surveyTemplate = SurveyFactory.fromJsonObject(jsonObject.surveyTemplate);
       }
       return surveyForm;
@@ -44,8 +44,8 @@
     self.surveyFormType = options.surveyFormType || null;
     self.surveyTemplate = options.surveyTemplate || null;
     if (self.surveyTemplate){
-      self.acronym = self.surveyTemplate.identity.acronym;
-      self.name = self.surveyTemplate.identity.name;
+      self.acronym = self.surveyTemplate.identity.acronym || null;
+      self.name = self.surveyTemplate.identity.name || null;
     } else {
       self.acronym = options.acronym || null;
       self.name = options.name || null;
