@@ -100,7 +100,7 @@
   function _itemContainerCaptureMetadata(item) {
     let metadataList = new Map();
     item.metadata.options.map(md => {
-      metadataList.set( md.label.ptBR.formattedText, md.extractionValue);
+      metadataList.set(md.label.ptBR.formattedText, md.extractionValue);
     });
     return metadataList;
   }
@@ -111,11 +111,11 @@
       item.options.map(option => {
         switch (option.objectType) {
           case "CheckboxAnswerOption":
-            values.set(option.optionID, option.label.ptBR.formattedText);
+            values.set(`[${option.optionID}]:${option.label.ptBR.formattedText}`, option.value );
             break;
           case "AnswerOption":
-             values.set(option.label.ptBR.formattedText, option.extractionValue);
-             break;
+            values.set(option.label.ptBR.formattedText, option.extractionValue);
+            break;
         }
       });
     }
@@ -180,7 +180,7 @@
     }
     if (item.fillingRules.options.rangeDate) {
       validators.set(item.fillingRules.options.rangeDate.validatorType,
-        [item.fillingRules.options.rangeDate.data.reference.initial.value +'~'+
+        [item.fillingRules.options.rangeDate.data.reference.initial.value + '~' +
         item.fillingRules.options.rangeDate.data.reference.end.value]
       );
     }
