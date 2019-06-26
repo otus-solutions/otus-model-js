@@ -77,6 +77,7 @@
     function createDictionary(jsonObject) {
       return _mountDictionaryInstances(jsonObject);
     }
+
     return self;
   }
 
@@ -96,19 +97,19 @@
     return dictionary;
   }
 
-  function _itemContainerCaptureMetadata(item){
+  function _itemContainerCaptureMetadata(item) {
     let metadataList = new Map();
-    item.metadata.options.map(md =>{
-      metadataList.set(md.extractionValue, md.label.ptBR.formattedText);
+    item.metadata.options.map(md => {
+      metadataList.set( md.label.ptBR.formattedText, md.extractionValue);
     });
     return metadataList;
   }
 
   function _itemContainerCaptureValues(item) {
     let values = new Map();
-    if (item.options){
+    if (item.options) {
       item.options.map(option => {
-        values.set(option.extractionValue, option.label.ptBR.formattedText);
+        values.set(option.label.ptBR.formattedText, option.extractionValue);
       });
     }
     //if(item.unit) values.push("Integer");
@@ -116,42 +117,48 @@
     return values;
   }
 
-  function _itemContainerCaptureValidatorTypes(item){
+  function _itemContainerCaptureValidatorTypes(item) {
     let validators = new Map();
-    if(item.fillingRules.options.accept){
-      validators.set(item.fillingRules.options.accept.data.reference,
-                      item.fillingRules.options.accept.validatorType);
+    if (item.fillingRules.options.accept) {
+      validators.set(item.fillingRules.options.accept.validatorType,
+        item.fillingRules.options.accept.data.reference);
     }
-    if(item.fillingRules.options.lowerLimit){
-      validators.set(item.fillingRules.options.lowerLimit.data.reference,
-                      item.fillingRules.options.lowerLimit.validatorType);
+    if (item.fillingRules.options.lowerLimit) {
+      validators.set(item.fillingRules.options.lowerLimit.validatorType,
+        item.fillingRules.options.lowerLimit.data.reference);
     }
-    if(item.fillingRules.options.upperLimit){
-      validators.set(item.fillingRules.options.upperLimit.data.reference,
-                      item.fillingRules.options.upperLimit.validatorType);
-    }
-
-    if(item.fillingRules.options.distict){
-      validators.set(item.fillingRules.options.distinct.data.reference,
-                      item.fillingRules.options.distinct.validatorType);
+    if (item.fillingRules.options.upperLimit) {
+      validators.set(item.fillingRules.options.upperLimit.validatorType,
+        item.fillingRules.options.upperLimit.data.reference);
     }
 
-    if(item.fillingRules.options.precision){
-      validators.set(item.fillingRules.options.precision.data.reference,
-                      item.fillingRules.options.precision.validatorType);
+    if (item.fillingRules.options.distict) {
+      validators.set(item.fillingRules.options.distinct.validatorType,
+        item.fillingRules.options.distinct.data.reference);
     }
 
-    if(item.fillingRules.options.in){
-      validators.set([item.fillingRules.options.in.data.reference.initial +'-'+
-                      item.fillingRules.options.in.data.reference.end],
-                      item.fillingRules.options.in.validatorType);
+    if (item.fillingRules.options.precision) {
+      validators.set(item.fillingRules.options.precision.validatorType,
+        item.fillingRules.options.precision.data.reference);
     }
 
-    if(item.fillingRules.options.minDate){
-      validators.set(item.fillingRules.options.minDate.data.reference.value = "null",
-        item.fillingRules.options.minDate.validatorType);
+    if (item.fillingRules.options.in) {
+      validators.set(item.fillingRules.options.in.validatorType,
+        [item.fillingRules.options.in.data.reference.initial + '-' +
+        item.fillingRules.options.in.data.reference.end]);
     }
 
+    if (item.fillingRules.options.minDate) {
+      validators.set(item.fillingRules.options.minDate.validatorType,
+        item.fillingRules.options.minDate.data.reference.value,
+      );
+    }
+
+    if (item.fillingRules.options.maxDate) {
+      validators.set(item.fillingRules.options.maxDate.validatorType,
+        item.fillingRules.options.maxDate.data.reference.value,
+      );
+    }
     return validators;
   };
 
