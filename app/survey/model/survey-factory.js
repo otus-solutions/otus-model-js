@@ -107,21 +107,35 @@
 
   function _itemContainerCaptureValues(item) {
     let values = new Map();
-    if (item.options) {
+    if (Array.isArray(item.options)) {
       item.options.map(option => {
-        values.set(option.label.ptBR.formattedText, option.extractionValue);
+        switch (option.objectType) {
+          case "CheckboxAnswerOption":
+            values.set(option.optionID, option.label.ptBR.formattedText);
+            break;
+          case "AnswerOption":
+             values.set(option.label.ptBR.formattedText, option.extractionValue);
+             break;
+        }
       });
     }
-    //if(item.unit) values.push("Integer");
-
     return values;
   }
 
   function _itemContainerCaptureValidatorTypes(item) {
     let validators = new Map();
+
+    if (item.fillingRules.options.mandatory) {
+      validators.set(item.fillingRules.options.mandatory.validatorType,
+        item.fillingRules.options.mandatory.data.reference);
+    }
     if (item.fillingRules.options.accept) {
       validators.set(item.fillingRules.options.accept.validatorType,
         item.fillingRules.options.accept.data.reference);
+    }
+    if (item.fillingRules.options.distinct) {
+      validators.set(item.fillingRules.options.distinct.validatorType,
+        item.fillingRules.options.distinct.data.reference);
     }
     if (item.fillingRules.options.lowerLimit) {
       validators.set(item.fillingRules.options.lowerLimit.validatorType,
@@ -131,34 +145,59 @@
       validators.set(item.fillingRules.options.upperLimit.validatorType,
         item.fillingRules.options.upperLimit.data.reference);
     }
-
-    if (item.fillingRules.options.distict) {
-      validators.set(item.fillingRules.options.distinct.validatorType,
-        item.fillingRules.options.distinct.data.reference);
-    }
-
     if (item.fillingRules.options.precision) {
       validators.set(item.fillingRules.options.precision.validatorType,
         item.fillingRules.options.precision.data.reference);
     }
-
+    if (item.fillingRules.options.scale) {
+      validators.set(item.fillingRules.options.scale.validatorType,
+        item.fillingRules.options.scale.data.reference);
+    }
     if (item.fillingRules.options.in) {
       validators.set(item.fillingRules.options.in.validatorType,
-        [item.fillingRules.options.in.data.reference.initial + '-' +
+        [item.fillingRules.options.in.data.reference.initial + '~' +
         item.fillingRules.options.in.data.reference.end]);
     }
-
     if (item.fillingRules.options.minDate) {
       validators.set(item.fillingRules.options.minDate.validatorType,
         item.fillingRules.options.minDate.data.reference.value,
       );
     }
-
     if (item.fillingRules.options.maxDate) {
       validators.set(item.fillingRules.options.maxDate.validatorType,
         item.fillingRules.options.maxDate.data.reference.value,
       );
     }
+    if (item.fillingRules.options.futureDate) {
+      validators.set(item.fillingRules.options.futureDate.validatorType,
+        item.fillingRules.options.futureDate.data.reference,
+      );
+    }
+    if (item.fillingRules.options.pastDate) {
+      validators.set(item.fillingRules.options.pastDate.validatorType,
+        item.fillingRules.options.pastDate.data.reference,
+      );
+    }
+    if (item.fillingRules.options.rangeDate) {
+      validators.set(item.fillingRules.options.rangeDate.validatorType,
+        [item.fillingRules.options.rangeDate.data.reference.initial.value +'~'+
+        item.fillingRules.options.rangeDate.data.reference.end.value]
+      );
+    }
+    if (item.fillingRules.options.minSelected) {
+      validators.set(item.fillingRules.options.minSelected.validatorType,
+        item.fillingRules.options.minSelected.data.reference);
+    }
+    if (item.fillingRules.options.maxSelected) {
+      validators.set(item.fillingRules.options.maxSelected.validatorType,
+        item.fillingRules.options.maxSelected.data.reference);
+    }
+    if (item.fillingRules.options.quantity) {
+      validators.set(item.fillingRules.options.quantity.validatorType,
+        item.fillingRules.options.quantity.data.reference);
+    }
+
+
     return validators;
   };
 
