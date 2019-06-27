@@ -128,6 +128,13 @@
         }
       });
     }
+    if(Array.isArray(item.lines)){
+      item.lines.map(line => {
+        line.gridTextList.map(gridText => {
+          values.set(gridText.customID, gridText.unit.ptBR.formattedText);
+        });
+      });
+    }
     return values;
   }
 
