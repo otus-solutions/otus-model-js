@@ -115,15 +115,18 @@
   }
 
   function _itemContainerCaptureValues(item) {
-    let values = new Map();
+    //let values = new Map();
+    let values = {};
     if (Array.isArray(item.options)) {
       item.options.map(option => {
         switch (option.objectType) {
           case "CheckboxAnswerOption":
-            values.set(`[${option.optionID}]:${option.label.ptBR.formattedText}`, option.value );
+            //values.set(`[${option.optionID}]:${option.label.ptBR.formattedText}`, option.value );
+            values[`[${option.optionID}]:${option.label.ptBR.formattedText}`] = option.value;
             break;
           case "AnswerOption":
-            values.set(option.label.ptBR.formattedText, option.extractionValue);
+            //values.set(option.label.ptBR.formattedText, option.extractionValue);
+            values[option.label.ptBR.formattedText] = option.extractionValue;
             break;
         }
       });
@@ -131,7 +134,8 @@
     if(Array.isArray(item.lines)){
       item.lines.map(line => {
         line.gridTextList.map(gridText => {
-          values.set(gridText.customID, gridText.unit.ptBR.formattedText);
+          //values.set(gridText.customID, gridText.unit.ptBR.formattedText);
+          values[gridText.customID] = gridText.unit.ptBR.formattedText;
         });
       });
     }
