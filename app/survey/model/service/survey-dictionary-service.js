@@ -18,11 +18,13 @@
           switch (option.objectType) {
             case "CheckboxAnswerOption":
               //values.set(`[${option.optionID}]:${option.label.ptBR.formattedText}`, option.value );
-              values.push({[`${option.optionID}.${option.label.ptBR.formattedText}`]: option.value});
+              //values.push({[`${option.optionID}.${option.label.ptBR.formattedText}`]: option.value});
+              values.push(`${option.optionID}-${option.value}-${option.label.ptBR.formattedText}`);
               break;
             case "AnswerOption":
               //values.set(option.label.ptBR.formattedText, option.extractionValue);
-              values.push({[option.label.ptBR.formattedText]: option.extractionValue});
+              //values.push({[option.label.ptBR.formattedText]: option.extractionValue});
+              values.push(`${option.extractionValue}-${option.label.ptBR.formattedText}` );
               break;
           }
         });
@@ -31,7 +33,8 @@
         item.lines.map(line => {
           line.gridTextList.map(gridText => {
             //values.set(gridText.customID, gridText.unit.ptBR.formattedText);
-            values.push({[gridText.customID] : gridText.unit.ptBR.formattedText});
+            // values.push({[gridText.customID] : gridText.unit.ptBR.formattedText});
+            values.push(`${gridText.customID}-${gridText.unit.ptBR.formattedText}`);
           });
         });
       }
