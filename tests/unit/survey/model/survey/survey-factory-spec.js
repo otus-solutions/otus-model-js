@@ -122,5 +122,4 @@ describe('SurveyFactory', function() {
     Mock.DataSourceDefinitionManagerFactory = $injector.get('otusjs.model.survey.DataSourceDefinitionManagerFactory');
     return Mock.DataSourceDefinitionManagerFactory;
   }
-
 });

@@ -87,14 +87,23 @@
       let json = {};
       json.acronym = jsonObject.identity.acronym;
       json.extractionID = item.customID;
-      json.label = item.label.ptBR.formattedText;
       json.dataType = item.dataType;
       json.extractionValues = _itemContainerCaptureValues(item);
-      json.metadata = _itemContainerCaptureMetadata(item);
-      json.validatorTypes = _itemContainerCaptureValidatorTypes(item);
+      _customQuestionTreatment(item, json);
       dictionary.push(json);
     });
     return dictionary;
+  }
+
+  function _customQuestionTreatment(item, json){
+    if(item.objectType != "TextItem"){
+        json.label = item.label.ptBR.formattedText;
+        json.metadata = _itemContainerCaptureMetadata(item);
+        json.validatorTypes = _itemContainerCaptureValidatorTypes(item);
+      }
+      else{
+        json.label = item.value.ptBR.formattedText
+      }
   }
 
   function _itemContainerCaptureMetadata(item) {
@@ -196,7 +205,14 @@
       validators.set(item.fillingRules.options.quantity.validatorType,
         item.fillingRules.options.quantity.data.reference);
     }
-
+    if (item.fillingRules.options.maxTime) {
+      validators.set(item.fillingRules.options.maxTime.validatorType,
+        item.fillingRules.options.maxTime.data.reference.value);
+    }
+    if (item.fillingRules.options.minTime) {
+      validators.set(item.fillingRules.options.minTime.validatorType,
+        item.fillingRules.options.minTime.data.reference.value);
+    }
 
     return validators;
   };
