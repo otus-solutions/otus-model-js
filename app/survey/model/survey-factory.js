@@ -83,7 +83,6 @@
         json.acronym = jsonObject.identity.acronym;
         json.extractionID = item.customID;
         json.objectType = item.objectType;
-        json.dataType = item.dataType;
         json.extractionValues = Inject.SurveyDictionaryService.itemContainerCaptureValues(item);
         Inject.SurveyDictionaryService.customQuestionTreatment(item, json);
         dictionary.push(json);
