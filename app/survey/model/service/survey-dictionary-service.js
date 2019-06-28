@@ -16,7 +16,7 @@
         item.options.map(option => {
           switch (option.objectType) {
             case "CheckboxAnswerOption":
-              values.push(`${option.optionID}(${option.value}):${option.label.ptBR.plainText}`);
+              values.push(`${option.optionID}(${option.value}):${option.label.ptBR.RCPCv2.json}`);
               break;
             case "AnswerOption":
               values.push(`(${option.extractionValue})${option.label.ptBR.plainText}`);
