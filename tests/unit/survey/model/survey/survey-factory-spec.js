@@ -81,7 +81,8 @@ describe('SurveyFactory', function() {
   describe("SurveyFactory.createDictionary", function () {
     beforeEach(function () {
       //jsonObject = Test.utils.data.surveyDIC;
-      jsonObject = Test.utils.data.surveyRCPCv2;
+      // jsonObject = Test.utils.data.surveyRCPCv2;
+      jsonObject = Test.utils.data.surveyMEDC2;
     });
 
     it('createDictionaryMethod_should ', function () {

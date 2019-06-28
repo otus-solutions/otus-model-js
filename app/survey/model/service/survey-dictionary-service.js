@@ -26,9 +26,17 @@
       }
       if(Array.isArray(item.lines)){
         item.lines.map(line => {
-          line.gridTextList.map(gridText => {
-            values.push(`${gridText.customID}(${gridText.unit.ptBR.plainText})`);
-          });
+          if(line.objectType == "GridTextList"){
+            line.gridTextList.map(gridText => {
+              values.push(`${gridText.customID}(${gridText.label.ptBR.plainText})`)
+            });
+          }
+
+          if(line.objectType == "GridIntegerLine"){
+            line.gridIntegerList.map(gridInteger => {
+              values.push(`${gridInteger.customID}(${gridInteger.label.ptBR.plainText})`);
+            });
+          }
         });
       }
       return values;
