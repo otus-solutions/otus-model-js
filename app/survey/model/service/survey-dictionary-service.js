@@ -26,7 +26,7 @@
       }
       if(Array.isArray(item.lines)){
         item.lines.map(line => {
-          if(line.objectType == "GridTextList"){
+          if(line.objectType == "GridTextLine"){
             line.gridTextList.map(gridText => {
               values.push(`${gridText.customID}(${gridText.label.ptBR.plainText})`)
             });
