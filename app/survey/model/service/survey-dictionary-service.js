@@ -16,10 +16,10 @@
         item.options.map(option => {
           switch (option.objectType) {
             case "CheckboxAnswerOption":
-              values.push(`${option.optionID}(${option.value}):${option.label.ptBR.formattedText}`);
+              values.push(`${option.optionID}(${option.value}):${option.label.ptBR.plainText}`);
               break;
             case "AnswerOption":
-              values.push(`(${option.extractionValue})${option.label.ptBR.formattedText}`);
+              values.push(`(${option.extractionValue})${option.label.ptBR.plainText}`);
               break;
           }
         });
@@ -27,7 +27,7 @@
       if(Array.isArray(item.lines)){
         item.lines.map(line => {
           line.gridTextList.map(gridText => {
-            values.push(`${gridText.customID}(${gridText.unit.ptBR.formattedText})`);
+            values.push(`${gridText.customID}(${gridText.unit.ptBR.plainText})`);
           });
         });
       }
@@ -36,26 +36,20 @@
 
     function customQuestionTreatment(item, json){
       if(item.objectType != "TextItem"){
-        json.label = item.label.ptBR.formattedText;
+        json.label = item.label.ptBR.plainText;
         json.metadata = _itemContainerCaptureMetadata(item);
         json.validatorTypes = _itemContainerCaptureValidatorTypes(item);
       }
       else{
-        json.label = item.value.ptBR.formattedText
+        json.label = item.value.ptBR.plainText
       }
     }
   }
 
   function _itemContainerCaptureMetadata(item) {
-    // let metadataList = new Map();
-    // item.metadata.options.map(md => {
-    //   metadataList.set(md.label.ptBR.formattedText, md.extractionValue);
-    // });
-    // return metadataList;
-
     let metadataList = [];
     item.metadata.options.map(md => {
-      metadataList.push(`${md.label.ptBR.formattedText}(${md.extractionValue})`);
+      metadataList.push(`${md.label.ptBR.plainText}(${md.extractionValue})`);
     });
     return metadataList;
   }
