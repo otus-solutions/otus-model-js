@@ -159,7 +159,7 @@
     }
 
     function getName() {
-      return getIdentity().name;
+      return getTemplate().name;
     }
 
     function getRealizationDate() {
