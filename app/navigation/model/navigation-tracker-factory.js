@@ -207,6 +207,11 @@
      * @memberof NavigationTracker
      */
     function visitItem(idToVisit) {
+      if(idToVisit === "END NODE") {
+        visitEndNode();
+        return;
+      }
+
       if (_isMovingForward(idToVisit)) {
         _setPrevious(idToVisit);
         _move(idToVisit);
@@ -214,6 +219,29 @@
       } else {
         _move(idToVisit);
       }
+    }
+
+    function visitEndNode() {
+      //this has to exist because END NODE doesn't have a NavigationItemTracking
+      //if this evolve to a insertion of endNode into _items at the begining
+      //this method can be deleted
+
+      var item = {};
+      var previous = _currentItem.getID();
+      item.getPrevious = function(){ return previous;};
+      item.getID = function() {return "END NODE"};
+      item.getOutputs = function() {return []};
+      item.isSkipped = function() {return false};
+
+      var itemsSize = Object.keys(_items).length;
+      item.getIndex = function() {return itemsSize};
+
+      _items["END NODE"] = item;
+      _currentItem = item;
+      _resolveJumps();
+
+
+
     }
 
     /**
@@ -254,6 +282,7 @@
       }
 
       json.items = [];
+      delete _items["END NODE"];
       Object.keys(_items).forEach(function(itemID) {
         json.items.push(_items[itemID]);
       });
