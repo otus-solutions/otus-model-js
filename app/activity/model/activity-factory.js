@@ -155,11 +155,13 @@
     }
 
     function getIdentity() {
-      return getTemplate().identity;
+      let template = getTemplate();
+      if(template.identity) return getTemplate().identity;
+      else return template;
     }
 
     function getName() {
-      return getTemplate().name;
+      return getIdentity().name;
     }
 
     function getRealizationDate() {
