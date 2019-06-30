@@ -156,8 +156,8 @@
 
     function getIdentity() {
       let template = getTemplate();
-      if(template.identity) return getTemplate().identity;
-      else return template;
+      if(!template.identity) return template;
+      else return template.identity;
     }
 
     function getName() {
