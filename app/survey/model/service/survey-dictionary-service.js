@@ -110,60 +110,72 @@
     let validators = [];
 
     if (item.fillingRules.options.mandatory) {
-      //validators.push(`${item.fillingRules.options.mandatory.validatorType}(${item.fillingRules.options.mandatory.data.reference})`);
       validators.push({name: item.fillingRules.options.mandatory.validatorType, value: item.fillingRules.options.mandatory.data.reference});
     }
     if (item.fillingRules.options.accept) {
-      validators.push(`${item.fillingRules.options.accept.validatorType}(${item.fillingRules.options.accept.data.reference})`);
+      //validators.push(`${item.fillingRules.options.accept.validatorType}(${item.fillingRules.options.accept.data.reference})`);
+      validators.push({name:item.fillingRules.options.accept.validatorType, value: item.fillingRules.options.accept.data.reference});
     }
     if (item.fillingRules.options.distinct) {
-      validators.push(`${item.fillingRules.options.distinct.validatorType}(${item.fillingRules.options.distinct.data.reference})`);
+      //validators.push(`${item.fillingRules.options.distinct.validatorType}(${item.fillingRules.options.distinct.data.reference})`);
+      validators.push({name:item.fillingRules.options.distinct.validatorType, value: item.fillingRules.options.distinct.data.reference});
     }
     if (item.fillingRules.options.lowerLimit) {
-      validators.push(`${item.fillingRules.options.lowerLimit.validatorType}(${item.fillingRules.options.lowerLimit.data.reference})`);
+      //validators.push(`${item.fillingRules.options.lowerLimit.validatorType}(${item.fillingRules.options.lowerLimit.data.reference})`);
+      validators.push({name: item.fillingRules.options.lowerLimit.validatorType, value: item.fillingRules.options.lowerLimit.data.reference});
     }
     if (item.fillingRules.options.upperLimit) {
-      validators.push(`${item.fillingRules.options.upperLimit.validatorType}(${item.fillingRules.options.upperLimit.data.reference})`);
+      //validators.push(`${item.fillingRules.options.upperLimit.validatorType}(${item.fillingRules.options.upperLimit.data.reference})`);
+      validators.push({name:item.fillingRules.options.upperLimit.validatorType, value: item.fillingRules.options.upperLimit.data.reference});
     }
     if (item.fillingRules.options.precision) {
-      validators.push(`${item.fillingRules.options.precision.validatorType}(${item.fillingRules.options.precision.data.reference})`);
+      //validators.push(`${item.fillingRules.options.precision.validatorType}(${item.fillingRules.options.precision.data.reference})`);
+      validators.push({name:item.fillingRules.options.precision.validatorType, value:item.fillingRules.options.precision.data.reference});
     }
     if (item.fillingRules.options.scale) {
-      validators.push(`${item.fillingRules.options.scale.validatorType}(${item.fillingRules.options.scale.data.reference})`);
+      //validators.push(`${item.fillingRules.options.scale.validatorType}(${item.fillingRules.options.scale.data.reference})`);
+      validators.push({name:item.fillingRules.options.scale.validatorType,value:item.fillingRules.options.scale.data.reference});
     }
     if (item.fillingRules.options.in) {
-      validators.push(`${item.fillingRules.options.in.validatorType}(${[item.fillingRules.options.in.data.reference.initial + '~' +
-        item.fillingRules.options.in.data.reference.end]})`);
+      validators.push({name: item.fillingRules.options.in.validatorType, begin: item.fillingRules.options.in.data.reference.initial,
+        end: item.fillingRules.options.in.data.reference.end});
     }
     if (item.fillingRules.options.minDate) {
-      validators.push(`${item.fillingRules.options.minDate.validatorType}(${item.fillingRules.options.minDate.data.reference.value})`);
+      //validators.push(`${item.fillingRules.options.minDate.validatorType}(${item.fillingRules.options.minDate.data.reference.value})`);
+      validators.push({name:item.fillingRules.options.minDate.validatorType, value: item.fillingRules.options.minDate.data.reference.value});
     }
     if (item.fillingRules.options.maxDate) {
-      validators.push(`${item.fillingRules.options.maxDate.validatorType}(${item.fillingRules.options.maxDate.data.reference.value})`);
+      //validators.push(`${item.fillingRules.options.maxDate.validatorType}(${item.fillingRules.options.maxDate.data.reference.value})`);
+      validators.push({name:item.fillingRules.options.maxDate.validatorType, value:item.fillingRules.options.maxDate.data.reference.value});
     }
     if (item.fillingRules.options.futureDate) {
-      validators.push(`${item.fillingRules.options.futureDate.validatorType}(${item.fillingRules.options.futureDate.data.reference})`);
+      //validators.push(`${item.fillingRules.options.futureDate.validatorType}(${item.fillingRules.options.futureDate.data.reference})`);
+      validators.push({name:item.fillingRules.options.futureDate.validatorType, value:item.fillingRules.options.futureDate.data.reference});
     }
     if (item.fillingRules.options.pastDate) {
-      validators.push(`${item.fillingRules.options.pastDate.validatorType}(${item.fillingRules.options.pastDate.data.reference})`);
+      //validators.push(`${item.fillingRules.options.pastDate.validatorType}(${item.fillingRules.options.pastDate.data.reference})`);
+      validators.push({name: item.fillingRules.options.pastDate.validatorType, value:item.fillingRules.options.pastDate.data.reference});
     }
     if (item.fillingRules.options.rangeDate) {
-      validators.push(`${item.fillingRules.options.rangeDate.validatorType}(${[item.fillingRules.options.rangeDate.data.reference.initial.value + '~' +
-        item.fillingRules.options.rangeDate.data.reference.end.value]})`);
+      validators.push({name:item.fillingRules.options.rangeDate.validatorType, begin:item.fillingRules.options.rangeDate.data.reference.initial.value,
+        end:item.fillingRules.options.rangeDate.data.reference.end.value});
     }
     if (item.fillingRules.options.minSelected) {
-      validators.push(`${item.fillingRules.options.minSelected.validatorType}(${item.fillingRules.options.minSelected.data.reference})`);
+      // validators.push(`${item.fillingRules.options.minSelected.validatorType}(${item.fillingRules.options.minSelected.data.reference})`);
+      validators.push({name:item.fillingRules.options.minSelected.validatorType, value:item.fillingRules.options.minSelected.data.reference});
     }
     if (item.fillingRules.options.maxSelected) {
-      validators.push(`${item.fillingRules.options.maxSelected.validatorType}(${item.fillingRules.options.maxSelected.data.reference})`);
+      // validators.push(`${item.fillingRules.options.maxSelected.validatorType}(${item.fillingRules.options.maxSelected.data.reference})`);
+      validators.push({name:item.fillingRules.options.maxSelected.validatorType, value:item.fillingRules.options.maxSelected.data.reference});
     }
     if (item.fillingRules.options.quantity) {
-      validators.push(`${item.fillingRules.options.quantity.validatorType}(${item.fillingRules.options.quantity.data.reference})`);
+      //validators.push(`${item.fillingRules.options.quantity.validatorType}(${item.fillingRules.options.quantity.data.reference})`);
+      validators.push({name:item.fillingRules.options.quantity.validatorType, value:item.fillingRules.options.quantity.data.reference});
     }
     if (item.fillingRules.options.maxTime) {
-      validators.push(`${item.fillingRules.options.maxTime.validatorType}(${item.fillingRules.options.maxTime.data.reference.value})`);
+      validators.push({name:item.fillingRules.options.maxTime.validatorType, value:item.fillingRules.options.maxTime.data.reference.value});
       if (item.fillingRules.options.minTime) {
-        validators.push(`${item.fillingRules.options.minTime.validatorType}(${item.fillingRules.options.minTime.data.reference.value})`);
+        validators.push({name:item.fillingRules.options.minTime.validatorType, value:item.fillingRules.options.minTime.data.reference.value});
       }
     }
       return validators;
