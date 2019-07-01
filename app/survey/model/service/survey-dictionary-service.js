@@ -7,16 +7,58 @@
   function Service(){
     var self = this;
 
-    self.itemContainerCaptureValues = itemContainerCaptureValues;
-    self.customQuestionTreatment = customQuestionTreatment;
+    self.dictionaryConstructionByExtractionId = dictionaryConstructionByExtractionId;
+    //self.itemContainerCaptureValues = itemContainerCaptureValues;
+    //self.customQuestionTreatment = customQuestionTreatment;
 
-    function itemContainerCaptureValues(item){
+    function dictionaryConstructionByExtractionId(jsonObject) {
+
+      var dictionary = [];
+      jsonObject.itemContainer.forEach(item => {
+        //
+        if(item.objectType == "CheckboxQuestion"){
+          _itemContainerCaptureValues(item)
+            .forEach(valuesCheckbox => {
+              let json = {};
+              _dictionaryAttributeFulfillment(jsonObject, json, item, valuesCheckbox);
+              dictionary.push(json);
+          });
+        }
+        else{
+          let json = {};
+          _dictionaryAttributeFulfillment(jsonObject, json, item);
+          json.extractionValues = _itemContainerCaptureValues(item);
+          dictionary.push(json);
+        }
+        //json.extractionValues = _itemContainerCaptureValues(item);
+
+      });
+      return dictionary;
+    }
+    
+    function _dictionaryAttributeFulfillment(jsonObject, json, item, valuesCheckbox) {
+      json.acronym = jsonObject.identity.acronym;
+      if(valuesCheckbox){
+         json.extractionID = valuesCheckbox.customID;
+         json.label = valuesCheckbox.label;
+         json.extractionValues = valuesCheckbox.value;
+      }
+      else{
+        json.extractionID = item.customID;
+        _customQuestionTreatment(item, json);
+      }
+      json.questionDataType = item.objectType;
+
+    }
+
+    function _itemContainerCaptureValues(item){
       let values = [];
       if (Array.isArray(item.options)) {
         item.options.map(option => {
           switch (option.objectType) {
             case "CheckboxAnswerOption":
-              values.push(`${option.optionID}(${option.value}):${option.label.ptBR.plainText}`);
+              //values.push(`${option.optionID}(${option.value}):${option.label.ptBR.plainText}`);
+              values.push({customID: option.optionID, value: option.value, label: option.label.ptBR.plainText })
               break;
             case "AnswerOption":
               values.push(`(${option.extractionValue})${option.label.ptBR.plainText}`);
@@ -42,11 +84,11 @@
       return values;
     }
 
-    function customQuestionTreatment(item, json){
+    function _customQuestionTreatment(item, json){
       if(item.objectType != "TextItem"){
         json.label = item.label.ptBR.plainText;
         json.metadata = _itemContainerCaptureMetadata(item);
-        json.validatorTypes = _itemContainerCaptureValidatorTypes(item);
+        json.validationTypes = _itemContainerCaptureValidatorTypes(item);
       }
       else{
         json.label = item.value.ptBR.plainText
