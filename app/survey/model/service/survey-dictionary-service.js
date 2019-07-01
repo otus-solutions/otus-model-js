@@ -27,7 +27,7 @@
         else{
           let json = {};
           _dictionaryAttributeFulfillment(jsonObject, json, item);
-          json.extractionValues = _itemContainerCaptureValues(item);
+          //json.extractionValues = _itemContainerCaptureValues(item);
           dictionary.push(json);
         }
         //json.extractionValues = _itemContainerCaptureValues(item);
@@ -38,6 +38,8 @@
     
     function _dictionaryAttributeFulfillment(jsonObject, json, item, valuesCheckbox) {
       json.acronym = jsonObject.identity.acronym;
+      json.objectType = item.objectType;
+      json.extractionValues = _itemContainerCaptureValues(item);
       if(valuesCheckbox){
          json.extractionID = valuesCheckbox.customID;
          json.label = valuesCheckbox.label;
@@ -47,8 +49,8 @@
         json.extractionID = item.customID;
         _customQuestionTreatment(item, json);
       }
-      json.questionDataType = item.objectType;
-
+      // json.questionDataType = item.objectType;
+      // json.extractionValues = _itemContainerCaptureValues(item);
     }
 
     function _itemContainerCaptureValues(item){
@@ -108,7 +110,8 @@
     let validators = [];
 
     if (item.fillingRules.options.mandatory) {
-      validators.push(`${item.fillingRules.options.mandatory.validatorType}(${item.fillingRules.options.mandatory.data.reference})`);
+      //validators.push(`${item.fillingRules.options.mandatory.validatorType}(${item.fillingRules.options.mandatory.data.reference})`);
+      validators.push({name: item.fillingRules.options.mandatory.validatorType, value: item.fillingRules.options.mandatory.data.reference});
     }
     if (item.fillingRules.options.accept) {
       validators.push(`${item.fillingRules.options.accept.validatorType}(${item.fillingRules.options.accept.data.reference})`);
