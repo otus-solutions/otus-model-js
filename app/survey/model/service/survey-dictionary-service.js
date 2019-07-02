@@ -59,13 +59,12 @@
 
   function _itemContainerCaptureValues(item) {
     let values = [];
-    const extractionValuesBooleans = [{ value: 0, label: false }, { value: 1, label: true }];
-
+    
     if (Array.isArray(item.options)) {
       item.options.map(option => {
         switch (option.objectType) {
           case "CheckboxAnswerOption":
-            values.push({ customID: option.optionID, label: option.label.ptBR.plainText, value: extractionValuesBooleans });
+            values.push({ customID: option.optionID, label: option.label.ptBR.plainText, value: [{ value: 0, label: false }, { value: 1, label: true }] });
             break;
           case "AnswerOption":
             values.push({ value: option.extractionValue, label: option.label.ptBR.plainText });
