@@ -12,17 +12,20 @@
       var dictionary = [];
 
       jsonObject.itemContainer.forEach(item => {
+        var json;
         switch (item.objectType) {
-          case "CheckboxQuestion" || "GridTextQuestion":
+          case 'CheckboxQuestion':
+          case 'GridTextQuestion':
+          case 'GridIntegerQuestion':
             _itemContainerCaptureValues(item).forEach(internalItem => {
-              let json = {};
+              json = {};
               _dictionaryAttributeFulfillment(jsonObject, json, item, internalItem);
               dictionary.push(json);
             });
             break;
 
           default:
-            let json = {};
+            json = {};
             _dictionaryAttributeFulfillment(jsonObject, json, item);
             json.extractionValues = _itemContainerCaptureValues(item);
             dictionary.push(json);
@@ -31,70 +34,69 @@
       });
       return dictionary;
     }
+  }
 
-    function _dictionaryAttributeFulfillment(jsonObject, json, item, internalItem) {
-      json.acronym = jsonObject.identity.acronym;
-      json.objectType = item.objectType;
-      switch (item.objectType) {
-        case 'CheckboxQuestion':
-          json.extractionID = internalItem.customID;
-          json.label = internalItem.label;
-          json.extractionValues = internalItem.value;
-          json.metadata = _itemContainerCaptureMetadata(item);
-          json.validationTypes = _itemContainerCaptureValidatorTypes(item);
-          break;
-        //case "GridTextQuestion":
+  function _dictionaryAttributeFulfillment(jsonObject, json, item, internalItem) {
+    json.acronym = jsonObject.identity.acronym;
+    json.objectType = item.objectType;
+    switch (item.objectType) {
+      case 'CheckboxQuestion':
+      case "GridTextQuestion":
+      case "GridIntegerQuestion":
+        json.extractionID = internalItem.customID;
+        json.label = internalItem.label;
+        json.extractionValues = internalItem.value;
+        json.metadata = _itemContainerCaptureMetadata(item);
+        json.validationTypes = _itemContainerCaptureValidatorTypes(item);
+        break;
 
-
-        default:
-          json.extractionID = item.customID;
-          _customQuestionTreatment(item, json);
-          break;
-      }
+      default:
+        json.extractionID = item.customID;
+        _customQuestionTreatment(item, json);
+        break;
     }
+  }
 
-    function _itemContainerCaptureValues(item) {
-      let values = [];
-      if (Array.isArray(item.options)) {
-        item.options.map(option => {
-          switch (option.objectType) {
-            case "CheckboxAnswerOption":
-              values.push({customID: option.optionID, label: option.label.ptBR.plainText, value: option.value})
-              break;
-            case "AnswerOption":
-              values.push({ value: option.extractionValue, label:option.label.ptBR.plainText});
-              break;
-          }
-        });
-      }
-      if (Array.isArray(item.lines)) {
-        item.lines.map(line => {
-          if (line.objectType == "GridTextLine") {
-            line.gridTextList.map(gridText => {
-              values.push(`${gridText.customID}(${gridText.label.ptBR.plainText})`)
-            });
-          }
-
-          if (line.objectType == "GridIntegerLine") {
-            line.gridIntegerList.map(gridInteger => {
-              values.push(`${gridInteger.customID}(${gridInteger.label.ptBR.plainText})`);
-            });
-          }
-        });
-      }
-      return values;
+  function _itemContainerCaptureValues(item) {
+    let values = [];
+    if (Array.isArray(item.options)) {
+      item.options.map(option => {
+        switch (option.objectType) {
+          case "CheckboxAnswerOption":
+            values.push({customID: option.optionID, label: option.label.ptBR.plainText, value: option.value})
+            break;
+          case "AnswerOption":
+            values.push({ value: option.extractionValue, label:option.label.ptBR.plainText});
+            break;
+        }
+      });
     }
+    if (Array.isArray(item.lines)) {
+      item.lines.map(line => {
+        if (line.objectType == "GridTextLine") {
+          line.gridTextList.map(gridText => {
+            values.push({customID: gridText.customID, label: gridText.label.ptBR.plainText, value:gridText.unit.ptBR.plainText});
+          });
+        }
+        if (line.objectType == "GridIntegerLine") {
+          line.gridIntegerList.map(gridInteger => {
+            values.push({customID: gridInteger.customID, label: gridInteger.label.ptBR.plainText, value:gridInteger.unit.ptBR.plainText});
+          });
+        }
+      });
+    }
+    return values;
+  }
 
-    function _customQuestionTreatment(item, json) {
-      if (item.objectType != "TextItem") {
-        json.label = item.label.ptBR.plainText;
-        json.metadata = _itemContainerCaptureMetadata(item) || [];
-        json.validationTypes = _itemContainerCaptureValidatorTypes(item) || [];
-      } else {
-        json.label = item.value.ptBR.plainText;
-        json.metadata = [];
-        json.validationTypes = [];
-      }
+  function _customQuestionTreatment(item, json) {
+    if (item.objectType != "TextItem") {
+      json.label = item.label.ptBR.plainText;
+      json.metadata = _itemContainerCaptureMetadata(item) || [];
+      json.validationTypes = _itemContainerCaptureValidatorTypes(item) || [];
+    } else {
+      json.label = item.value.ptBR.plainText;
+      json.metadata = [];
+      json.validationTypes = [];
     }
   }
 
