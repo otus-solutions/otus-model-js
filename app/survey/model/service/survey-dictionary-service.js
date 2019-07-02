@@ -63,7 +63,7 @@
       item.options.map(option => {
         switch (option.objectType) {
           case "CheckboxAnswerOption":
-            values.push({customID: option.optionID, label: option.label.ptBR.plainText, value: option.value})
+            values.push({customID: option.optionID, label: option.label.ptBR.plainText, value: {0:false, 1:true}});
             break;
           case "AnswerOption":
             values.push({ value: option.extractionValue, label:option.label.ptBR.plainText});
@@ -75,12 +75,12 @@
       item.lines.map(line => {
         if (line.objectType == "GridTextLine") {
           line.gridTextList.map(gridText => {
-            values.push({customID: gridText.customID, label: gridText.label.ptBR.plainText, value:gridText.unit.ptBR.plainText});
+            values.push({customID: gridText.customID, label: gridText.label.ptBR.plainText, value:[]});
           });
         }
         if (line.objectType == "GridIntegerLine") {
           line.gridIntegerList.map(gridInteger => {
-            values.push({customID: gridInteger.customID, label: gridInteger.label.ptBR.plainText, value:gridInteger.unit.ptBR.plainText});
+            values.push({customID: gridInteger.customID, label: gridInteger.label.ptBR.plainText, value:[]});
           });
         }
       });
