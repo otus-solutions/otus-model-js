@@ -6,20 +6,17 @@
 
   function Service() {
     var self = this;
-
     self.dictionaryConstructionByExtractionId = dictionaryConstructionByExtractionId;
-    //self.itemContainerCaptureValues = itemContainerCaptureValues;
-    //self.customQuestionTreatment = customQuestionTreatment;
 
     function dictionaryConstructionByExtractionId(jsonObject) {
       var dictionary = [];
 
       jsonObject.itemContainer.forEach(item => {
         switch (item.objectType) {
-          case "CheckboxQuestion":
-            _itemContainerCaptureValues(item).forEach(valuesCheckbox => {
+          case "CheckboxQuestion" || "GridTextQuestion":
+            _itemContainerCaptureValues(item).forEach(internalItem => {
               let json = {};
-              _dictionaryAttributeFulfillment(jsonObject, json, item, valuesCheckbox);
+              _dictionaryAttributeFulfillment(jsonObject, json, item, internalItem);
               dictionary.push(json);
             });
             break;
@@ -35,14 +32,14 @@
       return dictionary;
     }
 
-    function _dictionaryAttributeFulfillment(jsonObject, json, item, type) {
+    function _dictionaryAttributeFulfillment(jsonObject, json, item, internalItem) {
       json.acronym = jsonObject.identity.acronym;
       json.objectType = item.objectType;
       switch (item.objectType) {
         case 'CheckboxQuestion':
-          json.extractionID = type.customID;
-          json.label = type.label;
-          json.extractionValues = type.value;
+          json.extractionID = internalItem.customID;
+          json.label = internalItem.label;
+          json.extractionValues = internalItem.value;
           json.metadata = _itemContainerCaptureMetadata(item);
           json.validationTypes = _itemContainerCaptureValidatorTypes(item);
           break;
@@ -62,10 +59,9 @@
         item.options.map(option => {
           switch (option.objectType) {
             case "CheckboxAnswerOption":
-              values.push({customID: option.optionID, value: option.value, label: option.label.ptBR.plainText})
+              values.push({customID: option.optionID, label: option.label.ptBR.plainText, value: option.value})
               break;
             case "AnswerOption":
-              //values.push(`(${option.extractionValue})${option.label.ptBR.plainText}`);
               values.push({ value: option.extractionValue, label:option.label.ptBR.plainText});
               break;
           }
@@ -92,10 +88,12 @@
     function _customQuestionTreatment(item, json) {
       if (item.objectType != "TextItem") {
         json.label = item.label.ptBR.plainText;
-        json.metadata = _itemContainerCaptureMetadata(item);
-        json.validationTypes = _itemContainerCaptureValidatorTypes(item);
+        json.metadata = _itemContainerCaptureMetadata(item) || [];
+        json.validationTypes = _itemContainerCaptureValidatorTypes(item) || [];
       } else {
-        json.label = item.value.ptBR.plainText
+        json.label = item.value.ptBR.plainText;
+        json.metadata = [];
+        json.validationTypes = [];
       }
     }
   }
