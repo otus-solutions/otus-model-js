@@ -59,16 +59,16 @@
 
   function _itemContainerCaptureValues(item) {
     let values = [];
-    const extractionValuesBollean = [0, 1];
+    const extractionValuesBooleans = [{ value: 0, label: false }, { value: 1, label: true }];
 
     if (Array.isArray(item.options)) {
       item.options.map(option => {
         switch (option.objectType) {
           case "CheckboxAnswerOption":
-            values.push({customID: option.optionID, label: option.label.ptBR.plainText, value: extractionValuesBollean});
+            values.push({ customID: option.optionID, label: option.label.ptBR.plainText, value: extractionValuesBooleans });
             break;
           case "AnswerOption":
-            values.push({ value: option.extractionValue, label:option.label.ptBR.plainText});
+            values.push({ value: option.extractionValue, label: option.label.ptBR.plainText });
             break;
         }
       });
@@ -77,12 +77,12 @@
       item.lines.map(line => {
         if (line.objectType == "GridTextLine") {
           line.gridTextList.map(gridText => {
-            values.push({customID: gridText.customID, label: gridText.label.ptBR.plainText, value:[]});
+            values.push({ customID: gridText.customID, label: gridText.label.ptBR.plainText, value: [] });
           });
         }
         if (line.objectType == "GridIntegerLine") {
           line.gridIntegerList.map(gridInteger => {
-            values.push({customID: gridInteger.customID, label: gridInteger.label.ptBR.plainText, value:[]});
+            values.push({ customID: gridInteger.customID, label: gridInteger.label.ptBR.plainText, value: [] });
           });
         }
       });
