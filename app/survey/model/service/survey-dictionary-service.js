@@ -9,10 +9,10 @@
     self.dictionaryConstructionByExtractionId = dictionaryConstructionByExtractionId;
 
     function dictionaryConstructionByExtractionId(jsonObject) {
-      var dictionary = [];
+      let dictionary = [];
 
       jsonObject.itemContainer.forEach(item => {
-        var json;
+        let json;
         switch (item.objectType) {
           case 'CheckboxQuestion':
           case 'GridTextQuestion':
@@ -59,11 +59,13 @@
 
   function _itemContainerCaptureValues(item) {
     let values = [];
+    const extractionValuesBollean = [0, 1];
+
     if (Array.isArray(item.options)) {
       item.options.map(option => {
         switch (option.objectType) {
           case "CheckboxAnswerOption":
-            values.push({customID: option.optionID, label: option.label.ptBR.plainText, value: {0:false, 1:true}});
+            values.push({customID: option.optionID, label: option.label.ptBR.plainText, value: extractionValuesBollean});
             break;
           case "AnswerOption":
             values.push({ value: option.extractionValue, label:option.label.ptBR.plainText});
@@ -223,44 +225,3 @@
     return validators;
   };
 }());
-
-// if (item.objectType == "CheckboxQuestion") {
-//   _itemContainerCaptureValues(item)
-//     .forEach(valuesCheckbox => {
-//       let json = {};
-//       _dictionaryAttributeFulfillment(jsonObject, json, item, valuesCheckbox);
-//       dictionary.push(json);
-//     });
-// }
-// if (item.objectType == "GridTextQuestion") {
-//   _itemContainerCaptureValues(item)
-//     .forEach(valuesGridText => {
-//       let json = {};
-//       _dictionaryAttributeFulfillment(jsonObject, json, item, valuesGridText);
-//       dictionary.push(json);
-//     });
-//
-// } else {
-//   let json = {};
-//   _dictionaryAttributeFulfillment(jsonObject, json, item);
-//   //json.extractionValues = _itemContainerCaptureValues(item);
-//   dictionary.push(json);
-// }
-//json.extractionValues = _itemContainerCaptureValues(item);
-
-
-// if(valuesCheckbox){
-//    json.extractionID = valuesCheckbox.customID;
-//    json.label = valuesCheckbox.label;
-//    json.extractionValues = valuesCheckbox.value;
-//    json.metadata = _itemContainerCaptureMetadata(item);
-//    json.validationTypes = _itemContainerCaptureValidatorTypes(item);
-// }
-//
-// }
-// else{
-//   json.extractionID = item.customID;
-//   _customQuestionTreatment(item, json);
-// }
-// json.questionDataType = item.objectType;
-// json.extractionValues = _itemContainerCaptureValues(item);

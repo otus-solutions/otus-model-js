@@ -79,24 +79,9 @@
     function createDictionary(jsonObject) {
       return Inject.SurveyDictionaryService
         .dictionaryConstructionByExtractionId(jsonObject);
-
-      // let dictionary = [];
-      // jsonObject.itemContainer.forEach(item => {
-      //   let json = {};
-      //   json.acronym = jsonObject.identity.acronym;
-      //   json.extractionID = item.customID;
-      //   json.objectType = item.objectType;
-      //   json.extractionValues = Inject.SurveyDictionaryService.itemContainerCaptureValues(item);
-      //   Inject.SurveyDictionaryService.customQuestionTreatment(item, json);
-      //   dictionary.push(json);
-      // });
-      // return dictionary;
     }
-
     return self;
   }
-
-
 
   function Survey(surveyMetainfo, surveyIdentity, uuid) {
     var self = this;
