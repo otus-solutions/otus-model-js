@@ -76,8 +76,7 @@
     function _buildEngNodeTrackingItem(index) {
       return _toNavigationTrackingItems({
         id: "END NODE",
-        index: index
-      });
+      }, index);
     }
 
     function _buildInputs(itemToTrack) {
