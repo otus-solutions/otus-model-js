@@ -114,7 +114,7 @@ describe('SurveyFactory', function () {
       expect(Mock.dictionary[19].objectType).toBe("GridIntegerQuestion");
       expect(Mock.dictionary[20].objectType).toBe("GridIntegerQuestion");
     });
-    it('should ', function () {
+    it('createDictionaryMethod_should_invoke_dictionary_construction_service', function () {
       expect(Injections.SurveyDictionaryService.dictionaryConstructionByExtractionId).toHaveBeenCalledTimes(1)
     });
   });
