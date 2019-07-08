@@ -47,15 +47,10 @@
       _activity.fillContainer.buildJsonToFillContainer().fillingList.forEach(function (question) {
         if (_isValid) {
           question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
-          question.answer.metadata = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].metadata : null;
           question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
           _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(question.questionID);
           _validateActivity(question.questionID, question.answer, _item);
-          if (question.answer.metadata) {
-             var confirmation =_validateMetadata(_item.metadata.options, question.answer.metadata);
-             _isValid = confirmation.valid;
-             answers[IDS[question.questionID]].metadata = confirmation.value;
-          };
+          if (answers[IDS[question.questionID]].metadata) _validateMetadata(_item.metadata.options, answers[IDS[question.questionID]].metadata, question);
           if (!_isValid) _activity.error = "Questão {" + IDS[question.questionID] + "} contém uma resposta inválida!";
         }
       });
@@ -63,12 +58,21 @@
       _isValid = true;
     }
 
+    function _validateMetadata(metadataOptions, answerMetadata, question) {
+      metadataOptions.forEach((option, idx) => {
+        if (option.extractionValue === answerMetadata) {
+          _isValid = true;
+          question.metadata.value = ++idx;
+        }
+        else question.metadata.value = null;
+      });
+    }
+
     function _validateActivity(templateID, answer, _item) {
       if (_isValid) {
         _isValid = answer.value && answer.metadata ? false : true;
         if (_isValid) {
           _elementRegister = ElementRegisterFactory.create(templateID, {data: answer.value});
-          //_item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(templateID);
           _setupValidation(_item);
           ValidationService.validateElement(templateID, function (response) {
             response.forEach(function (validation) {
@@ -81,36 +85,6 @@
       }
     }
 
-
-    // function _validateActivity(templateID, answer) {
-    //   if (_isValid) {
-    //     _isValid = answer.value && answer.metadata ? false : true;
-    //     if (_isValid) {
-    //       _elementRegister = ElementRegisterFactory.create(templateID, {data: answer.value});
-    //       _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(templateID);
-    //       _setupValidation(_item);
-    //       ValidationService.validateElement(templateID, function (response) {
-    //         response.forEach(function (validation) {
-    //           validation.validatorsResponse.forEach(function (validator) {
-    //             _isValid = validator.result && ValidationTypeService.isValid(_item.dataType, answer.value);
-    //           });
-    //         });
-    //       });
-    //       if (answer.metadata) _validateMetadata(_item.metadata.options, answer);
-    //     }
-    //   }
-    // }
-
-    function _validateMetadata(metadataOptions, answerMetadata) {
-      var confirmations = {};
-      metadataOptions.forEach((option, idx) => {
-        if (option.extractionValue === answerMetadata) {
-          confirmations.valid = true;
-          confirmations.value = idx;
-        }
-      });
-      return confirmations;
-    }
 
     function _setupValidation(_item) {
       Object.keys(_item.fillingRules.options).forEach(function (validator) {
