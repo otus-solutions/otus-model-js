@@ -50,6 +50,7 @@
           question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
           _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(question.questionID);
           if (answers[IDS[question.questionID]].metadata) _validateMetadata(_item.metadata.options, answers[IDS[question.questionID]].metadata, question);
+          else question.metadata.value = null;
           _validateActivity(question.questionID, question.answer, _item, question.metadata);
           if (!_isValid) _activity.error = "Questão {" + IDS[question.questionID] + "} contém uma resposta inválida!";
         }
@@ -64,13 +65,12 @@
           _isValid = true;
           question.metadata.value = ++idx;
         }
-        else question.metadata.value = null;
       });
     }
 
     function _validateActivity(templateID, answer, _item, metadata) {
       if (_isValid) {
-        _isValid = answer.value && metadata.value ? false : true;
+        _isValid = (answer.value === 0) && (!answer.value) && metadata.value ? false : true;
         if (_isValid && !metadata.value) {
           _elementRegister = ElementRegisterFactory.create(templateID, {data: answer.value});
           _setupValidation(_item);
