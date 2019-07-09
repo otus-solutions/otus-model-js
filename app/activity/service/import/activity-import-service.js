@@ -46,11 +46,14 @@
       var IDS = _getQuestionsIdsMap(answers);
       _activity.fillContainer.buildJsonToFillContainer().fillingList.forEach(function (question) {
         if (_isValid) {
+          _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(question.questionID);
           question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
           question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
-          _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(question.questionID);
+
+          //checks the presence of metadata response
           if (answers[IDS[question.questionID]].metadata) _validateMetadata(_item.metadata.options, answers[IDS[question.questionID]].metadata, question);
           else question.metadata.value = null;
+
           _validateActivity(question.questionID, question.answer, _item, question.metadata);
           if (!_isValid) _activity.error = "Questão {" + IDS[question.questionID] + "} contém uma resposta inválida!";
         }
@@ -60,17 +63,24 @@
     }
 
     function _validateMetadata(metadataOptions, answerMetadata, question) {
-      metadataOptions.forEach((option, idx) => {
-        if (option.extractionValue === answerMetadata) {
-          _isValid = true;
-          question.metadata.value = ++idx;
-        }
+      var intro = metadataOptions.filter(options => {
+        return options.extractionValue === answerMetadata;
       });
+
+      if(intro.length){
+        metadataOptions.forEach((option, idx) => {
+          if (option.extractionValue === answerMetadata) {
+            _isValid = true;
+            question.metadata.value = ++idx;
+          }
+        });
+      }
+      else _isValid = false;
     }
 
     function _validateActivity(templateID, answer, _item, metadata) {
       if (_isValid) {
-        _isValid = (answer.value === 0) && (!answer.value) && metadata.value ? false : true;
+        _isValid = (answer.value || answer.value === 0) && metadata.value ? false : true;
         if (_isValid && !metadata.value) {
           _elementRegister = ElementRegisterFactory.create(templateID, {data: answer.value});
           _setupValidation(_item);
