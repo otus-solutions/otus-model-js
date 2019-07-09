@@ -59379,7 +59379,7 @@ Test.utils.data.surveyFormDSOC = {
   "version": 1
 };
 
-Test.util.data.jsonImportActivities = [
+Test.utils.data.jsonImportActivities = [
   {"id": "",
     "acronym": "IMT",
     "participant": {"recruitmentNumber":4025070},
@@ -59513,4 +59513,3 @@ Test.util.data.jsonImportActivities = [
     }
   }
 ];
-

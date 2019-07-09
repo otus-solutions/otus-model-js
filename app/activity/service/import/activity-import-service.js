@@ -63,11 +63,11 @@
     }
 
     function _validateMetadata(metadataOptions, answerMetadata, question) {
-      var intro = metadataOptions.filter(options => {
+      var associated = metadataOptions.filter(options => {
         return options.extractionValue === answerMetadata;
       });
 
-      if(intro.length){
+      if(associated.length){
         metadataOptions.forEach((option, idx) => {
           if (option.extractionValue === answerMetadata) {
             _isValid = true;
@@ -94,7 +94,6 @@
         }
       }
     }
-
 
     function _setupValidation(_item) {
       Object.keys(_item.fillingRules.options).forEach(function (validator) {
@@ -172,13 +171,11 @@
         if (jsonObject.length > 0) {
           if (_isValidSurveys(surveyForm.surveyTemplate.identity.acronym, jsonObject)) {
             jsonObject.forEach(function (json) {
-
               _activities.push(self.create(surveyForm, json, user));
             });
           }
         }
       }
-
       return _activities;
     }
 
