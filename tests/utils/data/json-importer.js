@@ -59377,4 +59377,140 @@ Test.utils.data.surveyFormDSOC = {
   },
   "isDiscarded": false,
   "version": 1
-}
+};
+
+Test.util.data.jsonImportActivities = [
+  {"id": "",
+    "acronym": "IMT",
+    "participant": {"recruitmentNumber":4025070},
+    "user": {
+      "name": "G",
+      "surname": "L",
+      "phone": 1234567890,
+      "email": "gl@otus.com"
+    },
+    "status": "FINALIZED",
+    "mode": "PAPER",
+    "activityConfiguration": {
+      "category": {
+        "name": "C0",
+        "objectType": "ActivityCategory",
+        "label": "Normal",
+        "disabled": false,
+        "isDefault": true
+      }
+    },
+    "answers": {
+      "IMT1": {
+        "value" : 0,
+        "metadata" : ".F",
+        "comment" : ""
+      },
+      "IMT2": {
+        "value" :0.52,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT3": {
+        "value" :0.89,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT4": {
+        "value" : null,
+        "metadata" : ".S",
+        "comment" : ""
+      },
+      "IMT5": {
+        "value" :5.51,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT6": {
+        "value" :2,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT7": {
+        "value" :0.58,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT8": {
+        "value" :0.68,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT9": {
+        "value" :7.98,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT10": {
+        "value" :6.33,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT11": {
+        "value" :0.57,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT12": {
+        "value" :0.42,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT13": {
+        "value" :0.62,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT14": {
+        "value" :7.98,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT15": {
+        "value" :6.54,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT16": {
+        "value" :0.58,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT17": {
+        "value" :0.58,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT18": {
+        "value" :0.65,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT19": {
+        "value" :8.46,
+        "metadata" : null,
+        "comment" : ""
+      },
+      "IMT20": {
+        "value" :7.01,
+        "metadata" : null,
+        "comment" : ""
+      }
+    },
+    "offlineData": {
+      "checker": {
+        "name": "Coruja",
+        "surname": "Owl",
+        "phone": 11979944817,
+        "email": "teste123@gmail.com"
+      },
+      "realizationDate": "2019-05-31T00:00:00.000Z"
+    }
+  }
+];
+
