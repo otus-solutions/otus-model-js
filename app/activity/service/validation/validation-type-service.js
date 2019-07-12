@@ -44,7 +44,7 @@
           _validation = !Number.isNaN(date.getDate()) && date instanceof Date && typeof date === "object" && !anyNumber && !isBoolean;
           break;
         case DECIMAL:
-          let numberDecimal = new Number(value);
+          let numberDecimal = new Number(value).toFixed(9);
           _validation = typeof value === "number" && !Number.isInteger(numberDecimal.valueOf()) && !Number.isNaN(numberDecimal);
           break;
         case BINARY:
