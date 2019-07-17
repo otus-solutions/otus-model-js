@@ -12,12 +12,13 @@
     'otusjs.model.navigation.NavigationManagerFactory',
     'SurveyItemManagerFactory',
     'otusjs.model.survey.DataSourceDefinitionManagerFactory',
-    'SurveyDictionaryService'
+    'SurveyDictionaryService',
+    'otusjs.staticVariable.StaticVariableManager'
   ];
 
   var Inject = {};
 
-  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService) {
+  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService, StaticVariableManager) {
     var self = this;
 
     self.OBJECT_TYPE = 'Survey';
@@ -26,6 +27,7 @@
     Inject.NavigationManagerFactory = NavigationManagerFactory;
     Inject.DataSourceDefinitionManagerFactory = DataSourceDefinitionManagerFactory;
     Inject.SurveyDictionaryService = SurveyDictionaryService;
+    Inject.StaticVariableManager = StaticVariableManager;
 
     /* Public interface */
     self.create = create;
@@ -72,6 +74,7 @@
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
+      survey.StaticVariableManager.loadJsonData(jsonObject.staticVariableList);
 
       return survey;
     }
@@ -94,6 +97,7 @@
     self.SurveyItemManager = Inject.SurveyItemManagerFactory.create();
     self.NavigationManager = Inject.NavigationManagerFactory.create(self);
     self.DataSourceManager = Inject.DataSourceDefinitionManagerFactory.create();
+    self.StaticVariableManager = Inject.StaticVariableManager.create();
 
     /* Public methods */
     self.initialize = initialize;
@@ -110,7 +114,13 @@
     self.isAvailableCustomID = isAvailableCustomID;
     self.getDataSource = getDataSource;
     self.getAllDataSources = getAllDataSources;
+    self.createStaticVariable = createStaticVariable;
+    self.addStaticVariable = addStaticVariable;
+    self.removeStaticVariable = removeStaticVariable;
+    self.updateStaticVariable = updateStaticVariable;
+    self.getStaticVariableList = getStaticVariableList;
     self.toJSON = toJSON;
+
 
     function initialize() {
       self.SurveyItemManager.init();
@@ -179,6 +189,27 @@
       return item.objectType === "AutocompleteQuestion";
     }
 
+    /* Static Variables */
+    function createStaticVariable() {
+      return self.StaticVariableManager.create();
+    }
+
+    function addStaticVariable(variable) {
+      self.StaticVariableManager.add(variable);
+    }
+
+    function removeStaticVariable(variable) {
+      self.StaticVariableManager.remove(variable);
+    }
+
+    function updateStaticVariable(variable) {
+      self.StaticVariableManager.updateStaticVariable(variable);
+    }
+
+    function getStaticVariableList() {
+      self.StaticVariableManager.getStaticVariableList();
+    }
+
     function toJSON() {
       var json = {};
 
@@ -206,6 +237,8 @@
           json.navigationList.push({});
         }
       });
+
+      json.staticVariableList = self.StaticVariableManager.getStaticVariableList();
 
       return json;
     }
