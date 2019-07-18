@@ -13,12 +13,12 @@
     'SurveyItemManagerFactory',
     'otusjs.model.survey.DataSourceDefinitionManagerFactory',
     'SurveyDictionaryService',
-    'otusjs.staticVariable.StaticVariableManager'
+    'otusjs.staticVariable.StaticVariableManagerFactory'
   ];
 
   var Inject = {};
 
-  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService, StaticVariableManager) {
+  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService, StaticVariableManagerFactory) {
     var self = this;
 
     self.OBJECT_TYPE = 'Survey';
@@ -27,7 +27,7 @@
     Inject.NavigationManagerFactory = NavigationManagerFactory;
     Inject.DataSourceDefinitionManagerFactory = DataSourceDefinitionManagerFactory;
     Inject.SurveyDictionaryService = SurveyDictionaryService;
-    Inject.StaticVariableManager = StaticVariableManager;
+    Inject.StaticVariableManagerFactory = StaticVariableManagerFactory;
 
     /* Public interface */
     self.create = create;
@@ -97,7 +97,7 @@
     self.SurveyItemManager = Inject.SurveyItemManagerFactory.create();
     self.NavigationManager = Inject.NavigationManagerFactory.create(self);
     self.DataSourceManager = Inject.DataSourceDefinitionManagerFactory.create();
-    self.StaticVariableManager = Inject.StaticVariableManager.create();
+    self.StaticVariableManager = Inject.StaticVariableManagerFactory.create();
 
     /* Public methods */
     self.initialize = initialize;
