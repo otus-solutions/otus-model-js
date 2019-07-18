@@ -506,8 +506,7 @@ Test.utils.data.survey = {
       "otusStudioVersion": ""
     },
     "dataSources": [],
-    "itemContainer": [
-      {
+    "itemContainer": [{
         "extents": "SurveyItem",
         "objectType": "DecimalQuestion",
         "templateID": "ANTC1",
@@ -539,8 +538,7 @@ Test.utils.data.survey = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -765,8 +763,7 @@ Test.utils.data.survey = {
             "formattedText": ""
           }
         },
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "value": 1,
@@ -830,8 +827,7 @@ Test.utils.data.survey = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -1068,36 +1064,31 @@ Test.utils.data.survey = {
         }
       }
     ],
-    "navigationList": [
-      {
+    "navigationList": [{
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "BEGIN NODE",
         "index": 0,
         "inNavigations": [],
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "BEGIN NODE",
-            "destination": "ANTC1",
-            "name": "BEGIN NODE_ANTC1",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "BEGIN NODE",
+          "destination": "ANTC1",
+          "name": "BEGIN NODE_ANTC1",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "END NODE",
         "index": 1,
-        "inNavigations": [
-          {
-            "origin": "ANTC4",
-            "index": 5
-          }
-        ],
+        "inNavigations": [{
+          "origin": "ANTC4",
+          "index": 5
+        }],
         "routes": []
       },
       {
@@ -1105,37 +1096,30 @@ Test.utils.data.survey = {
         "objectType": "Navigation",
         "origin": "ANTC1",
         "index": 2,
-        "inNavigations": [
-          {
-            "origin": "BEGIN NODE",
-            "index": 0
-          }
-        ],
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "ANTC1",
-            "destination": "ANTC2",
-            "name": "ANTC1_ANTC2",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "inNavigations": [{
+          "origin": "BEGIN NODE",
+          "index": 0
+        }],
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "ANTC1",
+          "destination": "ANTC2",
+          "name": "ANTC1_ANTC2",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "ANTC2",
         "index": 3,
-        "inNavigations": [
-          {
-            "origin": "ANTC1",
-            "index": 2
-          }
-        ],
-        "routes": [
-          {
+        "inNavigations": [{
+          "origin": "ANTC1",
+          "index": 2
+        }],
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "ANTC2",
@@ -1151,23 +1135,19 @@ Test.utils.data.survey = {
             "destination": "ANTC3",
             "name": "ANTC2_ANTC3",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "ANTC2",
-                    "operator": "equal",
-                    "answer": "1",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "ANTC2",
+                "operator": "equal",
+                "answer": "1",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -1176,31 +1156,26 @@ Test.utils.data.survey = {
         "objectType": "Navigation",
         "origin": "ANTC3",
         "index": 4,
-        "inNavigations": [
-          {
-            "origin": "ANTC2",
-            "index": 3
-          }
-        ],
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "ANTC3",
-            "destination": "ANTC4",
-            "name": "ANTC3_ANTC4",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "inNavigations": [{
+          "origin": "ANTC2",
+          "index": 3
+        }],
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "ANTC3",
+          "destination": "ANTC4",
+          "name": "ANTC3_ANTC4",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "ANTC4",
         "index": 5,
-        "inNavigations": [
-          {
+        "inNavigations": [{
             "origin": "ANTC3",
             "index": 4
           },
@@ -1209,17 +1184,15 @@ Test.utils.data.survey = {
             "index": 3
           }
         ],
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "ANTC4",
-            "destination": "END NODE",
-            "name": "ANTC4_END NODE",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "ANTC4",
+          "destination": "END NODE",
+          "name": "ANTC4_END NODE",
+          "isDefault": true,
+          "conditions": []
+        }]
       }
     ]
   },
@@ -3388,17 +3361,15 @@ Test.utils.data.participantLaboratory = {
         "metadata": "",
         "operator": "LALA@GMAIL.COM",
         "time": "2017-06-22T21:43:06.086Z",
-        "processing":"2018-06-20T18:58:10.942Z"
+        "processing": "2018-06-20T18:58:10.942Z"
       },
-      "aliquotHistory": [
-        {
-          "objectType": "AliquotEvent",
-          "type": "CONVERTED_STORAGE",
-          "userEmail": "otus@gmail.com",
-          "description": "Falta de material para completar os exames",
-          "date": "2019-05-14T12:36:23.631Z"
-        }
-      ]
+      "aliquotHistory": [{
+        "objectType": "AliquotEvent",
+        "type": "CONVERTED_STORAGE",
+        "userEmail": "otus@gmail.com",
+        "description": "Falta de material para completar os exames",
+        "date": "2019-05-14T12:36:23.631Z"
+      }]
     }],
     "order": 1,
     "tubeCollectionData": {
@@ -29244,103 +29215,103 @@ Test.utils.data.jsonObject = {
 //current_status_date, creation_date and last_finalization_date, the modeling will disregard
 //in array, first object is invalid.
 Test.utils.data.jsonObjectImport = [{
-  id: '',
-  acronym: 'PASC',
-  participant: '1234567',
-  user: {
-    name: 'otus',
-    surname: 'solutions',
-    phone: 654897566,
-    email: 'user@gmail.com'
-  },
-  status: 'FINALIZED',
-  mode: 'PAPER',
-  activityConfiguration: {
-    category: {
-      "name": "C0",
-      "objectType": "ActivityCategory",
-      "label": "Normal",
-      "disabled": false,
-      "isDefault": true
+    id: '',
+    acronym: 'PASC',
+    participant: '1234567',
+    user: {
+      name: 'otus',
+      surname: 'solutions',
+      phone: 654897566,
+      email: 'user@gmail.com'
+    },
+    status: 'FINALIZED',
+    mode: 'PAPER',
+    activityConfiguration: {
+      category: {
+        "name": "C0",
+        "objectType": "ActivityCategory",
+        "label": "Normal",
+        "disabled": false,
+        "isDefault": true
+      }
+    },
+    answers: {
+      "PASC3brs": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC1": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC3mets": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC1m": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC3a": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC4a": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC5a": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC3b": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC4b": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC5b": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC3c": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC4c": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASC5c": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      },
+      "PASCalt": {
+        value: "answer",
+        metadata: "",
+        comment: ""
+      }
+    },
+    offlineData: {
+      checker: 'other@email.com',
+      realizationDate: '2017-04-17T12:06:34.660Z'
     }
   },
-  answers: {
-    "PASC3brs": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC1": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC3mets": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC1m": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC3a": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC4a": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC5a": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC3b": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC4b": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC5b": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC3c": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC4c": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASC5c": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    },
-    "PASCalt": {
-      value: "answer",
-      metadata: "",
-      comment: ""
-    }
-  },
-  offlineData: {
-    checker: 'other@email.com',
-    realizationDate: '2017-04-17T12:06:34.660Z'
-  }
-},
   {
     id: '',
     acronym: 'PASC',
@@ -29352,7 +29323,7 @@ Test.utils.data.jsonObjectImport = [{
       email: 'user@gmail.com'
     },
     status: 'SAVED', //current_status
-    mode: 'ONLINE',//mode
+    mode: 'ONLINE', //mode
     activityConfiguration: {
       category: { //get category data
         "name": "C0",
@@ -29436,9 +29407,10 @@ Test.utils.data.jsonObjectImport = [{
     },
     offlineData: { //If the activity is online, the modeling will disregard
       checker: 'other@email.com', //paper_interviewer
-      realizationDate: '2017-04-17T12:06:34.660Z'//paper_realization_date
+      realizationDate: '2017-04-17T12:06:34.660Z' //paper_realization_date
     }
-  }];
+  }
+];
 
 Test.utils.data.activityPASC = {
   "_id": "58ee02de28110d317f1ad09b",
@@ -29470,10 +29442,8 @@ Test.utils.data.activityPASC = {
         "creationDatetime": "2017-02-21T11:33:30.223Z",
         "otusStudioVersion": ""
       },
-      "itemContainer": [
-        {
-          "options": [
-            {
+      "itemContainer": [{
+          "options": [{
               "extents": "StudioObject",
               "objectType": "AnswerOption",
               "dataType": "Integer",
@@ -29560,8 +29530,7 @@ Test.utils.data.activityPASC = {
           "metadata": {
             "extents": "StudioObject",
             "objectType": "MetadataGroup",
-            "options": [
-              {
+            "options": [{
                 "extends": "StudioObject",
                 "objectType": "MetadataAnswer",
                 "dataType": "Integer",
@@ -29754,8 +29723,7 @@ Test.utils.data.activityPASC = {
           "metadata": {
             "extents": "StudioObject",
             "objectType": "MetadataGroup",
-            "options": [
-              {
+            "options": [{
                 "extends": "StudioObject",
                 "objectType": "MetadataAnswer",
                 "dataType": "Integer",
@@ -29935,8 +29903,7 @@ Test.utils.data.activityPASC = {
           "dataType": "Decimal"
         },
         {
-          "options": [
-            {
+          "options": [{
               "extents": "StudioObject",
               "objectType": "AnswerOption",
               "dataType": "Integer",
@@ -30023,8 +29990,7 @@ Test.utils.data.activityPASC = {
           "metadata": {
             "extents": "StudioObject",
             "objectType": "MetadataGroup",
-            "options": [
-              {
+            "options": [{
                 "extends": "StudioObject",
                 "objectType": "MetadataAnswer",
                 "dataType": "Integer",
@@ -30168,8 +30134,7 @@ Test.utils.data.activityPASC = {
           "dataType": "Integer"
         },
         {
-          "options": [
-            {
+          "options": [{
               "extents": "StudioObject",
               "objectType": "AnswerOption",
               "dataType": "Integer",
@@ -30316,8 +30281,7 @@ Test.utils.data.activityPASC = {
           "metadata": {
             "extents": "StudioObject",
             "objectType": "MetadataGroup",
-            "options": [
-              {
+            "options": [{
                 "extends": "StudioObject",
                 "objectType": "MetadataAnswer",
                 "dataType": "Integer",
@@ -31361,8 +31325,7 @@ Test.utils.data.activityPASC = {
           "dataType": "Integer"
         },
         {
-          "options": [
-            {
+          "options": [{
               "extents": "StudioObject",
               "objectType": "AnswerOption",
               "dataType": "Integer",
@@ -31449,8 +31412,7 @@ Test.utils.data.activityPASC = {
           "metadata": {
             "extents": "StudioObject",
             "objectType": "MetadataGroup",
-            "options": [
-              {
+            "options": [{
                 "extends": "StudioObject",
                 "objectType": "MetadataAnswer",
                 "dataType": "Integer",
@@ -31594,8 +31556,7 @@ Test.utils.data.activityPASC = {
           "dataType": "Integer"
         },
         {
-          "options": [
-            {
+          "options": [{
               "extents": "StudioObject",
               "objectType": "CheckboxAnswerOption",
               "optionID": "PASC16a",
@@ -31882,8 +31843,7 @@ Test.utils.data.activityPASC = {
           "metadata": {
             "extents": "StudioObject",
             "objectType": "MetadataGroup",
-            "options": [
-              {
+            "options": [{
                 "extends": "StudioObject",
                 "objectType": "MetadataAnswer",
                 "dataType": "Integer",
@@ -32075,25 +32035,22 @@ Test.utils.data.activityPASC = {
           "dataType": "String"
         }
       ],
-      "navigationList": [
-        {
+      "navigationList": [{
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "BEGIN NODE",
           "index": 0,
           "inNavigations": [],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "BEGIN NODE",
-              "destination": "PASC1",
-              "name": "BEGIN NODE_PASC1",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "BEGIN NODE",
+            "destination": "PASC1",
+            "name": "BEGIN NODE_PASC1",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
@@ -32114,92 +32071,76 @@ Test.utils.data.activityPASC = {
           "objectType": "Navigation",
           "origin": "PASC1",
           "index": 2,
-          "inNavigations": [
-            {
-              "origin": "BEGIN NODE"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "BEGIN NODE"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC1",
-              "destination": "PASC2",
-              "name": "PASC1_PASC2",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC1",
+            "destination": "PASC2",
+            "name": "PASC1_PASC2",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC2",
           "index": 3,
-          "inNavigations": [
-            {
-              "origin": "PASC1"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC1"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC2",
-              "destination": "PASC3",
-              "name": "PASC2_PASC3",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC2",
+            "destination": "PASC3",
+            "name": "PASC2_PASC3",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC3",
           "index": 4,
-          "inNavigations": [
-            {
-              "origin": "PASC2"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC2"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC3",
-              "destination": "PASC4",
-              "name": "PASC3_PASC4",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC3",
+            "destination": "PASC4",
+            "name": "PASC3_PASC4",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC4",
           "index": 5,
-          "inNavigations": [
-            {
-              "origin": "PASC3"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC3"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC4",
-              "destination": "PASC6",
-              "name": "PASC4_PASC6",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC4",
+            "destination": "PASC6",
+            "name": "PASC4_PASC6",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
@@ -32213,215 +32154,178 @@ Test.utils.data.activityPASC = {
             }
           ],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC6",
-              "destination": "PASC7",
-              "name": "PASC6_PASC7",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC6",
+            "destination": "PASC7",
+            "name": "PASC6_PASC7",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC7",
           "index": 8,
-          "inNavigations": [
-            {
-              "origin": "PASC6"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC6"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC7",
-              "destination": "PASC8",
-              "name": "PASC7_PASC8",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC7",
+            "destination": "PASC8",
+            "name": "PASC7_PASC8",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC8",
           "index": 9,
-          "inNavigations": [
-            {
-              "origin": "PASC7"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC7"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC8",
-              "destination": "PASC9",
-              "name": "PASC8_PASC9",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC8",
+            "destination": "PASC9",
+            "name": "PASC8_PASC9",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC9",
           "index": 10,
-          "inNavigations": [
-            {
-              "origin": "PASC8"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC8"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC9",
-              "destination": "PASC10",
-              "name": "PASC9_PASC10",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC9",
+            "destination": "PASC10",
+            "name": "PASC9_PASC10",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC10",
           "index": 11,
-          "inNavigations": [
-            {
-              "origin": "PASC9"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC9"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC10",
-              "destination": "PASC11",
-              "name": "PASC10_PASC11",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC10",
+            "destination": "PASC11",
+            "name": "PASC10_PASC11",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC11",
           "index": 12,
-          "inNavigations": [
-            {
-              "origin": "PASC10"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC10"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC11",
-              "destination": "PASC12",
-              "name": "PASC11_PASC12",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC11",
+            "destination": "PASC12",
+            "name": "PASC11_PASC12",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC12",
           "index": 13,
-          "inNavigations": [
-            {
-              "origin": "PASC11"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC11"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC12",
-              "destination": "PASC13",
-              "name": "PASC12_PASC13",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC12",
+            "destination": "PASC13",
+            "name": "PASC12_PASC13",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC13",
           "index": 14,
-          "inNavigations": [
-            {
-              "origin": "PASC12"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC12"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC13",
-              "destination": "PASC14",
-              "name": "PASC13_PASC14",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC13",
+            "destination": "PASC14",
+            "name": "PASC13_PASC14",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC14",
           "index": 15,
-          "inNavigations": [
-            {
-              "origin": "PASC13"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC13"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC14",
-              "destination": "PASC15",
-              "name": "PASC14_PASC15",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC14",
+            "destination": "PASC15",
+            "name": "PASC14_PASC15",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC15",
           "index": 16,
-          "inNavigations": [
-            {
-              "origin": "PASC14"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC14"
+          }],
           "isDefault": false,
-          "routes": [
-            {
+          "routes": [{
               "extents": "SurveyTemplateObject",
               "objectType": "Route",
               "origin": "PASC15",
@@ -32437,23 +32341,19 @@ Test.utils.data.activityPASC = {
               "destination": "PASC16",
               "name": "PASC15_PASC16",
               "isDefault": false,
-              "conditions": [
-                {
-                  "extents": "StudioObject",
-                  "objectType": "RouteCondition",
-                  "name": "ROUTE_CONDITION_0",
-                  "rules": [
-                    {
-                      "extents": "SurveyTemplateObject",
-                      "objectType": "Rule",
-                      "when": "PASC15",
-                      "operator": "equal",
-                      "answer": "1",
-                      "isMetadata": false
-                    }
-                  ]
-                }
-              ]
+              "conditions": [{
+                "extents": "StudioObject",
+                "objectType": "RouteCondition",
+                "name": "ROUTE_CONDITION_0",
+                "rules": [{
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Rule",
+                  "when": "PASC15",
+                  "operator": "equal",
+                  "answer": "1",
+                  "isMetadata": false
+                }]
+              }]
             }
           ]
         },
@@ -32462,14 +32362,11 @@ Test.utils.data.activityPASC = {
           "objectType": "Navigation",
           "origin": "PASC16",
           "index": 17,
-          "inNavigations": [
-            {
-              "origin": "PASC15"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC15"
+          }],
           "isDefault": false,
-          "routes": [
-            {
+          "routes": [{
               "extents": "SurveyTemplateObject",
               "objectType": "Route",
               "origin": "PASC16",
@@ -32485,23 +32382,19 @@ Test.utils.data.activityPASC = {
               "destination": "PASC17",
               "name": "PASC16_PASC17",
               "isDefault": false,
-              "conditions": [
-                {
-                  "extents": "StudioObject",
-                  "objectType": "RouteCondition",
-                  "name": "ROUTE_CONDITION_0",
-                  "rules": [
-                    {
-                      "extents": "SurveyTemplateObject",
-                      "objectType": "Rule",
-                      "when": "PASC16",
-                      "operator": "equal",
-                      "answer": "PASCalt7",
-                      "isMetadata": false
-                    }
-                  ]
-                }
-              ]
+              "conditions": [{
+                "extents": "StudioObject",
+                "objectType": "RouteCondition",
+                "name": "ROUTE_CONDITION_0",
+                "rules": [{
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Rule",
+                  "when": "PASC16",
+                  "operator": "equal",
+                  "answer": "PASCalt7",
+                  "isMetadata": false
+                }]
+              }]
             }
           ]
         },
@@ -32510,31 +32403,26 @@ Test.utils.data.activityPASC = {
           "objectType": "Navigation",
           "origin": "PASC17",
           "index": 18,
-          "inNavigations": [
-            {
-              "origin": "PASC16"
-            }
-          ],
+          "inNavigations": [{
+            "origin": "PASC16"
+          }],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC17",
-              "destination": "PASC18",
-              "name": "PASC17_PASC18",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC17",
+            "destination": "PASC18",
+            "name": "PASC17_PASC18",
+            "isDefault": true,
+            "conditions": []
+          }]
         },
         {
           "extents": "SurveyTemplateObject",
           "objectType": "Navigation",
           "origin": "PASC18",
           "index": 19,
-          "inNavigations": [
-            {
+          "inNavigations": [{
               "origin": "PASC17"
             },
             {
@@ -32545,17 +32433,15 @@ Test.utils.data.activityPASC = {
             }
           ],
           "isDefault": false,
-          "routes": [
-            {
-              "extents": "SurveyTemplateObject",
-              "objectType": "Route",
-              "origin": "PASC18",
-              "destination": "END NODE",
-              "name": "PASC18_END NODE",
-              "isDefault": true,
-              "conditions": []
-            }
-          ]
+          "routes": [{
+            "extents": "SurveyTemplateObject",
+            "objectType": "Route",
+            "origin": "PASC18",
+            "destination": "END NODE",
+            "name": "PASC18_END NODE",
+            "isDefault": true,
+            "conditions": []
+          }]
         }
       ]
     },
@@ -32583,20 +32469,17 @@ Test.utils.data.activityPASC = {
       "phone": null
     }
   },
-  "interviews": [
-    {
-      "objectType": "Interview",
-      "date": "2017-04-12T11:16:59.154Z",
-      "interviewer": {
-        "objectType": "Interviewer",
-        "name": "Thiane",
-        "email": "thianeristowcardinal@gmail.com"
-      }
+  "interviews": [{
+    "objectType": "Interview",
+    "date": "2017-04-12T11:16:59.154Z",
+    "interviewer": {
+      "objectType": "Interviewer",
+      "name": "Thiane",
+      "email": "thianeristowcardinal@gmail.com"
     }
-  ],
+  }],
   "fillContainer": {
-    "fillingList": [
-      {
+    "fillingList": [{
         "objectType": "QuestionFill",
         "questionID": "PASC1",
         "answer": {
@@ -32808,8 +32691,7 @@ Test.utils.data.activityPASC = {
       }
     ]
   },
-  "statusHistory": [
-    {
+  "statusHistory": [{
       "objectType": "ActivityStatus",
       "name": "CREATED",
       "date": "2017-04-12T10:35:11.971Z",
@@ -32857,8 +32739,7 @@ Test.utils.data.activityPASC = {
   "isDiscarded": false,
   "navigationTracker": {
     "objectType": "NavigationTracker",
-    "items": [
-      {
+    "items": [{
         "objectType": "NavigationTrackingItem",
         "id": "PASC1",
         "state": "ANSWERED",
@@ -33712,8 +33593,7 @@ Test.utils.data.surveyFormDSOC = {
       "creationDatetime": "2017-04-13T13:58:37.774Z",
       "otusStudioVersion": ""
     },
-    "itemContainer": [
-      {
+    "itemContainer": [{
         "unit": {
           "ptBR": {
             "extends": "StudioObject",
@@ -33840,8 +33720,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -34020,8 +33899,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -34214,8 +34092,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -34435,8 +34312,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -34607,8 +34483,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -34695,8 +34570,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -34866,8 +34740,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -35037,8 +34910,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -35208,8 +35080,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -35379,8 +35250,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -35550,8 +35420,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -35730,8 +35599,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -35875,8 +35743,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "LocalTime"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -35963,8 +35830,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -36157,8 +36023,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -36329,8 +36194,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -36417,8 +36281,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -36562,8 +36425,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -36650,8 +36512,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -36821,8 +36682,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -37015,8 +36875,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -37236,8 +37095,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -37457,8 +37315,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -37629,8 +37486,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -37717,8 +37573,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -37888,8 +37743,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -38059,8 +37913,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -38230,8 +38083,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -38401,8 +38253,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -38572,8 +38423,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -38752,8 +38602,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -38897,8 +38746,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "LocalTime"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -38985,8 +38833,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -39179,8 +39026,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -39351,8 +39197,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -39439,8 +39284,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -39584,8 +39428,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -39672,8 +39515,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -39843,8 +39685,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -40037,8 +39878,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -40258,8 +40098,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -40479,8 +40318,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -40651,8 +40489,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -40739,8 +40576,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -40910,8 +40746,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -41081,8 +40916,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -41252,8 +41086,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -41423,8 +41256,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -41594,8 +41426,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -41774,8 +41605,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -41919,8 +41749,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "LocalTime"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -42007,8 +41836,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -42201,8 +42029,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -42373,8 +42200,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -42461,8 +42287,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -42606,8 +42431,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -42694,8 +42518,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -42865,8 +42688,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -43059,8 +42881,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -43280,8 +43101,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -43501,8 +43321,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -43673,8 +43492,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -43761,8 +43579,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -43932,8 +43749,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -44103,8 +43919,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -44274,8 +44089,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -44445,8 +44259,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -44616,8 +44429,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -44796,8 +44608,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -44941,8 +44752,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "LocalTime"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -45029,8 +44839,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -45223,8 +45032,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -45395,8 +45203,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -45483,8 +45290,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -45628,8 +45434,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -45716,8 +45521,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -45887,8 +45691,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -46081,8 +45884,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -46302,8 +46104,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -46523,8 +46324,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -46695,8 +46495,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -46783,8 +46582,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -46954,8 +46752,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -47125,8 +46922,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -47296,8 +47092,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -47467,8 +47262,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -47638,8 +47432,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -47818,8 +47611,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -47963,8 +47755,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "LocalTime"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -48051,8 +47842,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -48245,8 +48035,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -48417,8 +48206,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -48505,8 +48293,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -48650,8 +48437,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -48738,8 +48524,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -48909,8 +48694,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -49103,8 +48887,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -49324,8 +49107,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -49545,8 +49327,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -49717,8 +49498,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -49805,8 +49585,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -49976,8 +49755,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -50147,8 +49925,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -50318,8 +50095,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -50489,8 +50265,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -50660,8 +50435,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -50840,8 +50614,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -50985,8 +50758,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "LocalTime"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -51073,8 +50845,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -51267,8 +51038,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -51439,8 +51209,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -51527,8 +51296,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -51672,8 +51440,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -51760,8 +51527,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -51931,8 +51697,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -52125,8 +51890,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -52346,8 +52110,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -52567,8 +52330,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -52739,8 +52501,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -52827,8 +52588,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -52998,8 +52758,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -53169,8 +52928,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -53340,8 +53098,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -53511,8 +53268,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -53682,8 +53438,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -53862,8 +53617,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -54007,8 +53761,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "LocalTime"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -54095,8 +53848,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -54289,8 +54041,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -54461,8 +54212,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -54549,8 +54299,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -54694,8 +54443,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -54782,8 +54530,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -54976,8 +54723,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -55148,8 +54894,7 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "Integer"
       },
       {
-        "options": [
-          {
+        "options": [{
             "extents": "StudioObject",
             "objectType": "AnswerOption",
             "dataType": "Integer",
@@ -55236,8 +54981,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -55407,8 +55151,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -55578,8 +55321,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -55749,8 +55491,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -55920,8 +55661,7 @@ Test.utils.data.surveyFormDSOC = {
         "metadata": {
           "extents": "StudioObject",
           "objectType": "MetadataGroup",
-          "options": [
-            {
+          "options": [{
               "extends": "StudioObject",
               "objectType": "MetadataAnswer",
               "dataType": "Integer",
@@ -56095,25 +55835,22 @@ Test.utils.data.surveyFormDSOC = {
         "dataType": "String"
       }
     ],
-    "navigationList": [
-      {
+    "navigationList": [{
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "BEGIN NODE",
         "index": 0,
         "inNavigations": [],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "BEGIN NODE",
-            "destination": "DSOC1",
-            "name": "BEGIN NODE_DSOC1",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "BEGIN NODE",
+          "destination": "DSOC1",
+          "name": "BEGIN NODE_DSOC1",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
@@ -56135,14 +55872,11 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC1",
         "index": 2,
-        "inNavigations": [
-          {
-            "origin": "BEGIN NODE"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "BEGIN NODE"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC1",
@@ -56158,23 +55892,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC1_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "0",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "0",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -56183,106 +55913,87 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC2",
         "index": 3,
-        "inNavigations": [
-          {
-            "origin": "DSOC1"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC1"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC2",
-            "destination": "DSOC3",
-            "name": "DSOC2_DSOC3",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC2",
+          "destination": "DSOC3",
+          "name": "DSOC2_DSOC3",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC3",
         "index": 4,
-        "inNavigations": [
-          {
-            "origin": "DSOC2"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC2"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC3",
-            "destination": "DSOC4",
-            "name": "DSOC3_DSOC4",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC3",
+          "destination": "DSOC4",
+          "name": "DSOC3_DSOC4",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC4",
         "index": 5,
-        "inNavigations": [
-          {
-            "origin": "DSOC3"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC3"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC4",
-            "destination": "DSOC5",
-            "name": "DSOC4_DSOC5",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC4",
+          "destination": "DSOC5",
+          "name": "DSOC4_DSOC5",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC5",
         "index": 6,
-        "inNavigations": [
-          {
-            "origin": "DSOC4"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC4"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC5",
-            "destination": "DSOC6",
-            "name": "DSOC5_DSOC6",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC5",
+          "destination": "DSOC6",
+          "name": "DSOC5_DSOC6",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC6",
         "index": 7,
-        "inNavigations": [
-          {
-            "origin": "DSOC5"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC5"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC6",
@@ -56298,23 +56009,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC7",
             "name": "DSOC6_DSOC7",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC6",
-                    "operator": "equal",
-                    "answer": "2",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC6",
+                "operator": "equal",
+                "answer": "2",
+                "isMetadata": false
+              }]
+            }]
           },
           {
             "extents": "SurveyTemplateObject",
@@ -56323,23 +56030,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC6_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "1",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "1",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -56348,83 +56051,68 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC7",
         "index": 8,
-        "inNavigations": [
-          {
-            "origin": "DSOC6"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC6"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC7",
-            "destination": "DSOC8",
-            "name": "DSOC7_DSOC8",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC7",
+          "destination": "DSOC8",
+          "name": "DSOC7_DSOC8",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC8",
         "index": 9,
-        "inNavigations": [
-          {
-            "origin": "DSOC7"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC7"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC8",
-            "destination": "DSOC9",
-            "name": "DSOC8_DSOC9",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC8",
+          "destination": "DSOC9",
+          "name": "DSOC8_DSOC9",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC9",
         "index": 10,
-        "inNavigations": [
-          {
-            "origin": "DSOC8"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC8"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC9",
-            "destination": "DSOC10",
-            "name": "DSOC9_DSOC10",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC9",
+          "destination": "DSOC10",
+          "name": "DSOC9_DSOC10",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC10",
         "index": 11,
-        "inNavigations": [
-          {
-            "origin": "DSOC9"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC9"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC10",
@@ -56440,23 +56128,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC10_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "1",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "1",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -56465,8 +56149,7 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC11",
         "index": 12,
-        "inNavigations": [
-          {
+        "inNavigations": [{
             "origin": "DSOC10"
           },
           {
@@ -56474,238 +56157,197 @@ Test.utils.data.surveyFormDSOC = {
           }
         ],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC11",
-            "destination": "DSOC12",
-            "name": "DSOC11_DSOC12",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC11",
+          "destination": "DSOC12",
+          "name": "DSOC11_DSOC12",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC12",
         "index": 13,
-        "inNavigations": [
-          {
-            "origin": "DSOC11"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC11"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC12",
-            "destination": "DSOC13",
-            "name": "DSOC12_DSOC13",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC12",
+          "destination": "DSOC13",
+          "name": "DSOC12_DSOC13",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC13",
         "index": 14,
-        "inNavigations": [
-          {
-            "origin": "DSOC12"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC12"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC13",
-            "destination": "DSOC14",
-            "name": "DSOC13_DSOC14",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC13",
+          "destination": "DSOC14",
+          "name": "DSOC13_DSOC14",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC14",
         "index": 15,
-        "inNavigations": [
-          {
-            "origin": "DSOC13"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC13"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC14",
-            "destination": "DSOC15",
-            "name": "DSOC14_DSOC15",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC14",
+          "destination": "DSOC15",
+          "name": "DSOC14_DSOC15",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC15",
         "index": 16,
-        "inNavigations": [
-          {
-            "origin": "DSOC14"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC14"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC15",
-            "destination": "DSOC16",
-            "name": "DSOC15_DSOC16",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC15",
+          "destination": "DSOC16",
+          "name": "DSOC15_DSOC16",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC16",
         "index": 17,
-        "inNavigations": [
-          {
-            "origin": "DSOC15"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC15"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC16",
-            "destination": "DSOC17",
-            "name": "DSOC16_DSOC17",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC16",
+          "destination": "DSOC17",
+          "name": "DSOC16_DSOC17",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC17",
         "index": 18,
-        "inNavigations": [
-          {
-            "origin": "DSOC16"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC16"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC17",
-            "destination": "DSOC18",
-            "name": "DSOC17_DSOC18",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC17",
+          "destination": "DSOC18",
+          "name": "DSOC17_DSOC18",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC18",
         "index": 19,
-        "inNavigations": [
-          {
-            "origin": "DSOC17"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC17"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC18",
-            "destination": "DSOC19",
-            "name": "DSOC18_DSOC19",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC18",
+          "destination": "DSOC19",
+          "name": "DSOC18_DSOC19",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC19",
         "index": 20,
-        "inNavigations": [
-          {
-            "origin": "DSOC18"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC18"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC19",
-            "destination": "DSOC20",
-            "name": "DSOC19_DSOC20",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC19",
+          "destination": "DSOC20",
+          "name": "DSOC19_DSOC20",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC20",
         "index": 21,
-        "inNavigations": [
-          {
-            "origin": "DSOC19"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC19"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC20",
-            "destination": "DSOC21",
-            "name": "DSOC20_DSOC21",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC20",
+          "destination": "DSOC21",
+          "name": "DSOC20_DSOC21",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC21",
         "index": 22,
-        "inNavigations": [
-          {
-            "origin": "DSOC20"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC20"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC21",
@@ -56721,23 +56363,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC22",
             "name": "DSOC21_DSOC22",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC21",
-                    "operator": "equal",
-                    "answer": "2",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC21",
+                "operator": "equal",
+                "answer": "2",
+                "isMetadata": false
+              }]
+            }]
           },
           {
             "extents": "SurveyTemplateObject",
@@ -56746,23 +56384,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC21_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "2",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "2",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -56771,83 +56405,68 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC22",
         "index": 23,
-        "inNavigations": [
-          {
-            "origin": "DSOC21"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC21"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC22",
-            "destination": "DSOC23",
-            "name": "DSOC22_DSOC23",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC22",
+          "destination": "DSOC23",
+          "name": "DSOC22_DSOC23",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC23",
         "index": 24,
-        "inNavigations": [
-          {
-            "origin": "DSOC22"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC22"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC23",
-            "destination": "DSOC24",
-            "name": "DSOC23_DSOC24",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC23",
+          "destination": "DSOC24",
+          "name": "DSOC23_DSOC24",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC24",
         "index": 25,
-        "inNavigations": [
-          {
-            "origin": "DSOC23"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC23"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC24",
-            "destination": "DSOC25",
-            "name": "DSOC24_DSOC25",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC24",
+          "destination": "DSOC25",
+          "name": "DSOC24_DSOC25",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC25",
         "index": 26,
-        "inNavigations": [
-          {
-            "origin": "DSOC24"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC24"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC25",
@@ -56863,23 +56482,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC25_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "2",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "2",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -56888,8 +56503,7 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC26",
         "index": 27,
-        "inNavigations": [
-          {
+        "inNavigations": [{
             "origin": "DSOC25"
           },
           {
@@ -56897,238 +56511,197 @@ Test.utils.data.surveyFormDSOC = {
           }
         ],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC26",
-            "destination": "DSOC27",
-            "name": "DSOC26_DSOC27",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC26",
+          "destination": "DSOC27",
+          "name": "DSOC26_DSOC27",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC27",
         "index": 28,
-        "inNavigations": [
-          {
-            "origin": "DSOC26"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC26"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC27",
-            "destination": "DSOC28",
-            "name": "DSOC27_DSOC28",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC27",
+          "destination": "DSOC28",
+          "name": "DSOC27_DSOC28",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC28",
         "index": 29,
-        "inNavigations": [
-          {
-            "origin": "DSOC27"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC27"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC28",
-            "destination": "DSOC29",
-            "name": "DSOC28_DSOC29",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC28",
+          "destination": "DSOC29",
+          "name": "DSOC28_DSOC29",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC29",
         "index": 30,
-        "inNavigations": [
-          {
-            "origin": "DSOC28"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC28"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC29",
-            "destination": "DSOC30",
-            "name": "DSOC29_DSOC30",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC29",
+          "destination": "DSOC30",
+          "name": "DSOC29_DSOC30",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC30",
         "index": 31,
-        "inNavigations": [
-          {
-            "origin": "DSOC29"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC29"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC30",
-            "destination": "DSOC31",
-            "name": "DSOC30_DSOC31",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC30",
+          "destination": "DSOC31",
+          "name": "DSOC30_DSOC31",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC31",
         "index": 32,
-        "inNavigations": [
-          {
-            "origin": "DSOC30"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC30"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC31",
-            "destination": "DSOC32",
-            "name": "DSOC31_DSOC32",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC31",
+          "destination": "DSOC32",
+          "name": "DSOC31_DSOC32",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC32",
         "index": 33,
-        "inNavigations": [
-          {
-            "origin": "DSOC31"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC31"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC32",
-            "destination": "DSOC33",
-            "name": "DSOC32_DSOC33",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC32",
+          "destination": "DSOC33",
+          "name": "DSOC32_DSOC33",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC33",
         "index": 34,
-        "inNavigations": [
-          {
-            "origin": "DSOC32"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC32"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC33",
-            "destination": "DSOC34",
-            "name": "DSOC33_DSOC34",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC33",
+          "destination": "DSOC34",
+          "name": "DSOC33_DSOC34",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC34",
         "index": 35,
-        "inNavigations": [
-          {
-            "origin": "DSOC33"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC33"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC34",
-            "destination": "DSOC35",
-            "name": "DSOC34_DSOC35",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC34",
+          "destination": "DSOC35",
+          "name": "DSOC34_DSOC35",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC35",
         "index": 36,
-        "inNavigations": [
-          {
-            "origin": "DSOC34"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC34"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC35",
-            "destination": "DSOC36",
-            "name": "DSOC35_DSOC36",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC35",
+          "destination": "DSOC36",
+          "name": "DSOC35_DSOC36",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC36",
         "index": 37,
-        "inNavigations": [
-          {
-            "origin": "DSOC35"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC35"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC36",
@@ -57144,23 +56717,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC37",
             "name": "DSOC36_DSOC37",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC36",
-                    "operator": "equal",
-                    "answer": "2",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC36",
+                "operator": "equal",
+                "answer": "2",
+                "isMetadata": false
+              }]
+            }]
           },
           {
             "extents": "SurveyTemplateObject",
@@ -57169,23 +56738,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC36_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "3",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "3",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -57194,83 +56759,68 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC37",
         "index": 38,
-        "inNavigations": [
-          {
-            "origin": "DSOC36"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC36"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC37",
-            "destination": "DSOC38",
-            "name": "DSOC37_DSOC38",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC37",
+          "destination": "DSOC38",
+          "name": "DSOC37_DSOC38",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC38",
         "index": 39,
-        "inNavigations": [
-          {
-            "origin": "DSOC37"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC37"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC38",
-            "destination": "DSOC39",
-            "name": "DSOC38_DSOC39",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC38",
+          "destination": "DSOC39",
+          "name": "DSOC38_DSOC39",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC39",
         "index": 40,
-        "inNavigations": [
-          {
-            "origin": "DSOC38"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC38"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC39",
-            "destination": "DSOC40",
-            "name": "DSOC39_DSOC40",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC39",
+          "destination": "DSOC40",
+          "name": "DSOC39_DSOC40",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC40",
         "index": 41,
-        "inNavigations": [
-          {
-            "origin": "DSOC39"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC39"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC40",
@@ -57286,23 +56836,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC40_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "3",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "3",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -57311,8 +56857,7 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC41",
         "index": 42,
-        "inNavigations": [
-          {
+        "inNavigations": [{
             "origin": "DSOC40"
           },
           {
@@ -57320,238 +56865,197 @@ Test.utils.data.surveyFormDSOC = {
           }
         ],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC41",
-            "destination": "DSOC42",
-            "name": "DSOC41_DSOC42",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC41",
+          "destination": "DSOC42",
+          "name": "DSOC41_DSOC42",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC42",
         "index": 43,
-        "inNavigations": [
-          {
-            "origin": "DSOC41"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC41"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC42",
-            "destination": "DSOC43",
-            "name": "DSOC42_DSOC43",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC42",
+          "destination": "DSOC43",
+          "name": "DSOC42_DSOC43",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC43",
         "index": 44,
-        "inNavigations": [
-          {
-            "origin": "DSOC42"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC42"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC43",
-            "destination": "DSOC44",
-            "name": "DSOC43_DSOC44",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC43",
+          "destination": "DSOC44",
+          "name": "DSOC43_DSOC44",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC44",
         "index": 45,
-        "inNavigations": [
-          {
-            "origin": "DSOC43"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC43"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC44",
-            "destination": "DSOC45",
-            "name": "DSOC44_DSOC45",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC44",
+          "destination": "DSOC45",
+          "name": "DSOC44_DSOC45",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC45",
         "index": 46,
-        "inNavigations": [
-          {
-            "origin": "DSOC44"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC44"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC45",
-            "destination": "DSOC46",
-            "name": "DSOC45_DSOC46",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC45",
+          "destination": "DSOC46",
+          "name": "DSOC45_DSOC46",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC46",
         "index": 47,
-        "inNavigations": [
-          {
-            "origin": "DSOC45"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC45"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC46",
-            "destination": "DSOC47",
-            "name": "DSOC46_DSOC47",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC46",
+          "destination": "DSOC47",
+          "name": "DSOC46_DSOC47",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC47",
         "index": 48,
-        "inNavigations": [
-          {
-            "origin": "DSOC46"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC46"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC47",
-            "destination": "DSOC48",
-            "name": "DSOC47_DSOC48",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC47",
+          "destination": "DSOC48",
+          "name": "DSOC47_DSOC48",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC48",
         "index": 49,
-        "inNavigations": [
-          {
-            "origin": "DSOC47"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC47"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC48",
-            "destination": "DSOC49",
-            "name": "DSOC48_DSOC49",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC48",
+          "destination": "DSOC49",
+          "name": "DSOC48_DSOC49",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC49",
         "index": 50,
-        "inNavigations": [
-          {
-            "origin": "DSOC48"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC48"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC49",
-            "destination": "DSOC50",
-            "name": "DSOC49_DSOC50",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC49",
+          "destination": "DSOC50",
+          "name": "DSOC49_DSOC50",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC50",
         "index": 51,
-        "inNavigations": [
-          {
-            "origin": "DSOC49"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC49"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC50",
-            "destination": "DSOC51",
-            "name": "DSOC50_DSOC51",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC50",
+          "destination": "DSOC51",
+          "name": "DSOC50_DSOC51",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC51",
         "index": 52,
-        "inNavigations": [
-          {
-            "origin": "DSOC50"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC50"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC51",
@@ -57567,23 +57071,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC52",
             "name": "DSOC51_DSOC52",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC51",
-                    "operator": "equal",
-                    "answer": "2",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC51",
+                "operator": "equal",
+                "answer": "2",
+                "isMetadata": false
+              }]
+            }]
           },
           {
             "extents": "SurveyTemplateObject",
@@ -57592,23 +57092,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC51_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "4",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "4",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -57617,83 +57113,68 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC52",
         "index": 53,
-        "inNavigations": [
-          {
-            "origin": "DSOC51"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC51"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC52",
-            "destination": "DSOC53",
-            "name": "DSOC52_DSOC53",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC52",
+          "destination": "DSOC53",
+          "name": "DSOC52_DSOC53",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC53",
         "index": 54,
-        "inNavigations": [
-          {
-            "origin": "DSOC52"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC52"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC53",
-            "destination": "DSOC54",
-            "name": "DSOC53_DSOC54",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC53",
+          "destination": "DSOC54",
+          "name": "DSOC53_DSOC54",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC54",
         "index": 55,
-        "inNavigations": [
-          {
-            "origin": "DSOC53"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC53"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC54",
-            "destination": "DSOC55",
-            "name": "DSOC54_DSOC55",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC54",
+          "destination": "DSOC55",
+          "name": "DSOC54_DSOC55",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC55",
         "index": 56,
-        "inNavigations": [
-          {
-            "origin": "DSOC54"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC54"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC55",
@@ -57709,23 +57190,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC55_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "4",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "4",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -57734,8 +57211,7 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC56",
         "index": 57,
-        "inNavigations": [
-          {
+        "inNavigations": [{
             "origin": "DSOC55"
           },
           {
@@ -57743,238 +57219,197 @@ Test.utils.data.surveyFormDSOC = {
           }
         ],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC56",
-            "destination": "DSOC57",
-            "name": "DSOC56_DSOC57",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC56",
+          "destination": "DSOC57",
+          "name": "DSOC56_DSOC57",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC57",
         "index": 58,
-        "inNavigations": [
-          {
-            "origin": "DSOC56"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC56"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC57",
-            "destination": "DSOC58",
-            "name": "DSOC57_DSOC58",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC57",
+          "destination": "DSOC58",
+          "name": "DSOC57_DSOC58",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC58",
         "index": 59,
-        "inNavigations": [
-          {
-            "origin": "DSOC57"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC57"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC58",
-            "destination": "DSOC59",
-            "name": "DSOC58_DSOC59",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC58",
+          "destination": "DSOC59",
+          "name": "DSOC58_DSOC59",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC59",
         "index": 60,
-        "inNavigations": [
-          {
-            "origin": "DSOC58"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC58"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC59",
-            "destination": "DSOC60",
-            "name": "DSOC59_DSOC60",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC59",
+          "destination": "DSOC60",
+          "name": "DSOC59_DSOC60",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC60",
         "index": 61,
-        "inNavigations": [
-          {
-            "origin": "DSOC59"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC59"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC60",
-            "destination": "DSOC61",
-            "name": "DSOC60_DSOC61",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC60",
+          "destination": "DSOC61",
+          "name": "DSOC60_DSOC61",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC61",
         "index": 62,
-        "inNavigations": [
-          {
-            "origin": "DSOC60"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC60"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC61",
-            "destination": "DSOC62",
-            "name": "DSOC61_DSOC62",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC61",
+          "destination": "DSOC62",
+          "name": "DSOC61_DSOC62",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC62",
         "index": 63,
-        "inNavigations": [
-          {
-            "origin": "DSOC61"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC61"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC62",
-            "destination": "DSOC63",
-            "name": "DSOC62_DSOC63",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC62",
+          "destination": "DSOC63",
+          "name": "DSOC62_DSOC63",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC63",
         "index": 64,
-        "inNavigations": [
-          {
-            "origin": "DSOC62"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC62"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC63",
-            "destination": "DSOC64",
-            "name": "DSOC63_DSOC64",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC63",
+          "destination": "DSOC64",
+          "name": "DSOC63_DSOC64",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC64",
         "index": 65,
-        "inNavigations": [
-          {
-            "origin": "DSOC63"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC63"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC64",
-            "destination": "DSOC65",
-            "name": "DSOC64_DSOC65",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC64",
+          "destination": "DSOC65",
+          "name": "DSOC64_DSOC65",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC65",
         "index": 66,
-        "inNavigations": [
-          {
-            "origin": "DSOC64"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC64"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC65",
-            "destination": "DSOC66",
-            "name": "DSOC65_DSOC66",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC65",
+          "destination": "DSOC66",
+          "name": "DSOC65_DSOC66",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC66",
         "index": 67,
-        "inNavigations": [
-          {
-            "origin": "DSOC65"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC65"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC66",
@@ -57990,23 +57425,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC67",
             "name": "DSOC66_DSOC67",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC66",
-                    "operator": "equal",
-                    "answer": "2",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC66",
+                "operator": "equal",
+                "answer": "2",
+                "isMetadata": false
+              }]
+            }]
           },
           {
             "extents": "SurveyTemplateObject",
@@ -58015,23 +57446,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC66_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "5",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "5",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -58040,83 +57467,68 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC67",
         "index": 68,
-        "inNavigations": [
-          {
-            "origin": "DSOC66"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC66"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC67",
-            "destination": "DSOC68",
-            "name": "DSOC67_DSOC68",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC67",
+          "destination": "DSOC68",
+          "name": "DSOC67_DSOC68",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC68",
         "index": 69,
-        "inNavigations": [
-          {
-            "origin": "DSOC67"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC67"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC68",
-            "destination": "DSOC69",
-            "name": "DSOC68_DSOC69",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC68",
+          "destination": "DSOC69",
+          "name": "DSOC68_DSOC69",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC69",
         "index": 70,
-        "inNavigations": [
-          {
-            "origin": "DSOC68"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC68"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC69",
-            "destination": "DSOC70",
-            "name": "DSOC69_DSOC70",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC69",
+          "destination": "DSOC70",
+          "name": "DSOC69_DSOC70",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC70",
         "index": 71,
-        "inNavigations": [
-          {
-            "origin": "DSOC69"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC69"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC70",
@@ -58132,23 +57544,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC70_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "5",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "5",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -58157,8 +57565,7 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC71",
         "index": 72,
-        "inNavigations": [
-          {
+        "inNavigations": [{
             "origin": "DSOC70"
           },
           {
@@ -58166,238 +57573,197 @@ Test.utils.data.surveyFormDSOC = {
           }
         ],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC71",
-            "destination": "DSOC72",
-            "name": "DSOC71_DSOC72",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC71",
+          "destination": "DSOC72",
+          "name": "DSOC71_DSOC72",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC72",
         "index": 73,
-        "inNavigations": [
-          {
-            "origin": "DSOC71"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC71"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC72",
-            "destination": "DSOC73",
-            "name": "DSOC72_DSOC73",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC72",
+          "destination": "DSOC73",
+          "name": "DSOC72_DSOC73",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC73",
         "index": 74,
-        "inNavigations": [
-          {
-            "origin": "DSOC72"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC72"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC73",
-            "destination": "DSOC74",
-            "name": "DSOC73_DSOC74",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC73",
+          "destination": "DSOC74",
+          "name": "DSOC73_DSOC74",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC74",
         "index": 75,
-        "inNavigations": [
-          {
-            "origin": "DSOC73"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC73"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC74",
-            "destination": "DSOC75",
-            "name": "DSOC74_DSOC75",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC74",
+          "destination": "DSOC75",
+          "name": "DSOC74_DSOC75",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC75",
         "index": 76,
-        "inNavigations": [
-          {
-            "origin": "DSOC74"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC74"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC75",
-            "destination": "DSOC76",
-            "name": "DSOC75_DSOC76",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC75",
+          "destination": "DSOC76",
+          "name": "DSOC75_DSOC76",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC76",
         "index": 77,
-        "inNavigations": [
-          {
-            "origin": "DSOC75"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC75"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC76",
-            "destination": "DSOC77",
-            "name": "DSOC76_DSOC77",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC76",
+          "destination": "DSOC77",
+          "name": "DSOC76_DSOC77",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC77",
         "index": 78,
-        "inNavigations": [
-          {
-            "origin": "DSOC76"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC76"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC77",
-            "destination": "DSOC78",
-            "name": "DSOC77_DSOC78",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC77",
+          "destination": "DSOC78",
+          "name": "DSOC77_DSOC78",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC78",
         "index": 79,
-        "inNavigations": [
-          {
-            "origin": "DSOC77"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC77"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC78",
-            "destination": "DSOC79",
-            "name": "DSOC78_DSOC79",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC78",
+          "destination": "DSOC79",
+          "name": "DSOC78_DSOC79",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC79",
         "index": 80,
-        "inNavigations": [
-          {
-            "origin": "DSOC78"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC78"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC79",
-            "destination": "DSOC80",
-            "name": "DSOC79_DSOC80",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC79",
+          "destination": "DSOC80",
+          "name": "DSOC79_DSOC80",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC80",
         "index": 81,
-        "inNavigations": [
-          {
-            "origin": "DSOC79"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC79"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC80",
-            "destination": "DSOC81",
-            "name": "DSOC80_DSOC81",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC80",
+          "destination": "DSOC81",
+          "name": "DSOC80_DSOC81",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC81",
         "index": 82,
-        "inNavigations": [
-          {
-            "origin": "DSOC80"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC80"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC81",
@@ -58413,23 +57779,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC82",
             "name": "DSOC81_DSOC82",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC81",
-                    "operator": "equal",
-                    "answer": "2",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC81",
+                "operator": "equal",
+                "answer": "2",
+                "isMetadata": false
+              }]
+            }]
           },
           {
             "extents": "SurveyTemplateObject",
@@ -58438,23 +57800,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC81_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "6",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "6",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -58463,83 +57821,68 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC82",
         "index": 83,
-        "inNavigations": [
-          {
-            "origin": "DSOC81"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC81"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC82",
-            "destination": "DSOC83",
-            "name": "DSOC82_DSOC83",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC82",
+          "destination": "DSOC83",
+          "name": "DSOC82_DSOC83",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC83",
         "index": 84,
-        "inNavigations": [
-          {
-            "origin": "DSOC82"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC82"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC83",
-            "destination": "DSOC84",
-            "name": "DSOC83_DSOC84",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC83",
+          "destination": "DSOC84",
+          "name": "DSOC83_DSOC84",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC84",
         "index": 85,
-        "inNavigations": [
-          {
-            "origin": "DSOC83"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC83"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC84",
-            "destination": "DSOC85",
-            "name": "DSOC84_DSOC85",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC84",
+          "destination": "DSOC85",
+          "name": "DSOC84_DSOC85",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC85",
         "index": 86,
-        "inNavigations": [
-          {
-            "origin": "DSOC84"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC84"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC85",
@@ -58555,23 +57898,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC85_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "6",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "6",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -58580,8 +57919,7 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC86",
         "index": 87,
-        "inNavigations": [
-          {
+        "inNavigations": [{
             "origin": "DSOC85"
           },
           {
@@ -58589,238 +57927,197 @@ Test.utils.data.surveyFormDSOC = {
           }
         ],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC86",
-            "destination": "DSOC87",
-            "name": "DSOC86_DSOC87",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC86",
+          "destination": "DSOC87",
+          "name": "DSOC86_DSOC87",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC87",
         "index": 88,
-        "inNavigations": [
-          {
-            "origin": "DSOC86"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC86"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC87",
-            "destination": "DSOC88",
-            "name": "DSOC87_DSOC88",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC87",
+          "destination": "DSOC88",
+          "name": "DSOC87_DSOC88",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC88",
         "index": 89,
-        "inNavigations": [
-          {
-            "origin": "DSOC87"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC87"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC88",
-            "destination": "DSOC89",
-            "name": "DSOC88_DSOC89",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC88",
+          "destination": "DSOC89",
+          "name": "DSOC88_DSOC89",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC89",
         "index": 90,
-        "inNavigations": [
-          {
-            "origin": "DSOC88"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC88"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC89",
-            "destination": "DSOC90",
-            "name": "DSOC89_DSOC90",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC89",
+          "destination": "DSOC90",
+          "name": "DSOC89_DSOC90",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC90",
         "index": 91,
-        "inNavigations": [
-          {
-            "origin": "DSOC89"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC89"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC90",
-            "destination": "DSOC91",
-            "name": "DSOC90_DSOC91",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC90",
+          "destination": "DSOC91",
+          "name": "DSOC90_DSOC91",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC91",
         "index": 92,
-        "inNavigations": [
-          {
-            "origin": "DSOC90"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC90"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC91",
-            "destination": "DSOC92",
-            "name": "DSOC91_DSOC92",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC91",
+          "destination": "DSOC92",
+          "name": "DSOC91_DSOC92",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC92",
         "index": 93,
-        "inNavigations": [
-          {
-            "origin": "DSOC91"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC91"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC92",
-            "destination": "DSOC93",
-            "name": "DSOC92_DSOC93",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC92",
+          "destination": "DSOC93",
+          "name": "DSOC92_DSOC93",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC93",
         "index": 94,
-        "inNavigations": [
-          {
-            "origin": "DSOC92"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC92"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC93",
-            "destination": "DSOC94",
-            "name": "DSOC93_DSOC94",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC93",
+          "destination": "DSOC94",
+          "name": "DSOC93_DSOC94",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC94",
         "index": 95,
-        "inNavigations": [
-          {
-            "origin": "DSOC93"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC93"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC94",
-            "destination": "DSOC95",
-            "name": "DSOC94_DSOC95",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC94",
+          "destination": "DSOC95",
+          "name": "DSOC94_DSOC95",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC95",
         "index": 96,
-        "inNavigations": [
-          {
-            "origin": "DSOC94"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC94"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC95",
-            "destination": "DSOC96",
-            "name": "DSOC95_DSOC96",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC95",
+          "destination": "DSOC96",
+          "name": "DSOC95_DSOC96",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC96",
         "index": 97,
-        "inNavigations": [
-          {
-            "origin": "DSOC95"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC95"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC96",
@@ -58836,23 +58133,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC97",
             "name": "DSOC96_DSOC97",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC96",
-                    "operator": "equal",
-                    "answer": "2",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC96",
+                "operator": "equal",
+                "answer": "2",
+                "isMetadata": false
+              }]
+            }]
           },
           {
             "extents": "SurveyTemplateObject",
@@ -58861,23 +58154,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC96_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "7",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "7",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -58886,83 +58175,68 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC97",
         "index": 98,
-        "inNavigations": [
-          {
-            "origin": "DSOC96"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC96"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC97",
-            "destination": "DSOC98",
-            "name": "DSOC97_DSOC98",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC97",
+          "destination": "DSOC98",
+          "name": "DSOC97_DSOC98",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC98",
         "index": 99,
-        "inNavigations": [
-          {
-            "origin": "DSOC97"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC97"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC98",
-            "destination": "DSOC99",
-            "name": "DSOC98_DSOC99",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC98",
+          "destination": "DSOC99",
+          "name": "DSOC98_DSOC99",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC99",
         "index": 100,
-        "inNavigations": [
-          {
-            "origin": "DSOC98"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC98"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC99",
-            "destination": "DSOC100",
-            "name": "DSOC99_DSOC100",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC99",
+          "destination": "DSOC100",
+          "name": "DSOC99_DSOC100",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC100",
         "index": 101,
-        "inNavigations": [
-          {
-            "origin": "DSOC99"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC99"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC100",
@@ -58978,23 +58252,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC113",
             "name": "DSOC100_DSOC113",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC1",
-                    "operator": "equal",
-                    "answer": "7",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC1",
+                "operator": "equal",
+                "answer": "7",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -59003,8 +58273,7 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC101",
         "index": 102,
-        "inNavigations": [
-          {
+        "inNavigations": [{
             "origin": "DSOC100"
           },
           {
@@ -59012,169 +58281,140 @@ Test.utils.data.surveyFormDSOC = {
           }
         ],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC101",
-            "destination": "DSOC102",
-            "name": "DSOC101_DSOC102",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC101",
+          "destination": "DSOC102",
+          "name": "DSOC101_DSOC102",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC102",
         "index": 103,
-        "inNavigations": [
-          {
-            "origin": "DSOC101"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC101"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC102",
-            "destination": "DSOC103",
-            "name": "DSOC102_DSOC103",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC102",
+          "destination": "DSOC103",
+          "name": "DSOC102_DSOC103",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC103",
         "index": 104,
-        "inNavigations": [
-          {
-            "origin": "DSOC102"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC102"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC103",
-            "destination": "DSOC104",
-            "name": "DSOC103_DSOC104",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC103",
+          "destination": "DSOC104",
+          "name": "DSOC103_DSOC104",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC104",
         "index": 105,
-        "inNavigations": [
-          {
-            "origin": "DSOC103"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC103"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC104",
-            "destination": "DSOC105",
-            "name": "DSOC104_DSOC105",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC104",
+          "destination": "DSOC105",
+          "name": "DSOC104_DSOC105",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC105",
         "index": 106,
-        "inNavigations": [
-          {
-            "origin": "DSOC104"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC104"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC105",
-            "destination": "DSOC106",
-            "name": "DSOC105_DSOC106",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC105",
+          "destination": "DSOC106",
+          "name": "DSOC105_DSOC106",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC106",
         "index": 107,
-        "inNavigations": [
-          {
-            "origin": "DSOC105"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC105"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC106",
-            "destination": "DSOC107",
-            "name": "DSOC106_DSOC107",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC106",
+          "destination": "DSOC107",
+          "name": "DSOC106_DSOC107",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC107",
         "index": 108,
-        "inNavigations": [
-          {
-            "origin": "DSOC106"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC106"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC107",
-            "destination": "DSOC108",
-            "name": "DSOC107_DSOC108",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC107",
+          "destination": "DSOC108",
+          "name": "DSOC107_DSOC108",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC108",
         "index": 109,
-        "inNavigations": [
-          {
-            "origin": "DSOC107"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC107"
+        }],
         "isDefault": false,
-        "routes": [
-          {
+        "routes": [{
             "extents": "SurveyTemplateObject",
             "objectType": "Route",
             "origin": "DSOC108",
@@ -59190,23 +58430,19 @@ Test.utils.data.surveyFormDSOC = {
             "destination": "DSOC109",
             "name": "DSOC108_DSOC109",
             "isDefault": false,
-            "conditions": [
-              {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": [
-                  {
-                    "extents": "SurveyTemplateObject",
-                    "objectType": "Rule",
-                    "when": "DSOC108",
-                    "operator": "equal",
-                    "answer": "2",
-                    "isMetadata": false
-                  }
-                ]
-              }
-            ]
+            "conditions": [{
+              "extents": "StudioObject",
+              "objectType": "RouteCondition",
+              "name": "ROUTE_CONDITION_0",
+              "rules": [{
+                "extents": "SurveyTemplateObject",
+                "objectType": "Rule",
+                "when": "DSOC108",
+                "operator": "equal",
+                "answer": "2",
+                "isMetadata": false
+              }]
+            }]
           }
         ]
       },
@@ -59215,100 +58451,83 @@ Test.utils.data.surveyFormDSOC = {
         "objectType": "Navigation",
         "origin": "DSOC109",
         "index": 110,
-        "inNavigations": [
-          {
-            "origin": "DSOC108"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC108"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC109",
-            "destination": "DSOC110",
-            "name": "DSOC109_DSOC110",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC109",
+          "destination": "DSOC110",
+          "name": "DSOC109_DSOC110",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC110",
         "index": 111,
-        "inNavigations": [
-          {
-            "origin": "DSOC109"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC109"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC110",
-            "destination": "DSOC111",
-            "name": "DSOC110_DSOC111",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC110",
+          "destination": "DSOC111",
+          "name": "DSOC110_DSOC111",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC111",
         "index": 112,
-        "inNavigations": [
-          {
-            "origin": "DSOC110"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC110"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC111",
-            "destination": "DSOC112",
-            "name": "DSOC111_DSOC112",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC111",
+          "destination": "DSOC112",
+          "name": "DSOC111_DSOC112",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC112",
         "index": 113,
-        "inNavigations": [
-          {
-            "origin": "DSOC111"
-          }
-        ],
+        "inNavigations": [{
+          "origin": "DSOC111"
+        }],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC112",
-            "destination": "DSOC113",
-            "name": "DSOC112_DSOC113",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC112",
+          "destination": "DSOC113",
+          "name": "DSOC112_DSOC113",
+          "isDefault": true,
+          "conditions": []
+        }]
       },
       {
         "extents": "SurveyTemplateObject",
         "objectType": "Navigation",
         "origin": "DSOC113",
         "index": 114,
-        "inNavigations": [
-          {
+        "inNavigations": [{
             "origin": "DSOC112"
           },
           {
@@ -59361,17 +58580,15 @@ Test.utils.data.surveyFormDSOC = {
           }
         ],
         "isDefault": false,
-        "routes": [
-          {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": "DSOC113",
-            "destination": "END NODE",
-            "name": "DSOC113_END NODE",
-            "isDefault": true,
-            "conditions": []
-          }
-        ]
+        "routes": [{
+          "extents": "SurveyTemplateObject",
+          "objectType": "Route",
+          "origin": "DSOC113",
+          "destination": "END NODE",
+          "name": "DSOC113_END NODE",
+          "isDefault": true,
+          "conditions": []
+        }]
       }
     ]
   },
@@ -59379,137 +58596,2637 @@ Test.utils.data.surveyFormDSOC = {
   "version": 1
 };
 
-Test.utils.data.jsonImportActivities = [
-  {"id": "",
-    "acronym": "IMT",
-    "participant": {"recruitmentNumber":4025070},
-    "user": {
-      "name": "G",
-      "surname": "L",
-      "phone": 1234567890,
-      "email": "gl@otus.com"
-    },
-    "status": "FINALIZED",
-    "mode": "PAPER",
-    "activityConfiguration": {
-      "category": {
-        "name": "C0",
-        "objectType": "ActivityCategory",
-        "label": "Normal",
-        "disabled": false,
-        "isDefault": true
-      }
-    },
-    "answers": {
-      "IMT1": {
-        "value" : 0,
-        "metadata" : ".F",
-        "comment" : ""
-      },
-      "IMT2": {
-        "value" :0.52,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT3": {
-        "value" :0.89,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT4": {
-        "value" : null,
-        "metadata" : ".S",
-        "comment" : ""
-      },
-      "IMT5": {
-        "value" :5.51,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT6": {
-        "value" :2,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT7": {
-        "value" :0.58,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT8": {
-        "value" :0.68,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT9": {
-        "value" :7.98,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT10": {
-        "value" :6.33,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT11": {
-        "value" :0.57,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT12": {
-        "value" :0.42,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT13": {
-        "value" :0.62,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT14": {
-        "value" :7.98,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT15": {
-        "value" :6.54,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT16": {
-        "value" :0.58,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT17": {
-        "value" :0.58,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT18": {
-        "value" :0.65,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT19": {
-        "value" :8.46,
-        "metadata" : null,
-        "comment" : ""
-      },
-      "IMT20": {
-        "value" :7.01,
-        "metadata" : null,
-        "comment" : ""
-      }
-    },
-    "offlineData": {
-      "checker": {
-        "name": "Coruja",
-        "surname": "Owl",
-        "phone": 11979944817,
-        "email": "teste123@gmail.com"
-      },
-      "realizationDate": "2019-05-31T00:00:00.000Z"
+Test.utils.data.jsonImportActivities = [{
+  "id": "",
+  "acronym": "IMT",
+  "participant": {
+    "recruitmentNumber": 4025070
+  },
+  "user": {
+    "name": "G",
+    "surname": "L",
+    "phone": 1234567890,
+    "email": "gl@otus.com"
+  },
+  "status": "FINALIZED",
+  "mode": "PAPER",
+  "activityConfiguration": {
+    "category": {
+      "name": "C0",
+      "objectType": "ActivityCategory",
+      "label": "Normal",
+      "disabled": false,
+      "isDefault": true
     }
+  },
+  "answers": {
+    "IMT1": {
+      "value": 0,
+      "metadata": ".F",
+      "comment": ""
+    },
+    "IMT2": {
+      "value": 0.52,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT3": {
+      "value": 0.89,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT4": {
+      "value": null,
+      "metadata": ".S",
+      "comment": ""
+    },
+    "IMT5": {
+      "value": 5.51,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT6": {
+      "value": 2,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT7": {
+      "value": 0.58,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT8": {
+      "value": 0.68,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT9": {
+      "value": 7.98,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT10": {
+      "value": 6.33,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT11": {
+      "value": 0.57,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT12": {
+      "value": 0.42,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT13": {
+      "value": 0.62,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT14": {
+      "value": 7.98,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT15": {
+      "value": 6.54,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT16": {
+      "value": 0.58,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT17": {
+      "value": 0.58,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT18": {
+      "value": 0.65,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT19": {
+      "value": 8.46,
+      "metadata": null,
+      "comment": ""
+    },
+    "IMT20": {
+      "value": 7.01,
+      "metadata": null,
+      "comment": ""
+    }
+  },
+  "offlineData": {
+    "checker": {
+      "name": "Coruja",
+      "surname": "Owl",
+      "phone": 11979944817,
+      "email": "teste123@gmail.com"
+    },
+    "realizationDate": "2019-05-31T00:00:00.000Z"
   }
-];
+}];
+
+Test.utils.data.templateExampleWithAllQuestionsAndValidations = {
+  "extents": "StudioObject",
+  "objectType": "Survey",
+  "oid": "dXNlclVVSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOlthNzhiZWZkMC05NjhhLTExZTktODMzYi01ZDE5NmJhNWQzOTFdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==",
+  "identity": {
+    "extents": "StudioObject",
+    "objectType": "SurveyIdentity",
+    "name": "OMJ-55",
+    "acronym": "DIC",
+    "recommendedTo": "",
+    "description": "",
+    "keywords": []
+  },
+  "metainfo": {
+    "extents": "StudioObject",
+    "objectType": "SurveyMetaInfo",
+    "creationDatetime": "2019-06-24T14:16:27.213Z",
+    "otusStudioVersion": ""
+  },
+  "dataSources": [{
+    "objectType": "DataSourceDefinition",
+    "id": "portoalegre",
+    "name": "Porto Alegre",
+    "bindTo": ["DIC11"]
+  }],
+  "itemContainer": [{
+    "extents": "SurveyItem",
+    "objectType": "SingleSelectionQuestion",
+    "templateID": "DIC1",
+    "customID": "DIC1",
+    "dataType": "Integer",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question singleSelect",
+        "formattedText": "question singleSelect"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "options": [{
+      "extents": "StudioObject",
+      "objectType": "AnswerOption",
+      "value": 1,
+      "extractionValue": 1,
+      "dataType": "Integer",
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "sim",
+          "formattedText": "sim"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }, {
+      "extents": "StudioObject",
+      "objectType": "AnswerOption",
+      "value": 2,
+      "extractionValue": 2,
+      "dataType": "Integer",
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "não",
+          "formattedText": "não"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }],
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": [{
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 1,
+        "extractionValue": 1,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDA",
+            "formattedText": "MDA"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 2,
+        "extractionValue": 2,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDB",
+            "formattedText": "MDB"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 3,
+        "extractionValue": 3,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDC",
+            "formattedText": "MDC"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 4,
+        "extractionValue": 4,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDD",
+            "formattedText": "MDD"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }]
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        },
+        "accept": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "accept",
+          "data": {
+            "reference": true
+          }
+        }
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "IntegerQuestion",
+    "templateID": "DIC2",
+    "customID": "DIC2",
+    "dataType": "Integer",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question integer",
+        "formattedText": "question integer"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": [{
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 1,
+        "extractionValue": 1,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDA",
+            "formattedText": "MDA"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 2,
+        "extractionValue": 2,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDB",
+            "formattedText": "MDB"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 3,
+        "extractionValue": 3,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDC",
+            "formattedText": "MDC"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 4,
+        "extractionValue": 4,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDD",
+            "formattedText": "MDD"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }]
+    },
+    "unit": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Unit",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Unit",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Unit",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        },
+        "lowerLimit": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "lowerLimit",
+          "data": {
+            "canBeIgnored": true,
+            "reference": 1
+          }
+        },
+        "upperLimit": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "upperLimit",
+          "data": {
+            "canBeIgnored": true,
+            "reference": 4
+          }
+        },
+        "accept": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "accept",
+          "data": {
+            "reference": true
+          }
+        },
+        "distinct": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "distinct",
+          "data": {
+            "canBeIgnored": true,
+            "reference": 3
+          }
+        },
+        "precision": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "precision",
+          "data": {
+            "canBeIgnored": true,
+            "reference": 1
+          }
+        },
+        "in": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "in",
+          "data": {
+            "canBeIgnored": true,
+            "reference": {
+              "initial": 1,
+              "end": 2
+            }
+          }
+        }
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "CalendarQuestion",
+    "templateID": "DIC3",
+    "customID": "DIC3",
+    "dataType": "LocalDate",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question date",
+        "formattedText": "question date"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": [{
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 1,
+        "extractionValue": 1,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDA",
+            "formattedText": "MDA"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 2,
+        "extractionValue": 2,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDB",
+            "formattedText": "MDB"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 3,
+        "extractionValue": 3,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDC",
+            "formattedText": "MDC"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 4,
+        "extractionValue": 4,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDD",
+            "formattedText": "MDD"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }]
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        },
+        "minDate": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "minDate",
+          "data": {
+            "canBeIgnored": true,
+            "reference": {
+              "objectType": "ImmutableDate",
+              "value": "2019-06-01 00:00:00.000"
+            }
+          }
+        },
+        "maxDate": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "maxDate",
+          "data": {
+            "canBeIgnored": true,
+            "reference": {
+              "objectType": "ImmutableDate",
+              "value": "2019-06-30 00:00:00.000"
+            }
+          }
+        },
+        "futureDate": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "futureDate",
+          "data": {
+            "canBeIgnored": true,
+            "reference": true
+          }
+        },
+        "pastDate": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "pastDate",
+          "data": {
+            "canBeIgnored": true,
+            "reference": true
+          }
+        },
+        "rangeDate": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "rangeDate",
+          "data": {
+            "canBeIgnored": true,
+            "reference": {
+              "initial": {
+                "objectType": "ImmutableDate",
+                "value": "2019-06-23 00:00:00.000"
+              },
+              "end": {
+                "objectType": "ImmutableDate",
+                "value": "2019-10-26 00:00:00.000"
+              }
+            }
+          }
+        }
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "DecimalQuestion",
+    "templateID": "DIC4",
+    "customID": "DIC4",
+    "dataType": "Decimal",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question decimal",
+        "formattedText": "question decimal"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": []
+    },
+    "unit": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Unit",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Unit",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Unit",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        },
+        "distinct": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "distinct",
+          "data": {
+            "canBeIgnored": true,
+            "reference": 1
+          }
+        },
+        "upperLimit": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "upperLimit",
+          "data": {
+            "canBeIgnored": true,
+            "reference": 9
+          }
+        },
+        "lowerLimit": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "lowerLimit",
+          "data": {
+            "canBeIgnored": true,
+            "reference": 3
+          }
+        },
+        "scale": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "scale",
+          "data": {
+            "canBeIgnored": true,
+            "reference": 3
+          }
+        },
+        "in": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "in",
+          "data": {
+            "canBeIgnored": true,
+            "reference": {
+              "initial": 5,
+              "end": 6
+            }
+          }
+        }
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "CheckboxQuestion",
+    "templateID": "DIC5",
+    "customID": "DIC5",
+    "dataType": "Array",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question checkbox",
+        "formattedText": "question checkbox"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "options": [{
+      "extents": "StudioObject",
+      "objectType": "CheckboxAnswerOption",
+      "optionID": "DIC5a",
+      "customOptionID": "DIC5a",
+      "dataType": "Boolean",
+      "value": false,
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "lbA",
+          "formattedText": "lbA"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }, {
+      "extents": "StudioObject",
+      "objectType": "CheckboxAnswerOption",
+      "optionID": "DIC5b",
+      "customOptionID": "DIC5b",
+      "dataType": "Boolean",
+      "value": false,
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "lbB",
+          "formattedText": "lbB"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }, {
+      "extents": "StudioObject",
+      "objectType": "CheckboxAnswerOption",
+      "optionID": "DIC5c",
+      "customOptionID": "DIC5c",
+      "dataType": "Boolean",
+      "value": false,
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "lbC",
+          "formattedText": "lbC"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }, {
+      "extents": "StudioObject",
+      "objectType": "CheckboxAnswerOption",
+      "optionID": "DIC5d",
+      "customOptionID": "DIC5d",
+      "dataType": "Boolean",
+      "value": false,
+      "label": {
+        "ptBR": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "lbD",
+          "formattedText": "lbD"
+        },
+        "enUS": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        },
+        "esES": {
+          "extends": "StudioObject",
+          "objectType": "Label",
+          "oid": "",
+          "plainText": "",
+          "formattedText": ""
+        }
+      }
+    }],
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": [{
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 1,
+        "extractionValue": 1,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDA",
+            "formattedText": "MDA"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 2,
+        "extractionValue": 2,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDB",
+            "formattedText": "MDB"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 3,
+        "extractionValue": 3,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDC",
+            "formattedText": "MDC"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 4,
+        "extractionValue": 4,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDD",
+            "formattedText": "MDD"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }]
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        }
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "TextQuestion",
+    "templateID": "DIC6",
+    "customID": "DIC6",
+    "dataType": "String",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question text",
+        "formattedText": "question text"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": []
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        },
+        "alphanumeric": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "alphanumeric",
+          "data": {
+            "canBeIgnored": true,
+            "reference": true
+          }
+        },
+        "lowerCase": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "lowerCase",
+          "data": {
+            "canBeIgnored": true,
+            "reference": true
+          }
+        },
+        "upperCase": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "upperCase",
+          "data": {
+            "canBeIgnored": true,
+            "reference": true
+          }
+        },
+        "minLength": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "minLength",
+          "data": {
+            "canBeIgnored": true,
+            "reference": 1
+          }
+        },
+        "maxLength": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "maxLength",
+          "data": {
+            "canBeIgnored": true,
+            "reference": 2
+          }
+        }
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "EmailQuestion",
+    "templateID": "DIC7",
+    "customID": "DIC7",
+    "dataType": "String",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question email",
+        "formattedText": "question email"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": []
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        }
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "TimeQuestion",
+    "templateID": "DIC8",
+    "customID": "DIC8",
+    "dataType": "LocalTime",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question time",
+        "formattedText": "question time"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": []
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        },
+        "minTime": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "minTime",
+          "data": {
+            "canBeIgnored": true,
+            "reference": {
+              "objectType": "ImmutableDate",
+              "value": "1970-01-01 01:00:00.000"
+            }
+          }
+        },
+        "maxTime": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "maxTime",
+          "data": {
+            "canBeIgnored": true,
+            "reference": {
+              "objectType": "ImmutableDate",
+              "value": "1970-01-01 02:00:00.000"
+            }
+          }
+        }
+      }
+    },
+    "options": {
+      "extends": "StudioObject",
+      "objectType": "QuestionOption",
+      "data": {}
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "PhoneQuestion",
+    "templateID": "DIC9",
+    "customID": "DIC9",
+    "dataType": "Integer",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question fone",
+        "formattedText": "question fone"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": []
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        }
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "AutocompleteQuestion",
+    "templateID": "DIC11",
+    "customID": "DIC11",
+    "dataType": "String",
+    "dataSources": ["Porto Alegre"],
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question autocomplete",
+        "formattedText": "question autocomplete"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": []
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        },
+        "accept": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "accept",
+          "data": {
+            "reference": true
+          }
+        }
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "FileUploadQuestion",
+    "templateID": "DIC12",
+    "customID": "DIC12",
+    "dataType": "Binary",
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question fileUpload",
+        "formattedText": "question fileUpload"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": []
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        }
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "GridTextQuestion",
+    "templateID": "DIC13",
+    "customID": "DIC13",
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": [{
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 1,
+        "extractionValue": 1,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDA",
+            "formattedText": "MDA"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 2,
+        "extractionValue": 2,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDB",
+            "formattedText": "MDB"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 3,
+        "extractionValue": 3,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDC",
+            "formattedText": "MDC"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 4,
+        "extractionValue": 4,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDD",
+            "formattedText": "MDD"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }]
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        }
+      }
+    },
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question gridText",
+        "formattedText": "question gridText"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "lines": [{
+      "extents": "StudioObject",
+      "objectType": "GridTextLine",
+      "gridTextList": [{
+        "extents": "SurveyItem",
+        "objectType": "GridText",
+        "templateID": "DIC13a",
+        "customID": "DIC13a",
+        "dataType": "String",
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "GT1",
+            "formattedText": "GT1"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        },
+        "layout": {
+          "extents": "StudioObject",
+          "objectType": "LayoutGrid",
+          "width": 100
+        },
+        "unit": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "A",
+            "formattedText": "A"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extents": "SurveyItem",
+        "objectType": "GridText",
+        "templateID": "DIC13b",
+        "customID": "DIC13b",
+        "dataType": "String",
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "GT2",
+            "formattedText": "GT2"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        },
+        "layout": {
+          "extents": "StudioObject",
+          "objectType": "LayoutGrid",
+          "width": 100
+        },
+        "unit": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "B",
+            "formattedText": "B"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extents": "SurveyItem",
+        "objectType": "GridText",
+        "templateID": "DIC13c",
+        "customID": "DIC13c",
+        "dataType": "String",
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "GT3",
+            "formattedText": "GT3"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        },
+        "layout": {
+          "extents": "StudioObject",
+          "objectType": "LayoutGrid",
+          "width": 100
+        },
+        "unit": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "C",
+            "formattedText": "C"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }]
+    }]
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "TextItem",
+    "templateID": "DIC14",
+    "customID": "DIC14",
+    "dataType": "String",
+    "value": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question itemText",
+        "formattedText": "question itemText"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    }
+  }, {
+    "extents": "SurveyItem",
+    "objectType": "GridIntegerQuestion",
+    "templateID": "DIC15",
+    "customID": "DIC15",
+    "metadata": {
+      "extents": "StudioObject",
+      "objectType": "MetadataGroup",
+      "options": [{
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 1,
+        "extractionValue": 1,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDA",
+            "formattedText": "MDA"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 2,
+        "extractionValue": 2,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDB",
+            "formattedText": "MDB"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 3,
+        "extractionValue": 3,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDC",
+            "formattedText": "MDC"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extends": "StudioObject",
+        "objectType": "MetadataAnswer",
+        "dataType": "Integer",
+        "value": 4,
+        "extractionValue": 4,
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "MDD",
+            "formattedText": "MDD"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }]
+    },
+    "fillingRules": {
+      "extends": "StudioObject",
+      "objectType": "FillingRules",
+      "options": {
+        "mandatory": {
+          "extends": "StudioObject",
+          "objectType": "Rule",
+          "validatorType": "mandatory",
+          "data": {
+            "canBeIgnored": false,
+            "reference": true
+          }
+        }
+      }
+    },
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "question GridNumber",
+        "formattedText": "question GridNumber"
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    },
+    "lines": [{
+      "extents": "StudioObject",
+      "objectType": "GridIntegerLine",
+      "gridIntegerList": [{
+        "extents": "SurveyItem",
+        "objectType": "GridInteger",
+        "templateID": "DIC15a",
+        "customID": "DIC15a",
+        "dataType": "Integer",
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "GN1",
+            "formattedText": "GN1"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        },
+        "layout": {
+          "extents": "StudioObject",
+          "objectType": "LayoutGrid",
+          "width": 100
+        },
+        "unit": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "10",
+            "formattedText": "10"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extents": "SurveyItem",
+        "objectType": "GridInteger",
+        "templateID": "DIC15b",
+        "customID": "DIC15b",
+        "dataType": "Integer",
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "GN2",
+            "formattedText": "GN2"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        },
+        "layout": {
+          "extents": "StudioObject",
+          "objectType": "LayoutGrid",
+          "width": 100
+        },
+        "unit": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "20",
+            "formattedText": "20"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }, {
+        "extents": "SurveyItem",
+        "objectType": "GridInteger",
+        "templateID": "DIC15c",
+        "customID": "DIC15c",
+        "dataType": "Integer",
+        "label": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "GN3",
+            "formattedText": "GN3"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Label",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        },
+        "layout": {
+          "extents": "StudioObject",
+          "objectType": "LayoutGrid",
+          "width": 100
+        },
+        "unit": {
+          "ptBR": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "30",
+            "formattedText": "30"
+          },
+          "enUS": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          },
+          "esES": {
+            "extends": "StudioObject",
+            "objectType": "Unit",
+            "oid": "",
+            "plainText": "",
+            "formattedText": ""
+          }
+        }
+      }]
+    }]
+  }],
+  "navigationList": [{
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "BEGIN NODE",
+    "index": 0,
+    "inNavigations": [],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "BEGIN NODE",
+      "destination": "DIC1",
+      "name": "BEGIN NODE_DIC1",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "END NODE",
+    "index": 1,
+    "inNavigations": [{
+      "origin": "DIC15",
+      "index": 15
+    }],
+    "routes": []
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC1",
+    "index": 2,
+    "inNavigations": [{
+      "origin": "BEGIN NODE",
+      "index": 0
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC1",
+      "destination": "DIC2",
+      "name": "DIC1_DIC2",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC2",
+    "index": 3,
+    "inNavigations": [{
+      "origin": "DIC1",
+      "index": 2
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC2",
+      "destination": "DIC3",
+      "name": "DIC2_DIC3",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC3",
+    "index": 4,
+    "inNavigations": [{
+      "origin": "DIC2",
+      "index": 3
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC3",
+      "destination": "DIC4",
+      "name": "DIC3_DIC4",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC4",
+    "index": 5,
+    "inNavigations": [{
+      "origin": "DIC3",
+      "index": 4
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC4",
+      "destination": "DIC5",
+      "name": "DIC4_DIC5",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC5",
+    "index": 6,
+    "inNavigations": [{
+      "origin": "DIC4",
+      "index": 5
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC5",
+      "destination": "DIC6",
+      "name": "DIC5_DIC6",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC6",
+    "index": 7,
+    "inNavigations": [{
+      "origin": "DIC5",
+      "index": 6
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC6",
+      "destination": "DIC7",
+      "name": "DIC6_DIC7",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC7",
+    "index": 8,
+    "inNavigations": [{
+      "origin": "DIC6",
+      "index": 7
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC7",
+      "destination": "DIC8",
+      "name": "DIC7_DIC8",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC8",
+    "index": 9,
+    "inNavigations": [{
+      "origin": "DIC7",
+      "index": 8
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC8",
+      "destination": "DIC9",
+      "name": "DIC8_DIC9",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC9",
+    "index": 10,
+    "inNavigations": [{
+      "origin": "DIC8",
+      "index": 9
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC9",
+      "destination": "DIC11",
+      "name": "DIC9_DIC11",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC11",
+    "index": 11,
+    "inNavigations": [null, {
+      "origin": "DIC9",
+      "index": 10
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC11",
+      "destination": "DIC12",
+      "name": "DIC11_DIC12",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC12",
+    "index": 12,
+    "inNavigations": [{
+      "origin": "DIC11",
+      "index": 11
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC12",
+      "destination": "DIC13",
+      "name": "DIC12_DIC13",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC13",
+    "index": 13,
+    "inNavigations": [{
+      "origin": "DIC12",
+      "index": 12
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC13",
+      "destination": "DIC14",
+      "name": "DIC13_DIC14",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC14",
+    "index": 14,
+    "inNavigations": [{
+      "origin": "DIC13",
+      "index": 13
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC14",
+      "destination": "DIC15",
+      "name": "DIC14_DIC15",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }, {
+    "extents": "SurveyTemplateObject",
+    "objectType": "Navigation",
+    "origin": "DIC15",
+    "index": 15,
+    "inNavigations": [{
+      "origin": "DIC14",
+      "index": 14
+    }],
+    "routes": [{
+      "extents": "SurveyTemplateObject",
+      "objectType": "Route",
+      "origin": "DIC15",
+      "destination": "END NODE",
+      "name": "DIC15_END NODE",
+      "isDefault": true,
+      "conditions": []
+    }]
+  }]
+}
