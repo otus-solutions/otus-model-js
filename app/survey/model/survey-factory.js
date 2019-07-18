@@ -11,12 +11,13 @@
     'SurveyUUIDGenerator',
     'otusjs.model.navigation.NavigationManagerFactory',
     'SurveyItemManagerFactory',
-    'otusjs.model.survey.DataSourceDefinitionManagerFactory'
+    'otusjs.model.survey.DataSourceDefinitionManagerFactory',
+    'SurveyDictionaryService'
   ];
 
   var Inject = {};
 
-  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory) {
+  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService) {
     var self = this;
 
     self.OBJECT_TYPE = 'Survey';
@@ -24,11 +25,13 @@
     Inject.SurveyItemManagerFactory = SurveyItemManagerFactory;
     Inject.NavigationManagerFactory = NavigationManagerFactory;
     Inject.DataSourceDefinitionManagerFactory = DataSourceDefinitionManagerFactory;
+    Inject.SurveyDictionaryService = SurveyDictionaryService;
 
-    /* Public interdace */
+    /* Public interface */
     self.create = create;
     self.load = load;
     self.fromJsonObject = fromJsonObject;
+    self.createDictionary = createDictionary;
 
     /**
      TODO :
@@ -73,6 +76,10 @@
       return survey;
     }
 
+    function createDictionary(jsonObject) {
+      return Inject.SurveyDictionaryService
+        .dictionaryConstructionByExtractionId(jsonObject);
+    }
     return self;
   }
 
@@ -202,5 +209,7 @@
 
       return json;
     }
+
+
   }
 }());

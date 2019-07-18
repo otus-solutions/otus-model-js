@@ -85,7 +85,7 @@ describe("Validation Type Service Tests", function () {
   });
 
   it('should validate Decimal value', function () {
-    expect(service.isValid(DECIMAL, Mock.numberInteger)).toBeFalsy();
+    expect(service.isValid(DECIMAL, Mock.numberInteger)).toBeTruthy();
     expect(service.isValid(DECIMAL, Mock.numberDecimal)).toBeTruthy();
     expect(service.isValid(DECIMAL, Mock.boolean)).toBeFalsy();
     expect(service.isValid(DECIMAL, Mock.text)).toBeFalsy();

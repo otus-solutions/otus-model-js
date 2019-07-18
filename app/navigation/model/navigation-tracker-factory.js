@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -26,6 +26,7 @@
     function create(itemsToTrack, startIndex) {
       var validatedData = _applyPolicies(itemsToTrack, startIndex);
       var trackingItems = validatedData.itemsToTrack.map(_toNavigationTrackingItems);
+      trackingItems.push(_buildEngNodeTrackingItem(trackingItems.length));
       return new NavigationTracker(trackingItems, validatedData.startIndex);
     }
 
@@ -72,13 +73,19 @@
       return NavigationTrackingItemFactory.create(item);
     }
 
+    function _buildEngNodeTrackingItem(index) {
+      return _toNavigationTrackingItems({
+        id: "END NODE",
+      }, index);
+    }
+
     function _buildInputs(itemToTrack) {
       if (itemToTrack.inNavigations) {
         return itemToTrack.inNavigations
-          .filter(function(navigation) {
+          .filter(function (navigation) {
             return navigation.origin !== 'BEGIN NODE';
           })
-          .map(function(navigation) {
+          .map(function (navigation) {
             return navigation.origin;
           });
       } else {
@@ -89,10 +96,10 @@
     function _buildOutputs(itemToTrack) {
       if (itemToTrack.inNavigations) {
         return itemToTrack.listRoutes()
-          .filter(function(route) {
+          .filter(function (route) {
             return route.getDestination() !== 'END NODE';
           })
-          .map(function(route) {
+          .map(function (route) {
             return route.getDestination();
           });
       } else {
@@ -130,7 +137,7 @@
     function _createNavigationTrackingItemContainer(items) {
       var container = {};
 
-      items.forEach(function(item, index) {
+      items.forEach(function (item, index) {
         container[item.getID()] = item;
       });
 
@@ -254,8 +261,10 @@
       }
 
       json.items = [];
-      Object.keys(_items).forEach(function(itemID) {
-        json.items.push(_items[itemID]);
+      Object.keys(_items).forEach(function (itemID) {
+        if (itemID !== "END NODE") {
+          json.items.push(_items[itemID]);
+        }
       });
 
       return json;
@@ -302,7 +311,7 @@
     }
 
     function _skipUnreachableSiblings() {
-      _items[_currentItem.getPrevious()].getOutputs().forEach(function(siblingID) {
+      _items[_currentItem.getPrevious()].getOutputs().forEach(function (siblingID) {
         if (!_isItemReachable(siblingID)) {
           _skipItem(siblingID);
           _tryPropagateSkip(siblingID);
@@ -314,14 +323,14 @@
       if (_currentItem.getID() === itemID) {
         return true;
       }
-      return _currentItem.getOutputs().some(function(outputID) {
+      return _currentItem.getOutputs().some(function (outputID) {
         return outputID === itemID;
       });
     }
 
     function _tryPropagateSkip(skipedID) {
-      _items[skipedID].getOutputs().forEach(function(outputID) {
-        if (_isNotCurrentItem(outputID) && _isNotChildOfCurrentItem(outputID) &&  _isNotChildOfOriginItem(outputID)) {
+      _items[skipedID].getOutputs().forEach(function (outputID) {
+        if (_isNotCurrentItem(outputID) && _isNotChildOfCurrentItem(outputID) && _isNotChildOfOriginItem(outputID)) {
           if (!_isOnPathOf(_currentItem.getID(), outputID, skipedID)) {
             _skipItem(outputID);
             _tryPropagateSkip(outputID);
@@ -354,7 +363,7 @@
       }
 
       // Verify if some input of idToTest is on the path of referenceID
-      return _items[idToTest].getInputs().some(function(inputID) {
+      return _items[idToTest].getInputs().some(function (inputID) {
         if (idToIgnore !== inputID) {
           return _isOnPathOf(referenceID, inputID);
         }
