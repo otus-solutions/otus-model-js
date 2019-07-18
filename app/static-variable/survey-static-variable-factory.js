@@ -12,22 +12,23 @@
     self.create = create;
     self.fromJsonObject = fromJsonObject;
 
-    function create(name, sending, wholeTemplate, customizations, bindTo) {
+    function create(name, label, sending, wholeTemplate, customizations, bindTo) {
       return new StaticVariable(name, sending, wholeTemplate, customizations, bindTo);
     }
 
     function fromJsonObject(jsonObject) {
-      var variable = create(jsonObject.name, jsonObject.sending, jsonObject.wholeTemplate, jsonObject.customizations, jsonObject.bindTo);
+      var variable = create(jsonObject.name, jsonObject.label, jsonObject.sending, jsonObject.wholeTemplate, jsonObject.customizations, jsonObject.bindTo);
       variable.value = jsonObject.value;
     }
 
     return self;
   }
 
-  function StaticVariable(name, sending, wholeTemplate, customizations, bindTo) {
+  function StaticVariable(name, label, sending, wholeTemplate, customizations, bindTo) {
     var self = this;
 
     self.name = name || '';
+    self.label = label || '';
     self.sending = sending || -1;
     self.customized = false;
     self.bindToWholeTemplate = wholeTemplate || true;
