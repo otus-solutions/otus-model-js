@@ -6,7 +6,7 @@
     .service('otusjs.staticVariable.StaticVariableManagerFactory', Factory);
 
   Factory.$inject = [
-    'otusjs.staticVariable.SurveyStaticVariable'
+    'otusjs.staticVariable.SurveyStaticVariableFactory'
   ];
 
 
@@ -39,6 +39,7 @@
     /* Public interface */
     self.create = create;
     self.add = add;
+    self.removeByName = removeByName;
     self.remove = remove;
     self.updateStaticVariable = updateStaticVariable;
     self.getStaticVariableList = getStaticVariableList;
@@ -49,12 +50,20 @@
     }
 
     function add(variable) {
+      if (!variable.name) {
+        throw new Error("Variable with empty name can't be added");
+      }
+
       _findVariableIndex(variable.name, variable.sending);
       _items.push(variable);
     }
 
-    function remove(variable) {
-      _items.splice(_findVariableIndex(variable.name, variable.sending), 1);
+    function removeByName(variable) {
+      remove(_findVariableIndex(variable.name, variable.sending), 1);
+    }
+
+    function remove(ix) {
+      _items.splice(ix, 1);
     }
 
     function updateStaticVariable(variable) {

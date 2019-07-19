@@ -3,7 +3,9 @@
 
   angular
     .module('otusjs.staticVariable')
-    .factory('otusjs.staticVariable.SurveyStaticVariable', Factory);
+    .factory('otusjs.staticVariable.SurveyStaticVariableFactory', Factory);
+
+  Factory.$inject = [];
 
   function Factory() {
     var self = this;
@@ -12,19 +14,21 @@
     self.create = create;
     self.fromJsonObject = fromJsonObject;
 
-    function create(name, label, sending, wholeTemplate, customizations, bindTo) {
-      return new StaticVariable(name, sending, wholeTemplate, customizations, bindTo);
+    function create() {
+      return new StaticVariable();
     }
 
     function fromJsonObject(jsonObject) {
-      var variable = create(jsonObject.name, jsonObject.label, jsonObject.sending, jsonObject.wholeTemplate, jsonObject.customizations, jsonObject.bindTo);
+      var variable = new StaticVariable(jsonObject.label, jsonObject.name, jsonObject.sending, jsonObject.wholeTemplate, jsonObject.customizations, jsonObject.bindTo);
+
       variable.value = jsonObject.value;
+      return variable;
     }
 
     return self;
   }
 
-  function StaticVariable(name, label, sending, wholeTemplate, customizations, bindTo) {
+  function StaticVariable(label, name, sending, wholeTemplate, customizations, bindTo) {
     var self = this;
 
     self.name = name || '';
@@ -34,7 +38,6 @@
     self.bindToWholeTemplate = wholeTemplate || true;
     self.bindTo = bindTo || [];
     self.value = '';
-
     self.customizations = customizations || [];
 
     _init();
@@ -42,55 +45,59 @@
     self.setCustomizations = setCustomizations;
     self.addCustomization = addCustomization;
     self.removeCustomization = removeCustomization;
-    self.updateCustomization = updateCustomization;
     self.setValue = setValue;
 
     function _init() {
       self.customized = !!self.customizations;
       self.lastSending = self.sending === -1;
+      _translateValue();
     }
 
-
-    function setCustomizations(customizations) {
-      self.customizations = customizations.map(custom => {
-        return new StaticVariableCustomization(custom.answer, custom.label);
-      });
-    }
-
-    function addCustomization(answer, label) {
-      self.customizations.push(new StaticVariableCustomization(answer, label));
-    }
-
-    function removeCustomization(answer) {
-      var answerIndex = _findAnswerCustomizationIndex(answer);
-      self.customizations.splice(answerIndex, 1);
-    }
-
-    function updateCustomization(answer, label) {
-      var answerIndex = _findAnswerCustomizationIndex(answer);
-      if (answerIndex > -1) {
-        self.customizations[answerIndex].label = label;
+    function addCustomization(value, label) {
+      if(!value){
+        throw new Error("Customization must have a value");
       }
+
+      self.customizations.push(new StaticVariableCustomization(value, label));
+    }
+
+    function removeCustomization(ix) {
+      return self.customizations.splice(ix, 1);
     }
 
     function setValue(value) {
       self.value = value;
+      _translateValue();
     }
 
-    function _findAnswerCustomizationIndex(answer) {
-      self.customizations.findIndex(custom => {
-        return custom.answer === answer;
+    function setCustomizations(customizations) {
+      self.customizations = customizations.map(custom => {
+        return new StaticVariableCustomization(custom.value, custom.label);
       });
     }
+
+    function _translateValue() {
+      let translation = self.customizations.find(custom => {
+        return custom.value === self.value;
+      });
+
+      if (!translation){
+        self.translatedValue = self.value;
+        return;
+      }
+
+      self.translatedValue = translation.label;
+    }
+
 
     return self;
   }
 
-  function StaticVariableCustomization(answer, label) {
+  function StaticVariableCustomization(value, label) {
     var self = this;
 
-    self.answer = answer;
-    self.label = label;
+    self.value = value;
+    self.label = label || '';
 
     return self;
   }
