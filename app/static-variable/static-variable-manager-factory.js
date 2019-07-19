@@ -74,6 +74,10 @@
       });
     }
 
+    function fillVariableValues(variableArray) {
+
+    }
+
 
   }
 }());

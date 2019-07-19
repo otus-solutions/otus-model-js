@@ -24,7 +24,6 @@ fdescribe('The SurveyStaticVariableFactory', function () {
     var variableTemplate = factory.fromJsonObject(Mock.variableObject);
     expect(variableTemplate).toBeDefined();
     expect(variableTemplate.customized).toBeTruthy();
-    expect(variableTemplate.lastSending).toBeTruthy();
   });
 
   function mock() {

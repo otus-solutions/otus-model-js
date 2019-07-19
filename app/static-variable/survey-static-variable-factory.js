@@ -49,7 +49,6 @@
 
     function _init() {
       self.customized = !!self.customizations;
-      self.lastSending = self.sending === -1;
       _translateValue();
     }
 
