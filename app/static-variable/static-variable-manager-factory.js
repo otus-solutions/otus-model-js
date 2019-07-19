@@ -18,7 +18,7 @@
 
 
     function create() {
-      return new StaticVariableManager();
+      return new StaticVariableManager(SurveyStaticVariable);
     }
 
     function loadJsonData(itemsArray) {
