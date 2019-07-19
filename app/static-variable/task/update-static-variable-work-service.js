@@ -10,8 +10,8 @@
 
         self.execute = execute;
 
-        function execute(survey, variable) {
-            return survey.updateStaticVariable(variable);
+        function execute(survey, index, variable) {
+            return survey.updateStaticVariable(index, variable);
         }
     }
 

@@ -74,7 +74,7 @@
       survey.SurveyItemManager.loadJsonDataObject(jsonObject.itemContainer);
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
-      survey.StaticVariableManager.loadJsonData(jsonObject.staticVariableList);
+      survey.StaticVariableManager.loadJsonData(jsonObject.staticVariableList || []);
 
       return survey;
     }
@@ -198,12 +198,12 @@
       self.StaticVariableManager.add(variable);
     }
 
-    function removeStaticVariable(variable) {
-      self.StaticVariableManager.remove(variable);
+    function removeStaticVariable(index) {
+      self.StaticVariableManager.remove(index);
     }
 
-    function updateStaticVariable(variable) {
-      self.StaticVariableManager.updateStaticVariable(variable);
+    function updateStaticVariable(index, variable) {
+      self.StaticVariableManager.update(index, variable);
     }
 
     function getStaticVariableList() {

@@ -3364,7 +3364,8 @@ Test.utils.data.latestSurveyTemplate = {
       "isDefault": true,
       "conditions": []
     }]
-  }]
+  }],
+  "staticVariableList": []
 };
 Test.utils.data.participantLaboratory = {
 

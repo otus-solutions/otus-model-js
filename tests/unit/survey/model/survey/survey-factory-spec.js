@@ -18,7 +18,8 @@ describe('SurveyFactory', function () {
         'NavigationManagerFactory': mockNavigationManagerFactory(_$injector_),
         'SurveyItemManagerFactory': mockSurveyItemManagerFactory(_$injector_),
         'DataSourceDefinitionManagerFactory': mockDataSourceFactory(_$injector_),
-        'SurveyDictionaryService': mockSurveyDictionaryService(_$injector_)
+        'SurveyDictionaryService': mockSurveyDictionaryService(_$injector_),
+        'SurveyStaticVariableFactory': mockStaticVariableManager(_$injector_)
       };
       factory = _$injector_.get('SurveyFactory', Injections);
     });
@@ -72,6 +73,7 @@ describe('SurveyFactory', function () {
 
     beforeEach(function () {
       spyOn(Mock.SurveyMetaInfoFactory, 'fromJsonObject');
+      console.log(Mock.StaticVariableManagerFactory);
       survey = factory.fromJsonObject(Mock.surveyTemplate);
     });
 
@@ -117,6 +119,48 @@ describe('SurveyFactory', function () {
     it('createDictionaryMethod_should_invoke_dictionary_construction_service', function () {
       expect(Injections.SurveyDictionaryService.dictionaryConstructionByExtractionId).toHaveBeenCalledTimes(1)
     });
+
+  });
+
+  describe('the static variable methods', function () {
+    beforeEach(function () {
+      spyOn(Mock.StaticVariableManagerFactory, 'create').and.returnValue(Mock.StaticVariableManager);
+      spyOn(Mock.StaticVariableManager, 'create').and.callThrough();
+      spyOn(Mock.StaticVariableManager, 'add').and.callThrough();
+      spyOn(Mock.StaticVariableManager, 'remove').and.callThrough();
+      spyOn(Mock.StaticVariableManager, 'update').and.callThrough();
+      spyOn(Mock.StaticVariableManager, 'getStaticVariableList').and.callThrough();
+
+      survey = factory.create();
+    });
+
+    it('should call the managers create method', function () {
+      survey.createStaticVariable();
+      expect(Mock.StaticVariableManager.create).toHaveBeenCalled();
+    });
+
+    it('should call the managers add method', function () {
+      let fakeVariable = {name:"asd"};
+      survey.addStaticVariable(fakeVariable);
+      expect(Mock.StaticVariableManager.add).toHaveBeenCalledWith(fakeVariable);
+    });
+
+    it('should call the managers remove method', function () {
+      survey.removeStaticVariable(1);
+      expect(Mock.StaticVariableManager.remove).toHaveBeenCalledWith(1);
+    });
+
+    it('should call the managers update method', function () {
+      let fakeVariable = {name:"asd"};
+      survey.updateStaticVariable(1, fakeVariable);
+      expect(Mock.StaticVariableManager.update).toHaveBeenCalledWith(1, fakeVariable);
+    });
+
+    it('should call the managers remove method', function () {
+      survey.getStaticVariableList();
+      expect(Mock.StaticVariableManager.getStaticVariableList).toHaveBeenCalled();
+    });
+
   });
 
   function mockSurveyIdentityFactory($injector) {
@@ -155,5 +199,11 @@ describe('SurveyFactory', function () {
   function mockSurveyDictionaryService($injector) {
     Mock.SurveyDictionaryService = $injector.get('SurveyDictionaryService');
     return Mock.SurveyDictionaryService;
+  }
+
+  function mockStaticVariableManager($injector) {
+    Mock.StaticVariableManagerFactory = $injector.get('otusjs.staticVariable.StaticVariableManagerFactory');
+    Mock.StaticVariableManager = Mock.StaticVariableManagerFactory.create();
+    return Mock.StaticVariableManagerFactory;
   }
 });

@@ -14,21 +14,10 @@
     var self = this;
 
     self.create = create;
-    self.loadJsonData = loadJsonData;
-
 
     function create() {
       return new StaticVariableManager(SurveyStaticVariable);
     }
-
-    function loadJsonData(itemsArray) {
-      var manager = create();
-
-      itemsArray.forEach(item=> {
-        manager.add(SurveyStaticVariable.fromJson(item));
-      });
-    }
-
     return self;
   }
 
@@ -39,11 +28,16 @@
     /* Public interface */
     self.create = create;
     self.add = add;
-    self.removeByName = removeByName;
     self.remove = remove;
-    self.updateStaticVariable = updateStaticVariable;
+    self.update = update;
     self.getStaticVariableList = getStaticVariableList;
+    self.loadJsonData = loadJsonData;
 
+    function loadJsonData(itemsArray) {
+      itemsArray.forEach(item=> {
+        add(SurveyStaticVariable.fromJson(item));
+      });
+    }
 
     function create() {
       return SurveyStaticVariable.create();
@@ -58,16 +52,15 @@
       _items.push(variable);
     }
 
-    function removeByName(variable) {
-      remove(_findVariableIndex(variable.name, variable.sending), 1);
+    function remove(index) {
+      _items.splice(index, 1);
     }
 
-    function remove(ix) {
-      _items.splice(ix, 1);
-    }
+    function update(index, variable) {
+      if (!variable.name) {
+        throw new Error("Variable with empty name can't be added");
+      }
 
-    function updateStaticVariable(variable) {
-      var index = _findVariableIndex(variable.name, variable.sending);
       _items[index] = variable;
     }
 
