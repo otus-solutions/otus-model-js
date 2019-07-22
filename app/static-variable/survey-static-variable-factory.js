@@ -12,13 +12,13 @@
 
     /* Public interface */
     self.create = create;
-    self.fromJsonObject = fromJsonObject;
+    self.fromJson = fromJson;
 
     function create() {
       return new StaticVariable();
     }
 
-    function fromJsonObject(jsonObject) {
+    function fromJson(jsonObject) {
       var variable = new StaticVariable(jsonObject.label, jsonObject.name, jsonObject.sending, jsonObject.wholeTemplate, jsonObject.customizations, jsonObject.bindTo);
 
       variable.value = jsonObject.value;
