@@ -185,10 +185,6 @@
       return angular.copy(self.DataSourceManager.list());
     }
 
-    function isAutocomplete(item) {
-      return item.objectType === "AutocompleteQuestion";
-    }
-
     /* Static Variables */
     function createStaticVariable() {
       return self.StaticVariableManager.create();
@@ -208,6 +204,10 @@
 
     function getStaticVariableList() {
       self.StaticVariableManager.getStaticVariableList();
+    }
+
+    function fillVariables(fillingArray) {
+      self.StaticVariableManager.fillVariables(fillingArray);
     }
 
     function toJSON() {

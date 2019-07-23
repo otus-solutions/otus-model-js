@@ -35,7 +35,10 @@
 
     function loadJsonData(itemsArray) {
       itemsArray.forEach(item=> {
-        add(SurveyStaticVariable.fromJson(item));
+        try {
+          add(SurveyStaticVariable.fromJson(item));
+        } catch (e) {}
+
       });
     }
 
@@ -44,9 +47,7 @@
     }
 
     function add(variable) {
-      if (!variable.name) {
-        throw new Error("Variable with empty name can't be added");
-      }
+      _validateInsertion(variable);
 
       _findVariableIndex(variable.name, variable.sending);
       _items.push(variable);
@@ -57,9 +58,7 @@
     }
 
     function update(index, variable) {
-      if (!variable.name) {
-        throw new Error("Variable with empty name can't be added");
-      }
+      _validateInsertion(variable);
 
       _items[index] = variable;
     }
@@ -72,6 +71,16 @@
       return _items.findIndex(item => {
         return item.name === name && item.sending === sending;
       });
+    }
+
+    function _validateInsertion(variable) {
+      if (!variable.name) {
+        throw new Error("Variable with empty name can't be added");
+      }
+
+      if (!variable.sending) {
+        throw new Error("Variable with empty sending id can't be added");
+      }
     }
 
     function fillVariableValues(variableArray) {

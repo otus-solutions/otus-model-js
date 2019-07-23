@@ -31,6 +31,7 @@
   function StaticVariable(label, name, sending, wholeTemplate, customizations, bindTo) {
     var self = this;
 
+    self.objectType = "StaticVariableRequest ";
     self.name = name || '';
     self.label = label || '';
     self.sending = sending || '';

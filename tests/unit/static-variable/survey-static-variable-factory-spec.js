@@ -1,4 +1,4 @@
-fdescribe('The SurveyStaticVariableFactory', function () {
+describe('The SurveyStaticVariableFactory', function () {
 
   var Mock = {};
   var injections = {};
@@ -21,7 +21,7 @@ fdescribe('The SurveyStaticVariableFactory', function () {
   });
 
   it('should create an empty variable for template', function () {
-    var variableTemplate = factory.fromJsonObject(Mock.variableObject);
+    var variableTemplate = factory.fromJson(Mock.variableObject);
     expect(variableTemplate).toBeDefined();
     expect(variableTemplate.customized).toBeTruthy();
   });
