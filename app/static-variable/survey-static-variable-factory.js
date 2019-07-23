@@ -49,7 +49,7 @@
     self.toJSON = toJSON;
 
     function _init() {
-      self.customized = !!self.customizations;
+      self.customized = !!self.customizations.length;
       _translateValue();
     }
 
