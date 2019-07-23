@@ -26,12 +26,15 @@
     var _items = [];
 
     /* Public interface */
+    self.loadJsonData = loadJsonData;
     self.create = create;
     self.add = add;
     self.remove = remove;
     self.update = update;
     self.getStaticVariableList = getStaticVariableList;
-    self.loadJsonData = loadJsonData;
+    self.fillVariables = fillVariables;
+    self.getWholeTemplateVariables = getWholeTemplateVariables;
+    self.getItemVariables = getItemVariables;
 
     function loadJsonData(itemsArray) {
       itemsArray.forEach(item=> {
@@ -70,6 +73,26 @@
     function _findVariableIndex(name, sending) {
       return _items.findIndex(item => {
         return item.name === name && item.sending === sending;
+      });
+    }
+
+    function fillVariables(responseArray) {
+      responseArray.forEach(resp => {
+        let index = _findVariableIndex(resp.name, resp.sending);
+        _items[index].setValue(resp.value);
+      })
+    }
+
+    function getWholeTemplateVariables() {
+      return _items.filter(item => {
+        return item.bindToWholeTemplate === true;
+      });
+    }
+
+
+    function getItemVariables(itemId) {
+      return _items.filter(item => {
+        return item.bindTo.includes(itemId);
       });
     }
 

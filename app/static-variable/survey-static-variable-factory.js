@@ -19,7 +19,7 @@
     }
 
     function fromJson(jsonObject) {
-      var variable = new StaticVariable(jsonObject.label, jsonObject.name, jsonObject.sending, jsonObject.wholeTemplate, jsonObject.customizations, jsonObject.bindTo);
+      var variable = new StaticVariable(jsonObject.label, jsonObject.name, jsonObject.sending, jsonObject.bindToWholeTemplate, jsonObject.customizations, jsonObject.bindTo);
 
       variable.value = jsonObject.value;
       return variable;
@@ -36,7 +36,7 @@
     self.label = label || '';
     self.sending = sending || '';
     self.customized = false;
-    self.bindToWholeTemplate = wholeTemplate || true;
+    self.bindToWholeTemplate = wholeTemplate === undefined ? true : wholeTemplate;
     self.bindTo = bindTo || [];
     self.value = '';
     self.customizations = customizations || [];
@@ -55,7 +55,7 @@
     }
 
     function addCustomization(value, label) {
-      if(!value){
+      if (!value) {
         throw new Error("Customization must have a value");
       }
 
@@ -82,7 +82,7 @@
         return custom.value === self.value;
       });
 
-      if (!translation){
+      if (!translation) {
         self.translatedValue = self.value;
         return;
       }

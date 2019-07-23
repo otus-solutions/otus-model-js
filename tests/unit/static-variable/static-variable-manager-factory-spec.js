@@ -1,4 +1,4 @@
-fdescribe('The SurveyStaticVariableFactory', function () {
+describe('The SurveyStaticVariableFactory', function () {
 
   var Mock = {};
   var Injections = {};
@@ -90,7 +90,24 @@ fdescribe('The SurveyStaticVariableFactory', function () {
     });
 
     it('should fill the variable values', function () {
-      
+      manager.loadJsonData(Mock.variableList);
+      manager.fillVariables(Mock.variableResponse);
+
+      expect(manager.getStaticVariableList()[0].value).toEqual(0);
+    });
+
+    it('should fetch the whole template variables', function () {
+      manager.loadJsonData(Mock.variableList);
+
+
+      expect(manager.getWholeTemplateVariables().length).toEqual(2);
+    });
+
+
+    it('should fetch the item variables', function () {
+      manager.loadJsonData(Mock.variableList);
+
+      expect(manager.getItemVariables("CSJA").length).toEqual(1);
     });
   });
 
@@ -105,7 +122,9 @@ fdescribe('The SurveyStaticVariableFactory', function () {
       {
         name: "CSJ1",
         label: "Tem diabetes?",
-        sending: 1,
+        sending: "1",
+        bindToWholeTemplate:true,
+        bindTo: [],
         customizations: [
           {
             value: 0,
@@ -120,7 +139,9 @@ fdescribe('The SurveyStaticVariableFactory', function () {
       {
         name: "CSJ1",
         label: "Tem diabetes?",
-        sending: 2,
+        sending: "2",
+        bindToWholeTemplate:true,
+        bindTo: [],
         customizations: [
           {
             value: 1,
@@ -135,7 +156,9 @@ fdescribe('The SurveyStaticVariableFactory', function () {
       {
         name: "CSJ2",
         label: "Peso: ",
-        sending: 1,
+        sending: "onda 1",
+        bindToWholeTemplate: false,
+        bindTo: ["CSJA"],
         customizations: []
       }
     ];
@@ -143,17 +166,17 @@ fdescribe('The SurveyStaticVariableFactory', function () {
     Mock.variableResponse = [
       {
         name: "CSJ1",
-        sending: 2,
+        sending: "2",
         value: 1
       },
       {
         name: "CSJ1",
-        sending: 1,
+        sending: "1",
         value: 0
       },
       {
         name: "CSJ2",
-        label: "Peso: ",
+        sending: "onda 1",
         value: "60KG",
       }
     ];
