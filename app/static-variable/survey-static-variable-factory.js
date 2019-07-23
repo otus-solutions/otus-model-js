@@ -33,7 +33,7 @@
 
     self.name = name || '';
     self.label = label || '';
-    self.sending = sending || -1;
+    self.sending = sending || '';
     self.customized = false;
     self.bindToWholeTemplate = wholeTemplate || true;
     self.bindTo = bindTo || [];
@@ -46,6 +46,7 @@
     self.addCustomization = addCustomization;
     self.removeCustomization = removeCustomization;
     self.setValue = setValue;
+    self.toJSON = toJSON;
 
     function _init() {
       self.customized = !!self.customizations;
@@ -88,6 +89,18 @@
       self.translatedValue = translation.label;
     }
 
+    function toJSON() {
+      let json = {};
+
+      json.name = self.name;
+      json.label = self.label;
+      json.sending = self.sending;
+      json.bindToWholeTemplate = self.bindToWholeTemplate;
+      json.bindTo = self.bindTo;
+      json.customizations = self.customizations;
+
+      return json;
+    }
 
     return self;
   }
