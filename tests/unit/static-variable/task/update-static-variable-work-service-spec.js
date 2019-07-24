@@ -13,18 +13,24 @@ describe('AddStaticVariableService', function() {
   });
 
 
-  it('should execute calling the method on survey', function() {
-    spyOn(Mock.survey, 'updateStaticVariable');
+  it('should execute calling the method on surveys StaticVariableManager', function() {
+    spyOn(Mock.StaticVariableManager, 'update');
     service.execute(Mock.survey, Mock.indexToUpdate, Mock.variable);
 
-    expect(Mock.survey.updateStaticVariable).toHaveBeenCalledTimes(1);
-    expect(Mock.survey.updateStaticVariable).toHaveBeenCalledWith(Mock.indexToUpdate, Mock.variable);
+    expect(Mock.StaticVariableManager.update).toHaveBeenCalledTimes(1);
+    expect(Mock.StaticVariableManager.update).toHaveBeenCalledWith(Mock.indexToUpdate, Mock.variable);
   });
 
 
   function mock() {
+    Mock.StaticVariableManager = {
+      add: function (variable) {},
+      update: function (variable) {},
+      remove: function (variable) {}
+    };
+
     Mock.survey = {
-      updateStaticVariable: function (variable) {}
+      StaticVariableManager: Mock.StaticVariableManager
     };
 
     Mock.variable = {};

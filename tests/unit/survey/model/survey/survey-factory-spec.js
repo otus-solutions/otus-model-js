@@ -73,7 +73,6 @@ describe('SurveyFactory', function () {
 
     beforeEach(function () {
       spyOn(Mock.SurveyMetaInfoFactory, 'fromJsonObject');
-      console.log(Mock.StaticVariableManagerFactory);
       survey = factory.fromJsonObject(Mock.surveyTemplate);
     });
 
@@ -122,13 +121,12 @@ describe('SurveyFactory', function () {
 
   });
 
-  describe('the static variable methods', function () {
+  describe('The static variable methods', function () {
     beforeEach(function () {
       spyOn(Mock.StaticVariableManagerFactory, 'create').and.returnValue(Mock.StaticVariableManager);
       spyOn(Mock.StaticVariableManager, 'create').and.callThrough();
-      spyOn(Mock.StaticVariableManager, 'add').and.callThrough();
-      spyOn(Mock.StaticVariableManager, 'remove').and.callThrough();
-      spyOn(Mock.StaticVariableManager, 'update').and.callThrough();
+      spyOn(Mock.StaticVariableManager, 'getWholeTemplateVariables').and.callThrough();
+      spyOn(Mock.StaticVariableManager, 'getItemVariables').and.callThrough();
       spyOn(Mock.StaticVariableManager, 'getStaticVariableList').and.callThrough();
 
       survey = factory.create();
@@ -139,26 +137,20 @@ describe('SurveyFactory', function () {
       expect(Mock.StaticVariableManager.create).toHaveBeenCalled();
     });
 
-    it('should call the managers add method', function () {
-      let fakeVariable = {name:"asd"};
-      survey.addStaticVariable(fakeVariable);
-      expect(Mock.StaticVariableManager.add).toHaveBeenCalledWith(fakeVariable);
-    });
-
-    it('should call the managers remove method', function () {
-      survey.removeStaticVariable(1);
-      expect(Mock.StaticVariableManager.remove).toHaveBeenCalledWith(1);
-    });
-
-    it('should call the managers update method', function () {
-      let fakeVariable = {name:"asd"};
-      survey.updateStaticVariable(1, fakeVariable);
-      expect(Mock.StaticVariableManager.update).toHaveBeenCalledWith(1, fakeVariable);
-    });
-
-    it('should call the managers remove method', function () {
+    it('should call the managers get list method', function () {
       survey.getStaticVariableList();
       expect(Mock.StaticVariableManager.getStaticVariableList).toHaveBeenCalled();
+    });
+
+    it('should call the managers getWholeTemplateVariables method', function () {
+      survey.getWholeTemplateStaticVariable();
+      expect(Mock.StaticVariableManager.getWholeTemplateVariables).toHaveBeenCalled();
+    });
+
+    it('should call the managers getItemVariables method', function () {
+      let itemArray = ["CSJS"];
+      survey.getItemStaticVariable(itemArray);
+      expect(Mock.StaticVariableManager.getItemVariables).toHaveBeenCalledWith(itemArray);
     });
 
   });

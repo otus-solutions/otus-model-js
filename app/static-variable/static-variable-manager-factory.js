@@ -105,11 +105,5 @@
         throw new Error("Variable with empty sending id can't be added");
       }
     }
-
-    function fillVariableValues(variableArray) {
-
-    }
-
-
   }
 }());

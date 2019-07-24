@@ -11,7 +11,7 @@
         self.execute = execute;
 
         function execute(survey, index, variable) {
-            return survey.updateStaticVariable(index, variable);
+            return survey.StaticVariableManager.update(index, variable);
         }
     }
 
