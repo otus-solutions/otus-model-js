@@ -78,12 +78,13 @@
     }
 
     function _translateValue() {
+      let stringValue = self.value.toString();
       let translation = self.customizations.find(custom => {
-        return custom.value === self.value;
+        return custom.value === stringValue;
       });
 
       if (!translation) {
-        self.translatedValue = self.value;
+        self.translatedValue = stringValue;
         return;
       }
 

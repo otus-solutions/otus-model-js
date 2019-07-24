@@ -39,7 +39,11 @@ describe('The SurveyStaticVariableFactory', function () {
   it('should translate the value after be set', function () {
     var variable = factory.fromJson(Mock.variableObject);
     variable.setValue("1");
-    expect(variable.translatedValue).toEqual("Sim")
+    expect(variable.translatedValue).toEqual("Sim");
+
+
+    variable.setValue(2);
+    expect(variable.translatedValue).toEqual("Não")
   });
 
   function mock() {
