@@ -31,7 +31,7 @@
   function StaticVariable(label, name, sending, wholeTemplate, customizations, bindTo) {
     var self = this;
 
-    self.objectType = "StaticVariableRequest ";
+    self.objectType = "StaticVariable";
     self.name = name || '';
     self.label = label || '';
     self.sending = sending || '';
@@ -94,6 +94,7 @@
     function toJSON() {
       let json = {};
 
+      json.objectType = self.objectType;
       json.name = self.name;
       json.label = self.label;
       json.sending = self.sending;
@@ -110,8 +111,21 @@
   function StaticVariableCustomization(value, label) {
     var self = this;
 
+    self.toJSON = toJSON;
+
+    self.objectType = "StaticVariableCustomization";
     self.value = value;
     self.label = label || '';
+
+    function toJSON() {
+      let json = {};
+
+      json.objectType = self.objectType;
+      json.value = self.value;
+      json.label = self.label;
+
+      return json;
+    }
 
     return self;
   }

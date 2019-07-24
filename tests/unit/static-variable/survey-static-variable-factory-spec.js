@@ -32,7 +32,7 @@ describe('The SurveyStaticVariableFactory', function () {
     variable.addCustomization("1", "Sim");
     expect(variable.customizations.length).toBe(1);
 
-    variable.removeCustomization(0)
+    variable.removeCustomization(0);
     expect(variable.customizations.length).toBe(0);
   });
 

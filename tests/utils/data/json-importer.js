@@ -3365,8 +3365,37 @@ Test.utils.data.latestSurveyTemplate = {
       "conditions": []
     }]
   }],
-  "staticVariableList": []
-};
+  "staticVariableList": [
+    {
+      "objectType": "StaticVariable",
+      "name": "CSJC",
+      "label": "Diabetes:",
+      "sending": "onda 2",
+      "bindToWholeTemplate": true,
+      "bindTo": [],
+      "customizations": [
+        {
+          "objectType": "StaticVariableCustomization",
+          "value": "0",
+          "label": "sim"
+        },
+        {
+          "objectType": "StaticVariableCustomization",
+          "value": "1",
+          "label": "não"
+        }
+      ]
+    },
+    {
+      "objectType": "StaticVariable",
+      "name": "RCTD",
+      "label": "Peso:",
+      "sending": "onda 1",
+      "bindToWholeTemplate": true,
+      "bindTo": [],
+      "customizations": []
+    }
+  ]};
 Test.utils.data.participantLaboratory = {
 
   "objectType": null,
