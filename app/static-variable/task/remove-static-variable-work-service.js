@@ -3,7 +3,7 @@
 
     angular
         .module('otusjs.staticVariable')
-        .service('otusjs.staticVariable.RemoveStaticVariableService', RemoveStaticVariableService);
+        .service('otusjs.staticVariable.RemoveStaticVariableTaskService', RemoveStaticVariableService);
 
     function RemoveStaticVariableService() {
         var self = this;

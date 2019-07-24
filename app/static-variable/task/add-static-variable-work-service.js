@@ -3,7 +3,7 @@
 
     angular
         .module('otusjs.staticVariable')
-        .service('otusjs.staticVariable.AddStaticVariableService', AddStaticVariableService);
+        .service('otusjs.staticVariable.AddStaticVariableTaskService', AddStaticVariableService);
 
     function AddStaticVariableService() {
         var self = this;
