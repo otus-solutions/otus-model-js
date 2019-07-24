@@ -23,22 +23,24 @@ describe('The SurveyStaticVariableFactory', function () {
 
   describe('the manager methods for handling the list creation', function () {
     var manager;
+    var variable;
 
     beforeEach(function () {
       manager = factory.create();
-      spyOn(Injections.SurveyStaticVariableFactory, "create").and.callThrough();
+
+      variable = manager.create();
+      variable.name = 'name';
+      variable.sending = 'sending';
+
     });
 
     it('should create an empty variable', function () {
+      spyOn(Injections.SurveyStaticVariableFactory, "create").and.callThrough();
       manager.create();
       expect(Injections.SurveyStaticVariableFactory.create).toHaveBeenCalled();
     });
 
     it('should add a variable', function () {
-      let variable = manager.create();
-      variable.name = 'name';
-      variable.sending = 'sending';
-
       let beforeAddLength = manager.getStaticVariableList().length;
       manager.add(variable);
 
@@ -47,10 +49,6 @@ describe('The SurveyStaticVariableFactory', function () {
     });
 
     it('should remove a variable by index', function () {
-      let variable = manager.create();
-      variable.name = 'name';
-      variable.sending = 'sending';
-
       manager.add(variable);
       let indexToRemove = manager.getStaticVariableList().length - 1;
       manager.remove(indexToRemove);
@@ -59,10 +57,6 @@ describe('The SurveyStaticVariableFactory', function () {
     });
 
     it('should update a variable', function () {
-      let variable = manager.create();
-      variable.name = 'name';
-      variable.sending = 'sending';
-
       manager.add(variable);
 
       let anotherVariable = manager.create();
@@ -89,28 +83,41 @@ describe('The SurveyStaticVariableFactory', function () {
       expect(manager.getStaticVariableList()[0].name).toEqual(Mock.variableList[0].name);
     });
 
-    it('should fill the variable values', function () {
+    it('should throw an error when adding a variable with empty name', function () {
+      variable.name = '';
+      expect(function (){manager.add(variable)}).toThrow();
+    });
+
+    it('should throw an error when adding a variable with empty sending', function () {
+      variable.sending = '';
+      expect(function (){manager.add(variable)}).toThrow();
+    });
+  });
+
+  describe('the manger methods for filling and retrieving variable values', function () {
+    var manager;
+
+    beforeEach(function () {
+      manager = factory.create();
       manager.loadJsonData(Mock.variableList);
+
+    });
+
+    it('should fill the variable values', function () {
       manager.fillVariables(Mock.variableResponse);
 
       expect(manager.getStaticVariableList()[0].value).toEqual(0);
     });
 
     it('should fetch the whole template variables', function () {
-      manager.loadJsonData(Mock.variableList);
-
-
       expect(manager.getWholeTemplateVariables().length).toEqual(2);
     });
 
 
     it('should fetch the item variables', function () {
-      manager.loadJsonData(Mock.variableList);
-
       expect(manager.getItemVariables("CSJA").length).toEqual(1);
     });
   });
-
 
 
   function mockInjections($injector) {
