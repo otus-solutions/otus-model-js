@@ -20,10 +20,26 @@ describe('The SurveyStaticVariableFactory', function () {
     expect(variableTemplate).toBeDefined();
   });
 
-  it('should create an empty variable for template', function () {
-    var variableTemplate = factory.fromJson(Mock.variableObject);
-    expect(variableTemplate).toBeDefined();
-    expect(variableTemplate.customized).toBeTruthy();
+  it('should create a variable from json', function () {
+    var variable = factory.fromJson(Mock.variableObject);
+    expect(variable).toBeDefined();
+    expect(variable.customized).toBeTruthy();
+  });
+
+  it('should add and remove customizations', function () {
+    var variable = factory.create();
+
+    variable.addCustomization("1", "Sim");
+    expect(variable.customizations.length).toBe(1);
+
+    variable.removeCustomization(0)
+    expect(variable.customizations.length).toBe(0);
+  });
+
+  it('should translate the value after be set', function () {
+    var variable = factory.fromJson(Mock.variableObject);
+    variable.setValue("1");
+    expect(variable.translatedValue).toEqual("Sim")
   });
 
   function mock() {
@@ -42,6 +58,8 @@ describe('The SurveyStaticVariableFactory', function () {
       }
     ];
 
+    Mock.value = "1";
+
     Mock.blankCustomization = {
       value: "1",
       label: ""
@@ -50,7 +68,7 @@ describe('The SurveyStaticVariableFactory', function () {
     Mock.variableObject = {
       name: "CSJ11",
       label: "Tem diabetes?",
-      sending: -1,
+      sending: "onda 2",
       bindToWholeTemplate: true,
       bindTo: [],
       customizations: Mock.customizations,
