@@ -10,8 +10,8 @@
 
         self.execute = execute;
 
-        function execute(survey, variable) {
-            return survey.removeStaticVariable(variable);
+        function execute(survey, index) {
+            return survey.removeStaticVariable(index);
         }
     }
 
