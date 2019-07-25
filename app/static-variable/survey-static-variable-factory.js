@@ -59,6 +59,10 @@
         throw new Error("Customization must have a value");
       }
 
+      if(_findCustomization(value)) {
+        throw new Error("Customization with value " + value + "already exists.");
+      }
+
       self.customizations.push(new StaticVariableCustomization(value, label));
     }
 
@@ -89,6 +93,12 @@
       }
 
       self.translatedValue = translation.label;
+    }
+
+    function _findCustomization(value) {
+      return self.customizations.find(custom => {
+        return custom.value === value;
+      })
     }
 
     function toJSON() {

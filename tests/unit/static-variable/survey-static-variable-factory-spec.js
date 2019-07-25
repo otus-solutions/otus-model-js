@@ -36,6 +36,22 @@ describe('The SurveyStaticVariableFactory', function () {
     expect(variable.customizations.length).toBe(0);
   });
 
+  it('should not add customizations with empty value', function () {
+    var variable = factory.create();
+    expect(function () {
+      variable.addCustomization("", "Sim");
+    }).toThrow();
+  });
+
+  it('should not add customizations with a value already set', function () {
+    var variable = factory.create();
+    variable.addCustomization("1", "Sim");
+
+    expect(function () {
+      variable.addCustomization("1", "Não");
+    }).toThrow();
+  });
+
   it('should translate the value after be set', function () {
     var variable = factory.fromJson(Mock.variableObject);
     variable.setValue("1");
@@ -45,6 +61,8 @@ describe('The SurveyStaticVariableFactory', function () {
     variable.setValue(2);
     expect(variable.translatedValue).toEqual("Não")
   });
+
+
 
   function mock() {
     Mock.customizations = [
