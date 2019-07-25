@@ -123,6 +123,7 @@
     self.setNavigationTracker = setNavigationTracker;
     self.clearSkippedAnswers = clearSkippedAnswers;
     self.getDataSources = getDataSources;
+    self.getStaticVariable = getStaticVariable;
     self.toJSON = toJSON;
 
     function getID() {
@@ -146,6 +147,10 @@
       return getTemplate().getAllDataSources();
     }
 
+    function getStaticVariable() {
+      return getTemplate().getStaticVariableList();
+    }
+
     function getTemplate() {
       if (_existStructuralFailure()) {
         return self.surveyForm;
@@ -156,7 +161,7 @@
 
     function getIdentity() {
       let template = getTemplate();
-      if(!template.identity) return template;
+      if (!template.identity) return template;
       else return template.identity;
     }
 
