@@ -123,7 +123,9 @@
     self.setNavigationTracker = setNavigationTracker;
     self.clearSkippedAnswers = clearSkippedAnswers;
     self.getDataSources = getDataSources;
-    self.getStaticVariable = getStaticVariable;
+    self.getStaticVariableList = getStaticVariableList;
+    self.getWholeTemplateVariableList = getWholeTemplateVariableList;
+    self.getItemStaticVariableList = getItemStaticVariableList;
     self.toJSON = toJSON;
 
     function getID() {
@@ -147,7 +149,7 @@
       return getTemplate().getAllDataSources();
     }
 
-    function getStaticVariable() {
+    function getStaticVariableList() {
       return getTemplate().getStaticVariableList();
     }
 
@@ -195,6 +197,14 @@
 
     function setNavigationTracker(stack) {
       self.navigationTracker = stack;
+    }
+
+    function getWholeTemplateVariableList() {
+      return getTemplate().getWholeTemplateVariableList();
+    }
+
+    function getItemStaticVariableList(itemID) {
+      return getTemplate(itemID).getItemStaticVariableList();
     }
 
     function toJSON() {
