@@ -191,7 +191,7 @@
     }
 
     function getStaticVariableList() {
-      self.StaticVariableManager.getStaticVariableList();
+      return self.StaticVariableManager.getStaticVariableList();
     }
 
     function fillStaticVariablesValues(fillingArray) {
@@ -199,11 +199,11 @@
     }
 
     function getWholeTemplateStaticVariable() {
-      self.StaticVariableManager.getWholeTemplateVariables();
+      return self.StaticVariableManager.getWholeTemplateVariables();
     }
 
     function getItemStaticVariable(itemID) {
-      self.StaticVariableManager.getItemVariables(itemID);
+      return self.StaticVariableManager.getItemVariables(itemID);
     }
 
 

@@ -126,6 +126,7 @@
     self.getStaticVariableList = getStaticVariableList;
     self.getWholeTemplateVariableList = getWholeTemplateVariableList;
     self.getItemStaticVariableList = getItemStaticVariableList;
+    self.fillStaticVariablesValues = fillStaticVariablesValues;
     self.toJSON = toJSON;
 
     function getID() {
@@ -147,10 +148,6 @@
 
     function getDataSources() {
       return getTemplate().getAllDataSources();
-    }
-
-    function getStaticVariableList() {
-      return getTemplate().getStaticVariableList();
     }
 
     function getTemplate() {
@@ -199,12 +196,20 @@
       self.navigationTracker = stack;
     }
 
+    function getStaticVariableList() {
+      return getTemplate().getStaticVariableList();
+    }
+
     function getWholeTemplateVariableList() {
       return getTemplate().getWholeTemplateVariableList();
     }
 
     function getItemStaticVariableList(itemID) {
       return getTemplate(itemID).getItemStaticVariableList();
+    }
+
+    function fillStaticVariablesValues(fillingArray) {
+      return getTemplate().fillStaticVariablesValues(fillingArray);
     }
 
     function toJSON() {
