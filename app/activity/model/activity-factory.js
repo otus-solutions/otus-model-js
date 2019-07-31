@@ -205,7 +205,7 @@
     }
 
     function getItemStaticVariableList(itemID) {
-      return getTemplate(itemID).getItemStaticVariableList();
+      return getTemplate().getItemStaticVariableList(itemID);
     }
 
     function fillStaticVariablesValues(fillingArray) {
