@@ -1,4 +1,4 @@
-describe('The SurveyStaticVariableFactory', function () {
+describe('The StaticVariableFactory', function () {
 
   var Mock = {};
   var Injections = {};
@@ -35,9 +35,9 @@ describe('The SurveyStaticVariableFactory', function () {
     });
 
     it('should create an empty variable', function () {
-      spyOn(Injections.SurveyStaticVariableFactory, "create").and.callThrough();
+      spyOn(Injections.StaticVariableFactory, "create").and.callThrough();
       manager.create();
-      expect(Injections.SurveyStaticVariableFactory.create).toHaveBeenCalled();
+      expect(Injections.StaticVariableFactory.create).toHaveBeenCalled();
     });
 
     it('should add a variable', function () {
@@ -69,14 +69,14 @@ describe('The SurveyStaticVariableFactory', function () {
     });
 
     it('should set the variables all at once', function () {
-      spyOn(Injections.SurveyStaticVariableFactory, "fromJson").and.callThrough();
+      spyOn(Injections.StaticVariableFactory, "fromJson").and.callThrough();
       manager.loadJsonData(Mock.variableList);
 
-      expect(Injections.SurveyStaticVariableFactory.fromJson).toHaveBeenCalledTimes(Mock.variableList.length);
+      expect(Injections.StaticVariableFactory.fromJson).toHaveBeenCalledTimes(Mock.variableList.length);
     });
 
     it('should get the variable list', function () {
-      spyOn(Injections.SurveyStaticVariableFactory, "fromJson").and.callThrough();
+      spyOn(Injections.StaticVariableFactory, "fromJson").and.callThrough();
       manager.loadJsonData(Mock.variableList);
 
       expect(manager.getStaticVariableList().length).toEqual(Mock.variableList.length);
@@ -121,7 +121,7 @@ describe('The SurveyStaticVariableFactory', function () {
 
 
   function mockInjections($injector) {
-    Injections.SurveyStaticVariableFactory = $injector.get('otusjs.staticVariable.SurveyStaticVariableFactory');
+    Injections.StaticVariableFactory = $injector.get('otusjs.staticVariable.StaticVariableFactory');
   }
 
   function mock() {

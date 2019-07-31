@@ -19,7 +19,7 @@ describe('SurveyFactory', function () {
         'SurveyItemManagerFactory': mockSurveyItemManagerFactory(_$injector_),
         'DataSourceDefinitionManagerFactory': mockDataSourceFactory(_$injector_),
         'SurveyDictionaryService': mockSurveyDictionaryService(_$injector_),
-        'SurveyStaticVariableFactory': mockStaticVariableManager(_$injector_)
+        'StaticVariableFactory': mockStaticVariableManager(_$injector_)
       };
       factory = _$injector_.get('SurveyFactory', Injections);
     });
