@@ -117,8 +117,8 @@
     self.createStaticVariable = createStaticVariable;
     self.getStaticVariableList = getStaticVariableList;
     self.fillStaticVariablesValues = fillStaticVariablesValues;
-    self.getWholeTemplateStaticVariable = getWholeTemplateStaticVariable;
-    self.getItemStaticVariable = getItemStaticVariable;
+    self.getWholeTemplateVariableList = getWholeTemplateVariableList;
+    self.getItemStaticVariableList = getItemStaticVariableList;
     self.toJSON = toJSON;
 
 
@@ -191,21 +191,20 @@
     }
 
     function getStaticVariableList() {
-      self.StaticVariableManager.getStaticVariableList();
+      return self.StaticVariableManager.getStaticVariableList();
+    }
+
+    function getWholeTemplateVariableList() {
+      return self.StaticVariableManager.getWholeTemplateVariables();
+    }
+
+    function getItemStaticVariableList(itemID) {
+      return self.StaticVariableManager.getItemVariables(itemID);
     }
 
     function fillStaticVariablesValues(fillingArray) {
       self.StaticVariableManager.fillVariables(fillingArray);
     }
-
-    function getWholeTemplateStaticVariable() {
-      self.StaticVariableManager.getWholeTemplateVariables();
-    }
-
-    function getItemStaticVariable(itemID) {
-      self.StaticVariableManager.getItemVariables(itemID);
-    }
-
 
     function toJSON() {
       var json = {};

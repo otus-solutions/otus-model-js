@@ -1,4 +1,4 @@
-describe('The SurveyStaticVariableFactory', function () {
+describe('The StaticVariableFactory', function () {
 
   var Mock = {};
   var injections = {};
@@ -10,7 +10,7 @@ describe('The SurveyStaticVariableFactory', function () {
     mock();
 
     inject(function (_$injector_) {
-      factory = _$injector_.get('otusjs.staticVariable.SurveyStaticVariableFactory');
+      factory = _$injector_.get('otusjs.staticVariable.StaticVariableFactory');
     });
   });
 

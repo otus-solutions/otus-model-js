@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.staticVariable')
-    .factory('otusjs.staticVariable.SurveyStaticVariableFactory', Factory);
+    .factory('otusjs.staticVariable.StaticVariableFactory', Factory);
 
   Factory.$inject = [];
 

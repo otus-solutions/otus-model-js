@@ -6,7 +6,7 @@
     .service('otusjs.staticVariable.StaticVariableManagerFactory', Factory);
 
   Factory.$inject = [
-    'otusjs.staticVariable.SurveyStaticVariableFactory'
+    'otusjs.staticVariable.StaticVariableFactory'
   ];
 
 

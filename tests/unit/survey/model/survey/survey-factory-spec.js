@@ -19,7 +19,7 @@ describe('SurveyFactory', function () {
         'SurveyItemManagerFactory': mockSurveyItemManagerFactory(_$injector_),
         'DataSourceDefinitionManagerFactory': mockDataSourceFactory(_$injector_),
         'SurveyDictionaryService': mockSurveyDictionaryService(_$injector_),
-        'SurveyStaticVariableFactory': mockStaticVariableManager(_$injector_)
+        'StaticVariableFactory': mockStaticVariableManager(_$injector_)
       };
       factory = _$injector_.get('SurveyFactory', Injections);
     });
@@ -143,13 +143,13 @@ describe('SurveyFactory', function () {
     });
 
     it('should call the managers getWholeTemplateVariables method', function () {
-      survey.getWholeTemplateStaticVariable();
+      survey.getWholeTemplateVariableList();
       expect(Mock.StaticVariableManager.getWholeTemplateVariables).toHaveBeenCalled();
     });
 
     it('should call the managers getItemVariables method', function () {
       let itemArray = ["CSJS"];
-      survey.getItemStaticVariable(itemArray);
+      survey.getItemStaticVariableList(itemArray);
       expect(Mock.StaticVariableManager.getItemVariables).toHaveBeenCalledWith(itemArray);
     });
 
