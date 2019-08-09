@@ -13,12 +13,13 @@
     'SurveyItemManagerFactory',
     'otusjs.model.survey.DataSourceDefinitionManagerFactory',
     'SurveyDictionaryService',
-    'otusjs.staticVariable.StaticVariableManagerFactory'
+    'otusjs.staticVariable.StaticVariableManagerFactory',
+    'otusjs.surveyItemGroup.SurveyItemGroupManagerFactory'
   ];
 
   var Inject = {};
 
-  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService, StaticVariableManagerFactory) {
+  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService, StaticVariableManagerFactory, SurveyItemGroupManagerFactory) {
     var self = this;
 
     self.OBJECT_TYPE = 'Survey';
@@ -28,10 +29,11 @@
     Inject.DataSourceDefinitionManagerFactory = DataSourceDefinitionManagerFactory;
     Inject.SurveyDictionaryService = SurveyDictionaryService;
     Inject.StaticVariableManagerFactory = StaticVariableManagerFactory;
+    Inject.SurveyItemGroupManagerFactory = SurveyItemGroupManagerFactory;
 
     /* Public interface */
     self.create = create;
-    self.load = load;
+    // self.load = load;
     self.fromJsonObject = fromJsonObject;
     self.createDictionary = createDictionary;
 
@@ -42,16 +44,16 @@
      deve-se excluir o método load e usar somente o fromJsonObject.
 
      */
-    function load(jsonObject) {
-      var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
-      var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
-      var UUID = jsonObject.oid;
-
-      var survey = new Survey(metainfo, identity, UUID);
-      survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
-
-      return survey;
-    }
+    // function load(jsonObject) {
+    //   var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
+    //   var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
+    //   var UUID = jsonObject.oid;
+    //
+    //   var survey = new Survey(metainfo, identity, UUID);
+    //   survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
+    //
+    //   return survey;
+    // }
 
     function create(name, acronym) {
       var UUID = SurveyUUIDGenerator.generateSurveyUUID();
@@ -75,6 +77,7 @@
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
       survey.StaticVariableManager.loadJsonData(jsonObject.staticVariableList || []);
+      survey.SurveyItemGroupManagerFactory.loadJsonData(jsonObject.surveyItemGroupList || []); //todo this array should be here?
 
       return survey;
     }
@@ -98,6 +101,7 @@
     self.NavigationManager = Inject.NavigationManagerFactory.create(self);
     self.DataSourceManager = Inject.DataSourceDefinitionManagerFactory.create();
     self.StaticVariableManager = Inject.StaticVariableManagerFactory.create();
+    self.SurveyItemGroupManager = Inject.SurveyItemGroupManagerFactory.create();
 
     /* Public methods */
     self.initialize = initialize;
@@ -206,6 +210,12 @@
       self.StaticVariableManager.fillVariables(fillingArray);
     }
 
+    /* Survey Item Groups */
+    getSurveyItemGroupsManager(); //todo remove
+    function getSurveyItemGroupsManager() {
+      self.SurveyItemGroupManager.getGroupCandidates(self.SurveyItemManager.getItemList()[0].templateID);
+    }
+
     function toJSON() {
       var json = {};
 
@@ -235,6 +245,8 @@
       });
 
       json.staticVariableList = self.StaticVariableManager.getStaticVariableList();
+
+      json.surveyItemGroupList = self.SurveyItemGroupManager.getSurveyItemGroupList();
 
       return json;
     }

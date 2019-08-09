@@ -1,4 +1,4 @@
-describe('SurveyFactory', function () {
+fdescribe('SurveyFactory', function () {
   var Mock = {};
   var factory;
   var survey;
@@ -19,7 +19,8 @@ describe('SurveyFactory', function () {
         'SurveyItemManagerFactory': mockSurveyItemManagerFactory(_$injector_),
         'DataSourceDefinitionManagerFactory': mockDataSourceFactory(_$injector_),
         'SurveyDictionaryService': mockSurveyDictionaryService(_$injector_),
-        'StaticVariableFactory': mockStaticVariableManager(_$injector_)
+        'StaticVariableFactory': mockStaticVariableManager(_$injector_),
+        'SurveyItemGroupManagerFactory': mockSurveyItemGroupManager(_$injector_)
       };
       factory = _$injector_.get('SurveyFactory', Injections);
     });
@@ -196,6 +197,12 @@ describe('SurveyFactory', function () {
   function mockStaticVariableManager($injector) {
     Mock.StaticVariableManagerFactory = $injector.get('otusjs.staticVariable.StaticVariableManagerFactory');
     Mock.StaticVariableManager = Mock.StaticVariableManagerFactory.create();
+    return Mock.StaticVariableManagerFactory;
+  }
+
+  function mockSurveyItemGroupManager($injector) {
+    Mock.SurveyItemGroupManagerFactory = $injector.get('otusjs.surveyItemGroup.SurveyItemGroupManagerFactory');
+    Mock.SurveyItemGroupManager = Mock.StaticVariableManagerFactory.create();
     return Mock.StaticVariableManagerFactory;
   }
 });

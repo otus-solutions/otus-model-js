@@ -10,6 +10,7 @@
       'otusjs.model.monitoring',
       'otusjs.model.chart',
       'otusjs.surveyItem',
+      'otusjs.surveyItemGroup',
       'otusjs.staticVariable',
       'otusjs.metadata',
       'otusjs.misc',
