@@ -145,14 +145,14 @@ describe('SurveyItemFactory', function() {
       mockTemplate();
       spyOn(factory, "load").and.callThrough();
 
-    })
+    });
     it('should load a template', function() {
-      //spyOn(factory.load(Mock.template)).toHaveBeenCalled();
+      //spyOn(factory.load(Mock.questionTemplate)).toHaveBeenCalled();
       //console.log(template.extents);
-      var template = factory.load(Mock.template);
+      var template = factory.load(Mock.questionTemplate);
 
       expect(factory.load).toHaveBeenCalled();
-      expect(factory.load).toHaveBeenCalledWith(Mock.template);
+      expect(factory.load).toHaveBeenCalledWith(Mock.questionTemplate);
       expect(template.extents).toEqual('SurveyItem');
 
     })
@@ -241,7 +241,7 @@ describe('SurveyItemFactory', function() {
 
 
   function mockTemplate() {
-    Mock.template = Test.utils.data.SurveyTemplate;
+    Mock.questionTemplate = Test.utils.data.singleSelectionQuestionItem;
 
   }
 
