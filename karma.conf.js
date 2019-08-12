@@ -33,8 +33,7 @@ module.exports = function (config) {
         pattern: 'tests/**/*-spec.js',
         included: true
       },
-      TEST_UTILS_ROOT_PATH + 'data/latest-survey-template.js',
-      TEST_UTILS_ROOT_PATH + 'data/json-importer.js'
+      TEST_UTILS_ROOT_PATH + 'data/json-importer/*.js'
     ],
 
     // preprocess matching files before serving them to the browser

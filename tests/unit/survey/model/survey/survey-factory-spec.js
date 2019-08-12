@@ -1,4 +1,4 @@
-fdescribe('SurveyFactory', function () {
+describe('SurveyFactory', function () {
   var Mock = {};
   var factory;
   var survey;

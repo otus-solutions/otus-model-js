@@ -32,7 +32,7 @@
 
     self.objectType = "SurveyItemGroup";
     self.name = '';
-    self.members = [];
+    self.items = [];
 
     self.toJSON = toJSON;
 

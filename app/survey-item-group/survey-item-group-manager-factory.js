@@ -60,7 +60,7 @@
     let groups = [
       {
         name:'group 1',
-        members: [
+        items: [
           {
             id: "CSJ1",
             position: 'start'
@@ -73,7 +73,7 @@
       },
       {
         name:'group 2',
-        members: [
+        items: [
           {
             id: "CSJ3",
             position: 'start'
@@ -89,8 +89,8 @@
         ]
       },
       { // todo: answer: is this possible? wanted?
-        name:'group 2',
-        members: [
+        name:'group 3',
+        items: [
           {
             id: "CSJ7",
             position: 'middle'
