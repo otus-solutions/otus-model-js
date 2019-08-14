@@ -73,7 +73,7 @@
       //gets id, returns every id that can be grouped with
       let navigation = _navigationContainer.getNavigationByOrigin(startingPointID);
 
-      if (allowedAsFirstMember(navigation)) {
+      if (_allowedAsFirstMember(navigation)) {
         return chainGroup(navigation.routes[0].destination, []);
       } else {
         return [];
@@ -83,31 +83,33 @@
     function chainGroup(origin, candidatesChain) {
       let navigation = _navigationContainer.getNavigationByOrigin(origin);
 
-      if (notAllowedAsMember(navigation, candidatesChain)) {
+      if (isGroupMember(origin)) {
         return candidatesChain;
       }
 
-      if (allowedAsLastMember(navigation)) {
+      if (_allowedAsMiddleMember(navigation)) {
+        candidatesChain.push(origin);
+        return chainGroup(navigation.routes[0].destination, candidatesChain);
+      }
+
+      if (_allowedAsLastMember(navigation)) {
         candidatesChain.push(origin);
         return candidatesChain;
       }
 
-      candidatesChain.push(origin);
-      return chainGroup(navigation.routes[0].destination, candidatesChain);
+      return candidatesChain;
     }
 
-    function allowedAsFirstMember(navigation) {
-      return !isEndNode(navigation) && hasMultipleOutRoute(navigation);
+    function _allowedAsFirstMember(navigation) {
+      return !isEndNode(navigation) && !_hasMultipleOutRoute(navigation);
     }
 
-    function allowedAsLastMember(navigation) {
-      return hasMultipleOutRoute(navigation);
+    function _allowedAsLastMember(navigation) {
+      return !_hasMultipleInNavigations(navigation);
     }
 
-    function notAllowedAsMember(navigation, candidatesChain) {
-      return (candidatesChain.length !== 0 && hasMultipleInNavigations(navigation)) ||
-        isGroupMember(navigation.origin) ||
-        isEndNode(navigation);
+    function _allowedAsMiddleMember(navigation) {
+      return !_hasMultipleOutRoute(navigation) && !_hasMultipleInNavigations(navigation);
     }
 
     function isGroupMember(id) {
@@ -126,11 +128,13 @@
       return alreadyMember;
     }
 
+    //todo: move to navigation factory
     function isEndNode(navigation) {
       return navigation.origin === "END NODE";
     }
 
-    function hasMultipleInNavigations(navigation) {
+    //todo: move to navigation factory
+    function _hasMultipleInNavigations(navigation) {
       let inNavigations = navigation.inNavigations.filter(nav => {
         return nav && nav.origin !== 'NULL NAVIGATION';
       });
@@ -138,7 +142,8 @@
       return inNavigations.length > 1;
     }
 
-    function hasMultipleOutRoute(navigation) {
+    //todo: move to navigation factory
+    function _hasMultipleOutRoute(navigation) {
       let routes = navigation.routes;
       return routes.length > 1;
     }

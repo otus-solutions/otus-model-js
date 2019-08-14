@@ -31,12 +31,12 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
       expect(manager).toBeDefined();
     });
 
-    fit('should provide the candidates for a group', function () {
-      expect(manager.getGroupCandidates('DIC1')).toEqual(['DIC1', 'DIC2', 'DIC3']);
-      expect(manager.getGroupCandidates('DIC8')).toEqual(['DIC8', 'DIC9', 'DIC12', 'DIC13']);
-      expect(manager.getGroupCandidates('DIC5')).toEqual(['DIC5', 'DIC6']);
-      expect(manager.getGroupCandidates('DIC15')).toEqual(['DIC15', 'DIC4', 'DIC11']);
-      expect(manager.getGroupCandidates('DIC14')).toEqual(['DIC14', 'DIC16']);
+    it('should provide the candidates for a group', function () {
+      expect(manager.getGroupCandidates('DIC1')).toEqual(['DIC2', 'DIC3']);
+      expect(manager.getGroupCandidates('DIC8')).toEqual(['DIC9', 'DIC12', 'DIC13']);
+      expect(manager.getGroupCandidates('DIC5')).toEqual(['DIC6']);
+      expect(manager.getGroupCandidates('DIC15')).toEqual(['DIC4', 'DIC11']);
+      expect(manager.getGroupCandidates('DIC14')).toEqual(['DIC16']);
     });
 
     it('should create a new group', function () {
@@ -54,19 +54,6 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
 
   function mock(_$injector_) {
     Mock.template = Test.utils.data.templateExampleWithAllQuestionsAndValidations;
-
-    // Mock.template.itemContainer.forEach(item => {
-    //   console.log(item.templateID);
-    // });
-    //
-    // console.log('====');
-    //
-    // Mock.template.navigationList.forEach(nav => {
-    //   console.log(nav.origin);
-    //   console.log('in navs', nav.inNavigations.length);
-    //   console.log('routes', nav.routes.length);
-    // });
-
 
     Mock.surveyItemContainerFactory = _$injector_.get('SurveyItemContainerFactory');
     Mock.navigationContainerFactory = _$injector_.get('otusjs.model.navigation.NavigationContainerFactory');
