@@ -36,6 +36,31 @@
 
     self.toJSON = toJSON;
 
+    function insertInStartPosition(id) {
+      let previousStart = self.items.find(item => {
+        return item.position === POSITION.START;
+      });
+
+      previousStart.position = POSITION.MIDDLE;
+
+      self.items.unshift({
+        id: id,
+        position: POSITION.START
+      })
+    }
+
+    function insertInEndPosition(id) {
+      let previousEnd = self.items.find(item => {
+        return item.position === POSITION.END;
+      });
+
+      previousEnd.position = POSITION.MIDDLE;
+
+      self.items.unshift({
+        id: id,
+        position: POSITION.START
+      })
+    }
 
 
     function toJSON() {

@@ -18,48 +18,134 @@
     function create() {
       return new SurveyItemGroupManager(SurveyItemGroupFactory);
     }
+
     return self;
   }
 
   function SurveyItemGroupManager(SurveyItemGroupFactory) {
     var self = this;
     var _groups = [];
-    var _surveyItemManager;
-    var _navigationManager;
+    var _surveyItemContainer;
+    var _navigationContainer;
 
     /* Public interface */
     self.loadJsonData = loadJsonData;
-    self.setNavigationManager = setNavigationManager;
-    self.setSurveyItemManager = setSurveyItemManager;
+    self.setNavigationContainer = setNavigationContainer;
+    self.setSurveyItemContainer = setSurveyItemContainer;
     self.getSurveyItemGroupList = getSurveyItemGroupList;
 
     self.getGroupCandidates = getGroupCandidates;
+    self.createGroup = createGroup;
 
     function loadJsonData(groupsArray) {
       _groups = groupsArray;
     }
 
-    function setNavigationManager(manager) {
-      _navigationManager = manager;
+    function setNavigationContainer(container) {
+      _navigationContainer = container;
     }
 
-    function setSurveyItemManager(manager) {
-      _surveyItemManager = manager;
+    function setSurveyItemContainer(container) {
+      _surveyItemContainer = container;
     }
 
     function getSurveyItemGroupList() {
       return _groups;
     }
 
-    function getGroupCandidates(startingPointID) {
-      //getItemIndex
-      //getCandidatesFromNavigationList
+    function createGroup(members) {
+      validateGroupMembers(members);
+
+      let group = SurveyItemGroupFactory.create();
+      _groups.push(group);
     }
 
+    function validateGroupMembers(members) {
+      let candidates = chainGroup(members[0], []);
+      members.forEach(member => {
+        if (!candidates.includes(member)) {
+          throw new Error(member + ' cannot be added to the group');
+        }
+      });
+    }
+
+    function getGroupCandidates(startingPointID) {
+      //gets id, returns every id that can be grouped with
+      let navigation = _navigationContainer.getNavigationByOrigin(startingPointID);
+
+      if (allowedAsFirstMember(navigation)) {
+        return chainGroup(navigation.routes[0].destination, []);
+      } else {
+        return [];
+      }
+    }
+
+    function chainGroup(origin, candidatesChain) {
+      let navigation = _navigationContainer.getNavigationByOrigin(origin);
+
+      if (notAllowedAsMember(navigation, candidatesChain)) {
+        return candidatesChain;
+      }
+
+      if (allowedAsLastMember(navigation)) {
+        candidatesChain.push(origin);
+        return candidatesChain;
+      }
+
+      candidatesChain.push(origin);
+      return chainGroup(navigation.routes[0].destination, candidatesChain);
+    }
+
+    function allowedAsFirstMember(navigation) {
+      return !isEndNode(navigation) && hasMultipleOutRoute(navigation);
+    }
+
+    function allowedAsLastMember(navigation) {
+      return hasMultipleOutRoute(navigation);
+    }
+
+    function notAllowedAsMember(navigation, candidatesChain) {
+      return (candidatesChain.length !== 0 && hasMultipleInNavigations(navigation)) ||
+        isGroupMember(navigation.origin) ||
+        isEndNode(navigation);
+    }
+
+    function isGroupMember(id) {
+      let alreadyMember = false;
+
+      for (let group of _groups) {
+        alreadyMember = group.items.find(item => {
+          return item.id === id;
+        });
+
+        if (alreadyMember) {
+          break;
+        }
+      }
+
+      return alreadyMember;
+    }
+
+    function isEndNode(navigation) {
+      return navigation.origin === "END NODE";
+    }
+
+    function hasMultipleInNavigations(navigation) {
+      let inNavigations = navigation.inNavigations.filter(nav => {
+        return nav && nav.origin !== 'NULL NAVIGATION';
+      });
+
+      return inNavigations.length > 1;
+    }
+
+    function hasMultipleOutRoute(navigation) {
+      let routes = navigation.routes;
+      return routes.length > 1;
+    }
 
     let groups = [
       {
-        name:'group 1',
+        name: 'group 1',
         items: [
           {
             id: "CSJ1",
@@ -72,7 +158,7 @@
         ]
       },
       {
-        name:'group 2',
+        name: 'group 2',
         items: [
           {
             id: "CSJ3",
@@ -89,7 +175,7 @@
         ]
       },
       { // todo: answer: is this possible? wanted?
-        name:'group 3',
+        name: 'group 3',
         items: [
           {
             id: "CSJ7",

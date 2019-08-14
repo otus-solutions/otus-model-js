@@ -91,6 +91,7 @@
     self.listOrphanNavigations = listOrphanNavigations;
     self.selectNavigationByOrigin = selectNavigationByOrigin;
     self.selectedNavigation = selectedNavigation;
+    self.getNavigationByOrigin = getNavigationByOrigin;
 
     function initialize() {
       Inject.ContainerInitializationTask.execute();
@@ -129,6 +130,10 @@
 
     function getNavigationList() {
       return container.getNavigationList();
+    }
+
+    function getNavigationByOrigin(origin) {
+      return container.getNavigationByOrigin(origin);
     }
 
     function getExportableList() {

@@ -3,11 +3,11 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
   var Mock = {};
 
   beforeEach(function () {
-    angular.mock.module('otusjs.surveyItemGroup');
+    angular.mock.module('otusjs');
 
-    mock();
 
     inject(function (_$injector_) {
+      mock(_$injector_);
       factory = _$injector_.get('otusjs.surveyItemGroup.SurveyItemGroupManagerFactory');
     });
   });
@@ -16,44 +16,60 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
     var manager;
     beforeEach(function () {
       manager = factory.create();
-      manager.setSurveyItemManager(Mock.itemManager);
-      manager.setNavigationManager(Mock.navigationManager);
+
+      Mock.navigationContainer = Mock.navigationContainerFactory.create();
+      Mock.surveyItemContainer = Mock.surveyItemContainerFactory.create();
+
+      Mock.navigationContainer.loadJsonData(Mock.template.navigationList);
+      Mock.surveyItemContainer.loadFromItemContainerObject(Mock.template.itemContainer);
+
+      manager.setNavigationContainer(Mock.navigationContainer);
+      manager.setSurveyItemContainer(Mock.surveyItemContainer);
     });
 
     it('should create an defined object', function () {
       expect(manager).toBeDefined();
     });
 
+    fit('should provide the candidates for a group', function () {
+      expect(manager.getGroupCandidates('DIC1')).toEqual(['DIC1', 'DIC2', 'DIC3']);
+      expect(manager.getGroupCandidates('DIC8')).toEqual(['DIC8', 'DIC9', 'DIC12', 'DIC13']);
+      expect(manager.getGroupCandidates('DIC5')).toEqual(['DIC5', 'DIC6']);
+      expect(manager.getGroupCandidates('DIC15')).toEqual(['DIC15', 'DIC4', 'DIC11']);
+      expect(manager.getGroupCandidates('DIC14')).toEqual(['DIC14', 'DIC16']);
+    });
+
+    it('should create a new group', function () {
+      expect(manager.createGroup(['DIC8', 'DIC9'])).not.toBeDefined();
+    });
+
+    it('should throw error when pass impossible group', function () {
+      expect(function () {
+        manager.createGroup(['DIC8', 'DIC9', 'DIC11']);
+      }).toThrowError();
+    });
+
   });
 
-  function mock() {
-    Mock.template = Test.utils.data.latestSurveyTemplate;
-    Mock.template2 = Test.utils.data.templateExampleWithAllQuestionsAndValidations;
-    Mock.template.itemContainer.forEach(item => {
-      console.log(item.templateID);
-    });
 
-    console.log('====');
+  function mock(_$injector_) {
+    Mock.template = Test.utils.data.templateExampleWithAllQuestionsAndValidations;
 
-    Mock.template.navigationList.forEach(nav => {
-      console.log(nav.origin);
-      console.log(nav.routes.length);
-    });
+    // Mock.template.itemContainer.forEach(item => {
+    //   console.log(item.templateID);
+    // });
+    //
+    // console.log('====');
+    //
+    // Mock.template.navigationList.forEach(nav => {
+    //   console.log(nav.origin);
+    //   console.log('in navs', nav.inNavigations.length);
+    //   console.log('routes', nav.routes.length);
+    // });
 
-    Mock.template2.itemContainer.forEach(item => {
-      console.log(item.templateID);
-    });
 
-    console.log('====');
-
-    Mock.template2.navigationList.forEach(nav => {
-      console.log(nav.origin);
-      console.log(nav.routes.length);
-    });
-
-    Mock.navigationManager = { };
-    Mock.itemManager = { };
-
+    Mock.surveyItemContainerFactory = _$injector_.get('SurveyItemContainerFactory');
+    Mock.navigationContainerFactory = _$injector_.get('otusjs.model.navigation.NavigationContainerFactory');
 
   }
 

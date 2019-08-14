@@ -77,7 +77,7 @@
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
       survey.StaticVariableManager.loadJsonData(jsonObject.staticVariableList || []);
-      survey.SurveyItemGroupManagerFactory.loadJsonData(jsonObject.surveyItemGroupList || []); //todo this array should be here?
+      survey.SurveyItemGroupManager.loadJsonData(jsonObject.surveyItemGroupList || []); //todo this array should be here?
 
       return survey;
     }
@@ -103,6 +103,10 @@
     self.StaticVariableManager = Inject.StaticVariableManagerFactory.create();
     self.SurveyItemGroupManager = Inject.SurveyItemGroupManagerFactory.create();
 
+    //todo: move
+    self.SurveyItemGroupManager.setNavigationContainer(self.NavigationManager);
+    self.SurveyItemGroupManager.setSurveyItemContainer(self.SurveyItemManager);
+
     /* Public methods */
     self.initialize = initialize;
     self.addItem = addItem;
@@ -127,8 +131,10 @@
 
 
     function initialize() {
+      //todo is this ever used?
       self.SurveyItemManager.init();
       self.NavigationManager.initialize();
+
     }
 
     function addItem(type) {
@@ -211,7 +217,7 @@
     }
 
     /* Survey Item Groups */
-    getSurveyItemGroupsManager(); //todo remove
+    // getSurveyItemGroupsManager(); //todo remove
     function getSurveyItemGroupsManager() {
       self.SurveyItemGroupManager.getGroupCandidates(self.SurveyItemManager.getItemList()[0].templateID);
     }
