@@ -33,12 +33,14 @@
     self.setNavigationContainer = setNavigationContainer;
     self.setSurveyItemContainer = setSurveyItemContainer;
     self.getSurveyItemGroupList = getSurveyItemGroupList;
+    self.getGroupByStart = getGroupByStart;
 
     self.getGroupCandidates = getGroupCandidates;
+    self.isGroupMember = isGroupMember;
     self.createGroup = createGroup;
 
     function loadJsonData(groupsArray) {
-      _groups = groupsArray;
+      _groups = groupsArray || [];
     }
 
     function setNavigationContainer(container) {
@@ -53,17 +55,29 @@
       return _groups;
     }
 
+    function getGroupByStart(startName) {
+      return _groups.find(group => {
+        return group.start === startName;
+      });
+    }
+
     function createGroup(members) {
       validateGroupMembers(members);
 
-      let group = SurveyItemGroupFactory.create();
+      let group = SurveyItemGroupFactory.create(members);
       _groups.push(group);
+      return group;
     }
 
     function validateGroupMembers(members) {
-      let candidates = chainGroup(members[0], []);
-      members.forEach(member => {
-        if (!candidates.includes(member)) {
+      if(members.length < 2) {
+        throw new Error('Groups should be composed of more than one member');
+      }
+
+      let candidates = getGroupCandidates(members[0], []);
+
+      members.forEach((member, ix) => {
+        if (candidates[ix] !== member) {
           throw new Error(member + ' cannot be added to the group');
         }
       });
@@ -74,9 +88,9 @@
       let navigation = _navigationContainer.getNavigationByOrigin(startingPointID);
 
       if (_allowedAsFirstMember(navigation)) {
-        return chainGroup(navigation.routes[0].destination, []);
+        return chainGroup(navigation.routes[0].destination, [startingPointID]);
       } else {
-        return [];
+        return [startingPointID];
       }
     }
 
@@ -101,15 +115,17 @@
     }
 
     function _allowedAsFirstMember(navigation) {
-      return !isEndNode(navigation) && !_hasMultipleOutRoute(navigation);
+      return !navigation.isEndNode(navigation) &&
+              !navigation.hasMultipleOutRoutes(navigation);
     }
 
     function _allowedAsLastMember(navigation) {
-      return !_hasMultipleInNavigations(navigation);
+      return !navigation.hasMultipleInNavigations(navigation);
     }
 
     function _allowedAsMiddleMember(navigation) {
-      return !_hasMultipleOutRoute(navigation) && !_hasMultipleInNavigations(navigation);
+      return !navigation.hasMultipleOutRoutes(navigation) &&
+              !navigation.hasMultipleInNavigations(navigation);
     }
 
     function isGroupMember(id) {
@@ -127,77 +143,6 @@
 
       return alreadyMember;
     }
-
-    //todo: move to navigation factory
-    function isEndNode(navigation) {
-      return navigation.origin === "END NODE";
-    }
-
-    //todo: move to navigation factory
-    function _hasMultipleInNavigations(navigation) {
-      let inNavigations = navigation.inNavigations.filter(nav => {
-        return nav && nav.origin !== 'NULL NAVIGATION';
-      });
-
-      return inNavigations.length > 1;
-    }
-
-    //todo: move to navigation factory
-    function _hasMultipleOutRoute(navigation) {
-      let routes = navigation.routes;
-      return routes.length > 1;
-    }
-
-    let groups = [
-      {
-        name: 'group 1',
-        items: [
-          {
-            id: "CSJ1",
-            position: 'start'
-          },
-          {
-            id: "CSJ2",
-            position: 'end'
-          }
-        ]
-      },
-      {
-        name: 'group 2',
-        items: [
-          {
-            id: "CSJ3",
-            position: 'start'
-          },
-          {
-            id: "CSJ4",
-            position: 'middle'
-          },
-          {
-            id: "CSJ5",
-            position: 'end'
-          }
-        ]
-      },
-      { // todo: answer: is this possible? wanted?
-        name: 'group 3',
-        items: [
-          {
-            id: "CSJ7",
-            position: 'middle'
-          },
-          {
-            id: "CSJ8",
-            position: 'end'
-          },
-          {
-            id: "CSJ6",
-            position: 'start'
-          }
-        ]
-      }
-    ]
-
 
   }
 }());

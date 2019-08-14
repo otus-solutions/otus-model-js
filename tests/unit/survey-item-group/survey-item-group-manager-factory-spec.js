@@ -12,13 +12,22 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
     });
   });
 
-  describe('the creation and load method', function () {
+  describe('the creation method', function () {
+    it('should create an defined object', function () {
+      var manager = factory.create();
+      expect(manager).toBeDefined();
+    });
+
+
+  });
+
+  describe ('the manager methods', function () {
     var manager;
     beforeEach(function () {
       manager = factory.create();
 
-      Mock.navigationContainer = Mock.navigationContainerFactory.create();
-      Mock.surveyItemContainer = Mock.surveyItemContainerFactory.create();
+      Mock.navigationContainer = Mock.NavigationContainerFactory.create();
+      Mock.surveyItemContainer = Mock.SurveyItemContainerFactory.create();
 
       Mock.navigationContainer.loadJsonData(Mock.template.navigationList);
       Mock.surveyItemContainer.loadFromItemContainerObject(Mock.template.itemContainer);
@@ -27,26 +36,79 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
       manager.setSurveyItemContainer(Mock.surveyItemContainer);
     });
 
-    it('should create an defined object', function () {
-      expect(manager).toBeDefined();
+
+    describe('the loadJsonData method', function () {
+      it('should load as empty array when passed undefined value (for compatibility purposes)', function () {
+        manager.loadJsonData(undefined);
+        expect(manager.getSurveyItemGroupList()).toEqual([]);
+      });
+
+      it('should load as empty array when passed undefined value (for compatibility purposes)', function () {
+        manager.loadJsonData(Mock.template.surveyItemGroupList);
+        expect(manager.getSurveyItemGroupList().length).toEqual(2);
+      });
     });
 
-    it('should provide the candidates for a group', function () {
-      expect(manager.getGroupCandidates('DIC1')).toEqual(['DIC2', 'DIC3']);
-      expect(manager.getGroupCandidates('DIC8')).toEqual(['DIC9', 'DIC12', 'DIC13']);
-      expect(manager.getGroupCandidates('DIC5')).toEqual(['DIC6']);
-      expect(manager.getGroupCandidates('DIC15')).toEqual(['DIC4', 'DIC11']);
-      expect(manager.getGroupCandidates('DIC14')).toEqual(['DIC16']);
+    describe('the getGroupByStart method', function () {
+      it('should get the group by the starting member', function () {
+        manager.loadJsonData(Mock.template.surveyItemGroupList);
+        let group = manager.getGroupByStart("DIC15");
+
+        expect(group).toBeDefined();
+        expect(group.start).toEqual("DIC15");
+        expect(group.objectType).toEqual("SurveyItemGroup");
+      });
+
     });
 
-    it('should create a new group', function () {
-      expect(manager.createGroup(['DIC8', 'DIC9'])).not.toBeDefined();
+    describe('the getGroupCandidates method', function () {
+
+      it('should provide the candidates for a group', function () {
+        expect(manager.getGroupCandidates('DIC1')).toEqual(['DIC1', 'DIC2', 'DIC3']);
+        expect(manager.getGroupCandidates('DIC8')).toEqual(['DIC8', 'DIC9', 'DIC12', 'DIC13']);
+        expect(manager.getGroupCandidates('DIC5')).toEqual(['DIC5', 'DIC6']);
+        expect(manager.getGroupCandidates('DIC15')).toEqual(['DIC15', 'DIC4', 'DIC11']);
+        expect(manager.getGroupCandidates('DIC14')).toEqual(['DIC14', 'DIC16']);
+      });
+
+      it('should return the element alone when its not possible to form a group starting from it', function () {
+        expect(manager.getGroupCandidates('DIC3')).toEqual(['DIC3']);
+        expect(manager.getGroupCandidates('DIC16')).toEqual(['DIC16']);
+      });
+
     });
 
-    it('should throw error when pass impossible group', function () {
-      expect(function () {
-        manager.createGroup(['DIC8', 'DIC9', 'DIC11']);
-      }).toThrowError();
+    describe('the createGroup method', function () {
+      it('should create a new group and return it', function () {
+        let group = manager.createGroup(['DIC8', 'DIC9']);
+        expect(group).toBeDefined();
+      });
+
+      it('should throw error when pass impossible group', function () {
+        expect(function () {
+          manager.createGroup(['DIC8', 'DIC9', 'DIC11']);
+        }).toThrowError();
+      });
+
+      it('should throw error when pass an array  out of order besides valid group', function () {
+        expect(function () {
+          manager.createGroup(['DIC8', 'DIC13', 'DIC9']);
+        }).toThrowError();
+      });
+
+      it('should throw error when pass an array with less than 2 items', function () {
+        expect(function () {
+          manager.createGroup(['DIC8']);
+        }).toThrowError();
+      });
+
+    });
+
+    describe('the deleteGroup method', function () {
+      it('should delete a group given the starting element', function () {
+
+      });
+
     });
 
   });
@@ -55,8 +117,9 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
   function mock(_$injector_) {
     Mock.template = Test.utils.data.templateExampleWithAllQuestionsAndValidations;
 
-    Mock.surveyItemContainerFactory = _$injector_.get('SurveyItemContainerFactory');
-    Mock.navigationContainerFactory = _$injector_.get('otusjs.model.navigation.NavigationContainerFactory');
+    Mock.SurveyItemContainerFactory = _$injector_.get('SurveyItemContainerFactory');
+    Mock.NavigationContainerFactory = _$injector_.get('otusjs.model.navigation.NavigationContainerFactory');
+    Mock.SurveyItemGroupFactory = _$injector_.get('otusjs.surveyItemGroup.SurveyItemGroupFactory');
 
   }
 

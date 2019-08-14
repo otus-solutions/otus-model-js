@@ -12,55 +12,38 @@
 
     /* Public interface */
     self.create = create;
-    self.fromJson = fromJson;
 
-    function create() {
-      return new SurveyItemGroup();
-    }
-
-    function fromJson() {
-      var group = new SurveyItemGroup();
-
-      return group;
+    function create(members) {
+      return new SurveyItemGroup(members);
     }
 
     return self;
   }
 
-  function SurveyItemGroup() {
+  function SurveyItemGroup(members) {
     var self = this;
 
     self.objectType = "SurveyItemGroup";
-    self.name = '';
-    self.items = [];
+    self.start = '';
+    self.members = [];
+
+
+    init();
+
+    function init() {
+      let start = members.shift();
+      let end = members.pop();
+      self.members.push(new GroupMember(start, POSITION.START));
+
+      members.forEach(member => {
+        self.members.push(new GroupMember(member, POSITION.MIDDLE));
+      });
+
+      self.members.push(new GroupMember(end, POSITION.END));
+
+    }
 
     self.toJSON = toJSON;
-
-    function insertInStartPosition(id) {
-      let previousStart = self.items.find(item => {
-        return item.position === POSITION.START;
-      });
-
-      previousStart.position = POSITION.MIDDLE;
-
-      self.items.unshift({
-        id: id,
-        position: POSITION.START
-      })
-    }
-
-    function insertInEndPosition(id) {
-      let previousEnd = self.items.find(item => {
-        return item.position === POSITION.END;
-      });
-
-      previousEnd.position = POSITION.MIDDLE;
-
-      self.items.unshift({
-        id: id,
-        position: POSITION.START
-      })
-    }
 
 
     function toJSON() {
@@ -73,7 +56,10 @@
   }
 
   function GroupMember(id, position) {
-
+    return {
+      id: id,
+      position: position
+    }
   }
 
   const POSITION = {
@@ -84,7 +70,7 @@
 
 
   var group = {
-    name:'group 1',
+    name: 'group 1',
     members: [
       {
         id: "CSJ1",

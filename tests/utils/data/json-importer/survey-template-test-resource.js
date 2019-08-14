@@ -1870,11 +1870,7 @@ Test.utils.data.latestSurveyTemplate = {
     }]
   }],
   staticVariableList: [],
-  surveyItemGroupList: [
-    {
-      items: []
-    }
-  ]
+  surveyItemGroupList: []
 };
 
 
@@ -4673,5 +4669,44 @@ Test.utils.data.templateExampleWithAllQuestionsAndValidations = {
       ]
     }
   ],
-  "staticVariableList": []
+  "staticVariableList": [],
+  "surveyItemGroupList": [
+    {
+      "objectType": "SurveyItemGroup",
+      "start": "DIC1",
+      "items": [
+        {
+          id: "DIC1",
+          position: 'start'
+        },
+        {
+          id: "DIC2",
+          position: 'middle'
+        },
+        {
+          id: "DIC3",
+          position: 'end'
+        }
+      ]
+    },
+    {
+      "objectType": "SurveyItemGroup",
+      "start": "DIC15",
+      "items": [
+        {
+          id: "DIC15",
+          position: 'start'
+        },
+        {
+          id: "DIC4",
+          position: 'middle'
+        },
+        {
+          id: "DIC11",
+          position: 'end'
+        }
+      ]
+    }
+
+  ]
 };
