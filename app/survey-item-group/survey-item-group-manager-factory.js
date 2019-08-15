@@ -134,9 +134,7 @@
       let alreadyMember = false;
 
       for (let group of _groups) {
-        alreadyMember = group.items.find(item => {
-          return item.id === id;
-        });
+        alreadyMember = group.hasMember(id);
 
         if (alreadyMember) {
           break;

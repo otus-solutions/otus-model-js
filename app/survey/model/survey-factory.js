@@ -33,27 +33,8 @@
 
     /* Public interface */
     self.create = create;
-    // self.load = load;
     self.fromJsonObject = fromJsonObject;
     self.createDictionary = createDictionary;
-
-    /**
-     TODO :
-
-     Quando for implementado o novo método de carregamento no projeto OTUS-STUDIO,
-     deve-se excluir o método load e usar somente o fromJsonObject.
-
-     */
-    // function load(jsonObject) {
-    //   var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
-    //   var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
-    //   var UUID = jsonObject.oid;
-    //
-    //   var survey = new Survey(metainfo, identity, UUID);
-    //   survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
-    //
-    //   return survey;
-    // }
 
     function create(name, acronym) {
       var UUID = SurveyUUIDGenerator.generateSurveyUUID();
@@ -132,6 +113,7 @@
 
     function initialize() {
       //todo is this ever used?
+      console.log('usou');
       self.SurveyItemManager.init();
       self.NavigationManager.initialize();
 
@@ -214,12 +196,6 @@
 
     function fillStaticVariablesValues(fillingArray) {
       self.StaticVariableManager.fillVariables(fillingArray);
-    }
-
-    /* Survey Item Groups */
-    // getSurveyItemGroupsManager(); //todo remove
-    function getSurveyItemGroupsManager() {
-      self.SurveyItemGroupManager.getGroupCandidates(self.SurveyItemManager.getItemList()[0].templateID);
     }
 
     function toJSON() {

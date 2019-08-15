@@ -22,11 +22,18 @@
 
   function SurveyItemGroup(members) {
     var self = this;
+    const POSITION = {
+      START: 'start',
+      MIDDLE: 'middle',
+      END: 'end'
+    };
 
     self.objectType = "SurveyItemGroup";
     self.start = '';
     self.end = '';
     self.members = [];
+
+    self.hasMember = hasMember;
 
 
     init();
@@ -45,6 +52,12 @@
 
       self.members.push(new GroupMember(end, POSITION.END));
 
+    }
+
+    function hasMember(id) {
+      return !!self.members.find(member => {
+        return member.id === id;
+      });
     }
 
     self.toJSON = toJSON;
@@ -69,26 +82,5 @@
       position: position
     }
   }
-
-  const POSITION = {
-    START: 'start',
-    MIDDLE: 'middle',
-    END: 'end'
-  };
-
-
-  var group = {
-    name: 'group 1',
-    members: [
-      {
-        id: "CSJ1",
-        position: 'start'
-      },
-      {
-        id: "CSJ2",
-        position: 'end'
-      }
-    ]
-  };
 
 }());
