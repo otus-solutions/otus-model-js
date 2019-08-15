@@ -20,9 +20,7 @@
 
     function fromJson(groupJson) {
       let group = new SurveyItemGroup([]);
-      group.members = groupJson.members;
-      group.start = groupJson.start;
-      group.end = groupJson.end;
+      group.rewrite(groupJson);
       return group;
     }
 
@@ -43,6 +41,7 @@
     self.members = [];
 
     self.hasMember = hasMember;
+    self.rewrite = rewrite;
 
 
     init();
@@ -67,6 +66,14 @@
       return !!self.members.find(member => {
         return member.id === id;
       });
+    }
+
+    function rewrite(surveyItemGroup) {
+      if (surveyItemGroup && surveyItemGroup.objectType === self.objectType) {
+        self.start = surveyItemGroup.start;
+        self.end = surveyItemGroup.end;
+        self.members = surveyItemGroup.members;
+      }
     }
 
     self.toJSON = toJSON;

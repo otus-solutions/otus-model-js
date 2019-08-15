@@ -70,12 +70,12 @@
       validateGroupMembers(members);
 
       let group = SurveyItemGroupFactory.create(members);
-      let existentGroupIndex = getGroupIndex(group.start);
+      let existentGroup = getGroupByStart(group.start);
 
-      if (existentGroupIndex === -1) {
+      if (!existentGroup) {
         _groups.push(group);
       } else {
-        _groups[existentGroupIndex] = group;
+        existentGroup.rewrite(group);
       }
 
       return group;
@@ -118,10 +118,6 @@
       return alreadyMember;
     }
 
-    function getGroupIndex(start) {
-      return _groups.findIndex(group => group.start === start)
-    }
-
     function getGroupCandidates(startingPointID) {
       //gets id, returns every id that can be grouped with
       let navigation = _navigationContainer.getNavigationByOrigin(startingPointID);
@@ -129,13 +125,13 @@
 
 
       if (_allowedAsFirstMember(navigation)) {
-        return chainGroup(originalGroup, navigation.getDefaultRoute().destination, [startingPointID]);
+        return chainGroupCandidates(originalGroup, navigation.getDefaultRoute().destination, [startingPointID]);
       } else {
         return [startingPointID];
       }
     }
 
-    function chainGroup(originalGroup, origin, candidatesChain) {
+    function chainGroupCandidates(originalGroup, origin, candidatesChain) {
       let navigation = _navigationContainer.getNavigationByOrigin(origin);
       let group = getGroupByMember(origin);
 
@@ -147,7 +143,7 @@
 
       if (_allowedAsMiddleMember(navigation)) {
         candidatesChain.push(origin);
-        return chainGroup(originalGroup, navigation.getDefaultRoute().destination, candidatesChain);
+        return chainGroupCandidates(originalGroup, navigation.getDefaultRoute().destination, candidatesChain);
       }
 
       if (_allowedAsLastMember(navigation)) {
