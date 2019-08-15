@@ -102,6 +102,19 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
         }).toThrowError();
       });
 
+      it('should rewrite a group', function() {
+        manager.createGroup(['DIC8', 'DIC9']);
+        expect(manager.getGroupByStart('DIC8').members.length).toEqual(2);
+
+        manager.createGroup(['DIC8', 'DIC9', 'DIC12']);
+        expect(manager.getGroupByStart('DIC8').members.length).toEqual(3);
+
+        manager.createGroup(['DIC8', 'DIC9']);
+        expect(manager.getGroupByStart('DIC8').members.length).toEqual(2);
+
+        expect(manager.getSurveyItemGroupList().filter(group=>group.start==='DIC8').length).toEqual(1);
+      });
+
     });
 
     describe('the deleteGroup method', function () {

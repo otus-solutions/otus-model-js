@@ -19,7 +19,11 @@
     }
 
     function fromJson(groupJson) {
-      return new SurveyItemGroup(groupJson.members);
+      let group = new SurveyItemGroup([]);
+      group.members = groupJson.members;
+      group.start = groupJson.start;
+      group.end = groupJson.end;
+      return group;
     }
 
     return self;

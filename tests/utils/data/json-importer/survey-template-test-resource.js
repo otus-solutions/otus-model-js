@@ -4674,7 +4674,8 @@ Test.utils.data.templateExampleWithAllQuestionsAndValidations = {
     {
       "objectType": "SurveyItemGroup",
       "start": "DIC1",
-      "items": [
+      "end": "DIC3",
+      "members": [
         {
           id: "DIC1",
           position: 'start'
@@ -4692,7 +4693,8 @@ Test.utils.data.templateExampleWithAllQuestionsAndValidations = {
     {
       "objectType": "SurveyItemGroup",
       "start": "DIC15",
-      "items": [
+      "end": "DIC11",
+      "members": [
         {
           id: "DIC15",
           position: 'start'

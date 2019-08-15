@@ -41,9 +41,11 @@
     self.createGroup = createGroup;
 
     function loadJsonData(groupsArray) {
-      _groups = groupsArray.map(groupJson => {
-        return SurveyItemGroupFactory.fromJson(groupJson);
-      }) || [];
+      if (groupsArray) {
+        _groups = groupsArray.map(groupJson => SurveyItemGroupFactory.fromJson(groupJson));
+      } else {
+        _groups = [];
+      }
     }
 
     function setNavigationContainer(container) {
@@ -68,7 +70,14 @@
       validateGroupMembers(members);
 
       let group = SurveyItemGroupFactory.create(members);
-      _groups.push(group);
+      let existentGroupIndex = getGroupIndex(group.start);
+
+      if (existentGroupIndex === -1) {
+        _groups.push(group);
+      } else {
+        _groups[existentGroupIndex] = group;
+      }
+
       return group;
     }
 
@@ -78,7 +87,6 @@
       }
 
       let candidates = getGroupCandidates(members[0], []);
-
       members.forEach((member, ix) => {
         if (candidates[ix] !== member) {
           throw new Error(member + ' cannot be added to the group');
@@ -97,10 +105,6 @@
       }
     }
 
-    function editGroup(start, groupArray) {
-
-    }
-
     function getGroupByMember(id) {
       let alreadyMember;
 
@@ -114,27 +118,36 @@
       return alreadyMember;
     }
 
+    function getGroupIndex(start) {
+      return _groups.findIndex(group => group.start === start)
+    }
+
     function getGroupCandidates(startingPointID) {
       //gets id, returns every id that can be grouped with
       let navigation = _navigationContainer.getNavigationByOrigin(startingPointID);
+      let originalGroup = getGroupByMember(startingPointID);
+
 
       if (_allowedAsFirstMember(navigation)) {
-        return chainGroup(navigation.getDefaultRoute().destination, [startingPointID]);
+        return chainGroup(originalGroup, navigation.getDefaultRoute().destination, [startingPointID]);
       } else {
         return [startingPointID];
       }
     }
 
-    function chainGroup(origin, candidatesChain) {
+    function chainGroup(originalGroup, origin, candidatesChain) {
       let navigation = _navigationContainer.getNavigationByOrigin(origin);
+      let group = getGroupByMember(origin);
 
-      if (getGroupByMember(origin)) {
-        return candidatesChain;
+      if (group) {
+        if ((!originalGroup || originalGroup.start !== group.start)) {
+          return candidatesChain;
+        }
       }
 
       if (_allowedAsMiddleMember(navigation)) {
         candidatesChain.push(origin);
-        return chainGroup(navigation.getDefaultRoute().destination, candidatesChain);
+        return chainGroup(originalGroup, navigation.getDefaultRoute().destination, candidatesChain);
       }
 
       if (_allowedAsLastMember(navigation)) {
