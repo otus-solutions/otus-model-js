@@ -25,6 +25,7 @@
 
     self.objectType = "SurveyItemGroup";
     self.start = '';
+    self.end = '';
     self.members = [];
 
 
@@ -33,7 +34,10 @@
     function init() {
       let start = members.shift();
       let end = members.pop();
+      self.start = start;
+      self.end = end;
       self.members.push(new GroupMember(start, POSITION.START));
+
 
       members.forEach(member => {
         self.members.push(new GroupMember(member, POSITION.MIDDLE));
@@ -48,6 +52,10 @@
 
     function toJSON() {
       let json = {};
+      json.objectType = self.objectType;
+      json.start = self.start;
+      json.end = self.end;
+      json.members = self.members;
 
       return json;
     }

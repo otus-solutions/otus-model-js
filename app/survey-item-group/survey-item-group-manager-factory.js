@@ -120,11 +120,13 @@
     }
 
     function _allowedAsLastMember(navigation) {
-      return !navigation.hasMultipleInNavigations(navigation);
+      return !navigation.isEndNode(navigation) &&
+            !navigation.hasMultipleInNavigations(navigation);
     }
 
     function _allowedAsMiddleMember(navigation) {
       return !navigation.hasMultipleOutRoutes(navigation) &&
+        !navigation.isEndNode(navigation) &&
               !navigation.hasMultipleInNavigations(navigation);
     }
 
