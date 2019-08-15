@@ -113,7 +113,7 @@
 
     function initialize() {
       //todo is this ever used?
-      console.log('usou');
+      console.log("used");
       self.SurveyItemManager.init();
       self.NavigationManager.initialize();
 

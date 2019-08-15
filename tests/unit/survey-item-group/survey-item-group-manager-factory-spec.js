@@ -21,7 +21,7 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
 
   });
 
-  describe ('the manager methods', function () {
+  describe('the manager methods', function () {
     var manager;
     beforeEach(function () {
       manager = factory.create();
@@ -105,8 +105,21 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
     });
 
     describe('the deleteGroup method', function () {
-      it('should delete a group given the starting element', function () {
+      beforeEach(function () {
+        manager.loadJsonData(Mock.template.surveyItemGroupList);
+      });
 
+      it('should delete a group given the starting element', function () {
+        let idToExclude = 'DIC15';
+        manager.deleteGroup(idToExclude);
+        expect(manager.getGroupByStart(idToExclude)).toBeFalsy();
+      });
+
+      it('should not modify the group list when passed a not found group start', function () {
+        let idToExclude = 'DIC15231123';
+        let beforeDeletionList = manager.getSurveyItemGroupList();
+        manager.deleteGroup(idToExclude);
+        expect(manager.getSurveyItemGroupList()).toEqual(beforeDeletionList);
       });
 
     });

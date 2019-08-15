@@ -34,9 +34,10 @@
     self.setSurveyItemContainer = setSurveyItemContainer;
     self.getSurveyItemGroupList = getSurveyItemGroupList;
     self.getGroupByStart = getGroupByStart;
+    self.deleteGroup = deleteGroup;
 
     self.getGroupCandidates = getGroupCandidates;
-    self.isGroupMember = isGroupMember;
+    self.getGroupByMember = getGroupByMember;
     self.createGroup = createGroup;
 
     function loadJsonData(groupsArray) {
@@ -70,7 +71,7 @@
     }
 
     function validateGroupMembers(members) {
-      if(members.length < 2) {
+      if (members.length < 2) {
         throw new Error('Groups should be composed of more than one member');
       }
 
@@ -81,6 +82,29 @@
           throw new Error(member + ' cannot be added to the group');
         }
       });
+    }
+
+    function deleteGroup(start) {
+      let ix = _groups.findIndex(group => {
+        return group.start === start;
+      });
+
+      if (ix > -1) {
+        _groups.splice(ix, 1);
+      }
+    }
+
+    function getGroupByMember(id) {
+      let alreadyMember;
+
+      for (let group of _groups) {
+        if (group.hasMember(id)) {
+          alreadyMember = group;
+          break;
+        }
+      }
+
+      return alreadyMember;
     }
 
     function getGroupCandidates(startingPointID) {
@@ -97,7 +121,7 @@
     function chainGroup(origin, candidatesChain) {
       let navigation = _navigationContainer.getNavigationByOrigin(origin);
 
-      if (isGroupMember(origin)) {
+      if (getGroupByMember(origin)) {
         return candidatesChain;
       }
 
@@ -116,32 +140,18 @@
 
     function _allowedAsFirstMember(navigation) {
       return !navigation.isEndNode(navigation) &&
-              !navigation.hasMultipleOutRoutes(navigation);
+        !navigation.hasMultipleOutRoutes(navigation);
     }
 
     function _allowedAsLastMember(navigation) {
       return !navigation.isEndNode(navigation) &&
-            !navigation.hasMultipleInNavigations(navigation);
+        !navigation.hasMultipleInNavigations(navigation);
     }
 
     function _allowedAsMiddleMember(navigation) {
       return !navigation.hasMultipleOutRoutes(navigation) &&
         !navigation.isEndNode(navigation) &&
-              !navigation.hasMultipleInNavigations(navigation);
-    }
-
-    function isGroupMember(id) {
-      let alreadyMember = false;
-
-      for (let group of _groups) {
-        alreadyMember = group.hasMember(id);
-
-        if (alreadyMember) {
-          break;
-        }
-      }
-
-      return alreadyMember;
+        !navigation.hasMultipleInNavigations(navigation);
     }
 
   }
