@@ -41,7 +41,9 @@
     self.createGroup = createGroup;
 
     function loadJsonData(groupsArray) {
-      _groups = groupsArray || [];
+      _groups = groupsArray.map(groupJson => {
+        return SurveyItemGroupFactory.fromJson(groupJson);
+      }) || [];
     }
 
     function setNavigationContainer(container) {
@@ -91,7 +93,12 @@
 
       if (ix > -1) {
         _groups.splice(ix, 1);
+        return true;
       }
+    }
+
+    function editGroup(start, groupArray) {
+
     }
 
     function getGroupByMember(id) {
@@ -112,7 +119,7 @@
       let navigation = _navigationContainer.getNavigationByOrigin(startingPointID);
 
       if (_allowedAsFirstMember(navigation)) {
-        return chainGroup(navigation.routes[0].destination, [startingPointID]);
+        return chainGroup(navigation.getDefaultRoute().destination, [startingPointID]);
       } else {
         return [startingPointID];
       }
@@ -127,7 +134,7 @@
 
       if (_allowedAsMiddleMember(navigation)) {
         candidatesChain.push(origin);
-        return chainGroup(navigation.routes[0].destination, candidatesChain);
+        return chainGroup(navigation.getDefaultRoute().destination, candidatesChain);
       }
 
       if (_allowedAsLastMember(navigation)) {

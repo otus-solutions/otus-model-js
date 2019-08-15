@@ -82,14 +82,6 @@
       return navigation;
     }
 
-    function _parse(jsonData) {
-      if (typeof jsonData === 'string') {
-        return JSON.parse(jsonData);
-      } else if (typeof jsonData === 'object') {
-        return JSON.parse(JSON.stringify(jsonData));
-      }
-    }
-
     return self;
   }
 
@@ -238,10 +230,6 @@
       return true;
     }
 
-    function _existsRouteAtIndex(index) {
-      return (self.routes[index]) ? true : false;
-    }
-
     function getDefaultRoute() {
       return self.routes[0].clone();
     }
@@ -288,20 +276,13 @@
     }
 
     function isOrphan() {
-      if (self.index !== 0 && !self.inNavigations.length) {
-        return true;
-      } else {
-        return false;
-      }
+      return self.index !== 0 && !self.inNavigations.length;
     }
 
     function listRoutes() {
-      var clones = [];
-
-      clones = self.routes.map(function (route) {
+      let clones = self.routes.map(function (route) {
         return route.clone();
       });
-
       return clones;
     }
 

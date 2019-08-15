@@ -12,9 +12,14 @@
 
     /* Public interface */
     self.create = create;
+    self.fromJson = fromJson;
 
     function create(members) {
       return new SurveyItemGroup(members);
+    }
+
+    function fromJson(groupJson) {
+      return new SurveyItemGroup(groupJson.members);
     }
 
     return self;
