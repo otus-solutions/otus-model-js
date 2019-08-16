@@ -66,6 +66,14 @@
       });
     }
 
+    //todo
+    function removeItemFromGroup(templateID) {
+      let group = getGroupByMember(templateID);
+      if (group) {
+        // group
+      }
+    }
+
     function createGroup(members) {
       validateGroupMembers(members);
 

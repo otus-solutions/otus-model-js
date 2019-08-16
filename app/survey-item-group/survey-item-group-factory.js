@@ -19,7 +19,7 @@
     }
 
     function fromJson(groupJson) {
-      let group = new SurveyItemGroup([]);
+      let group = new SurveyItemGroup();
       group.rewrite(groupJson);
       return group;
     }
@@ -47,19 +47,20 @@
     init();
 
     function init() {
-      let start = members.shift();
-      let end = members.pop();
-      self.start = start;
-      self.end = end;
-      self.members.push(new GroupMember(start, POSITION.START));
+      if (members && members.length) {
+        let start = members.shift();
+        let end = members.pop();
+        self.start = start;
+        self.end = end;
+        self.members.push(new GroupMember(start, POSITION.START));
 
 
-      members.forEach(member => {
-        self.members.push(new GroupMember(member, POSITION.MIDDLE));
-      });
+        members.forEach(member => {
+          self.members.push(new GroupMember(member, POSITION.MIDDLE));
+        });
 
-      self.members.push(new GroupMember(end, POSITION.END));
-
+        self.members.push(new GroupMember(end, POSITION.END));
+      }
     }
 
     function hasMember(id) {

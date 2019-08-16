@@ -1,4 +1,4 @@
-fdescribe('the SurveyItemGroupManagerFactory', function () {
+describe('the SurveyItemGroupManagerFactory', function () {
   var factory;
   var Mock = {};
 
@@ -133,6 +133,30 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
         let beforeDeletionList = manager.getSurveyItemGroupList();
         manager.deleteGroup(idToExclude);
         expect(manager.getSurveyItemGroupList()).toEqual(beforeDeletionList);
+      });
+
+    });
+
+    describe('the getGroupByMember method', function () {
+      beforeEach(function () {
+        manager.loadJsonData(Mock.template.surveyItemGroupList);
+      });
+
+      it('should return the group to which the member belongs to', function () {
+        let id = 'DIC4';
+
+        expect(manager.getGroupByMember(id)).toBeDefined();
+        expect(manager.getGroupByMember(id).members).toContain({
+          id:'DIC4',
+          position:'middle'
+        });
+
+      });
+
+      it('should return undefined when dont find any group with given id', function () {
+        let id = 'DIC12';
+
+        expect(manager.getGroupByMember(id)).not.toBeDefined();
       });
 
     });
