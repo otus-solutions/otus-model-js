@@ -6,32 +6,30 @@
     .service('otusjs.surveyItemGroup.SurveyItemGroupManagerFactory', Factory);
 
   Factory.$inject = [
+    'otusjs.survey.ManagerCenterService',
     'otusjs.surveyItemGroup.SurveyItemGroupFactory'
   ];
 
 
-  function Factory(SurveyItemGroupFactory) {
+  function Factory(ManagerCenterService, SurveyItemGroupFactory) {
     var self = this;
 
     self.create = create;
 
     function create() {
-      return new SurveyItemGroupManager(SurveyItemGroupFactory);
+      return new SurveyItemGroupManager(ManagerCenterService, SurveyItemGroupFactory);
     }
 
     return self;
   }
 
-  function SurveyItemGroupManager(SurveyItemGroupFactory) {
+  function SurveyItemGroupManager(ManagerCenterService, SurveyItemGroupFactory) {
     var self = this;
     var _groups = [];
-    var _surveyItemContainer;
-    var _navigationContainer;
+    var _navigationManager;
 
     /* Public interface */
     self.loadJsonData = loadJsonData;
-    self.setNavigationContainer = setNavigationContainer;
-    self.setSurveyItemContainer = setSurveyItemContainer;
     self.getSurveyItemGroupList = getSurveyItemGroupList;
     self.getGroupByStart = getGroupByStart;
     self.deleteGroup = deleteGroup;
@@ -40,20 +38,18 @@
     self.getGroupByMember = getGroupByMember;
     self.createGroup = createGroup;
 
+    init();
+
+    function init() {
+      _navigationManager = ManagerCenterService.getNavigationManager();
+    }
+
     function loadJsonData(groupsArray) {
       if (groupsArray) {
         _groups = groupsArray.map(groupJson => SurveyItemGroupFactory.fromJson(groupJson));
       } else {
         _groups = [];
       }
-    }
-
-    function setNavigationContainer(container) {
-      _navigationContainer = container;
-    }
-
-    function setSurveyItemContainer(container) {
-      _surveyItemContainer = container;
     }
 
     function getSurveyItemGroupList() {
@@ -128,7 +124,7 @@
 
     function getGroupCandidates(startingPointID) {
       //gets id, returns every id that can be grouped with
-      let navigation = _navigationContainer.getNavigationByOrigin(startingPointID);
+      let navigation = _navigationManager.getNavigationByOrigin(startingPointID);
       let originalGroup = getGroupByMember(startingPointID);
 
 
@@ -140,7 +136,7 @@
     }
 
     function chainGroupCandidates(originalGroup, origin, candidatesChain) {
-      let navigation = _navigationContainer.getNavigationByOrigin(origin);
+      let navigation = _navigationManager.getNavigationByOrigin(origin);
       let group = getGroupByMember(origin);
 
       if (group) {

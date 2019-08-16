@@ -14,12 +14,13 @@
     'otusjs.model.survey.DataSourceDefinitionManagerFactory',
     'SurveyDictionaryService',
     'otusjs.staticVariable.StaticVariableManagerFactory',
-    'otusjs.surveyItemGroup.SurveyItemGroupManagerFactory'
+    'otusjs.surveyItemGroup.SurveyItemGroupManagerFactory',
+    'otusjs.survey.ManagerCenterService'
   ];
 
   var Inject = {};
 
-  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService, StaticVariableManagerFactory, SurveyItemGroupManagerFactory) {
+  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService, StaticVariableManagerFactory, SurveyItemGroupManagerFactory, ManagerCenterService) {
     var self = this;
 
     self.OBJECT_TYPE = 'Survey';
@@ -30,6 +31,7 @@
     Inject.SurveyDictionaryService = SurveyDictionaryService;
     Inject.StaticVariableManagerFactory = StaticVariableManagerFactory;
     Inject.SurveyItemGroupManagerFactory = SurveyItemGroupManagerFactory;
+    Inject.SurveyItemGroupManagerFactory = ManagerCenterService;
 
     /* Public interface */
     self.create = create;
@@ -58,7 +60,7 @@
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
       survey.StaticVariableManager.loadJsonData(jsonObject.staticVariableList || []);
-      survey.SurveyItemGroupManager.loadJsonData(jsonObject.surveyItemGroupList || []); //todo this array should be here?
+      survey.SurveyItemGroupManager.loadJsonData(jsonObject.surveyItemGroupList);
 
       return survey;
     }
@@ -84,9 +86,7 @@
     self.StaticVariableManager = Inject.StaticVariableManagerFactory.create();
     self.SurveyItemGroupManager = Inject.SurveyItemGroupManagerFactory.create();
 
-    //todo: move
-    self.SurveyItemGroupManager.setNavigationContainer(self.NavigationManager);
-    self.SurveyItemGroupManager.setSurveyItemContainer(self.SurveyItemManager);
+    Inject.SurveyItemGroupManagerFactory.initialize(self.SurveyItemManager, self.NavigationManager, self.SurveyItemGroupManager); //todo move to initialize if possible
 
     /* Public methods */
     self.initialize = initialize;
