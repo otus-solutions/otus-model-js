@@ -55,13 +55,19 @@
       });
     }
 
-    //todo
-    function removeItemFromGroup(templateID) {
-      let group = getGroupByMember(templateID);
-      if (group) {
-        // group
+    function getGroupByMember(id) {
+      let alreadyMember;
+
+      for (let group of _groups) {
+        if (group.hasMember(id)) {
+          alreadyMember = group;
+          break;
+        }
       }
+
+      return alreadyMember;
     }
+
 
     function createGroup(members) {
       validateGroupMembers(members);
@@ -78,6 +84,18 @@
       return group;
     }
 
+
+    function deleteGroup(start) {
+      let ix = _groups.findIndex(group => {
+        return group.start === start;
+      });
+
+      if (ix > -1) {
+        _groups.splice(ix, 1);
+        return true;
+      }
+    }
+
     function validateGroupMembers(members) {
       if (members.length < 2) {
         throw new Error('Groups should be composed of more than one member');
@@ -91,29 +109,6 @@
       });
     }
 
-    function deleteGroup(start) {
-      let ix = _groups.findIndex(group => {
-        return group.start === start;
-      });
-
-      if (ix > -1) {
-        _groups.splice(ix, 1);
-        return true;
-      }
-    }
-
-    function getGroupByMember(id) {
-      let alreadyMember;
-
-      for (let group of _groups) {
-        if (group.hasMember(id)) {
-          alreadyMember = group;
-          break;
-        }
-      }
-
-      return alreadyMember;
-    }
 
     function getGroupCandidates(startingPointID) {
       //gets id, returns every id that can be grouped with
