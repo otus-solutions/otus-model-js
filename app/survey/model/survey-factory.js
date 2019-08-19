@@ -31,7 +31,7 @@
     Inject.SurveyDictionaryService = SurveyDictionaryService;
     Inject.StaticVariableManagerFactory = StaticVariableManagerFactory;
     Inject.SurveyItemGroupManagerFactory = SurveyItemGroupManagerFactory;
-    Inject.SurveyItemGroupManagerFactory = ManagerCenterService;
+    Inject.ManagerCenterService = ManagerCenterService;
 
     /* Public interface */
     self.create = create;
@@ -86,7 +86,7 @@
     self.StaticVariableManager = Inject.StaticVariableManagerFactory.create();
     self.SurveyItemGroupManager = Inject.SurveyItemGroupManagerFactory.create();
 
-    Inject.SurveyItemGroupManagerFactory.initialize(self.SurveyItemManager, self.NavigationManager, self.SurveyItemGroupManager); //todo move to initialize if possible
+    Inject.ManagerCenterService.initialize(self.SurveyItemManager, self.NavigationManager, self.SurveyItemGroupManager); //todo move to initialize if possible
 
     /* Public methods */
     self.initialize = initialize;
@@ -112,8 +112,6 @@
 
 
     function initialize() {
-      //todo is this ever used?
-      console.log("used");
       self.SurveyItemManager.init();
       self.NavigationManager.initialize();
 

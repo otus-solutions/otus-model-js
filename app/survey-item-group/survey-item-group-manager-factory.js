@@ -26,7 +26,6 @@
   function SurveyItemGroupManager(ManagerCenterService, SurveyItemGroupFactory) {
     var self = this;
     var _groups = [];
-    var _navigationManager;
 
     /* Public interface */
     self.loadJsonData = loadJsonData;
@@ -37,12 +36,6 @@
     self.getGroupCandidates = getGroupCandidates;
     self.getGroupByMember = getGroupByMember;
     self.createGroup = createGroup;
-
-    init();
-
-    function init() {
-      _navigationManager = ManagerCenterService.getNavigationManager();
-    }
 
     function loadJsonData(groupsArray) {
       if (groupsArray) {
@@ -124,7 +117,7 @@
 
     function getGroupCandidates(startingPointID) {
       //gets id, returns every id that can be grouped with
-      let navigation = _navigationManager.getNavigationByOrigin(startingPointID);
+      let navigation = ManagerCenterService.getNavigationManager().getNavigationByOrigin(startingPointID);
       let originalGroup = getGroupByMember(startingPointID);
 
 
@@ -136,7 +129,7 @@
     }
 
     function chainGroupCandidates(originalGroup, origin, candidatesChain) {
-      let navigation = _navigationManager.getNavigationByOrigin(origin);
+      let navigation = ManagerCenterService.getNavigationManager().getNavigationByOrigin(origin);
       let group = getGroupByMember(origin);
 
       if (group) {

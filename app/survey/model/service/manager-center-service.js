@@ -4,6 +4,12 @@
     angular.module('otusjs.survey')
       .service('otusjs.survey.ManagerCenterService', Service);
 
+    /*
+    * Whoever uses this service should not request a manager on onInit type methods.
+    * Doing this could cause a bug if the survey is changed and the new survey managers are not set yet on
+    * the request moment
+    * */
+
     function Service() {
       var self = this;
       var _surveyItemManager, _navigationManager, _surveyItemGroupManager;
@@ -22,7 +28,6 @@
       function getSurveyItemManager() {
         return _surveyItemManager;
       }
-
 
       function getNavigationManager() {
         return _navigationManager;
