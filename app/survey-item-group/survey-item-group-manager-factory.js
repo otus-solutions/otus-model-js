@@ -50,19 +50,15 @@
 
     function allowItemMovement(item, position) {
       let lastItemInPosition = ManagerCenterService.getSurveyItemManager().getItemByPosition(position);
-      //todo check if the item goes to before or after lastItemInPosition
+      let groupCheck = getGroupByMember(lastItemInPosition);
 
-      let groupCheck = getGroupByMember(item.templateID);
-      let memberCheck = groupCheck.getMember(item.templateID);
-
-      if (memberCheck) {
-        if (memberCheck.position === 'start') {
-          //ok to move
-        } else {
-          //cannot move
+      if (groupCheck) {
+        let member = groupCheck.getMember(lastItemInPosition);
+        if (member) {
+          if (member.position !== 'start') {
+            throw new Error("Cannot move item to inside of another group");
+          }
         }
-      } else {
-        //ok to move
       }
       removeItemFromGroup(item.templateID);
 
@@ -70,10 +66,12 @@
 
     function removeItemFromGroup(templateID) {
       let group = getGroupByMember(templateID);
-      if (group.members < 3) {
-        deleteGroup(group.start);
-      } else {
-        group.removeMember(templateID);
+      if (group) {
+        if (group && group.members < 3) {
+          deleteGroup(group.start);
+        } else {
+          group.removeMember(templateID);
+        }
       }
 
     }
