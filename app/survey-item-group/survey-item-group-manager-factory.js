@@ -53,10 +53,10 @@
       let groupCheck = getGroupByMember(lastItemInPosition);
 
       if (groupCheck) {
-        let member = groupCheck.getMember(lastItemInPosition);
+        let member = groupCheck.getMember(lastItemInPosition.templateID);
         if (member) {
           if (member.position !== 'start') {
-            throw new Error("Cannot move item to inside of another group");
+            throw new Error("Cannot move item to inside of an existing group");
           }
         }
       }
@@ -67,7 +67,7 @@
     function removeItemFromGroup(templateID) {
       let group = getGroupByMember(templateID);
       if (group) {
-        if (group && group.members < 3) {
+        if (group && group.members.length <= 2) {
           deleteGroup(group.start);
         } else {
           group.removeMember(templateID);
