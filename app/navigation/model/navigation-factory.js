@@ -141,12 +141,10 @@
       return isEndNode() || isBeginNode();
     }
 
-    //todo: move to navigation factory
     function hasMultipleInNavigations() {
       return _filterOutNullNavigations().length > 1;
     }
 
-    //todo: move to navigation factory
     function hasMultipleOutRoutes() {
       return self.routes.length > 1;
     }

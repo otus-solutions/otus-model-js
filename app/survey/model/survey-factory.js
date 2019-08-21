@@ -124,11 +124,14 @@
     }
 
     function removeItem(templateID) {
+      // self.SurveyItemGroupManager.removeItemFromGroup(templateID);
       self.SurveyItemManager.removeItem(templateID);
       self.NavigationManager.removeNavigation(templateID);
     }
 
     function moveItem(item, position) {
+      // self.SurveyItemGroupManager.allowItemMovement(item.templateID, position);
+      console.log(item, position);
       self.SurveyItemManager.moveItem(item, position);
       self.NavigationManager.moveNavigation(item.templateID, position);
     }

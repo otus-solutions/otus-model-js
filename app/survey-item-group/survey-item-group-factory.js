@@ -41,6 +41,7 @@
     self.members = [];
 
     self.hasMember = hasMember;
+    self.getMember = getMember;
     self.rewrite = rewrite;
 
 
@@ -63,10 +64,14 @@
       }
     }
 
-    function hasMember(id) {
-      return !!self.members.find(member => {
+    function getMember(id) {
+      return self.members.find(member => {
         return member.id === id;
       });
+    }
+
+    function hasMember(id) {
+      return !!getMember;
     }
 
     function rewrite(surveyItemGroup) {

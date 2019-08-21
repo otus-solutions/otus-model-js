@@ -29,19 +29,64 @@
 
     /* Public interface */
     self.loadJsonData = loadJsonData;
+    self.allowItemMovement = allowItemMovement;
+    self.removeItemFromGroup = removeItemFromGroup;
+
     self.getSurveyItemGroupList = getSurveyItemGroupList;
     self.getGroupByStart = getGroupByStart;
-    self.deleteGroup = deleteGroup;
-
-    self.getGroupCandidates = getGroupCandidates;
     self.getGroupByMember = getGroupByMember;
+
     self.createGroup = createGroup;
+    self.deleteGroup = deleteGroup;
+    self.getGroupCandidates = getGroupCandidates;
 
     function loadJsonData(groupsArray) {
       if (groupsArray) {
         _groups = groupsArray.map(groupJson => SurveyItemGroupFactory.fromJson(groupJson));
       } else {
         _groups = [];
+      }
+    }
+
+    function allowItemMovement(item, position) {
+      let lastItemInPosition = ManagerCenterService.getSurveyItemManager().getItemByPosition(position);
+      //todo check if the item goes to before or after lastItemInPosition
+
+      let groupCheck = getGroupByMember(item.templateID);
+      let memberCheck = groupCheck.getMember(item.templateID);
+
+      if (memberCheck) {
+        if (memberCheck.position === 'start') {
+          //ok to move
+        } else {
+          //cannot move
+        }
+      } else {
+        //ok to move
+      }
+      removeItemFromGroup(item.templateID);
+
+    }
+
+    function removeItemFromGroup(templateID) {
+
+      let group = getGroupByMember(templateID);
+      let member = group.getMember(templateID);
+      if (member) {
+        if (group.members < 3) {
+          //delete group
+          //return
+        }
+        if (member.position === 'start') {
+          //displace start position
+        } else if (member.position === 'end') {
+          //displace end position
+        } else if (member.position === 'middle') {
+          //nothing to do
+        }
+
+      } else {
+        //nothing to do
       }
     }
 
