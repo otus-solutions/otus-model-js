@@ -69,25 +69,13 @@
     }
 
     function removeItemFromGroup(templateID) {
-
       let group = getGroupByMember(templateID);
-      let member = group.getMember(templateID);
-      if (member) {
-        if (group.members < 3) {
-          //delete group
-          //return
-        }
-        if (member.position === 'start') {
-          //displace start position
-        } else if (member.position === 'end') {
-          //displace end position
-        } else if (member.position === 'middle') {
-          //nothing to do
-        }
-
+      if (group.members < 3) {
+        deleteGroup(group.start);
       } else {
-        //nothing to do
+        group.removeMember(templateID);
       }
+
     }
 
     function getSurveyItemGroupList() {

@@ -42,6 +42,7 @@
 
     self.hasMember = hasMember;
     self.getMember = getMember;
+    self.removeMember = removeMember;
     self.rewrite = rewrite;
 
 
@@ -68,6 +69,26 @@
       return self.members.find(member => {
         return member.id === id;
       });
+    }
+
+    function removeMember(id) {
+      let member = self.getMember(id);
+      if (self.members <= 2) {
+        throw new Error("A group must have at least 2 members");
+      }
+      if (member) {
+        if (member.position === 'start') {
+          self.members.splice(0, 1);
+          self.start = self.members[0].id;
+        } else if (member.position === 'end') {
+          self.members.splice(-1, 1);
+          self.end = self.members[self.members.length - 1].id;
+        } else if (member.position === 'middle') {
+          let indexToRemove = self.members.indexOf(member);
+          self.members.splice(indexToRemove, 1);
+        }
+
+      }
     }
 
     function hasMember(id) {
