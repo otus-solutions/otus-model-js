@@ -92,7 +92,7 @@
     }
 
     function hasMember(id) {
-      return !!getMember;
+      return !!getMember(id);
     }
 
     function rewrite(surveyItemGroup) {

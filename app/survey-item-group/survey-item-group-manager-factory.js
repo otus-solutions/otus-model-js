@@ -87,16 +87,16 @@
     }
 
     function getGroupByMember(id) {
-      let alreadyMember;
+      let groupFound;
 
       for (let group of _groups) {
         if (group.hasMember(id)) {
-          alreadyMember = group;
+          groupFound = group;
           break;
         }
       }
 
-      return alreadyMember;
+      return groupFound;
     }
 
 
