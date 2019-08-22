@@ -48,19 +48,22 @@
       }
     }
 
-    function allowItemMovement(item, position) {
+    function allowItemMovement(templateID, position) {
       let lastItemInPosition = ManagerCenterService.getSurveyItemManager().getItemByPosition(position);
-      let groupCheck = getGroupByMember(lastItemInPosition.templateID);
 
-      if (groupCheck) {
-        let member = groupCheck.getMember(lastItemInPosition.templateID);
-        if (member) {
-          if (member.position !== 'start') {
-            throw new Error("Cannot move item to inside of an existing group");
+      if (lastItemInPosition) {
+        let groupCheck = getGroupByMember(lastItemInPosition.templateID);
+
+        if (groupCheck) {
+          let member = groupCheck.getMember(lastItemInPosition.templateID);
+          if (member) {
+            if (member.position !== 'start') {
+              throw new Error("Can not move item to inside of an existing group");
+            }
           }
         }
       }
-      removeItemFromGroup(item.templateID);
+      removeItemFromGroup(templateID);
 
     }
 
@@ -106,10 +109,10 @@
       let group = SurveyItemGroupFactory.create(members);
       let existentGroup = getGroupByStart(group.start);
 
-      if (!existentGroup) {
-        _groups.push(group);
-      } else {
+      if (existentGroup) {
         existentGroup.rewrite(group);
+      } else {
+        _groups.push(group);
       }
 
       return group;

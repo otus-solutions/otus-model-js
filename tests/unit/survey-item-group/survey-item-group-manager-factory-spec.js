@@ -106,7 +106,7 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
         }).toThrowError();
       });
 
-      it('should rewrite a group', function() {
+      it('should rewrite a group', function () {
         manager.createGroup(['DIC8', 'DIC9']);
         expect(manager.getGroupByStart('DIC8').members.length).toEqual(2);
 
@@ -116,7 +116,7 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
         manager.createGroup(['DIC8', 'DIC9']);
         expect(manager.getGroupByStart('DIC8').members.length).toEqual(2);
 
-        expect(manager.getSurveyItemGroupList().filter(group=>group.start==='DIC8').length).toEqual(1);
+        expect(manager.getSurveyItemGroupList().filter(group => group.start === 'DIC8').length).toEqual(1);
       });
 
     });
@@ -151,8 +151,8 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
 
         expect(manager.getGroupByMember(id)).toBeDefined();
         expect(manager.getGroupByMember(id).members).toContain({
-          id:'DIC4',
-          position:'middle'
+          id: 'DIC4',
+          position: 'middle'
         });
 
       });
@@ -165,6 +165,76 @@ fdescribe('the SurveyItemGroupManagerFactory', function () {
 
     });
 
+    describe('the allowItemMovement method', function () {
+      beforeEach(function () {
+        manager.loadJsonData(Mock.template.surveyItemGroupList);
+      });
+
+      it('should allow movement when last item in position is not a group member', function () {
+        expect(function () {
+          manager.allowItemMovement("DIC5", 9);
+        }).not.toThrowError();
+
+      });
+
+      it('should allow movement when last item in position is the start of a group', function () {
+        expect(function () {
+          manager.allowItemMovement("DIC5", 0);
+        }).not.toThrowError();
+
+      });
+
+      it('should not allow movement to inside a group', function () {
+        expect(function () {
+          manager.allowItemMovement("DIC5", 1);
+        }).toThrowError();
+
+      })
+    });
+
+
+    describe('the removeItemFromGroup method', function () {
+      let group;
+      beforeEach(function () {
+        group = manager.createGroup(["DIC1", "DIC2", "DIC3"]);
+      });
+
+      it('should remove item with no modification to group', function () {
+        manager.removeItemFromGroup("DIC2");
+        expect(group).toBeDefined();
+        expect(group.start).toEqual("DIC1");
+        expect(group.end).toEqual("DIC3");
+        expect(group.members.length).toEqual(2);
+      });
+
+      it('should displace the start position when removing start item', function () {
+        manager.removeItemFromGroup("DIC1");
+        group = manager.getGroupByStart("DIC1");
+        expect(group).not.toBeDefined();
+
+        group = manager.getGroupByStart("DIC2");
+        expect(group.start).toEqual("DIC2");
+        expect(group.end).toEqual("DIC3");
+        expect(group.members.length).toEqual(2);
+      });
+
+      it('should displace the end position when removing end item', function () {
+        manager.removeItemFromGroup("DIC3");
+        group = manager.getGroupByStart("DIC1");
+        expect(group).toBeDefined();
+        expect(group.start).toEqual("DIC1");
+        expect(group.end).toEqual("DIC2");
+        expect(group.members.length).toEqual(2);
+      });
+
+      it('should delete the group when less than two remaining items', function () {
+
+        manager.removeItemFromGroup("DIC2");
+        manager.removeItemFromGroup("DIC3");
+        expect(manager.getGroupByStart("DIC1")).not.toBeDefined();
+      });
+
+    });
   });
 
 

@@ -79,10 +79,16 @@
       if (member) {
         if (member.position === 'start') {
           self.members.splice(0, 1);
-          self.start = self.members[0].id;
+          let newStart = self.members[0];
+          self.start = newStart.id;
+          newStart.position = 'start';
+
         } else if (member.position === 'end') {
           self.members.splice(-1, 1);
-          self.end = self.members[self.members.length - 1].id;
+          let newEnd = self.members[self.members.length - 1];
+          self.end = newEnd.id;
+          newEnd.position = 'end';
+
         } else if (member.position === 'middle') {
           let indexToRemove = self.members.indexOf(member);
           self.members.splice(indexToRemove, 1);

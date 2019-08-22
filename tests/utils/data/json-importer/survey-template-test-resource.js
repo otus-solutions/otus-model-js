@@ -4677,16 +4677,16 @@ Test.utils.data.templateExampleWithAllQuestionsAndValidations = {
       "end": "DIC3",
       "members": [
         {
-          id: "DIC1",
-          position: 'start'
+          "id": "DIC1",
+          "position": "start"
         },
         {
-          id: "DIC2",
-          position: 'middle'
+          "id": "DIC2",
+          "position": "middle"
         },
         {
-          id: "DIC3",
-          position: 'end'
+          "id": "DIC3",
+          "position": "end"
         }
       ]
     },
@@ -4696,16 +4696,16 @@ Test.utils.data.templateExampleWithAllQuestionsAndValidations = {
       "end": "DIC11",
       "members": [
         {
-          id: "DIC15",
-          position: 'start'
+          "id": "DIC15",
+          "position": "start"
         },
         {
-          id: "DIC4",
-          position: 'middle'
+          "id": "DIC4",
+          "position": "middle"
         },
         {
-          id: "DIC11",
-          position: 'end'
+          "id": "DIC11",
+          "position": "end"
         }
       ]
     }
