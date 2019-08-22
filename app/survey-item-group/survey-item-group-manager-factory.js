@@ -50,7 +50,7 @@
 
     function allowItemMovement(item, position) {
       let lastItemInPosition = ManagerCenterService.getSurveyItemManager().getItemByPosition(position);
-      let groupCheck = getGroupByMember(lastItemInPosition);
+      let groupCheck = getGroupByMember(lastItemInPosition.templateID);
 
       if (groupCheck) {
         let member = groupCheck.getMember(lastItemInPosition.templateID);
