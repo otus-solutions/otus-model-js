@@ -1,4 +1,4 @@
-describe('the ActivityFacadeService', function() {
+describe('the ActivityFacadeService', function () {
 
   var Mock = {};
   var service;
@@ -8,10 +8,10 @@ describe('the ActivityFacadeService', function() {
   var QUESTION_FILL_TYPE = 'QuestionFill';
   var QUESTION_ID = 'TEST1';
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('otusjs');
 
-    inject(function(_$injector_) {
+    inject(function (_$injector_) {
       var Injections = {
         'AnswerFillFactory': mockAnswerFillFactory(_$injector_),
         'MetadataFillFactory': mockMetadataFillFactory(
@@ -42,10 +42,16 @@ describe('the ActivityFacadeService', function() {
     });
   });
 
-  xdescribe('createActivity method', function() {
+  describe('basic tests scenarios', function () {
+    it('check created service', function () {
+      expect(service).toBeDefined();
+    });
+  });
 
-    it('should call method create', function() {
-      beforeEach(function() {
+  xdescribe('createActivity method', function () {
+
+    it('should call method create', function () {
+      beforeEach(function () {
 
       });
 
@@ -58,14 +64,14 @@ describe('the ActivityFacadeService', function() {
 
     xit(
       'should create new object ActivitySurvey with call method create',
-      function() {
+      function () {
         service.createActivity(Mock.surveyTemplate);
 
         expect(service.surveyActivity.objectType).toEqual('Activity');
       });
 
     xit('should create ActivitySurvey with parameter template',
-      function() {
+      function () {
         service.createActivity(Mock.surveyTemplate);
 
         expect(service.surveyActivity.surveyForm.surveyTemplate).toEqual(
@@ -74,7 +80,7 @@ describe('the ActivityFacadeService', function() {
 
     xit(
       'should create new object ActivitySurvey with call method create used parameter User',
-      function() {
+      function () {
         service.createActivity(Mock.surveyTemplate);
 
         expect(Mock.ActivityFactory.create).toHaveBeenCalledWith(Mock
@@ -83,15 +89,15 @@ describe('the ActivityFacadeService', function() {
 
   });
 
-  xdescribe('openActivitySurvey method', function() {
+  xdescribe('openActivitySurvey method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       service.createActivity(Mock.surveyTemplate);
     });
 
     it(
       'should call method newOpenedRegistry when method openActivitySurvey called ',
-      function() {
+      function () {
         spyOn(service.surveyActivity.statusHistory,
           'newOpenedRegistry');
         service.openActivitySurvey();
@@ -101,15 +107,15 @@ describe('the ActivityFacadeService', function() {
 
   });
 
-  xdescribe('initializeActivitySurvey method', function() {
+  xdescribe('initializeActivitySurvey method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       service.createActivity(Mock.surveyTemplate);
     });
 
     it(
       'should call method newInitializedOnlineRegistry when method initializeActivitySurvey called ',
-      function() {
+      function () {
         spyOn(service.surveyActivity.statusHistory,
           'newInitializedOnlineRegistry');
         service.initializeActivitySurvey();
@@ -119,15 +125,15 @@ describe('the ActivityFacadeService', function() {
 
   });
 
-  xdescribe('createQuestionFill method', function() {
+  xdescribe('createQuestionFill method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       service.createActivity(Mock.surveyTemplate);
     });
 
     it(
       'should call method create when method createQuestionFill called',
-      function() {
+      function () {
         service.createQuestionFill(Mock.item, ANSWER, METADATA,
           COMMENT);
 
@@ -136,35 +142,35 @@ describe('the ActivityFacadeService', function() {
 
     it(
       'should return object question when method createQuestionFill called',
-      function() {
+      function () {
         var questionFill = service.createQuestionFill(Mock.item,
           ANSWER, METADATA, COMMENT);
 
         expect(questionFill.objectType).toEqual('QuestionFill');
       });
 
-    it('should create QuestionFill with parameter QuestionID', function() {
+    it('should create QuestionFill with parameter QuestionID', function () {
       var questionFill = service.createQuestionFill(Mock.item,
         ANSWER, METADATA, COMMENT);
 
       expect(questionFill.questionID).toEqual(QUESTION_ID);
     });
 
-    it('should create QuestionFill with parameter ANSWER', function() {
+    it('should create QuestionFill with parameter ANSWER', function () {
       var questionFill = service.createQuestionFill(Mock.item,
         ANSWER, METADATA, COMMENT);
 
       expect(questionFill.answer.value).toEqual(ANSWER);
     });
 
-    it('should create QuestionFill with parameter METADATA', function() {
+    it('should create QuestionFill with parameter METADATA', function () {
       var questionFill = service.createQuestionFill(Mock.item,
         ANSWER, METADATA, COMMENT);
 
       expect(questionFill.metadata.value).toEqual(METADATA);
     });
 
-    it('should create QuestionFill with parameter COMMENT', function() {
+    it('should create QuestionFill with parameter COMMENT', function () {
       var questionFill = service.createQuestionFill(Mock.item,
         ANSWER, METADATA, COMMENT);
 
@@ -173,15 +179,15 @@ describe('the ActivityFacadeService', function() {
 
   });
 
-  xdescribe('fillQuestion method', function() {
+  xdescribe('fillQuestion method', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
       service.createActivity(Mock.surveyTemplate);
     });
 
     it(
       'should call method updateFilling when method createQuestionFill called ',
-      function() {
+      function () {
         spyOn(service.surveyActivity.fillContainer, 'updateFilling');
 
         service.fillQuestion(QUESTION_ID, ANSWER, METADATA, COMMENT);
@@ -191,18 +197,18 @@ describe('the ActivityFacadeService', function() {
 
   });
 
-  xdescribe('getFillingByQuestionID method', function() {
+  xdescribe('getFillingByQuestionID method', function () {
 
     var filling = {};
 
-    beforeEach(function() {
+    beforeEach(function () {
       service.createActivity(Mock.surveyTemplate);
       filling = service.createQuestionFill(Mock.item, ANSWER,
         METADATA, COMMENT);
       service.fillQuestion(filling);
     });
 
-    it('should retrieve the filling of a question', function() {
+    it('should retrieve the filling of a question', function () {
       spyOn(service.surveyActivity.fillContainer,
         'searchFillingByID').and.callThrough();
 
@@ -214,6 +220,48 @@ describe('the ActivityFacadeService', function() {
       expect(returnedValue).toEqual(filling);
     });
 
+  });
+
+  describe('finalizeActivitySurvey method', function () {
+    beforeEach(function () {
+      service.createActivity(Test.utils.data.survey, Test.utils.data.otusLoggedUser, Test.utils.data.selectedParticipant, {
+        activityConfiguration: {
+          category: {
+            "name": "C0",
+            "objectType": "ActivityCategory",
+            "label": "Normal",
+            "disabled": false,
+            "isDefault": true
+          }
+        }
+      });
+      service.finalizeActivitySurvey();
+    });
+
+    it('', function () {
+      expect(service.surveyActivity.interviews.newRegistry).toHaveBeenCalled();
+    });
+  });
+
+  describe('saveActivitySurveys method', function () {
+    beforeEach(function () {
+      service.createActivity(Test.utils.data.survey, Test.utils.data.otusLoggedUser, Test.utils.data.selectedParticipant, {
+        activityConfiguration: {
+          category: {
+            "name": "C0",
+            "objectType": "ActivityCategory",
+            "label": "Normal",
+            "disabled": false,
+            "isDefault": true
+          }
+        }
+      });
+      service.saveActivitySurveys();
+    });
+
+    it('', function () {
+      expect(service.surveyActivity.interviews.newRegistry).toHaveBeenCalled();
+    });
   });
 
   function mockQuestionItem() {

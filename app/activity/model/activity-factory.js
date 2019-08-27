@@ -8,8 +8,8 @@
   Factory.$inject = [
     'otusjs.model.activity.StatusHistoryManagerFactory',
     'otusjs.model.activity.FillingManagerFactory',
-    'otusjs.model.activity.InterviewFactory',
     'otusjs.model.navigation.NavigationTrackerFactory',
+    'otusjs.model.activity.InterviewManagerFactory',
     'SurveyFormFactory'
   ];
 
@@ -18,8 +18,8 @@
   function Factory(
     StatusHistoryManagerFactory,
     FillingManagerFactory,
-    InterviewFactory,
     NavigationTrackerFactory,
+    InterviewManagerFactory,
     SurveyFormFactory
   ) {
     Inject.FillingManager = FillingManagerFactory.create();
@@ -40,7 +40,9 @@
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
+      var interviews = InterviewManagerFactory.create();
+
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id);
       activity.mode = 'ONLINE';
       activity.category = activityConfiguration.category;
 
@@ -56,7 +58,9 @@
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
 
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, id);
+      var interviews = InterviewManagerFactory.create();
+
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id);
       activity.mode = 'PAPER';
       activity.category = activityConfiguration.category;
 
@@ -69,18 +73,17 @@
       var surveyForm = SurveyFormFactory.fromJsonObject(jsonObject.surveyForm);
       var participantData = jsonObject.participantData;
       var statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
+      var interviews = InterviewManagerFactory.fromJsonObject(jsonObject.interviews);
 
       var id = jsonObject._id;
 
-      var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, id);
+      var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, interviews, id);
       activity.category = jsonObject.category;
       activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
       activity.isDiscarded = jsonObject.isDiscarded;
       activity.mode = jsonObject.mode;
       activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
-      activity.interviews = jsonObject.interviews.map(function (interview) {
-        return InterviewFactory.fromJsonObject(interview);
-      });
+      activity.interviews = InterviewManagerFactory.fromJsonObject(jsonObject.interviews);
 
       _addBackCompatibility(activity, jsonObject);
 
@@ -98,14 +101,14 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, id) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, interviews, id) {
     var self = this;
     var _id = id || null;
 
     self.objectType = 'Activity';
     self.surveyForm = surveyForm;
     self.participantData = participant;
-    self.interviews = [];
+    self.interviews = interviews;
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
     self.isDiscarded = false;
@@ -156,7 +159,7 @@
 
     function getIdentity() {
       let template = getTemplate();
-      if(!template.identity) return template;
+      if (!template.identity) return template;
       else return template.identity;
     }
 
@@ -201,10 +204,12 @@
       json.participantData = self.participantData;
       json.category = self.category;
       json.mode = self.mode;
-      json.interviews = self.interviews;
       json.fillContainer = self.fillContainer.buildJsonToFillContainer();
       json.statusHistory = self.statusHistory.toJSON().map(function (statusHistory) {
         return statusHistory;
+      });
+      json.interviews = self.interviews.toJSON().map(function (interview) {
+        return interview;
       });
       json.isDiscarded = self.isDiscarded;
       json.navigationTracker = self.navigationTracker;
