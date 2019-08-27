@@ -44,10 +44,10 @@
     var _interviews = [];
 
     self.init = init;
+    self.newRegistry = newRegistry;
     self.getInterviewSizeOfList = getInterviewSizeOfList;
     self.getInterviews = getInterviews;
     self.getLastStatus = getLastStatus;
-    self.newRegistry = newRegistry;
     self.toJSON = toJSON;
 
     function init(interview) {
