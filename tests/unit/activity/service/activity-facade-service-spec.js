@@ -222,48 +222,6 @@ describe('the ActivityFacadeService', function () {
 
   });
 
-  describe('finalizeActivitySurvey method', function () {
-    beforeEach(function () {
-      service.createActivity(Test.utils.data.survey, Test.utils.data.otusLoggedUser, Test.utils.data.selectedParticipant, {
-        activityConfiguration: {
-          category: {
-            "name": "C0",
-            "objectType": "ActivityCategory",
-            "label": "Normal",
-            "disabled": false,
-            "isDefault": true
-          }
-        }
-      });
-      service.finalizeActivitySurvey();
-    });
-
-    it('', function () {
-      expect(service.surveyActivity.interviews.newRegistry).toHaveBeenCalled();
-    });
-  });
-
-  describe('saveActivitySurveys method', function () {
-    beforeEach(function () {
-      service.createActivity(Test.utils.data.survey, Test.utils.data.otusLoggedUser, Test.utils.data.selectedParticipant, {
-        activityConfiguration: {
-          category: {
-            "name": "C0",
-            "objectType": "ActivityCategory",
-            "label": "Normal",
-            "disabled": false,
-            "isDefault": true
-          }
-        }
-      });
-      service.saveActivitySurveys();
-    });
-
-    it('', function () {
-      expect(service.surveyActivity.interviews.newRegistry).toHaveBeenCalled();
-    });
-  });
-
   function mockQuestionItem() {
     Mock.item = {};
     Mock.item.customID = QUESTION_ID;

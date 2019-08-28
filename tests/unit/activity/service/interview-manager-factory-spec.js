@@ -12,6 +12,8 @@ describe('InterviewManagerFactory', function () {
         InterviewFactory: mockInterviewFactory(_$injector_)
       });
       service = factory;
+
+      spyOn(Mock.InterviewFactory, 'create').and.callThrough();
     });
   });
 
@@ -35,35 +37,73 @@ describe('InterviewManagerFactory', function () {
   });
 
   describe('init method', function () {
+    it('when method is call with current ', function () {
 
+    });
   });
 
   describe('newRegistry method', function () {
-
     beforeEach(function () {
       instanceOfManager = factory.create();
+      instanceOfManager.newRegistry(Mock.user);
     });
 
-    it('', function () {
-      instanceOfManager.newRegistry(Mock.user);
-
+    it('when method is call then should add new register', function () {
       expect(instanceOfManager.getInterviewSizeOfList()).toBe(1);
-    })
+    });
+
+    it('should call create method with parameter expected', function () {
+      expect(Mock.InterviewFactory.create).toHaveBeenCalledWith(Mock.user);
+    });
   });
 
   describe('getInterviews method', function () {
+    beforeEach(function () {
+      instanceOfManager = factory.create();
+      instanceOfManager.newRegistry(Mock.user);
+    });
 
+    it('should return list', function () {
+      expect(instanceOfManager.getInterviews()).toEqual(jasmine.any(Array));
+    });
   });
 
   describe('getLastStatus method', function () {
+    beforeEach(function () {
+      instanceOfManager = factory.create();
+      instanceOfManager.newRegistry(Mock.user);
+    });
 
+    it('should return last element in list', function () {
+      var result = instanceOfManager.getLastStatus();
+
+      expect(result.interviewer.email).toEqual('user@email.com');
+    });
   });
 
   describe('getInterviewSizeOfList method', function () {
+    beforeEach(function () {
+      instanceOfManager = factory.create();
+      instanceOfManager.newRegistry(Mock.user);
+    });
 
+    it('should return size of list', function () {
+      expect(instanceOfManager.getInterviewSizeOfList()).toBe(1);
+    });
   });
 
   describe('toJSON method', function () {
+    beforeEach(function () {
+      instanceOfManager = factory.create();
+      instanceOfManager.newRegistry(Mock.user);
+    });
+
+    it('should method when called expected ', function () {
+      var jsonExpected = JSON.stringify([Mock.InterviewFactory.create(Mock.user).toJSON()]);
+
+
+      expect(JSON.stringify(instanceOfManager.toJSON())).toEqual(jsonExpected);
+    });
 
   });
 
