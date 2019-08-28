@@ -53,7 +53,7 @@
     "gulp-sonar": "^2.1.0",
     "gulp-uglify": "^1.5.4",
     "gulp-util": "^3.0.7",
-    "jasmine-core": "^2.8.0",
+    "jasmine-core": "2.8.0",
     "karma": "^0.13.19",
     "karma-babel-preprocessor": "^7.0.0",
     "karma-browserify": "^5.1.1",
