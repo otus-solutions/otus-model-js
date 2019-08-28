@@ -131,7 +131,6 @@
 
     function moveItem(item, position) {
       self.SurveyItemGroupManager.allowItemMovement(item.templateID, position);
-      console.log(item, position);
       self.SurveyItemManager.moveItem(item, position);
       self.NavigationManager.moveNavigation(item.templateID, position);
     }

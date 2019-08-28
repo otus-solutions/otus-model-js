@@ -1,4 +1,4 @@
-fdescribe('the SurveyItemGroupManagerFactory', function () {
+describe('the SurveyItemGroupManagerFactory', function () {
   var factory;
   var Mock = {};
   var Injections = {};
