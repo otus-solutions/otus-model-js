@@ -5,8 +5,8 @@
       .service('otusjs.survey.ManagerCenterService', Service);
 
     /*
-    * Whoever uses this service should not request a manager on onInit type methods.
-    * Doing this could cause a bug if the survey is changed and the new survey managers are not set yet on
+    * When using this service, do not request a manager on onInit type methods.
+    * Doing this could cause a bug if the survey is changed and the new survey managers are yet not set on
     * the request moment
     * */
 

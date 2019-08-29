@@ -27,8 +27,8 @@ describe('the SurveyItemGroupManagerFactory', function () {
   describe('the manager methods', function () {
     var manager;
     beforeEach(function () {
-      Mock.navigationManager = Mock.NavigationContainerFactory.create();
-      Mock.surveyItemManager = Mock.SurveyItemContainerFactory.create();
+      Mock.navigationManager = Mock.NavigationManagerFactory.create();
+      Mock.surveyItemManager = Mock.SurveyItemManagerFactory.create();
 
       Injections.ManagerCenterService.initialize(Mock.surveyItemManager, Mock.navigationManager);
 
@@ -36,7 +36,7 @@ describe('the SurveyItemGroupManagerFactory', function () {
 
 
       Mock.navigationManager.loadJsonData(Mock.template.navigationList);
-      Mock.surveyItemManager.loadFromItemContainerObject(Mock.template.itemContainer);
+      Mock.surveyItemManager.loadJsonDataObject(Mock.template.itemContainer);
 
     });
 
@@ -244,8 +244,8 @@ describe('the SurveyItemGroupManagerFactory', function () {
     Injections.ManagerCenterService = _$injector_.get('otusjs.survey.ManagerCenterService');
     Injections.SurveyItemGroupFactory = _$injector_.get('otusjs.surveyItemGroup.SurveyItemGroupFactory');
 
-    Mock.SurveyItemContainerFactory = _$injector_.get('SurveyItemContainerFactory');
-    Mock.NavigationContainerFactory = _$injector_.get('otusjs.model.navigation.NavigationContainerFactory');
+    Mock.SurveyItemManagerFactory = _$injector_.get('SurveyItemManagerFactory');
+    Mock.NavigationManagerFactory = _$injector_.get('otusjs.model.navigation.NavigationManagerFactory');
 
   }
 
