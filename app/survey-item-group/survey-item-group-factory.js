@@ -23,7 +23,6 @@
       group.rewrite(groupJson);
       return group;
     }
-
     return self;
   }
 
@@ -45,7 +44,6 @@
     self.removeMember = removeMember;
     self.rewrite = rewrite;
 
-
     init();
 
     function init() {
@@ -55,12 +53,9 @@
         self.start = start;
         self.end = end;
         self.members.push(new GroupMember(start, POSITION.START));
-
-
         members.forEach(member => {
           self.members.push(new GroupMember(member, POSITION.MIDDLE));
         });
-
         self.members.push(new GroupMember(end, POSITION.END));
       }
     }
@@ -93,7 +88,6 @@
           let indexToRemove = self.members.indexOf(member);
           self.members.splice(indexToRemove, 1);
         }
-
       }
     }
 
@@ -108,9 +102,7 @@
         self.members = surveyItemGroup.members;
       }
     }
-
     self.toJSON = toJSON;
-
 
     function toJSON() {
       let json = {};
@@ -118,10 +110,8 @@
       json.start = self.start;
       json.end = self.end;
       json.members = self.members;
-
       return json;
     }
-
     return self;
   }
 
@@ -131,5 +121,4 @@
       position: position
     }
   }
-
 }());

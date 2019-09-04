@@ -5,7 +5,6 @@ describe("SurveyDictionaryService_TestSuite", function () {
   beforeEach(function () {
     angular.mock.module('otusjs');
 
-
     inject(function (_$injector_) {
       mock(_$injector_);
       service = _$injector_.get('otusjs.survey.ManagerCenterService');
@@ -19,7 +18,6 @@ describe("SurveyDictionaryService_TestSuite", function () {
       Mock.surveyItemGroupManager = Mock.SurveyItemGroupManagerFactory.create();
 
       service.initialize(Mock.surveyItemManager, Mock.navigationManager, Mock.surveyItemGroupManager);
-
     });
 
     it('serviceExistence_check', function () {
@@ -32,21 +30,16 @@ describe("SurveyDictionaryService_TestSuite", function () {
 
     it('should provide the navigationManager', function () {
       expect(service.getNavigationManager()).toEqual(Mock.navigationManager);
-
     });
 
     it('should provide the surveyItemGroupManager', function () {
       expect(service.getSurveyItemGroupManager()).toEqual(Mock.surveyItemGroupManager);
-
     });
   });
-
-
 
   function mock(_$injector_) {
     Mock.SurveyItemManagerFactory = _$injector_.get('SurveyItemManagerFactory');
     Mock.NavigationManagerFactory = _$injector_.get('otusjs.model.navigation.NavigationManagerFactory');
     Mock.SurveyItemGroupManagerFactory = _$injector_.get('otusjs.surveyItemGroup.SurveyItemGroupManagerFactory');
-
   }
 });

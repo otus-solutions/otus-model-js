@@ -42,11 +42,9 @@
       var UUID = SurveyUUIDGenerator.generateSurveyUUID();
       var metainfo = SurveyMetaInfoFactory.create();
       var identity = SurveyIdentityFactory.create(name, acronym);
-
-
       var survey = new Survey(metainfo, identity, UUID);
-      survey.initialize();
 
+      survey.initialize();
       return survey;
     }
 
@@ -61,7 +59,6 @@
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
       survey.StaticVariableManager.loadJsonData(jsonObject.staticVariableList || []);
       survey.SurveyItemGroupManager.loadJsonData(jsonObject.surveyItemGroupList);
-
       return survey;
     }
 
@@ -110,11 +107,9 @@
     self.getItemStaticVariableList = getItemStaticVariableList;
     self.toJSON = toJSON;
 
-
     function initialize() {
       self.SurveyItemManager.init();
       self.NavigationManager.initialize();
-
     }
 
     function addItem(type) {
@@ -227,12 +222,8 @@
       });
 
       json.staticVariableList = self.StaticVariableManager.getStaticVariableList();
-
       json.surveyItemGroupList = self.SurveyItemGroupManager.getSurveyItemGroupList();
-
       return json;
     }
-
-
   }
 }());

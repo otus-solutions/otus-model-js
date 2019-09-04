@@ -1,13 +1,13 @@
-describe('SurveyItemFactory', function() {
+describe('SurveyItemFactory', function () {
   var Mock = {};
   var OID = 'OID';
   var factory;
   var injections = {};
 
-  beforeEach(function() {
+  beforeEach(function () {
     angular.mock.module('otusjs');
 
-    inject(function(_$injector_) {
+    inject(function (_$injector_) {
       injections = {
         'CalendarQuestionFactory': mockCalendarQuestionFactory(
           _$injector_),
@@ -40,121 +40,81 @@ describe('SurveyItemFactory', function() {
       }
       factory = _$injector_.get('SurveyItemFactory', injections);
     });
-
   });
 
-  describe('Specialized factory use', function() {
+  describe('Specialized factory use', function () {
+    it('CalendarQuestionFactory.create should be called when parameter is CalendarQuestion', function () {
+      spyOn(Mock.CalendarQuestionFactory, 'create');
+      factory.create('CalendarQuestion', jasmine.any(String));
+      expect(Mock.CalendarQuestionFactory.create).toHaveBeenCalled();
+    });
 
     it(
-      'CalendarQuestionFactory.create should be called when parameter is CalendarQuestion',
-      function() {
-        spyOn(Mock.CalendarQuestionFactory, 'create');
-
-        factory.create('CalendarQuestion', jasmine.any(String));
-
-        expect(Mock.CalendarQuestionFactory.create).toHaveBeenCalled();
-      });
-
-    it(
-      'IntegerQuestionFactory.create should be called when parameter is integer-question',
-      function() {
+      'IntegerQuestionFactory.create should be called when parameter is integer-question', function () {
         spyOn(Mock.IntegerQuestionFactory, 'create');
-
         factory.create('IntegerQuestion', jasmine.any(String));
-
         expect(Mock.IntegerQuestionFactory.create).toHaveBeenCalled();
       });
 
-    it(
-      'SingleSelectionQuestionFactory.create should be called when parameter is SingleSelectionQuestion',
-      function() {
-        spyOn(Mock.SingleSelectionQuestionFactory, 'create');
+    it('SingleSelectionQuestionFactory.create should be called when parameter is SingleSelectionQuestion', function () {
+      spyOn(Mock.SingleSelectionQuestionFactory, 'create');
+      factory.create('SingleSelectionQuestion', jasmine.any(String));
+      expect(Mock.SingleSelectionQuestionFactory.create).toHaveBeenCalled();
+    });
 
-        factory.create('SingleSelectionQuestion', jasmine.any(String));
+    it('TextQuestionFactory.create should be called when parameter is TextQuestion', function () {
+      spyOn(Mock.TextQuestionFactory, 'create');
+      factory.create('TextQuestion', jasmine.any(String));
+      expect(Mock.TextQuestionFactory.create).toHaveBeenCalled();
+    });
 
-        expect(Mock.SingleSelectionQuestionFactory.create).toHaveBeenCalled();
-      });
-
-    it(
-      'TextQuestionFactory.create should be called when parameter is TextQuestion',
-      function() {
-        spyOn(Mock.TextQuestionFactory, 'create');
-
-        factory.create('TextQuestion', jasmine.any(String));
-
-        expect(Mock.TextQuestionFactory.create).toHaveBeenCalled();
-      });
-
-    it(
-      'TimeQuestionFactory.create should be called when parameter is TimeQuestion',
-      function() {
-        spyOn(Mock.TimeQuestionFactory, 'create');
-
-        factory.create('TimeQuestion', jasmine.any(String));
-
-        expect(Mock.TimeQuestionFactory.create).toHaveBeenCalled();
-      });
-
+    it('TimeQuestionFactory.create should be called when parameter is TimeQuestion', function () {
+      spyOn(Mock.TimeQuestionFactory, 'create');
+      factory.create('TimeQuestion', jasmine.any(String));
+      expect(Mock.TimeQuestionFactory.create).toHaveBeenCalled();
+    });
   });
 
-  describe('Question', function() {
-
-    it('returned object should extends Question', function() {
-      var question = factory.create('CalendarQuestion', jasmine.any(
-        String));
-
+  describe('Question', function () {
+    it('returned object should extends Question', function () {
+      var question = factory.create('CalendarQuestion', jasmine.any(String));
       expect(question.extents).toBe('SurveyItem');
     });
 
-    it('returned object should have a not null templateID', function() {
+    it('returned object should have a not null templateID', function () {
       var question = factory.create('CalendarQuestion', OID);
-
       expect(question.templateID).toBe(OID);
     });
 
-    it('returned object should have a label object for ptBR locale',
-      function() {
+    it('returned object should have a label object for ptBR locale', function () {
+      var question = factory.create('CalendarQuestion', OID);
+      expect(question.label.ptBR).not.toBeNull();
+      expect(question.label.ptBR).not.toBeUndefined();
+    });
+
+    it('returned object should have a label object for enUS locale', function () {
         var question = factory.create('CalendarQuestion', OID);
-
-        expect(question.label.ptBR).not.toBeNull();
-        expect(question.label.ptBR).not.toBeUndefined();
-      });
-
-    it('returned object should have a label object for enUS locale',
-      function() {
-        var question = factory.create('CalendarQuestion', OID);
-
         expect(question.label.enUS).not.toBeNull();
         expect(question.label.enUS).not.toBeUndefined();
       });
 
-    it('returned object should have a label object for enUS locale',
-      function() {
+    it('returned object should have a label object for enUS locale', function () {
         var question = factory.create('CalendarQuestion', OID);
-
         expect(question.label.esES).not.toBeNull();
         expect(question.label.esES).not.toBeUndefined();
       });
-
   });
 
-
-
-  describe('Load', function() {
-    beforeEach(function() {
+  describe('Load', function () {
+    beforeEach(function () {
       mockTemplate();
       spyOn(factory, "load").and.callThrough();
-
     });
-    it('should load a template', function() {
-      //spyOn(factory.load(Mock.questionTemplate)).toHaveBeenCalled();
-      //console.log(template.extents);
+    it('should load a template', function () {
       var template = factory.load(Mock.questionTemplate);
-
       expect(factory.load).toHaveBeenCalled();
       expect(factory.load).toHaveBeenCalledWith(Mock.questionTemplate);
       expect(template.extents).toEqual('SurveyItem');
-
     })
   });
 
@@ -205,26 +165,22 @@ describe('SurveyItemFactory', function() {
   }
 
   function mockAutocompleteQuestionFactory($injector) {
-    Mock.AutocompleteQuestionFactory = $injector.get(
-      'AutocompleteQuestionFactory');
+    Mock.AutocompleteQuestionFactory = $injector.get('AutocompleteQuestionFactory');
     return Mock.AutocompleteQuestionFactory;
   }
 
   function mockFileUploadQuestionFactory($injector) {
-    Mock.FileUploadQuestionFactory = $injector.get(
-      'FileUploadQuestionFactory');
+    Mock.FileUploadQuestionFactory = $injector.get('FileUploadQuestionFactory');
     return Mock.FileUploadQuestionFactory;
   }
 
   function mockGridTextQuestionFactory($injector) {
-    Mock.GridTextQuestionFactory = $injector.get(
-      'otusjs.model.question.GridTextQuestionFactory');
+    Mock.GridTextQuestionFactory = $injector.get('otusjs.model.question.GridTextQuestionFactory');
     return Mock.GridTextQuestionFactory;
   }
 
   function mockGridIntegerQuestionFactory($injector) {
-    Mock.GridIntegerQuestionFactory = $injector.get(
-      'otusjs.model.question.GridIntegerQuestionFactory');
+    Mock.GridIntegerQuestionFactory = $injector.get('otusjs.model.question.GridIntegerQuestionFactory');
     return Mock.GridIntegerQuestionFactory;
   }
 
@@ -238,11 +194,7 @@ describe('SurveyItemFactory', function() {
     return Mock.ImageItemFactory;
   }
 
-
-
   function mockTemplate() {
     Mock.questionTemplate = Test.utils.data.singleSelectionQuestionItem;
-
   }
-
 });

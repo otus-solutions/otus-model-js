@@ -10,16 +10,13 @@
     'otusjs.surveyItemGroup.SurveyItemGroupFactory'
   ];
 
-
   function Factory(ManagerCenterService, SurveyItemGroupFactory) {
     var self = this;
-
     self.create = create;
 
     function create() {
       return new SurveyItemGroupManager(ManagerCenterService, SurveyItemGroupFactory);
     }
-
     return self;
   }
 
@@ -64,7 +61,6 @@
         }
       }
       removeItemFromGroup(templateID);
-
     }
 
     function removeItemFromGroup(templateID) {
@@ -76,7 +72,6 @@
           group.removeMember(templateID);
         }
       }
-
     }
 
     function getSurveyItemGroupList() {
@@ -114,7 +109,6 @@
       } else {
         _groups.push(group);
       }
-
       return group;
     }
 
@@ -176,7 +170,6 @@
         candidatesChain.push(origin);
         return candidatesChain;
       }
-
       return candidatesChain;
     }
 
@@ -195,6 +188,5 @@
         !navigation.isEndNode(navigation) &&
         !navigation.hasMultipleInNavigations(navigation);
     }
-
   }
 }());

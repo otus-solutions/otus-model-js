@@ -27,7 +27,6 @@
       if (!origin) {
         return createNullNavigation();
       }
-
       return new Navigation(origin);
     }
 
@@ -39,7 +38,6 @@
       } else {
         initialNavigation.index = 1;
       }
-
       return initialNavigation;
     }
 
@@ -81,7 +79,6 @@
 
       return navigation;
     }
-
     return self;
   }
 
@@ -224,7 +221,6 @@
       } else {
         return false;
       }
-
       return true;
     }
 
@@ -245,7 +241,6 @@
           return true;
         }
       });
-
       return routeToReturn;
     }
 
@@ -269,7 +264,6 @@
       result = self.inNavigations.every(function (navigation) {
         return navigation.isOrphan() || navigation.hasOrphanRoot();
       });
-
       return result;
     }
 
@@ -343,7 +337,6 @@
       json.routes = self.routes.map(function (route) {
         return route;
       });
-
       return json;
     }
 
