@@ -41,6 +41,9 @@
     self.getNavigationTracker = getNavigationTracker;
     self.createActivityRevision = createActivityRevision;
     self.createActivityRevisionFromJson = createActivityRevisionFromJson;
+    self.getWholeTemplateVariableList = getWholeTemplateVariableList;
+    self.getItemStaticVariableList = getItemStaticVariableList;
+    self.fillStaticVariablesValues = fillStaticVariablesValues;
 
     function createActivity(template, user, participant, activityConfiguration) {
       self.surveyActivity = ActivityFactory.create(template, user, participant, activityConfiguration);
@@ -99,6 +102,18 @@
 
     function createActivityRevisionFromJson(jsonArray) {
       return ActivityRevisionFactory.fromJson(jsonArray);
+    }
+
+    function getWholeTemplateVariableList() {
+      return self.surveyActivity.getWholeTemplateVariableList();
+    }
+
+    function getItemStaticVariableList(itemID) {
+      return self.surveyActivity.getItemStaticVariableList(itemID);
+    }
+
+    function fillStaticVariablesValues(fillingArray) {
+      return self.surveyActivity.fillStaticVariablesValues(fillingArray);
     }
   }
 }());
