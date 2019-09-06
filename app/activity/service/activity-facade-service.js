@@ -51,7 +51,6 @@
 
     function createPaperActivity(template, user, participant, paperActivityData, activityConfiguration) {
       self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, activityConfiguration);
-      self.surveyActivity.interviews.push(InterviewFactory.create(paperActivityData));
     }
 
     function getInterviewer() {
@@ -65,15 +64,16 @@
 
     function initializeActivitySurvey() {
       self.surveyActivity.statusHistory.newInitializedOnlineRegistry(_user);
-      self.surveyActivity.interviews.push(InterviewFactory.create(_user));
     }
 
     function finalizeActivitySurvey() {
       self.surveyActivity.statusHistory.newFinalizedRegistry(_user);
+      self.surveyActivity.interviews.newRegistry(_user);
     }
 
     function saveActivitySurvey() {
       self.surveyActivity.statusHistory.newSavedRegistry(_user);
+      self.surveyActivity.interviews.newRegistry(_user);
     }
 
     function createQuestionFill(question, answer, metadata, comment) {
