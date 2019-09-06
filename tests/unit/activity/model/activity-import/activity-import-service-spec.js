@@ -44,8 +44,13 @@ describe('ActivityImportFactory Tests', function () {
     expect(_activities[1].isValid).toBeFalsy();
     expect(_activities[0].statusHistory.getLastStatus().name).toEqual('FINALIZED');
     expect(_activities[0].statusHistory.historySize()).toEqual(4);
+    expect(_activities[0].interviews.getInterviewSizeOfList()).toEqual(1);
+    expect(_activities[0].interviews.getInterviews()[0].interviewer.email).toEqual('user@gmail.com');
+
     expect(_activities[1].statusHistory.getLastStatus().name).toEqual('SAVED');
     expect(_activities[1].statusHistory.historySize()).toEqual(4);
+    expect(_activities[1].interviews.getInterviewSizeOfList()).toEqual(1);
+    expect(_activities[1].interviews.getInterviews()[0].interviewer.email).toEqual('user@gmail.com');
   });
 
   it('should create activities DSOC in fromJsonObject method', function () {
@@ -61,6 +66,7 @@ describe('ActivityImportFactory Tests', function () {
     expect(_activities[0].isValid).toBeFalsy();
     expect(_activities[0].statusHistory.getLastStatus().name).toEqual('FINALIZED');
     expect(_activities[0].statusHistory.historySize()).toEqual(4);
+    expect(_activities[0].interviews.getInterviewSizeOfList()).toEqual(1);
   });
 
 });
