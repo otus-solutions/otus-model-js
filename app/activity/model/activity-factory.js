@@ -142,7 +142,7 @@
     }
 
     function getGroupByItemID(templateID) {
-      return self.surveyForm.SurveyItemGroupManager.getGroupByMember(templateID);
+      return getTemplate().SurveyItemGroupManager.getGroupByMember(templateID);
     }
 
     function getNavigations() {
