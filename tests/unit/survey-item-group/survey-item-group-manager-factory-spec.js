@@ -6,14 +6,10 @@ describe('the SurveyItemGroupManagerFactory', function () {
   beforeEach(function () {
     angular.mock.module('otusjs');
 
-
     inject(function (_$injector_) {
       mock(_$injector_);
-
       factory = _$injector_.get('otusjs.surveyItemGroup.SurveyItemGroupManagerFactory', Injections);
     });
-
-
   });
 
   describe('the creation method', function () {
@@ -21,7 +17,6 @@ describe('the SurveyItemGroupManagerFactory', function () {
       var manager = factory.create();
       expect(manager).toBeDefined();
     });
-
   });
 
   describe('the manager methods', function () {
@@ -29,17 +24,12 @@ describe('the SurveyItemGroupManagerFactory', function () {
     beforeEach(function () {
       Mock.navigationManager = Mock.NavigationManagerFactory.create();
       Mock.surveyItemManager = Mock.SurveyItemManagerFactory.create();
-
       Injections.ManagerCenterService.initialize(Mock.surveyItemManager, Mock.navigationManager);
 
       manager = factory.create();
-
-
       Mock.navigationManager.loadJsonData(Mock.template.navigationList);
       Mock.surveyItemManager.loadJsonDataObject(Mock.template.itemContainer);
-
     });
-
 
     describe('the loadJsonData method', function () {
       it('should load as empty array when passed undefined value (for compatibility purposes)', function () {
@@ -57,12 +47,10 @@ describe('the SurveyItemGroupManagerFactory', function () {
       it('should get the group by the starting member', function () {
         manager.loadJsonData(Mock.template.surveyItemGroupList);
         let group = manager.getGroupByStart("DIC15");
-
         expect(group).toBeDefined();
         expect(group.start).toEqual("DIC15");
         expect(group.objectType).toEqual("SurveyItemGroup");
       });
-
     });
 
     describe('the getGroupCandidates method', function () {
@@ -79,7 +67,6 @@ describe('the SurveyItemGroupManagerFactory', function () {
         expect(manager.getGroupCandidates('DIC3')).toEqual(['DIC3']);
         expect(manager.getGroupCandidates('DIC16')).toEqual(['DIC16']);
       });
-
     });
 
     describe('the createGroup method', function () {
@@ -115,10 +102,8 @@ describe('the SurveyItemGroupManagerFactory', function () {
 
         manager.createGroup(['DIC8', 'DIC9']);
         expect(manager.getGroupByStart('DIC8').members.length).toEqual(2);
-
         expect(manager.getSurveyItemGroupList().filter(group => group.start === 'DIC8').length).toEqual(1);
       });
-
     });
 
     describe('the deleteGroup method', function () {
@@ -138,7 +123,6 @@ describe('the SurveyItemGroupManagerFactory', function () {
         manager.deleteGroup(idToExclude);
         expect(manager.getSurveyItemGroupList()).toEqual(beforeDeletionList);
       });
-
     });
 
     describe('the getGroupByMember method', function () {
@@ -148,21 +132,17 @@ describe('the SurveyItemGroupManagerFactory', function () {
 
       it('should return the group to which the member belongs to', function () {
         let id = 'DIC4';
-
         expect(manager.getGroupByMember(id)).toBeDefined();
         expect(manager.getGroupByMember(id).members).toContain({
           id: 'DIC4',
           position: 'middle'
         });
-
       });
 
       it('should return undefined when dont find any group with given id', function () {
         let id = 'DIC12';
-
         expect(manager.getGroupByMember(id)).not.toBeDefined();
       });
-
     });
 
     describe('the allowItemMovement method', function () {
@@ -174,24 +154,20 @@ describe('the SurveyItemGroupManagerFactory', function () {
         expect(function () {
           manager.allowItemMovement("DIC5", 9);
         }).not.toThrowError();
-
       });
 
       it('should allow movement when last item in position is the start of a group', function () {
         expect(function () {
           manager.allowItemMovement("DIC5", 0);
         }).not.toThrowError();
-
       });
 
       it('should not allow movement to inside a group', function () {
         expect(function () {
           manager.allowItemMovement("DIC5", 1);
         }).toThrowError();
-
       })
     });
-
 
     describe('the removeItemFromGroup method', function () {
       let group;
@@ -228,26 +204,18 @@ describe('the SurveyItemGroupManagerFactory', function () {
       });
 
       it('should delete the group when less than two remaining items', function () {
-
         manager.removeItemFromGroup("DIC2");
         manager.removeItemFromGroup("DIC3");
         expect(manager.getGroupByStart("DIC1")).not.toBeDefined();
       });
-
     });
   });
 
-
   function mock(_$injector_) {
     Mock.template = Test.utils.data.templateExampleWithAllQuestionsAndValidations;
-
     Injections.ManagerCenterService = _$injector_.get('otusjs.survey.ManagerCenterService');
     Injections.SurveyItemGroupFactory = _$injector_.get('otusjs.surveyItemGroup.SurveyItemGroupFactory');
-
     Mock.SurveyItemManagerFactory = _$injector_.get('SurveyItemManagerFactory');
     Mock.NavigationManagerFactory = _$injector_.get('otusjs.model.navigation.NavigationManagerFactory');
-
   }
-
-
 });

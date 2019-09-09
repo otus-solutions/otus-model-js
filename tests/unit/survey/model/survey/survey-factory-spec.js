@@ -68,7 +68,6 @@ describe('SurveyFactory', function () {
       expect(survey.SurveyItemManager.moveItem).toHaveBeenCalled();
       expect(survey.NavigationManager.moveNavigation).toHaveBeenCalled();
       expect(survey.SurveyItemGroupManager.allowItemMovement).toHaveBeenCalled();
-
     });
   });
 
@@ -83,7 +82,6 @@ describe('SurveyFactory', function () {
     it("should call SurveyMetaInfoFactory.fromJsonObject method with Mock.surveyTemplate.metainfo", function () {
       expect(Mock.SurveyMetaInfoFactory.fromJsonObject).toHaveBeenCalledWith(Mock.surveyTemplate.metainfo);
     });
-
   });
 
   //fixme
@@ -123,7 +121,6 @@ describe('SurveyFactory', function () {
     it('createDictionaryMethod_should_invoke_dictionary_construction_service', function () {
       expect(Injections.SurveyDictionaryService.dictionaryConstructionByExtractionId).toHaveBeenCalledTimes(1)
     });
-
   });
 
   describe('The static variable methods', function () {
@@ -157,7 +154,6 @@ describe('SurveyFactory', function () {
       survey.getItemStaticVariableList(itemArray);
       expect(Mock.StaticVariableManager.getItemVariables).toHaveBeenCalledWith(itemArray);
     });
-
   });
 
   describe('The ManagerCenterService methods', function () {

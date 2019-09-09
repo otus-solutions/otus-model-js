@@ -68,7 +68,6 @@
       Inject.RouteUpdateTaskService = RouteUpdateTaskService;
       Inject.InitialNodesCreationTask = InitialNodesCreationTask;
     }
-
     return self;
   }
 
@@ -152,7 +151,6 @@
           currentPathState = navigation;
         }
       });
-
       return defaultPath;
     }
 
@@ -163,7 +161,6 @@
       var avaiableItems = allItems.filter(function (item, index) {
         return index <= referenceItemIndex;
       });
-
       return avaiableItems;
     }
 
