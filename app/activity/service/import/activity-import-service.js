@@ -67,7 +67,7 @@
         return options.extractionValue === answerMetadata;
       });
 
-      if(associated.length){
+      if (associated.length) {
         metadataOptions.forEach((option, idx) => {
           if (option.extractionValue === answerMetadata) {
             _isValid = true;
@@ -82,7 +82,7 @@
       if (_isValid) {
         _isValid = (answer.value || answer.value === 0) && metadata.value ? false : true;
         if (_isValid && !metadata.value) {
-          _elementRegister = ElementRegisterFactory.create(templateID, {data: answer.value});
+          _elementRegister = ElementRegisterFactory.create(templateID, { data: answer.value });
           _setupValidation(_item);
           ValidationService.validateElement(templateID, function (response) {
             response.forEach(function (validation) {
@@ -152,7 +152,7 @@
     }
 
     function _setInterview(user) {
-      _activity.interviews.push(InterviewFactory.create(user));
+      _activity.interviews.newRegistry(user);
     }
 
     function _isValidSurveys(acronym, json) {

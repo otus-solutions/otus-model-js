@@ -1,23 +1,45 @@
-describe("activityFactorySuite", function () {
-  var factory;
+describe('ActivityImportService_TestSuite', function () {
+  var Mock = {};
   var Injections = [];
 
   beforeEach(function () {
     angular.mock.module('otusjs.model.activity');
-
-    inject(function ($injector) {
+    angular.mock.inject($injector => {
       Injections.StatusHistoryManagerFactory = $injector.get('otusjs.model.activity.StatusHistoryManagerFactory');
       Injections.FillingManagerFactory = $injector.get('otusjs.model.activity.FillingManagerFactory');
-      Injections.InterviewFactory = $injector.get('otusjs.model.activity.InterviewFactory');
       Injections.NavigationTrackerFactory = $injector.get('otusjs.model.navigation.NavigationTrackerFactory');
+      Injections.InterviewManagerFactory = $injector.get('otusjs.model.activity.InterviewManagerFactory');
       Injections.SurveyFormFactory = $injector.get('SurveyFormFactory');
 
-      factory = $injector.get('otusjs.model.activity.ActivityFactory', Injections);
+      Mock.factory = $injector.get('otusjs.model.activity.ActivityFactory', Injections);
+      spyOn(Mock.factory, "create").and.callThrough();
+      spyOn(Injections.InterviewManagerFactory, 'create').and.callThrough();
+      spyOn(Injections.InterviewManagerFactory, 'newRegistry').and.callThrough();
     });
-  });
 
-  // it('factoryExistence check ', function () {
-  //   console.log(factory)
-  //   expect(factory).toBeDefined();
-  // });
-});
+    describe('basic tests scenarios', function () {
+      it('check created factory', function () {
+        expect(Mock.factory).toBeDefined();
+      });
+    });
+
+    describe('create method', function () {
+      beforeEach(function () {
+        Mock.factory.create();
+      });
+
+      it('check created factory', function () {
+        expect(Mock.factory.create).toHaveBeenCalled();
+        expect(Injections.InterviewManagerFactory.create).toHaveBeenCalled();
+      });
+    });
+
+    describe('createPaperActivity method', function () {
+      it('check created factory', function () {
+        expect(Mock.factory).toBeDefined();
+        expect(Injections.InterviewManagerFactory.create).toHaveBeenCalled();
+      });
+    });
+
+  });
+})
