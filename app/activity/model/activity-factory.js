@@ -116,6 +116,7 @@
     /* Public methods */
     self.getID = getID;
     self.getItems = getItems;
+    self.getGroupByItemID = getGroupByItemID;
     self.getNavigations = getNavigations;
     self.getExportableList = getExportableList;
     self.getTemplate = getTemplate;
@@ -138,6 +139,10 @@
 
     function getItems() {
       return getTemplate().getItems();
+    }
+
+    function getGroupByItemID(templateID) {
+      return self.surveyForm.SurveyItemGroupManager.getGroupByMember(templateID);
     }
 
     function getNavigations() {
