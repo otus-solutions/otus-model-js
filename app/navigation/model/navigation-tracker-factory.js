@@ -113,19 +113,20 @@
   function NavigationTracker(items, startIndex) {
     var self = this;
     var _objectType = 'NavigationTracker';
-    var _currentItem = null;
+    var _currentItemGroup = [];
+    var _currentItemGroupLength = 0;
     var _items = null;
     var _size = 0;
 
     /* Public methods */
     self.getObjectType = getObjectType;
     self.getItems = getItems;
-    self.getCurrentItem = getCurrentItem;
+    self.getCurrentItemGroup = getCurrentItemGroup;
     self.getCurrentIndex = getCurrentIndex;
     self.getItemCount = getItemCount;
     self.getSkippedItems = getSkippedItems;
-    self.visitItem = visitItem;
-    self.updateCurrentItem = updateCurrentItem;
+    self.visitGroup = visitGroup;
+    self.updateCurrentGroup = updateCurrentGroup;
     self.hasPreviousItem = hasPreviousItem;
     self.toJSON = toJSON;
 
@@ -167,8 +168,8 @@
      * @returns {NavigationTrackingItem}
      * @memberof NavigationTracker
      */
-    function getCurrentItem() {
-      return _currentItem;
+    function getCurrentItemGroup() {
+      return _currentItemGroup;
     }
 
     /**
@@ -177,8 +178,8 @@
      * @memberof NavigationTracker
      */
     function getCurrentIndex() {
-      if (_currentItem) {
-        return _currentItem.getIndex();
+      if (_currentItemGroupLength) {
+        return _currentItemGroup[_currentItemGroupLength - 1].getIndex();
       } else {
         return null;
       }
@@ -213,34 +214,38 @@
     /**
      * @memberof NavigationTracker
      */
-    function visitItem(idToVisit) {
-      if (_isMovingForward(idToVisit)) {
-        _setPrevious(idToVisit);
-        _move(idToVisit);
-        _resolveJumps();
+    function visitGroup(idsToVisit) {
+      if (_isMovingForward(idsToVisit)) {
+        _setCurrentAsPrevious(idsToVisit);
+        _move(idsToVisit);
+        // _resolveJumps(); //todo
       } else {
-        _move(idToVisit);
+        _move(idsToVisit);
       }
     }
 
     /**
      * @memberof NavigationTracker
      */
-    function updateCurrentItem(item) {
-      if (item && item.isFilled) {
-        if (item.isFilled()) {
-          _currentItem.setAsAnswered();
-        } else if (item.isIgnored()) {
-          _currentItem.setAsIgnored();
+    function updateCurrentGroup(itemsFilling) {
+      _currentItemGroup.forEach(item => {
+        let itemFilling = itemsFilling[item.getID()];
+        if (itemFilling && itemFilling.isFilled) {
+          if (itemFilling.isFilled()) {
+            item.setAsAnswered();
+          } else if (itemFilling.isIgnored()) {
+            item.setAsIgnored();
+          }
         }
-      }
+
+      });
     }
 
     function hasPreviousItem() {
-      if (!_currentItem) {
+      if (!_currentItemGroupLength) {
         return false;
       } else {
-        return _currentItem.getIndex() > 0;
+        return _currentItemGroup[0].getIndex() > 0;
       }
     }
 
@@ -254,8 +259,8 @@
 
       json.objectType = _objectType;
 
-      if (_currentItem) {
-        json.lastVisitedIndex = _currentItem.getIndex();
+      if (_currentItemGroupLength) {
+        json.lastVisitedIndex = _currentItemGroup[_currentItemGroupLength -1].getIndex();
       } else {
         json.lastVisitedIndex = null;
       }
@@ -270,22 +275,27 @@
       return json;
     }
 
-    function _isMovingForward(idToVisit) {
-      if (!_currentItem) {
+    function _isMovingForward(idsToVisit) {
+      if (!_currentItemGroupLength) {
         return true;
       }
 
-      return (_currentItem.getIndex() < _items[idToVisit].getIndex()) ? true : false;
+      return (_currentItemGroup[_currentItemGroupLength - 1].getIndex() < _items[idsToVisit].getIndex());
     }
 
-    function _move(idToVisit) {
-      _currentItem = _items[idToVisit];
-      _currentItem.setAsVisited();
+    function _move(idsToVisit) {
+      _currentItemGroup = idsToVisit.map(idToVisit => {
+        _items[idToVisit].setAsVisited();
+        return _items[idToVisit]
+      });
+      _currentItemGroupLength = _currentItemGroup.length;
     }
 
-    function _setPrevious(idToVisit) {
-      if (_currentItem) {
-        _items[idToVisit].setPrevious(_currentItem.getID());
+    function _setCurrentAsPrevious(idsToVisit) {
+      if (_currentItemGroupLength) {
+        idsToVisit.forEach(id => {
+          _items[id].setPrevious(_currentItemGroup[_currentItemGroupLength - 1].getID());
+        });
       }
     }
 
@@ -299,31 +309,30 @@
     }
 
     function _existsSiblings() {
-      if (!_currentItem.getPrevious()) {
+      if (!_currentItemGroup[0].getPrevious()) {
         return false;
       }
 
-      if (_items[_currentItem.getPrevious()].getOutputs() === 1) {
-        return false;
-      }
-
-      return true;
+      return _items[_currentItemGroup[0].getPrevious()].getOutputs() !== 1;
     }
 
     function _skipUnreachableSiblings() {
-      _items[_currentItem.getPrevious()].getOutputs().forEach(function (siblingID) {
-        if (!_isItemReachable(siblingID)) {
-          _skipItem(siblingID);
-          _tryPropagateSkip(siblingID);
-        }
-      });
+      let previousItemId = _currentItemGroup[0].getPrevious();
+      _items[previousItemId]
+        .getOutputs()
+        .forEach(function (siblingID) {
+          if (!_isItemReachable(siblingID)) {
+            _skipItem(siblingID);
+            _tryPropagateSkip(siblingID);
+          }
+        });
     }
 
     function _isItemReachable(itemID) {
-      if (_currentItem.getID() === itemID) {
+      if (_currentItemGroup.getID() === itemID) {
         return true;
       }
-      return _currentItem.getOutputs().some(function (outputID) {
+      return _currentItemGroup.getOutputs().some(function (outputID) {
         return outputID === itemID;
       });
     }
@@ -331,7 +340,7 @@
     function _tryPropagateSkip(skipedID) {
       _items[skipedID].getOutputs().forEach(function (outputID) {
         if (_isNotCurrentItem(outputID) && _isNotChildOfCurrentItem(outputID) && _isNotChildOfOriginItem(outputID)) {
-          if (!_isOnPathOf(_currentItem.getID(), outputID, skipedID)) {
+          if (!_isOnPathOf(_currentItemGroup.getID(), outputID, skipedID)) {
             _skipItem(outputID);
             _tryPropagateSkip(outputID);
           }
@@ -340,15 +349,15 @@
     }
 
     function _isNotCurrentItem(itemID) {
-      return _currentItem.getID() !== itemID;
+      return _currentItemGroup.getID() !== itemID;
     }
 
     function _isNotChildOfCurrentItem(itemID) {
-      return _currentItem.getOutputs().indexOf !== itemID;
+      return _currentItemGroup.getOutputs().indexOf !== itemID;
     }
 
     function _isNotChildOfOriginItem(itemID) {
-      return _items[_currentItem.getPrevious()].getOutputs().indexOf(itemID) === -1;
+      return _items[_currentItemGroup.getPrevious()].getOutputs().indexOf(itemID) === -1;
     }
 
     function _isOnPathOf(referenceID, idToTest, idToIgnore) {
