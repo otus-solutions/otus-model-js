@@ -280,7 +280,7 @@
         return true;
       }
 
-      return (_currentItemGroup[_currentItemGroupLength - 1].getIndex() < _items[idsToVisit].getIndex());
+      return (_currentItemGroup[_currentItemGroupLength - 1].getIndex() < _items[idsToVisit[0]].getIndex());
     }
 
     function _move(idsToVisit) {
