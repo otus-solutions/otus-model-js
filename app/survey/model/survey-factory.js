@@ -66,6 +66,7 @@
       return Inject.SurveyDictionaryService
         .dictionaryConstructionByExtractionId(jsonObject);
     }
+
     return self;
   }
 
@@ -105,6 +106,8 @@
     self.fillStaticVariablesValues = fillStaticVariablesValues;
     self.getWholeTemplateVariableList = getWholeTemplateVariableList;
     self.getItemStaticVariableList = getItemStaticVariableList;
+    self.getGroupByItemID = getGroupByItemID;
+    self.getGroupItemsByItemID = getGroupItemsByItemID;
     self.toJSON = toJSON;
 
     function initialize() {
@@ -191,6 +194,21 @@
 
     function fillStaticVariablesValues(fillingArray) {
       self.StaticVariableManager.fillVariables(fillingArray);
+    }
+
+    function getGroupByItemID(templateID) {
+      return self.SurveyItemGroupManager.getGroupByMember(templateID)
+    }
+
+    function getGroupItemsByItemID(templateID) {
+      let group = getGroupByItemID(templateID);
+      if (group) {
+        return group.members.map(member => {
+          return getItemByTemplateID(member.id);
+        });
+      } else {
+        return [getItemByTemplateID(templateID)];
+      }
     }
 
     function toJSON() {
