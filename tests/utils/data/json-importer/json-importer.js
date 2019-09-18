@@ -30005,3 +30005,6 @@ Test.utils.data.jsonImportActivities = [{
   }
 }];
 
+Test.utils.data.groupArtefacts = {
+members : ["TST1", "TST2", "TST3", "TST4"]
+};

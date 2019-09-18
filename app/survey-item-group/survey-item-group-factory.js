@@ -68,7 +68,7 @@
 
     function removeMember(id) {
       let member = self.getMember(id);
-      if (self.members <= 2) {
+      if (self.members.length <= 2) {
         throw new Error("A group must have at least 2 members");
       }
       if (member) {
