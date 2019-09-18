@@ -13,12 +13,14 @@
     'SurveyItemManagerFactory',
     'otusjs.model.survey.DataSourceDefinitionManagerFactory',
     'SurveyDictionaryService',
-    'otusjs.staticVariable.StaticVariableManagerFactory'
+    'otusjs.staticVariable.StaticVariableManagerFactory',
+    'otusjs.surveyItemGroup.SurveyItemGroupManagerFactory',
+    'otusjs.survey.ManagerCenterService'
   ];
 
   var Inject = {};
 
-  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService, StaticVariableManagerFactory) {
+  function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, SurveyItemManagerFactory, DataSourceDefinitionManagerFactory, SurveyDictionaryService, StaticVariableManagerFactory, SurveyItemGroupManagerFactory, ManagerCenterService) {
     var self = this;
 
     self.OBJECT_TYPE = 'Survey';
@@ -28,40 +30,21 @@
     Inject.DataSourceDefinitionManagerFactory = DataSourceDefinitionManagerFactory;
     Inject.SurveyDictionaryService = SurveyDictionaryService;
     Inject.StaticVariableManagerFactory = StaticVariableManagerFactory;
+    Inject.SurveyItemGroupManagerFactory = SurveyItemGroupManagerFactory;
+    Inject.ManagerCenterService = ManagerCenterService;
 
     /* Public interface */
     self.create = create;
-    self.load = load;
     self.fromJsonObject = fromJsonObject;
     self.createDictionary = createDictionary;
-
-    /**
-     TODO :
-
-     Quando for implementado o novo método de carregamento no projeto OTUS-STUDIO,
-     deve-se excluir o método load e usar somente o fromJsonObject.
-
-     */
-    function load(jsonObject) {
-      var metainfo = SurveyMetaInfoFactory.fromJsonObject(jsonObject.metainfo);
-      var identity = SurveyIdentityFactory.fromJsonObject(jsonObject.identity);
-      var UUID = jsonObject.oid;
-
-      var survey = new Survey(metainfo, identity, UUID);
-      survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
-
-      return survey;
-    }
 
     function create(name, acronym) {
       var UUID = SurveyUUIDGenerator.generateSurveyUUID();
       var metainfo = SurveyMetaInfoFactory.create();
       var identity = SurveyIdentityFactory.create(name, acronym);
-
-
       var survey = new Survey(metainfo, identity, UUID);
-      survey.initialize();
 
+      survey.initialize();
       return survey;
     }
 
@@ -75,7 +58,7 @@
       survey.NavigationManager.loadJsonData(jsonObject.navigationList);
       survey.DataSourceManager.loadJsonData(jsonObject.dataSources);
       survey.StaticVariableManager.loadJsonData(jsonObject.staticVariableList || []);
-
+      survey.SurveyItemGroupManager.loadJsonData(jsonObject.surveyItemGroupList);
       return survey;
     }
 
@@ -98,6 +81,9 @@
     self.NavigationManager = Inject.NavigationManagerFactory.create(self);
     self.DataSourceManager = Inject.DataSourceDefinitionManagerFactory.create();
     self.StaticVariableManager = Inject.StaticVariableManagerFactory.create();
+    self.SurveyItemGroupManager = Inject.SurveyItemGroupManagerFactory.create();
+
+    Inject.ManagerCenterService.initialize(self.SurveyItemManager, self.NavigationManager, self.SurveyItemGroupManager); //todo move to initialize if possible
 
     /* Public methods */
     self.initialize = initialize;
@@ -121,7 +107,6 @@
     self.getItemStaticVariableList = getItemStaticVariableList;
     self.toJSON = toJSON;
 
-
     function initialize() {
       self.SurveyItemManager.init();
       self.NavigationManager.initialize();
@@ -134,11 +119,13 @@
     }
 
     function removeItem(templateID) {
+      self.SurveyItemGroupManager.removeItemFromGroup(templateID);
       self.SurveyItemManager.removeItem(templateID);
       self.NavigationManager.removeNavigation(templateID);
     }
 
     function moveItem(item, position) {
+      self.SurveyItemGroupManager.allowItemMovement(item.templateID, position);
       self.SurveyItemManager.moveItem(item, position);
       self.NavigationManager.moveNavigation(item.templateID, position);
     }
@@ -235,10 +222,8 @@
       });
 
       json.staticVariableList = self.StaticVariableManager.getStaticVariableList();
-
+      json.surveyItemGroupList = self.SurveyItemGroupManager.getSurveyItemGroupList();
       return json;
     }
-
-
   }
 }());

@@ -68,7 +68,6 @@
       Inject.RouteUpdateTaskService = RouteUpdateTaskService;
       Inject.InitialNodesCreationTask = InitialNodesCreationTask;
     }
-
     return self;
   }
 
@@ -91,6 +90,7 @@
     self.listOrphanNavigations = listOrphanNavigations;
     self.selectNavigationByOrigin = selectNavigationByOrigin;
     self.selectedNavigation = selectedNavigation;
+    self.getNavigationByOrigin = getNavigationByOrigin;
 
     function initialize() {
       Inject.ContainerInitializationTask.execute();
@@ -131,6 +131,10 @@
       return container.getNavigationList();
     }
 
+    function getNavigationByOrigin(origin) {
+      return container.getNavigationByOrigin(origin);
+    }
+
     function getExportableList() {
       var fullList = container.getNavigationList();
       return fullList.slice(2, fullList.length);
@@ -147,7 +151,6 @@
           currentPathState = navigation;
         }
       });
-
       return defaultPath;
     }
 
@@ -158,7 +161,6 @@
       var avaiableItems = allItems.filter(function (item, index) {
         return index <= referenceItemIndex;
       });
-
       return avaiableItems;
     }
 

@@ -34,6 +34,7 @@
     self.getItemByTemplateID = getItemByTemplateID;
     self.getItemByCustomID = getItemByCustomID;
     self.getItemByID = getItemByID;
+    self.getItemByPosition = getItemByPosition;
     self.getItemPosition = getItemPosition;
     self.getAllCustomOptionsID = getAllCustomOptionsID;
     self.getLastItem = getLastItem;
@@ -71,6 +72,10 @@
 
     function getItemByID(id) {
       return surveyItemContainer.getItemByID(id);
+    }
+
+    function getItemByPosition(position) {
+      return surveyItemContainer.getItemByPosition(position);
     }
 
     function getItemPosition(customID) {
@@ -132,8 +137,7 @@
       do {
         templateID = templateIDPrefix + _getNextIncrementalGenerator();
       } while (!isAvailableCustomID(templateID));
-      var item = surveyItemContainer.createItem(itemType, templateID);
-      return item;
+      return surveyItemContainer.createItem(itemType, templateID);
     }
 
     function removeItem(templateID) {
@@ -159,7 +163,7 @@
           foundCustomOptionID = true;
         }
       });
-      return (getItemByCustomID(id) || foundCustomOptionID) ? false : true;
+      return (!(getItemByCustomID(id) || foundCustomOptionID));
     }
   }
 }());
