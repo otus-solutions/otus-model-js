@@ -129,7 +129,7 @@
         throw new Error('Groups should be composed of more than one member');
       }
 
-      let candidates = getGroupCandidates(members[0], []);
+      let candidates = getGroupCandidates(members[0]);
       members.forEach((member, ix) => {
         if (candidates[ix] !== member) {
           throw new Error(member + ' cannot be added to the group');
