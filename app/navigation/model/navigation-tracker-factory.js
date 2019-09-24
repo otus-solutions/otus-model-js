@@ -218,7 +218,7 @@
       if (_isMovingForward(idsToVisit)) {
         _setCurrentAsPrevious(idsToVisit);
         _move(idsToVisit);
-        _resolveJumps(); //todo
+        _resolveJumps();
       } else {
         _move(idsToVisit);
       }
