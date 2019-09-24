@@ -69,6 +69,32 @@ describe('SurveyFactory', function () {
       expect(survey.NavigationManager.moveNavigation).toHaveBeenCalled();
       expect(survey.SurveyItemGroupManager.allowItemMovement).toHaveBeenCalled();
     });
+
+    it("should getGroupByItemID a SurveyItem by calling SurveyItemGroupManager", function () {
+      let mockSurveyItem = {templateID: "T1"};
+      spyOn(survey.SurveyItemGroupManager, 'getGroupByMember').and.callThrough();
+      survey.getGroupByItemID(mockSurveyItem);
+      expect(survey.SurveyItemGroupManager.getGroupByMember).toHaveBeenCalledTimes(1);
+    });
+
+    it("should getGroupItemsByItemID return a SurveyItemGroup", function () {
+      let mockSurveyItem = "T1";
+      let surveyItemGroup = {"objectType":"SurveyItemGroup","start":"T1","end":"T2","members":[{"id":"T1","position":"start"},{"id":"T3","position":"middle"},{"id":"T2","position":"end"}]};
+      let itemFakeTemplateID = "T1";
+      let compare = ['T1', 'T1', 'T1'];
+      spyOn(survey.SurveyItemGroupManager, 'getGroupByMember').and.returnValue(surveyItemGroup);
+      spyOn(survey.SurveyItemManager, 'getItemByTemplateID').and.returnValue(itemFakeTemplateID);
+      expect(survey.getGroupItemsByItemID(mockSurveyItem)).toEqual(compare);
+    });
+
+    it("should getGroupItemsByItemID return a SurveyItem", function () {
+      let mockSurveyItem = "T1";
+      let itemFakeTemplateID = "T1";
+      let compare = ['T1'];
+      spyOn(survey.SurveyItemManager, 'getItemByTemplateID').and.returnValue(itemFakeTemplateID);
+      expect(survey.getGroupItemsByItemID(mockSurveyItem)).toEqual(compare);
+    });
+
   });
 
   describe("SurveyFactory.fromJsonObject(jsonObject)", function () {
