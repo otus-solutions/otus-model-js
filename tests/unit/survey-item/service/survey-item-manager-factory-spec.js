@@ -144,6 +144,9 @@ describe('SurveyItemManagerFactory', function() {
       expect(Mock.SurveyItemManager.getItemPosition('Q3')).toEqual(2);
     });
 
+    it('should ', function () {
+      expect(Mock.SurveyItemManager.getItemByPosition(2).templateID).toEqual("Q3");
+    });
   });
 
   describe('existsItem method', function() {
@@ -317,6 +320,8 @@ describe('SurveyItemManagerFactory', function() {
     });
 
   });
+
+
 
   function mockItems($injector) {
     Mock.itemOne = $injector.get('SurveyItemFactory').create(QUESTION_TYPE, 'Q1');
