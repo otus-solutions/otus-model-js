@@ -8,23 +8,12 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
     angular.mock.inject($injector => {
       Injections.AnswerFillFactory = $injector.get('otusjs.model.activity.AnswerFillFactory');
       Injections.MetadataFillFactory = $injector.get('otusjs.model.activity.MetadataFillFactory');
-      Injections.QuestionFillFactory= $injector.get('otusjs.model.activity.QuestionFillFactory');
+      Injections.QuestionFillFactory = $injector.get('otusjs.model.activity.QuestionFillFactory');
       Injections.ActivityFactory = $injector.get('otusjs.model.activity.ActivityFactory');
       Injections.InterviewFactory = $injector.get('otusjs.model.activity.InterviewFactory');
       Injections.RevisionFactory = $injector.get('otusjs.model.activity.RevisionFactory');
 
       facade = $injector.get('otusjs.model.activity.ActivityFacadeService', Injections);
-      mockSelectedParticipant();
-      mockParticipantLaboratory();
-      mockLoggedUser();
-      mockActivityConfiguration();
-      mockTemplate($injector);
-
-      Mock.surveyActivity = facade.createActivity(
-        Mock.surveyTemplate,
-        Mock.LoggedUser,
-        Mock.SelectedParticipant,
-        Mock.activityConfiguration);
     });
   });
 
@@ -43,7 +32,7 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
     expect(facade.finalizeActivitySurvey).toBeDefined();
     expect(facade.saveActivitySurvey).toBeDefined();
     expect(facade.getFillingByQuestionID).toBeDefined();
-    expect(facade.clearSkippedAnswers ).toBeDefined();
+    expect(facade.clearSkippedAnswers).toBeDefined();
     expect(facade.getNavigationTracker).toBeDefined();
     expect(facade.createActivityRevision).toBeDefined();
     expect(facade.createActivityRevisionFromJson).toBeDefined();
@@ -52,84 +41,10 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
     expect(facade.fillStaticVariablesValues).toBeDefined();
     expect(facade.hasRequiredExternalID).toBeDefined();
   });
-
-  it('should ', () => {
-    console.log(Mock.surveyActivity)
-    //console.log(facade.hasRequiredExternalID())
-  });
+});
 
 
-
-
-  function mockQuestionItem() {
-    Mock.item = {};
-    Mock.item.customID = QUESTION_ID;
-    Mock.item.objectType = 'IntegerQuestion';
-  }
-
-  function mockSurveyTemplate() {
-    Mock.surveyTemplate = {};
-  }
-
-  function mockActivityConfiguration() {
-    Mock.activityConfiguration = {category: "online"}
-
-  }
-
-  function mockAnswerFillFactory($injector) {
-    Mock.AnswerFillFactory = $injector.get('otusjs.model.activity.AnswerFillFactory');
-    //spyOn(Mock.AnswerFillFactory, 'create').and.callThrough();
-    return Mock.AnswerFillFactory;
-  }
-
-  function mockMetadataFillFactory($injector) {
-    Mock.MetadataFillFactory = $injector.get('otusjs.model.activity.MetadataFillFactory');
-    //spyOn(Mock.MetadataFillFactory, 'create').and.callThrough();
-    return Mock.MetadataFillFactory;
-  }
-
-  function mockQuestionFillFactory($injector) {
-    Mock.QuestionFillFactory = $injector.get('otusjs.model.activity.QuestionFillFactory');
-    //spyOn(Mock.QuestionFillFactory, 'create').and.callThrough();
-    return Mock.QuestionFillFactory;
-  }
-
-  function mockActivityFactory($injector) {
-    Mock.ActivityFactory = $injector.get('otusjs.model.activity.ActivityFactory');
-    //spyOn(Mock.ActivityFactory, 'create').and.callThrough();
-    return Mock.ActivityFactory;
-  }
-
-  function mockInterviewFactory($injector) {
-    Mock.InterviewFactory = $injector.get('otusjs.model.activity.InterviewFactory');
-    //spyOn(Mock.InterviewFactory, 'create').and.callThrough();
-    return Mock.InterviewFactory;
-  }
-
-  function mockTemplate($injector) {
-    var SurveyFormFactory = $injector.get('SurveyFormFactory');
-    Mock.template = SurveyFormFactory.fromJsonObject(Test.utils.data.surveyFormDSOC);
-  }
-
-  function mockParticipantLaboratory() {
-    Mock.ParticipantLaboratory = Test.utils.data.participantLaboratory;
-  }
-
-  function mockLoggedUser() {
-    Mock.LoggedUser = Test.utils.data.otusLoggedUser;
-  }
-
-  function mockSelectedParticipant() {
-    Mock.SelectedParticipant = Test.utils.data.selectedParticipant;
-  }
-
-  function mockAliquotInfo() { Mock.aliquotInfo = Mock.singleTube.aliquots[0]; }
- });
-
-
-
-
-
+//old test with mock injections
 
 // describe('the ActivityFacadeService', function () {
 //
