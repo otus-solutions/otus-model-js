@@ -100,7 +100,7 @@
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
     self.isDiscarded = false;
-    self.externalID =  null;
+    self.externalID =  false;
 
     /* Public methods */
     self.getID = getID;
@@ -217,7 +217,6 @@
 
     function toJSON() {
       var json = {};
-
       json.objectType = self.objectType;
       json._id = _id;
       json.surveyForm = self.surveyForm;
