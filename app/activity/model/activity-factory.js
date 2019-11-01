@@ -89,7 +89,7 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, interviews, id) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID) {
     var self = this;
     var _id = id || null;
 
@@ -100,7 +100,7 @@
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
     self.isDiscarded = false;
-    self.externalID =  false;
+    self.externalID =  externalID || null;
 
     /* Public methods */
     self.getID = getID;
