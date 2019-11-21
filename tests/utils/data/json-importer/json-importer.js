@@ -22,8 +22,6 @@ Test.utils.data.selectedParticipant = {
   },
   stringfiedRN: "5003388"
 };
-
-
 Test.utils.data.ruleItem = {
   "extents": "SurveyTemplateObject",
   "objectType": "Rule",
@@ -33,7 +31,6 @@ Test.utils.data.ruleItem = {
   "isMetadata": false,
   "isCustom": false
 };
-
 Test.utils.data.otusLoggedUser = {
   "name": "Fulano",
   "surname": "Detal",
@@ -42,8 +39,6 @@ Test.utils.data.otusLoggedUser = {
   "email": "fulanodetal@mail.com",
   "token": "edasEQW"
 };
-
-
 Test.utils.data.participantLaboratory = {
 
   "objectType": null,
@@ -252,7 +247,6 @@ Test.utils.data.participantLaboratory = {
   }],
   "exams": []
 };
-
 Test.utils.data.workAliquotsList = [{
   "objectType": "WorkAliquot",
   "code": "333000001",
@@ -484,7 +478,6 @@ Test.utils.data.workAliquotsList = [{
     "time": "2017-07-27T17:03:41.968Z"
   }
 }];
-
 //current_status_date, creation_date and last_finalization_date, the modeling will disregard
 //in array, first object is invalid.
 Test.utils.data.jsonObjectImport = [{
@@ -684,7 +677,6 @@ Test.utils.data.jsonObjectImport = [{
     }
   }
 ];
-
 Test.utils.data.activityPASC = {
   "_id": "58ee02de28110d317f1ad09b",
   "objectType": "Activity",
@@ -4229,8 +4221,6 @@ Test.utils.data.activityPASC = {
     "isDefault": true
   }
 };
-
-
 Test.utils.data.jsonImportDSOC = [{
   id: '',
   acronym: 'DSOC',
@@ -4840,7 +4830,6 @@ Test.utils.data.jsonImportDSOC = [{
     realizationDate: ''
   }
 }];
-
 Test.utils.data.surveyFormDSOC = {
   "sender": "otus@gmail.com",
   "sendingDate": "2017-07-06T13:51:55.243Z",
@@ -29866,9 +29855,9 @@ Test.utils.data.surveyFormDSOC = {
     ]
   },
   "isDiscarded": false,
-  "version": 1
-};
+  "version": 1,
 
+};
 Test.utils.data.jsonImportActivities = [{
   "id": "",
   "acronym": "IMT",
@@ -30004,7 +29993,6 @@ Test.utils.data.jsonImportActivities = [{
     "realizationDate": "2019-05-31T00:00:00.000Z"
   }
 }];
-
 Test.utils.data.groupArtefacts = {
 members : ["TST1", "TST2", "TST3", "TST4"]
 };

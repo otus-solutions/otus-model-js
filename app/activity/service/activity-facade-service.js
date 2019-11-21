@@ -44,6 +44,7 @@
     self.getWholeTemplateVariableList = getWholeTemplateVariableList;
     self.getItemStaticVariableList = getItemStaticVariableList;
     self.fillStaticVariablesValues = fillStaticVariablesValues;
+    self.hasRequiredExternalID = hasRequiredExternalID;
 
     function createActivity(template, user, participant, activityConfiguration) {
       self.surveyActivity = ActivityFactory.create(template, user, participant, activityConfiguration);
@@ -114,6 +115,10 @@
 
     function fillStaticVariablesValues(fillingArray) {
       return self.surveyActivity.fillStaticVariablesValues(fillingArray);
+    }
+
+    function hasRequiredExternalID(){
+      return self.surveyActivity.hasRequiredExternalID()
     }
   }
 }());
