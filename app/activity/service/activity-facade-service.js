@@ -46,12 +46,12 @@
     self.fillStaticVariablesValues = fillStaticVariablesValues;
     self.hasRequiredExternalID = hasRequiredExternalID;
 
-    function createActivity(template, user, participant, activityConfiguration) {
-      self.surveyActivity = ActivityFactory.create(template, user, participant, activityConfiguration);
+    function createActivity(template, user, participant, activityConfiguration, externalID) {
+      self.surveyActivity = ActivityFactory.create(template, user, participant, activityConfiguration, externalID);
     }
 
-    function createPaperActivity(template, user, participant, paperActivityData, activityConfiguration) {
-      self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, activityConfiguration);
+    function createPaperActivity(template, user, participant, paperActivityData, activityConfiguration, externalID) {
+      self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, activityConfiguration, externalID);
     }
 
     function getInterviewer() {
