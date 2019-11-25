@@ -47,11 +47,11 @@
     self.hasRequiredExternalID = hasRequiredExternalID;
 
     function createActivity(template, user, participant, activityConfiguration, externalID) {
-      self.surveyActivity = ActivityFactory.create(template, user, participant, activityConfiguration, externalID);
+      self.surveyActivity = ActivityFactory.create(template, user, participant, activityConfiguration, null, externalID);
     }
 
     function createPaperActivity(template, user, participant, paperActivityData, activityConfiguration, externalID) {
-      self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, activityConfiguration, externalID);
+      self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, activityConfiguration, null, externalID);
     }
 
     function getInterviewer() {
