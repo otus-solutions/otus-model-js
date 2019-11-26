@@ -34,25 +34,25 @@
     self.createPaperActivity = createPaperActivity;
     self.fromJsonObject = fromJsonObject;
 
-    function create(surveyForm, user, participant, activityConfiguration, id) {
+    function create(surveyForm, user, participant, activityConfiguration, id, externalID) {
       Inject.FillingManager.init();
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
       activity.mode = 'ONLINE';
       activity.category = activityConfiguration.category;
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
       return activity;
     }
 
-    function createPaperActivity(surveyForm, user, participant, paperActivityData, activityConfiguration, id) {
+    function createPaperActivity(surveyForm, user, participant, paperActivityData, activityConfiguration, id, externalID) {
       Inject.FillingManager.init();
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
       activity.mode = 'PAPER';
       activity.category = activityConfiguration.category;
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
