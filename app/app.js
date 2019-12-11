@@ -8,6 +8,7 @@
       'otusjs.model.participant',
       'otusjs.model.fieldCenter',
       'otusjs.model.monitoring',
+      'otusjs.model.outcome',
       'otusjs.model.chart',
       'otusjs.surveyItem',
       'otusjs.surveyItemGroup',
@@ -18,6 +19,7 @@
       'otusjs.validation',
       'otusjs.laboratory',
       'otusjs.user',
+
       'utils'
     ]);
 
