@@ -8,7 +8,6 @@
   Factory.$inject = [];
 
   function Factory() {
-
     const self = this;
 
     /* Public methods */
@@ -16,9 +15,9 @@
     self.fromJsonObject = fromJsonObject;
     self.createActivityInfo = createActivityInfo;
 
-    function create(requester, receiver, dueDate, activity) {
+    function create(requester, receiver, dueDate, activity, id) {
       const activityInfo = createActivityInfo(activity);
-      return new UserActivityPendency(requester, receiver, dueDate, activityInfo);
+      return new UserActivityPendency(requester, receiver, dueDate, activityInfo, id);
     }
 
     function fromJsonObject(jsonObject) {
@@ -27,15 +26,13 @@
       return new UserActivityPendency(requester, receiver, dueDate, activityInfo, id);
     }
 
-    function createActivityInfo(activity){
-      //console.log(activity)
-
+    function createActivityInfo(activity) {
       return {
         id: activity.getID(),
         acronym: activity.getIdentity().acronym,
         name: activity.getName(),
         recruitmentNumber: activity.participantData.recruitmentNumber,
-        lastStatusName: 'CREATE',
+        lastStatusName: activity.statusHistory.getLastStatus().name,
         externalID: activity.externalID || null
       }
     }
@@ -43,10 +40,9 @@
     return self;
   }
 
-  function UserActivityPendency(requester, receiver, dueDate, activityInfo,  id) {
+  function UserActivityPendency(requester, receiver, dueDate, activityInfo, id) {
     const self = this;
-    let _id = id || null;
-
+    self.id = id || null;
     self.objectType = 'userActivityPendency';
     self.creationDate = new Date();
     self.dueDate = dueDate;
@@ -60,34 +56,43 @@
       externalID: activityInfo.externalID
     };
 
-
-    /* Public Get methods */
-    self.getId = () => _id;
+    /* Public Getter Methods */
+    self.getID = () => self.id;
     self.getCreationDate = () => self.creationDate;
     self.getDueDate = () => self.dueDate;
     self.getRequester = () => self.requester;
     self.getReceiver = () => self.receiver;
-    self.getActivityId = () => self.activityInfo.id;
-    self.getAcronym = () => self.activityInfo.acronym;
-    self.getRecruitmentNumber = () => self.activityInfo.recruitmentNumber;
-    self.lastStatusName = () => self.activityInfo.lastStatusName;
-    self.externalId = () => self.activityInfo.externalId;
+    self.getActivityID = () => self.activityInfo.id;
+    self.getActivityAcronym = () => self.activityInfo.acronym;
+    self.getActivityRecruitmentNumber = () => self.activityInfo.recruitmentNumber;
+    self.getActivitylastStatusName = () => self.activityInfo.lastStatusName;
+    self.getActivityExternalID = () => self.activityInfo.externalID;
+
+    /* Public  Setter Methods */
+    self.setReceiver = (receiver) => self.receiver = receiver;
+    self.setDueDate = (date) => self.dueDate = date;
 
     /* Public  methods */
-  //   self.toJSON = toJSON;
-  //
-  //   function toJSON() {
-  //     let json = {
-  //       objectType: self.objectType,
-  //       creationDate: self.creationDate,
-  //       acronym: self.acronym,
-  //       recruitmentNumber: self.recruitmentNumber,
-  //       requester: self.requester,
-  //       receiver: self.receiver
-  //     };
-  //
-  //     return JSON.stringify(json);
-  //   }
+    self.toJSON = toJSON;
+
+    function toJSON() {
+      let json = {
+        id: self.id,
+        objectType: self.objectType,
+        creationDate: self.creationDate,
+        dueDate: self.dueDate,
+        requester: self.requester,
+        receiver: self.receiver,
+        activityInfo: {
+          id: self.activityInfo.id,
+          acronym: self.activityInfo.acronym,
+          recruitmentNumber: self.activityInfo.recruitmentNumber,
+          lastStatusName: self.activityInfo.lastStatusName,
+          externalID: self.activityInfo.externalID
+        }
+      };
+      return JSON.stringify(json);
+    }
 
   }
 })();
