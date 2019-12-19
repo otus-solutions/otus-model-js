@@ -1,7 +1,7 @@
 (function () {
   'use restrict';
 
-  describe('PendencyActivityReviewFactory_UnitTest_Suite', () => {
+  describe('UserActivityPendencyFactory_UnitTest_Suite', () => {
     let factory;
     let Injections = [];
     let Mock = {};
