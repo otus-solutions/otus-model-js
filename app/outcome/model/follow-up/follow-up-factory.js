@@ -5,9 +5,11 @@
     .module('otusjs.model.outcome')
     .factory('otusjs.model.outcome.FollowUpFactory', Factory);
 
-  Factory.$inject = [];
+  Factory.$inject = [
+    'otusjs.model.outcome.ActivityAutoFillEventFactory'
+  ];
 
-  function Factory() {
+  function Factory(ActivityAutoFillEventFactory) {
     var self = this;
 
     /* Public interface */
@@ -15,18 +17,22 @@
     self.fromJson = fromJson;
     self.fromArray = fromArray;
 
+    self.Model = {
+      ActivityAutoFillEvent: ActivityAutoFillEventFactory
+    };
+
     function create() {
-      return new FollowUp({});
+      return new FollowUp({}, self.Model);
     }
 
     function fromJson(json) {
-      return new FollowUp(json);
+      return new FollowUp(json, self.Model);
     }
 
     function fromArray(jsonObjects) {
       if (Array.isArray(jsonObjects)) {
         return jsonObjects.map(function (json) {
-          return new FollowUp(json);
+          return new FollowUp(json, self.Model);
         });
       } else {
         return [];
@@ -36,58 +42,27 @@
     return self;
   }
 
-  function FollowUp(JsonObject) {
+  function FollowUp(JsonObject, Model) {
     var self = this;
     self._id = JsonObject._id;
     self.objectType = "FollowUp";
     self.label = JsonObject.label || '';
+    self.windowBetween = JsonObject.windowBetween || null;
     self.time = JsonObject.time || null;
-    self.initialDate = JsonObject.initialDate || null;
-    self.events = JsonObject.events || [];
+    self.events = Array.isArray(JsonObject.events) ? JsonObject.events.map(function (item) {
+      return Model[item.objectType].create()
+    }) : [];
 
     self.addEvent = addEvent;
     self.removeEvent = removeEvent;
-    self.start = start;
-    self.setTime = setTime;
-    self.getFinalDate = getFinalDate;
     self.toJSON = toJSON;
 
-    function setTime(time) {
-      if (typeof time === "number"){
-        self.time = angular.copy(Number(time));
-      }
+    function addEvent(objectTypeEvent) {
+      self.events.push(Model[objectTypeEvent].create())
     }
 
-    function start() {
-      if (self.time) {
-        var _data = new Date();
-        _data.setHours(0, 0, 0, 0);
-        self.initialDate = _data.toISOString();
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    function getFinalDate() {
-      if (self.initialDate && self.time) {
-        var _data = new Date(self.initialDate);
-        _data.setDate(_data.getDate() + self.time);
-        return _data.toISOString();
-      }
-      return null;
-    }
-
-
-    function addEvent(eventFollow) {
-      self.events.push(eventFollow)
-    }
-
-    function removeEvent(eventFollow) {
-      var _index = self.events.indexOf(eventFollow);
-      if (_index > -1) {
-        self.events.splice(_index, 1);
-      }
+    function removeEvent(index) {
+      self.events.splice(index, 1);
     }
 
     function toJSON() {
@@ -96,8 +71,8 @@
       json._id = self._id;
       json.objectType = self.objectType;
       json.label = self.label;
+      json.windowBetween = self.windowBetween;
       json.time = self.time;
-      json.initialDate = self.initialDate;
       json.events = self.events;
 
       return json;
