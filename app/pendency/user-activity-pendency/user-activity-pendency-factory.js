@@ -14,80 +14,56 @@
     /* Public methods */
     self.create = create;
     self.fromJsonObject = fromJsonObject;
-    self.createActivityInfo = createActivityInfo;
 
-    function create(requester, receiver, dueDate, activity) {
-      const activityInfo = createActivityInfo(activity);
-      return new UserActivityPendency(requester, receiver, dueDate, activityInfo);
+    function create(acronym, recruitmentNumber, requester, receiver) {
+      return new UserActivityPendency(acronym, recruitmentNumber, requester, receiver);
     }
 
     function fromJsonObject(jsonObject) {
       //Destruct ES6
-      const {requester, receiver, dueDate, activityInfo, id} = JSON.parse(jsonObject);
-      return new UserActivityPendency(requester, receiver, dueDate, activityInfo, id);
-    }
-
-    function createActivityInfo(activity){
-      //console.log(activity)
-
-      return {
-        id: activity.getID(),
-        acronym: activity.getIdentity().acronym,
-        name: activity.getName(),
-        recruitmentNumber: activity.participantData.recruitmentNumber,
-        lastStatusName: 'CREATE',
-        externalID: activity.externalID || null
-      }
+      const {acronym, recruitmentNumber, requester, receiver, id} = JSON.parse(jsonObject);
+      return new UserActivityPendency(acronym, recruitmentNumber, requester, receiver, id);
     }
 
     return self;
   }
 
-  function UserActivityPendency(requester, receiver, dueDate, activityInfo,  id) {
+  function UserActivityPendency(acronym, recruitmentNumber, requester, receiver, id) {
     const self = this;
     let _id = id || null;
 
     self.objectType = 'userActivityPendency';
     self.creationDate = new Date();
-    self.dueDate = dueDate;
+    self.acronym = acronym;
+    self.recruitmentNumber = recruitmentNumber;
     self.requester = requester;
     self.receiver = receiver;
-    self.activityInfo = {
-      id: activityInfo.id,
-      acronym: activityInfo.acronym,
-      recruitmentNumber: activityInfo.recruitmentNumber,
-      lastStatusName: activityInfo.lastStatusName,
-      externalID: activityInfo.externalID
-    };
-
+    // self.dueDate = dueDate;
 
     /* Public Get methods */
-    self.getId = () => _id;
+    self.getID = () => _id;
     self.getCreationDate = () => self.creationDate;
-    self.getDueDate = () => self.dueDate;
+    self.getAcronym = () => self.acronym;
+    self.getRecruitmentNumber = () => self.recruitmentNumber;
     self.getRequester = () => self.requester;
     self.getReceiver = () => self.receiver;
-    self.getActivityId = () => self.activityInfo.id;
-    self.getAcronym = () => self.activityInfo.acronym;
-    self.getRecruitmentNumber = () => self.activityInfo.recruitmentNumber;
-    self.lastStatusName = () => self.activityInfo.lastStatusName;
-    self.externalId = () => self.activityInfo.externalId;
 
     /* Public  methods */
-  //   self.toJSON = toJSON;
-  //
-  //   function toJSON() {
-  //     let json = {
-  //       objectType: self.objectType,
-  //       creationDate: self.creationDate,
-  //       acronym: self.acronym,
-  //       recruitmentNumber: self.recruitmentNumber,
-  //       requester: self.requester,
-  //       receiver: self.receiver
-  //     };
-  //
-  //     return JSON.stringify(json);
-  //   }
+    self.toJSON = toJSON;
 
+    function toJSON() {
+      let json = {
+        objectType: self.objectType,
+        creationDate: self.creationDate,
+        acronym: self.acronym,
+        recruitmentNumber: self.recruitmentNumber,
+        requester: self.requester,
+        receiver: self.receiver
+      };
+
+      return JSON.stringify(json);
+    }
   }
+
+
 })();
