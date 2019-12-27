@@ -8,14 +8,14 @@
     beforeEach(() => {
       angular.mock.module('otusjs');
       angular.mock.inject($injector => {
-        factory = $injector.get('otusjs.model.pendency.UserActivityPendency');
+        factory = $injector.get('otusjs.model.pendency.UserActivityPendencyFactory');
 
         Mock.ActivityFactory = $injector.get('otusjs.model.activity.ActivityFactory');
         _prepareMockParameters();
 
         //Destruct ES6
-        const {requester, receiver, dueDate, activity, id} = Mock.userActivityPendencyParameters;
-        pendency = factory.create(requester, receiver, dueDate, activity, id);
+        const { receiver, dueDate, activity, requester, id} = Mock.userActivityPendencyParameters;
+        pendency = factory.create( receiver, dueDate, activity, requester, id);
       });
     });
 

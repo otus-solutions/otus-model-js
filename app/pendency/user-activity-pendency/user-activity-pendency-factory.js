@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.model.pendency')
-    .factory('otusjs.model.pendency.UserActivityPendency', Factory);
+    .factory('otusjs.model.pendency.UserActivityPendencyFactory', Factory);
 
   Factory.$inject = [];
 
@@ -15,15 +15,15 @@
     self.fromJsonObject = fromJsonObject;
     self.createActivityInfo = createActivityInfo;
 
-    function create(requester, receiver, dueDate, activity, id) {
+    function create(receiver, dueDate, activity, requester, id) {
       const activityInfo = createActivityInfo(activity);
-      return new UserActivityPendency(requester, receiver, dueDate, activityInfo, id);
+      return new UserActivityPendency( receiver, dueDate, activityInfo, requester, id);
     }
 
     function fromJsonObject(jsonObject) {
       //Destruct ES6
-      const {requester, receiver, dueDate, activityInfo, id} = JSON.parse(jsonObject);
-      return new UserActivityPendency(requester, receiver, dueDate, activityInfo, id);
+      const { receiver, dueDate, activityInfo, requester, id} = JSON.parse(jsonObject);
+      return new UserActivityPendency( receiver, dueDate, activityInfo, requester, id);
     }
 
     function createActivityInfo(activity) {
@@ -40,13 +40,13 @@
     return self;
   }
 
-  function UserActivityPendency(requester, receiver, dueDate, activityInfo, id) {
+  function UserActivityPendency(receiver, dueDate, activityInfo, requester, id) {
     const self = this;
     self.id = id || null;
     self.objectType = 'userActivityPendency';
     self.creationDate = new Date();
     self.dueDate = dueDate;
-    self.requester = requester;
+    self.requester = requester || null;
     self.receiver = receiver;
     self.activityInfo = {
       id: activityInfo.id,
