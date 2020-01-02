@@ -39,8 +39,12 @@
     self.removeFollowUp = removeFollowUp;
     self.toJSON = toJSON;
 
-    function addFollowUp() {
-      self.followUps.push(FollowUpFactory.create());
+    function addFollowUp(data) {
+      if(data){
+        self.followUps.push(data);
+      } else {
+        self.followUps.push(FollowUpFactory.create());
+      }
     }
 
     function removeFollowUp(index) {

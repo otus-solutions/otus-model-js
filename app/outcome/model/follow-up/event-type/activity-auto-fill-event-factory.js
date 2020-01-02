@@ -39,7 +39,7 @@
   function ActivityAutoFillEvent(JsonObject) {
     var self = this;
 
-    self._id = JsonObject._id || '';
+    self._id = JsonObject._id || null;
     self.objectType = "ActivityAutoFillEvent";
     self.name = JsonObject.name || '';
     self.acronym = JsonObject.acronym || '';
@@ -54,6 +54,7 @@
       json.objectType = self.objectType;
       json.acronym = self.acronym;
       json.name = self.name;
+      json.acronym = self.acronym;
       json.description = self.description;
 
       return json;

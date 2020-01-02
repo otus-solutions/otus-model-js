@@ -5,17 +5,19 @@ describe('FollowUpFactory_TestSuite', function () {
       _id: '789',
       objectType: 'FollowUp',
       label: 'Seguimento 1',
+      windowBetween: 20,
       time: 365,
-      initialDate: '2019-12-11T03:00:00.000Z',
-      events: [951]
+      events: [{objectType: 'ActivityAutoFillEvent', name: 'AAA'}]
     },
     followUp2: {
       _id: '987',
       objectType: 'FollowUp',
       label: 'Seguimento 2',
+      windowBetween: null,
       time: 365,
-      initialDate: null,
-      events: [123, 456, 789]
+      events: [{objectType: 'ActivityAutoFillEvent', name: 'BBB'},
+        {objectType: 'ActivityAutoFillEvent', name: 'CCC'},
+        {objectType: 'ActivityAutoFillEvent', name: 'DDD'}]
     }
   };
 
@@ -38,12 +40,10 @@ describe('FollowUpFactory_TestSuite', function () {
     expect(object.objectType).toEqual('FollowUp');
     expect(object.label).toEqual('');
     expect(object.time).toBeNull();
-    expect(object.initialDate).toBeNull();
+    expect(object.windowBetween).toBeNull();
     expect(object.events.length).toEqual(0);
     expect(object.addEvent).toBeDefined();
     expect(object.removeEvent).toBeDefined();
-    expect(object.start).toBeDefined();
-    expect(object.getFinalDate).toBeDefined();
     expect(object.toJSON).toBeDefined();
   });
 
@@ -52,63 +52,32 @@ describe('FollowUpFactory_TestSuite', function () {
     expect(object.objectType).toEqual(Mock.followUp1.objectType);
     expect(object.label).toEqual(Mock.followUp1.label);
     expect(object.time).toEqual(Mock.followUp1.time);
-    expect(object.initialDate).toEqual(Mock.followUp1.initialDate);
+    expect(object.windowBetween).toEqual(Mock.followUp1.windowBetween);
     expect(object.events.length).toEqual(1);
   });
 
   it('should create fromArray method', function () {
     var array = factory.fromArray([Mock.followUp1, Mock.followUp2]);
-    expect(array[0].toJSON()).toEqual(Mock.followUp1);
-    expect(array[1].toJSON()).toEqual(Mock.followUp2);
+    expect(array[0].toJSON().label).toEqual(Mock.followUp1.label);
+    expect(array[1].toJSON().label).toEqual(Mock.followUp2.label);
     expect(array[0].toJSON()).not.toEqual(Mock.followUp2);
     expect(array[1].toJSON()).not.toEqual(Mock.followUp1);
-  });
-
-  it('should set time method', function () {
-    var object = factory.create();
-    expect(object.time).toBeNull();
-    object.setTime('meio dia');
-    expect(object.time).toBeNull();
-    object.setTime(365);
-    expect(object.time).toEqual(365);
-  });
-
-  it('should start followUp', function () {
-    var object = factory.create();
-    expect(object.start()).toBeFalsy();
-    expect(object.initialDate).toBeNull();
-    object.setTime(365);
-    expect(object.start()).toBeTruthy();
-    expect(object.initialDate).not.toBeNull();
-    var data = new Date();
-    data.setHours(0, 0,0,0,);
-    expect(object.initialDate).toEqual(data.toISOString());
-  });
-
-  it('should return final date', function () {
-    var object = factory.create();
-    expect(object.getFinalDate()).toBeNull();
-    object.setTime(365);
-    expect(object.getFinalDate()).toBeNull();
-    object.start();
-    expect(new Date(object.getFinalDate()).getFullYear()).toBeGreaterThan(new Date(object.initialDate).getFullYear());
   });
 
   it('should add event', function () {
     var object = factory.create();
     expect(object.events.length).toEqual(0);
-    object.addEvent(123);
+    object.addEvent('ActivityAutoFillEvent');
     expect(object.events.length).toEqual(1);
-    expect(object.events.includes(123)).toBeTruthy();
   });
 
   it('should remove event', function () {
     var object = factory.fromJson(Mock.followUp2);
     expect(object.events.length).toEqual(3);
-    object.removeEvent(777);
+    object.removeEvent(5);
     expect(object.events.length).toEqual(3);
-    object.removeEvent(456);
-    expect(object.events).toEqual([123, 789]);
+    object.removeEvent(2);
+    expect(object.events.length).toEqual(2);
   });
 
 

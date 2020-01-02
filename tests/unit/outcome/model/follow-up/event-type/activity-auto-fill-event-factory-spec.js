@@ -4,24 +4,17 @@ describe('ActivityAutoFillEventFactory_TestSuite', function () {
     autoFillEvent1: {
       _id: '789',
       objectType: 'ActivityAutoFillEvent',
-      activityId: 123,
-      participant: 456,
-      status: {
-        objectType: 'StatusEvent',
-        label: 'WAITING',
-        statusDate: '2019-12-11T18:01:15.129Z'
-      }
+      name: 'evento 1',
+      acronym: 'abc',
+      description: 'abc'
+
     },
     autoFillEvent2: {
       _id: '987',
       objectType: 'ActivityAutoFillEvent',
-      activityId: 321,
-      participant: 654,
-      status: {
-        objectType: 'StatusEvent',
-        label: 'PENDING',
-        statusDate: '2019-12-11T18:01:15.129Z'
-      }
+      name: 'evento 2',
+      acronym: 'def',
+      description: 'def'
     }
   };
 
@@ -42,38 +35,19 @@ describe('ActivityAutoFillEventFactory_TestSuite', function () {
   it('create a object', function () {
     var object = factory.create();
     expect(object.objectType).toEqual('ActivityAutoFillEvent');
-    expect(object.activityId).toBeNull();
-    expect(object.participant).toBeNull();
-    expect(object.status.objectType).toEqual('StatusEvent');
-    expect(object.status.label).toEqual('WAITING');
-    expect(object.setActivity).toBeDefined();
-    expect(object.getActivity).toBeDefined();
+    expect(object.name).toEqual('');
+    expect(object.acronym).toEqual('')
+    expect(object.description).toEqual('');
   });
 
-  it('should return a activityId', function () {
-    var object = factory.create();
-    const id = 123;
-    object.setActivity(id);
-    expect(object.getActivity()).toEqual(id);
-    expect(object.getActivity()).not.toEqual(1);
-  });
-
-  it('should return a participant rn', function () {
-    var object = factory.create();
-    const rn = 123;
-    object.setParticipant(rn);
-    expect(object.getParticipant()).toEqual(rn);
-    expect(object.getParticipant()).not.toEqual(1);
-  });
 
   it('should create fromJson method', function () {
     var object = factory.fromJson(Mock.autoFillEvent1);
     expect(object._id).toEqual(Mock.autoFillEvent1._id);
     expect(object.objectType).toEqual(Mock.autoFillEvent1.objectType);
-    expect(object.activityId).toEqual(Mock.autoFillEvent1.activityId);
-    expect(object.participant).toEqual(Mock.autoFillEvent1.participant);
-    expect(object.status.label).toEqual(Mock.autoFillEvent1.status.label);
-    expect(object.status.statusDate).toEqual(Mock.autoFillEvent1.status.statusDate);
+    expect(object.name).toEqual(Mock.autoFillEvent1.name);
+    expect(object.acronym).toEqual(Mock.autoFillEvent1.acronym);
+    expect(object.description).toEqual(Mock.autoFillEvent1.description);
   });
 
   it('should create events formArray method', function () {
