@@ -41,6 +41,7 @@
 
     self._id = JsonObject._id || null;
     self.objectType = "ActivityAutoFillEvent";
+    self.icon = "home_work";
     self.name = JsonObject.name || '';
     self.acronym = JsonObject.acronym || '';
     self.description = JsonObject.description || '';

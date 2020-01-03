@@ -57,8 +57,13 @@
     self.removeEvent = removeEvent;
     self.toJSON = toJSON;
 
-    function addEvent(objectTypeEvent) {
-      self.events.push(Model[objectTypeEvent].create())
+    function addEvent(objectTypeEvent, data) {
+      if (data){
+        self.events.push(Model[objectTypeEvent].fromJson(data));
+      } else {
+
+        self.events.push(Model[objectTypeEvent].create());
+      }
     }
 
     function removeEvent(index) {
