@@ -22,8 +22,8 @@
 
     function fromJsonObject(jsonObject) {
       //Destruct ES6
-      const { receiver, dueDate, activityInfo, requester, id} = JSON.parse(jsonObject);
-      return new UserActivityPendency( receiver, dueDate, activityInfo, requester, id);
+      const { receiver, dueDate, activityInfo, requester, _id} = JSON.parse(jsonObject);
+      return new UserActivityPendency( receiver, dueDate, activityInfo, requester, _id);
     }
 
     function createActivityInfo(activity) {
@@ -42,7 +42,7 @@
 
   function UserActivityPendency(receiver, dueDate, activityInfo, requester, id) {
     const self = this;
-    self.id = id || null;
+    self._id = id || null;
     self.objectType = 'userActivityPendency';
     self.creationDate = new Date();
     self.dueDate = dueDate;
@@ -57,7 +57,7 @@
     };
 
     /* Public Getter Methods */
-    self.getID = () => self.id;
+    self.getID = () => self._id;
     self.getCreationDate = () => self.creationDate;
     self.getDueDate = () => self.dueDate;
     self.getRequester = () => self.requester;
@@ -77,7 +77,7 @@
 
     function toJSON() {
       let json = {
-        id: self.id,
+        _id: self._id,
         objectType: self.objectType,
         creationDate: self.creationDate,
         dueDate: self.dueDate,
