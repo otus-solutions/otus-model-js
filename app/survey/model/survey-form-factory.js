@@ -52,18 +52,23 @@
     }
     self.version = options.version || null;
     self.isDiscarded = options.isDiscarded || false;
+    self.requiredExternalID = options.requiredExternalID || false;
 
     /* Public methods */
     self.getItems = getItems;
     self.toJSON = toJSON;
+    self.isRequiredExternalID = isRequiredExternalID;
 
     function getItems() {
       return self.surveyTemplate.getItems();
     }
 
+    function isRequiredExternalID() {
+      return self.requiredExternalID;
+    }
+
     function toJSON() {
       var json = {};
-
       json.extents = self.extents;
       json.objectType = self.objectType;
       json._id = self._id;
@@ -75,7 +80,7 @@
       json.acronym = self.acronym;
       json.name = self.name;
       json.isDiscarded = self.isDiscarded;
-
+      json.requiredExternalID = self.requiredExternalID;
       return json;
     }
   }

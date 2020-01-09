@@ -124,6 +124,10 @@ describe('SurveyFormFactory', function() {
       expect(Injections.SurveyFactory.fromJsonObject).toHaveBeenCalledTimes(0);
     });
 
+    it('isRequiredExternalID_should_return_valid', function(){
+      expect(surveyForm.requiredExternalID).toBe(true);
+    });
+
   });
 
   describe('SurveyFormFactory.toJSON()', function() {
@@ -137,6 +141,4 @@ describe('SurveyFormFactory', function() {
       expect(JSON.stringify(surveyJson)).toEqual(JSON.stringify(Mock.survey));
     });
   });
-
-
 });

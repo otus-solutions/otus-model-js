@@ -56,6 +56,7 @@ describe('ActivityImportService_TestSuite', function () {
     expect(activity.getWholeTemplateVariableList).toBeDefined();
     expect(activity.getItemStaticVariableList).toBeDefined();
     expect(activity.fillStaticVariablesValues).toBeDefined();
+    expect(activity.hasRequiredExternalID());
     expect(activity.toJSON).toBeDefined();
   });
 
@@ -67,5 +68,9 @@ describe('ActivityImportService_TestSuite', function () {
   it('getGroupItemsByItemID_method_ should_return_itemsGroup_by_ID ', function () {
     expect(activity.getGroupItemsByItemID("PASC2")[0].objectType).toBe("DecimalQuestion");
     expect(activity.surveyForm.surveyTemplate.getGroupItemsByItemID).toHaveBeenCalledTimes(1);
+  });
+
+  it('hasRequiredExternalID_method_should_return_invalid', function () {
+    expect(activity.hasRequiredExternalID()).toBeFalsy();
   });
 });

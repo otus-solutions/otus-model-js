@@ -34,38 +34,28 @@
     self.createPaperActivity = createPaperActivity;
     self.fromJsonObject = fromJsonObject;
 
-    function create(surveyForm, user, participant, activityConfiguration, id) {
+    function create(surveyForm, user, participant, activityConfiguration, id, externalID) {
       Inject.FillingManager.init();
-
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
-
       var interviews = InterviewManagerFactory.create();
-
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
       activity.mode = 'ONLINE';
       activity.category = activityConfiguration.category;
-
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
-
       return activity;
     }
 
-    function createPaperActivity(surveyForm, user, participant, paperActivityData, activityConfiguration, id) {
+    function createPaperActivity(surveyForm, user, participant, paperActivityData, activityConfiguration, id, externalID) {
       Inject.FillingManager.init();
-
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
-
       var interviews = InterviewManagerFactory.create();
-
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
       activity.mode = 'PAPER';
       activity.category = activityConfiguration.category;
-
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
-
       return activity;
     }
 
@@ -74,9 +64,7 @@
       var participantData = jsonObject.participantData;
       var statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
       var interviews = InterviewManagerFactory.fromJsonObject(jsonObject.interviews);
-
       var id = jsonObject._id;
-
       var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, interviews, id);
       activity.category = jsonObject.category;
       activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
@@ -84,9 +72,9 @@
       activity.mode = jsonObject.mode;
       activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
       activity.interviews = InterviewManagerFactory.fromJsonObject(jsonObject.interviews);
+      activity.externalID = jsonObject.externalID;
 
       _addBackCompatibility(activity, jsonObject);
-
       return activity;
     }
 
@@ -101,7 +89,7 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, interviews, id) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID) {
     var self = this;
     var _id = id || null;
 
@@ -112,6 +100,7 @@
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
     self.isDiscarded = false;
+    self.externalID =  externalID || null;
 
     /* Public methods */
     self.getID = getID;
@@ -133,6 +122,7 @@
     self.getItemStaticVariableList = getItemStaticVariableList;
     self.fillStaticVariablesValues = fillStaticVariablesValues;
     self.toJSON = toJSON;
+    self.hasRequiredExternalID = hasRequiredExternalID;
 
     function getID() {
       return _id;
@@ -227,7 +217,6 @@
 
     function toJSON() {
       var json = {};
-
       json.objectType = self.objectType;
       json._id = _id;
       json.surveyForm = self.surveyForm;
@@ -243,6 +232,7 @@
       });
       json.isDiscarded = self.isDiscarded;
       json.navigationTracker = self.navigationTracker;
+      json.externalID = self.externalID;
 
       return json;
     }
@@ -256,6 +246,10 @@
      */
     function _existStructuralFailure() {
       return (!self.surveyForm.surveyTemplate) ? true : false;
+    }
+
+    function hasRequiredExternalID(){
+      return self.surveyForm.isRequiredExternalID();
     }
   }
 }());

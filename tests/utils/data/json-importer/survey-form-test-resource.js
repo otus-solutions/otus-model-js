@@ -718,5 +718,6 @@ Test.utils.data.survey = {
   "version": 1,
   "acronym": "ANTC",
   "name": "ANTROPOMETRIA",
-  "isDiscarded": true
+  "isDiscarded": true,
+  "requiredExternalID":true,
 };
