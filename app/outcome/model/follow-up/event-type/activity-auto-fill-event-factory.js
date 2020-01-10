@@ -53,7 +53,6 @@
 
       json._id = self._id;
       json.objectType = self.objectType;
-      json.acronym = self.acronym;
       json.name = self.name;
       json.acronym = self.acronym;
       json.description = self.description;
