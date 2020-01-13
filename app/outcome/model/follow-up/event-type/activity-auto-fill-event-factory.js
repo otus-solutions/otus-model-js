@@ -43,6 +43,7 @@
     self.objectType = "ActivityAutoFillEvent";
     self.icon = "home_work";
     self.name = JsonObject.name || '';
+    self.order = JsonObject.order;
     self.acronym = JsonObject.acronym || '';
     self.description = JsonObject.description || '';
 
@@ -54,6 +55,7 @@
       json._id = self._id;
       json.objectType = self.objectType;
       json.name = self.name;
+      json.order = self.order;
       json.acronym = self.acronym;
       json.description = self.description;
 

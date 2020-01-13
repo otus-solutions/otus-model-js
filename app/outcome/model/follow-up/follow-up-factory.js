@@ -47,6 +47,7 @@
     self._id = JsonObject._id;
     self.objectType = "FollowUp";
     self.label = JsonObject.label || '';
+    self.order = JsonObject.order;
     self.windowBetween = JsonObject.windowBetween || null;
     self.time = JsonObject.time || null;
     self.events = Array.isArray(JsonObject.events) ? JsonObject.events.map(function (item) {
@@ -76,9 +77,9 @@
       json._id = self._id;
       json.objectType = self.objectType;
       json.label = self.label;
+      json.order = self.order;
       json.windowBetween = self.windowBetween;
       json.time = self.time;
-      json.events = self.events;
 
       return json;
     }

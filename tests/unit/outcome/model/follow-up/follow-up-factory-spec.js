@@ -5,6 +5,7 @@ describe('FollowUpFactory_TestSuite', function () {
       _id: '789',
       objectType: 'FollowUp',
       label: 'Seguimento 1',
+      order: 0,
       windowBetween: 20,
       time: 365,
       events: [{objectType: 'ActivityAutoFillEvent', name: 'AAA'}]
@@ -13,6 +14,7 @@ describe('FollowUpFactory_TestSuite', function () {
       _id: '987',
       objectType: 'FollowUp',
       label: 'Seguimento 2',
+      order: 1,
       windowBetween: null,
       time: 365,
       events: [{objectType: 'ActivityAutoFillEvent', name: 'BBB'},

@@ -6,6 +6,7 @@ describe('ActivityAutoFillEventFactory_TestSuite', function () {
       objectType: 'ActivityAutoFillEvent',
       name: 'evento 1',
       acronym: 'abc',
+      order: 0,
       description: 'abc'
 
     },
@@ -14,6 +15,7 @@ describe('ActivityAutoFillEventFactory_TestSuite', function () {
       objectType: 'ActivityAutoFillEvent',
       name: 'evento 2',
       acronym: 'def',
+      order: 1,
       description: 'def'
     }
   };
@@ -37,6 +39,7 @@ describe('ActivityAutoFillEventFactory_TestSuite', function () {
     expect(object.objectType).toEqual('ActivityAutoFillEvent');
     expect(object.name).toEqual('');
     expect(object.acronym).toEqual('')
+    expect(object.order).toBeNull();
     expect(object.description).toEqual('');
   });
 
@@ -46,6 +49,8 @@ describe('ActivityAutoFillEventFactory_TestSuite', function () {
     expect(object._id).toEqual(Mock.autoFillEvent1._id);
     expect(object.objectType).toEqual(Mock.autoFillEvent1.objectType);
     expect(object.name).toEqual(Mock.autoFillEvent1.name);
+    console.log(object)
+    expect(object.order).toEqual(Mock.autoFillEvent1.order);
     expect(object.acronym).toEqual(Mock.autoFillEvent1.acronym);
     expect(object.description).toEqual(Mock.autoFillEvent1.description);
   });
