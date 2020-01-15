@@ -44,7 +44,7 @@ describe('FollowUpFactory_TestSuite', function () {
     expect(object.time).toBeNull();
     expect(object.windowBetween).toBeNull();
     expect(object.events.length).toEqual(0);
-    expect(object.addEvent).toBeDefined();
+    expect(object.createEvent).toBeDefined();
     expect(object.removeEvent).toBeDefined();
     expect(object.toJSON).toBeDefined();
   });
@@ -69,8 +69,9 @@ describe('FollowUpFactory_TestSuite', function () {
   it('should add event', function () {
     var object = factory.create();
     expect(object.events.length).toEqual(0);
-    object.addEvent('ActivityAutoFillEvent');
+    object.events.push(object.createEvent('ActivityAutoFillEvent', {}));
     expect(object.events.length).toEqual(1);
+    expect(object.events[0].objectType).toEqual('ActivityAutoFillEvent');
   });
 
   it('should remove event', function () {

@@ -54,16 +54,15 @@
       return Model[item.objectType].create()
     }) : [];
 
-    self.addEvent = addEvent;
+    self.createEvent = createEvent;
     self.removeEvent = removeEvent;
     self.toJSON = toJSON;
 
-    function addEvent(objectTypeEvent, data) {
-      if (data){
-        self.events.push(Model[objectTypeEvent].fromJson(data));
+    function createEvent(objectTypeEvent, data) {
+      if (data && objectTypeEvent){
+        return Model[objectTypeEvent].fromJson(data);
       } else {
-
-        self.events.push(Model[objectTypeEvent].create());
+        throw new Error('Insuficients parameters');
       }
     }
 
