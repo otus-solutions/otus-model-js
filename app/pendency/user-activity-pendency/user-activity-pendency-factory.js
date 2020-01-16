@@ -13,34 +13,21 @@
     /* Public methods */
     self.create = create;
     self.fromJsonObject = fromJsonObject;
-    self.createActivityInfo = createActivityInfo;
 
-    function create(requester, receiver, dueDate, activity, id) {
-      const activityInfo = createActivityInfo(activity);
-      return new UserActivityPendency(requester, receiver, dueDate, activityInfo, id);
+    function create(requester, receiver, dueDate, activityId, id) {
+      return new UserActivityPendency(requester, receiver, dueDate, activityId, id);
     }
 
     function fromJsonObject(jsonObject) {
       //Destruct ES6
-      const {requester, receiver, dueDate, activityInfo, id} = JSON.parse(jsonObject);
-      return new UserActivityPendency(requester, receiver, dueDate, activityInfo, id);
-    }
-
-    function createActivityInfo(activity) {
-      return {
-        id: activity.getID(),
-        acronym: activity.getIdentity().acronym,
-        name: activity.getName(),
-        recruitmentNumber: activity.participantData.recruitmentNumber,
-        lastStatusName: activity.statusHistory.getLastStatus().name,
-        externalID: activity.externalID || null
-      }
+      const {requester, receiver, dueDate, activityId, activityInfo, id} = jsonObject;
+      return new UserActivityPendency(requester, receiver, dueDate, activityId, activityInfo, id);
     }
 
     return self;
   }
 
-  function UserActivityPendency(requester, receiver, dueDate, activityInfo, id) {
+  function UserActivityPendency(requester, receiver, dueDate, activityId, activityInfo, id) {
     const self = this;
     self.id = id || null;
     self.objectType = 'userActivityPendency';
@@ -48,9 +35,10 @@
     self.dueDate = dueDate;
     self.requester = requester;
     self.receiver = receiver;
+    self.activityId = activityId;
     self.activityInfo = {
-      id: activityInfo.id,
       acronym: activityInfo.acronym,
+      name: activityInfo.name,
       recruitmentNumber: activityInfo.recruitmentNumber,
       lastStatusName: activityInfo.lastStatusName,
       externalID: activityInfo.externalID
@@ -62,8 +50,9 @@
     self.getDueDate = () => self.dueDate;
     self.getRequester = () => self.requester;
     self.getReceiver = () => self.receiver;
-    self.getActivityID = () => self.activityInfo.id;
+    self.getActivityID = () => self.activityId;
     self.getActivityAcronym = () => self.activityInfo.acronym;
+    self.getActivityName = () => self.activityInfo.name;
     self.getActivityRecruitmentNumber = () => self.activityInfo.recruitmentNumber;
     self.getActivitylastStatusName = () => self.activityInfo.lastStatusName;
     self.getActivityExternalID = () => self.activityInfo.externalID;
@@ -76,22 +65,15 @@
     self.toJSON = toJSON;
 
     function toJSON() {
-      let json = {
+      return {
         id: self.id,
         objectType: self.objectType,
         creationDate: self.creationDate,
         dueDate: self.dueDate,
         requester: self.requester,
         receiver: self.receiver,
-        activityInfo: {
-          id: self.activityInfo.id,
-          acronym: self.activityInfo.acronym,
-          recruitmentNumber: self.activityInfo.recruitmentNumber,
-          lastStatusName: self.activityInfo.lastStatusName,
-          externalID: self.activityInfo.externalID
-        }
+        activityId: self.activityId
       };
-      return JSON.stringify(json);
     }
 
   }

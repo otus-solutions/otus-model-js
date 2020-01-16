@@ -2,7 +2,7 @@
   'use restrict';
 
   describe('UserActivityPendencyFactory_UnitTest_Suite', () => {
-    let factory, pendency;
+    let factory, pendency, pendencyfromJsonObject;
     let Mock = {};
 
     beforeEach(() => {
@@ -14,8 +14,8 @@
         _prepareMockParameters();
 
         //Destruct ES6
-        const {requester, receiver, dueDate, activity, id} = Mock.userActivityPendencyParameters;
-        pendency = factory.create(requester, receiver, dueDate, activity, id);
+        const {requester, receiver, dueDate, activityId, id} = Mock.userActivityPendencyParameters;
+        pendency = factory.create(requester, receiver, dueDate, activityId, id);
       });
     });
 
@@ -26,30 +26,30 @@
     it('serviceMethodsExistence_check', () => {
       expect(factory.create).toBeDefined();
       expect(factory.fromJsonObject).toBeDefined();
-      expect(factory.createActivityInfo).toBeDefined();
     });
 
     it('createMethod_should_return_instanceOf_userActivityPendency', () => {
       expect(pendency.objectType).toBe('userActivityPendency');
     });
 
-    it('fromJsonObjectMethod_should_fit_attributes_of_json_and_return_userActivityPendency', () => {
+    it('createMethod_should_fit_attributes_of_json_and_return_userActivityPendency', () => {
       Mock.json = pendency.toJSON();
-      let expectPendency = factory.fromJsonObject(Mock.json);
-      expect(expectPendency.getID()).toBe("58ee02de28110d317f1ad75x");
+      expect(JSON.stringify(Mock.json)).toBe(JSON.stringify(pendency));
     });
 
     it('getterMethods_should_return_values', function () {
-      expect(pendency.getID()).toBe("58ee02de28110d317f1ad75x");
-      expect(pendency.getCreationDate() instanceof Date).toBeTruthy();
-      expect(pendency.getDueDate() instanceof Date).toBeTruthy();
-      expect(pendency.getRequester()).toBe("otus_supervisor@otus.com");
-      expect(pendency.getReceiver()).toBe("otus_revisor@otus.com");
-      expect(pendency.getActivityID()).toBe("58ee02de28110d317f1ad09b");
-      expect(pendency.getActivityAcronym()).toBe("PASC");
-      expect(pendency.getActivityRecruitmentNumber()).toBe(1234567);
-      expect(pendency.getActivitylastStatusName()).toBe("FINALIZED");
-      expect(pendency.getActivityExternalID()).toBe("ABC123");
+      pendencyfromJsonObject = factory.fromJsonObject(Mock.userActivityPendencyParameters);
+      expect(pendencyfromJsonObject.getID()).toBe("58ee02de28110d317f1ad75x");
+      expect(pendencyfromJsonObject.getCreationDate() instanceof Date).toBeTruthy();
+      expect(pendencyfromJsonObject.getDueDate() instanceof Date).toBeTruthy();
+      expect(pendencyfromJsonObject.getRequester()).toBe("otus_supervisor@otus.com");
+      expect(pendencyfromJsonObject.getReceiver()).toBe("otus_revisor@otus.com");
+      expect(pendencyfromJsonObject.getActivityID()).toBe("58ee02de28110d317f1ad75y");
+      expect(pendencyfromJsonObject.getActivityAcronym()).toBe("PASC");
+      expect(pendencyfromJsonObject.getActivityName()).toBe("PRESSÃO ARTERIAL");
+      expect(pendencyfromJsonObject.getActivityRecruitmentNumber()).toBe(1234567);
+      expect(pendencyfromJsonObject.getActivitylastStatusName()).toBe("FINALIZED");
+      expect(pendencyfromJsonObject.getActivityExternalID()).toBe("ABC123");
     });
 
     it('setReceiverMethod_should_update_receiverAttribute ', function () {
@@ -67,12 +67,19 @@
 
     function _prepareMockParameters() {
       let activity = Mock.ActivityFactory.fromJsonObject(Test.utils.data.activityPASC);
-      let activityInfo = factory.createActivityInfo(activity);
+      let activityInfo = {
+        acronym: "PASC",
+        name: "PRESSÃO ARTERIAL",
+        recruitmentNumber: 1234567,
+        lastStatusName: "FINALIZED",
+        externalID: "ABC123"
+      };
 
       Mock.userActivityPendencyParameters = {
         requester: "otus_supervisor@otus.com",
         receiver: "otus_revisor@otus.com",
         dueDate: new Date(),
+        activityId: "58ee02de28110d317f1ad75y",
         activityInfo: activityInfo,
         activity: activity,
         id: "58ee02de28110d317f1ad75x"
