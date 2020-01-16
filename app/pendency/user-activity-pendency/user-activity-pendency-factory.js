@@ -14,8 +14,8 @@
     self.create = create;
     self.fromJsonObject = fromJsonObject;
 
-    function create(requester, receiver, dueDate, activityId, id) {
-      return new UserActivityPendency(requester, receiver, dueDate, activityId, id);
+    function create(requester, receiver, dueDate, activityId, activityInfo, id) {
+      return new UserActivityPendency(requester, receiver, dueDate, activityId, activityInfo, id);
     }
 
     function fromJsonObject(jsonObject) {

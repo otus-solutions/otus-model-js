@@ -14,8 +14,8 @@
         _prepareMockParameters();
 
         //Destruct ES6
-        const {requester, receiver, dueDate, activityId, id} = Mock.userActivityPendencyParameters;
-        pendency = factory.create(requester, receiver, dueDate, activityId, id);
+        const {requester, receiver, dueDate, activityId, activityInfo, id} = Mock.userActivityPendencyParameters;
+        pendency = factory.create(requester, receiver, dueDate, activityId, activityInfo, id);
       });
     });
 
