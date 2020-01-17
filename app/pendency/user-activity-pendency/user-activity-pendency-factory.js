@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.model.pendency')
-    .factory('otusjs.model.pendency.UserActivityPendency', Factory);
+    .factory('otusjs.model.pendency.UserActivityPendencyFactory', Factory);
 
   Factory.$inject = [];
 
@@ -14,35 +14,39 @@
     self.create = create;
     self.fromJsonObject = fromJsonObject;
 
-    function create(requester, receiver, dueDate, activityId, activityInfo, id) {
-      return new UserActivityPendency(requester, receiver, dueDate, activityId, activityInfo, id);
+    function create(requester, receiver, creationDate, dueDate, activityId, activityInfo, _id) {
+      return new UserActivityPendency(requester, receiver, creationDate, dueDate, activityId, activityInfo, _id);
     }
 
     function fromJsonObject(jsonObject) {
       //Destruct ES6
-      const {requester, receiver, dueDate, activityId, activityInfo, id} = jsonObject;
-      return new UserActivityPendency(requester, receiver, dueDate, activityId, activityInfo, id);
+      const {requester, receiver, creationDate, dueDate, activityId, activityInfo, _id} = jsonObject;
+      return new UserActivityPendency(requester, receiver, creationDate, dueDate, activityId, activityInfo, _id);
     }
 
     return self;
   }
 
-  function UserActivityPendency(requester, receiver, dueDate, activityId, activityInfo, id) {
+  function UserActivityPendency(requester, receiver, creationDate, dueDate, activityId, activityInfo, id) {
     const self = this;
     self.id = id || null;
     self.objectType = 'userActivityPendency';
-    self.creationDate = new Date();
+    self.creationDate = creationDate || new Date();
     self.dueDate = dueDate;
     self.requester = requester;
     self.receiver = receiver;
     self.activityId = activityId;
-    self.activityInfo = {
-      acronym: activityInfo.acronym,
-      name: activityInfo.name,
-      recruitmentNumber: activityInfo.recruitmentNumber,
-      lastStatusName: activityInfo.lastStatusName,
-      externalID: activityInfo.externalID
-    };
+
+    try {
+      self.activityInfo = {
+        acronym: activityInfo.acronym,
+        name: activityInfo.name,
+        recruitmentNumber: activityInfo.recruitmentNumber,
+        lastStatusName: activityInfo.lastStatusName,
+        externalID: activityInfo.externalID
+      };
+    } catch (e) {}
+
 
     /* Public Getter Methods */
     self.getID = () => self.id;
