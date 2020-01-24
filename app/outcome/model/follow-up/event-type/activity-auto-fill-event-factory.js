@@ -46,6 +46,7 @@
     self.order = JsonObject.order;
     self.acronym = JsonObject.acronym || '';
     self.description = JsonObject.description || '';
+    self.participantEvents = JsonObject.participantEvents || [];
 
     self.toJSON = toJSON;
 

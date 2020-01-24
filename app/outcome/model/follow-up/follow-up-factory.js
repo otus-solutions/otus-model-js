@@ -46,12 +46,14 @@
     var self = this;
     self._id = JsonObject._id;
     self.objectType = "FollowUp";
-    self.label = JsonObject.label || '';
+    self.description = JsonObject.description || '';
     self.order = JsonObject.order;
     self.windowBetween = JsonObject.windowBetween || null;
     self.time = JsonObject.time || null;
+    self.deadLine = JsonObject.deadLine || {};
+    self.participantEvents = JsonObject.participantEvents || [];
     self.events = Array.isArray(JsonObject.events) ? JsonObject.events.map(function (item) {
-      return Model[item.objectType].create()
+      return Model[item.objectType].fromJson(item)
     }) : [];
 
     self.createEvent = createEvent;
