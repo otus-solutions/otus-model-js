@@ -38,7 +38,6 @@
         return [];
       }
     }
-
     return self;
   }
 

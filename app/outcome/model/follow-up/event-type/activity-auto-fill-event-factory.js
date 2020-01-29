@@ -45,6 +45,7 @@
     self.name = JsonObject.name || '';
     self.order = JsonObject.order;
     self.acronym = JsonObject.acronym || '';
+    self.activityId = JsonObject.activityId || '';
     self.description = JsonObject.description || '';
     self.participantEvents = JsonObject.participantEvents || [];
 
@@ -58,6 +59,7 @@
       json.name = self.name;
       json.order = self.order;
       json.acronym = self.acronym;
+      json.activityId = self.activityId;
       json.description = self.description;
 
       return json;
