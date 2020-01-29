@@ -50,7 +50,7 @@
     self.order = JsonObject.order;
     self.windowBetween = JsonObject.windowBetween || null;
     self.time = JsonObject.time || null;
-    self.deadLine = JsonObject.deadLine || {};
+    self.deadline = JsonObject.deadline || {};
     self.participantEvents = JsonObject.participantEvents || [];
     self.events = Array.isArray(JsonObject.events) ? JsonObject.events.map(function (item) {
       return Model[item.objectType].fromJson(item)
