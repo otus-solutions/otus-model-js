@@ -76,7 +76,7 @@
 
       json._id = self._id;
       json.objectType = self.objectType;
-      json.label = self.label;
+      json.description = self.description;
       json.order = self.order;
       json.windowBetween = self.windowBetween;
       json.time = self.time;
