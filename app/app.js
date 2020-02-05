@@ -19,8 +19,8 @@
       'otusjs.validation',
       'otusjs.laboratory',
       'otusjs.user',
-
-      'utils'
+      'utils',
+      'otusjs.model.pendency'
     ]);
 
 }());

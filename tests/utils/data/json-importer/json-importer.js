@@ -4219,7 +4219,8 @@ Test.utils.data.activityPASC = {
     "label": "Normal",
     "disabled": false,
     "isDefault": true
-  }
+  },
+  "externalID": "ABC123"
 };
 Test.utils.data.jsonImportDSOC = [{
   id: '',
