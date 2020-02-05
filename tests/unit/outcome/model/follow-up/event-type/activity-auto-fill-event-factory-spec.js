@@ -5,6 +5,7 @@ describe('ActivityAutoFillEventFactory_TestSuite', function () {
       _id: '789',
       objectType: 'ActivityAutoFillEvent',
       name: 'evento 1',
+      activityId: 'asdfasdga',
       acronym: 'abc',
       order: 0,
       description: 'abc'
@@ -14,6 +15,7 @@ describe('ActivityAutoFillEventFactory_TestSuite', function () {
       _id: '987',
       objectType: 'ActivityAutoFillEvent',
       name: 'evento 2',
+      activityId: 'asdfagadgasd',
       acronym: 'def',
       order: 1,
       description: 'def'
