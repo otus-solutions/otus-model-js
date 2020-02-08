@@ -54,7 +54,7 @@
 
     function _init() {
       _recruitment_number = ActivityFacadeService.surveyActivity.participantData.recruitmentNumber;
-      _interviewer = ActivityFacadeService.getInterviewer().email;
+      _interviewer = null;
       _requestCanceler = {};
     }
 
@@ -76,7 +76,7 @@
       formData.append('name', name);
       formData.append('type', type);
       formData.append('size', size);
-      
+
       return _resource.post(formData, _requestCanceler[file.control].promise);
     }
 
