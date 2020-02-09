@@ -59,6 +59,13 @@
 (function () {
     'use strict';
 
+    angular.module('otusjs.model.outcome', []);
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
     angular.module('otusjs.model.participant', []);
 })();
 'use strict';
@@ -164,7 +171,7 @@
 (function () {
   'use strict';
 
-  angular.module('otusjs', ['otusjs.survey', 'otusjs.model.activity', 'otusjs.model.participant', 'otusjs.model.fieldCenter', 'otusjs.model.monitoring', 'otusjs.model.chart', 'otusjs.surveyItem', 'otusjs.surveyItemGroup', 'otusjs.staticVariable', 'otusjs.metadata', 'otusjs.misc', 'otusjs.model.navigation', 'otusjs.validation', 'otusjs.laboratory', 'otusjs.user', 'utils', 'otusjs.model.pendency']);
+  angular.module('otusjs', ['otusjs.survey', 'otusjs.model.activity', 'otusjs.model.participant', 'otusjs.model.fieldCenter', 'otusjs.model.monitoring', 'otusjs.model.outcome', 'otusjs.model.chart', 'otusjs.surveyItem', 'otusjs.surveyItemGroup', 'otusjs.staticVariable', 'otusjs.metadata', 'otusjs.misc', 'otusjs.model.navigation', 'otusjs.validation', 'otusjs.laboratory', 'otusjs.user', 'utils', 'otusjs.model.pendency']);
 })();
 'use strict';
 
@@ -908,6 +915,7 @@
     /* Public methods */
     self.create = create;
     self.createPaperActivity = createPaperActivity;
+    self.createAutoFillActivity = createAutoFillActivity;
     self.fromJsonObject = fromJsonObject;
 
     function create(surveyForm, user, participant, activityConfiguration, id, externalID) {
@@ -930,6 +938,18 @@
       var interviews = InterviewManagerFactory.create();
       var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
       activity.mode = 'PAPER';
+      activity.category = activityConfiguration.category;
+      activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
+      return activity;
+    }
+
+    function createAutoFillActivity(surveyForm, user, participant, activityConfiguration) {
+      Inject.FillingManager.init();
+      var statusHistory = StatusHistoryManagerFactory.create();
+      statusHistory.newCreatedRegistry(user);
+      var interviews = InterviewManagerFactory.create();
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews);
+      activity.mode = 'AUTOFILL';
       activity.category = activityConfiguration.category;
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
       return activity;
@@ -7079,200 +7099,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityImportService', Service);
-
-  Service.$inject = ['ElementRegisterFactory', 'otusjs.validation.api.ValidationService', 'otusjs.model.activity.ActivityFactory', 'otusjs.model.activity.QuestionFillFactory', 'otusjs.model.activity.InterviewFactory', 'otusjs.model.activity.ValidationTypeService', 'otusjs.model.activity.FillingManagerFactory'];
-
-  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory, ValidationTypeService, FillingManagerFactory) {
-    var self = this;
-
-    var _isValid = true;
-    var _elementRegister = null;
-    var _item = null;
-    var _activity;
-    var _activities = [];
-
-    //Public methods
-    self.fromJsonObject = fromJsonObject;
-    self.create = create;
-
-    function _setQuestionFill(answers, item) {
-      if (answers[item.customID]) {
-        _activity.fillContainer.updateFilling(QuestionFillFactory.create(item, answers[item.customID].value, answers[item.customID].metadata, answers[item.customID].comment));
-      }
-    }
-
-    function _getQuestionsIdsMap(answers) {
-      var _mapId = {};
-      _activity.fillContainer = FillingManagerFactory.create();
-      _activity.surveyForm.surveyTemplate.toJSON().itemContainer.forEach(function (item) {
-        _mapId[item.templateID] = item.customID;
-        _setQuestionFill(answers, item);
-      });
-
-      return _mapId;
-    }
-
-    function _setAnswersValues(answers) {
-      var IDS = _getQuestionsIdsMap(answers);
-      _activity.fillContainer.buildJsonToFillContainer().fillingList.forEach(function (question) {
-        if (_isValid) {
-          _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(question.questionID);
-          question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
-          question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
-
-          //checks the presence of metadata response
-          if (answers[IDS[question.questionID]].metadata) _validateMetadata(_item.metadata.options, answers[IDS[question.questionID]].metadata, question);else question.metadata.value = null;
-
-          _validateActivity(question.questionID, question.answer, _item, question.metadata);
-          if (!_isValid) _activity.error = "Questão {" + IDS[question.questionID] + "} contém uma resposta inválida!";
-        }
-      });
-      _activity.isValid = _isValid;
-      _isValid = true;
-    }
-
-    function _validateMetadata(metadataOptions, answerMetadata, question) {
-      var associated = metadataOptions.filter(function (options) {
-        return options.extractionValue === answerMetadata;
-      });
-
-      if (associated.length) {
-        metadataOptions.forEach(function (option, idx) {
-          if (option.extractionValue === answerMetadata) {
-            _isValid = true;
-            question.metadata.value = ++idx;
-          }
-        });
-      } else _isValid = false;
-    }
-
-    function _validateActivity(templateID, answer, _item, metadata) {
-      if (_isValid) {
-        _isValid = (answer.value || answer.value === 0) && metadata.value ? false : true;
-        if (_isValid && !metadata.value) {
-          _elementRegister = ElementRegisterFactory.create(templateID, { data: answer.value });
-          _setupValidation(_item);
-          ValidationService.validateElement(templateID, function (response) {
-            response.forEach(function (validation) {
-              validation.validatorsResponse.forEach(function (validator) {
-                _isValid = validator.result && ValidationTypeService.isValid(_item.dataType, answer.value);
-              });
-            });
-          });
-        }
-      }
-    }
-
-    function _setupValidation(_item) {
-      Object.keys(_item.fillingRules.options).forEach(function (validator) {
-        _addValidator(validator, _item);
-      });
-
-      ValidationService.unregisterElement(_elementRegister.id);
-      ValidationService.registerElement(_elementRegister);
-    }
-
-    function _addValidator(validator, _item) {
-      var reference = _item.fillingRules.options[validator].data;
-      if (_item.objectType === "TimeQuestion" || _item.objectType === "CalendarQuestion") {
-        _elementRegister.addValidator("ImmutableDate", reference);
-      } else {
-        _elementRegister.addValidator(validator, reference);
-      }
-    }
-
-    function _createStatusHistoryPaper(json) {
-      switch (json.status) {
-        case 'OPENED':
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          break;
-        case 'SAVED':
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newSavedRegistry(json.user);
-          break;
-        case 'FINALIZED':
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newFinalizedRegistry(json.user);
-          break;
-      }
-    }
-
-    function _createStatusHistoryOnline(json) {
-      switch (json.status) {
-        case 'INITIALIZED_ONLINE':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          break;
-        case 'OPENED':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          break;
-        case 'SAVED':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newSavedRegistry(json.user);
-          break;
-        case 'FINALIZED':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newFinalizedRegistry(json.user);
-          break;
-      }
-    }
-
-    function _setInterview(user) {
-      _activity.interviews.newRegistry(user);
-    }
-
-    function _isValidSurveys(acronym, json) {
-      var _valid = true;
-      json.forEach(function (activity) {
-        if (_valid) {
-          _valid = acronym == activity.acronym;
-        }
-      });
-      return _valid;
-    }
-
-    function fromJsonObject(surveyForm, jsonObject, user) {
-      _activities = [];
-      if (Array.isArray(jsonObject)) {
-        if (jsonObject.length > 0) {
-          if (_isValidSurveys(surveyForm.surveyTemplate.identity.acronym, jsonObject)) {
-            jsonObject.forEach(function (json) {
-              _activities.push(self.create(surveyForm, json, user));
-            });
-          }
-        }
-      }
-      return _activities;
-    }
-
-    function create(surveyForm, json, user) {
-      self = this;
-      _activity = null;
-      if (json.acronym == surveyForm.surveyTemplate.identity.acronym) {
-        if (json.mode === "PAPER" && json.offlineData) {
-          _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id);
-          _createStatusHistoryPaper(json);
-        } else if (json.mode === "ONLINE") {
-          _activity = ActivityFactory.create(surveyForm, user, json.participant, json.activityConfiguration, json.id);
-          _createStatusHistoryOnline(json);
-        }
-        _setAnswersValues(json.answers);
-        _setInterview(user);
-        _activity.surveyForm.acronym = _activity.surveyForm.surveyTemplate.identity.acronym;
-      }
-
-      return angular.copy(_activity);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.model.activity').service('otusjs.model.activity.AnswerEvaluationService', Service);
 
   Service.$inject = ['otusjs.model.activity.NumericRuleTestService', 'otusjs.model.activity.TextRuleTestService', 'otusjs.model.activity.CalendarRuleTestService', 'otusjs.model.activity.TimeRuleTestService', 'otusjs.model.activity.CheckboxRuleTestService'];
@@ -7667,6 +7493,200 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       immutableDate.setSeconds(resultRegex[2] != undefined ? resultRegex[2] : 0);
       immutableDate.setMilliseconds(resultRegex[3] != undefined ? resultRegex[3] : 0);
       return immutableDate;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityImportService', Service);
+
+  Service.$inject = ['ElementRegisterFactory', 'otusjs.validation.api.ValidationService', 'otusjs.model.activity.ActivityFactory', 'otusjs.model.activity.QuestionFillFactory', 'otusjs.model.activity.InterviewFactory', 'otusjs.model.activity.ValidationTypeService', 'otusjs.model.activity.FillingManagerFactory'];
+
+  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory, ValidationTypeService, FillingManagerFactory) {
+    var self = this;
+
+    var _isValid = true;
+    var _elementRegister = null;
+    var _item = null;
+    var _activity;
+    var _activities = [];
+
+    //Public methods
+    self.fromJsonObject = fromJsonObject;
+    self.create = create;
+
+    function _setQuestionFill(answers, item) {
+      if (answers[item.customID]) {
+        _activity.fillContainer.updateFilling(QuestionFillFactory.create(item, answers[item.customID].value, answers[item.customID].metadata, answers[item.customID].comment));
+      }
+    }
+
+    function _getQuestionsIdsMap(answers) {
+      var _mapId = {};
+      _activity.fillContainer = FillingManagerFactory.create();
+      _activity.surveyForm.surveyTemplate.toJSON().itemContainer.forEach(function (item) {
+        _mapId[item.templateID] = item.customID;
+        _setQuestionFill(answers, item);
+      });
+
+      return _mapId;
+    }
+
+    function _setAnswersValues(answers) {
+      var IDS = _getQuestionsIdsMap(answers);
+      _activity.fillContainer.buildJsonToFillContainer().fillingList.forEach(function (question) {
+        if (_isValid) {
+          _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(question.questionID);
+          question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
+          question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
+
+          //checks the presence of metadata response
+          if (answers[IDS[question.questionID]].metadata) _validateMetadata(_item.metadata.options, answers[IDS[question.questionID]].metadata, question);else question.metadata.value = null;
+
+          _validateActivity(question.questionID, question.answer, _item, question.metadata);
+          if (!_isValid) _activity.error = "Questão {" + IDS[question.questionID] + "} contém uma resposta inválida!";
+        }
+      });
+      _activity.isValid = _isValid;
+      _isValid = true;
+    }
+
+    function _validateMetadata(metadataOptions, answerMetadata, question) {
+      var associated = metadataOptions.filter(function (options) {
+        return options.extractionValue === answerMetadata;
+      });
+
+      if (associated.length) {
+        metadataOptions.forEach(function (option, idx) {
+          if (option.extractionValue === answerMetadata) {
+            _isValid = true;
+            question.metadata.value = ++idx;
+          }
+        });
+      } else _isValid = false;
+    }
+
+    function _validateActivity(templateID, answer, _item, metadata) {
+      if (_isValid) {
+        _isValid = (answer.value || answer.value === 0) && metadata.value ? false : true;
+        if (_isValid && !metadata.value) {
+          _elementRegister = ElementRegisterFactory.create(templateID, { data: answer.value });
+          _setupValidation(_item);
+          ValidationService.validateElement(templateID, function (response) {
+            response.forEach(function (validation) {
+              validation.validatorsResponse.forEach(function (validator) {
+                _isValid = validator.result && ValidationTypeService.isValid(_item.dataType, answer.value);
+              });
+            });
+          });
+        }
+      }
+    }
+
+    function _setupValidation(_item) {
+      Object.keys(_item.fillingRules.options).forEach(function (validator) {
+        _addValidator(validator, _item);
+      });
+
+      ValidationService.unregisterElement(_elementRegister.id);
+      ValidationService.registerElement(_elementRegister);
+    }
+
+    function _addValidator(validator, _item) {
+      var reference = _item.fillingRules.options[validator].data;
+      if (_item.objectType === "TimeQuestion" || _item.objectType === "CalendarQuestion") {
+        _elementRegister.addValidator("ImmutableDate", reference);
+      } else {
+        _elementRegister.addValidator(validator, reference);
+      }
+    }
+
+    function _createStatusHistoryPaper(json) {
+      switch (json.status) {
+        case 'OPENED':
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          break;
+        case 'SAVED':
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newSavedRegistry(json.user);
+          break;
+        case 'FINALIZED':
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newFinalizedRegistry(json.user);
+          break;
+      }
+    }
+
+    function _createStatusHistoryOnline(json) {
+      switch (json.status) {
+        case 'INITIALIZED_ONLINE':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          break;
+        case 'OPENED':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          break;
+        case 'SAVED':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newSavedRegistry(json.user);
+          break;
+        case 'FINALIZED':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newFinalizedRegistry(json.user);
+          break;
+      }
+    }
+
+    function _setInterview(user) {
+      _activity.interviews.newRegistry(user);
+    }
+
+    function _isValidSurveys(acronym, json) {
+      var _valid = true;
+      json.forEach(function (activity) {
+        if (_valid) {
+          _valid = acronym == activity.acronym;
+        }
+      });
+      return _valid;
+    }
+
+    function fromJsonObject(surveyForm, jsonObject, user) {
+      _activities = [];
+      if (Array.isArray(jsonObject)) {
+        if (jsonObject.length > 0) {
+          if (_isValidSurveys(surveyForm.surveyTemplate.identity.acronym, jsonObject)) {
+            jsonObject.forEach(function (json) {
+              _activities.push(self.create(surveyForm, json, user));
+            });
+          }
+        }
+      }
+      return _activities;
+    }
+
+    function create(surveyForm, json, user) {
+      self = this;
+      _activity = null;
+      if (json.acronym == surveyForm.surveyTemplate.identity.acronym) {
+        if (json.mode === "PAPER" && json.offlineData) {
+          _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id);
+          _createStatusHistoryPaper(json);
+        } else if (json.mode === "ONLINE") {
+          _activity = ActivityFactory.create(surveyForm, user, json.participant, json.activityConfiguration, json.id);
+          _createStatusHistoryOnline(json);
+        }
+        _setAnswersValues(json.answers);
+        _setInterview(user);
+        _activity.surveyForm.acronym = _activity.surveyForm.surveyTemplate.identity.acronym;
+      }
+
+      return angular.copy(_activity);
     }
   }
 })();
@@ -8643,6 +8663,271 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.model.outcome').factory('otusjs.model.outcome.FollowUpFactory', Factory);
+
+  Factory.$inject = ['otusjs.model.outcome.ActivityAutoFillEventFactory'];
+
+  function Factory(ActivityAutoFillEventFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+    self.fromArray = fromArray;
+
+    self.Model = {
+      ActivityAutoFillEvent: ActivityAutoFillEventFactory
+    };
+
+    function create() {
+      return new FollowUp({}, self.Model);
+    }
+
+    function fromJson(json) {
+      return new FollowUp(json, self.Model);
+    }
+
+    function fromArray(jsonObjects) {
+      if (Array.isArray(jsonObjects)) {
+        return jsonObjects.map(function (json) {
+          return new FollowUp(json, self.Model);
+        });
+      } else {
+        return [];
+      }
+    }
+    return self;
+  }
+
+  function FollowUp(JsonObject, Model) {
+    var self = this;
+    self._id = JsonObject._id;
+    self.objectType = "FollowUp";
+    self.description = JsonObject.description || '';
+    self.order = JsonObject.order;
+    self.windowBetween = JsonObject.windowBetween || null;
+    self.time = JsonObject.time || null;
+    self.deadline = JsonObject.deadline || {};
+    self.participantEvents = JsonObject.participantEvents || [];
+    self.events = Array.isArray(JsonObject.events) ? JsonObject.events.map(function (item) {
+      return Model[item.objectType].fromJson(item);
+    }) : [];
+
+    self.createEvent = createEvent;
+    self.removeEvent = removeEvent;
+    self.toJSON = toJSON;
+
+    function createEvent(objectTypeEvent, data) {
+      if (data && objectTypeEvent) {
+        return Model[objectTypeEvent].fromJson(data);
+      } else {
+        throw new Error('Insuficients parameters');
+      }
+    }
+
+    function removeEvent(index) {
+      self.events.splice(index, 1);
+    }
+
+    function toJSON() {
+      var json = {};
+
+      json._id = self._id;
+      json.objectType = self.objectType;
+      json.description = self.description;
+      json.order = self.order;
+      json.windowBetween = self.windowBetween;
+      json.time = self.time;
+
+      return json;
+    }
+
+    return self;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.survey').factory('otusjs.survey.GroupFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create(name, surveyAcronyms) {
+      if (typeof name !== "string") {
+        throw Error("Name should be a string");
+      }
+
+      if (surveyAcronyms && !Array.isArray(surveyAcronyms)) {
+        throw Error("surveyAcronyms should be an array");
+      }
+
+      return new SurveyGroup(name, surveyAcronyms);
+    }
+
+    function fromJson(groupJson) {
+      return create(groupJson.name, groupJson.surveyAcronyms);
+    }
+
+    return self;
+  }
+
+  function SurveyGroup(name, surveyAcronyms) {
+    var self = this;
+
+    self.objectType = 'SurveyGroup';
+    self.name = name;
+    self.surveyAcronyms = surveyAcronyms || [];
+
+    if (!self.name) {
+      throw new Error("Name should be provided");
+    }
+
+    /* Public methods */
+    self.getName = getName;
+    self.getSurveys = getSurveys;
+    self.addSurvey = addSurvey;
+    self.removeSurvey = removeSurvey;
+    self.toJSON = toJSON;
+
+    function getName() {
+      return self.name;
+    }
+
+    function getSurveys() {
+      return self.surveyAcronyms;
+    }
+
+    function addSurvey(acronym) {
+      if (self.surveyAcronyms.indexOf(acronym) !== -1) {
+        throw new Error("Survey already in the group");
+      }
+      self.surveyAcronyms.push(acronym);
+      return self;
+    }
+
+    function removeSurvey(acronym) {
+      var index = self.surveyAcronyms.indexOf(acronym);
+
+      if (index === -1) {
+        throw new Error("Survey not found in the group");
+      }
+      self.surveyAcronyms.splice(index, 1);
+
+      return self;
+    }
+
+    function toJSON() {
+      return {
+        name: self.name,
+        surveyAcronyms: self.surveyAcronyms
+      };
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.survey').factory('otusjs.survey.GroupManagerFactory', Factory);
+
+  Factory.$inject = ['otusjs.survey.GroupFactory'];
+
+  function Factory(GroupFactory) {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+
+    function create(groupList) {
+      return new SurveyGroupManager(GroupFactory, groupList);
+    }
+
+    return self;
+  }
+
+  function SurveyGroupManager(GroupFactory, groups) {
+    var self = this;
+    var groupStructure = _buildGroupStructure(groups);
+
+    self.objectType = 'SurveyGroupManager';
+
+    /* Public methods */
+    self.createGroup = createGroup;
+    self.getGroup = getGroup;
+    self.getGroupList = getGroupList;
+    self.getGroupNames = getGroupNames;
+    self.getGroupSurveys = getGroupSurveys;
+    self.getSurveyGroups = getSurveyGroups;
+    self.toJSON = toJSON;
+
+    function createGroup(name, surveys) {
+      if (getGroup(name)) {
+        throw new Error("Group already exists");
+      }
+      var group = GroupFactory.create(name, surveys);
+      groupStructure[name] = group;
+      return group;
+    }
+
+    function getGroupList() {
+      return Object.values(groupStructure);
+    }
+
+    function getGroup(name) {
+      return groupStructure[name];
+    }
+
+    function getGroupNames() {
+      return Object.keys(groupStructure);
+    }
+
+    function getGroupSurveys(name) {
+      var found = getGroup(name);
+      if (!found) {
+        throw new Error("Group not found");
+      }
+      return found.getSurveys();
+    }
+
+    function getSurveyGroups(surveyAcronym) {
+      return getGroupList().filter(function (group) {
+        return group.getSurveys().includes(surveyAcronym);
+      }).map(function (group) {
+        return group.getName();
+      });
+    }
+
+    function toJSON() {
+      return self.getGroupList();
+    }
+
+    function _buildGroupStructure(groups) {
+      var structure = {};
+
+      if (groups) {
+        groups.forEach(function (groupJson) {
+          var group = GroupFactory.fromJson(groupJson);
+          structure[group.getName()] = group;
+        });
+      }
+
+      return structure;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.survey').factory('otusjs.model.survey.DataSourceDefinitionFactory', Factory);
 
   function Factory() {
@@ -8822,184 +9107,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function _bindedDataSources(dataSource) {
       return dataSource.isBinded();
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.survey').factory('otusjs.survey.GroupFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create(name, surveyAcronyms) {
-      if (typeof name !== "string") {
-        throw Error("Name should be a string");
-      }
-
-      if (surveyAcronyms && !Array.isArray(surveyAcronyms)) {
-        throw Error("surveyAcronyms should be an array");
-      }
-
-      return new SurveyGroup(name, surveyAcronyms);
-    }
-
-    function fromJson(groupJson) {
-      return create(groupJson.name, groupJson.surveyAcronyms);
-    }
-
-    return self;
-  }
-
-  function SurveyGroup(name, surveyAcronyms) {
-    var self = this;
-
-    self.objectType = 'SurveyGroup';
-    self.name = name;
-    self.surveyAcronyms = surveyAcronyms || [];
-
-    if (!self.name) {
-      throw new Error("Name should be provided");
-    }
-
-    /* Public methods */
-    self.getName = getName;
-    self.getSurveys = getSurveys;
-    self.addSurvey = addSurvey;
-    self.removeSurvey = removeSurvey;
-    self.toJSON = toJSON;
-
-    function getName() {
-      return self.name;
-    }
-
-    function getSurveys() {
-      return self.surveyAcronyms;
-    }
-
-    function addSurvey(acronym) {
-      if (self.surveyAcronyms.indexOf(acronym) !== -1) {
-        throw new Error("Survey already in the group");
-      }
-      self.surveyAcronyms.push(acronym);
-      return self;
-    }
-
-    function removeSurvey(acronym) {
-      var index = self.surveyAcronyms.indexOf(acronym);
-
-      if (index === -1) {
-        throw new Error("Survey not found in the group");
-      }
-      self.surveyAcronyms.splice(index, 1);
-
-      return self;
-    }
-
-    function toJSON() {
-      return {
-        name: self.name,
-        surveyAcronyms: self.surveyAcronyms
-      };
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.survey').factory('otusjs.survey.GroupManagerFactory', Factory);
-
-  Factory.$inject = ['otusjs.survey.GroupFactory'];
-
-  function Factory(GroupFactory) {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-
-    function create(groupList) {
-      return new SurveyGroupManager(GroupFactory, groupList);
-    }
-
-    return self;
-  }
-
-  function SurveyGroupManager(GroupFactory, groups) {
-    var self = this;
-    var groupStructure = _buildGroupStructure(groups);
-
-    self.objectType = 'SurveyGroupManager';
-
-    /* Public methods */
-    self.createGroup = createGroup;
-    self.getGroup = getGroup;
-    self.getGroupList = getGroupList;
-    self.getGroupNames = getGroupNames;
-    self.getGroupSurveys = getGroupSurveys;
-    self.getSurveyGroups = getSurveyGroups;
-    self.toJSON = toJSON;
-
-    function createGroup(name, surveys) {
-      if (getGroup(name)) {
-        throw new Error("Group already exists");
-      }
-      var group = GroupFactory.create(name, surveys);
-      groupStructure[name] = group;
-      return group;
-    }
-
-    function getGroupList() {
-      return Object.values(groupStructure);
-    }
-
-    function getGroup(name) {
-      return groupStructure[name];
-    }
-
-    function getGroupNames() {
-      return Object.keys(groupStructure);
-    }
-
-    function getGroupSurveys(name) {
-      var found = getGroup(name);
-      if (!found) {
-        throw new Error("Group not found");
-      }
-      return found.getSurveys();
-    }
-
-    function getSurveyGroups(surveyAcronym) {
-      return getGroupList().filter(function (group) {
-        return group.getSurveys().includes(surveyAcronym);
-      }).map(function (group) {
-        return group.getName();
-      });
-    }
-
-    function toJSON() {
-      return self.getGroupList();
-    }
-
-    function _buildGroupStructure(groups) {
-      var structure = {};
-
-      if (groups) {
-        groups.forEach(function (groupJson) {
-          var group = GroupFactory.fromJson(groupJson);
-          structure[group.getName()] = group;
-        });
-      }
-
-      return structure;
     }
   }
 })();
@@ -9326,6 +9433,98 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.surveyItem').factory('OptionItemFactory', OptionItemFactory);
+
+  function OptionItemFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(optionValue) {
+      return new Option(optionValue);
+    }
+
+    function fromJsonObject(option) {
+      if (option.objectType === 'OptionItem') {
+        return new Option(option.value);
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function Option(value) {
+    var self = this;
+    self.extends = 'StudioObject';
+    self.objectType = 'OptionItem';
+    self.value = value;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('QuestionOptionFactory', QuestionOptionFactory);
+
+  QuestionOptionFactory.$inject = ['OptionItemFactory'];
+
+  function QuestionOptionFactory(OptionItemFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new QuestionOption(OptionItemFactory);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.QuestionOptionFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var options = new QuestionOption(OptionItemFactory);
+      for (var object in jsonObject.data) {
+        options.data[object] = OptionItemFactory.fromJsonObject(jsonObject.data[object]);
+      }
+      return options;
+    }
+
+    return self;
+  }
+
+  function QuestionOption(OptionItemFactory) {
+    var self = this;
+
+    self.extends = 'StudioObject';
+    self.objectType = 'QuestionOption';
+    self.data = {};
+
+    /* Public methods */
+    self.createOption = createOption;
+    self.removeOption = removeOption;
+
+    function createOption(name, value) {
+      var option = OptionItemFactory.create(value);
+      self.data[name] = option;
+      return option;
+    }
+
+    function removeOption(name) {
+      delete self.data[name];
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.surveyItem').factory('ImageItemFactory', ImageItemFactory);
 
   ImageItemFactory.$inject = ['LabelFactory'];
@@ -9459,98 +9658,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       json.value = self.value;
 
       return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('OptionItemFactory', OptionItemFactory);
-
-  function OptionItemFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(optionValue) {
-      return new Option(optionValue);
-    }
-
-    function fromJsonObject(option) {
-      if (option.objectType === 'OptionItem') {
-        return new Option(option.value);
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function Option(value) {
-    var self = this;
-    self.extends = 'StudioObject';
-    self.objectType = 'OptionItem';
-    self.value = value;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('QuestionOptionFactory', QuestionOptionFactory);
-
-  QuestionOptionFactory.$inject = ['OptionItemFactory'];
-
-  function QuestionOptionFactory(OptionItemFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new QuestionOption(OptionItemFactory);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.QuestionOptionFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var options = new QuestionOption(OptionItemFactory);
-      for (var object in jsonObject.data) {
-        options.data[object] = OptionItemFactory.fromJsonObject(jsonObject.data[object]);
-      }
-      return options;
-    }
-
-    return self;
-  }
-
-  function QuestionOption(OptionItemFactory) {
-    var self = this;
-
-    self.extends = 'StudioObject';
-    self.objectType = 'QuestionOption';
-    self.data = {};
-
-    /* Public methods */
-    self.createOption = createOption;
-    self.removeOption = removeOption;
-
-    function createOption(name, value) {
-      var option = OptionItemFactory.create(value);
-      self.data[name] = option;
-      return option;
-    }
-
-    function removeOption(name) {
-      delete self.data[name];
     }
   }
 })();
@@ -10993,6 +11100,192 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.AlternativeRouteCreationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.RouteFactory', 'otusjs.model.navigation.RouteConditionFactory', 'otusjs.model.navigation.RuleFactory'];
+
+  function Service(RouteFactory, RouteConditionFactory, RuleFactory) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(routeData, navigation) {
+      if (routeData.origin === 'BEGIN NODE') {
+        return;
+      }
+      var conditions = routeData.conditions.map(_setupConditions);
+      var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, conditions);
+
+      navigation.createAlternativeRoute(route);
+      _notifyNewDefaultNavigation(route, navigation);
+
+      return route;
+    }
+
+    function _setupConditions(conditionData) {
+      var rules = conditionData.rules.map(_setupRules);
+      return RouteConditionFactory.create(conditionData.name, rules);
+    }
+
+    function _setupRules(ruleData) {
+      var when = ruleData.when.templateID || ruleData.when;
+      var operator = ruleData.operator.type || ruleData.operator;
+      var answer = ruleData.answer;
+      return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
+    }
+
+    function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
+      var nextNavigation = _container.getNavigationByOrigin(newDefaultRoute.destination);
+      nextNavigation.updateInNavigation(navigation);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.DefaultRouteCreationTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.RouteFactory'];
+
+  function Service(RouteFactory) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(routeData, navigation) {
+      var route;
+      if (navigation.hasDefaultRoute()) {
+        var currentDefaultRoute = navigation.getDefaultRoute();
+        route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+        navigation.setupDefaultRoute(route);
+
+        _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
+        _notifyNewDefaultNavigation(route, navigation);
+      } else {
+        route = RouteFactory.createDefault(routeData.origin, routeData.destination);
+        navigation.setupDefaultRoute(route);
+        _notifyNewDefaultNavigation(route, navigation);
+      }
+    }
+
+    function _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation) {
+      var nextNavigation = _container.getNavigationByOrigin(currentDefaultRoute.destination);
+      nextNavigation.removeInNavigation(navigation);
+    }
+
+    function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
+      var nextNavigation = _container.getNavigationByOrigin(newDefaultRoute.destination);
+      nextNavigation.updateInNavigation(navigation);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.RouteRemovalTaskService', Service);
+
+  function Service() {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(routeData, navigation) {
+      navigation.removeRouteByName(routeData.name);
+      var nextNavigation = _container.getNavigationByOrigin(routeData.destination);
+      nextNavigation.removeInNavigation(navigation);
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.RouteUpdateTaskService', Service);
+
+  Service.$inject = ['otusjs.model.navigation.RuleFactory', 'otusjs.model.navigation.RouteConditionFactory', 'otusjs.model.navigation.RouteFactory', 'otusjs.model.navigation.DefaultRouteCreationTaskService'];
+
+  function Service(RuleFactory, RouteConditionFactory, RouteFactory, DefaultRouteCreationTaskService) {
+    var self = this;
+    var _container = null;
+
+    /* Public methods */
+    self.setContainer = setContainer;
+    self.execute = execute;
+
+    function setContainer(container) {
+      _container = container;
+    }
+
+    function execute(routeData, navigation) {
+      if (_isCurrentDefaultRoute(routeData, navigation.getDefaultRoute())) {
+        throw new Error('Is not possible update a default route.', 'update-route-task-service.js', 23);
+      } else if (routeData.isDefault) {
+        DefaultRouteCreationTaskService.execute(routeData, navigation);
+      } else {
+        var conditions = routeData.conditions.map(_setupConditions);
+        var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, conditions);
+        navigation.updateRoute(route);
+        _notifyNextNavigation(route, navigation);
+      }
+    }
+
+    function _isCurrentDefaultRoute(routeToUpdate, currentDefaultRoute) {
+      var isSameOrigin = currentDefaultRoute.origin === routeToUpdate.origin;
+      var isSameDestination = currentDefaultRoute.destination === routeToUpdate.destination;
+      return isSameOrigin && isSameDestination;
+    }
+
+    function _setupConditions(conditionData) {
+      var rules = conditionData.rules.map(_setupRules);
+      return RouteConditionFactory.create(conditionData.name, rules);
+    }
+
+    function _setupRules(ruleData) {
+      var when = ruleData.when.templateID || ruleData.when;
+      var operator = ruleData.operator.type || ruleData.operator;
+      var answer = ruleData.answer;
+      return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
+    }
+
+    function _notifyNextNavigation(routeData, navigation) {
+      var nextNavigation = _container.getNavigationByOrigin(routeData.destination);
+      if (nextNavigation) {
+        nextNavigation.updateInNavigation(navigation);
+      }
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.model.navigation').service('otusjs.model.navigation.ContainerInitializationTaskService', Service);
 
   Service.$inject = ['otusjs.model.navigation.InitialNodesCreationTaskService'];
@@ -11258,185 +11551,69 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.AlternativeRouteCreationTaskService', Service);
+  angular.module('otusjs.model.outcome').factory('otusjs.model.outcome.ActivityAutoFillEventFactory', Factory);
 
-  Service.$inject = ['otusjs.model.navigation.RouteFactory', 'otusjs.model.navigation.RouteConditionFactory', 'otusjs.model.navigation.RuleFactory'];
+  Factory.$inject = [];
 
-  function Service(RouteFactory, RouteConditionFactory, RuleFactory) {
+  function Factory() {
     var self = this;
-    var _container = null;
 
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
+    /* Public interface */
+    self.create = create;
+    self.fromJson = fromJson;
+    self.fromArray = fromArray;
 
-    function setContainer(container) {
-      _container = container;
+    function create() {
+      return new ActivityAutoFillEvent({});
     }
 
-    function execute(routeData, navigation) {
-      if (routeData.origin === 'BEGIN NODE') {
-        return;
-      }
-      var conditions = routeData.conditions.map(_setupConditions);
-      var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, conditions);
-
-      navigation.createAlternativeRoute(route);
-      _notifyNewDefaultNavigation(route, navigation);
-
-      return route;
+    function fromJson(json) {
+      return new ActivityAutoFillEvent(json);
     }
 
-    function _setupConditions(conditionData) {
-      var rules = conditionData.rules.map(_setupRules);
-      return RouteConditionFactory.create(conditionData.name, rules);
-    }
-
-    function _setupRules(ruleData) {
-      var when = ruleData.when.templateID || ruleData.when;
-      var operator = ruleData.operator.type || ruleData.operator;
-      var answer = ruleData.answer;
-      return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
-    }
-
-    function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
-      var nextNavigation = _container.getNavigationByOrigin(newDefaultRoute.destination);
-      nextNavigation.updateInNavigation(navigation);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.DefaultRouteCreationTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.RouteFactory'];
-
-  function Service(RouteFactory) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(routeData, navigation) {
-      var route;
-      if (navigation.hasDefaultRoute()) {
-        var currentDefaultRoute = navigation.getDefaultRoute();
-        route = RouteFactory.createDefault(routeData.origin, routeData.destination);
-        navigation.setupDefaultRoute(route);
-
-        _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation);
-        _notifyNewDefaultNavigation(route, navigation);
+    function fromArray(jsonObjects) {
+      if (Array.isArray(jsonObjects)) {
+        return jsonObjects.map(function (json) {
+          return new ActivityAutoFillEvent(json);
+        });
       } else {
-        route = RouteFactory.createDefault(routeData.origin, routeData.destination);
-        navigation.setupDefaultRoute(route);
-        _notifyNewDefaultNavigation(route, navigation);
+        return [];
       }
     }
 
-    function _notifyPreviousDefaultNavigation(currentDefaultRoute, navigation) {
-      var nextNavigation = _container.getNavigationByOrigin(currentDefaultRoute.destination);
-      nextNavigation.removeInNavigation(navigation);
-    }
-
-    function _notifyNewDefaultNavigation(newDefaultRoute, navigation) {
-      var nextNavigation = _container.getNavigationByOrigin(newDefaultRoute.destination);
-      nextNavigation.updateInNavigation(navigation);
-    }
+    return self;
   }
-})();
-'use strict';
 
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.RouteRemovalTaskService', Service);
-
-  function Service() {
+  function ActivityAutoFillEvent(JsonObject) {
     var self = this;
-    var _container = null;
 
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
+    self._id = JsonObject._id || null;
+    self.objectType = "ActivityAutoFillEvent";
+    self.icon = "home_work";
+    self.name = JsonObject.name || '';
+    self.order = JsonObject.order;
+    self.acronym = JsonObject.acronym || '';
+    self.activityId = JsonObject.activityId || '';
+    self.description = JsonObject.description || '';
+    self.participantEvents = JsonObject.participantEvents || [];
 
-    function setContainer(container) {
-      _container = container;
+    self.toJSON = toJSON;
+
+    function toJSON() {
+      var json = {};
+
+      json._id = self._id;
+      json.objectType = self.objectType;
+      json.name = self.name;
+      json.order = self.order;
+      json.acronym = self.acronym;
+      json.activityId = self.activityId;
+      json.description = self.description;
+
+      return json;
     }
 
-    function execute(routeData, navigation) {
-      navigation.removeRouteByName(routeData.name);
-      var nextNavigation = _container.getNavigationByOrigin(routeData.destination);
-      nextNavigation.removeInNavigation(navigation);
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.navigation').service('otusjs.model.navigation.RouteUpdateTaskService', Service);
-
-  Service.$inject = ['otusjs.model.navigation.RuleFactory', 'otusjs.model.navigation.RouteConditionFactory', 'otusjs.model.navigation.RouteFactory', 'otusjs.model.navigation.DefaultRouteCreationTaskService'];
-
-  function Service(RuleFactory, RouteConditionFactory, RouteFactory, DefaultRouteCreationTaskService) {
-    var self = this;
-    var _container = null;
-
-    /* Public methods */
-    self.setContainer = setContainer;
-    self.execute = execute;
-
-    function setContainer(container) {
-      _container = container;
-    }
-
-    function execute(routeData, navigation) {
-      if (_isCurrentDefaultRoute(routeData, navigation.getDefaultRoute())) {
-        throw new Error('Is not possible update a default route.', 'update-route-task-service.js', 23);
-      } else if (routeData.isDefault) {
-        DefaultRouteCreationTaskService.execute(routeData, navigation);
-      } else {
-        var conditions = routeData.conditions.map(_setupConditions);
-        var route = RouteFactory.createAlternative(routeData.origin, routeData.destination, conditions);
-        navigation.updateRoute(route);
-        _notifyNextNavigation(route, navigation);
-      }
-    }
-
-    function _isCurrentDefaultRoute(routeToUpdate, currentDefaultRoute) {
-      var isSameOrigin = currentDefaultRoute.origin === routeToUpdate.origin;
-      var isSameDestination = currentDefaultRoute.destination === routeToUpdate.destination;
-      return isSameOrigin && isSameDestination;
-    }
-
-    function _setupConditions(conditionData) {
-      var rules = conditionData.rules.map(_setupRules);
-      return RouteConditionFactory.create(conditionData.name, rules);
-    }
-
-    function _setupRules(ruleData) {
-      var when = ruleData.when.templateID || ruleData.when;
-      var operator = ruleData.operator.type || ruleData.operator;
-      var answer = ruleData.answer;
-      return RuleFactory.create(when, operator, answer, ruleData.isMetadata, ruleData.isCustom);
-    }
-
-    function _notifyNextNavigation(routeData, navigation) {
-      var nextNavigation = _container.getNavigationByOrigin(routeData.destination);
-      if (nextNavigation) {
-        nextNavigation.updateInNavigation(navigation);
-      }
-    }
+    return self;
   }
 })();
 'use strict';
@@ -11824,163 +12001,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.validation').factory('DistinctValidatorFactory', DistinctValidatorFactory);
-
-  function DistinctValidatorFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new DistinctValidator();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.DistinctValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new DistinctValidator();
-      validator.canBeIgnored = jsonObject.canBeIgnored;
-      validator.reference = jsonObject.reference;
-      return validator;
-    }
-
-    return self;
-  }
-
-  function DistinctValidator() {
-    var self = this;
-
-    self.canBeIgnored = true;
-    self.reference = null;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.validation').factory('InValidatorFactory', InValidatorFactory);
-
-  function InValidatorFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new InValidator();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.InValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new InValidator();
-      validator.canBeIgnored = jsonObject.canBeIgnored;
-      validator.reference = jsonObject.reference;
-      return validator;
-    }
-
-    return self;
-  }
-
-  function InValidator() {
-    var self = this;
-
-    self.canBeIgnored = true;
-    self.reference = {
-      'initial': null,
-      'end': null
-    };
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.validation').factory('LowerLimitValidatorFactory', LowerLimitValidatorFactory);
-
-  function LowerLimitValidatorFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new LowerLimitValidator();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.LowerLimitValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new LowerLimitValidator();
-      validator.canBeIgnored = jsonObject.canBeIgnored;
-      validator.reference = jsonObject.reference;
-
-      return validator;
-    }
-
-    return self;
-  }
-
-  function LowerLimitValidator() {
-    var self = this;
-
-    self.canBeIgnored = true;
-    self.reference = null;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.validation').factory('UpperLimitValidatorFactory', UpperLimitValidatorFactory);
-
-  function UpperLimitValidatorFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new UpperLimitValidator();
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.UpperLimitValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var validator = new UpperLimitValidator();
-      validator.canBeIgnored = jsonObject.canBeIgnored;
-      validator.reference = jsonObject.reference;
-
-      return validator;
-    }
-
-    return self;
-  }
-
-  function UpperLimitValidator() {
-    var self = this;
-
-    self.canBeIgnored = true;
-    self.reference = null;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.validation').factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
 
   function AlphanumericValidatorFactory() {
@@ -12209,6 +12229,163 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.validation').factory('DistinctValidatorFactory', DistinctValidatorFactory);
+
+  function DistinctValidatorFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new DistinctValidator();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.DistinctValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new DistinctValidator();
+      validator.canBeIgnored = jsonObject.canBeIgnored;
+      validator.reference = jsonObject.reference;
+      return validator;
+    }
+
+    return self;
+  }
+
+  function DistinctValidator() {
+    var self = this;
+
+    self.canBeIgnored = true;
+    self.reference = null;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.validation').factory('InValidatorFactory', InValidatorFactory);
+
+  function InValidatorFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new InValidator();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.InValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new InValidator();
+      validator.canBeIgnored = jsonObject.canBeIgnored;
+      validator.reference = jsonObject.reference;
+      return validator;
+    }
+
+    return self;
+  }
+
+  function InValidator() {
+    var self = this;
+
+    self.canBeIgnored = true;
+    self.reference = {
+      'initial': null,
+      'end': null
+    };
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.validation').factory('LowerLimitValidatorFactory', LowerLimitValidatorFactory);
+
+  function LowerLimitValidatorFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new LowerLimitValidator();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.LowerLimitValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new LowerLimitValidator();
+      validator.canBeIgnored = jsonObject.canBeIgnored;
+      validator.reference = jsonObject.reference;
+
+      return validator;
+    }
+
+    return self;
+  }
+
+  function LowerLimitValidator() {
+    var self = this;
+
+    self.canBeIgnored = true;
+    self.reference = null;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.validation').factory('UpperLimitValidatorFactory', UpperLimitValidatorFactory);
+
+  function UpperLimitValidatorFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new UpperLimitValidator();
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.UpperLimitValidatorFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var validator = new UpperLimitValidator();
+      validator.canBeIgnored = jsonObject.canBeIgnored;
+      validator.reference = jsonObject.reference;
+
+      return validator;
+    }
+
+    return self;
+  }
+
+  function UpperLimitValidator() {
+    var self = this;
+
+    self.canBeIgnored = true;
+    self.reference = null;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.validation').factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
 
   MaxTimeValidatorFactory.$inject = ['otusjs.utils.ImmutableDate'];
@@ -12282,360 +12459,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     self.canBeIgnored = true;
     self.reference = { value: '' };
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridIntegerFactory', GridIntegerFactory);
-
-  GridIntegerFactory.$inject = ['LabelFactory', 'UnitFactory', 'otusjs.model.question.LayoutGridFactory'];
-
-  function GridIntegerFactory(LabelFactory, UnitFactory, LayoutGridFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(templateID) {
-      var labelObject = LabelFactory.create();
-      var layout = LayoutGridFactory.create();
-
-      var unitObject = {};
-      unitObject.ptBR = UnitFactory.create();
-      unitObject.enUS = UnitFactory.create();
-      unitObject.esES = UnitFactory.create();
-
-      return new GridInteger(templateID, labelObject, layout, unitObject);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.GridIntegerFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
-
-      var unitObject = {};
-      unitObject.ptBR = UnitFactory.fromJsonObject(jsonObject.unit.ptBR);
-      unitObject.enUS = UnitFactory.fromJsonObject(jsonObject.unit.enUS);
-      unitObject.esES = UnitFactory.fromJsonObject(jsonObject.unit.esES);
-
-      var layout = LayoutGridFactory.fromJsonObject(jsonObject.layout);
-      var gridInteger = new GridInteger(jsonObject.templateID, labelObject, layout, unitObject);
-      gridInteger.customID = jsonObject.customID;
-
-      return gridInteger;
-    }
-
-    return self;
-  }
-
-  function GridInteger(templateID, labelObject, layout, unitObject) {
-    var self = this;
-
-    self.extents = 'SurveyItem';
-    self.objectType = 'GridInteger';
-    self.templateID = templateID;
-    self.customID = templateID;
-    self.dataType = 'Integer';
-    self.label = labelObject;
-    self.layout = layout;
-    self.unit = unitObject;
-
-    /* Public methods */
-    self.setWidth = setWidth;
-    self.getWidth = getWidth;
-    self.setColor = setColor;
-    self.getColor = getColor;
-    self.isQuestion = isQuestion;
-    self.toJSON = toJSON;
-
-    function setWidth(width) {
-      self.layout.width = width;
-    }
-
-    function getWidth() {
-      return self.layout.width;
-    }
-
-    function setColor(color) {
-      self.layout.color = color;
-    }
-
-    function getColor() {
-      return self.layout.color;
-    }
-
-    function isQuestion() {
-      return true;
-    }
-
-    function toJSON() {
-      var json = {};
-
-      json.extents = self.extents;
-      json.objectType = self.objectType;
-      json.templateID = self.templateID;
-      json.customID = self.customID;
-      json.dataType = self.dataType;
-      json.label = self.label;
-      json.layout = self.layout;
-      json.unit = self.unit;
-
-      return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridIntegerLineFactory', GridIntegerLineFactory);
-
-  GridIntegerLineFactory.$inject = ['otusjs.model.question.GridIntegerFactory'];
-
-  function GridIntegerLineFactory(GridIntegerFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new GridIntegerLine(GridIntegerFactory);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.question.model.GridIntegerLine.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var gridIntegerLine = new GridIntegerLine(GridIntegerFactory);
-      gridIntegerLine.loadGridIntegerListFromJsonObject(jsonObject.gridIntegerList);
-
-      return gridIntegerLine;
-    }
-
-    return self;
-  }
-
-  function GridIntegerLine(GridIntegerFactory) {
-    var self = this;
-    var _gridIntegerList = [];
-
-    self.extents = 'StudioObject';
-    self.objectType = 'GridIntegerLine';
-
-    /* Public methods */
-    self.addGridInteger = addGridInteger;
-    self.removeGridInteger = removeGridInteger;
-    self.removeLastGridInteger = removeLastGridInteger;
-    self.filterItems = filterItems;
-    self.getGridIntegerIndex = getGridIntegerIndex;
-    self.getGridIntegerList = getGridIntegerList;
-    self.getGridIntegerListSize = getGridIntegerListSize;
-    self.getAllGridIntegerCustomOptionsID = getAllGridIntegerCustomOptionsID;
-    self.loadGridIntegerListFromJsonObject = loadGridIntegerListFromJsonObject;
-    self.toJSON = toJSON;
-
-    function addGridInteger(templateID) {
-      var gridInteger = GridIntegerFactory.create(templateID);
-      _gridIntegerList.push(gridInteger);
-      return gridInteger;
-    }
-
-    function removeGridInteger(index) {
-      return _gridIntegerList.splice(index - 1, 1);
-    }
-
-    function removeLastGridInteger() {
-      return _gridIntegerList.splice(-1, 1);
-    }
-
-    function filterItems(query) {
-      return _gridIntegerList.filter(query);
-    }
-
-    function getGridIntegerIndex(index) {
-      return _gridIntegerList.filter(function (gridInteger, i) {
-        if (i === index) return gridInteger;
-      });
-    }
-
-    function getGridIntegerList() {
-      return _gridIntegerList;
-    }
-
-    function getGridIntegerListSize() {
-      return _gridIntegerList.length;
-    }
-
-    function getAllGridIntegerCustomOptionsID() {
-      return _gridIntegerList.map(function (gridInteger) {
-        return gridInteger.customID;
-      });
-    }
-
-    function loadGridIntegerListFromJsonObject(gridIntegerList) {
-      _gridIntegerList = [];
-      gridIntegerList.forEach(function (gridInteger) {
-        _gridIntegerList.push(GridIntegerFactory.fromJsonObject(gridInteger));
-      });
-    }
-
-    function toJSON() {
-      var json = {};
-
-      json.extents = self.extents;
-      json.objectType = self.objectType;
-      json.gridIntegerList = _gridIntegerList;
-
-      return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridIntegerQuestionFactory', GridIntegerQuestionFactory);
-
-  GridIntegerQuestionFactory.$inject = ['MetadataGroupFactory', 'FillingRulesOptionFactory', 'LabelFactory', 'otusjs.model.question.GridIntegerLineFactory'];
-
-  function GridIntegerQuestionFactory(MetadataGroupFactory, FillingRulesOptionFactory, LabelFactory, GridIntegerLineFactory) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(templateID, prototype) {
-      var metadataGroupObject = MetadataGroupFactory.create();
-      var fillingRulesObject = FillingRulesOptionFactory.create();
-      var labelObject = LabelFactory.create();
-
-      return new GridIntegerQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.question.model.GridIntegerQuestion.fromJsonObject() method expects to receive a object instead a String");
-      }
-      var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
-      var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
-      var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
-
-      var prototype = {};
-      prototype.objectType = "SurveyItem";
-      var question = new GridIntegerQuestion(jsonObject.templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory);
-      question.loadFromJsonLinesObject(jsonObject.lines);
-      question.customID = jsonObject.customID;
-
-      return question;
-    }
-
-    return self;
-  }
-
-  function GridIntegerQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory) {
-    var self = this;
-    var _lines = [];
-
-    self.extents = prototype.objectType;
-    self.objectType = 'GridIntegerQuestion';
-    self.templateID = templateID;
-    self.customID = templateID;
-    self.metadata = metadataGroupObject;
-    self.fillingRules = fillingRulesObject;
-    self.label = labelObject;
-
-    /* Public methods */
-    self.createLine = createLine;
-    self.removeLine = removeLine;
-    self.removeLastLine = removeLastLine;
-    self.filterItems = filterItems;
-    self.getLineIndex = getLineIndex;
-    self.getLinesList = getLinesList;
-    self.getLinesListSize = getLinesListSize;
-    self.isQuestion = isQuestion;
-    self.validators = validators;
-    self.getAllCustomOptionsID = getAllCustomOptionsID;
-    self.loadFromJsonLinesObject = loadFromJsonLinesObject;
-    self.toJSON = toJSON;
-
-    function createLine() {
-      var line = GridIntegerLineFactory.create();
-      _lines.push(line);
-      return line;
-    }
-
-    function removeLine(index) {
-      _lines.splice(index, 1);
-    }
-
-    function removeLastLine() {
-      _lines.splice(-1, 1);
-    }
-
-    function filterItems(query) {
-      return _lines.filter(query);
-    }
-
-    function getLineIndex(gridLine) {
-      return _lines.indexOf(gridLine);
-    }
-
-    function getLinesList() {
-      return _lines;
-    }
-
-    function getLinesListSize() {
-      return _lines.length;
-    }
-
-    function isQuestion() {
-      return true;
-    }
-
-    function validators() {
-      var validatorsList = ['mandatory'];
-      return validatorsList;
-    }
-
-    function getAllCustomOptionsID() {
-      return _lines.map(function (line) {
-        return line.getAllGridIntegerCustomOptionsID();
-      });
-    }
-
-    function loadFromJsonLinesObject(lines) {
-      _lines = [];
-      lines.forEach(function (gridIntegerLine) {
-        _lines.push(GridIntegerLineFactory.fromJsonObject(gridIntegerLine));
-      });
-    }
-
-    function toJSON() {
-      var json = {};
-
-      json.extents = self.extents;
-      json.objectType = self.objectType;
-      json.templateID = self.templateID;
-      json.customID = self.customID;
-      json.metadata = self.metadata;
-      json.fillingRules = self.fillingRules;
-      json.label = self.label;
-      json.lines = [];
-      _lines.forEach(function (line) {
-        json.lines.push(line);
-      });
-
-      return json;
-    }
   }
 })();
 'use strict';
@@ -12970,6 +12793,360 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       _lines = [];
       lines.forEach(function (gridTextLine) {
         _lines.push(GridTextLineFactory.fromJsonObject(gridTextLine));
+      });
+    }
+
+    function toJSON() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.templateID = self.templateID;
+      json.customID = self.customID;
+      json.metadata = self.metadata;
+      json.fillingRules = self.fillingRules;
+      json.label = self.label;
+      json.lines = [];
+      _lines.forEach(function (line) {
+        json.lines.push(line);
+      });
+
+      return json;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridIntegerFactory', GridIntegerFactory);
+
+  GridIntegerFactory.$inject = ['LabelFactory', 'UnitFactory', 'otusjs.model.question.LayoutGridFactory'];
+
+  function GridIntegerFactory(LabelFactory, UnitFactory, LayoutGridFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(templateID) {
+      var labelObject = LabelFactory.create();
+      var layout = LayoutGridFactory.create();
+
+      var unitObject = {};
+      unitObject.ptBR = UnitFactory.create();
+      unitObject.enUS = UnitFactory.create();
+      unitObject.esES = UnitFactory.create();
+
+      return new GridInteger(templateID, labelObject, layout, unitObject);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.GridIntegerFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
+
+      var unitObject = {};
+      unitObject.ptBR = UnitFactory.fromJsonObject(jsonObject.unit.ptBR);
+      unitObject.enUS = UnitFactory.fromJsonObject(jsonObject.unit.enUS);
+      unitObject.esES = UnitFactory.fromJsonObject(jsonObject.unit.esES);
+
+      var layout = LayoutGridFactory.fromJsonObject(jsonObject.layout);
+      var gridInteger = new GridInteger(jsonObject.templateID, labelObject, layout, unitObject);
+      gridInteger.customID = jsonObject.customID;
+
+      return gridInteger;
+    }
+
+    return self;
+  }
+
+  function GridInteger(templateID, labelObject, layout, unitObject) {
+    var self = this;
+
+    self.extents = 'SurveyItem';
+    self.objectType = 'GridInteger';
+    self.templateID = templateID;
+    self.customID = templateID;
+    self.dataType = 'Integer';
+    self.label = labelObject;
+    self.layout = layout;
+    self.unit = unitObject;
+
+    /* Public methods */
+    self.setWidth = setWidth;
+    self.getWidth = getWidth;
+    self.setColor = setColor;
+    self.getColor = getColor;
+    self.isQuestion = isQuestion;
+    self.toJSON = toJSON;
+
+    function setWidth(width) {
+      self.layout.width = width;
+    }
+
+    function getWidth() {
+      return self.layout.width;
+    }
+
+    function setColor(color) {
+      self.layout.color = color;
+    }
+
+    function getColor() {
+      return self.layout.color;
+    }
+
+    function isQuestion() {
+      return true;
+    }
+
+    function toJSON() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.templateID = self.templateID;
+      json.customID = self.customID;
+      json.dataType = self.dataType;
+      json.label = self.label;
+      json.layout = self.layout;
+      json.unit = self.unit;
+
+      return json;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridIntegerLineFactory', GridIntegerLineFactory);
+
+  GridIntegerLineFactory.$inject = ['otusjs.model.question.GridIntegerFactory'];
+
+  function GridIntegerLineFactory(GridIntegerFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new GridIntegerLine(GridIntegerFactory);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.question.model.GridIntegerLine.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var gridIntegerLine = new GridIntegerLine(GridIntegerFactory);
+      gridIntegerLine.loadGridIntegerListFromJsonObject(jsonObject.gridIntegerList);
+
+      return gridIntegerLine;
+    }
+
+    return self;
+  }
+
+  function GridIntegerLine(GridIntegerFactory) {
+    var self = this;
+    var _gridIntegerList = [];
+
+    self.extents = 'StudioObject';
+    self.objectType = 'GridIntegerLine';
+
+    /* Public methods */
+    self.addGridInteger = addGridInteger;
+    self.removeGridInteger = removeGridInteger;
+    self.removeLastGridInteger = removeLastGridInteger;
+    self.filterItems = filterItems;
+    self.getGridIntegerIndex = getGridIntegerIndex;
+    self.getGridIntegerList = getGridIntegerList;
+    self.getGridIntegerListSize = getGridIntegerListSize;
+    self.getAllGridIntegerCustomOptionsID = getAllGridIntegerCustomOptionsID;
+    self.loadGridIntegerListFromJsonObject = loadGridIntegerListFromJsonObject;
+    self.toJSON = toJSON;
+
+    function addGridInteger(templateID) {
+      var gridInteger = GridIntegerFactory.create(templateID);
+      _gridIntegerList.push(gridInteger);
+      return gridInteger;
+    }
+
+    function removeGridInteger(index) {
+      return _gridIntegerList.splice(index - 1, 1);
+    }
+
+    function removeLastGridInteger() {
+      return _gridIntegerList.splice(-1, 1);
+    }
+
+    function filterItems(query) {
+      return _gridIntegerList.filter(query);
+    }
+
+    function getGridIntegerIndex(index) {
+      return _gridIntegerList.filter(function (gridInteger, i) {
+        if (i === index) return gridInteger;
+      });
+    }
+
+    function getGridIntegerList() {
+      return _gridIntegerList;
+    }
+
+    function getGridIntegerListSize() {
+      return _gridIntegerList.length;
+    }
+
+    function getAllGridIntegerCustomOptionsID() {
+      return _gridIntegerList.map(function (gridInteger) {
+        return gridInteger.customID;
+      });
+    }
+
+    function loadGridIntegerListFromJsonObject(gridIntegerList) {
+      _gridIntegerList = [];
+      gridIntegerList.forEach(function (gridInteger) {
+        _gridIntegerList.push(GridIntegerFactory.fromJsonObject(gridInteger));
+      });
+    }
+
+    function toJSON() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.gridIntegerList = _gridIntegerList;
+
+      return json;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('otusjs.model.question.GridIntegerQuestionFactory', GridIntegerQuestionFactory);
+
+  GridIntegerQuestionFactory.$inject = ['MetadataGroupFactory', 'FillingRulesOptionFactory', 'LabelFactory', 'otusjs.model.question.GridIntegerLineFactory'];
+
+  function GridIntegerQuestionFactory(MetadataGroupFactory, FillingRulesOptionFactory, LabelFactory, GridIntegerLineFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(templateID, prototype) {
+      var metadataGroupObject = MetadataGroupFactory.create();
+      var fillingRulesObject = FillingRulesOptionFactory.create();
+      var labelObject = LabelFactory.create();
+
+      return new GridIntegerQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.question.model.GridIntegerQuestion.fromJsonObject() method expects to receive a object instead a String");
+      }
+      var metadataGroupObject = MetadataGroupFactory.fromJsonObject(jsonObject.metadata);
+      var fillingRulesObject = FillingRulesOptionFactory.fromJsonObject(jsonObject.fillingRules);
+      var labelObject = LabelFactory.fromJsonObject(jsonObject.label);
+
+      var prototype = {};
+      prototype.objectType = "SurveyItem";
+      var question = new GridIntegerQuestion(jsonObject.templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory);
+      question.loadFromJsonLinesObject(jsonObject.lines);
+      question.customID = jsonObject.customID;
+
+      return question;
+    }
+
+    return self;
+  }
+
+  function GridIntegerQuestion(templateID, prototype, metadataGroupObject, fillingRulesObject, labelObject, GridIntegerLineFactory) {
+    var self = this;
+    var _lines = [];
+
+    self.extents = prototype.objectType;
+    self.objectType = 'GridIntegerQuestion';
+    self.templateID = templateID;
+    self.customID = templateID;
+    self.metadata = metadataGroupObject;
+    self.fillingRules = fillingRulesObject;
+    self.label = labelObject;
+
+    /* Public methods */
+    self.createLine = createLine;
+    self.removeLine = removeLine;
+    self.removeLastLine = removeLastLine;
+    self.filterItems = filterItems;
+    self.getLineIndex = getLineIndex;
+    self.getLinesList = getLinesList;
+    self.getLinesListSize = getLinesListSize;
+    self.isQuestion = isQuestion;
+    self.validators = validators;
+    self.getAllCustomOptionsID = getAllCustomOptionsID;
+    self.loadFromJsonLinesObject = loadFromJsonLinesObject;
+    self.toJSON = toJSON;
+
+    function createLine() {
+      var line = GridIntegerLineFactory.create();
+      _lines.push(line);
+      return line;
+    }
+
+    function removeLine(index) {
+      _lines.splice(index, 1);
+    }
+
+    function removeLastLine() {
+      _lines.splice(-1, 1);
+    }
+
+    function filterItems(query) {
+      return _lines.filter(query);
+    }
+
+    function getLineIndex(gridLine) {
+      return _lines.indexOf(gridLine);
+    }
+
+    function getLinesList() {
+      return _lines;
+    }
+
+    function getLinesListSize() {
+      return _lines.length;
+    }
+
+    function isQuestion() {
+      return true;
+    }
+
+    function validators() {
+      var validatorsList = ['mandatory'];
+      return validatorsList;
+    }
+
+    function getAllCustomOptionsID() {
+      return _lines.map(function (line) {
+        return line.getAllGridIntegerCustomOptionsID();
+      });
+    }
+
+    function loadFromJsonLinesObject(lines) {
+      _lines = [];
+      lines.forEach(function (gridIntegerLine) {
+        _lines.push(GridIntegerLineFactory.fromJsonObject(gridIntegerLine));
       });
     }
 

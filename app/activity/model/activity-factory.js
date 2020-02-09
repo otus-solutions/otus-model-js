@@ -32,6 +32,7 @@
     /* Public methods */
     self.create = create;
     self.createPaperActivity = createPaperActivity;
+    self.createAutoFillActivity = createAutoFillActivity;
     self.fromJsonObject = fromJsonObject;
 
     function create(surveyForm, user, participant, activityConfiguration, id, externalID) {
@@ -54,6 +55,18 @@
       var interviews = InterviewManagerFactory.create();
       var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
       activity.mode = 'PAPER';
+      activity.category = activityConfiguration.category;
+      activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
+      return activity;
+    }
+
+    function createAutoFillActivity(surveyForm, user, participant, activityConfiguration) {
+      Inject.FillingManager.init();
+      var statusHistory = StatusHistoryManagerFactory.create();
+      statusHistory.newCreatedRegistry(user);
+      var interviews = InterviewManagerFactory.create();
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews);
+      activity.mode = 'AUTOFILL';
       activity.category = activityConfiguration.category;
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
       return activity;
