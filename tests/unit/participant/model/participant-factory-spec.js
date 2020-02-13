@@ -67,8 +67,6 @@ describe("ParticipantFactory", function () {
       sex: PARTICIPANT_SEX,
       birthdate: PARTICIPANT_BIRTHDATE,
       fieldCenter: FIELD_CENTER,
-      email: "",
-      password: "",
       late: PARTICIPANT_LATE
     };
   }

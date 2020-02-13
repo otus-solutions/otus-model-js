@@ -23,7 +23,7 @@
     function fromArray(jsonObjects) {
       if (Array.isArray(jsonObjects)) {
         return jsonObjects.map(function (json) {
-          return new Participant(json);
+          return new Participant(json).toJSON();
         });
       } else {
         return [];
@@ -55,12 +55,10 @@
 
       json.objectType = self.objectType;
       json.recruitmentNumber = self.recruitmentNumber;
-      json.name = self.name;
-      json.sex = self.sex;
-      json.birthdate = self.birthdate;
+      if (self.name) json.name = self.name;
+      if (self.sex) json.sex = self.sex;
+      if (self.birthdate) json.birthdate = self.birthdate;
       json.fieldCenter = self.fieldCenter;
-      json.email = self.email;
-      json.password = self.password;
       json.late = self.late;
 
       return json;
