@@ -14,7 +14,7 @@
     self.fromArray = fromArray;
 
     function create() {
-      return new Participant();
+      return new Participant({});
     }
     function fromJson(json) {
       return new Participant(json)
@@ -37,11 +37,11 @@
     var self = this;
 
     self.objectType = 'Participant';
-    self.recruitmentNumber = participant.recruitmentNumber;
+    self.recruitmentNumber = participant.recruitmentNumber || "";
     self.name = participant.name || "";
     self.sex = participant.sex || "";
     self.birthdate = participant.birthdate || "";
-    self.fieldCenter = participant.fieldCenter;
+    self.fieldCenter = participant.fieldCenter || {};
     self.email = participant.email || "";
     self.password = participant.password || "";
     self.registeredBy = participant.registeredBy;
