@@ -46,7 +46,7 @@
     self.password = participant.password || "";
     self.registeredBy = participant.registeredBy;
     self.late = participant.late || false;
-    self.identified = participant.identified || true;
+    self.identified = participant.identified;
 
     /* Public methods */
     self.toJSON = toJSON;
@@ -61,7 +61,7 @@
       if (self.birthdate) json.birthdate = self.birthdate;
       json.fieldCenter = self.fieldCenter;
       json.late = self.late;
-      json.identified = self.name && self.sex && self.birthdate;
+      json.identified = self.identified || !!(self.name && self.sex && self.birthdate);
 
       return json;
     }
