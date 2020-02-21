@@ -1,74 +1,112 @@
-describe("ParticipantContactsFactory", function () {
-  console.log(); console.log('O primeiro de muitos testes!');
-  // var PARTICIPANT_OBJECT_TYPE = 'Participant';
-  // var RECURIMENT_NUMBER = 123456;
-  // var PARTICIPANT_NAME = 'Nome Participante';
-  // var PARTICIPANT_SEX = 'M';
-  // var PARTICIPANT_BIRTHDATE = '1954-09-22T00:00:00.000Z';
-  // var PARTICIPANT_LATE = false;
-  // var FIELD_CENTER = 'RS';
-  // var Mock = {};
-  // var participantData;
-  // var factory;
-  //
-  // beforeEach(function () {
-  //   angular.mock.module('otusjs');
-  //
-  //   inject(function (_$injector_) {
-  //     mockParticipant();
-  //
-  //     factory = _$injector_.get('otusjs.model.participant.ParticipantFactory');
-  //   });
-  //
-  //   participantData = factory.create(Mock.participant);
+fdescribe("ParticipantContactsFactory", function () {
+
+  var Mock = {};
+  var participantContactsData;
+  var factory;
+
+  beforeEach(function () {
+    angular.mock.module('otusjs.model.participant');
+
+    inject(function (_$injector_) {
+      mockParticipantContacts();
+
+      factory = _$injector_.get('otusjs.model.participantContacts.ParticipantContactsFactory');
+    });
+
+    participantContactsData = factory.create(Mock.participant, Mock.participantContacts);
+  });
+
+  describe('Create method', function () {
+
+    it("should do something", function () {
+      console.log('\n' + JSON.stringify(participantContactsData, null, 4));
+    })
+
+  });
+
+  // it('unitTest: should success response with body parameter', function () {
+  //   let body = { teste: null };
+  //   let valueCustom = responseApp.success(body);
+  //   expect(valueCustom.code).toBe(200);
+  //   expect(valueCustom.body.data).toBe(body);
   // });
-  //
-  // describe('creat method', function () {
-  //
-  //   it('should return an object of type Participant', function () {
-  //     expect(participantData.objectType).toEqual(PARTICIPANT_OBJECT_TYPE);
-  //   });
-  //
-  //   it('should return an object with recruitmentNumber attribute value equal to participant recruitment number', function () {
-  //     expect(participantData.recruitmentNumber).toEqual(Mock.participant.recruitmentNumber);
-  //   });
-  //
-  //   it('should return an object with name attribute value equal to participant name', function () {
-  //     expect(participantData.name).toEqual(Mock.participant.name);
-  //   });
-  //
-  //   it('should return an object with name attribute value equal to participant sex', function () {
-  //     expect(participantData.sex).toEqual(Mock.participant.sex);
-  //   });
-  //
-  //   it('should return an object with name attribute value equal to participant birthdate', function () {
-  //     expect(participantData.birthdate).toEqual(Mock.participant.birthdate);
-  //   });
-  //
-  //   it('should return an object with name attribute value equal to participant field center', function () {
-  //     expect(participantData.fieldCenter).toEqual(Mock.participant.fieldCenter);
-  //   });
-  //
-  //   it('should return an object with name attribute value equal to participant late', function () {
-  //     expect(participantData.late).toEqual(Mock.participant.late);
-  //   });
-  //
-  //   it('should return stringify of toJson method', function() {
-  //     expect(participantData.toJson()).toEqual(JSON.stringify(Mock.participant));
-  //   });
-  //
+
+  // it('unitTest: should success response with no body parameter', function () {
+  //   let valueDefault = responseApp.success();
+  //   expect(valueDefault.code).toBe(200);
+  //   expect(valueDefault.body.data).toBe(true);
   // });
-  //
-  // function mockParticipant() {
-  //   Mock.participant = {
-  //     objectType: PARTICIPANT_OBJECT_TYPE,
-  //     recruitmentNumber: RECURIMENT_NUMBER,
-  //     name: PARTICIPANT_NAME,
-  //     sex: PARTICIPANT_SEX,
-  //     birthdate: PARTICIPANT_BIRTHDATE,
-  //     fieldCenter: FIELD_CENTER,
-  //     late: PARTICIPANT_LATE
-  //   };
-  // }
-//
+
+  // it("should return an object named phoneNumber with attribute value equal to +55 011-1406", function () {
+  //   expect(participantContactsData.phoneNumber).toEqual(Mock.participantContacts.phoneNumber);
+  //   console.log(participantContactsData.phoneNumber);
+  //   console.log(Mock.participantContacts.phoneNumber);
+  //   console.log();
+  // })
+
+  // it("should return an object named email with attribute value equal to 'EMAIL'", function () {
+  //   expect(participantContactsData.email).toEqual(EMAIL);
+  //   console.log(participantContactsData.email);
+  //   console.log(Mock.participantContacts.email);
+  //   console.log();
+  // })
+
+// });
+
+  function mockParticipantContacts() {
+    Mock.participant = {
+      objectType: 'Participant',
+      recruitmentNumber: 123456,
+      name: 'Nome Participante',
+      sex: 'M',
+      birthdate: '1954-09-22T00:00:00.000Z',
+      fieldCenter: 'RS',
+      late: false,
+      email: 'email@mail.com',
+      password: 'P@$$W0rD',
+      tokenList: ['gcd4w', 'ppkhc', 'y6qr8', 'tcyfy', '29rx2']
+    };
+
+    Mock.participantContacts = {
+      objectType: 'ParticipantContacts',
+      phoneNumber: '+55 011-1406',
+      emailList: ['new_1_@mail.com', 'new_2_@mail.com'],
+      addresslist: [
+        {
+          postalCode: "90010-907",
+          street: 'Rua dos Bobos',
+          streetNumber: 0,                               // seria melhor string, aqui? ou ainda: seria melhor juntar rua e número no mesmo campo?
+          complements: 'Feita com muito esmero!',
+          neighbourhood: 'Centro',
+          city: 'Porto Alegre',
+          country: 'Brasil',
+          observations: 'Casa da vizinha da minha tia.'
+        },
+        {
+          postalCode: "H3500COA",
+          street: 'Avenida Las Heras',
+          streetNumber: 727,
+          complements: 'Facultad de Ingeniería, segundo piso.',
+          neighbourhood: 'Centro',
+          city: 'Resistencia',
+          country: 'Argentina',
+          observations: 'Universidad Nacional del Nordeste.'
+        }
+      ],
+    };
+
+  };
+
+
+// var participantContacts = {
+//   objectType: 'ParticipantContacts',
+//   phoneNumber: '+55 011-1406',
+//   email: 'email@mail.com',
+//   addresslist: []
+// };
+// var participant = {
+//   objectType: 'Participant',
+//   email: 'email@mail.com'
+// };
+
 });
