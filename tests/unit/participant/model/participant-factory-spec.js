@@ -67,6 +67,7 @@ describe("ParticipantFactory", function () {
       sex: PARTICIPANT_SEX,
       birthdate: PARTICIPANT_BIRTHDATE,
       fieldCenter: FIELD_CENTER,
+      identified: true,
       late: PARTICIPANT_LATE
     };
   }
