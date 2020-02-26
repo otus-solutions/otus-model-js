@@ -39,7 +39,7 @@
 
     self.toJSON = toJSON;
 
-    self._id = locationPoint._id;
+    self._id = locationPoint._id ? locationPoint["_id"].$oid : null;
     self.name = locationPoint.name || null;
     self.users = locationPoint.users || [];
 
