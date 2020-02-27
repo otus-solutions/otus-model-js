@@ -30,18 +30,18 @@
 
     self.objectType = 'TransportationLot';
     self.code = lotInfo.code || '';
-    self.fieldCenter = lotInfo.fieldCenter || '';
     self.aliquotList = WorkAliquot.fromJson(lotInfo.aliquotList);
     self.shipmentDate = lotInfo.shipmentDate || '';
     self.processingDate = lotInfo.processingDate || '';
     self.operator = lotInfo.operator || '';
     self.aliquotsInfo = lotInfo.aliquotsInfo || [];
+    self.originLocationPoint = lotInfo.originLocationPoint || '';
+    self.destinationLocationPoint = lotInfo.destinationLocationPoint || '';
 
     self.chartDataSet = {
       labels: [],
       data: [],
       backgroundColor: [],
-      fieldCenter: self.fieldCenter,
       chartId: self.code
     };
 
@@ -199,10 +199,11 @@
       var json = {
         objectType: self.objectType,
         code: self.code,
-        fieldCenter: self.fieldCenter,
         shipmentDate: self.shipmentDate,
         processingDate: self.processingDate,
         operator: self.operator,
+        originLocationPoint: self.originLocationPoint,
+        destinationLocationPoint: self.destinationLocationPoint,
         aliquotList: self.aliquotList,
         aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) {
           return { aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity };
