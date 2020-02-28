@@ -74,11 +74,6 @@ describe('the transportation lot factory', function() {
         expect(Mock.lot.aliquotList[0].name).toBe('BIOCHEMICAL_SERUM');
       });
 
-    it('inserted Aliquot should have fieldCenter name equal to Bahia',
-      function() {
-        expect(Mock.lot.aliquotList[0].fieldCenter.name).toBe('Bahia');
-      });
-
     it('inserted Aliquot should have role equal to EXAM', function() {
       expect(Mock.lot.aliquotList[0].role).toBe('EXAM');
     });
@@ -237,14 +232,11 @@ describe('the transportation lot factory', function() {
     Mock.LotJson = {
       objectType: "TransportationLot",
       code: "30513515",
-      fieldCenter: {
-        name: "Bahia",
-        acronym: "BA",
-        code: 1
-      },
       shipmentDate: "2017-09-21T15:36:56.929Z",
       processingDate: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
+      originLocationPoint: '',
+      destinationLocationPoint: '',
       aliquotList: [],
       aliquotsInfo: []
     }
@@ -257,11 +249,6 @@ describe('the transportation lot factory', function() {
     Mock.LotWithAliquotJSON = {
       objectType: "TransportationLot",
       code: "30513515",
-      fieldCenter: {
-        name: "Bahia",
-        acronym: "BA",
-        code: 1
-      },
       shipmentDate: "2017-09-21T15:36:56.929Z",
       processingDate: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
