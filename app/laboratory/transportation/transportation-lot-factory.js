@@ -35,16 +35,10 @@
     self.processingDate = lotInfo.processingDate || '';
     self.operator = lotInfo.operator || '';
     self.aliquotsInfo = lotInfo.aliquotsInfo || [];
-    self.originLocationPoint = lotInfo.originLocationPoint || '';
-    self.destinationLocationPoint = lotInfo.destinationLocationPoint || '';
+    self.originLocationPoint = lotInfo.originLocationPoint ? lotInfo.originLocationPoint.hasOwnProperty('$oid') ? lotInfo.originLocationPoint.$oid : lotInfo.originLocationPoint : '';
+    self.destinationLocationPoint = lotInfo.destinationLocationPoint ? lotInfo.destinationLocationPoint.hasOwnProperty('$oid') ? lotInfo.destinationLocationPoint.$oid : lotInfo.destinationLocationPoint : '';
 
-    self.chartDataSet = {
-      labels: [],
-      data: [],
-      backgroundColor: [],
-      chartId: self.code
-    };
-
+    self.chartAliquotDataSet = _getStructureDataSet();
     self.insertAliquot = insertAliquot;
     self.insertAliquotList = insertAliquotList;
     self.removeAliquotByIndex = removeAliquotByIndex;
@@ -55,6 +49,15 @@
 
     function _onInit() {
       _fillAliquotInfoLabel();
+    }
+
+    function _getStructureDataSet() {
+      return {
+        labels: [],
+        data: [],
+        backgroundColor: [],
+        chartId: self.code
+      }
     }
 
     function _fillAliquotInfoLabel() {
@@ -75,12 +78,13 @@
         });
       }
 
-      _generateDataSetForChart();
+      _generateDataSetForAliquotChart();
     }
 
-    function _generateDataSetForChart() {
-      self.chartDataSet.labels = [];
-      self.chartDataSet.data = [];
+    function _generateDataSetForAliquotChart() {
+      self.chartAliquotDataSet.labels = [];
+      self.chartAliquotDataSet.data = [];
+
 
       if (self.aliquotsInfo.length) {
         self.aliquotsInfo.sort(function (a, b) {
@@ -92,15 +96,15 @@
         });
 
         self.aliquotsInfo.forEach(function (aliquotInfo) {
-          self.chartDataSet.labels.push(aliquotInfo.aliquotLabel + " (" + aliquotInfo.roleLabel + ")");
-          self.chartDataSet.data.push(aliquotInfo.quantity);
+          self.chartAliquotDataSet.labels.push(aliquotInfo.aliquotLabel + " (" + aliquotInfo.roleLabel + ")");
+          self.chartAliquotDataSet.data.push(aliquotInfo.quantity);
         });
       }
 
-      var tmpDataSet = angular.copy(self.chartDataSet)
-      self.chartDataSet = undefined;
-      self.chartDataSet = angular.copy(tmpDataSet);
-      return self.chartDataSet;
+      var tmpDataSet = angular.copy(self.chartAliquotDataSet);
+      self.chartAliquotDataSet = undefined;
+      self.chartAliquotDataSet = angular.copy(tmpDataSet);
+      return self.chartAliquotDataSet;
     }
 
     function _findAliquotInfo(aliquot) {
@@ -132,7 +136,7 @@
       newAliquotsInfo.push(aliquotInfo);
 
       self.aliquotsInfo = newAliquotsInfo;
-      _generateDataSetForChart();
+      _generateDataSetForAliquotChart();
     }
 
     function _removeAliquotInfo(aliquot) {
@@ -145,7 +149,7 @@
       }
 
       self.aliquotsInfo = newAliquotsInfo;
-      _generateDataSetForChart();
+      _generateDataSetForAliquotChart();
     }
 
     function insertAliquot(aliquotInfo) {
@@ -184,8 +188,9 @@
           return workAliquot;
         }));
 
-      _generateDataSetForChart();
+      _generateDataSetForAliquotChart();
     }
+
 
     function AliquotInfoModel(workAliquot) {
       this.aliquotName = workAliquot.name;
@@ -193,7 +198,7 @@
       this.role = workAliquot.role;
       this.roleLabel = workAliquot.roleLabel;
       this.quantity = 1;
-    };
+    }
 
     function toJSON() {
       var json = {

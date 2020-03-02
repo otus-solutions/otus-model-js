@@ -143,12 +143,12 @@ describe('the transportation lot factory', function() {
       mockLotWithAliquotFromJSON();
     });
 
-    it('chartDataSet should have labels',function() {
-      expect(Mock.lotWithAliquotFromJSON.chartDataSet.labels[0]).not.toBeUndefined();
+    it('chartAliquotDataSet should have labels',function() {
+      expect(Mock.lotWithAliquotFromJSON.chartAliquotDataSet.labels[0]).not.toBeUndefined();
     });
 
-    it('chartDataSet should have data',function() {
-      expect(Mock.lotWithAliquotFromJSON.chartDataSet.data[0]).not.toBeUndefined();
+    it('chartAliquotDataSet should have data',function() {
+      expect(Mock.lotWithAliquotFromJSON.chartAliquotDataSet.data[0]).not.toBeUndefined();
     });
   });
 
