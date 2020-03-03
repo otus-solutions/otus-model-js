@@ -94,10 +94,10 @@
     function _fillTubeInfoLabel() {
       self.tubesInfo.forEach(function (tubeInfo) {
         var tube = self.tubeList.find(function (tube) {
-          return tube.label === tubeInfo.label;
+          return tube.type === tubeInfo.type && tube.moment === tubeInfo.moment;
         });
         if (tube) {
-          tubeInfo.label = tube.label;
+          tubeInfo.typeLabel = tube.typeLabel;
           tubeInfo.moment = tube.moment;
           tubeInfo.momentLabel = tube.momentLabel;
         }
@@ -354,9 +354,13 @@
         operator: self.operator,
         originLocationPoint: self.originLocationPoint,
         destinationLocationPoint: self.destinationLocationPoint,
+        tubeList: self.tubeList,
         aliquotList: self.aliquotList,
         aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) {
           return { aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity };
+        }),
+        tubesInfo: self.tubesInfo.map(function (tubeInfo) {
+          return { typeLabel: tubeInfo.typeLabel, momentLabel: tubeInfo.momentLabel, quantity: tubeInfo.quantity };
         })
       };
 
