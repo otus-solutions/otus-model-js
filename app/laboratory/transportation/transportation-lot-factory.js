@@ -363,6 +363,7 @@
 
     function toJSON() {
       var json = {
+        _id: self._id,
         objectType: self.objectType,
         code: self.code,
         shipmentDate: self.shipmentDate,

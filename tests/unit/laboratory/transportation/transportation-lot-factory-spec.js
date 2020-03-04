@@ -230,6 +230,7 @@ describe('the transportation lot factory', function() {
 
   function mockTransportationLotJson() {
     Mock.LotJson = {
+      _id: null,
       objectType: "TransportationLot",
       code: "30513515",
       shipmentDate: "2017-09-21T15:36:56.929Z",
@@ -249,6 +250,7 @@ describe('the transportation lot factory', function() {
     mockAliquotInfo();
 
     Mock.LotWithAliquotJSON = {
+      _id: null,
       objectType: "TransportationLot",
       code: "30513515",
       shipmentDate: "2017-09-21T15:36:56.929Z",
