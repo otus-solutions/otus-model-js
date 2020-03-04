@@ -7,7 +7,9 @@
     var self = this;
     var _laboratoryDescriptor;
     var _aliquotConfiguration;
+    var _tubeConfiguration;
     var _aliquotsDescriptors;
+    var _tubesDescriptors;
     var _selectedParticipant;
     var _participantCQ;
 
@@ -15,9 +17,11 @@
     self.initializeParticipantConfiguration = initializeParticipantConfiguration;
     self.initializeLaboratoryConfiguration = initializeLaboratoryConfiguration;
     self.initializeAliquotsDescriptors = initializeAliquotsDescriptors;
+    self.initializeTubesDescriptors = initializeTubesDescriptors;
 
     self.checkLaboratoryConfiguration = checkLaboratoryConfiguration;
     self.checkAliquotsDescriptors = checkAliquotsDescriptors;
+    self.checkTubesDescriptors = checkTubesDescriptors;
 
     self.getAvaiableAliquots = getAvaiableAliquots;
     self.getAliquotDescriptor = getAliquotDescriptor;
@@ -38,15 +42,25 @@
 
       //filling sub-descriptors
       _aliquotConfiguration = _laboratoryDescriptor.aliquotConfiguration;
+      _tubeConfiguration = _laboratoryDescriptor.tubeConfiguration;
       _aliquotsDescriptors = _aliquotConfiguration.aliquotDescriptors;
+      _tubesDescriptors = _tubeConfiguration.tubeDescriptors;
     }
 
     function initializeAliquotsDescriptors(aliquotsDescriptor) {
       _aliquotsDescriptors = aliquotsDescriptor;
     }
 
+    function initializeTubesDescriptors(tubesDescriptor) {
+      _tubesDescriptors = tubesDescriptor;
+    }
+
     function checkAliquotsDescriptors(aliquotsDescriptor) {
       return !!_aliquotsDescriptors;
+    }
+
+    function checkTubesDescriptors(tubesDescriptor) {
+      return !!_tubesDescriptors;
     }
 
     function checkLaboratoryConfiguration() {

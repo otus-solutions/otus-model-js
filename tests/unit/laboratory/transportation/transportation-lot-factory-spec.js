@@ -215,7 +215,6 @@ describe('the transportation lot factory', function() {
 
       expect(Mock.lotWithAliquotFromJSON.aliquotList.length).toEqual(1);
       expect(Mock.lotWithAliquotFromJSON.aliquotList[0].name).toEqual(Mock.workAliquot.name);
-      console.info(Mock.lotWithAliquotFromJSON)
     });
 
 
@@ -238,8 +237,10 @@ describe('the transportation lot factory', function() {
       operator: "teste@email.com",
       originLocationPoint: '',
       destinationLocationPoint: '',
+      tubeList: [],
       aliquotList: [],
-      aliquotsInfo: []
+      aliquotsInfo: [],
+      tubesInfo: []
     }
   }
 
@@ -253,12 +254,14 @@ describe('the transportation lot factory', function() {
       shipmentDate: "2017-09-21T15:36:56.929Z",
       processingDate: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
+      tubeList: [],
       aliquotList: [
         Mock.workAliquot
       ],
       aliquotsInfo: [
         Mock.AliquotInfo
-      ]
+      ],
+      tubesInfo: []
     }
   }
 

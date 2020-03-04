@@ -29,6 +29,7 @@
   function TransportationLot(WorkAliquot, WorkTube, lotInfo) {
     var self = this;
 
+    self._id = lotInfo._id ? lotInfo._id.hasOwnProperty('$oid') ? lotInfo._id.$oid : lotInfo._id : null;
     self.objectType = 'TransportationLot';
     self.code = lotInfo.code || '';
     self.aliquotList = WorkAliquot.fromJson(lotInfo.aliquotList);
@@ -52,6 +53,7 @@
     self.removeTubeByIndex = removeTubeByIndex;
     self.getAliquotCodeList = getAliquotCodeList;
     self.getTubeCodeList = getTubeCodeList;
+    self.getTubeForDynamicTable = getTubeForDynamicTable;
     self.toJSON = toJSON;
 
     _onInit();
@@ -69,6 +71,20 @@
         chartId: self.code
       }
     }
+
+    function getTubeForDynamicTable() {
+      return self.tubeList.map(function (tube) {
+        return {
+          code: tube.code,
+          label: tube.typeLabel+' ('+tube.momentLabel+')',
+          containerLabel: 'Tubo',
+          aliquotCollectionData: {
+            processing: tube.tubeCollectionData.time
+          },
+          roleLabel: ''
+        }
+      });
+    };
 
     function _fillAliquotInfoLabel() {
       self.aliquotsInfo.forEach(function (aliquotInfo) {
@@ -360,7 +376,7 @@
           return { aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity };
         }),
         tubesInfo: self.tubesInfo.map(function (tubeInfo) {
-          return { typeLabel: tubeInfo.typeLabel, momentLabel: tubeInfo.momentLabel, quantity: tubeInfo.quantity };
+          return { type: tubeInfo.type, moment: tubeInfo.moment, quantity: tubeInfo.quantity };
         })
       };
 
