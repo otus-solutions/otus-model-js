@@ -144,11 +144,11 @@ describe('the transportation lot factory', function() {
     });
 
     it('chartDataSet should have labels',function() {
-      expect(Mock.lotWithAliquotFromJSON.chartDataSet.labels[0]).not.toBeUndefined();
+      expect(Mock.lotWithAliquotFromJSON.chartAliquotDataSet.labels[0]).not.toBeUndefined();
     });
 
     it('chartDataSet should have data',function() {
-      expect(Mock.lotWithAliquotFromJSON.chartDataSet.data[0]).not.toBeUndefined();
+      expect(Mock.lotWithAliquotFromJSON.chartAliquotDataSet.data[0]).not.toBeUndefined();
     });
   });
 
@@ -230,6 +230,7 @@ describe('the transportation lot factory', function() {
 
   function mockTransportationLotJson() {
     Mock.LotJson = {
+      _id: null,
       objectType: "TransportationLot",
       code: "30513515",
       shipmentDate: "2017-09-21T15:36:56.929Z",
@@ -237,8 +238,10 @@ describe('the transportation lot factory', function() {
       operator: "teste@email.com",
       originLocationPoint: '',
       destinationLocationPoint: '',
+      tubeList: [],
       aliquotList: [],
-      aliquotsInfo: []
+      aliquotsInfo: [],
+      tubesInfo: []
     }
   }
 
@@ -247,17 +250,20 @@ describe('the transportation lot factory', function() {
     mockAliquotInfo();
 
     Mock.LotWithAliquotJSON = {
+      _id: null,
       objectType: "TransportationLot",
       code: "30513515",
       shipmentDate: "2017-09-21T15:36:56.929Z",
       processingDate: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
+      tubeList: [],
       aliquotList: [
         Mock.workAliquot
       ],
       aliquotsInfo: [
         Mock.AliquotInfo
-      ]
+      ],
+      tubesInfo: []
     }
   }
 
