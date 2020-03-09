@@ -74,11 +74,6 @@ describe('the transportation lot factory', function() {
         expect(Mock.lot.aliquotList[0].name).toBe('BIOCHEMICAL_SERUM');
       });
 
-    it('inserted Aliquot should have fieldCenter name equal to Bahia',
-      function() {
-        expect(Mock.lot.aliquotList[0].fieldCenter.name).toBe('Bahia');
-      });
-
     it('inserted Aliquot should have role equal to EXAM', function() {
       expect(Mock.lot.aliquotList[0].role).toBe('EXAM');
     });
@@ -149,11 +144,11 @@ describe('the transportation lot factory', function() {
     });
 
     it('chartDataSet should have labels',function() {
-      expect(Mock.lotWithAliquotFromJSON.chartDataSet.labels[0]).not.toBeUndefined();
+      expect(Mock.lotWithAliquotFromJSON.chartAliquotDataSet.labels[0]).not.toBeUndefined();
     });
 
     it('chartDataSet should have data',function() {
-      expect(Mock.lotWithAliquotFromJSON.chartDataSet.data[0]).not.toBeUndefined();
+      expect(Mock.lotWithAliquotFromJSON.chartAliquotDataSet.data[0]).not.toBeUndefined();
     });
   });
 
@@ -235,18 +230,18 @@ describe('the transportation lot factory', function() {
 
   function mockTransportationLotJson() {
     Mock.LotJson = {
+      _id: null,
       objectType: "TransportationLot",
       code: "30513515",
-      fieldCenter: {
-        name: "Bahia",
-        acronym: "BA",
-        code: 1
-      },
       shipmentDate: "2017-09-21T15:36:56.929Z",
       processingDate: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
+      originLocationPoint: '',
+      destinationLocationPoint: '',
+      tubeList: [],
       aliquotList: [],
-      aliquotsInfo: []
+      aliquotsInfo: [],
+      tubesInfo: []
     }
   }
 
@@ -255,22 +250,20 @@ describe('the transportation lot factory', function() {
     mockAliquotInfo();
 
     Mock.LotWithAliquotJSON = {
+      _id: null,
       objectType: "TransportationLot",
       code: "30513515",
-      fieldCenter: {
-        name: "Bahia",
-        acronym: "BA",
-        code: 1
-      },
       shipmentDate: "2017-09-21T15:36:56.929Z",
       processingDate: "2017-09-21T15:36:56.929Z",
       operator: "teste@email.com",
+      tubeList: [],
       aliquotList: [
         Mock.workAliquot
       ],
       aliquotsInfo: [
         Mock.AliquotInfo
-      ]
+      ],
+      tubesInfo: []
     }
   }
 
