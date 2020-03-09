@@ -32,7 +32,7 @@
   function FieldCenter(fieldCenter) {
     var self = this;
 
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
     self.name = fieldCenter.name || null;
     self.code = fieldCenter.code || null;
@@ -47,7 +47,7 @@
     self.borderColor = fieldCenter.borderColor || null;
 
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.name = self.name;
@@ -62,7 +62,7 @@
       json.backgroundColor = self.backgroundColor;
       json.borderColor = self.borderColor;
 
-      return JSON.stringify(json);
+      return json;
     }
 
 
