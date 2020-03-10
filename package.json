@@ -1,6 +1,6 @@
 {
   "name": "otus-model-js",
-  "version": "1.29.0",
+  "version": "1.31.0",
   "description": "Model Otus",
   "keywords": [
     "model",
@@ -32,7 +32,7 @@
     "js-base64": "^2.1.9",
     "jsonfile": "^5.0.0",
     "node-uuid": "^1.4.7",
-    "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#1.1.0"
+    "otus-validation-js": "1.1.0"
   },
   "devDependencies": {
     "fs": "0.0.1-security",

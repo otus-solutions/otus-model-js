@@ -20,10 +20,10 @@ describe("ParticipantFactory", function () {
       factory = _$injector_.get('otusjs.model.participant.ParticipantFactory');
     });
 
-    participantData = factory.create(Mock.participant);
+    participantData = factory.fromJson(Mock.participant);
   });
 
-  describe('creat method', function () {
+  describe('create method', function () {
 
     it('should return an object of type Participant', function () {
       expect(participantData.objectType).toEqual(PARTICIPANT_OBJECT_TYPE);
@@ -54,7 +54,7 @@ describe("ParticipantFactory", function () {
     });
 
     it('should return stringify of toJson method', function() {
-      expect(participantData.toJson()).toEqual(JSON.stringify(Mock.participant));
+      expect(participantData.toJSON()).toEqual(Mock.participant);
     });
 
   });
@@ -67,6 +67,7 @@ describe("ParticipantFactory", function () {
       sex: PARTICIPANT_SEX,
       birthdate: PARTICIPANT_BIRTHDATE,
       fieldCenter: FIELD_CENTER,
+      identified: true,
       late: PARTICIPANT_LATE
     };
   }

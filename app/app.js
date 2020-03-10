@@ -7,6 +7,7 @@
       'otusjs.model.activity',
       'otusjs.model.participant',
       'otusjs.model.fieldCenter',
+      'otusjs.model.locationPoint',
       'otusjs.model.monitoring',
       'otusjs.model.outcome',
       'otusjs.model.chart',

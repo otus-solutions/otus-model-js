@@ -10,9 +10,24 @@
 
     /* Public methods */
     self.create = create;
+    self.fromJson = fromJson;
+    self.fromArray = fromArray;
 
-    function create(participant) {
-      return new Participant(participant);
+    function create() {
+      return new Participant({});
+    }
+    function fromJson(json) {
+      return new Participant(json)
+    }
+
+    function fromArray(jsonObjects) {
+      if (Array.isArray(jsonObjects)) {
+        return jsonObjects.map(function (json) {
+          return new Participant(json).toJSON();
+        });
+      } else {
+        return [];
+      }
     }
 
     return self;
@@ -22,29 +37,36 @@
     var self = this;
 
     self.objectType = 'Participant';
-    self.recruitmentNumber = participant.recruitmentNumber;
-    self.name = participant.name;
-    self.sex = participant.sex;
-    self.birthdate = participant.birthdate;
-    self.fieldCenter = participant.fieldCenter;
-    self.late = participant.late;
+    self.recruitmentNumber = participant.recruitmentNumber || "";
+    self.name = participant.name || "";
+    self.sex = participant.sex || "";
+    self.birthdate = participant.birthdate || "";
+    self.fieldCenter = participant.fieldCenter || {};
+    self.email = participant.email || "";
+    self.password = participant.password || "";
+    self.registeredBy = participant.registeredBy;
+    self.late = participant.late || false;
+    self.identified = participant.identified;
 
     /* Public methods */
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
       json.objectType = self.objectType;
       json.recruitmentNumber = self.recruitmentNumber;
-      json.name = self.name;
-      json.sex = self.sex;
-      json.birthdate = self.birthdate;
+      if (self.name) json.name = self.name;
+      if (self.sex) json.sex = self.sex;
+      if (self.birthdate) json.birthdate = self.birthdate;
       json.fieldCenter = self.fieldCenter;
       json.late = self.late;
+      json.identified = self.identified || !!(self.name && self.sex && self.birthdate);
 
-      return JSON.stringify(json);
+      return json;
     }
+
+    return self;
   }
 
 }());

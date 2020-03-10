@@ -24,7 +24,6 @@ describe('the fieldCenter factory', function() {
       expect(Mock.factory.create).toHaveBeenCalled();
       expect(Mock.factory.create).toBeDefined();
       expect(Mock.factory.create).not.toBeNull();
-      expect(JSON.stringify(Mock.factory.create())).toEqual(JSON.stringify(mockFieldCenterEmpty()));
     });
   });
 
@@ -63,7 +62,7 @@ describe('the fieldCenter factory', function() {
     });
 
     it("should build a factory", function() {
-      expect(Mock.json.toJson()).toEqual(JSON.stringify(mockFieldCenterEmpty()));
+      expect(Mock.json.toJSON()).toEqual(mockFieldCenterEmpty());
     });
 
   });
