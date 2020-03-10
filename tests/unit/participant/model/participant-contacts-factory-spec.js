@@ -22,6 +22,17 @@ fdescribe("ParticipantContactsFactory", function () {
       console.log('\n' + JSON.stringify(participantContactsData, null, 4));
     })
 
+    it("should return an object with attribute value equal to 'ParticipantContacts'", function () {
+      expect(participantContactsData.objectType).toEqual('ParticipantContacts');
+    })
+
+    it("should do something again", function () {
+      expect(participantContactsData.objectType).toEqual('ParticipantContacts');
+    })
+
+// TODO: dependendo de como ficar a distribuição das listas, com, ou sem 'principais", fazer um  teste
+//  comparando com o mock do "participantContacts"
+
   });
 
   // it('unitTest: should success response with body parameter', function () {
@@ -53,6 +64,8 @@ fdescribe("ParticipantContactsFactory", function () {
 
 // });
 
+
+  /*=================================================*/
   function mockParticipantContacts() {
     Mock.participant = {
       objectType: 'Participant',
@@ -68,7 +81,7 @@ fdescribe("ParticipantContactsFactory", function () {
     };
 
     Mock.participantContacts = {
-      objectType: 'ParticipantContact',
+      objectType: 'ParticipantContacts',
       mainPhoneNumber: '+55 011-1406',
       secondaryPhoneNumbers: ['0800-0000', '0800-1000', '0800-2000'],
       secondaryEmails: ['new_1_@mail.com', 'new_2_@mail.com'],
@@ -82,11 +95,11 @@ fdescribe("ParticipantContactsFactory", function () {
         country: 'Sexto país',
         observations: 'Ao lado do pórtico da cidade'
       },
-      secondaryAdresses: [
+      secondaryAddresses: [
         {
           postalCode: "90010-907",
           street: 'Rua dos Bobos',
-          streetNumber: 0,                               // seria melhor string, aqui? ou ainda: seria melhor juntar rua e número no mesmo campo?
+          streetNumber: 0,
           complements: 'Feita com muito esmero!',
           neighbourhood: 'Centro',
           city: 'Porto Alegre',
@@ -107,7 +120,7 @@ fdescribe("ParticipantContactsFactory", function () {
     };
 
   };
-
+  /*============================================================================*/
 
 // var participantContacts = {
 //   objectType: 'ParticipantContacts',
