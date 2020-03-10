@@ -22,36 +22,53 @@
     function ParticipantContacts(participant, participantContacts) {
       var self = this;
 
-      self.objectType = 'ParticipantContacts';
+      self.objectType = 'ParticipantContact';
+      self.recruitNumber = participant.recruitmentNumber;
+
       self.mainEmail = participant.email || ""; //assumir que o e-mail sempre existirá no participant.email (adicionar erro se não houver??)
 
       if (participant.email) {
-        self.emailList = [participant.email];
+        self.secondaryEmails = [participant.email + ' (principal)'];
       } else {
-        self.emailList = [];
+        self.secondaryEmails = [];
       }
 
-      if (participantContacts.emailList) {
-        self.emailList = self.emailList.concat(participantContacts.emailList);
+      if (participantContacts.secondaryEmails) {
+        self.secondaryEmails = self.secondaryEmails.concat(participantContacts.secondaryEmails);
       }
 
 
-      // self.phoneNumber = participantContacts.phoneNumberList || [];
-      // self.address = info.addressList || [];
-      // console.log(self.emailList);
+      self.phoneNumber = participantContacts.mainPhoneNumber || '';
+      self.secondaryPhoneNumbers = participantContacts.secondaryPhoneNumbers || [];
+      self.mainAddress = participantContacts.mainAddress || {};
+      self.secondaryAddresses = participantContacts.secondaryAddresses || [];
+      // self.secondaryAddresses = participantContacts.secondaryAddresses || [ // Colocar Objeto ou simplesmente deixar o array vazio?
+      //   {
+      //     postalCode: '',
+      //     street: '',
+      //     streetNumber: 0,
+      //     complements: '',
+      //     neighbourhood: '',
+      //     city: '',
+      //     country: '',
+      //     observations: ''
+      //   }
+      //   ];
+
+      // console.log(self.secondaryEmails);
 
       // self.campo = info.campo || "";
-      // self.emailList = info.emailList || [];
+      // self.secondaryEmails = info.secondaryEmails || [];
       // self.addEmail = addEmail;
 
 
       // function addEmail(email) {
-      //   if (self.emailList.length === 5) {
-      //     self.emailList.pop();
+      //   if (self.secondaryEmails.length === 5) {
+      //     self.secondaryEmails.pop();
       //     // or
       //     // throw new Error("");
       //   }
-      //   self.emailList.push();
+      //   self.secondaryEmails.push();
       // }
       self.toJson = toJson;
 
@@ -85,7 +102,7 @@
 // var contact = ParticipantContactFactory.create();
 //
 // contact.campo = "";
-// contact.emailList.push("email@email");
+// contact.secondaryEmails.push("email@email");
 // contact.addEmail("email@email");
 
 //===================================================================================

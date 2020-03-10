@@ -68,10 +68,21 @@ fdescribe("ParticipantContactsFactory", function () {
     };
 
     Mock.participantContacts = {
-      objectType: 'ParticipantContacts',
-      phoneNumber: '+55 011-1406',
-      emailList: ['new_1_@mail.com', 'new_2_@mail.com'],
-      addresslist: [
+      objectType: 'ParticipantContact',
+      mainPhoneNumber: '+55 011-1406',
+      secondaryPhoneNumbers: ['0800-0000', '0800-1000', '0800-2000'],
+      secondaryEmails: ['new_1_@mail.com', 'new_2_@mail.com'],
+      mainAddress: {
+        postalCode: "90010-907",
+        street: 'Rua Um',
+        streetNumber: 2,                               // seria melhor string, aqui? ou ainda: seria melhor juntar rua e número no mesmo campo?
+        complements: 'Ap. 3',
+        neighbourhood: 'Bairro Quatro',
+        city: 'Cidade Cinco',
+        country: 'Sexto país',
+        observations: 'Ao lado do pórtico da cidade'
+      },
+      secondaryAdresses: [
         {
           postalCode: "90010-907",
           street: 'Rua dos Bobos',
@@ -102,7 +113,7 @@ fdescribe("ParticipantContactsFactory", function () {
 //   objectType: 'ParticipantContacts',
 //   phoneNumber: '+55 011-1406',
 //   email: 'email@mail.com',
-//   addresslist: []
+//   secondaryAdresses: []
 // };
 // var participant = {
 //   objectType: 'Participant',
