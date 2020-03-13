@@ -22,62 +22,95 @@
 
   function ParticipantContacts(participant, participantContacts) {
     var self = this;
-    var limitErrMsg = "Limite máximo atingido, por favor remova um campo para adicionar um novo contato."
-
-    self.showError = showError;
 
     self.objectType = 'ParticipantContacts';
+    self._id = participant._id || null;
     self.recruitNumber = participant.recruitmentNumber || "";
-    self.mainEmail = participant.email || "";
-    self.secondaryEmails = participantContacts.secondaryEmails;
-    self.phoneNumber = participantContacts.mainPhoneNumber || '';
-    self.secondaryPhoneNumbers = participantContacts.secondaryPhoneNumbers || [];
-    self.mainAddress = participantContacts.mainAddress || {};
-    self.secondaryAddresses = participantContacts.secondaryAddresses || [{
-      postalCode: '',
-      street: '',
-      streetNumber: '',
-      complements: '',
-      neighbourhood: '',
-      city: '',
-      country: '',
-      observations: ''
-    }];
+    self.email = participantContacts.email || {
+      main: {value: participant.email || "", observation: ""},
+      second: {value: "", observation: ""},
+      third: {value: "", observation: ""},
+      fourth: {value: "", observation: ""},
+      fifth: {value: "", observation: ""},
+    };
+    self.phoneNumber = participantContacts.phoneNumber || {
+      main: {value: "", observation: ""},
+      second: {value: "", observation: ""},
+      third: {value: "", observation: ""},
+      fourth: {value: "", observation: ""},
+      fifth: {value: "", observation: ""},
+    };
+    self.address = participantContacts.address || {
+      main: {
+        value: {
+          postalCode: "",
+          street: "",
+          streetNumber: 0,
+          complements: "",
+          neighbourhood: "",
+          city: "",
+          country: ""
+        }, observation: ""
+      },
+      second: {
+        value: {
+          postalCode: "",
+          street: "",
+          streetNumber: 0,
+          complements: "",
+          neighbourhood: "",
+          city: "",
+          country: ""
+        }, observation: ""
+      },
+      third: {
+        value: {
+          postalCode: "",
+          street: "",
+          streetNumber: 0,
+          complements: "",
+          neighbourhood: "",
+          city: "",
+          country: ""
+        }, observation: ""
+      },
+      fourth: {
+        value: {
+          postalCode: "",
+          street: "",
+          streetNumber: 0,
+          complements: "",
+          neighbourhood: "",
+          city: "",
+          country: ""
+        }, observation: ""
+      },
+      fifth: {
+        value: {
+          postalCode: "",
+          street: "",
+          streetNumber: 0,
+          complements: "",
+          neighbourhood: "",
+          city: "",
+          country: ""
+        }, observation: ""
+      },
+    };
 
     /* Public methods */
     self.toJson = toJson;
-    self.addSecondaryEmail = addSecondaryEmails;
-
-    function showError(msg) {
-      throw new Error(msg);
-    }
-
-    function _validEmail(email) {
-      var Regex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}/gi;
-      return Regex.test(email);
-    }
-
-    //ToDo: Validar este método e replicar para secondaryPhoneNumbers & secondaryAddresses.
-    function addSecondaryEmails(newEmail) {
-      if (self.secondaryEmails.length === 5) {
-        self.showError(limitErrMsg);
-      } else if (!_validEmail(newEmail)) {
-        self.showError('Email is invalid!');
-      } else {
-        self.secondaryEmails.push(newEmail.toLowerCase())
-      }
-    }
 
     function toJson() {
       var json = {};
+
+      json._id = self._id;
       json.objectType = self.objectType;
       json.recruitmentNumber = self.recruitmentNumber;
-      json.mainEmail = self.mainEmail;
-      json.secondaryEmails = self.secondaryEmails;
+      json.email = self.email;
       json.phoneNumber = self.phoneNumber;
-      json.secondaryPhoneNumbers = self.secondaryPhoneNumbers;
       json.address = self.address;
-      json.secondaryAddresses = self.secondaryAddresses;
+
       return JSON.stringify(json);
     }
 
@@ -86,6 +119,7 @@
 
 }());
 
+/*===================================================================================================*/
 
 // Coisas no OTUS:
 // var contact = ParticipantContactsFactory.create();

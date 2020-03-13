@@ -29994,6 +29994,60 @@ Test.utils.data.jsonImportActivities = [{
     "realizationDate": "2019-05-31T00:00:00.000Z"
   }
 }];
-Test.utils.data.groupArtefacts = {
-members : ["TST1", "TST2", "TST3", "TST4"]
-};
+Test.utils.data.groupArtefacts = {members : ["TST1", "TST2", "TST3", "TST4"]};
+
+Test.utils.data.participantContacts = {
+    _id: "5e6a45dd2273ad0a40d4050b",
+    objectType: "ParticipantContacts",
+    recruitmentNumber: 1234567,
+    email: {
+      main: {
+        value: "main.email@gmail.com",
+        observation: "Pessoal"
+      },
+      second: {
+        value: "secondary0.email@gmail.com",
+        observation: "Trabalho"
+      },
+      third: {
+        value: "secondary1.email@gmail.com",
+        observation: "Universidade"
+      }
+    },
+    address: {
+      main: {
+        value: {
+          postalCode: "90010-907",
+          street: "Rua dos Bobos",
+          streetNumber: 0,
+          complements: "Feita com muito esmero!",
+          neighbourhood: "Centro",
+          city: "Porto Alegre",
+          country: "Brasil"
+        },
+        observations: "Casa"
+      },
+      second: {
+        value: {
+          postalCode: "91712320",
+          street: "Avenida Las Heras",
+          streetNumber: 727,
+          complements: "Facultad de Ingeniería, segundo piso.",
+          neighbourhood: "Centro",
+          city: "Resistencia",
+          country: "Argentina"
+        },
+        observations: "Universidad Nacional del Nordeste."
+      }
+    },
+    phoneNumber: {
+      main: {
+        value: "+55 (51) 2345-6789",
+        observation: "Casa"
+      },
+      second: {
+        value: "51987654321",
+        observation: "Celular"
+      }
+    }
+  };
