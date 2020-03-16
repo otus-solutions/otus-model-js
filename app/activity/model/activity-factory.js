@@ -68,13 +68,7 @@
       var interviews = InterviewManagerFactory.create();
       var activity = new ActivitySurvey('OFFLINE', surveyForm, statusHistory, interviews);
       activity.mode = 'OFFLINE';
-      activity.category = {
-        "name" : "C0",
-        "objectType" : "ActivityCategory",
-        "label" : "Normal",
-        "disabled" : false,
-        "isDefault" : true
-      };
+      activity.category = {};
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
       return activity;
     }
