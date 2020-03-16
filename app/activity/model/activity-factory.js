@@ -33,6 +33,7 @@
     self.create = create;
     self.createPaperActivity = createPaperActivity;
     self.createAutoFillActivity = createAutoFillActivity;
+    self.createOfflineActivity = createOfflineActivity;
     self.fromJsonObject = fromJsonObject;
 
     function create(surveyForm, user, participant, activityConfiguration, id, externalID) {
@@ -40,7 +41,7 @@
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
+      var activity = new ActivitySurvey('ONLINE', surveyForm, participant, statusHistory, interviews, id, externalID);
       activity.mode = 'ONLINE';
       activity.category = activityConfiguration.category;
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -53,9 +54,27 @@
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
+      var activity = new ActivitySurvey('PAPER', surveyForm, participant, statusHistory, interviews, id, externalID);
       activity.mode = 'PAPER';
       activity.category = activityConfiguration.category;
+      activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
+      return activity;
+    }
+
+    function createOfflineActivity(surveyForm, user) {
+      Inject.FillingManager.init();
+      var statusHistory = StatusHistoryManagerFactory.create();
+      statusHistory.newCreatedRegistry(user);
+      var interviews = InterviewManagerFactory.create();
+      var activity = new ActivitySurvey('OFFLINE', surveyForm, statusHistory, interviews);
+      activity.mode = 'OFFLINE';
+      activity.category = {
+        "name" : "C0",
+        "objectType" : "ActivityCategory",
+        "label" : "Normal",
+        "disabled" : false,
+        "isDefault" : true
+      };
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
       return activity;
     }
@@ -65,7 +84,7 @@
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews);
+      var activity = new ActivitySurvey('AUTOFILL', surveyForm, participant, statusHistory, interviews);
       activity.mode = 'AUTOFILL';
       activity.category = activityConfiguration.category;
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -78,7 +97,7 @@
       var statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
       var interviews = InterviewManagerFactory.fromJsonObject(jsonObject.interviews);
       var id = jsonObject._id;
-      var activity = new ActivitySurvey(surveyForm, participantData, statusHistory, interviews, id);
+      var activity = new ActivitySurvey(jsonObject.mode, surveyForm, participantData, statusHistory, interviews, id);
       activity.category = jsonObject.category;
       activity.fillContainer = FillingManagerFactory.fromJsonObject(jsonObject.fillContainer);
       activity.isDiscarded = jsonObject.isDiscarded;
@@ -102,13 +121,17 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID) {
+  function ActivitySurvey(mode, surveyForm, participant, statusHistory, interviews, id, externalID) {
     var self = this;
     var _id = id || null;
 
     self.objectType = 'Activity';
     self.surveyForm = surveyForm;
-    self.participantData = participant;
+    if (mode === 'OFFLINE'){
+      self.participantData = participant;
+    } else {
+      self.participantData = {};
+    }
     self.interviews = interviews;
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
