@@ -27,14 +27,14 @@
     self._id = participant._id || null;
     self.recruitNumber = participant.recruitmentNumber || "";
     self.email = participantContacts.email || {
-      main: {value: participant.email || "", observation: ""},
+      main: {value: participant.email || {content: ""}, observation: ""},
       second: null,
       third: null,
       fourth: null,
       fifth: null,
     };
     self.phoneNumber = participantContacts.phoneNumber || {
-      main: {number: "", contact: ""},
+      main: {value: {content: ""}, observation: ""},
       second: null,
       third: null,
       fourth: null,

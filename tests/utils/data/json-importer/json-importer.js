@@ -30002,15 +30002,15 @@ Test.utils.data.participantContacts = {
     recruitmentNumber: 1234567,
     email: {
       main: {
-        value: "main.email@gmail.com",
+        value: {content: "main.email@gmail.com"},
         observation: "Pessoal"
       },
       second: {
-        value: "secondary0.email@gmail.com",
+        value: {content: "secondary0.email@gmail.com"},
         observation: "Trabalho"
       },
       third: {
-        value: "secondary1.email@gmail.com",
+        value: {content: "secondary1.email@gmail.com"},
         observation: "Universidade"
       }
     },
@@ -30042,11 +30042,11 @@ Test.utils.data.participantContacts = {
     },
     phoneNumber: {
       main: {
-        value: "+55 (51) 2345-6789",
+        value: {content: "+55 (51) 2345-6789"},
         observation: "Casa"
       },
       second: {
-        value: "51987654321",
+        value: {content: "51987654321"},
         observation: "Celular"
       }
     }
