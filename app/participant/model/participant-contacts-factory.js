@@ -28,17 +28,17 @@
     self.recruitNumber = participant.recruitmentNumber || "";
     self.email = participantContacts.email || {
       main: {value: participant.email || "", observation: ""},
-      second: {value: "", observation: ""},
-      third: {value: "", observation: ""},
-      fourth: {value: "", observation: ""},
-      fifth: {value: "", observation: ""},
+      second: null,
+      third: null,
+      fourth: null,
+      fifth: null,
     };
     self.phoneNumber = participantContacts.phoneNumber || {
-      main: {value: "", observation: ""},
-      second: {value: "", observation: ""},
-      third: {value: "", observation: ""},
-      fourth: {value: "", observation: ""},
-      fifth: {value: "", observation: ""},
+      main: {number: "", contact: ""},
+      second: null,
+      third: null,
+      fourth: null,
+      fifth: null,
     };
     self.address = participantContacts.address || {
       main: {
@@ -52,50 +52,10 @@
           country: ""
         }, observation: ""
       },
-      second: {
-        value: {
-          postalCode: "",
-          street: "",
-          streetNumber: 0,
-          complements: "",
-          neighbourhood: "",
-          city: "",
-          country: ""
-        }, observation: ""
-      },
-      third: {
-        value: {
-          postalCode: "",
-          street: "",
-          streetNumber: 0,
-          complements: "",
-          neighbourhood: "",
-          city: "",
-          country: ""
-        }, observation: ""
-      },
-      fourth: {
-        value: {
-          postalCode: "",
-          street: "",
-          streetNumber: 0,
-          complements: "",
-          neighbourhood: "",
-          city: "",
-          country: ""
-        }, observation: ""
-      },
-      fifth: {
-        value: {
-          postalCode: "",
-          street: "",
-          streetNumber: 0,
-          complements: "",
-          neighbourhood: "",
-          city: "",
-          country: ""
-        }, observation: ""
-      },
+      second: null,
+      third: null,
+      fourth: null,
+      fifth: null,
     };
 
     /* Public methods */
