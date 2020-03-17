@@ -27,7 +27,7 @@
     var self = this;
 
     self.objectType = 'ParticipantContact';
-    self._id = participantContact._id || null;
+    self._id = participantContact._id ? participantContact._id : null;
     self.recruitNumber = participantContact.recruitmentNumber || rn;
     self.email = participantContact.email ? participantContact.email : {
       main: {value: {content: ""}, observation: ""},
