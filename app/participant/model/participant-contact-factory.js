@@ -12,38 +12,38 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(participant,{}) {
-      return new ParticipantContact(participant, {});
+    function create(rn) {
+      return new ParticipantContact(rn, {});
     }
 
-    function fromJson(participant, participantContact) {
-      return new ParticipantContact(participant, participantContact);
+    function fromJson(rn, participantContact) {
+      return new ParticipantContact("", participantContact);
     }
 
     return self;
   }
 
-  function ParticipantContact(participant, participantContact) {
+  function ParticipantContact(rn, participantContact) {
     var self = this;
 
     self.objectType = 'ParticipantContact';
-    self._id = null;
-    self.recruitNumber = participant.recruitmentNumber || "";
-    self.email = participantContact.email || {
-      main: {value: {content: participant.email} || {content: ""}, observation: ""},
-      second: null,
-      third: null,
-      fourth: null,
-      fifth: null,
-    };
-    self.phoneNumber = participantContact.phoneNumber || {
+    self._id = participantContact._id || null;
+    self.recruitNumber = participantContact.recruitmentNumber || rn;
+    self.email = participantContact.email ? participantContact.email : {
       main: {value: {content: ""}, observation: ""},
       second: null,
       third: null,
       fourth: null,
       fifth: null,
     };
-    self.address = participantContact.address || {
+    self.phoneNumber = participantContact.phoneNumber ? participantContact.phoneNumber : {
+      main: {value: {content: ""}, observation: ""},
+      second: null,
+      third: null,
+      fourth: null,
+      fifth: null,
+    };
+    self.address = participantContact.address ? participantContact.address : {
       main: {
         value: {
           postalCode: "",
@@ -62,31 +62,22 @@
     };
 
     /* Public methods */
-    self.toJson = toJson;
+    self.toJSON = toJSON;
 
-    function toJson() {
+    function toJSON() {
       var json = {};
 
-      json._id = self._id;
       json.objectType = self.objectType;
+      json._id = self._id;
       json.recruitmentNumber = self.recruitmentNumber;
       json.email = self.email;
       json.phoneNumber = self.phoneNumber;
       json.address = self.address;
 
-      return JSON.stringify(json);
+      return json;
     }
 
     return self;
   }
 
 }());
-
-/*===================================================================================================*/
-
-// Coisas no OTUS:
-// var contact = ParticipantContactFactory.create();
-//
-// contact.campo = "";
-// contact.emailsList.push("email@email");
-// contact.addEmail("email@email");

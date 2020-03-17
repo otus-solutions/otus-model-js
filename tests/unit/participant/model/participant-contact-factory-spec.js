@@ -3,6 +3,7 @@ fdescribe("ParticipantContactFactory", function () {
     var Mock = {};
     var createParticipantContactData;
     var participantContactData;
+    var participantContactData2;
     var factory;
 
     beforeEach(function () {
@@ -17,7 +18,8 @@ fdescribe("ParticipantContactFactory", function () {
       });
 
       createParticipantContactData = factory.create(Mock.participant, {});
-      participantContactData = factory.fromJson(Mock.participant, Mock.participantContact);
+      participantContactData = factory.fromJson(/*Mock.participant*/{}, Mock.participantContact);
+      participantContactData2 = factory.fromJson(Mock.participant, Mock.participantContact);
     });
 
 /*===================================================================================================*/
@@ -25,8 +27,10 @@ fdescribe("ParticipantContactFactory", function () {
     describe('Create method', function () {
 
       it("should do something", function () {
-        console.log('\n' + JSON.stringify(createParticipantContactData, null, 4));
-        console.log('\n' + JSON.stringify(participantContactData, null, 4));
+        console.log('Create\n' + JSON.stringify(createParticipantContactData, null, 4));
+        console.log('mockcontact\n' + JSON.stringify(participantContactData, null, 4));
+        console.log('mocktudo\n' + JSON.stringify(participantContactData2, null, 4));
+        console.log(JSON.stringify(createParticipantContactData,null,4));
       })
 
       it("should return an object with attribute value equal to 'ParticipantContact'", function () {
@@ -47,13 +51,13 @@ fdescribe("ParticipantContactFactory", function () {
       Mock.participant = {
         objectType: 'Participant',
         _id: "5e6a45dd2273ad0a40d4050b",
-        recruitmentNumber: 123456,
-        name: 'Nome Participante',
+        recruitmentNumber: 1234567,
+        name: 'Nome do Participante',
         sex: 'M',
         birthdate: '1954-09-22T00:00:00.000Z',
         fieldCenter: 'RS',
         late: false,
-        email: 'email@mail.com',
+        email: 'participant@mail.com',
         password: 'P@$$W0rD',
         tokenList: ['gcd4w', 'ppkhc', 'y6qr8', 'tcyfy', '29rx2']
       };
