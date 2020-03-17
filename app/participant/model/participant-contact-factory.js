@@ -3,44 +3,47 @@
 
   angular
     .module('otusjs.model.participant')
-    .factory('otusjs.model.participantContacts.ParticipantContactsFactory', Factory);
+    .factory('otusjs.model.participantContact.ParticipantContactFactory', Factory);
 
   function Factory() {
     var self = this;
 
     /* Public methods */
     self.create = create;
+    self.fromJson = fromJson;
 
-    function create(participant, participantContacts) {
-      return new ParticipantContacts(participant, participantContacts);
+    function create(participant,{}) {
+      return new ParticipantContact(participant, {});
     }
 
-    // function fromJson(jsonObject) { let contacts = new ParticipantContacts(jsonObject); }
+    function fromJson(participant, participantContact) {
+      return new ParticipantContact(participant, participantContact);
+    }
 
     return self;
   }
 
-  function ParticipantContacts(participant, participantContacts) {
+  function ParticipantContact(participant, participantContact) {
     var self = this;
 
-    self.objectType = 'ParticipantContacts';
-    self._id = participant._id || null;
+    self.objectType = 'ParticipantContact';
+    self._id = null;
     self.recruitNumber = participant.recruitmentNumber || "";
-    self.email = participantContacts.email || {
-      main: {value: participant.email || {content: ""}, observation: ""},
+    self.email = participantContact.email || {
+      main: {value: {content: participant.email} || {content: ""}, observation: ""},
       second: null,
       third: null,
       fourth: null,
       fifth: null,
     };
-    self.phoneNumber = participantContacts.phoneNumber || {
+    self.phoneNumber = participantContact.phoneNumber || {
       main: {value: {content: ""}, observation: ""},
       second: null,
       third: null,
       fourth: null,
       fifth: null,
     };
-    self.address = participantContacts.address || {
+    self.address = participantContact.address || {
       main: {
         value: {
           postalCode: "",
@@ -82,7 +85,7 @@
 /*===================================================================================================*/
 
 // Coisas no OTUS:
-// var contact = ParticipantContactsFactory.create();
+// var contact = ParticipantContactFactory.create();
 //
 // contact.campo = "";
 // contact.emailsList.push("email@email");

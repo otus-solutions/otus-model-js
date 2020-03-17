@@ -29996,7 +29996,7 @@ Test.utils.data.jsonImportActivities = [{
 }];
 Test.utils.data.groupArtefacts = {members : ["TST1", "TST2", "TST3", "TST4"]};
 
-Test.utils.data.participantContacts = {
+Test.utils.data.participantContact = {
     _id: "5e6a45dd2273ad0a40d4050b",
     objectType: "ParticipantContacts",
     recruitmentNumber: 1234567,

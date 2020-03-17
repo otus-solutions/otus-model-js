@@ -1,21 +1,23 @@
-fdescribe("ParticipantContactsFactory", function () {
+fdescribe("ParticipantContactFactory", function () {
 
     var Mock = {};
-    var participantContactsData;
+    var createParticipantContactData;
+    var participantContactData;
     var factory;
 
     beforeEach(function () {
       angular.mock.module('otusjs.model.participant');
 
-      mockParticipantContacts();
+      mockParticipantContact();
 
       inject(function (_$injector_) {
-        mockParticipantContacts();
+        mockParticipantContact();
 
-        factory = _$injector_.get('otusjs.model.participantContacts.ParticipantContactsFactory');
+        factory = _$injector_.get('otusjs.model.participantContact.ParticipantContactFactory');
       });
 
-      participantContactsData = factory.create(Mock.participant, Mock.participantContacts);
+      createParticipantContactData = factory.create(Mock.participant, {});
+      participantContactData = factory.fromJson(Mock.participant, Mock.participantContact);
     });
 
 /*===================================================================================================*/
@@ -23,22 +25,25 @@ fdescribe("ParticipantContactsFactory", function () {
     describe('Create method', function () {
 
       it("should do something", function () {
-        console.log('\n' + JSON.stringify(participantContactsData, null, 4));
+        console.log('\n' + JSON.stringify(createParticipantContactData, null, 4));
+        console.log('\n' + JSON.stringify(participantContactData, null, 4));
       })
 
-      it("should return an object with attribute value equal to 'ParticipantContacts'", function () {
-        expect(participantContactsData.objectType).toEqual('ParticipantContacts');
+      it("should return an object with attribute value equal to 'ParticipantContact'", function () {
+        expect(createParticipantContactData.objectType).toEqual('ParticipantContact');
+        expect(participantContactData.objectType).toEqual('ParticipantContact');
       })
 
       it("should do something again", function () {
-        expect(participantContactsData.objectType).toEqual('ParticipantContacts');
+        expect(createParticipantContactData.objectType).toEqual('ParticipantContact');
+        expect(participantContactData.objectType).toEqual('ParticipantContact');
       })
 
     });
 
 /*===================================================================================================*/
 
-    function mockParticipantContacts() {
+    function mockParticipantContact() {
       Mock.participant = {
         objectType: 'Participant',
         _id: "5e6a45dd2273ad0a40d4050b",
@@ -53,7 +58,7 @@ fdescribe("ParticipantContactsFactory", function () {
         tokenList: ['gcd4w', 'ppkhc', 'y6qr8', 'tcyfy', '29rx2']
       };
 
-      Mock.participantContacts = Test.utils.data.participantContacts; //json-importer.js
+      Mock.participantContact = Test.utils.data.participantContact; //json-importer.js
 
     }
   }
@@ -70,15 +75,15 @@ fdescribe("ParticipantContactsFactory", function () {
 // });
 
 // it("should return an object named phoneNumber with attribute value equal to +55 011-1406", function () {
-//   expect(participantContactsData.phoneNumber).toEqual(Mock.participantContacts.phoneNumber);
-//   console.log(participantContactsData.phoneNumber);
-//   console.log(Mock.participantContacts.phoneNumber);
+//   expect(participantContactData.phoneNumber).toEqual(Mock.participantContact.phoneNumber);
+//   console.log(participantContactData.phoneNumber);
+//   console.log(Mock.participantContact.phoneNumber);
 //   console.log();
 // })
 
 // it("should return an object named email with attribute value equal to 'EMAIL'", function () {
-//   expect(participantContactsData.email).toEqual(EMAIL);
-//   console.log(participantContactsData.email);
-//   console.log(Mock.participantContacts.email);
+//   expect(participantContactData.email).toEqual(EMAIL);
+//   console.log(participantContactData.email);
+//   console.log(Mock.participantContact.email);
 //   console.log();
 // })
