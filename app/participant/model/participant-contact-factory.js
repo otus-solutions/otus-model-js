@@ -28,7 +28,7 @@
 
     self.objectType = 'ParticipantContact';
     self._id = participantContact._id ? participantContact._id : null;
-    self.recruitNumber = participantContact.recruitmentNumber || rn;
+    self.recruitmentNumber = participantContact.recruitmentNumber || rn;
     self.email = participantContact.email ? participantContact.email : {
       main: {value: {content: ""}, observation: ""},
       second: null,
