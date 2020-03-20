@@ -16,10 +16,6 @@ global.GeoJSON = (function () {
 
     function GeoJSON() {
       var self = this;
-      self.objectType = 'GeoJSON';
-      self.type = 'point';
-      self.coordinates = [0,0];
-
 
       function getLocation() {
         if (navigator.geolocation) {
@@ -30,11 +26,11 @@ global.GeoJSON = (function () {
       }
 
       function setPosition(position) {
-        self.coordinates[0] =  position.coords.longitude;
-        self.coordinates[1] = position.coords.latitude;
-        return toJSON();
+        self.type = 'point';
+        self.coordinates = [0,0];
+        self.coordinates[0] =  position.coords.latitude;
+        self.coordinates[1] = position.coords.longitude;
       }
-
 
       function showError(error) {
         switch(error.code) {
@@ -47,17 +43,11 @@ global.GeoJSON = (function () {
           case error.UNKNOWN_ERROR:
             throw new Error("An unknown error occurred.");
         }
+        return null;
       }
 
-      function toJSON() {
-        var json = {
-          type: self.type,
-          coordinates: self.coordinates
-        }
-        return json;
-      }
-
-      return getLocation();
+      getLocation();
+      return self;
     }
   }
 

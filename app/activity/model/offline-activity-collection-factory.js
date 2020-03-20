@@ -40,7 +40,6 @@
     var self = this;
 
     const OBJECT_TYPE = 'Activity';
-    const ERROR_ACTIVITY_ADD = 'Insert only activity object';
 
     self.objectType = "OfflineActivityCollection";
     self._id = jsonObject._id ? jsonObject._id.hasOwnProperty('$oid') ? jsonObject._id.$oid : jsonObject._id : null;
@@ -85,7 +84,7 @@
       json.userId = self.userId;
       json.date = self.date;
       json.activities = self.activities;
-      json.geoJson = self.geoJson;
+      json.geoJson =  self.geoJson.hasOwnProperty('type') ? self.geoJson : null;
       return json;
     }
 
