@@ -8,17 +8,9 @@ describe('OfflineActivityCollection Tests', function () {
     angular.mock.module('otusjs');
     angular.mock.inject($injector => {
       mockInjections();
-      // Injections.StatusHistoryManagerFactory = $injector.get('otusjs.model.activity.StatusHistoryManagerFactory');
-      // Injections.FillingManagerFactory = $injector.get('otusjs.model.activity.FillingManagerFactory');
-      // Injections.NavigationTrackerFactory = $injector.get('otusjs.model.navigation.NavigationTrackerFactory');
-      // Injections.InterviewManagerFactory = $injector.get('otusjs.model.activity.InterviewManagerFactory');
-      // Injections.SurveyFormFactory = $injector.get('SurveyFormFactory');
 
       factory = $injector.get('otusjs.model.activity.OfflineActivityCollection', Injections);
       spyOn(window, 'GeoJSON').and.returnValue(Mock.GeoJSON)
-      // spyOn(factory, "create").and.callFake(() => factory.fromJsonObject(Test.utils.data.activityPASC));
-      // spyOn(activity.surveyForm.surveyTemplate, "getGroupItemsByItemID").and.callThrough();
-      // spyOn(activity.surveyForm.surveyTemplate, "getGroupByItemID").and.callThrough();
     });
   });
 

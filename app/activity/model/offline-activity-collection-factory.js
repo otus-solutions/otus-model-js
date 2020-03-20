@@ -5,13 +5,10 @@
   angular.module('otusjs.model.activity')
     .factory('otusjs.model.activity.OfflineActivityCollection', Factory);
 
-  Factory.$inject = [
-    'otusjs.model.activity.ActivityFactory',
-    'SurveyFormFactory'
-  ];
+  Factory.$inject = [];
 
 
-  function Factory(ActivityFactory, SurveyFormFactory) {
+  function Factory() {
     var self = this;
 
     self.create = create;
