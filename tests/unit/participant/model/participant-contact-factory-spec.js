@@ -11,12 +11,11 @@ fdescribe("ParticipantContactFactory", function () {
 
       inject(function (_$injector_) {
         mockParticipantContact();
-
         factory = _$injector_.get('otusjs.model.participantContact.ParticipantContactFactory');
       });
 
-      newContactData = factory.create(Mock.participant.recruitmentNumber, {});
-      participantContactData = factory.fromJson(Mock.participant.recruitmentNumber, Mock.participantContact);
+      newContactData = factory.create();
+      participantContactData = factory.fromJson(Mock.participantContact);
     });
 
     describe('Create method', function () {
@@ -29,7 +28,7 @@ fdescribe("ParticipantContactFactory", function () {
 
       it("should return an object with recruitmentNumber attribute value equal to RN.", function () {
         expect(newContactData.recruitmentNumber).toBeDefined("The 'recruitmentNumber' of 'newContactData' was not defined.");
-        expect(newContactData.recruitmentNumber).toEqual(RN);
+        expect(newContactData.recruitmentNumber).toEqual("");
       });
 
       it("should return an empty value for main e-mail's 'content', also 'null' for secondary e-mails.", function () {
@@ -61,6 +60,10 @@ fdescribe("ParticipantContactFactory", function () {
         expect(address.third).toBeNull();
         expect(address.fourth).toBeNull();
         expect(address.fifth).toBeNull();
+      });
+
+      it('should return stringify of toJSON method', function () {
+        expect(newContactData.toJSON()).toEqual(Mock.emptyParticipantContact);
       });
 
     });
@@ -106,22 +109,103 @@ fdescribe("ParticipantContactFactory", function () {
     });
 
     function mockParticipantContact() {
-      Mock.participant = {
-        objectType: 'Participant',
-        _id: "5e6a45dd2273ad0a40d4050b",
-        recruitmentNumber: RN,
-        name: 'Nome do Participante',
-        sex: 'M',
-        birthdate: '1954-09-22T00:00:00.000Z',
-        fieldCenter: 'RS',
-        late: false,
-        email: 'participant@mail.com',
-        password: 'P@$$W0rD',
-        tokenList: ['gcd4w', 'ppkhc', 'y6qr8', 'tcyfy', '29rx2']
+
+      Mock.emptyParticipantContact = {
+        objectType: "ParticipantContact",
+        _id: null,
+        recruitmentNumber: "",
+        email: {
+          main: {value: {content: ""}, observation: ""},
+          second: null,
+          third: null,
+          fourth: null,
+          fifth: null
+        },
+        phoneNumber: {
+          main: {value: {content: ""}, observation: ""},
+          second: null,
+          third: null,
+          fourth: null,
+          fifth: null
+        },
+        address: {
+          main: {
+            value: {
+              postalCode: "",
+              street: "",
+              streetNumber: 0,
+              complements: "",
+              neighbourhood: "",
+              city: "",
+              state: "",
+              country: ""
+            },
+            observation: ""
+          },
+          second: null,
+          third: null,
+          fourth: null,
+          fifth: null
+        }
       };
 
-      Mock.participantContact = Test.utils.data.participantContact; //json-importer.js
-
+      Mock.participantContact = {
+        _id: "5e6a45dd2273ad0a40d4050b",
+        objectType: "ParticipantContact",
+        recruitmentNumber: 7654321,
+        email: {
+          main: {
+            value: {content: "main.email@gmail.com"},
+            observation: "Pessoal"
+          },
+          second: {
+            value: {content: "secondary0.email@gmail.com"},
+            observation: "Trabalho"
+          },
+          third: {
+            value: {content: "secondary1.email@gmail.com"},
+            observation: "Universidade"
+          }
+        },
+        address: {
+          main: {
+            value: {
+              postalCode: "90010-907",
+              street: "Rua dos Bobos",
+              streetNumber: 0,
+              complements: "Feita com muito esmero!",
+              neighbourhood: "Centro",
+              city: "Porto Alegre",
+              state: "Rio Grande do Sul",
+              country: "Brasil"
+            },
+            observations: "Casa"
+          },
+          second: {
+            value: {
+              postalCode: "91712320",
+              street: "Avenida Las Heras",
+              streetNumber: 727,
+              complements: "Facultad de Ingeniería, segundo piso.",
+              neighbourhood: "Centro",
+              city: "Resistencia",
+              State: "Chaco",
+              country: "Argentina"
+            },
+            observations: "Universidad Nacional del Nordeste."
+          }
+        },
+        phoneNumber: {
+          main: {
+            value: {content: "+55 (51) 2345-6789"},
+            observation: "Casa"
+          },
+          second: {
+            value: {content: "51987654321"},
+            observation: "Celular"
+          }
+        }
+      };
     }
   }
 );

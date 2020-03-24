@@ -12,23 +12,23 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(rn) {
-      return new ParticipantContact(rn, {});
+    function create() {
+      return new ParticipantContact({});
     }
 
-    function fromJson(rn, participantContact) {
-      return new ParticipantContact("", participantContact);
+    function fromJson(participantContact) {
+      return new ParticipantContact(participantContact);
     }
 
     return self;
   }
 
-  function ParticipantContact(rn, participantContact) {
+  function ParticipantContact(participantContact) {
     var self = this;
 
     self.objectType = 'ParticipantContact';
     self._id = participantContact._id ? participantContact._id : null;
-    self.recruitmentNumber = participantContact.recruitmentNumber || rn;
+    self.recruitmentNumber = participantContact.recruitmentNumber || "";
     self.email = participantContact.email ? participantContact.email : {
       main: {value: {content: ""}, observation: ""},
       second: null,
@@ -52,6 +52,7 @@
           complements: "",
           neighbourhood: "",
           city: "",
+          state:"",
           country: ""
         }, observation: ""
       },
