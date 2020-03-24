@@ -14,14 +14,13 @@ describe('OfflineActivityCollection Tests', function () {
     });
   });
 
-  it('should test', function () {
+  it('should test properties', function () {
     activity = factory.create();
     expect(activity.objectType).toBeDefined();
     expect(activity._id).toBeDefined();
     expect(activity.userId).toBeDefined();
     expect(activity.activities).toBeDefined();
     expect(activity.geoJson).toBeDefined();
-    console.log(activity)
   });
 
 

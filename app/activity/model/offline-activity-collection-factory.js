@@ -37,25 +37,43 @@
     var self = this;
 
     const OBJECT_TYPE = 'Activity';
+    const CREATED = 'CREATED';
 
     self.objectType = "OfflineActivityCollection";
-    self._id = jsonObject._id ? jsonObject._id.hasOwnProperty('$oid') ? jsonObject._id.$oid : jsonObject._id : null;
+    self._id = jsonObject._id ? new ObjectId(jsonObject._id).toString() : null;
     self.observation = jsonObject.observation || '';
-    self.userId = jsonObject.userId ? jsonObject.userId.hasOwnProperty('$oid') ? jsonObject.userId.$oid : jsonObject.userId : null;
-    self.date = jsonObject.date ? jsonObject.date : new Date().toISOString();
+    self.userId = jsonObject.userId ? new ObjectId(jsonObject.userId).toString() :  null;
+    self.userEmail = jsonObject.userEmail || null;
+    self.date = jsonObject.date || null;
     self.activities = jsonObject.activities || [];
-    self.geoJson = jsonObject.geoJson || new GeoJSON();
+    self.geoJson = jsonObject.geoJson || null;
+    self.hasInitialized = !!self.date;
 
+    self.initialize = initialize;
     self.addActivity = addActivity;
     self.addActivities = addActivities;
     self.removeActivity = removeActivity;
+    self.getActivitiesToSave = getActivitiesToSave;
+
     self.toJSON = toJSON;
 
+
+    function initialize() {
+      self.date = new Date().toISOString();
+      self.geoJson = new GeoJSON();
+      self.hasInitialized = true;
+    }
 
     function addActivity(activity) {
       if (_validateActivityObject(activity)){
         self.activities.push(activity);
       }
+    }
+
+    function getActivitiesToSave() {
+      return self.activities.filter(function (activity) {
+        return activity.statusHistory.getLastStatus().name != CREATED;
+      });
     }
 
     function addActivities(activities) {
@@ -77,11 +95,13 @@
     function toJSON() {
       var json = {};
       json._id = self._id;
+      json.objectType = self.objectType;
       json.observation = self.observation;
       json.userId = self.userId;
-      json.date = self.date;
+      json.userEmail = self.userEmail;
+      self.date ? json.date = self.date : null;
       json.activities = self.activities;
-      json.geoJson =  self.geoJson.hasOwnProperty('type') ? self.geoJson : null;
+      json.geoJson =  self.geoJson;
       return json;
     }
 
