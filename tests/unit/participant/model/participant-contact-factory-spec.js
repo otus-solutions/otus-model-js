@@ -1,4 +1,4 @@
-fdescribe("ParticipantContactFactory", function () {
+describe("ParticipantContactFactory", function () {
 
     var RN = 1234567;
     var Mock = {};
