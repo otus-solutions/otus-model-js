@@ -19,21 +19,21 @@
       return new OfflineActivityCollection({});
     }
 
-    function fromJson(json) {
-      return new OfflineActivityCollection(json);
+    function fromJson(json, email) {
+      return new OfflineActivityCollection(json, email);
     }
 
-    function fromArray(jsonArray) {
+    function fromArray(jsonArray, email) {
       var _collections = Array.prototype.concat.apply(jsonArray);
       return _collections.map(function (jsonObject) {
-          return new OfflineActivityCollection(jsonObject);
+          return new OfflineActivityCollection(jsonObject, email);
       });
     }
 
     return self;
   }
 
-  function OfflineActivityCollection(jsonObject) {
+  function OfflineActivityCollection(jsonObject, userEmail) {
     var self = this;
 
     const OBJECT_TYPE = 'Activity';
@@ -41,9 +41,10 @@
 
     self.objectType = "OfflineActivityCollection";
     self._id = jsonObject._id ? new ObjectId(jsonObject._id).toString() : null;
+    self.code = jsonObject._id ? new ObjectId(jsonObject._id).toString() : jsonObject.code || null;
     self.observation = jsonObject.observation || '';
     self.userId = jsonObject.userId ? new ObjectId(jsonObject.userId).toString() :  null;
-    self.userEmail = jsonObject.userEmail || null;
+    self.userEmail = userEmail || null;
     self.date = jsonObject.date || null;
     self.activities = jsonObject.activities || [];
     self.geoJson = jsonObject.geoJson || null;
@@ -95,6 +96,7 @@
     function toJSON() {
       var json = {};
       json._id = self._id;
+      json.code = self.code;
       json.objectType = self.objectType;
       json.observation = self.observation;
       json.userId = self.userId;
