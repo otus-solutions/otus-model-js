@@ -29994,6 +29994,4 @@ Test.utils.data.jsonImportActivities = [{
     "realizationDate": "2019-05-31T00:00:00.000Z"
   }
 }];
-Test.utils.data.groupArtefacts = {
-members : ["TST1", "TST2", "TST3", "TST4"]
-};
+Test.utils.data.groupArtefacts = {members : ["TST1", "TST2", "TST3", "TST4"]};
