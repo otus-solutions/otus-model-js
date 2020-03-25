@@ -108,7 +108,7 @@ describe("ParticipantContactFactory", function () {
 
     });
 
-    function mockParticipantContact() {
+  function mockParticipantContact() {
 
       Mock.emptyParticipantContact = {
         objectType: "ParticipantContact",
