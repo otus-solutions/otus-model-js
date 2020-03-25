@@ -14,7 +14,7 @@ describe("ParticipantContactFactory", function () {
         factory = _$injector_.get('otusjs.model.participantContact.ParticipantContactFactory');
       });
 
-      newContactData = factory.create();
+      newContactData = factory.create(Mock.participantContact.recruitmentNumber);
       participantContactData = factory.fromJson(Mock.participantContact);
     });
 
@@ -165,7 +165,9 @@ describe("ParticipantContactFactory", function () {
           third: {
             value: {content: "secondary1.email@gmail.com"},
             observation: "Universidade"
-          }
+          },
+          fourth: null,
+          fifth: null
         },
         address: {
           main: {
@@ -193,7 +195,10 @@ describe("ParticipantContactFactory", function () {
               country: "Argentina"
             },
             observations: "Universidad Nacional del Nordeste."
-          }
+          },
+          third: null,
+          fourth: null,
+          fifth: null
         },
         phoneNumber: {
           main: {
@@ -203,7 +208,10 @@ describe("ParticipantContactFactory", function () {
           second: {
             value: {content: "51987654321"},
             observation: "Celular"
-          }
+          },
+          third: null,
+          fourth: null,
+          fifth: null
         }
       };
     }
