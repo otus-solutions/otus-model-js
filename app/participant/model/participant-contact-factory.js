@@ -25,26 +25,29 @@
 
   function ParticipantContact(participantContact) {
     var self = this;
+    let email = participantContact.email || "";
+    let phoneNumber = participantContact.phoneNumber || "";
+    let address = participantContact.address || "";
 
     self.objectType = 'ParticipantContact';
     self._id = participantContact._id ? participantContact._id : null;
     self.recruitmentNumber = participantContact.recruitmentNumber ? participantContact.recruitmentNumber : "";
     self.email = {
-      main: participantContact.email.main ? participantContact.email.main : {value: {content: ""}, observation: ""},
-      second: participantContact.email.second ? participantContact.email.second : null,
-      third: participantContact.email.third ? participantContact.email.third : null,
-      fourth: participantContact.email.fourth ? participantContact.email.fourth : null,
-      fifth: participantContact.email.fifth ? participantContact.email.fifth : null
+      main: email.main ? email.main : {value: {content: ""}, observation: ""},
+      second: email.second ? email.second : null,
+      third: email.third ? email.third : null,
+      fourth: email.fourth ? email.fourth : null,
+      fifth: email.fifth ? email.fifth : null
     };
     self.phoneNumber = {
-      main: participantContact.phoneNumber.main ? participantContact.phoneNumber.main :  {value: {content: ""}, observation: ""},
-      second: participantContact.phoneNumber.second ? participantContact.phoneNumber.second : null,
-      third: participantContact.phoneNumber.third ? participantContact.phoneNumber.third : null,
-      fourth: participantContact.phoneNumber.fourth ? participantContact.phoneNumber.fourth : null,
-      fifth: participantContact.phoneNumber.fifth ? participantContact.phoneNumber.fifth : null
+      main: phoneNumber.main ? phoneNumber.main :  {value: {content: ""}, observation: ""},
+      second: phoneNumber.second ? phoneNumber.second : null,
+      third: phoneNumber.third ? phoneNumber.third : null,
+      fourth: phoneNumber.fourth ? phoneNumber.fourth : null,
+      fifth: phoneNumber.fifth ? phoneNumber.fifth : null
     };
     self.address = {
-      main: participantContact.address.main ? participantContact.address.main : {
+      main: address.main ? address.main : {
         value: {
           postalCode: "",
           street: "",
@@ -56,10 +59,10 @@
           country: ""
         }, observation: ""
       },
-      second: participantContact.address.second ? participantContact.address.second : null,
-      third: participantContact.address.third  ? participantContact.address.third  : null,
-      fourth: participantContact.address.fourth ? participantContact.address.fourth : null,
-      fifth: participantContact.address.fifth  ? participantContact.address.fifth  : null
+      second: address.second ? address.second : null,
+      third: address.third  ? address.third  : null,
+      fourth: address.fourth ? address.fourth : null,
+      fifth: address.fifth  ? address.fifth  : null
     };
 
     /* Public methods */
