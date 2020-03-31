@@ -126,7 +126,7 @@
     self.fillContainer = Inject.FillingManager;
     self.statusHistory = statusHistory;
     self.isDiscarded = false;
-    self.externalID =  externalID || null;
+    self.externalID = externalID || null;
 
     /* Public methods */
     self.getID = getID;
@@ -148,6 +148,7 @@
     self.getItemStaticVariableList = getItemStaticVariableList;
     self.fillStaticVariablesValues = fillStaticVariablesValues;
     self.toJSON = toJSON;
+    self.toObjectJson = toObjectJson;
     self.hasRequiredExternalID = hasRequiredExternalID;
 
     function getID() {
@@ -263,6 +264,10 @@
       return json;
     }
 
+    function toObjectJson() {
+      return JSON.parse(JSON.stringify(self));
+    }
+
     /**
      * TODO: effectively to resolve the bug #252 (Mantis)
      * This method is an workaround for the reported bug #252 (on Mantis) and story OTUS-85 (on
@@ -274,7 +279,7 @@
       return (!self.surveyForm.surveyTemplate) ? true : false;
     }
 
-    function hasRequiredExternalID(){
+    function hasRequiredExternalID() {
       return self.surveyForm.isRequiredExternalID();
     }
   }

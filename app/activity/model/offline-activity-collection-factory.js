@@ -19,43 +19,62 @@
       return new OfflineActivityCollection({});
     }
 
-    function fromJson(json) {
-      return new OfflineActivityCollection(json);
+    function fromJson(json, email) {
+      return new OfflineActivityCollection(json, email);
     }
 
-    function fromArray(jsonArray) {
+    function fromArray(jsonArray, email) {
       var _collections = Array.prototype.concat.apply(jsonArray);
       return _collections.map(function (jsonObject) {
-          return new OfflineActivityCollection(jsonObject);
+          return new OfflineActivityCollection(jsonObject, email);
       });
     }
 
     return self;
   }
 
-  function OfflineActivityCollection(jsonObject) {
+  function OfflineActivityCollection(jsonObject, userEmail) {
     var self = this;
 
     const OBJECT_TYPE = 'Activity';
+    const CREATED = 'CREATED';
 
     self.objectType = "OfflineActivityCollection";
-    self._id = jsonObject._id ? jsonObject._id.hasOwnProperty('$oid') ? jsonObject._id.$oid : jsonObject._id : null;
+    self._id = jsonObject._id ? new ObjectId(jsonObject._id).toString() : null;
+    self.code = jsonObject._id ? new ObjectId(jsonObject._id).toString() : jsonObject.code || null;
     self.observation = jsonObject.observation || '';
-    self.userId = jsonObject.userId ? jsonObject.userId.hasOwnProperty('$oid') ? jsonObject.userId.$oid : jsonObject.userId : null;
-    self.date = jsonObject.date ? jsonObject.date : new Date().toISOString();
+    self.userId = jsonObject.userId ? new ObjectId(jsonObject.userId).toString() :  null;
+    self.userEmail = userEmail || null;
+    self.date = jsonObject.date || null;
     self.activities = jsonObject.activities || [];
-    self.geoJson = jsonObject.geoJson || new GeoJSON();
+    self.geoJson = jsonObject.geoJson || null;
+    self.hasInitialized = !!self.date;
 
+    self.initialize = initialize;
     self.addActivity = addActivity;
     self.addActivities = addActivities;
     self.removeActivity = removeActivity;
+    self.getActivitiesToSave = getActivitiesToSave;
+
     self.toJSON = toJSON;
 
+
+    function initialize() {
+      self.date = new Date().toISOString();
+      self.geoJson = new GeoJSON();
+      self.hasInitialized = true;
+    }
 
     function addActivity(activity) {
       if (_validateActivityObject(activity)){
         self.activities.push(activity);
       }
+    }
+
+    function getActivitiesToSave() {
+      return self.activities.filter(function (activity) {
+        return activity.statusHistory.getLastStatus().name != CREATED;
+      });
     }
 
     function addActivities(activities) {
@@ -77,11 +96,14 @@
     function toJSON() {
       var json = {};
       json._id = self._id;
+      json.code = self.code;
+      json.objectType = self.objectType;
       json.observation = self.observation;
       json.userId = self.userId;
-      json.date = self.date;
+      json.userEmail = self.userEmail;
+      self.date ? json.date = self.date : null;
       json.activities = self.activities;
-      json.geoJson =  self.geoJson.hasOwnProperty('type') ? self.geoJson : null;
+      json.geoJson =  self.geoJson;
       return json;
     }
 
