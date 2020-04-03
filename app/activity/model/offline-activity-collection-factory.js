@@ -19,32 +19,33 @@
       return new OfflineActivityCollection({});
     }
 
-    function fromJson(json, email) {
-      return new OfflineActivityCollection(json, email);
+    function fromJson(json) {
+      return new OfflineActivityCollection(json);
     }
 
-    function fromArray(jsonArray, email) {
+    function fromArray(jsonArray) {
       var _collections = Array.prototype.concat.apply(jsonArray);
       return _collections.map(function (jsonObject) {
-          return new OfflineActivityCollection(jsonObject, email);
+          return new OfflineActivityCollection(jsonObject);
       });
     }
 
     return self;
   }
 
-  function OfflineActivityCollection(jsonObject, userEmail) {
+  function OfflineActivityCollection(jsonObject) {
     var self = this;
 
     const OBJECT_TYPE = 'Activity';
-    const CREATED = 'CREATED';
 
     self.objectType = "OfflineActivityCollection";
     self._id = jsonObject._id ? new ObjectId(jsonObject._id).toString() : null;
-    self.code = jsonObject._id ? new ObjectId(jsonObject._id).toString() : jsonObject.code || null;
     self.observation = jsonObject.observation || '';
+    self.code = jsonObject.code || new ObjectId().toString();
+    self.groupId = jsonObject.groupId || '';
+    self.groupObservation = jsonObject.groupObservation || '';
     self.userId = jsonObject.userId ? new ObjectId(jsonObject.userId).toString() :  null;
-    self.userEmail = userEmail || null;
+    self.userEmail = jsonObject.userEmail || null;
     self.date = jsonObject.date || null;
     self.activities = jsonObject.activities || [];
     self.geoJson = jsonObject.geoJson || null;
@@ -54,10 +55,8 @@
     self.addActivity = addActivity;
     self.addActivities = addActivities;
     self.removeActivity = removeActivity;
-    self.getActivitiesToSave = getActivitiesToSave;
 
     self.toJSON = toJSON;
-
 
     function initialize() {
       self.date = new Date().toISOString();
@@ -69,12 +68,6 @@
       if (_validateActivityObject(activity)){
         self.activities.push(activity);
       }
-    }
-
-    function getActivitiesToSave() {
-      return self.activities.filter(function (activity) {
-        return activity.statusHistory.getLastStatus().name != CREATED;
-      });
     }
 
     function addActivities(activities) {
@@ -96,10 +89,12 @@
     function toJSON() {
       var json = {};
       json._id = self._id;
-      json.code = self.code;
       json.objectType = self.objectType;
       json.observation = self.observation;
+      json.code = self.code;
       json.userId = self.userId;
+      json.groupId = self.groupId;
+      json.groupObservation = self.groupObservation;
       json.userEmail = self.userEmail;
       self.date ? json.date = self.date : null;
       json.activities = self.activities;
