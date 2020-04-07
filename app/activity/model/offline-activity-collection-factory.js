@@ -58,9 +58,9 @@
 
     self.toJSON = toJSON;
 
-    function initialize() {
+    function initialize(callback) {
       self.date = new Date().toISOString();
-      self.geoJson = new GeoJSON();
+      self.geoJson = new GeoJSON(callback);
       self.hasInitialized = true;
     }
 

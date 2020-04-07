@@ -220,14 +220,15 @@ global.GeoJSON = (function () {
 
 
   function Factory() {
-    var constructor = function () {
-      return new GeoJSON();
+    var constructor = function (callback) {
+      return new GeoJSON(callback);
 
     };
     return constructor;
 
-    function GeoJSON() {
+    function GeoJSON(callback) {
       var self = this;
+
 
       function getLocation() {
         if (navigator.geolocation) {
@@ -242,6 +243,7 @@ global.GeoJSON = (function () {
         self.coordinates = angular.copy([0,0]);
         self.coordinates[0] =  angular.copy(position.coords.latitude);
         self.coordinates[1] = angular.copy(position.coords.longitude);
+        if (callback) callback(toJSON())
         self = toJSON();
       }
 
