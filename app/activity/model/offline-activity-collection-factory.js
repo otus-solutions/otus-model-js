@@ -58,9 +58,9 @@
 
     self.toJSON = toJSON;
 
-    function initialize() {
+    function initialize(callback) {
       self.date = new Date().toISOString();
-      self.geoJson = new GeoJSON();
+      self.geoJson = new GeoJSON(callback);
       self.hasInitialized = true;
     }
 
@@ -96,7 +96,7 @@
       json.groupId = self.groupId;
       json.groupObservation = self.groupObservation;
       json.userEmail = self.userEmail;
-      self.date ? json.date = self.date : null;
+      json.date = self.date;
       json.activities = self.activities;
       json.geoJson =  self.geoJson;
       return json;

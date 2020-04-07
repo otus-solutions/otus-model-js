@@ -220,14 +220,15 @@ global.GeoJSON = (function () {
 
 
   function Factory() {
-    var constructor = function () {
-      return new GeoJSON();
+    var constructor = function (callback) {
+      return new GeoJSON(callback);
 
     };
     return constructor;
 
-    function GeoJSON() {
+    function GeoJSON(callback) {
       var self = this;
+
 
       function getLocation() {
         if (navigator.geolocation) {
@@ -238,10 +239,12 @@ global.GeoJSON = (function () {
       }
 
       function setPosition(position) {
-        self.type = 'point';
-        self.coordinates = [0,0];
-        self.coordinates[0] =  position.coords.latitude;
-        self.coordinates[1] = position.coords.longitude;
+        self.type = angular.copy('point');
+        self.coordinates = angular.copy([0,0]);
+        self.coordinates[0] =  angular.copy(position.coords.latitude);
+        self.coordinates[1] = angular.copy(position.coords.longitude);
+        if (callback) callback(toJSON())
+        self = toJSON();
       }
 
       function showError(error) {
@@ -258,6 +261,13 @@ global.GeoJSON = (function () {
         return null;
       }
 
+      function toJSON() {
+        var json = {
+          type: self.type,
+          coordinates: self.coordinates
+        };
+        return json;
+      }
       getLocation();
       return self;
     }
