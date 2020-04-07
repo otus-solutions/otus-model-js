@@ -238,10 +238,11 @@ global.GeoJSON = (function () {
       }
 
       function setPosition(position) {
-        self.type = 'point';
-        self.coordinates = [0,0];
-        self.coordinates[0] =  position.coords.latitude;
-        self.coordinates[1] = position.coords.longitude;
+        self.type = angular.copy('point');
+        self.coordinates = angular.copy([0,0]);
+        self.coordinates[0] =  angular.copy(position.coords.latitude);
+        self.coordinates[1] = angular.copy(position.coords.longitude);
+        self = toJSON();
       }
 
       function showError(error) {
@@ -258,6 +259,13 @@ global.GeoJSON = (function () {
         return null;
       }
 
+      function toJSON() {
+        var json = {
+          type: self.type,
+          coordinates: self.coordinates
+        };
+        return json;
+      }
       getLocation();
       return self;
     }

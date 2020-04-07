@@ -57,7 +57,7 @@
       if (_validateCollectionObject(collection)){
         collection.groupObservation = self.observation;
         collection.groupId = self._id;
-        self.collections.push(OfflineActivityCollection.fromJson(collection).toJSON());
+        self.collections.push(OfflineActivityCollection.fromJson(collection));
       }
     }
 
