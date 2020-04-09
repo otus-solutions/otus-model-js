@@ -69,7 +69,7 @@
     }
 
     function removeCollection(index) {
-      if(index >= 0 && index < self.activities.length){
+      if(index >= 0 && index < self.collections.length){
         self.collections.splice(index, 1);
       }
     }
