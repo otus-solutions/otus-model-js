@@ -250,15 +250,15 @@ global.GeoJSON = (function () {
       function showError(error) {
         switch(error.code) {
           case error.PERMISSION_DENIED:
-            throw new Error("User denied the request for Geolocation.");
+           console.error("User denied the request for Geolocation.");
           case error.POSITION_UNAVAILABLE:
-            throw new Error("Location information is unavailable.");
+           console.error("Location information is unavailable.");
           case error.TIMEOUT:
-            throw new Error("The request to get user location timed out.");
+           console.error("The request to get user location timed out.");
           case error.UNKNOWN_ERROR:
-            throw new Error("An unknown error occurred.");
+           console.error("An unknown error occurred.");
         }
-        return null;
+        callback(null);
       }
 
       function toJSON() {
