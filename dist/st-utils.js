@@ -232,7 +232,7 @@ global.GeoJSON = (function () {
 
       function getLocation() {
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(setPosition, showError);
+          navigator.geolocation.getCurrentPosition(setPosition, showError, {timeout: 10000, maximumAge: 300000 });
         } else {
           throw new Error("Geolocation is not supported by this browser.");
         }
