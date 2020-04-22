@@ -38,12 +38,11 @@
 
     self.objectType = 'ExamResults';
     self.examName = result.examName || '';
-    self.aliquotCode = result.aliquotCode || '';
+    self.code = result.code || result.aliquotCode || '';
     self.releaseDate = result.releaseDate || '';
     self.resultName = result.resultName || '';
     self.value = result.value || '';
-    self.materialType = result.materialType || '';
-    self.aliquotValid = result.aliquotValid === false ? false : true;
+    self.isValid = result['isValid' || 'aliquotValid'] === false ? false : true;
 
     /* Public methods */
     self.toJSON = toJSON;
@@ -54,13 +53,12 @@
       var json = {
         objectType: self.objectType,
         examName: self.examName,
-        aliquotCode: self.aliquotCode,
+        code: self.code,
         resultName: self.resultName,
         releaseDate: self.releaseDate,
         observations: self.observations,
         value: self.value,
-        aliquotValid: self.aliquotValid,
-        materialType: self.materialType
+        isValid: self.isValid
       };
 
       return json;

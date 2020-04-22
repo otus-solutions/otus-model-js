@@ -98,8 +98,7 @@ describe('the exam sending factory', function() {
             resultName: "GLICOSE.................................:",
             releaseDate: "2017-05-03T13:08:00.000Z",
             observations: [],
-            value: "93",
-            materialType: ''
+            value: "93"
           }]
         }];
 
