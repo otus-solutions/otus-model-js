@@ -66,6 +66,7 @@
             aliquotCode: result.aliquotCode,
             examName: result.examName,
             resultName: result.resultName,
+            materialType: result.materialType,
             value: result.value,
             releaseDate: result.releaseDate,
             aliquotValid: result.aliquotValid

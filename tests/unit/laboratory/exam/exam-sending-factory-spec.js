@@ -1,4 +1,4 @@
-describe('the exam results factory', function() {
+describe('the exam sending factory', function() {
       var Mock = {};
       var injections;
 
@@ -50,7 +50,7 @@ describe('the exam results factory', function() {
         });
       });
 
-      describe('toJSON method', function() {
+      xdescribe('toJSON method', function() {
         beforeEach(function() {
           mockExamSendingFromJson();
         });
@@ -98,7 +98,8 @@ describe('the exam results factory', function() {
             resultName: "GLICOSE.................................:",
             releaseDate: "2017-05-03T13:08:00.000Z",
             observations: [],
-            value: "93"
+            value: "93",
+            materialType: ''
           }]
         }];
 
@@ -128,7 +129,8 @@ describe('the exam results factory', function() {
                 "value":"93",
                 "aliquotValid":true}],
                 "observations": []
-              }]
+              }],
+          "observations": []
             };
 
           }
