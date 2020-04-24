@@ -51,7 +51,7 @@ describe('the exam factory', function() {
     });
   });
 
-  xdescribe('toJSON method', function() {
+  describe('toJSON method', function() {
     beforeEach(function() {
       mockExamFromJson();
     });
@@ -131,12 +131,12 @@ describe('the exam factory', function() {
         "examResults": [{
           "objectType": "ExamResults",
           "examName": "GLICOSE - SANGUE",
-          "aliquotCode": "363027659",
+          "code": "363027659",
           "resultName": "GLICOSE.................................:",
           "releaseDate": "2017-05-03T13:08:00.000Z",
           "observations": [],
           "value": "93",
-          "aliquotValid": true
+          "isValid": true
         }],
         "observations": []
       }]
