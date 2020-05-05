@@ -1,7 +1,6 @@
 describe('ActivityFacadeService_UnitTest_Suite', () => {
   let facade;
   let Injections = [];
-  let Mock = {};
 
   beforeEach(() => {
     angular.mock.module('otusjs');
@@ -24,6 +23,7 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
   it('facadeMethodsExistence_check', () => {
     expect(facade.createActivity).toBeDefined();
     expect(facade.createPaperActivity).toBeDefined();
+    expect(facade.createAutoFillActivity).toBeDefined();
     expect(facade.createQuestionFill).toBeDefined();
     expect(facade.fillQuestion).toBeDefined();
     expect(facade.getInterviewer).toBeDefined();
@@ -41,6 +41,25 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
     expect(facade.fillStaticVariablesValues).toBeDefined();
     expect(facade.hasRequiredExternalID).toBeDefined();
   });
+
+  it('createActivity should invoke the same method of ActivityFactory', function(){
+    spyOn(Injections.ActivityFactory, 'create').and.returnValue({});
+    facade.createActivity();
+    expect(Injections.ActivityFactory.create).toHaveBeenCalledTimes(1);
+  });
+
+  it('createPaperActivity should invoke the same method of ActivityFactory', function(){
+    spyOn(Injections.ActivityFactory, 'createPaperActivity').and.returnValue({});
+    facade.createPaperActivity();
+    expect(Injections.ActivityFactory.createPaperActivity).toHaveBeenCalledTimes(1);
+  });
+
+  it('createAutoFillActivity should invoke the same method of ActivityFactory', function(){
+    spyOn(Injections.ActivityFactory, 'createAutoFillActivity').and.returnValue({});
+    facade.createAutoFillActivity();
+    expect(Injections.ActivityFactory.createAutoFillActivity).toHaveBeenCalledTimes(1);
+  });
+
 });
 
 
