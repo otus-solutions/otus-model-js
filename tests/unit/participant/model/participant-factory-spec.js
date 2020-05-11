@@ -58,10 +58,9 @@ describe("ParticipantFactory", function () {
       expect(participantData.email).toEqual(Mock.participant.email);
     });
 
-    it('should return stringify of toJson method', function() {
+    it('should return stringify of toJson method', function () {
       expect(participantData.toJSON()).toEqual(Mock.participant);
     });
-
   });
 
   function mockParticipant() {
@@ -76,27 +75,6 @@ describe("ParticipantFactory", function () {
       identified: true,
       late: PARTICIPANT_LATE
     };
-
-    // Mock.participant = {
-    //   "recruitmentNumber" : 5555563,
-    //   "name" : "A",
-    //   "sex" : "M",
-    //   "birthdate" : {
-    //     "objectType" : "ImmutableDate",
-    //     "value" : "1959-04-22 00:00:00.000"
-    //   },
-    //   "fieldCenter" : {
-    //     "code" : 5,
-    //     "acronym" : "RS"
-    //   },
-    //   "late" : false,
-    //   "email" : "a@gmail.com",
-    //   "password" : "TXUEOePzmEg0XG73TvPXGeNOcRE=",
-    //   "tokenList" : [
-    //     "eyJhbGciOiJIUzI1NiJ9.eyJtb2RlIjoicGFydGljaXBhbnQiLCJpc3MiOiJicnVub3dza3lAZ21haWwuY29tIn0.ALxt5L3-9tYC7Lx6r1Vvw8qq8fHUskiFTiZF_2AvPmw"
-    //   ]
-    // }
-
   }
 
 });
