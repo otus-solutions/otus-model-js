@@ -59,6 +59,7 @@
       if (self.name) json.name = self.name;
       if (self.sex) json.sex = self.sex;
       if (self.birthdate) json.birthdate = self.birthdate;
+      if (self.email) json.email = self.email;
       json.fieldCenter = self.fieldCenter;
       json.late = self.late;
       json.identified = self.identified || !!(self.name && self.sex && self.birthdate);

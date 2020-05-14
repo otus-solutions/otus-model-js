@@ -7,6 +7,7 @@ describe("ParticipantFactory", function () {
   var PARTICIPANT_BIRTHDATE = '1954-09-22T00:00:00.000Z';
   var PARTICIPANT_LATE = false;
   var FIELD_CENTER = 'RS';
+  var EMAIL = 'otus.mock@gmail.com'
   var Mock = {};
   var participantData;
   var factory;
@@ -53,10 +54,13 @@ describe("ParticipantFactory", function () {
       expect(participantData.late).toEqual(Mock.participant.late);
     });
 
-    it('should return stringify of toJson method', function() {
-      expect(participantData.toJSON()).toEqual(Mock.participant);
+    it('should return an object with name attribute value equal to participant email', function () {
+      expect(participantData.email).toEqual(Mock.participant.email);
     });
 
+    it('should return stringify of toJson method', function () {
+      expect(participantData.toJSON()).toEqual(Mock.participant);
+    });
   });
 
   function mockParticipant() {
@@ -65,6 +69,7 @@ describe("ParticipantFactory", function () {
       recruitmentNumber: RECURIMENT_NUMBER,
       name: PARTICIPANT_NAME,
       sex: PARTICIPANT_SEX,
+      email: EMAIL,
       birthdate: PARTICIPANT_BIRTHDATE,
       fieldCenter: FIELD_CENTER,
       identified: true,
