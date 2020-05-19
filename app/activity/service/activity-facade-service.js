@@ -29,6 +29,7 @@
     /* Public interface */
     self.createActivity = createActivity;
     self.createPaperActivity = createPaperActivity;
+    self.createAutoFillActivity = createAutoFillActivity;
     self.createQuestionFill = createQuestionFill;
     self.fillQuestion = fillQuestion;
     self.getInterviewer = getInterviewer;
@@ -52,6 +53,10 @@
 
     function createPaperActivity(template, user, participant, paperActivityData, activityConfiguration, externalID) {
       self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, activityConfiguration, null, externalID);
+    }
+
+    function createAutoFillActivity(template, user, participant, activityConfiguration) {
+      self.surveyActivity = ActivityFactory.createAutoFillActivity(template, user, participant, activityConfiguration);
     }
 
     function getInterviewer() {
