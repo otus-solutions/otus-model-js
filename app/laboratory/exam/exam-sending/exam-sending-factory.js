@@ -63,12 +63,12 @@
       self.exams.forEach(function(exam) {
         exam.examResults.forEach(function(result) {
           var _json = {
-            aliquotCode: result.aliquotCode,
+            code: result.code,
             examName: result.examName,
             resultName: result.resultName,
             value: result.value,
             releaseDate: result.releaseDate,
-            aliquotValid: result.aliquotValid
+            isValid: result.isValid
           };
           _examList.push(_json);
         });

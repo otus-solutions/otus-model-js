@@ -1,7 +1,7 @@
 describe('the exam results factory', function() {
   var Mock = {};
   var injections;
-  
+
   beforeEach(function() {
     window.module("otusjs.laboratory.exam.sending");
   });
@@ -95,12 +95,12 @@ describe('the exam results factory', function() {
       objectType: 'ExamResults',
       examName: "HEMOGRAMA",
       observations: Mock.observation,
-      aliquotCode: "354005001",
+      code: "354005001",
       resultName: "Basofilos",
       releaseDate: "2018-01-10T09:49:50.000Z",
       observations: [],
       value: 32,
-      aliquotValid: true
+      isValid: true
     }];
   }
 
