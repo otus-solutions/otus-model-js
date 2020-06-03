@@ -1,15 +1,14 @@
-describe("SurveyGroupPermissionFactory", function () {
+describe("ParticipantPermissionFactory", function () {
   let factory;
 
   const USER_EMAIL = "email@provider.com";
 
   const PERMISSION_JSON = {
-    objectType: "LaboratoryPermission",
+    objectType: "ParticipantPermission",
     email: "other_email@provider.com",
-    sampleTransportationAccess: false,
-    examLotsAccess:false,
-    examSendingAccess:true,
-    unattachedLaboratoriesAccess:false
+    participantListAccess: false,
+    participantCreateAccess: false,
+    anonymousParticipantAccess: false
   };
 
   beforeEach(function () {
@@ -17,7 +16,7 @@ describe("SurveyGroupPermissionFactory", function () {
 
 
     inject(function (_$injector_) {
-      factory = _$injector_.get('otusjs.user.permission.LaboratoryPermissionFactory');
+      factory = _$injector_.get('otusjs.user.permission.ParticipantPermissionFactory');
     });
 
   });
@@ -27,10 +26,9 @@ describe("SurveyGroupPermissionFactory", function () {
       let permission = factory.create(PERMISSION_JSON);
 
       expect(permission.objectType).toEqual(PERMISSION_JSON.objectType);
-      expect(permission.sampleTransportationAccess).toEqual(PERMISSION_JSON.sampleTransportationAccess);
-      expect(permission.examLotsAccess).toEqual(PERMISSION_JSON.examLotsAccess);
-      expect(permission.examSendingAccess).toEqual(PERMISSION_JSON.examSendingAccess);
-      expect(permission.unattachedLaboratoriesAccess).toEqual(PERMISSION_JSON.unattachedLaboratoriesAccess);
+      expect(permission.participantListAccess).toEqual(PERMISSION_JSON.participantListAccess);
+      expect(permission.participantCreateAccess).toEqual(PERMISSION_JSON.participantCreateAccess);
+      expect(permission.anonymousParticipantAccess).toEqual(PERMISSION_JSON.anonymousParticipantAccess);
       expect(permission.toJSON().email).toEqual(PERMISSION_JSON.email);
     });
 
