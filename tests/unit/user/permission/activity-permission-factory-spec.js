@@ -6,7 +6,8 @@ describe("ActivityPermissionFactory", function () {
   const PERMISSION_JSON = {
     objectType: "ActivityPermission",
     email: "other_email@provider.com",
-    participantActivityAccess: false
+    participantActivityAccess: false,
+    offlineActivitySincAccess: false
   };
 
   beforeEach(function () {
@@ -25,6 +26,7 @@ describe("ActivityPermissionFactory", function () {
 
       expect(permission.objectType).toEqual(PERMISSION_JSON.objectType);
       expect(permission.participantActivityAccess).toEqual(PERMISSION_JSON.participantActivityAccess);
+      expect(permission.offlineActivitySincAccess).toEqual(PERMISSION_JSON.offlineActivitySincAccess);
       expect(permission.toJSON().email).toEqual(PERMISSION_JSON.email);
     });
 
