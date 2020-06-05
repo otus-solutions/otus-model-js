@@ -21,6 +21,7 @@
       let _email = userEmail || permissionJson.email;
 
       self.objectType = "LaboratoryPermission";
+      self.participantLaboratoryAccess = permissionJson.participantLaboratoryAccess || false;
       self.sampleTransportationAccess = permissionJson.sampleTransportationAccess || false;
       self.examLotsAccess = permissionJson.examLotsAccess || false;
       self.examSendingAccess = permissionJson.examSendingAccess || false;
@@ -33,6 +34,7 @@
 
         json.objectType = self.objectType;
         json.email = _email;
+        json.participantLaboratoryAccess = self.participantLaboratoryAccess;
         json.sampleTransportationAccess = self.sampleTransportationAccess;
         json.examLotsAccess = self.examLotsAccess;
         json.examSendingAccess = self.examSendingAccess;

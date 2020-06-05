@@ -6,6 +6,7 @@ describe("SurveyGroupPermissionFactory", function () {
   const PERMISSION_JSON = {
     objectType: "LaboratoryPermission",
     email: "other_email@provider.com",
+    participantLaboratoryAccess: false,
     sampleTransportationAccess: false,
     examLotsAccess:false,
     examSendingAccess:true,
@@ -27,6 +28,7 @@ describe("SurveyGroupPermissionFactory", function () {
       let permission = factory.create(PERMISSION_JSON);
 
       expect(permission.objectType).toEqual(PERMISSION_JSON.objectType);
+      expect(permission.participantLaboratoryAccess).toEqual(PERMISSION_JSON.participantLaboratoryAccess);
       expect(permission.sampleTransportationAccess).toEqual(PERMISSION_JSON.sampleTransportationAccess);
       expect(permission.examLotsAccess).toEqual(PERMISSION_JSON.examLotsAccess);
       expect(permission.examSendingAccess).toEqual(PERMISSION_JSON.examSendingAccess);

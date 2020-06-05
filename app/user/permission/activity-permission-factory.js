@@ -22,6 +22,7 @@
 
       self.objectType = "ActivityPermission";
       self.participantActivityAccess = permissionJson.participantActivityAccess || false;
+      self.offlineActivitySincAccess = permissionJson.offlineActivitySincAccess || false;
 
       self.toJSON = toJSON;
 
@@ -31,6 +32,7 @@
         json.objectType = self.objectType;
         json.email = _email;
         json.participantActivityAccess = self.participantActivityAccess;
+        json.offlineActivitySincAccess = self.offlineActivitySincAccess;
 
         return json;
       }
