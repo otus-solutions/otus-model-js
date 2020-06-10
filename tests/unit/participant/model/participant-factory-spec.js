@@ -8,6 +8,7 @@ describe("ParticipantFactory", function () {
   var PARTICIPANT_LATE = false;
   var FIELD_CENTER = 'RS';
   var EMAIL = 'otus.mock@gmail.com'
+  var ID = '414earfsferw9874844few8';
   var Mock = {};
   var participantData;
   var factory;
@@ -65,6 +66,7 @@ describe("ParticipantFactory", function () {
 
   function mockParticipant() {
     Mock.participant = {
+      _id: ID,
       objectType: PARTICIPANT_OBJECT_TYPE,
       recruitmentNumber: RECURIMENT_NUMBER,
       name: PARTICIPANT_NAME,

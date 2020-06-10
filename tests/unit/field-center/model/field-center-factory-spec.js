@@ -69,6 +69,7 @@ describe('the fieldCenter factory', function() {
 
   function mockFieldCenter() {
     return [{
+      "_id": "4d4fsf874ef48/7feehgh5",
       "name": "Minas Gerais",
       "code": 3,
       "acronym": "MG",
@@ -85,6 +86,7 @@ describe('the fieldCenter factory', function() {
 
   function mockFieldCenterEmpty() {
     return {
+      "_id": null,
       "name": null,
       "code": null,
       "acronym": null,
