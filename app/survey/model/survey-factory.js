@@ -108,6 +108,7 @@
     self.getItemStaticVariableList = getItemStaticVariableList;
     self.getGroupByItemID = getGroupByItemID;
     self.getGroupItemsByItemID = getGroupItemsByItemID;
+    self.loadIncrementalIDValue = loadIncrementalIDValue;
     self.toJSON = toJSON;
 
     function initialize() {
@@ -141,6 +142,10 @@
       var item = self.SurveyItemManager.loadItem(type, templateID, self.identity.acronym);
       self.NavigationManager.addNavigation();
       return item;
+    }
+
+    function loadIncrementalIDValue() {
+      self.SurveyItemManager.loadIncrementalIDValue(self.identity.acronym);
     }
 
     function getItems() {

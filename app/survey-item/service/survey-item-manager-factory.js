@@ -44,6 +44,7 @@
     self.moveItem = moveItem;
     self.existsItem = existsItem;
     self.isAvailableCustomID = isAvailableCustomID;
+    self.loadIncrementalIDValue = loadIncrementalIDValue;
 
     function init() {
       // surveyItemContainer.init();
@@ -124,17 +125,24 @@
 
     function loadItem(itemType, templateID, surveyAcronym) {
       var item = surveyItemContainer.createItem(itemType, templateID);
-      self.setIncrementalIDValue(parseInt(templateID.split(surveyAcronym)[1]));
+      loadIncrementalIDValue(surveyAcronym);
       return item;
     }
 
+    function loadIncrementalIDValue(acronym) {
+      getItemList().forEach(item => {
+        setIncrementalIDValue(parseInt(item.templateID.split(acronym)[1]));
+      });
+    }
+
     function setIncrementalIDValue(id) {
-      incrementalIDValue = id;
+      incrementalIDValue = (incrementalIDValue > id) ? incrementalIDValue : id;
     }
 
     function addItem(itemType, templateIDPrefix) {
       var templateID;
       do {
+        loadIncrementalIDValue(templateIDPrefix)
         templateID = templateIDPrefix + _getNextIncrementalGenerator();
       } while (!isAvailableCustomID(templateID));
       return surveyItemContainer.createItem(itemType, templateID);
