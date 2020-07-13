@@ -34,6 +34,7 @@
 
     self.toJSON = toJSON;
 
+    self._id = fieldCenter._id || null;
     self.name = fieldCenter.name || null;
     self.code = fieldCenter.code || null;
     self.acronym = fieldCenter.acronym || null;
@@ -50,6 +51,7 @@
     function toJSON() {
       var json = {};
 
+      json._id = self._id;
       json.name = self.name;
       json.code = self.code;
       json.acronym = self.acronym;
@@ -64,7 +66,6 @@
 
       return json;
     }
-
 
   }
 }());

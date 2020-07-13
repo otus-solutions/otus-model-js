@@ -1,6 +1,6 @@
 {
   "name": "otus-model-js",
-  "version": "1.32.0",
+  "version": "1.33.0",
   "description": "Model Otus",
   "keywords": [
     "model",
@@ -21,7 +21,7 @@
     "karma": "karma",
     "build": "gulp compress",
     "open-reports": "nautilus ./target/test-coverage/",
-    "production": "npm install && npm test && npm run build && npm prune --production"
+    "production": "rm -rf node_modules package-lock.json && npm install && npm test && npm run build && npm prune --production"
   },
   "dependencies": {
     "angular": "^1.4.7",
