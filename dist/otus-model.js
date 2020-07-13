@@ -15,13 +15,6 @@
 'use strict';
 
 (function () {
-    'use strict';
-
-    angular.module('otusjs.model.fieldCenter', []);
-})();
-'use strict';
-
-(function () {
    'use strict';
 
    angular.module('otusjs.laboratory', ['otusjs.laboratory.participant', 'otusjs.laboratory.configuration', 'otusjs.laboratory.transportation', 'otusjs.laboratory.exam']);
@@ -39,6 +32,13 @@
     'use strict';
 
     angular.module('otusjs.metadata', []);
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.model.fieldCenter', []);
 })();
 'use strict';
 
@@ -2545,40 +2545,6 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.validation').service('AddFillingRulesService', AddFillingRulesService);
-
-    function AddFillingRulesService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, validatorType) {
-            return item.fillingRules.createOption(validatorType);
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('otusjs.validation').service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
-
-    function RemoveFillingRulesWorkService() {
-        var self = this;
-
-        self.execute = execute;
-
-        function execute(item, fillingRuleType) {
-            item.fillingRules.removeFillingRules(fillingRuleType);
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
     angular.module('otusjs.surveyItem').service('AddAnswerOptionService', AddAnswerOptionService);
 
     function AddAnswerOptionService() {
@@ -2696,6 +2662,40 @@
 })();
 'use strict';
 
+(function () {
+    'use strict';
+
+    angular.module('otusjs.validation').service('AddFillingRulesService', AddFillingRulesService);
+
+    function AddFillingRulesService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, validatorType) {
+            return item.fillingRules.createOption(validatorType);
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('otusjs.validation').service('RemoveFillingRulesWorkService', RemoveFillingRulesWorkService);
+
+    function RemoveFillingRulesWorkService() {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, fillingRuleType) {
+            item.fillingRules.removeFillingRules(fillingRuleType);
+        }
+    }
+})();
+'use strict';
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 (function () {
@@ -2756,75 +2756,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       json.char_title = self.char_title;
       json.column = self.column;
       json.value = self.value;
-
-      return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.fieldCenter').factory('otusjs.model.fieldCenter.FieldCenterFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create() {
-      return new FieldCenter({});
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (center) {
-          return new FieldCenter(center);
-        });
-      } else {
-        return [];
-      }
-    }
-
-    return self;
-  }
-
-  function FieldCenter(fieldCenter) {
-    var self = this;
-
-    self.toJSON = toJSON;
-
-    self._id = fieldCenter._id || null;
-    self.name = fieldCenter.name || null;
-    self.code = fieldCenter.code || null;
-    self.acronym = fieldCenter.acronym || null;
-    self.country = fieldCenter.country || null;
-    self.state = fieldCenter.state || null;
-    self.address = fieldCenter.address || null;
-    self.complement = fieldCenter.complement || null;
-    self.zip = fieldCenter.zip || null;
-    self.phone = fieldCenter.phone || null;
-    self.backgroundColor = fieldCenter.backgroundColor || null;
-    self.borderColor = fieldCenter.borderColor || null;
-
-    function toJSON() {
-      var json = {};
-
-      json._id = self._id;
-      json.name = self.name;
-      json.code = self.code;
-      json.acronym = self.acronym;
-      json.country = self.country;
-      json.state = self.state;
-      json.address = self.address;
-      json.complement = self.complement;
-      json.zip = self.zip;
-      json.phone = self.phone;
-      json.backgroundColor = self.backgroundColor;
-      json.borderColor = self.borderColor;
 
       return json;
     }
@@ -3883,6 +3814,75 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function isAvailableValue(value) {
       return getOptionByValue(value) ? false : true;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.fieldCenter').factory('otusjs.model.fieldCenter.FieldCenterFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create() {
+      return new FieldCenter({});
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (center) {
+          return new FieldCenter(center);
+        });
+      } else {
+        return [];
+      }
+    }
+
+    return self;
+  }
+
+  function FieldCenter(fieldCenter) {
+    var self = this;
+
+    self.toJSON = toJSON;
+
+    self._id = fieldCenter._id || null;
+    self.name = fieldCenter.name || null;
+    self.code = fieldCenter.code || null;
+    self.acronym = fieldCenter.acronym || null;
+    self.country = fieldCenter.country || null;
+    self.state = fieldCenter.state || null;
+    self.address = fieldCenter.address || null;
+    self.complement = fieldCenter.complement || null;
+    self.zip = fieldCenter.zip || null;
+    self.phone = fieldCenter.phone || null;
+    self.backgroundColor = fieldCenter.backgroundColor || null;
+    self.borderColor = fieldCenter.borderColor || null;
+
+    function toJSON() {
+      var json = {};
+
+      json._id = self._id;
+      json.name = self.name;
+      json.code = self.code;
+      json.acronym = self.acronym;
+      json.country = self.country;
+      json.state = self.state;
+      json.address = self.address;
+      json.complement = self.complement;
+      json.zip = self.zip;
+      json.phone = self.phone;
+      json.backgroundColor = self.backgroundColor;
+      json.borderColor = self.borderColor;
+
+      return json;
     }
   }
 })();
@@ -7424,6 +7424,49 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module("otusjs.user.permission").factory("otusjs.user.permission.ActivityPermissionFactory", Factory);
+
+  function Factory() {
+    var self = this;
+
+    self.create = create;
+
+    function create(permissionJson, userEmail) {
+      return new ActivityPermission(permissionJson, userEmail);
+    }
+
+    return self;
+
+    function ActivityPermission(permissionJson, userEmail) {
+      var self = this;
+      var _email = userEmail || permissionJson.email;
+
+      self.objectType = "ActivityPermission";
+      self.participantActivityAccess = permissionJson.participantActivityAccess || false;
+      self.offlineActivitySincAccess = permissionJson.offlineActivitySincAccess || false;
+
+      self.toJSON = toJSON;
+
+      function toJSON() {
+        var json = {};
+
+        json.objectType = self.objectType;
+        json.email = _email;
+        json.participantActivityAccess = self.participantActivityAccess;
+        json.offlineActivitySincAccess = self.offlineActivitySincAccess;
+
+        return json;
+      }
+
+      return self;
+    }
+  }
+})();
+"use strict";
+
+(function () {
+  'use strict';
+
   angular.module("otusjs.user.permission").factory("otusjs.user.permission.LaboratoryPermissionFactory", Factory);
 
   function Factory() {
@@ -7442,7 +7485,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var _email = userEmail || permissionJson.email;
 
       self.objectType = "LaboratoryPermission";
-      self.access = permissionJson.access || false;
+      self.participantLaboratoryAccess = permissionJson.participantLaboratoryAccess || false;
+      self.sampleTransportationAccess = permissionJson.sampleTransportationAccess || false;
+      self.examLotsAccess = permissionJson.examLotsAccess || false;
+      self.examSendingAccess = permissionJson.examSendingAccess || false;
+      self.unattachedLaboratoriesAccess = permissionJson.unattachedLaboratoriesAccess || false;
 
       self.toJSON = toJSON;
 
@@ -7451,7 +7498,105 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         json.objectType = self.objectType;
         json.email = _email;
-        json.access = self.access;
+        json.participantLaboratoryAccess = self.participantLaboratoryAccess;
+        json.sampleTransportationAccess = self.sampleTransportationAccess;
+        json.examLotsAccess = self.examLotsAccess;
+        json.examSendingAccess = self.examSendingAccess;
+        json.unattachedLaboratoriesAccess = self.unattachedLaboratoriesAccess;
+
+        return json;
+      }
+
+      return self;
+    }
+  }
+})();
+"use strict";
+
+(function () {
+  'use strict';
+
+  angular.module("otusjs.user.permission").factory("otusjs.user.permission.MonitoringPermissionFactory", Factory);
+
+  function Factory() {
+    var self = this;
+
+    self.create = create;
+
+    function create(permissionJson, userEmail) {
+      return new MonitoringPermission(permissionJson, userEmail);
+    }
+
+    return self;
+
+    function MonitoringPermission(permissionJson, userEmail) {
+      var self = this;
+      var _email = userEmail || permissionJson.email;
+
+      self.objectType = "MonitoringPermission";
+      self.centerActivitiesAccess = permissionJson.centerActivitiesAccess || false;
+      self.activityFlagsAccess = permissionJson.activityFlagsAccess || false;
+      self.laboratoryFlagsAccess = permissionJson.laboratoryFlagsAccess || false;
+      self.laboratoryControlAccess = permissionJson.laboratoryControlAccess || false;
+      self.pendencyVisualizerAccess = permissionJson.pendencyVisualizerAccess || false;
+
+      self.toJSON = toJSON;
+
+      function toJSON() {
+        var json = {};
+
+        json.objectType = self.objectType;
+        json.email = _email;
+        json.centerActivitiesAccess = self.centerActivitiesAccess;
+        json.activityFlagsAccess = self.activityFlagsAccess;
+        json.laboratoryFlagsAccess = self.laboratoryFlagsAccess;
+        json.laboratoryControlAccess = self.laboratoryControlAccess;
+        json.pendencyVisualizerAccess = self.pendencyVisualizerAccess;
+
+        return json;
+      }
+
+      return self;
+    }
+  }
+})();
+"use strict";
+
+(function () {
+  'use strict';
+
+  angular.module("otusjs.user.permission").factory("otusjs.user.permission.ParticipantPermissionFactory", Factory);
+
+  function Factory() {
+    var self = this;
+
+    self.create = create;
+
+    function create(permissionJson, userEmail) {
+      return new ParticipantPermission(permissionJson, userEmail);
+    }
+
+    return self;
+
+    function ParticipantPermission(permissionJson, userEmail) {
+      var self = this;
+      var _email = userEmail || permissionJson.email;
+
+      self.objectType = "ParticipantPermission";
+      self.participantListAccess = permissionJson.participantListAccess || false;
+      self.participantCreateAccess = permissionJson.participantCreateAccess || false;
+      self.anonymousParticipantAccess = permissionJson.anonymousParticipantAccess || false;
+
+      self.toJSON = toJSON;
+
+      function toJSON() {
+        var json = {};
+
+        json.objectType = self.objectType;
+        json.email = _email;
+        json.participantListAccess = self.participantListAccess;
+        json.participantCreateAccess = self.participantCreateAccess;
+        json.anonymousParticipantAccess = self.anonymousParticipantAccess;
 
         return json;
       }
@@ -7521,9 +7666,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   angular.module('otusjs.user.permission').service('otusjs.user.permission.PermissionMapper', Service);
 
-  Service.$inject = ['otusjs.user.permission.SurveyGroupPermissionFactory', 'otusjs.user.permission.LaboratoryPermissionFactory'];
+  Service.$inject = ['otusjs.user.permission.SurveyGroupPermissionFactory', 'otusjs.user.permission.LaboratoryPermissionFactory', 'otusjs.user.permission.ActivityPermissionFactory', 'otusjs.user.permission.MonitoringPermissionFactory', 'otusjs.user.permission.ParticipantPermissionFactory'];
 
-  function Service(SurveyGroupPermissionFactory, LaboratoryPermissionFactory) {
+  function Service(SurveyGroupPermissionFactory, LaboratoryPermissionFactory, ActivityPermissionFactory, MonitoringPermissionFactory, ParticipantPermissionFactory) {
     var self = this;
 
     self.create = create;
@@ -7535,6 +7680,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         case "LaboratoryPermission":
           return LaboratoryPermissionFactory.create(permissionJson, userEmail);
+
+        case "ActivityPermission":
+          return ActivityPermissionFactory.create(permissionJson, userEmail);
+
+        case "ParticipantPermission":
+          return ParticipantPermissionFactory.create(permissionJson, userEmail);
+
+        case "MonitoringPermission":
+          return MonitoringPermissionFactory.create(permissionJson, userEmail);
 
         default:
           throw Error("Undefined object type");
@@ -7757,200 +7911,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.objectType = 'Rule';
     self.validatorType = validatorType;
     self.data = validator;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityImportService', Service);
-
-  Service.$inject = ['ElementRegisterFactory', 'otusjs.validation.api.ValidationService', 'otusjs.model.activity.ActivityFactory', 'otusjs.model.activity.QuestionFillFactory', 'otusjs.model.activity.InterviewFactory', 'otusjs.model.activity.ValidationTypeService', 'otusjs.model.activity.FillingManagerFactory'];
-
-  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory, ValidationTypeService, FillingManagerFactory) {
-    var self = this;
-
-    var _isValid = true;
-    var _elementRegister = null;
-    var _item = null;
-    var _activity;
-    var _activities = [];
-
-    //Public methods
-    self.fromJsonObject = fromJsonObject;
-    self.create = create;
-
-    function _setQuestionFill(answers, item) {
-      if (answers[item.customID]) {
-        _activity.fillContainer.updateFilling(QuestionFillFactory.create(item, answers[item.customID].value, answers[item.customID].metadata, answers[item.customID].comment));
-      }
-    }
-
-    function _getQuestionsIdsMap(answers) {
-      var _mapId = {};
-      _activity.fillContainer = FillingManagerFactory.create();
-      _activity.surveyForm.surveyTemplate.toJSON().itemContainer.forEach(function (item) {
-        _mapId[item.templateID] = item.customID;
-        _setQuestionFill(answers, item);
-      });
-
-      return _mapId;
-    }
-
-    function _setAnswersValues(answers) {
-      var IDS = _getQuestionsIdsMap(answers);
-      _activity.fillContainer.buildJsonToFillContainer().fillingList.forEach(function (question) {
-        if (_isValid) {
-          _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(question.questionID);
-          question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
-          question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
-
-          //checks the presence of metadata response
-          if (answers[IDS[question.questionID]].metadata) _validateMetadata(_item.metadata.options, answers[IDS[question.questionID]].metadata, question);else question.metadata.value = null;
-
-          _validateActivity(question.questionID, question.answer, _item, question.metadata);
-          if (!_isValid) _activity.error = "Questão {" + IDS[question.questionID] + "} contém uma resposta inválida!";
-        }
-      });
-      _activity.isValid = _isValid;
-      _isValid = true;
-    }
-
-    function _validateMetadata(metadataOptions, answerMetadata, question) {
-      var associated = metadataOptions.filter(function (options) {
-        return options.extractionValue === answerMetadata;
-      });
-
-      if (associated.length) {
-        metadataOptions.forEach(function (option, idx) {
-          if (option.extractionValue === answerMetadata) {
-            _isValid = true;
-            question.metadata.value = ++idx;
-          }
-        });
-      } else _isValid = false;
-    }
-
-    function _validateActivity(templateID, answer, _item, metadata) {
-      if (_isValid) {
-        _isValid = (answer.value || answer.value === 0) && metadata.value ? false : true;
-        if (_isValid && !metadata.value) {
-          _elementRegister = ElementRegisterFactory.create(templateID, { data: answer.value });
-          _setupValidation(_item);
-          ValidationService.validateElement(templateID, function (response) {
-            response.forEach(function (validation) {
-              validation.validatorsResponse.forEach(function (validator) {
-                _isValid = validator.result && ValidationTypeService.isValid(_item.dataType, answer.value);
-              });
-            });
-          });
-        }
-      }
-    }
-
-    function _setupValidation(_item) {
-      Object.keys(_item.fillingRules.options).forEach(function (validator) {
-        _addValidator(validator, _item);
-      });
-
-      ValidationService.unregisterElement(_elementRegister.id);
-      ValidationService.registerElement(_elementRegister);
-    }
-
-    function _addValidator(validator, _item) {
-      var reference = _item.fillingRules.options[validator].data;
-      if (_item.objectType === "TimeQuestion" || _item.objectType === "CalendarQuestion") {
-        _elementRegister.addValidator("ImmutableDate", reference);
-      } else {
-        _elementRegister.addValidator(validator, reference);
-      }
-    }
-
-    function _createStatusHistoryPaper(json) {
-      switch (json.status) {
-        case 'OPENED':
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          break;
-        case 'SAVED':
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newSavedRegistry(json.user);
-          break;
-        case 'FINALIZED':
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newFinalizedRegistry(json.user);
-          break;
-      }
-    }
-
-    function _createStatusHistoryOnline(json) {
-      switch (json.status) {
-        case 'INITIALIZED_ONLINE':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          break;
-        case 'OPENED':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          break;
-        case 'SAVED':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newSavedRegistry(json.user);
-          break;
-        case 'FINALIZED':
-          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
-          _activity.statusHistory.newOpenedRegistry(json.user);
-          _activity.statusHistory.newFinalizedRegistry(json.user);
-          break;
-      }
-    }
-
-    function _setInterview(user) {
-      _activity.interviews.newRegistry(user);
-    }
-
-    function _isValidSurveys(acronym, json) {
-      var _valid = true;
-      json.forEach(function (activity) {
-        if (_valid) {
-          _valid = acronym == activity.acronym;
-        }
-      });
-      return _valid;
-    }
-
-    function fromJsonObject(surveyForm, jsonObject, user) {
-      _activities = [];
-      if (Array.isArray(jsonObject)) {
-        if (jsonObject.length > 0) {
-          if (_isValidSurveys(surveyForm.surveyTemplate.identity.acronym, jsonObject)) {
-            jsonObject.forEach(function (json) {
-              _activities.push(self.create(surveyForm, json, user));
-            });
-          }
-        }
-      }
-      return _activities;
-    }
-
-    function create(surveyForm, json, user) {
-      self = this;
-      _activity = null;
-      if (json.acronym == surveyForm.surveyTemplate.identity.acronym) {
-        if (json.mode === "PAPER" && json.offlineData) {
-          _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id);
-          _createStatusHistoryPaper(json);
-        } else if (json.mode === "ONLINE") {
-          _activity = ActivityFactory.create(surveyForm, user, json.participant, json.activityConfiguration, json.id);
-          _createStatusHistoryOnline(json);
-        }
-        _setAnswersValues(json.answers);
-        _setInterview(user);
-        _activity.surveyForm.acronym = _activity.surveyForm.surveyTemplate.identity.acronym;
-      }
-
-      return angular.copy(_activity);
-    }
   }
 })();
 'use strict';
@@ -8414,6 +8374,200 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       return _validation;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.model.activity').service('otusjs.model.activity.ActivityImportService', Service);
+
+  Service.$inject = ['ElementRegisterFactory', 'otusjs.validation.api.ValidationService', 'otusjs.model.activity.ActivityFactory', 'otusjs.model.activity.QuestionFillFactory', 'otusjs.model.activity.InterviewFactory', 'otusjs.model.activity.ValidationTypeService', 'otusjs.model.activity.FillingManagerFactory'];
+
+  function Service(ElementRegisterFactory, ValidationService, ActivityFactory, QuestionFillFactory, InterviewFactory, ValidationTypeService, FillingManagerFactory) {
+    var self = this;
+
+    var _isValid = true;
+    var _elementRegister = null;
+    var _item = null;
+    var _activity;
+    var _activities = [];
+
+    //Public methods
+    self.fromJsonObject = fromJsonObject;
+    self.create = create;
+
+    function _setQuestionFill(answers, item) {
+      if (answers[item.customID]) {
+        _activity.fillContainer.updateFilling(QuestionFillFactory.create(item, answers[item.customID].value, answers[item.customID].metadata, answers[item.customID].comment));
+      }
+    }
+
+    function _getQuestionsIdsMap(answers) {
+      var _mapId = {};
+      _activity.fillContainer = FillingManagerFactory.create();
+      _activity.surveyForm.surveyTemplate.toJSON().itemContainer.forEach(function (item) {
+        _mapId[item.templateID] = item.customID;
+        _setQuestionFill(answers, item);
+      });
+
+      return _mapId;
+    }
+
+    function _setAnswersValues(answers) {
+      var IDS = _getQuestionsIdsMap(answers);
+      _activity.fillContainer.buildJsonToFillContainer().fillingList.forEach(function (question) {
+        if (_isValid) {
+          _item = _activity.surveyForm.surveyTemplate.SurveyItemManager.getItemByTemplateID(question.questionID);
+          question.answer.value = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].value : null;
+          question.answer.comment = answers[IDS[question.questionID]] ? answers[IDS[question.questionID]].comment : '';
+
+          //checks the presence of metadata response
+          if (answers[IDS[question.questionID]].metadata) _validateMetadata(_item.metadata.options, answers[IDS[question.questionID]].metadata, question);else question.metadata.value = null;
+
+          _validateActivity(question.questionID, question.answer, _item, question.metadata);
+          if (!_isValid) _activity.error = "Questão {" + IDS[question.questionID] + "} contém uma resposta inválida!";
+        }
+      });
+      _activity.isValid = _isValid;
+      _isValid = true;
+    }
+
+    function _validateMetadata(metadataOptions, answerMetadata, question) {
+      var associated = metadataOptions.filter(function (options) {
+        return options.extractionValue === answerMetadata;
+      });
+
+      if (associated.length) {
+        metadataOptions.forEach(function (option, idx) {
+          if (option.extractionValue === answerMetadata) {
+            _isValid = true;
+            question.metadata.value = ++idx;
+          }
+        });
+      } else _isValid = false;
+    }
+
+    function _validateActivity(templateID, answer, _item, metadata) {
+      if (_isValid) {
+        _isValid = (answer.value || answer.value === 0) && metadata.value ? false : true;
+        if (_isValid && !metadata.value) {
+          _elementRegister = ElementRegisterFactory.create(templateID, { data: answer.value });
+          _setupValidation(_item);
+          ValidationService.validateElement(templateID, function (response) {
+            response.forEach(function (validation) {
+              validation.validatorsResponse.forEach(function (validator) {
+                _isValid = validator.result && ValidationTypeService.isValid(_item.dataType, answer.value);
+              });
+            });
+          });
+        }
+      }
+    }
+
+    function _setupValidation(_item) {
+      Object.keys(_item.fillingRules.options).forEach(function (validator) {
+        _addValidator(validator, _item);
+      });
+
+      ValidationService.unregisterElement(_elementRegister.id);
+      ValidationService.registerElement(_elementRegister);
+    }
+
+    function _addValidator(validator, _item) {
+      var reference = _item.fillingRules.options[validator].data;
+      if (_item.objectType === "TimeQuestion" || _item.objectType === "CalendarQuestion") {
+        _elementRegister.addValidator("ImmutableDate", reference);
+      } else {
+        _elementRegister.addValidator(validator, reference);
+      }
+    }
+
+    function _createStatusHistoryPaper(json) {
+      switch (json.status) {
+        case 'OPENED':
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          break;
+        case 'SAVED':
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newSavedRegistry(json.user);
+          break;
+        case 'FINALIZED':
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newFinalizedRegistry(json.user);
+          break;
+      }
+    }
+
+    function _createStatusHistoryOnline(json) {
+      switch (json.status) {
+        case 'INITIALIZED_ONLINE':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          break;
+        case 'OPENED':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          break;
+        case 'SAVED':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newSavedRegistry(json.user);
+          break;
+        case 'FINALIZED':
+          _activity.statusHistory.newInitializedOnlineRegistry(json.user);
+          _activity.statusHistory.newOpenedRegistry(json.user);
+          _activity.statusHistory.newFinalizedRegistry(json.user);
+          break;
+      }
+    }
+
+    function _setInterview(user) {
+      _activity.interviews.newRegistry(user);
+    }
+
+    function _isValidSurveys(acronym, json) {
+      var _valid = true;
+      json.forEach(function (activity) {
+        if (_valid) {
+          _valid = acronym == activity.acronym;
+        }
+      });
+      return _valid;
+    }
+
+    function fromJsonObject(surveyForm, jsonObject, user) {
+      _activities = [];
+      if (Array.isArray(jsonObject)) {
+        if (jsonObject.length > 0) {
+          if (_isValidSurveys(surveyForm.surveyTemplate.identity.acronym, jsonObject)) {
+            jsonObject.forEach(function (json) {
+              _activities.push(self.create(surveyForm, json, user));
+            });
+          }
+        }
+      }
+      return _activities;
+    }
+
+    function create(surveyForm, json, user) {
+      self = this;
+      _activity = null;
+      if (json.acronym == surveyForm.surveyTemplate.identity.acronym) {
+        if (json.mode === "PAPER" && json.offlineData) {
+          _activity = ActivityFactory.createPaperActivity(surveyForm, user, json.participant, json.offlineData, json.activityConfiguration, json.id);
+          _createStatusHistoryPaper(json);
+        } else if (json.mode === "ONLINE") {
+          _activity = ActivityFactory.create(surveyForm, user, json.participant, json.activityConfiguration, json.id);
+          _createStatusHistoryOnline(json);
+        }
+        _setAnswersValues(json.answers);
+        _setInterview(user);
+        _activity.surveyForm.acronym = _activity.surveyForm.surveyTemplate.identity.acronym;
+      }
+
+      return angular.copy(_activity);
     }
   }
 })();
@@ -9415,6 +9569,184 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.survey').factory('otusjs.survey.GroupFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create(name, surveyAcronyms) {
+      if (typeof name !== "string") {
+        throw Error("Name should be a string");
+      }
+
+      if (surveyAcronyms && !Array.isArray(surveyAcronyms)) {
+        throw Error("surveyAcronyms should be an array");
+      }
+
+      return new SurveyGroup(name, surveyAcronyms);
+    }
+
+    function fromJson(groupJson) {
+      return create(groupJson.name, groupJson.surveyAcronyms);
+    }
+
+    return self;
+  }
+
+  function SurveyGroup(name, surveyAcronyms) {
+    var self = this;
+
+    self.objectType = 'SurveyGroup';
+    self.name = name;
+    self.surveyAcronyms = surveyAcronyms || [];
+
+    if (!self.name) {
+      throw new Error("Name should be provided");
+    }
+
+    /* Public methods */
+    self.getName = getName;
+    self.getSurveys = getSurveys;
+    self.addSurvey = addSurvey;
+    self.removeSurvey = removeSurvey;
+    self.toJSON = toJSON;
+
+    function getName() {
+      return self.name;
+    }
+
+    function getSurveys() {
+      return self.surveyAcronyms;
+    }
+
+    function addSurvey(acronym) {
+      if (self.surveyAcronyms.indexOf(acronym) !== -1) {
+        throw new Error("Survey already in the group");
+      }
+      self.surveyAcronyms.push(acronym);
+      return self;
+    }
+
+    function removeSurvey(acronym) {
+      var index = self.surveyAcronyms.indexOf(acronym);
+
+      if (index === -1) {
+        throw new Error("Survey not found in the group");
+      }
+      self.surveyAcronyms.splice(index, 1);
+
+      return self;
+    }
+
+    function toJSON() {
+      return {
+        name: self.name,
+        surveyAcronyms: self.surveyAcronyms
+      };
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.survey').factory('otusjs.survey.GroupManagerFactory', Factory);
+
+  Factory.$inject = ['otusjs.survey.GroupFactory'];
+
+  function Factory(GroupFactory) {
+    var self = this;
+
+    /* Public methods */
+    self.create = create;
+
+    function create(groupList) {
+      return new SurveyGroupManager(GroupFactory, groupList);
+    }
+
+    return self;
+  }
+
+  function SurveyGroupManager(GroupFactory, groups) {
+    var self = this;
+    var groupStructure = _buildGroupStructure(groups);
+
+    self.objectType = 'SurveyGroupManager';
+
+    /* Public methods */
+    self.createGroup = createGroup;
+    self.getGroup = getGroup;
+    self.getGroupList = getGroupList;
+    self.getGroupNames = getGroupNames;
+    self.getGroupSurveys = getGroupSurveys;
+    self.getSurveyGroups = getSurveyGroups;
+    self.toJSON = toJSON;
+
+    function createGroup(name, surveys) {
+      if (getGroup(name)) {
+        throw new Error("Group already exists");
+      }
+      var group = GroupFactory.create(name, surveys);
+      groupStructure[name] = group;
+      return group;
+    }
+
+    function getGroupList() {
+      return Object.values(groupStructure);
+    }
+
+    function getGroup(name) {
+      return groupStructure[name];
+    }
+
+    function getGroupNames() {
+      return Object.keys(groupStructure);
+    }
+
+    function getGroupSurveys(name) {
+      var found = getGroup(name);
+      if (!found) {
+        throw new Error("Group not found");
+      }
+      return found.getSurveys();
+    }
+
+    function getSurveyGroups(surveyAcronym) {
+      return getGroupList().filter(function (group) {
+        return group.getSurveys().includes(surveyAcronym);
+      }).map(function (group) {
+        return group.getName();
+      });
+    }
+
+    function toJSON() {
+      return self.getGroupList();
+    }
+
+    function _buildGroupStructure(groups) {
+      var structure = {};
+
+      if (groups) {
+        groups.forEach(function (groupJson) {
+          var group = GroupFactory.fromJson(groupJson);
+          structure[group.getName()] = group;
+        });
+      }
+
+      return structure;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.survey').factory('otusjs.model.survey.DataSourceDefinitionFactory', Factory);
 
   function Factory() {
@@ -9594,234 +9926,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function _bindedDataSources(dataSource) {
       return dataSource.isBinded();
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.survey').factory('otusjs.survey.GroupFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create(name, surveyAcronyms) {
-      if (typeof name !== "string") {
-        throw Error("Name should be a string");
-      }
-
-      if (surveyAcronyms && !Array.isArray(surveyAcronyms)) {
-        throw Error("surveyAcronyms should be an array");
-      }
-
-      return new SurveyGroup(name, surveyAcronyms);
-    }
-
-    function fromJson(groupJson) {
-      return create(groupJson.name, groupJson.surveyAcronyms);
-    }
-
-    return self;
-  }
-
-  function SurveyGroup(name, surveyAcronyms) {
-    var self = this;
-
-    self.objectType = 'SurveyGroup';
-    self.name = name;
-    self.surveyAcronyms = surveyAcronyms || [];
-
-    if (!self.name) {
-      throw new Error("Name should be provided");
-    }
-
-    /* Public methods */
-    self.getName = getName;
-    self.getSurveys = getSurveys;
-    self.addSurvey = addSurvey;
-    self.removeSurvey = removeSurvey;
-    self.toJSON = toJSON;
-
-    function getName() {
-      return self.name;
-    }
-
-    function getSurveys() {
-      return self.surveyAcronyms;
-    }
-
-    function addSurvey(acronym) {
-      if (self.surveyAcronyms.indexOf(acronym) !== -1) {
-        throw new Error("Survey already in the group");
-      }
-      self.surveyAcronyms.push(acronym);
-      return self;
-    }
-
-    function removeSurvey(acronym) {
-      var index = self.surveyAcronyms.indexOf(acronym);
-
-      if (index === -1) {
-        throw new Error("Survey not found in the group");
-      }
-      self.surveyAcronyms.splice(index, 1);
-
-      return self;
-    }
-
-    function toJSON() {
-      return {
-        name: self.name,
-        surveyAcronyms: self.surveyAcronyms
-      };
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.survey').factory('otusjs.survey.GroupManagerFactory', Factory);
-
-  Factory.$inject = ['otusjs.survey.GroupFactory'];
-
-  function Factory(GroupFactory) {
-    var self = this;
-
-    /* Public methods */
-    self.create = create;
-
-    function create(groupList) {
-      return new SurveyGroupManager(GroupFactory, groupList);
-    }
-
-    return self;
-  }
-
-  function SurveyGroupManager(GroupFactory, groups) {
-    var self = this;
-    var groupStructure = _buildGroupStructure(groups);
-
-    self.objectType = 'SurveyGroupManager';
-
-    /* Public methods */
-    self.createGroup = createGroup;
-    self.getGroup = getGroup;
-    self.getGroupList = getGroupList;
-    self.getGroupNames = getGroupNames;
-    self.getGroupSurveys = getGroupSurveys;
-    self.getSurveyGroups = getSurveyGroups;
-    self.toJSON = toJSON;
-
-    function createGroup(name, surveys) {
-      if (getGroup(name)) {
-        throw new Error("Group already exists");
-      }
-      var group = GroupFactory.create(name, surveys);
-      groupStructure[name] = group;
-      return group;
-    }
-
-    function getGroupList() {
-      return Object.values(groupStructure);
-    }
-
-    function getGroup(name) {
-      return groupStructure[name];
-    }
-
-    function getGroupNames() {
-      return Object.keys(groupStructure);
-    }
-
-    function getGroupSurveys(name) {
-      var found = getGroup(name);
-      if (!found) {
-        throw new Error("Group not found");
-      }
-      return found.getSurveys();
-    }
-
-    function getSurveyGroups(surveyAcronym) {
-      return getGroupList().filter(function (group) {
-        return group.getSurveys().includes(surveyAcronym);
-      }).map(function (group) {
-        return group.getName();
-      });
-    }
-
-    function toJSON() {
-      return self.getGroupList();
-    }
-
-    function _buildGroupStructure(groups) {
-      var structure = {};
-
-      if (groups) {
-        groups.forEach(function (groupJson) {
-          var group = GroupFactory.fromJson(groupJson);
-          structure[group.getName()] = group;
-        });
-      }
-
-      return structure;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.surveyItem').factory('otusjs.surveyItem.customAnswer.FileUploadAnswerFactory', factory);
-
-  function factory() {
-    var self = this;
-
-    /* Public Interface */
-    self.buildAnswer = buildAnswer;
-    self.buildFromJson = buildFromJson;
-
-    function buildAnswer(fileInfo) {
-      return fileInfo.oid ? new FileUploadAnswer(fileInfo) : null;
-    }
-
-    function buildFromJson(fileArray) {
-      var arrayResult = [];
-      fileArray.forEach(function (jsonFile) {
-        var file = new FileUploadAnswer(jsonFile);
-        file.sentDate = new Date(jsonFile.sentDate);
-        arrayResult.push(file);
-      });
-      return arrayResult;
-    }
-    return self;
-  }
-
-  function FileUploadAnswer(fileInfo) {
-    var self = this;
-
-    self.objectType = 'FileAnswer';
-    self.name = fileInfo.name;
-    self.size = fileInfo.size;
-    self.type = fileInfo.type;
-    self.sentDate = fileInfo.lastModifiedDate ? fileInfo.lastModifiedDate.toISOString() : '';
-    self.oid = fileInfo.oid;
-    self.printableSize = bytesToSize();
-
-    function bytesToSize() {
-      var bytes = self.size;
-      var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-      if (bytes === 0) return '0 Byte';
-      var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-      return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     }
   }
 })();
@@ -10092,6 +10196,56 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
     return validators;
   };
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('otusjs.surveyItem.customAnswer.FileUploadAnswerFactory', factory);
+
+  function factory() {
+    var self = this;
+
+    /* Public Interface */
+    self.buildAnswer = buildAnswer;
+    self.buildFromJson = buildFromJson;
+
+    function buildAnswer(fileInfo) {
+      return fileInfo.oid ? new FileUploadAnswer(fileInfo) : null;
+    }
+
+    function buildFromJson(fileArray) {
+      var arrayResult = [];
+      fileArray.forEach(function (jsonFile) {
+        var file = new FileUploadAnswer(jsonFile);
+        file.sentDate = new Date(jsonFile.sentDate);
+        arrayResult.push(file);
+      });
+      return arrayResult;
+    }
+    return self;
+  }
+
+  function FileUploadAnswer(fileInfo) {
+    var self = this;
+
+    self.objectType = 'FileAnswer';
+    self.name = fileInfo.name;
+    self.size = fileInfo.size;
+    self.type = fileInfo.type;
+    self.sentDate = fileInfo.lastModifiedDate ? fileInfo.lastModifiedDate.toISOString() : '';
+    self.oid = fileInfo.oid;
+    self.printableSize = bytesToSize();
+
+    function bytesToSize() {
+      var bytes = self.size;
+      var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+      if (bytes === 0) return '0 Byte';
+      var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+      return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    }
+  }
 })();
 'use strict';
 
@@ -12286,71 +12440,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
-  angular.module('otusjs.surveyItem').factory('otusjs.model.question.LayoutGridFactory', LayoutGridFactory);
-
-  LayoutGridFactory.$inject = [];
-
-  function LayoutGridFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-    self.fromJsonObject = fromJsonObject;
-
-    function create(width) {
-      return new LayoutGrid(width);
-    }
-
-    function fromJsonObject(jsonObject) {
-      if (typeof jsonObject === 'string') {
-        throw new Error("otusjs.model.misc.model.LayoutGridFactory.fromJsonObject() method expects to receive a object instead a String");
-      }
-
-      var width = jsonObject.width;
-      var layoutGrid = new LayoutGrid(width);
-
-      return layoutGrid;
-    }
-
-    return self;
-  }
-
-  function LayoutGrid(width) {
-    var self = this;
-
-    self.extents = 'StudioObject';
-    self.objectType = "LayoutGrid";
-    self.width = width || 100;
-
-    /* Public methods */
-    self.setWidth = setWidth;
-    self.getWidth = getWidth;
-    self.toJSON = toJSON;
-
-    function setWidth(width) {
-      self.width = width;
-    }
-
-    function getWidth() {
-      return self.width;
-    }
-
-    function toJSON() {
-      var json = {};
-
-      json.extents = self.extents;
-      json.objectType = self.objectType;
-      json.width = self.width;
-
-      return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
   angular.module('otusjs.validation').factory('otusjs.model.validation.MaxSelectedValidatorFactory', Factory);
 
   function Factory() {
@@ -12458,6 +12547,71 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     self.canBeIgnored = true;
     self.reference = null;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('otusjs.surveyItem').factory('otusjs.model.question.LayoutGridFactory', LayoutGridFactory);
+
+  LayoutGridFactory.$inject = [];
+
+  function LayoutGridFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+    self.fromJsonObject = fromJsonObject;
+
+    function create(width) {
+      return new LayoutGrid(width);
+    }
+
+    function fromJsonObject(jsonObject) {
+      if (typeof jsonObject === 'string') {
+        throw new Error("otusjs.model.misc.model.LayoutGridFactory.fromJsonObject() method expects to receive a object instead a String");
+      }
+
+      var width = jsonObject.width;
+      var layoutGrid = new LayoutGrid(width);
+
+      return layoutGrid;
+    }
+
+    return self;
+  }
+
+  function LayoutGrid(width) {
+    var self = this;
+
+    self.extents = 'StudioObject';
+    self.objectType = "LayoutGrid";
+    self.width = width || 100;
+
+    /* Public methods */
+    self.setWidth = setWidth;
+    self.getWidth = getWidth;
+    self.toJSON = toJSON;
+
+    function setWidth(width) {
+      self.width = width;
+    }
+
+    function getWidth() {
+      return self.width;
+    }
+
+    function toJSON() {
+      var json = {};
+
+      json.extents = self.extents;
+      json.objectType = self.objectType;
+      json.width = self.width;
+
+      return json;
+    }
   }
 })();
 'use strict';

@@ -47,7 +47,6 @@ describe("PermissionManagerFactory", function () {
   describe("the findByType method", function () {
     beforeAll(function () {
       permissionManager = factory.create(PERMISSION_LIST, USER_EMAIL);
-
     });
 
     it("should fetch a permission given the object type", function () {
