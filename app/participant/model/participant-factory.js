@@ -36,6 +36,7 @@
   function Participant(participant) {
     var self = this;
 
+    self._id = participant._id || null;
     self.objectType = 'Participant';
     self.recruitmentNumber = participant.recruitmentNumber || "";
     self.name = participant.name || "";
@@ -54,6 +55,7 @@
     function toJSON() {
       var json = {};
 
+      json._id = self._id;
       json.objectType = self.objectType;
       json.recruitmentNumber = self.recruitmentNumber;
       if (self.name) json.name = self.name;
