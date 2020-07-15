@@ -5,10 +5,10 @@
   angular.module('otusjs.model.activity')
     .factory('otusjs.model.activity.OfflineActivityCollection', Factory);
 
-  Factory.$inject = [];
+  Factory.$inject = ['ObjectId', 'GeoJSON'];
 
 
-  function Factory() {
+  function Factory(ObjectId, GeoJSON) {
     var self = this;
 
     self.create = create;
@@ -16,24 +16,24 @@
     self.fromArray = fromArray;
 
     function create() {
-      return new OfflineActivityCollection({});
+      return new OfflineActivityCollection({}, ObjectId, GeoJSON);
     }
 
     function fromJson(json) {
-      return new OfflineActivityCollection(json);
+      return new OfflineActivityCollection(json, ObjectId, GeoJSON);
     }
 
     function fromArray(jsonArray) {
       var _collections = Array.prototype.concat.apply(jsonArray);
       return _collections.map(function (jsonObject) {
-          return new OfflineActivityCollection(jsonObject);
+        return new OfflineActivityCollection(jsonObject, ObjectId, GeoJSON);
       });
     }
 
     return self;
   }
 
-  function OfflineActivityCollection(jsonObject) {
+  function OfflineActivityCollection(jsonObject, ObjectId, GeoJSON) {
     var self = this;
 
     const OBJECT_TYPE = 'Activity';

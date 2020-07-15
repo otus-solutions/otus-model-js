@@ -9,8 +9,10 @@ describe('OfflineActivityCollection Tests', function () {
     angular.mock.inject($injector => {
       mockInjections();
 
+      Injections.GeoJSON = $injector.get('GeoJSON');
+
       factory = $injector.get('otusjs.model.activity.OfflineActivityCollection', Injections);
-      spyOn(window, 'GeoJSON').and.returnValue(Mock.GeoJSON)
+      spyOn(Injections, 'GeoJSON').and.returnValue(Mock.GeoJSON)
     });
   });
 
