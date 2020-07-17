@@ -321,6 +321,25 @@ describe('SurveyItemManagerFactory', function() {
 
   });
 
+  describe('loadIncrementalIDValue method', function () {
+
+    beforeEach(function () {
+      Mock.SurveyItemManager = factory.create();
+      Mock.SurveyItemManager.setIncrementalIDValue(9);
+    });
+
+    it('should be defined in factory', function () {
+      expect(Mock.SurveyItemManager.loadIncrementalIDValue).toBeDefined();
+    });
+
+    it('should call SurveyItemContainer.loadIncrementalIDValue method with customID', function () {
+      Mock.SurveyItemManager.loadItem(CHECKBOX_TYPE, 'Q3', 'Q');
+      Mock.SurveyItemManager.addItem(CHECKBOX_TYPE, 'Q');
+      Mock.SurveyItemManager.loadIncrementalIDValue("Q");
+      expect(Mock.SurveyItemManager.getLastItem().templateID).toEqual('Q10');
+    });
+
+  });
 
 
   function mockItems($injector) {
