@@ -1,22 +1,16 @@
-var global = window || global;
-global.GeoJSON = (function () {
-
+(function () {
   'use strict';
 
   angular.module('utils')
     .factory('GeoJSON', Factory);
 
-
   function Factory() {
     var constructor = function (callback) {
       return new GeoJSON(callback);
-
     };
-    return constructor;
 
     function GeoJSON(callback) {
       var self = this;
-
 
       function getLocation() {
         if (navigator.geolocation) {
@@ -59,9 +53,7 @@ global.GeoJSON = (function () {
       getLocation();
       return self;
     }
+
+    return constructor;
   }
-
-  return Factory();
-})();
-
-
+}());

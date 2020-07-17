@@ -95,6 +95,12 @@ describe('SurveyFactory', function () {
       expect(survey.getGroupItemsByItemID(mockSurveyItem)).toEqual(compare);
     });
 
+    it("should getGroupItemsByItemID return a SurveyItem", function () {
+      spyOn(survey.SurveyItemManager, 'loadIncrementalIDValue').and.callThrough();
+      survey.loadIncrementalIDValue();
+      expect(survey.SurveyItemManager.loadIncrementalIDValue).toHaveBeenCalledTimes(1);
+    });
+
   });
 
   describe("SurveyFactory.fromJsonObject(jsonObject)", function () {

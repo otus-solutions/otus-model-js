@@ -6,11 +6,12 @@
     .factory('otusjs.model.activity.GroupOfflineActivityCollection', Factory);
 
   Factory.$inject = [
-    'otusjs.model.activity.OfflineActivityCollection'
+    'otusjs.model.activity.OfflineActivityCollection',
+    'ObjectId'
   ];
 
 
-  function Factory(OfflineActivityCollection) {
+  function Factory(OfflineActivityCollection, ObjectId) {
     var self = this;
 
     self.create = create;
@@ -18,24 +19,24 @@
     self.fromArray = fromArray;
 
     function create() {
-      return new GroupOfflineActivityCollection({}, OfflineActivityCollection);
+      return new GroupOfflineActivityCollection({}, OfflineActivityCollection, ObjectId);
     }
 
     function fromJson(json) {
-      return new GroupOfflineActivityCollection(json, OfflineActivityCollection);
+      return new GroupOfflineActivityCollection(json, OfflineActivityCollection, ObjectId);
     }
 
     function fromArray(jsonArray) {
       var _collections = Array.prototype.concat.apply(jsonArray);
       return _collections.map(function (jsonObject) {
-          return new GroupOfflineActivityCollection(jsonObject, OfflineActivityCollection);
+        return new GroupOfflineActivityCollection(jsonObject, OfflineActivityCollection, ObjectId);
       });
     }
 
     return self;
   }
 
-  function GroupOfflineActivityCollection(jsonObject, OfflineActivityCollection) {
+  function GroupOfflineActivityCollection(jsonObject, OfflineActivityCollection, ObjectId) {
     var self = this;
 
     const OBJECT_TYPE = 'OfflineActivityCollection';
