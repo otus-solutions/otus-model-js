@@ -12,6 +12,7 @@ describe('ActivityImportService_TestSuite', function () {
       Injections.InterviewManagerFactory = $injector.get('otusjs.model.activity.InterviewManagerFactory');
       Injections.SurveyFormFactory = $injector.get('SurveyFormFactory');
 
+
       factory = $injector.get('otusjs.model.activity.ActivityFactory', Injections);
       spyOn(factory, "create").and.callFake(() => factory.fromJsonObject(Test.utils.data.activityPASC));
       activity = factory.create();
@@ -28,6 +29,7 @@ describe('ActivityImportService_TestSuite', function () {
     expect(factory.create).toBeDefined();
     expect(factory.createPaperActivity).toBeDefined();
     expect(factory.fromJsonObject).toBeDefined();
+    expect(factory.createAutoFillActivity).toBeDefined();
   });
 
   it('test_should_verify_instanceStructureCreated_by_createMethod', function () {
@@ -73,4 +75,14 @@ describe('ActivityImportService_TestSuite', function () {
   it('hasRequiredExternalID_method_should_return_invalid', function () {
     expect(activity.hasRequiredExternalID()).toBeFalsy();
   });
+
+  it('createAutoFillActivity_method_should_create_instance_of_autofillActivity_with_externalID', function () {
+    spyOn(Injections.NavigationTrackerFactory, 'create');
+    let [{ surveyForm, user, configuration, externalID }] = Test.utils.data.preActivityAutofill;
+    let participant = Test.utils.data.selectedParticipant;
+    let surveyFormInstance = Injections.SurveyFormFactory.fromJsonObject(surveyForm)
+    let autofillActivity = factory.createAutoFillActivity(surveyFormInstance, user, participant, configuration, "", externalID);
+    expect(autofillActivity.mode).toBe('AUTOFILL')
+    expect(autofillActivity.externalID).toBe(externalID);
+  })
 });
