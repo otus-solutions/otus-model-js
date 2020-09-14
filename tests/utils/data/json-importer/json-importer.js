@@ -29995,3 +29995,621 @@ Test.utils.data.jsonImportActivities = [{
   }
 }];
 Test.utils.data.groupArtefacts = {members : ["TST1", "TST2", "TST3", "TST4"]};
+Test.utils.data.autoFillArtects = {
+
+};
+
+Test.utils.data.preActivityAutofill = [
+  {
+    "objectType": "preActivity",
+    "surveyForm": {
+      "extents": "StudioObject",
+      "objectType": "SurveyForm",
+      "_id": "5aff3ee1af11bb0d302be3fe",
+      "sender": "diogo.rosas.ferreira@gmail.com",
+      "sendingDate": "2017-05-16T17:21:35.932Z",
+      "surveyFormType": "FORM_INTERVIEW",
+      "surveyTemplate": {
+        "extents": "StudioObject",
+        "objectType": "Survey",
+        "oid": "dXNlclVVSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOls0NTM4NDFkMC0zYTU3LTExZTctYmYzMi1kOWFmMzdjYTg5NmJdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==",
+        "identity": {
+          "extents": "StudioObject",
+          "objectType": "SurveyIdentity",
+          "name": "TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO",
+          "acronym": "TCLEC",
+          "recommendedTo": "",
+          "description": "",
+          "keywords": []
+        },
+        "metainfo": {
+          "extents": "StudioObject",
+          "objectType": "SurveyMetaInfo",
+          "creationDatetime": "2017-05-16T16:46:55.597Z",
+          "otusStudioVersion": ""
+        },
+        "dataSources": [],
+        "itemContainer": [
+          {
+            "extents": "SurveyItem",
+            "objectType": "SingleSelectionQuestion",
+            "templateID": "TCLEC1",
+            "customID": "TCLEC1",
+            "dataType": "Integer",
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "01. Declarou que compreendeu as informações apresentadas no TCLE e deu&nbsp; consentimento para participação no estudo.",
+                "formattedText": "<div>01. Declarou que compreendeu as informações apresentadas no TCLE e deu&nbsp;<span style='letter-spacing: 0.01em;'>consentimento para participação no estudo.</span></div>"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            },
+            "options": [
+              {
+                "extents": "StudioObject",
+                "objectType": "AnswerOption",
+                "value": 1,
+                "extractionValue": "0",
+                "dataType": "Integer",
+                "label": {
+                  "ptBR": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "Não",
+                    "formattedText": "Não"
+                  },
+                  "enUS": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                  },
+                  "esES": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                  }
+                }
+              },
+              {
+                "extents": "StudioObject",
+                "objectType": "AnswerOption",
+                "value": 2,
+                "extractionValue": "1",
+                "dataType": "Integer",
+                "label": {
+                  "ptBR": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "Sim",
+                    "formattedText": "Sim"
+                  },
+                  "enUS": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                  },
+                  "esES": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "extents": "StudioObject",
+              "objectType": "MetadataGroup",
+              "options": []
+            },
+            "fillingRules": {
+              "extends": "StudioObject",
+              "objectType": "FillingRules",
+              "options": {
+                "mandatory": {
+                  "extends": "StudioObject",
+                  "objectType": "Rule",
+                  "validatorType": "mandatory",
+                  "data": {
+                    "canBeIgnored": false,
+                    "reference": true
+                  }
+                }
+              }
+            }
+          },
+          {
+            "extents": "SurveyItem",
+            "objectType": "SingleSelectionQuestion",
+            "templateID": "TCLEC2",
+            "customID": "TCLEC2",
+            "dataType": "Integer",
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "02. Declarou concordar que amostras de sangue sejam armazenadas para análises&nbsp; futuras sobre as doenças crônicas em estudo.",
+                "formattedText": "<div>02. Declarou concordar que amostras de sangue sejam armazenadas para análises&nbsp;<span style='letter-spacing: 0.01em;'>futuras sobre as doenças crônicas em estudo.</span></div>"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            },
+            "options": [
+              {
+                "extents": "StudioObject",
+                "objectType": "AnswerOption",
+                "value": 1,
+                "extractionValue": "0",
+                "dataType": "Integer",
+                "label": {
+                  "ptBR": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "Não",
+                    "formattedText": "Não"
+                  },
+                  "enUS": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                  },
+                  "esES": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                  }
+                }
+              },
+              {
+                "extents": "StudioObject",
+                "objectType": "AnswerOption",
+                "value": 2,
+                "extractionValue": "1",
+                "dataType": "Integer",
+                "label": {
+                  "ptBR": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "Sim",
+                    "formattedText": "Sim"
+                  },
+                  "enUS": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                  },
+                  "esES": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "extents": "StudioObject",
+              "objectType": "MetadataGroup",
+              "options": []
+            },
+            "fillingRules": {
+              "extends": "StudioObject",
+              "objectType": "FillingRules",
+              "options": {
+                "mandatory": {
+                  "extends": "StudioObject",
+                  "objectType": "Rule",
+                  "validatorType": "mandatory",
+                  "data": {
+                    "canBeIgnored": false,
+                    "reference": true
+                  }
+                }
+              }
+            }
+          },
+          {
+            "extents": "SurveyItem",
+            "objectType": "FileUploadQuestion",
+            "templateID": "TCLEC3",
+            "customID": "TCLECupload",
+            "dataType": "Binary",
+            "label": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "Upload de Arquivo(s)",
+                "formattedText": "Upload de Arquivo(s)"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            },
+            "metadata": {
+              "extents": "StudioObject",
+              "objectType": "MetadataGroup",
+              "options": [
+                {
+                  "extends": "StudioObject",
+                  "objectType": "MetadataAnswer",
+                  "dataType": "Integer",
+                  "value": 1,
+                  "extractionValue": ".Q",
+                  "label": {
+                    "ptBR": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "Não quer responder",
+                      "formattedText": "Não quer responder"
+                    },
+                    "enUS": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "",
+                      "formattedText": ""
+                    },
+                    "esES": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "",
+                      "formattedText": ""
+                    }
+                  }
+                },
+                {
+                  "extends": "StudioObject",
+                  "objectType": "MetadataAnswer",
+                  "dataType": "Integer",
+                  "value": 2,
+                  "extractionValue": ".S",
+                  "label": {
+                    "ptBR": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "Não sabe",
+                      "formattedText": "Não sabe"
+                    },
+                    "enUS": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "",
+                      "formattedText": ""
+                    },
+                    "esES": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "",
+                      "formattedText": ""
+                    }
+                  }
+                },
+                {
+                  "extends": "StudioObject",
+                  "objectType": "MetadataAnswer",
+                  "dataType": "Integer",
+                  "value": 3,
+                  "extractionValue": ".A",
+                  "label": {
+                    "ptBR": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "Não se aplica",
+                      "formattedText": "Não se aplica"
+                    },
+                    "enUS": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "",
+                      "formattedText": ""
+                    },
+                    "esES": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "",
+                      "formattedText": ""
+                    }
+                  }
+                },
+                {
+                  "extends": "StudioObject",
+                  "objectType": "MetadataAnswer",
+                  "dataType": "Integer",
+                  "value": 4,
+                  "extractionValue": ".F",
+                  "label": {
+                    "ptBR": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "Não há dados",
+                      "formattedText": "Não há dados"
+                    },
+                    "enUS": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "",
+                      "formattedText": ""
+                    },
+                    "esES": {
+                      "extends": "StudioObject",
+                      "objectType": "Label",
+                      "oid": "",
+                      "plainText": "",
+                      "formattedText": ""
+                    }
+                  }
+                }
+              ]
+            },
+            "fillingRules": {
+              "extends": "StudioObject",
+              "objectType": "FillingRules",
+              "options": {
+                "mandatory": {
+                  "extends": "StudioObject",
+                  "objectType": "Rule",
+                  "validatorType": "mandatory",
+                  "data": {
+                    "canBeIgnored": false,
+                    "reference": true
+                  }
+                }
+              }
+            }
+          },
+          {
+            "extents": "SurveyItem",
+            "objectType": "TextItem",
+            "templateID": "TCLEC4",
+            "customID": "TCLECZ",
+            "dataType": "String",
+            "value": {
+              "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "Obrigado(a).",
+                "formattedText": "<i>Obrigado(a).</i>"
+              },
+              "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              },
+              "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+              }
+            }
+          }
+        ],
+        "navigationList": [
+          {
+            "extents": "SurveyTemplateObject",
+            "objectType": "Navigation",
+            "origin": "BEGIN NODE",
+            "index": 0,
+            "inNavigations": [],
+            "routes": [
+              {
+                "extents": "SurveyTemplateObject",
+                "objectType": "Route",
+                "origin": "BEGIN NODE",
+                "destination": "TCLEC1",
+                "name": "BEGIN NODE_TCLEC1",
+                "isDefault": true,
+                "conditions": []
+              }
+            ]
+          },
+          {
+            "extents": "SurveyTemplateObject",
+            "objectType": "Navigation",
+            "origin": "END NODE",
+            "index": 1,
+            "inNavigations": [
+              {
+                "origin": "TCLEC4",
+                "index": 5
+              }
+            ],
+            "routes": []
+          },
+          {
+            "extents": "SurveyTemplateObject",
+            "objectType": "Navigation",
+            "origin": "TCLEC1",
+            "index": 2,
+            "inNavigations": [
+              {
+                "origin": "BEGIN NODE",
+                "index": 0
+              }
+            ],
+            "routes": [
+              {
+                "extents": "SurveyTemplateObject",
+                "objectType": "Route",
+                "origin": "TCLEC1",
+                "destination": "TCLEC2",
+                "name": "TCLEC1_TCLEC2",
+                "isDefault": true,
+                "conditions": []
+              }
+            ]
+          },
+          {
+            "extents": "SurveyTemplateObject",
+            "objectType": "Navigation",
+            "origin": "TCLEC2",
+            "index": 3,
+            "inNavigations": [
+              {
+                "origin": "TCLEC1",
+                "index": 2
+              }
+            ],
+            "routes": [
+              {
+                "extents": "SurveyTemplateObject",
+                "objectType": "Route",
+                "origin": "TCLEC2",
+                "destination": "TCLEC3",
+                "name": "TCLEC2_TCLEC3",
+                "isDefault": true,
+                "conditions": []
+              }
+            ]
+          },
+          {
+            "extents": "SurveyTemplateObject",
+            "objectType": "Navigation",
+            "origin": "TCLEC3",
+            "index": 4,
+            "inNavigations": [
+              {
+                "origin": "TCLEC2",
+                "index": 3
+              }
+            ],
+            "routes": [
+              {
+                "extents": "SurveyTemplateObject",
+                "objectType": "Route",
+                "origin": "TCLEC3",
+                "destination": "TCLEC4",
+                "name": "TCLEC3_TCLEC4",
+                "isDefault": true,
+                "conditions": []
+              }
+            ]
+          },
+          {
+            "extents": "SurveyTemplateObject",
+            "objectType": "Navigation",
+            "origin": "TCLEC4",
+            "index": 5,
+            "inNavigations": [
+              {
+                "origin": "TCLEC3",
+                "index": 4
+              }
+            ],
+            "routes": [
+              {
+                "extents": "SurveyTemplateObject",
+                "objectType": "Route",
+                "origin": "TCLEC4",
+                "destination": "END NODE",
+                "name": "TCLEC4_END NODE",
+                "isDefault": true,
+                "conditions": []
+              }
+            ]
+          }
+        ],
+        "staticVariableList": [],
+        "surveyItemGroupList": []
+      },
+      "version": 1,
+      "acronym": "TCLEC",
+      "name": "TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO",
+      "isDiscarded": false,
+      "requiredExternalID": false
+    },
+    "configuration": {
+      "category": {
+        "name": "C0",
+        "objectType": "ActivityCategory",
+        "label": "Normal",
+        "disabled": false,
+        "isDefault": true,
+        "$$mdSelectId": 1
+      }
+    },
+    "mode": "AUTOFILL",
+    "user": {
+      "name": "Otus",
+      "surname": "Tester",
+      "fieldCenter": {},
+      "phone": "51998577585",
+      "email": "otus@gmail.com",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJtb2RlIjoidXNlciIsImlzcyI6ImZkcnRlY0BnbWFpbC5jb20ifQ.jjg9aUY70bYMXPQHVsAlrr5r-_gSbVxWVVTzgSGaIZw"
+    },
+    "externalID": "123-mock-dossie",
+    "preActivityValid": true
+  }
+]
