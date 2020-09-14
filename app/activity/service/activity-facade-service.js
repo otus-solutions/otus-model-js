@@ -55,8 +55,8 @@
       self.surveyActivity = ActivityFactory.createPaperActivity(template, user, participant, paperActivityData, activityConfiguration, null, externalID);
     }
 
-    function createAutoFillActivity(template, user, participant, activityConfiguration) {
-      self.surveyActivity = ActivityFactory.createAutoFillActivity(template, user, participant, activityConfiguration);
+    function createAutoFillActivity(template, user, participant, activityConfiguration, externalID) {
+      self.surveyActivity = ActivityFactory.createAutoFillActivity(template, user, participant, activityConfiguration, null, externalID);
     }
 
     function getInterviewer() {
