@@ -52,7 +52,7 @@ describe('Activity Permission Factory Test', function () {
     expect(permission.exclusiveDisjunction.length).toEqual(1);
     permission.removeUser(EMAIL);
     expect(permission.isUserExists).toHaveBeenCalledWith(EMAIL);
-    expect(permission.isUserExists).toHaveBeenCalledTimes(2);
+    expect(permission.isUserExists).toHaveBeenCalledTimes(1);
     expect(permission.exclusiveDisjunction.length).toEqual(0);
   });
 

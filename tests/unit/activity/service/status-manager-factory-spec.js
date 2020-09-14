@@ -1,19 +1,21 @@
 describe('StatusHistoryManagerFactory' , function() {
 
   var Mock = {};
-  var factory,service;
+  var Injections = [];
+  var factory;
   var baseDate = Date.now();
 
   beforeEach(function() {
     angular.mock.module('otusjs');
 
-    inject(function(_$injector_) {
-      mockUser(_$injector_);
+    inject(function($injector) {
+      Injections.ActivityStatusFactory = mockActivityStatusFactory($injector);
+      Injections.ACTIVITY_CONSTANTS = $injector.get('ACTIVITY_CONSTANTS');
 
-      factory = _$injector_.get('otusjs.model.activity.StatusHistoryManagerFactory', {
-        ActivityStatusFactory: mockActivityStatusFactory(_$injector_)
-      });
-      service = factory;
+      factory = $injector.get('otusjs.model.activity.StatusHistoryManagerFactory', Injections);
+
+      Mock.STATUS = Injections.ACTIVITY_CONSTANTS.STATUS;
+      mockUser($injector);
     });
   });
 
@@ -24,12 +26,12 @@ describe('StatusHistoryManagerFactory' , function() {
       factory.init();
     });
 
-    it('update user in inicialize offline registry should reset history', function() {
+    it('update user in initialize offline registry should reset history', function() {
       expect(factory.historySize()).toBe(0);
       factory.newCreatedRegistry(Mock.user);
       factory.newInitializedOfflineRegistry(Mock.offlineData);
       expect(factory.historySize()).toBe(2);
-      factory.getInitializedOfflineRegistry().setUser(Mock.userNew)
+      factory.getInitializedOfflineRegistry().setUser(Mock.userNew);
       expect(factory.historySize()).toBe(2);
     });
 
@@ -48,96 +50,82 @@ describe('StatusHistoryManagerFactory' , function() {
   describe('StatusHistoryManager method', function() {
     beforeEach(function () {
       mockOfflineData();
-      service = service.create();
-      service.init();
+      factory = factory.create();
+      factory.init();
     });
 
     it('historySizeMethod should return the number of history occurrences', function() {
-      service.newCreatedRegistry(Mock.user);
-      service.newCreatedRegistry(Mock.user);
-      service.newCreatedRegistry(Mock.user);
-
-      expect(service.historySize()).toBe(3);
+      factory.newCreatedRegistry(Mock.user);
+      factory.newCreatedRegistry(Mock.user);
+      factory.newCreatedRegistry(Mock.user);
+      expect(factory.historySize()).toBe(3);
     });
 
     it('getHistoryMethod should return history list', function() {
-      service.newCreatedRegistry(Mock.user);
-      service.newCreatedRegistry(Mock.user);
-      service.newCreatedRegistry(Mock.user);
-
-      expect(service.getHistory()).toEqual(jasmine.any(Array));
+      factory.newCreatedRegistry(Mock.user);
+      factory.newCreatedRegistry(Mock.user);
+      factory.newCreatedRegistry(Mock.user);
+      expect(factory.getHistory()).toEqual(jasmine.any(Array));
     });
 
     it('newInitializedOfflineRegistryMethod should add a new ActivityStatus in the list', function() {
-      service.newInitializedOfflineRegistry(Mock.user);
-
-      expect(service.historySize()).toBe(1);
+      factory.newInitializedOfflineRegistry(Mock.user);
+      expect(factory.historySize()).toBe(1);
     });
 
     it('newInitializedOfflineRegistryMethod should call ActivityStatusFactory.createInitializedOfflineStatus', function() {
-      service.newInitializedOfflineRegistry(Mock.user);
-
+      factory.newInitializedOfflineRegistry(Mock.user);
       expect(Mock.ActivityStatusFactory.createInitializedOfflineStatus).toHaveBeenCalledWith(Mock.user);
     });
 
     it('newInitializedOnlineRegistryMethod should add a new ActivityStatus in the list', function() {
-      service.newInitializedOnlineRegistry(Mock.user);
-
-      expect(service.historySize()).toBe(1);
+      factory.newInitializedOnlineRegistry(Mock.user);
+      expect(factory.historySize()).toBe(1);
     });
 
     it('newInitializedOnlineRegistryMethod should call ActivityStatusFactory.createInitializedOnlineStatus', function() {
-      service.newInitializedOnlineRegistry(Mock.user);
-
+      factory.newInitializedOnlineRegistry(Mock.user);
       expect(Mock.ActivityStatusFactory.createInitializedOnlineStatus).toHaveBeenCalledWith(Mock.user);
     });
 
     it('newOpenedRegistryMethod should add a new ActivityStatus in the list', function() {
-      service.newOpenedRegistry(Mock.user);
-
-      expect(service.historySize()).toBe(1);
+      factory.newOpenedRegistry(Mock.user);
+      expect(factory.historySize()).toBe(1);
     });
 
     it('newOpenedRegistryMethod should call ActivityStatusFactory.createOpenedStatus', function() {
-      service.newOpenedRegistry(Mock.user);
-
+      factory.newOpenedRegistry(Mock.user);
       expect(Mock.ActivityStatusFactory.createOpenedStatus).toHaveBeenCalledWith(Mock.user);
     });
 
     it('newSavedRegistryMethod should add a new ActivityStatus in the list', function() {
-      service.newSavedRegistry(Mock.user);
-
-      expect(service.historySize()).toBe(1);
+      factory.newSavedRegistry(Mock.user);
+      expect(factory.historySize()).toBe(1);
     });
 
     it('newSavedRegistryMethod should call ActivityStatusFactory.createSavedStatus', function() {
-      service.newSavedRegistry(Mock.user);
-
+      factory.newSavedRegistry(Mock.user);
       expect(Mock.ActivityStatusFactory.createSavedStatus).toHaveBeenCalledWith(Mock.user);
     });
 
     it('newFinalizedRegistryMethod should add a new ActivityStatus in the list', function() {
-      service.newFinalizedRegistry(Mock.user);
-
-      expect(service.historySize()).toBe(1);
+      factory.newFinalizedRegistry(Mock.user);
+      expect(factory.historySize()).toBe(1);
     });
 
     it('newFinalizedRegistryMethod should call ActivityStatusFactory.createFinalizedStatus', function() {
-      service.newFinalizedRegistry(Mock.user);
-
+      factory.newFinalizedRegistry(Mock.user);
       expect(Mock.ActivityStatusFactory.createFinalizedStatus).toHaveBeenCalledWith(Mock.user);
     });
 
     it('toJSONMethod should return a well formatted json based history list', function() {
       baseDate = new Date();
       jasmine.clock().mockDate(baseDate);
-
       mockJson();
 
-      service.newCreatedRegistry(Mock.user);
-      service.newCreatedRegistry(Mock.user);
-
-      expect(JSON.stringify(service.toJSON())).toEqual(Mock.json);
+      factory.newCreatedRegistry(Mock.user);
+      factory.newCreatedRegistry(Mock.user);
+      expect(JSON.stringify(factory.toJSON())).toEqual(Mock.json);
     });
 
   });
@@ -145,12 +133,12 @@ describe('StatusHistoryManagerFactory' , function() {
   function mockJson() {
     Mock.json = JSON.stringify([{
       objectType: 'ActivityStatus',
-      name: 'CREATED',
+      name: Mock.STATUS.CREATED,
       date: baseDate ,
       user: Mock.user
     }, {
       objectType: 'ActivityStatus',
-      name: 'CREATED',
+      name: Mock.STATUS.CREATED,
       date: baseDate,
       user: Mock.user
     }]);

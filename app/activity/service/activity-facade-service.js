@@ -37,6 +37,7 @@
     self.initializeActivitySurvey = initializeActivitySurvey;
     self.finalizeActivitySurvey = finalizeActivitySurvey;
     self.saveActivitySurvey = saveActivitySurvey;
+    self.reopenActivitySurvey = reopenActivitySurvey;
     self.getFillingByQuestionID = getFillingByQuestionID;
     self.clearSkippedAnswers = clearSkippedAnswers;
     self.getNavigationTracker = getNavigationTracker;
@@ -79,6 +80,11 @@
 
     function saveActivitySurvey() {
       self.surveyActivity.statusHistory.newSavedRegistry(_user);
+      self.surveyActivity.interviews.newRegistry(_user);
+    }
+
+    function reopenActivitySurvey() {
+      self.surveyActivity.statusHistory.newReopenedRegistry(_user);
       self.surveyActivity.interviews.newRegistry(_user);
     }
 

@@ -1,6 +1,7 @@
 describe('ActivityFacadeService_UnitTest_Suite', () => {
   let facade;
   let Injections = [];
+  let Mock = {};
 
   beforeEach(() => {
     angular.mock.module('otusjs');
@@ -13,6 +14,12 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
       Injections.RevisionFactory = $injector.get('otusjs.model.activity.RevisionFactory');
 
       facade = $injector.get('otusjs.model.activity.ActivityFacadeService', Injections);
+
+      Mock.ActivityStatusFactory = $injector.get('otusjs.model.activity.StatusHistoryManagerFactory',
+        {
+          ActivityStatusFactory: $injector.get('otusjs.model.activity.StatusHistoryManagerFactory'),
+          ACTIVITY_CONSTANTS: $injector.get('ACTIVITY_CONSTANTS')
+        })
     });
   });
 
@@ -31,6 +38,7 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
     expect(facade.initializeActivitySurvey).toBeDefined();
     expect(facade.finalizeActivitySurvey).toBeDefined();
     expect(facade.saveActivitySurvey).toBeDefined();
+    expect(facade.reopenActivitySurvey).toBeDefined();
     expect(facade.getFillingByQuestionID).toBeDefined();
     expect(facade.clearSkippedAnswers).toBeDefined();
     expect(facade.getNavigationTracker).toBeDefined();
@@ -59,6 +67,86 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
     facade.createAutoFillActivity();
     expect(Injections.ActivityFactory.createAutoFillActivity).toHaveBeenCalledTimes(1);
   });
+
+  describe('SurveyActivity statusHistory Suite Test', () => {
+
+    beforeEach(() => {
+      _mockSurveyActivity();
+    });
+
+    it('openActivitySurvey should invoke surveyActivity.statusHistory.newOpenedRegistry', function(){
+      spyOn(facade.surveyActivity.statusHistory, 'newOpenedRegistry');
+      facade.openActivitySurvey();
+      expect(facade.surveyActivity.statusHistory.newOpenedRegistry).toHaveBeenCalledTimes(1);
+    });
+
+    it('initializeActivitySurvey should invoke surveyActivity.statusHistory.newInitializedOnlineRegistry', function(){
+      spyOn(facade.surveyActivity.statusHistory, 'newInitializedOnlineRegistry');
+      facade.initializeActivitySurvey();
+      expect(facade.surveyActivity.statusHistory.newInitializedOnlineRegistry).toHaveBeenCalledTimes(1);
+    });
+
+    it('finalizeActivitySurvey should invoke surveyActivity.statusHistory.newFinalizedRegistry', function(){
+      spyOn(facade.surveyActivity.statusHistory, 'newFinalizedRegistry');
+      facade.finalizeActivitySurvey();
+      expect(facade.surveyActivity.statusHistory.newFinalizedRegistry).toHaveBeenCalledTimes(1);
+    });
+
+    it('saveActivitySurvey should invoke surveyActivity.statusHistory.newSavedRegistry', function(){
+      spyOn(facade.surveyActivity.statusHistory, 'newSavedRegistry');
+      facade.saveActivitySurvey();
+      expect(facade.surveyActivity.statusHistory.newSavedRegistry).toHaveBeenCalledTimes(1);
+    });
+
+    it('reopenActivitySurvey should invoke surveyActivity.statusHistory.newReopenedRegistry', function(){
+      spyOn(facade.surveyActivity.statusHistory, 'newReopenedRegistry');
+      facade.reopenActivitySurvey();
+      expect(facade.surveyActivity.statusHistory.newReopenedRegistry).toHaveBeenCalledTimes(1);
+    });
+
+  });
+
+  it('createQuestionFill should invoke QuestionFillFactory create', function(){
+    spyOn(Injections.QuestionFillFactory, 'create');
+    facade.createQuestionFill();
+    expect(Injections.QuestionFillFactory.create).toHaveBeenCalledTimes(1);
+  });
+
+  it('fillQuestion should invoke surveyActivity.fillContainer.updateFilling', function(){
+    _mockSurveyActivity();
+    spyOn(facade.surveyActivity.fillContainer, 'updateFilling');
+    facade.fillQuestion();
+    expect(facade.surveyActivity.fillContainer.updateFilling).toHaveBeenCalledTimes(1);
+  });
+
+  it('getFillingByQuestionID should invoke surveyActivity.fillContainer.searchFillingByID', function(){
+    _mockSurveyActivity();
+    spyOn(facade.surveyActivity.fillContainer, 'searchFillingByID');
+    facade.getFillingByQuestionID();
+    expect(facade.surveyActivity.fillContainer.searchFillingByID).toHaveBeenCalledTimes(1);
+  });
+
+  function _mockSurveyActivity() {
+    const surveyActivity = Test.utils.data.activityPASC;
+    // facade.createActivity(
+    //   surveyActivity.template,
+    //   surveyActivity.surveyForm.sender,
+    //   surveyActivity.participantData,
+    //   {},
+    //   surveyActivity.externalID
+    // );
+    // console.log(facade.surveyActivity)
+    // angular.extend(facade.surveyActivity, facade.surveyActivity, surveyActivity);
+
+    facade.surveyActivity = angular.copy(surveyActivity);
+    facade.surveyActivity.statusHistory = Mock.ActivityStatusFactory.create();
+    facade.surveyActivity.statusHistory.init(surveyActivity.statusHistory);
+    facade.surveyActivity.interviews = {
+      newRegistry: function(user) {}
+    };
+    facade.surveyActivity.fillContainer.updateFilling = function(any){};
+    facade.surveyActivity.fillContainer.searchFillingByID = function(any){};
+  }
 
 });
 

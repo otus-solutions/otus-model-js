@@ -6,16 +6,19 @@
     .factory('otusjs.model.activity.StatusHistoryManagerFactory', Factory);
 
   Factory.$inject = [
-    'otusjs.model.activity.ActivityStatusFactory'
+    'otusjs.model.activity.ActivityStatusFactory',
+    'ACTIVITY_CONSTANTS'
   ];
 
   var Inject = {};
+  var statusValues = null;
 
-  function Factory(ActivityStatusFactory) {
+  function Factory(ActivityStatusFactory, ACTIVITY_CONSTANTS) {
     Inject.ActivityStatusFactory = ActivityStatusFactory;
 
     var self = this;
     self.OBJECT_TYPE = 'StatusHistoryManager';
+    statusValues = ACTIVITY_CONSTANTS.STATUS;
 
     /* Public methods */
     self.create = create;
@@ -55,6 +58,7 @@
     self.newOpenedRegistry = newOpenedRegistry;
     self.newSavedRegistry = newSavedRegistry;
     self.newFinalizedRegistry = newFinalizedRegistry;
+    self.newReopenedRegistry = newReopenedRegistry;
     self.toJSON = toJSON;
 
     function init(history) {
@@ -71,15 +75,14 @@
 
     function getInitializedOfflineRegistry() {
       var registry = _history.filter(function(status) {
-        return status.name === 'INITIALIZED_OFFLINE';
+        return status.name === statusValues.INITIALIZED_OFFLINE;
       });
-
       return registry[0];
     }
 
     function getFinalizedRegistries() {
       return _history.filter(function(status) {
-        return status.name === 'FINALIZED';
+        return status.name === statusValues.FINALIZED;
       });
     }
 
@@ -105,6 +108,10 @@
 
     function newFinalizedRegistry(user) {
       _history.push(Inject.ActivityStatusFactory.createFinalizedStatus(user));
+    }
+
+    function newReopenedRegistry(user) {
+      _history.push(Inject.ActivityStatusFactory.createReopenedStatus(user));
     }
 
     function historySize() {
