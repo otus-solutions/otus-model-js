@@ -10,7 +10,8 @@ describe("SurveyGroupPermissionFactory", function () {
     sampleTransportationAccess: false,
     examLotsAccess:false,
     examSendingAccess:true,
-    unattachedLaboratoriesAccess:false
+    unattachedLaboratoriesAccess:false,
+    laboratoryMaterialManagerAccess:false
   };
 
   beforeEach(function () {
@@ -33,6 +34,7 @@ describe("SurveyGroupPermissionFactory", function () {
       expect(permission.examLotsAccess).toEqual(PERMISSION_JSON.examLotsAccess);
       expect(permission.examSendingAccess).toEqual(PERMISSION_JSON.examSendingAccess);
       expect(permission.unattachedLaboratoriesAccess).toEqual(PERMISSION_JSON.unattachedLaboratoriesAccess);
+      expect(permission.laboratorysMaterialManagerAccess).toEqual(PERMISSION_JSON.laboratorysMaterialManagerAccess);
       expect(permission.toJSON().email).toEqual(PERMISSION_JSON.email);
     });
 
