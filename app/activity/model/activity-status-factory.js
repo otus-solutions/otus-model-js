@@ -5,10 +5,17 @@
     .module('otusjs.model.activity')
     .factory('otusjs.model.activity.ActivityStatusFactory', Factory);
 
-  function Factory() {
+  Factory.inject = [
+    'ACTIVITY_CONSTANTS'
+  ];
+
+  let offLineStatus = '';
+
+  function Factory(ACTIVITY_CONSTANTS) {
     var self = this;
 
     self.OBJECT_TYPE = 'ActivityStatus';
+    offLineStatus = ACTIVITY_CONSTANTS.STATUS.INITIALIZED_OFFLINE;
 
     /* Public methods */
     self.createCreatedStatus = createCreatedStatus;
@@ -17,30 +24,35 @@
     self.createOpenedStatus = createOpenedStatus;
     self.createSavedStatus = createSavedStatus;
     self.createFinalizedStatus = createFinalizedStatus;
+    self.createReopenedStatus = createReopenedStatus;
     self.fromJsonObject = fromJsonObject;
 
     function createCreatedStatus(user) {
-      return new ActivityStatus('CREATED', user);
+      return new ActivityStatus(ACTIVITY_CONSTANTS.STATUS.CREATED, user);
     }
 
     function createInitializedOfflineStatus(offlineData) {
-      return new ActivityStatus('INITIALIZED_OFFLINE', offlineData.checker, offlineData.realizationDate);
+      return new ActivityStatus(ACTIVITY_CONSTANTS.STATUS.INITIALIZED_OFFLINE, offlineData.checker, offlineData.realizationDate);
     }
 
     function createInitializedOnlineStatus(user) {
-      return new ActivityStatus('INITIALIZED_ONLINE', user);
+      return new ActivityStatus(ACTIVITY_CONSTANTS.STATUS.INITIALIZED_ONLINE, user);
     }
 
     function createOpenedStatus(user) {
-      return new ActivityStatus('OPENED', user);
+      return new ActivityStatus(ACTIVITY_CONSTANTS.STATUS.OPENED, user);
     }
 
     function createSavedStatus(user) {
-      return new ActivityStatus('SAVED', user);
+      return new ActivityStatus(ACTIVITY_CONSTANTS.STATUS.SAVED, user);
     }
 
     function createFinalizedStatus(user) {
-      return new ActivityStatus('FINALIZED', user);
+      return new ActivityStatus(ACTIVITY_CONSTANTS.STATUS.FINALIZED, user);
+    }
+
+    function createReopenedStatus(user) {
+      return new ActivityStatus(ACTIVITY_CONSTANTS.STATUS.REOPENED, user);
     }
 
     function fromJsonObject(jsonObject) {
@@ -67,26 +79,24 @@
 
 
     function setUser(user) {
-      if(self.name === 'INITIALIZED_OFFLINE'){
+      if(self.name === offLineStatus){
         self.user = angular.copy(user);
       }
     }
 
     function setDate(date) {
-      if(self.name === 'INITIALIZED_OFFLINE'){
+      if(self.name === offLineStatus){
         self.date = angular.copy(date);
       }
     }
 
     function toJSON() {
-      var json = {};
-
-      json.objectType = self.objectType;
-      json.name = self.name;
-      json.date = self.date;
-      json.user = self.user;
-
-      return json;
+      return {
+        objectType: self.objectType,
+        name: self.name,
+        date: self.date,
+        user: self.user
+      };
     }
   }
 

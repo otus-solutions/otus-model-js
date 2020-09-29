@@ -34,8 +34,13 @@
   function ActivityPermission(objectJson) {
     var self = this;
 
-
+    /* Public methods */
     self.showError = showError;
+    self.addUser = addUser;
+    self.removeUser = removeUser;
+    self.isUserExists = isUserExists;
+    self.toJSON = toJSON;
+
 
     self._id = '_id' in objectJson ? objectJson._id : null;
     self.objectType = 'ActivityPermission';
@@ -45,12 +50,6 @@
     self.exclusiveDisjunction = Array.isArray(objectJson.exclusiveDisjunction) ? objectJson.exclusiveDisjunction : [];
 
 
-    /* Public methods */
-    self.addUser = addUser;
-    self.removeUser = removeUser;
-    self.isUserExists = isUserExists;
-    self.toJSON = toJSON;
-
     function showError (msg) {
       throw new Error(msg);
     }
@@ -58,27 +57,25 @@
     function addUser(email) {
       if (!_validEmail(email)){
         self.showError('Email invalid!');
-      } else
-          if(!self.isUserExists(email)){
-            self.exclusiveDisjunction.push(email.toLowerCase())
-          }
+      } else if(!self.isUserExists(email)){
+        self.exclusiveDisjunction.push(email.toLowerCase())
+      }
     }
 
     function removeUser(email) {
       if (!_validEmail(email)){
         self.showError('Email invalid!');
-      } else
-          if(self.isUserExists(email)){
-            var index = self.exclusiveDisjunction.indexOf(email.toLowerCase());
-            if(index > -1){
-              self.exclusiveDisjunction.splice(index, 1);
-            }
+      } else {
+          var index = self.exclusiveDisjunction.indexOf(email.toLowerCase());
+          if(index > -1){
+            self.exclusiveDisjunction.splice(index, 1);
           }
+        }
     }
 
     function isUserExists(email) {
       var index = self.exclusiveDisjunction.indexOf(email.toLowerCase());
-      return index > -1 ? true : false;
+      return index > -1;
     }
 
     function _validEmail(email) {
@@ -87,14 +84,13 @@
     }
 
     function toJSON() {
-      var json = {};
-      json._id = self._id;
-      json.objectType = self.objectType;
-      json.acronym = self.acronym;
-      json.version = self.version;
-      json.exclusiveDisjunction = self.exclusiveDisjunction;
-
-      return json;
+      return {
+        _id: self._id,
+        objectType: self.objectType,
+        acronym: self.acronym,
+        version: self.version,
+        exclusiveDisjunction: self.exclusiveDisjunction
+      };
     }
 
   }

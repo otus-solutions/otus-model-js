@@ -73,12 +73,12 @@
       return activity;
     }
 
-    function createAutoFillActivity(surveyForm, user, participant, activityConfiguration) {
+    function createAutoFillActivity(surveyForm, user, participant, activityConfiguration, id, externalID) {
       Inject.FillingManager.init();
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
       activity.mode = 'AUTOFILL';
       activity.category = activityConfiguration.category;
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -183,15 +183,16 @@
     function getTemplate() {
       if (_existStructuralFailure()) {
         return self.surveyForm;
-      } else {
-        return self.surveyForm.surveyTemplate;
       }
+      return self.surveyForm.surveyTemplate;
     }
 
     function getIdentity() {
       let template = getTemplate();
-      if (!template.identity) return template;
-      else return template.identity;
+      if (!template.identity) {
+        return template;
+      }
+      return template.identity;
     }
 
     function getName() {
@@ -205,11 +206,12 @@
 
       if (lastFinalizedStatus) {
         return lastFinalizedStatus.date;
-      } else if (offlineInitialization) {
-        return offlineInitialization.date;
-      } else {
-        throw new Error('Can not determine the realization date of Activity.');
       }
+      if (offlineInitialization) {
+        return offlineInitialization.date;
+      }
+
+      throw new Error('Can not determine the realization date of Activity.');
     }
 
     function getNavigationTracker() {

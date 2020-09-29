@@ -26,6 +26,7 @@
       self.examLotsAccess = permissionJson.examLotsAccess || false;
       self.examSendingAccess = permissionJson.examSendingAccess || false;
       self.unattachedLaboratoriesAccess = permissionJson.unattachedLaboratoriesAccess || false;
+      self.laboratoryMaterialManagerAccess = permissionJson.laboratoryMaterialManagerAccess || false;
 
       self.toJSON = toJSON;
 
@@ -39,6 +40,7 @@
         json.examLotsAccess = self.examLotsAccess;
         json.examSendingAccess = self.examSendingAccess;
         json.unattachedLaboratoriesAccess = self.unattachedLaboratoriesAccess;
+        json.laboratoryMaterialManagerAccess = self.laboratoryMaterialManagerAccess;
 
         return json;
       }

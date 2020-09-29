@@ -1,26 +1,21 @@
 describe('ActivityStatusFactory', function() {
 
-    var CREATED = 'CREATED';
-    var OPENED = 'OPENED';
-    var SAVED = 'SAVED';
-    var FINALIZED = 'FINALIZED';
-    var INITIALIZED_OFFLINE = 'INITIALIZED_OFFLINE';
-    var INITIALIZED_ONLINE = 'INITIALIZED_ONLINE';
-
     var factory;
     var userFactory;
     var Mock = {};
+    var Injections = [];
 
     beforeEach(function() {
         angular.mock.module('otusjs');
 
-        inject(function(_$injector_) {
-            factory = _$injector_.get('otusjs.model.activity.ActivityStatusFactory');
-            userFactory = _$injector_.get('otusjs.model.activity.ActivityUserFactory');
+        inject(function($injector) {
+            Injections.ACTIVITY_CONSTANTS = $injector.get('ACTIVITY_CONSTANTS');
+            factory = $injector.get('otusjs.model.activity.ActivityStatusFactory', Injections);
+            userFactory = $injector.get('otusjs.model.activity.ActivityUserFactory');
         });
 
+        Mock.STATUS = Injections.ACTIVITY_CONSTANTS.STATUS;
         mockUser();
-
     });
 
     describe('createCreatedStatus method', function() {
@@ -35,7 +30,7 @@ describe('ActivityStatusFactory', function() {
         });
 
         it('should return an object with name equal to CREATED', function() {
-            expect(status.name).toEqual(CREATED);
+            expect(status.name).toEqual(Mock.STATUS.CREATED);
         });
 
         it('should return an object with a date', function() {
@@ -61,7 +56,7 @@ describe('ActivityStatusFactory', function() {
         });
 
         it('should return an object with name equal to INITIALIZED_OFFLINE', function() {
-            expect(status.name).toEqual(INITIALIZED_OFFLINE);
+            expect(status.name).toEqual(Mock.STATUS.INITIALIZED_OFFLINE);
         });
 
         it('should return an object with a date', function() {
@@ -86,7 +81,7 @@ describe('ActivityStatusFactory', function() {
         });
 
         it('should return an object with name equal to INITIALIZED_ONLINE', function() {
-            expect(status.name).toEqual(INITIALIZED_ONLINE);
+            expect(status.name).toEqual(Mock.STATUS.INITIALIZED_ONLINE);
         });
 
         it('should return an object with a date', function() {
@@ -111,7 +106,7 @@ describe('ActivityStatusFactory', function() {
         });
 
         it('should return an object with name equal to OPENED', function() {
-            expect(status.name).toEqual(OPENED);
+            expect(status.name).toEqual(Mock.STATUS.OPENED);
         });
 
         it('should return an object with a date', function() {
@@ -136,7 +131,7 @@ describe('ActivityStatusFactory', function() {
         });
 
         it('should return an object with name equal to SAVED', function() {
-            expect(status.name).toEqual(SAVED);
+            expect(status.name).toEqual(Mock.STATUS.SAVED);
         });
 
         it('should return an object with a date', function() {
@@ -161,7 +156,7 @@ describe('ActivityStatusFactory', function() {
         });
 
         it('should return an object with name equal to FINALIZED', function() {
-            expect(status.name).toEqual(FINALIZED);
+            expect(status.name).toEqual(Mock.STATUS.FINALIZED);
         });
 
         it('should return an object with a date', function() {
@@ -184,7 +179,7 @@ describe('ActivityStatusFactory', function() {
     it('should update user in activity status', function () {
       status = factory.createInitializedOfflineStatus(Mock.offlineData);
       status.date = Mock.date;
-      expect(status.name).toEqual(INITIALIZED_OFFLINE);
+      expect(status.name).toEqual(Mock.STATUS.INITIALIZED_OFFLINE);
       expect(status.user.name).toEqual(Mock.user.name);
       expect(status.user.email).toEqual(Mock.user.email);
       expect(status.date).toEqual(Mock.date);
@@ -197,7 +192,7 @@ describe('ActivityStatusFactory', function() {
 
     it('should update user in activity status', function () {
       status = factory.createInitializedOnlineStatus(Mock.user);
-      expect(status.name).not.toEqual(INITIALIZED_OFFLINE);
+      expect(status.name).not.toEqual(Mock.STATUS.INITIALIZED_OFFLINE);
       expect(status.user.name).toEqual(Mock.user.name);
       expect(status.user.email).toEqual(Mock.user.email);
       status.setUser(Mock.userNew);
@@ -212,7 +207,6 @@ describe('ActivityStatusFactory', function() {
         Mock.date = "2017-04-12T02:57:33.873Z";
         Mock.userNew = userFactory.create('New User', 'newuser@email.com');
         Mock.dateNew = "2018-04-12T02:57:33.873Z";
-
     }
 
     function mockOfflineData() {
