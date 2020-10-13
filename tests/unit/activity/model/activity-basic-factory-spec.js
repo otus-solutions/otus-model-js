@@ -6,7 +6,6 @@ describe('ActivityBaseFactory_UnitTest_Suite', () => {
   beforeEach(() => {
     angular.mock.module('otusjs.model.activity');
     angular.mock.inject($injector => {
-      //Injections. = $injector.get(' ');
       factory = $injector.get('otusjs.model.activity.ActivityBasicFactory', Injections);
       mockInitialize();
     });
@@ -20,12 +19,12 @@ describe('ActivityBaseFactory_UnitTest_Suite', () => {
     expect(factory).toBeDefined();
   });
 
-  xit('factoryMethodsExistence_check', () => {
-    //expect(factory.).toBeDefined();
+  it('factoryMethodsExistence_check', () => {
+    expect(factory.fromJsonObject).toBeDefined();
   });
 
   it('should ', () => {
     let activityBasic = factory.fromJsonObject(Mock.data);
-    console.log(activityBasic.acronym);
+    expect(activityBasic.objectType).toBe("ActivityBasicModel");
   });
 });

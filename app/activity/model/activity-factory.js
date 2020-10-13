@@ -152,7 +152,6 @@
     self.toJSON = toJSON;
     self.toObjectJson = toObjectJson;
     self.hasRequiredExternalID = hasRequiredExternalID;
-    self.getStageId = getStageId;
 
     function getID() {
       return _id;
@@ -245,10 +244,6 @@
 
     function fillStaticVariablesValues(fillingArray) {
       return getTemplate().fillStaticVariablesValues(fillingArray);
-    }
-
-    function getStageId(){
-      return self.stageId;
     }
 
     function toJSON() {
