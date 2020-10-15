@@ -39,6 +39,7 @@
     //tube handling
     self.tubes = [];
     self.exams = labParticipant.exams; //not in use yet
+    self.locationPoint = labParticipant.locationPoint;
 
     self.reloadTubeList = reloadTubeList;
     self.updateTubeList = updateTubeList;
@@ -62,7 +63,8 @@
         recruitmentNumber: self.recruitmentNumber,
         collectGroupName: self.collectGroupName,
         tubes: self.tubes,
-        exams: self.exams
+        exams: self.exams,
+        locationPoint: self.locationPoint
       };
 
       return json;

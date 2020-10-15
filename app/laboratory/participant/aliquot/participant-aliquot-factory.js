@@ -42,6 +42,7 @@
     self.role = aliquotInfo.role;
     self.code = aliquotInfo.code || aliquotInfo.aliquotCode; //.aliquotCode
     self.container = aliquotInfo.container;
+    self.locationPoint = aliquotInfo.locationPoint;
 
     self.aliquotCollectionData = AliquotCollectionDataFactory.create(aliquotInfo.aliquotCollectionData);
     self.aliquotHistory = AliquotHistoryFactory.fromArray(aliquotInfo.aliquotHistory);
@@ -72,8 +73,9 @@
       self.label = aliquotDescriptor.label;
     }
 
-    function collect(operator, processing) {
+    function collect(operator, processing, locationPoint) {
       self.aliquotCollectionData.fill(operator, processing);
+      self.locationPoint = locationPoint;
     }
 
     function convertStorage(operator,description, type) {
@@ -97,7 +99,8 @@
         container: self.container,
         role: self.role,
         aliquotCollectionData: self.aliquotCollectionData,
-        aliquotHistory: self.aliquotHistory
+        aliquotHistory: self.aliquotHistory,
+        locationPoint: self.locationPoint
       };
       return json;
     }
