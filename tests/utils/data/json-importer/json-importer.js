@@ -30624,5 +30624,5 @@ Test.utils.data.activityBaseModel = {
     "user": {},
     "date": "2020-09-30T00:00:00"
   },
-  "externalId": "20200921516453",
+  "externalID": "20200921516453",
 }

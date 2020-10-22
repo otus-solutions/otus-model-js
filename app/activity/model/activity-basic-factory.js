@@ -30,7 +30,7 @@
     self.mode = data.mode;
     self.category = data.category;
     self.lastStatus = data.lastStatus;
-    self.externalId = data.externalId;
+    self.externalID = data.externalID;
   }
 
 }());
