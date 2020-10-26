@@ -12,6 +12,7 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
       Injections.ActivityFactory = $injector.get('otusjs.model.activity.ActivityFactory');
       Injections.InterviewFactory = $injector.get('otusjs.model.activity.InterviewFactory');
       Injections.RevisionFactory = $injector.get('otusjs.model.activity.RevisionFactory');
+      Injections.ActivityBasicFactory = $injector.get('otusjs.model.activity.ActivityBasicFactory');
 
       facade = $injector.get('otusjs.model.activity.ActivityFacadeService', Injections);
 
@@ -48,21 +49,22 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
     expect(facade.getItemStaticVariableList).toBeDefined();
     expect(facade.fillStaticVariablesValues).toBeDefined();
     expect(facade.hasRequiredExternalID).toBeDefined();
+    expect(facade.getActivityBasicFactory).toBeDefined();
   });
 
-  it('createActivity should invoke the same method of ActivityFactory', function(){
+  it('createActivity should invoke the same method of ActivityFactory', function () {
     spyOn(Injections.ActivityFactory, 'create').and.returnValue({});
     facade.createActivity();
     expect(Injections.ActivityFactory.create).toHaveBeenCalledTimes(1);
   });
 
-  it('createPaperActivity should invoke the same method of ActivityFactory', function(){
+  it('createPaperActivity should invoke the same method of ActivityFactory', function () {
     spyOn(Injections.ActivityFactory, 'createPaperActivity').and.returnValue({});
     facade.createPaperActivity();
     expect(Injections.ActivityFactory.createPaperActivity).toHaveBeenCalledTimes(1);
   });
 
-  it('createAutoFillActivity should invoke the same method of ActivityFactory', function(){
+  it('createAutoFillActivity should invoke the same method of ActivityFactory', function () {
     spyOn(Injections.ActivityFactory, 'createAutoFillActivity').and.returnValue({});
     facade.createAutoFillActivity();
     expect(Injections.ActivityFactory.createAutoFillActivity).toHaveBeenCalledTimes(1);
@@ -74,31 +76,31 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
       _mockSurveyActivity();
     });
 
-    it('openActivitySurvey should invoke surveyActivity.statusHistory.newOpenedRegistry', function(){
+    it('openActivitySurvey should invoke surveyActivity.statusHistory.newOpenedRegistry', function () {
       spyOn(facade.surveyActivity.statusHistory, 'newOpenedRegistry');
       facade.openActivitySurvey();
       expect(facade.surveyActivity.statusHistory.newOpenedRegistry).toHaveBeenCalledTimes(1);
     });
 
-    it('initializeActivitySurvey should invoke surveyActivity.statusHistory.newInitializedOnlineRegistry', function(){
+    it('initializeActivitySurvey should invoke surveyActivity.statusHistory.newInitializedOnlineRegistry', function () {
       spyOn(facade.surveyActivity.statusHistory, 'newInitializedOnlineRegistry');
       facade.initializeActivitySurvey();
       expect(facade.surveyActivity.statusHistory.newInitializedOnlineRegistry).toHaveBeenCalledTimes(1);
     });
 
-    it('finalizeActivitySurvey should invoke surveyActivity.statusHistory.newFinalizedRegistry', function(){
+    it('finalizeActivitySurvey should invoke surveyActivity.statusHistory.newFinalizedRegistry', function () {
       spyOn(facade.surveyActivity.statusHistory, 'newFinalizedRegistry');
       facade.finalizeActivitySurvey();
       expect(facade.surveyActivity.statusHistory.newFinalizedRegistry).toHaveBeenCalledTimes(1);
     });
 
-    it('saveActivitySurvey should invoke surveyActivity.statusHistory.newSavedRegistry', function(){
+    it('saveActivitySurvey should invoke surveyActivity.statusHistory.newSavedRegistry', function () {
       spyOn(facade.surveyActivity.statusHistory, 'newSavedRegistry');
       facade.saveActivitySurvey();
       expect(facade.surveyActivity.statusHistory.newSavedRegistry).toHaveBeenCalledTimes(1);
     });
 
-    it('reopenActivitySurvey should invoke surveyActivity.statusHistory.newReopenedRegistry', function(){
+    it('reopenActivitySurvey should invoke surveyActivity.statusHistory.newReopenedRegistry', function () {
       spyOn(facade.surveyActivity.statusHistory, 'newReopenedRegistry');
       facade.reopenActivitySurvey();
       expect(facade.surveyActivity.statusHistory.newReopenedRegistry).toHaveBeenCalledTimes(1);
@@ -106,25 +108,30 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
 
   });
 
-  it('createQuestionFill should invoke QuestionFillFactory create', function(){
+  it('createQuestionFill should invoke QuestionFillFactory create', function () {
     spyOn(Injections.QuestionFillFactory, 'create');
     facade.createQuestionFill();
     expect(Injections.QuestionFillFactory.create).toHaveBeenCalledTimes(1);
   });
 
-  it('fillQuestion should invoke surveyActivity.fillContainer.updateFilling', function(){
+  it('fillQuestion should invoke surveyActivity.fillContainer.updateFilling', function () {
     _mockSurveyActivity();
     spyOn(facade.surveyActivity.fillContainer, 'updateFilling');
     facade.fillQuestion();
     expect(facade.surveyActivity.fillContainer.updateFilling).toHaveBeenCalledTimes(1);
   });
 
-  it('getFillingByQuestionID should invoke surveyActivity.fillContainer.searchFillingByID', function(){
+  it('getFillingByQuestionID should invoke surveyActivity.fillContainer.searchFillingByID', function () {
     _mockSurveyActivity();
     spyOn(facade.surveyActivity.fillContainer, 'searchFillingByID');
     facade.getFillingByQuestionID();
     expect(facade.surveyActivity.fillContainer.searchFillingByID).toHaveBeenCalledTimes(1);
   });
+
+  it('getActivityBasicFactory method should return factory of activityBasic', () => {
+    let result = facade.getActivityBasicFactory();
+    expect(result.OBJECT_TYPE).toBe('ActivityBasicModelFactory')
+  })
 
   function _mockSurveyActivity() {
     const surveyActivity = Test.utils.data.activityPASC;
@@ -142,10 +149,13 @@ describe('ActivityFacadeService_UnitTest_Suite', () => {
     facade.surveyActivity.statusHistory = Mock.ActivityStatusFactory.create();
     facade.surveyActivity.statusHistory.init(surveyActivity.statusHistory);
     facade.surveyActivity.interviews = {
-      newRegistry: function(user) {}
+      newRegistry: function (user) {
+      }
     };
-    facade.surveyActivity.fillContainer.updateFilling = function(any){};
-    facade.surveyActivity.fillContainer.searchFillingByID = function(any){};
+    facade.surveyActivity.fillContainer.updateFilling = function (any) {
+    };
+    facade.surveyActivity.fillContainer.searchFillingByID = function (any) {
+    };
   }
 
 });
