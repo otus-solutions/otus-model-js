@@ -26,7 +26,7 @@
     self.metadata = collectionInfo.metadata;
     self.operator = collectionInfo.operator;
     self.time = collectionInfo.time;
-
+    self.customMetadata = collectionInfo.customMetadata;
 
     self.fill = fill;
     self.toJSON = toJSON;
@@ -36,6 +36,7 @@
       self.metadata = "";
       self.operator = operator.email;
       self.time = new Date().toISOString();
+      self.customMetadata = [];
     }
 
     function toJSON() {
@@ -44,7 +45,8 @@
         isCollected: self.isCollected,
         metadata: self.metadata,
         operator: self.operator,
-        time: self.time
+        time: self.time,
+        customMetadata: self.customMetadata
       };
     }
   }
