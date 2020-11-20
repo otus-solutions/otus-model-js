@@ -53,6 +53,8 @@
 
     /* Custom Methods */
     self.collect = collect;
+    self.pushCustomMetadata = pushCustomMetadata;
+    self.removeCustomMetadata = removeCustomMetadata;
     self.toJSON = toJSON;
 
     //aliquot handling
@@ -69,6 +71,18 @@
       _manageAliquots();
     }
 
+    function collect() {
+      self.tubeCollectionData.fill(_operator);
+    }
+
+    function pushCustomMetadata(customMetadataId) {
+      self.tubeCollectionData.pushCustomMetadata(customMetadataId);
+    }
+
+    function removeCustomMetadata(customMetadataId) {
+      self.tubeCollectionData.removeCustomMetadata(customMetadataId);
+    }
+
     function _fillDescriptors() {
       var tubeDescriptor = LaboratoryConfigurationService.getTubeDescriptor(self.type);
       var momentDescriptor = LaboratoryConfigurationService.getMomentDescriptor(self.moment);
@@ -81,10 +95,6 @@
 
     function _manageAliquots() {
       self.availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type);
-    }
-
-    function collect() {
-      self.tubeCollectionData.fill(_operator);
     }
 
     //aliquot handling

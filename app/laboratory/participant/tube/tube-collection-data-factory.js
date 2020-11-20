@@ -29,6 +29,8 @@
     self.customMetadata = collectionInfo.customMetadata;
 
     self.fill = fill;
+    self.pushCustomMetadata = pushCustomMetadata;
+    self.removeCustomMetadata = removeCustomMetadata;
     self.toJSON = toJSON;
 
     function fill(operator) {
@@ -37,6 +39,19 @@
       self.operator = operator.email;
       self.time = new Date().toISOString();
       self.customMetadata = [];
+    }
+
+    function pushCustomMetadata(customMetadataId) {
+      try{
+        self.customMetadata.push(customMetadataId);
+      }
+      catch (e) {
+        self.customMetadata = [customMetadataId];
+      }
+    }
+
+    function removeCustomMetadata(customMetadataId){
+      self.customMetadata = self.customMetadata.filter(id => id !== customMetadataId);
     }
 
     function toJSON() {
