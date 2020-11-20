@@ -14,18 +14,13 @@
   function factory(TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService) {
     var self = this;
 
-    _onInit();
-
-    function _onInit() {}
-
     /* Public Methods */
     self.create = create;
     self.buildFromArray = buildFromArray;
 
 
     function create(tubeInfo, operator) {
-      var tube = new Tube(tubeInfo, operator, TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService);
-      return tube;
+      return new Tube(tubeInfo, operator, TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService);
     }
 
     function buildFromArray(tubeArray, operator) {
@@ -43,12 +38,10 @@
     var self = this;
     var _operator;
 
-
     /* Public Interface */
     self.objectType = "Tube";
 
     self.code = tubeInfo.code;
-
     self.type = tubeInfo.type;
     self.moment = tubeInfo.moment;
     self.groupName = tubeInfo.groupName;
@@ -87,8 +80,7 @@
     }
 
     function _manageAliquots() {
-      var availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type);
-      self.availableAliquots = availableAliquots;
+      self.availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type);
     }
 
     function collect() {
