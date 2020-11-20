@@ -120,7 +120,7 @@
     }
 
     function toJSON() {
-      var json = {
+      return {
         objectType: self.objectType,
         type: self.type,
         moment: self.moment,
@@ -128,9 +128,8 @@
         groupName: self.groupName,
         aliquotes: self.aliquots,
         order: self.order,
-        tubeCollectionData: self.tubeCollectionData
+        tubeCollectionData: self.tubeCollectionData.toJSON()
       };
-      return json;
     }
   }
 }());
