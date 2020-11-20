@@ -3,8 +3,7 @@
 
   angular
     .module('otusjs.laboratory.participant')
-    .factory('otusjs.laboratory.participant.TubeCollectionDataFactory',
-      factory);
+    .factory('otusjs.laboratory.participant.TubeCollectionDataFactory', factory);
 
   function factory() {
     var self = this;
@@ -26,7 +25,7 @@
     self.metadata = collectionInfo.metadata;
     self.operator = collectionInfo.operator;
     self.time = collectionInfo.time;
-    self.customMetadata = collectionInfo.customMetadata;
+    self.customMetadata = collectionInfo.customMetadata || [];
 
     self.fill = fill;
     self.pushCustomMetadata = pushCustomMetadata;
@@ -42,12 +41,7 @@
     }
 
     function pushCustomMetadata(customMetadataId) {
-      try{
-        self.customMetadata.push(customMetadataId);
-      }
-      catch (e) {
-        self.customMetadata = [customMetadataId];
-      }
+      self.customMetadata.push(customMetadataId);
     }
 
     function removeCustomMetadata(customMetadataId){
