@@ -14,18 +14,13 @@
   function factory(TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService) {
     var self = this;
 
-    _onInit();
-
-    function _onInit() {}
-
     /* Public Methods */
     self.create = create;
     self.buildFromArray = buildFromArray;
 
 
     function create(tubeInfo, operator) {
-      var tube = new Tube(tubeInfo, operator, TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService);
-      return tube;
+      return new Tube(tubeInfo, operator, TubeCollectionDataFactory, ParticipantAliquotFactory, LaboratoryConfigurationService);
     }
 
     function buildFromArray(tubeArray, operator) {
@@ -43,12 +38,10 @@
     var self = this;
     var _operator;
 
-
     /* Public Interface */
     self.objectType = "Tube";
 
     self.code = tubeInfo.code;
-
     self.type = tubeInfo.type;
     self.moment = tubeInfo.moment;
     self.groupName = tubeInfo.groupName;
@@ -60,6 +53,8 @@
 
     /* Custom Methods */
     self.collect = collect;
+    self.pushCustomMetadata = pushCustomMetadata;
+    self.removeCustomMetadata = removeCustomMetadata;
     self.toJSON = toJSON;
 
     //aliquot handling
@@ -76,6 +71,18 @@
       _manageAliquots();
     }
 
+    function collect() {
+      self.tubeCollectionData.fill(_operator);
+    }
+
+    function pushCustomMetadata(customMetadataId) {
+      self.tubeCollectionData.pushCustomMetadata(customMetadataId);
+    }
+
+    function removeCustomMetadata(customMetadataId) {
+      self.tubeCollectionData.removeCustomMetadata(customMetadataId);
+    }
+
     function _fillDescriptors() {
       var tubeDescriptor = LaboratoryConfigurationService.getTubeDescriptor(self.type);
       var momentDescriptor = LaboratoryConfigurationService.getMomentDescriptor(self.moment);
@@ -87,12 +94,7 @@
     }
 
     function _manageAliquots() {
-      var availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type);
-      self.availableAliquots = availableAliquots;
-    }
-
-    function collect() {
-      self.tubeCollectionData.fill(_operator);
+      self.availableAliquots = LaboratoryConfigurationService.getAvaiableAliquots(self.moment, self.type);
     }
 
     //aliquot handling
@@ -120,7 +122,7 @@
     }
 
     function toJSON() {
-      var json = {
+      return {
         objectType: self.objectType,
         type: self.type,
         moment: self.moment,
@@ -128,9 +130,8 @@
         groupName: self.groupName,
         aliquotes: self.aliquots,
         order: self.order,
-        tubeCollectionData: self.tubeCollectionData
+        tubeCollectionData: self.tubeCollectionData.toJSON()
       };
-      return json;
     }
   }
 }());

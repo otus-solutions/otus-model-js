@@ -3,8 +3,7 @@
 
   angular
     .module('otusjs.laboratory.participant')
-    .factory('otusjs.laboratory.participant.TubeCollectionDataFactory',
-      factory);
+    .factory('otusjs.laboratory.participant.TubeCollectionDataFactory', factory);
 
   function factory() {
     var self = this;
@@ -26,9 +25,11 @@
     self.metadata = collectionInfo.metadata;
     self.operator = collectionInfo.operator;
     self.time = collectionInfo.time;
-
+    self.customMetadata = collectionInfo.customMetadata || [];
 
     self.fill = fill;
+    self.pushCustomMetadata = pushCustomMetadata;
+    self.removeCustomMetadata = removeCustomMetadata;
     self.toJSON = toJSON;
 
     function fill(operator) {
@@ -36,6 +37,15 @@
       self.metadata = "";
       self.operator = operator.email;
       self.time = new Date().toISOString();
+      self.customMetadata = [];
+    }
+
+    function pushCustomMetadata(customMetadataId) {
+      self.customMetadata.push(customMetadataId);
+    }
+
+    function removeCustomMetadata(customMetadataId){
+      self.customMetadata = self.customMetadata.filter(id => id !== customMetadataId);
     }
 
     function toJSON() {
@@ -44,7 +54,8 @@
         isCollected: self.isCollected,
         metadata: self.metadata,
         operator: self.operator,
-        time: self.time
+        time: self.time,
+        customMetadata: self.customMetadata
       };
     }
   }

@@ -44,7 +44,8 @@ Test.utils.data.participantLaboratory = {
   "objectType": null,
   "recruitmentNumber": 5003304,
   "collectGroupName": "DEFAULT",
-  "tubes": [{
+  "tubes": [
+    {
     "objectType": "Tube",
     "type": "GEL",
     "moment": "FASTING",
@@ -77,7 +78,8 @@ Test.utils.data.participantLaboratory = {
       "isCollected": true,
       "metadata": "",
       "operator": "lalala@gmail.com",
-      "time": "2017-06-06T15:15:28.958Z"
+      "time": "2017-06-06T15:15:28.958Z",
+      "customMetadata": ["59b68aee28f10d398e986595"]
     }
   }, {
     "objectType": "Tube",
@@ -92,7 +94,8 @@ Test.utils.data.participantLaboratory = {
       "isCollected": false,
       "metadata": "",
       "operator": "",
-      "time": null
+      "time": null,
+      "customMetadata": []
     }
   }, {
     "objectType": "Tube",
