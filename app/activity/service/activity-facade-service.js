@@ -11,7 +11,9 @@
     'otusjs.model.activity.QuestionFillFactory',
     'otusjs.model.activity.ActivityFactory',
     'otusjs.model.activity.InterviewFactory',
-    'otusjs.model.activity.RevisionFactory'
+    'otusjs.model.activity.RevisionFactory',
+    'otusjs.model.activity.ActivityBasicFactory',
+
   ];
 
   function ActivityFacadeService(
@@ -20,7 +22,8 @@
     QuestionFillFactory,
     ActivityFactory,
     InterviewFactory,
-    ActivityRevisionFactory
+    ActivityRevisionFactory,
+    ActivityBasicFactory
   ) {
     var self = this;
     var _user = null;
@@ -47,6 +50,7 @@
     self.getItemStaticVariableList = getItemStaticVariableList;
     self.fillStaticVariablesValues = fillStaticVariablesValues;
     self.hasRequiredExternalID = hasRequiredExternalID;
+    self.getActivityBasicFactory = getActivityBasicFactory;
 
     function createActivity(template, user, participant, activityConfiguration, externalID) {
       self.surveyActivity = ActivityFactory.create(template, user, participant, activityConfiguration, null, externalID);
@@ -130,6 +134,10 @@
 
     function hasRequiredExternalID(){
       return self.surveyActivity.hasRequiredExternalID()
+    }
+
+    function getActivityBasicFactory(){
+      return ActivityBasicFactory;
     }
   }
 }());

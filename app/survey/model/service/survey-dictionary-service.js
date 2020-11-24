@@ -64,7 +64,7 @@
       item.options.map(option => {
         switch (option.objectType) {
           case "CheckboxAnswerOption":
-            values.push({ customID: option.optionID, label: option.label.ptBR.plainText, value: [{ value: 0, label: false }, { value: 1, label: true }] });
+            values.push({ customID: option.customOptionID, label: option.label.ptBR.plainText, value: [{ value: 0, label: false }, { value: 1, label: true }] });
             break;
           case "AnswerOption":
             values.push({ value: option.extractionValue, label: option.label.ptBR.plainText });
