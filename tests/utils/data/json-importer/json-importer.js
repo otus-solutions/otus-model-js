@@ -30001,7 +30001,6 @@ Test.utils.data.groupArtefacts = {members : ["TST1", "TST2", "TST3", "TST4"]};
 Test.utils.data.autoFillArtects = {
 
 };
-
 Test.utils.data.preActivityAutofill = [
   {
     "objectType": "preActivity",
@@ -30615,4 +30614,18 @@ Test.utils.data.preActivityAutofill = [
     "externalID": "123-mock-dossie",
     "preActivityValid": true
   }
-]
+];
+Test.utils.data.activityBaseModel = {
+  "_id": "20193n8120938",
+  "objectType": "ActivityBasicModel",
+  "acronym": "FRC",
+  "name": "Formulário de revisão cardiovascular",
+  "mode": "AUTOFILL",
+  "category": "C0",
+  "lastStatus": {
+    "name": "FINALIZED",
+    "user": {},
+    "date": "2020-09-30T00:00:00"
+  },
+  "externalID": "20200921516453",
+}
