@@ -36,25 +36,25 @@
     self.createOfflineActivity = createOfflineActivity;
     self.fromJsonObject = fromJsonObject;
 
-    function create(surveyForm, user, participant, activityConfiguration, id, externalID) {
+    function create(surveyForm, user, participant, activityConfiguration, id, externalID, stageId) {
       Inject.FillingManager.init();
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID, stageId);
       activity.mode = 'ONLINE';
       activity.category = activityConfiguration.category;
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
       return activity;
     }
 
-    function createPaperActivity(surveyForm, user, participant, paperActivityData, activityConfiguration, id, externalID) {
+    function createPaperActivity(surveyForm, user, participant, paperActivityData, activityConfiguration, id, externalID, stageId) {
       Inject.FillingManager.init();
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       statusHistory.newInitializedOfflineRegistry(paperActivityData);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID, stageId);
       activity.mode = 'PAPER';
       activity.category = activityConfiguration.category;
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -66,19 +66,19 @@
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, {}, statusHistory, interviews);
+      var activity = new ActivitySurvey(surveyForm, {}, statusHistory, interviews, null, null, stageId);
       activity.mode = 'OFFLINE';
       activity.category = {};
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
       return activity;
     }
 
-    function createAutoFillActivity(surveyForm, user, participant, activityConfiguration, id, externalID) {
+    function createAutoFillActivity(surveyForm, user, participant, activityConfiguration, id, externalID, stageId) {
       Inject.FillingManager.init();
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID);
+      var activity = new ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID, stageId);
       activity.mode = 'AUTOFILL';
       activity.category = activityConfiguration.category;
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
@@ -99,6 +99,7 @@
       activity.statusHistory = StatusHistoryManagerFactory.fromJsonObject(jsonObject.statusHistory);
       activity.interviews = InterviewManagerFactory.fromJsonObject(jsonObject.interviews);
       activity.externalID = jsonObject.externalID;
+      activity.stageId = jsonObject.stageId;
 
       _addBackCompatibility(activity, jsonObject);
       return activity;
@@ -115,7 +116,7 @@
     return self;
   }
 
-  function ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID) {
+  function ActivitySurvey(surveyForm, participant, statusHistory, interviews, id, externalID, stageId) {
     var self = this;
     var _id = id || null;
 
@@ -127,6 +128,7 @@
     self.statusHistory = statusHistory;
     self.isDiscarded = false;
     self.externalID = externalID || null;
+    self.stageId = stageId || null;
 
     /* Public methods */
     self.getID = getID;
@@ -262,6 +264,7 @@
       json.isDiscarded = self.isDiscarded;
       json.navigationTracker = self.navigationTracker;
       json.externalID = self.externalID;
+      json.stageId = self.stageId;
 
       return json;
     }
