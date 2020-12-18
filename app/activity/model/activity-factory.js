@@ -66,7 +66,7 @@
       var statusHistory = StatusHistoryManagerFactory.create();
       statusHistory.newCreatedRegistry(user);
       var interviews = InterviewManagerFactory.create();
-      var activity = new ActivitySurvey(surveyForm, {}, statusHistory, interviews, null, null, stageId);
+      var activity = new ActivitySurvey(surveyForm, {}, statusHistory, interviews, null, null, null);
       activity.mode = 'OFFLINE';
       activity.category = {};
       activity.setNavigationTracker(Inject.NavigationTrackerFactory.create(activity.getExportableList(), 0));
