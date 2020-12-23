@@ -31,11 +31,10 @@
     var self = this;
     var _backupJSON;
 
-
     self.objectType = labParticipant.objectType || 'ParticipantLaboratory';
     self.recruitmentNumber = labParticipant.recruitmentNumber;
     self.collectGroupName = labParticipant.collectGroupName; //CQ
-    self.identification = labParticipant.identification;
+    self.identification = labParticipant.identification || '';
 
     //tube handling
     self.tubes = [];

@@ -10,7 +10,7 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.model.fieldCenter', []);
+    angular.module('otusjs.model.chart', []);
 })();
 'use strict';
 
@@ -24,7 +24,7 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.model.chart', []);
+    angular.module('otusjs.model.fieldCenter', []);
 })();
 'use strict';
 
@@ -164,14 +164,14 @@
 (function () {
     'use strict';
 
-    angular.module('otusjs.laboratory.exam.sending', []);
+    angular.module('otusjs.laboratory.exam.lot', []);
 })();
 'use strict';
 
 (function () {
     'use strict';
 
-    angular.module('otusjs.laboratory.exam.lot', []);
+    angular.module('otusjs.laboratory.exam.sending', []);
 })();
 'use strict';
 
@@ -2786,12 +2786,16 @@
 })();
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.fieldCenter').factory('otusjs.model.fieldCenter.FieldCenterFactory', Factory);
+  angular.module('otusjs.model.chart').factory('otusjs.model.chart.VerticalBarFactory', Factory);
 
-  function Factory() {
+  Factory.$inject = ['otusjs.laboratory.configuration.AliquotDescriptorsService'];
+
+  function Factory(AliquotDescriptorsService) {
     var self = this;
 
     /* Public methods */
@@ -2799,55 +2803,49 @@
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new FieldCenter({});
+      return new MonitoringPending();
     }
 
-    function fromJsonObject(jsonObject) {
-      if (Array.isArray(jsonObject)) {
-        return jsonObject.map(function (center) {
-          return new FieldCenter(center);
-        });
+    function fromJsonObject(jsonObject, labels) {
+      var dataset = [];
+      var keys = [];
+      if (Array.isArray(jsonObject) && (typeof labels === 'undefined' ? 'undefined' : _typeof(labels)) === "object") {
+        keys = Object.keys(jsonObject[0]);
+
+        var _loop = function _loop(i) {
+          dataset.push(jsonObject.map(function (data) {
+            var title = AliquotDescriptorsService.getLabel(data.title);
+            title = title ? title : data.title;
+            return new MonitoringPending(labels[keys[i]], title, data[keys[i]]).toJSON();
+          }));
+        };
+
+        for (var i = 1; i < keys.length; i++) {
+          _loop(i);
+        }
+        return dataset;
       } else {
-        return [];
+        return [[]];
       }
     }
 
     return self;
   }
 
-  function FieldCenter(fieldCenter) {
+  function MonitoringPending(title, column, value) {
     var self = this;
 
     self.toJSON = toJSON;
 
-    self._id = fieldCenter._id || null;
-    self.name = fieldCenter.name || null;
-    self.code = fieldCenter.code || null;
-    self.acronym = fieldCenter.acronym || null;
-    self.country = fieldCenter.country || null;
-    self.state = fieldCenter.state || null;
-    self.address = fieldCenter.address || null;
-    self.complement = fieldCenter.complement || null;
-    self.zip = fieldCenter.zip || null;
-    self.phone = fieldCenter.phone || null;
-    self.backgroundColor = fieldCenter.backgroundColor || null;
-    self.borderColor = fieldCenter.borderColor || null;
+    self.char_title = title || "";
+    self.column = column || "";
+    self.value = value || 0;
 
     function toJSON() {
       var json = {};
-
-      json._id = self._id;
-      json.name = self.name;
-      json.code = self.code;
-      json.acronym = self.acronym;
-      json.country = self.country;
-      json.state = self.state;
-      json.address = self.address;
-      json.complement = self.complement;
-      json.zip = self.zip;
-      json.phone = self.phone;
-      json.backgroundColor = self.backgroundColor;
-      json.borderColor = self.borderColor;
+      json.char_title = self.char_title;
+      json.column = self.column;
+      json.value = self.value;
 
       return json;
     }
@@ -3126,6 +3124,7 @@
     self.objectType = labParticipant.objectType || 'ParticipantLaboratory';
     self.recruitmentNumber = labParticipant.recruitmentNumber;
     self.collectGroupName = labParticipant.collectGroupName; //CQ
+    self.identification = labParticipant.identification || '';
 
     //tube handling
     self.tubes = [];
@@ -3155,7 +3154,8 @@
         collectGroupName: self.collectGroupName,
         tubes: self.tubes,
         exams: self.exams,
-        locationPoint: self.locationPoint
+        locationPoint: self.locationPoint,
+        identification: self.identification
       };
 
       return json;
@@ -3678,16 +3678,12 @@
 })();
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 (function () {
   'use strict';
 
-  angular.module('otusjs.model.chart').factory('otusjs.model.chart.VerticalBarFactory', Factory);
+  angular.module('otusjs.model.fieldCenter').factory('otusjs.model.fieldCenter.FieldCenterFactory', Factory);
 
-  Factory.$inject = ['otusjs.laboratory.configuration.AliquotDescriptorsService'];
-
-  function Factory(AliquotDescriptorsService) {
+  function Factory() {
     var self = this;
 
     /* Public methods */
@@ -3695,49 +3691,55 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     self.fromJsonObject = fromJsonObject;
 
     function create() {
-      return new MonitoringPending();
+      return new FieldCenter({});
     }
 
-    function fromJsonObject(jsonObject, labels) {
-      var dataset = [];
-      var keys = [];
-      if (Array.isArray(jsonObject) && (typeof labels === 'undefined' ? 'undefined' : _typeof(labels)) === "object") {
-        keys = Object.keys(jsonObject[0]);
-
-        var _loop = function _loop(i) {
-          dataset.push(jsonObject.map(function (data) {
-            var title = AliquotDescriptorsService.getLabel(data.title);
-            title = title ? title : data.title;
-            return new MonitoringPending(labels[keys[i]], title, data[keys[i]]).toJSON();
-          }));
-        };
-
-        for (var i = 1; i < keys.length; i++) {
-          _loop(i);
-        }
-        return dataset;
+    function fromJsonObject(jsonObject) {
+      if (Array.isArray(jsonObject)) {
+        return jsonObject.map(function (center) {
+          return new FieldCenter(center);
+        });
       } else {
-        return [[]];
+        return [];
       }
     }
 
     return self;
   }
 
-  function MonitoringPending(title, column, value) {
+  function FieldCenter(fieldCenter) {
     var self = this;
 
     self.toJSON = toJSON;
 
-    self.char_title = title || "";
-    self.column = column || "";
-    self.value = value || 0;
+    self._id = fieldCenter._id || null;
+    self.name = fieldCenter.name || null;
+    self.code = fieldCenter.code || null;
+    self.acronym = fieldCenter.acronym || null;
+    self.country = fieldCenter.country || null;
+    self.state = fieldCenter.state || null;
+    self.address = fieldCenter.address || null;
+    self.complement = fieldCenter.complement || null;
+    self.zip = fieldCenter.zip || null;
+    self.phone = fieldCenter.phone || null;
+    self.backgroundColor = fieldCenter.backgroundColor || null;
+    self.borderColor = fieldCenter.borderColor || null;
 
     function toJSON() {
       var json = {};
-      json.char_title = self.char_title;
-      json.column = self.column;
-      json.value = self.value;
+
+      json._id = self._id;
+      json.name = self.name;
+      json.code = self.code;
+      json.acronym = self.acronym;
+      json.country = self.country;
+      json.state = self.state;
+      json.address = self.address;
+      json.complement = self.complement;
+      json.zip = self.zip;
+      json.phone = self.phone;
+      json.backgroundColor = self.backgroundColor;
+      json.borderColor = self.borderColor;
 
       return json;
     }
@@ -8719,6 +8721,130 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.laboratory.exam').factory('otusjs.laboratory.exam.ExamLotFactory', Factory);
+
+  Factory.$inject = ['$filter', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
+
+  function Factory($filter, LaboratoryConfigurationService) {
+    var self = this;
+    self.create = create;
+    self.fromJson = fromJson;
+
+    function create() {
+      return new ExamLot($filter, LaboratoryConfigurationService, {});
+    }
+
+    function fromJson(lotInfo) {
+      return new ExamLot($filter, LaboratoryConfigurationService, lotInfo);
+    }
+
+    return self;
+  }
+
+  function ExamLot($filter, LaboratoryConfigurationService, lotInfo) {
+    var self = this;
+    var _aliquotDescriptor;
+
+    self.objectType = 'ExamLot';
+    self._id = lotInfo._id || '';
+    self.code = lotInfo.code || '';
+    self.aliquotName = lotInfo.aliquotName || '';
+    self.aliquotList = lotInfo.aliquotList || null;
+    self.aliquotLabel = lotInfo.aliquotLabel || '';
+    self.fieldCenter = lotInfo.fieldCenter || '';
+    self.realizationDate = lotInfo.realizationDate || new Date();
+    self.operator = lotInfo.operator || '';
+
+    self.setAliquotName = setAliquotName;
+    self.insertAliquot = insertAliquot;
+    self.removeAliquotByIndex = removeAliquotByIndex;
+    self.getAliquotsToCsv = getAliquotsToCsv;
+
+    self.toJSON = toJSON;
+
+    onInit();
+
+    function onInit() {
+      _updateAliquotLabel();
+      _fixAliquots();
+    }
+
+    function _fixAliquots() {
+      if (self.aliquotList) {
+        if (self.aliquotList.length > 0) {
+          self.aliquotList.map(function (aliquot) {
+            _fillAliquotLabels(aliquot);
+          });
+        }
+      }
+    }
+
+    function _updateAliquotLabel() {
+      if (self.aliquotName.length) {
+        _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.aliquotName);
+        self.aliquotLabel = _aliquotDescriptor.label;
+      }
+    }
+
+    function setAliquotName(aliquotName) {
+      self.aliquotName = aliquotName;
+      _updateAliquotLabel();
+    }
+
+    function insertAliquot(aliquot) {
+      _fillAliquotLabels(aliquot);
+      self.aliquotList.push(aliquot);
+      return aliquot;
+    }
+
+    function _fillAliquotLabels(aliquot) {
+      aliquot.label = _getAliquotLabel(aliquot.name);
+      aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
+      aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
+    }
+
+    function _getAliquotLabel(aliquotName) {
+      var aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
+      if (aliquotDescriptor) return aliquotDescriptor.label;
+    }
+
+    function removeAliquotByIndex(index) {
+      return self.aliquotList.splice(index, 1);
+    }
+
+    function getAliquotsToCsv() {
+      return self.aliquotList.map(function (aliquot) {
+        var formattedDate = $filter('date')(new Date(aliquot.birthdate.value), 'dd/MM/yyyy');
+
+        return {
+          aliquota: aliquot.code,
+          sexo: aliquot.sex,
+          nascimento: formattedDate
+        };
+      });
+    }
+
+    function toJSON() {
+      var json = {
+        objectType: self.objectType,
+        _id: self._id,
+        code: self.code,
+        aliquotName: self.aliquotName,
+        fieldCenter: self.fieldCenter,
+        realizationDate: self.realizationDate,
+        operator: self.operator,
+        aliquotList: self.aliquotList
+      };
+
+      return json;
+    }
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.laboratory.exam.sending').factory('otusjs.laboratory.exam.sending.Exam', Factory);
 
   Factory.$inject = ['otusjs.laboratory.exam.sending.ExamResults', 'otusjs.laboratory.exam.sending.ExamObservation'];
@@ -9051,130 +9177,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (self._id) {
         json._id = self._id;
       }
-
-      return json;
-    }
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.laboratory.exam').factory('otusjs.laboratory.exam.ExamLotFactory', Factory);
-
-  Factory.$inject = ['$filter', 'otusjs.laboratory.configuration.LaboratoryConfigurationService'];
-
-  function Factory($filter, LaboratoryConfigurationService) {
-    var self = this;
-    self.create = create;
-    self.fromJson = fromJson;
-
-    function create() {
-      return new ExamLot($filter, LaboratoryConfigurationService, {});
-    }
-
-    function fromJson(lotInfo) {
-      return new ExamLot($filter, LaboratoryConfigurationService, lotInfo);
-    }
-
-    return self;
-  }
-
-  function ExamLot($filter, LaboratoryConfigurationService, lotInfo) {
-    var self = this;
-    var _aliquotDescriptor;
-
-    self.objectType = 'ExamLot';
-    self._id = lotInfo._id || '';
-    self.code = lotInfo.code || '';
-    self.aliquotName = lotInfo.aliquotName || '';
-    self.aliquotList = lotInfo.aliquotList || null;
-    self.aliquotLabel = lotInfo.aliquotLabel || '';
-    self.fieldCenter = lotInfo.fieldCenter || '';
-    self.realizationDate = lotInfo.realizationDate || new Date();
-    self.operator = lotInfo.operator || '';
-
-    self.setAliquotName = setAliquotName;
-    self.insertAliquot = insertAliquot;
-    self.removeAliquotByIndex = removeAliquotByIndex;
-    self.getAliquotsToCsv = getAliquotsToCsv;
-
-    self.toJSON = toJSON;
-
-    onInit();
-
-    function onInit() {
-      _updateAliquotLabel();
-      _fixAliquots();
-    }
-
-    function _fixAliquots() {
-      if (self.aliquotList) {
-        if (self.aliquotList.length > 0) {
-          self.aliquotList.map(function (aliquot) {
-            _fillAliquotLabels(aliquot);
-          });
-        }
-      }
-    }
-
-    function _updateAliquotLabel() {
-      if (self.aliquotName.length) {
-        _aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(self.aliquotName);
-        self.aliquotLabel = _aliquotDescriptor.label;
-      }
-    }
-
-    function setAliquotName(aliquotName) {
-      self.aliquotName = aliquotName;
-      _updateAliquotLabel();
-    }
-
-    function insertAliquot(aliquot) {
-      _fillAliquotLabels(aliquot);
-      self.aliquotList.push(aliquot);
-      return aliquot;
-    }
-
-    function _fillAliquotLabels(aliquot) {
-      aliquot.label = _getAliquotLabel(aliquot.name);
-      aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
-      aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
-    }
-
-    function _getAliquotLabel(aliquotName) {
-      var aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
-      if (aliquotDescriptor) return aliquotDescriptor.label;
-    }
-
-    function removeAliquotByIndex(index) {
-      return self.aliquotList.splice(index, 1);
-    }
-
-    function getAliquotsToCsv() {
-      return self.aliquotList.map(function (aliquot) {
-        var formattedDate = $filter('date')(new Date(aliquot.birthdate.value), 'dd/MM/yyyy');
-
-        return {
-          aliquota: aliquot.code,
-          sexo: aliquot.sex,
-          nascimento: formattedDate
-        };
-      });
-    }
-
-    function toJSON() {
-      var json = {
-        objectType: self.objectType,
-        _id: self._id,
-        code: self.code,
-        aliquotName: self.aliquotName,
-        fieldCenter: self.fieldCenter,
-        realizationDate: self.realizationDate,
-        operator: self.operator,
-        aliquotList: self.aliquotList
-      };
 
       return json;
     }
@@ -11995,6 +11997,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
   'use strict';
 
+  angular.module('otusjs.laboratory.exam').service('otusjs.laboratory.exam.ExamService', Service);
+
+  Service.$inject = ['otusjs.laboratory.exam.ExamLotFactory'];
+
+  function Service(ExamLotFactory) {
+    var self = this;
+
+    self.createAliquotLot = createAliquotLot;
+    self.buildAliquotLotFromJson = buildAliquotLotFromJson;
+
+    function createAliquotLot() {
+      return ExamLotFactory.create();
+    }
+
+    function buildAliquotLotFromJson(lotJson) {
+      return ExamLotFactory.fromJson(lotJson);
+    }
+
+    return self;
+  }
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('otusjs.laboratory.exam.sending').service('otusjs.laboratory.exam.sending.ExamSendingLotService', service);
 
   service.$inject = ['otusjs.laboratory.exam.sending.ExamSendingFactory'];
@@ -12012,32 +12040,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function buildExamSendingFromJson(examSendingLot, exam) {
       return ExamSendingFactory.fromJson(examSendingLot, exam);
-    }
-
-    return self;
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('otusjs.laboratory.exam').service('otusjs.laboratory.exam.ExamService', Service);
-
-  Service.$inject = ['otusjs.laboratory.exam.ExamLotFactory'];
-
-  function Service(ExamLotFactory) {
-    var self = this;
-
-    self.createAliquotLot = createAliquotLot;
-    self.buildAliquotLotFromJson = buildAliquotLotFromJson;
-
-    function createAliquotLot() {
-      return ExamLotFactory.create();
-    }
-
-    function buildAliquotLotFromJson(lotJson) {
-      return ExamLotFactory.fromJson(lotJson);
     }
 
     return self;
