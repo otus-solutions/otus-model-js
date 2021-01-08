@@ -138,7 +138,8 @@ describe("ParticipantContactFactory", function () {
               neighbourhood: "",
               city: "",
               state: "",
-              country: ""
+              country: "",
+              census: ""
             },
             observation: ""
           },
@@ -179,7 +180,8 @@ describe("ParticipantContactFactory", function () {
               neighbourhood: "Centro",
               city: "Porto Alegre",
               state: "Rio Grande do Sul",
-              country: "Brasil"
+              country: "Brasil",
+              census: "census"
             },
             observations: "Casa"
           },
@@ -192,7 +194,8 @@ describe("ParticipantContactFactory", function () {
               neighbourhood: "Centro",
               city: "Resistencia",
               State: "Chaco",
-              country: "Argentina"
+              country: "Argentina",
+              census: "census"
             },
             observations: "Universidad Nacional del Nordeste."
           },
