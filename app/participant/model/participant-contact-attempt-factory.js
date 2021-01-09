@@ -23,7 +23,7 @@
     return self;
   }
 
-  function ParticipantContactAttempt(contactType, attemptData) {
+  function ParticipantContactAttempt(attemptData) {
     var self = this;
     self.objectType = attemptData.objectType ? attemptData.objectType : "";
     self._id = attemptData._id ? attemptData._id : "";
