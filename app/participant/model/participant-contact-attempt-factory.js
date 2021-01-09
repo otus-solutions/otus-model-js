@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.model.participant')
-    .factory('otusjs.model.participantContact.ParticipantContactAttemptFactory', Factory);
+    .factory('otusjs.model.participant.ParticipantContactAttemptFactory', Factory);
 
   function Factory() {
     var self = this;
