@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.model.participant')
-    .factory('otusjs.model.participant.ParticipantContactAttemptConfiguration', Factory);
+    .factory('otusjs.model.participant.ParticipantContactAttemptConfigurationFactory', Factory);
 
   function Factory() {
     var self = this;
@@ -13,17 +13,17 @@
     self.fromJson = fromJson;
 
     function create(attemptConfiguration) {
-      return new ParticipantMetadataAttempt(attemptConfiguration);
+      return new ParticipantContactAttemptConfiguration(attemptConfiguration);
     }
 
     function fromJson(attemptConfiguration) {
-      return new ParticipantMetadataAttempt(attemptConfiguration);
+      return new ParticipantContactAttemptConfiguration(attemptConfiguration);
     }
 
     return self;
   }
 
-  function ParticipantMetadataAttempt(attemptConfiguration) {
+  function ParticipantContactAttemptConfiguration(attemptConfiguration) {
     var self = this;
     self.objectType = attemptConfiguration.objectType ? attemptConfiguration.objectType : "";
     self._id = attemptConfiguration._id ? attemptConfiguration._id : "";
