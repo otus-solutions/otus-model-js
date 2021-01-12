@@ -29,7 +29,9 @@
     self._id = attemptData._id ? attemptData._id : "";
     self.recruitmentNumber = attemptData.recruitmentNumber ? attemptData.recruitmentNumber : "";
     self.address = attemptData.address ? attemptData.address : "";
-    self.attemptStatus = attemptData.attemptStatus ? attemptData.attemptStatus : "";
+    self.attemptStatus = attemptData.attemptStatus ? attemptData.attemptStatus : {};
+    self.registeredBy = attemptData.registeredBy ? attemptData.registeredBy : "";
+    self.userEmail = attemptData.userEmail ? attemptData.userEmail : "";
     self.attemptDateTime = attemptData.attemptDateTime ? attemptData.attemptDateTime : "";
     /* Public methods */
     self.toJSON = toJSON;
