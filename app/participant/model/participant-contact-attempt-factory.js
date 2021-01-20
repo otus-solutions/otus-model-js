@@ -33,6 +33,7 @@
     self.registeredBy = attemptData.registeredBy ? attemptData.registeredBy : "";
     self.userEmail = attemptData.userEmail ? attemptData.userEmail : "";
     self.attemptDateTime = attemptData.attemptDateTime ? attemptData.attemptDateTime : "";
+    self.isActive = attemptData.isActive ? attemptData.isActive : true
     /* Public methods */
     self.toJSON = toJSON;
 
