@@ -105,6 +105,7 @@ describe('the exam factory', function() {
       "releaseDate": "2017-05-03T13:08:00.000Z",
       "observations": [],
       "value": "93",
+      "cutOffValue": "55",
       "aliquotValid": true
     };
     Mock.obs = {
@@ -136,6 +137,7 @@ describe('the exam factory', function() {
           "releaseDate": "2017-05-03T13:08:00.000Z",
           "observations": [],
           "value": "93",
+          "cutOffValue": "55",
           "isValid": true
         }],
         "observations": []
