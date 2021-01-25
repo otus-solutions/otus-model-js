@@ -42,6 +42,7 @@
     self.releaseDate = result.releaseDate || '';
     self.resultName = result.resultName || '';
     self.value = result.value || '';
+    self.cutOffValue = result.cutOffValue || '';
     self.isValid = result['isValid' || 'aliquotValid'] === false ? false : true;
 
     /* Public methods */
@@ -58,6 +59,7 @@
         releaseDate: self.releaseDate,
         observations: self.observations,
         value: self.value,
+        cutOffValue: self.cutOffValue,
         isValid: self.isValid
       };
 

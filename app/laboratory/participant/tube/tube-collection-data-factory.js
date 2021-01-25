@@ -26,6 +26,7 @@
     self.operator = collectionInfo.operator;
     self.time = collectionInfo.time;
     self.customMetadata = collectionInfo.customMetadata || [];
+    self.dynamicMetadata = collectionInfo.dynamicMetadata
 
     self.fill = fill;
     self.pushCustomMetadata = pushCustomMetadata;
@@ -38,6 +39,7 @@
       self.operator = operator.email;
       self.time = new Date().toISOString();
       self.customMetadata = [];
+      self.dynamicMetadata = "";
     }
 
     function pushCustomMetadata(customMetadataId) {
@@ -55,7 +57,8 @@
         metadata: self.metadata,
         operator: self.operator,
         time: self.time,
-        customMetadata: self.customMetadata
+        customMetadata: self.customMetadata,
+        dynamicMetadata: self.dynamicMetadata
       };
     }
   }

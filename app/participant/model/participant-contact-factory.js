@@ -56,7 +56,8 @@
           neighbourhood: "",
           city: "",
           state:"",
-          country: ""
+          country: "",
+          census: "",
         }, observation: ""
       },
       second: address.second ? address.second : null,
