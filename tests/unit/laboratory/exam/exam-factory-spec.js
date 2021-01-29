@@ -106,6 +106,9 @@ describe('the exam factory', function() {
       "observations": [],
       "value": "93",
       "cutOffValue": "55",
+      "extraVariables": [
+        {"name": "VAR_1", "value": "firstValue"}
+      ],
       "aliquotValid": true
     };
     Mock.obs = {
@@ -138,6 +141,9 @@ describe('the exam factory', function() {
           "observations": [],
           "value": "93",
           "cutOffValue": "55",
+          "extraVariables": [
+            {name: "VAR_1", value: "firstValue"}
+          ],
           "isValid": true
         }],
         "observations": []
