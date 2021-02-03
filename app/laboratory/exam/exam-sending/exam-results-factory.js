@@ -43,6 +43,7 @@
     self.resultName = result.resultName || '';
     self.value = result.value || '';
     self.cutOffValue = result.cutOffValue || '';
+    self.extraVariables = result.extraVariables || [];
     self.isValid = result['isValid' || 'aliquotValid'] === false ? false : true;
 
     /* Public methods */
@@ -60,6 +61,7 @@
         observations: self.observations,
         value: self.value,
         cutOffValue: self.cutOffValue,
+        extraVariables: self.extraVariables,
         isValid: self.isValid
       };
 

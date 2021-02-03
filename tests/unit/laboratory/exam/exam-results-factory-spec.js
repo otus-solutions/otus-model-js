@@ -101,6 +101,9 @@ describe('the exam results factory', function() {
       observations: [],
       value: 32,
       cutOffValue: "55",
+      extraVariables: [
+        {name: "VAR_1", value: "firstValue"}
+      ],
       isValid: true
     }];
   }

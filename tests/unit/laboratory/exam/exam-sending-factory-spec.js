@@ -99,7 +99,10 @@ describe('the exam sending factory', function() {
             releaseDate: "2017-05-03T13:08:00.000Z",
             observations: [],
             value: "93",
-            "cutOffValue": "55"
+            "cutOffValue": "55",
+            extraVariables: [
+              {name: "VAR_1", value: "firstValue"}
+            ]
           }]
         }];
 
@@ -128,6 +131,9 @@ describe('the exam sending factory', function() {
                 "observations": [],
                 "value":"93",
                 "cutOffValue": "55",
+                "extraVariables": [
+                  {"name": "VAR_1", "value": "firstValue"}
+                ],
                 "isValid":true}],
                 "observations": []
               }]
