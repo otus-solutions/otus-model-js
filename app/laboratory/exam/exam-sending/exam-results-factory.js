@@ -40,6 +40,7 @@
     self.examName = result.examName || '';
     self.code = result.code || result.aliquotCode || '';
     self.releaseDate = result.releaseDate || '';
+    self.realizationDate = result.realizationDate || '';
     self.resultName = result.resultName || '';
     self.value = result.value || '';
     self.cutOffValue = result.cutOffValue || '';
@@ -58,6 +59,7 @@
         code: self.code,
         resultName: self.resultName,
         releaseDate: self.releaseDate,
+        realizationDate: self.realizationDate,
         observations: self.observations,
         value: self.value,
         cutOffValue: self.cutOffValue,
