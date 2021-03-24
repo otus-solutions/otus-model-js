@@ -241,7 +241,8 @@ describe('the transportation lot factory', function() {
       tubeList: [],
       aliquotList: [],
       aliquotsInfo: [],
-      tubesInfo: []
+      tubesInfo: [],
+      transportationReceipt: []
     }
   }
 
@@ -263,7 +264,14 @@ describe('the transportation lot factory', function() {
       aliquotsInfo: [
         Mock.AliquotInfo
       ],
-      tubesInfo: []
+      tubesInfo: [],
+      transportationReceipt: {
+        objectType: "TransportationReceipt",
+        temperature: 100,
+        receiptDate: "2017-09-21T15:36:56.929Z",
+        lastUpdateDate: "2017-09-21T15:36:56.929Z",
+        transportationMetadata: ["6059191c5a74f25f13f20697"]
+      }
     }
   }
 
