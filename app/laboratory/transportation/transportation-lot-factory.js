@@ -41,6 +41,7 @@
     self.tubesInfo = lotInfo.tubesInfo || [];
     self.originLocationPoint = lotInfo.originLocationPoint ? lotInfo.originLocationPoint.hasOwnProperty('$oid') ? lotInfo.originLocationPoint.$oid : lotInfo.originLocationPoint : '';
     self.destinationLocationPoint = lotInfo.destinationLocationPoint ? lotInfo.destinationLocationPoint.hasOwnProperty('$oid') ? lotInfo.destinationLocationPoint.$oid : lotInfo.destinationLocationPoint : '';
+    self.transportationReceipt = lotInfo.transportationReceipt || [];
 
     self.chartAliquotDataSet = _getStructureDataSet();
     self.chartTubeDataSet = _getStructureDataSet();
