@@ -379,7 +379,8 @@
         }),
         tubesInfo: self.tubesInfo.map(function (tubeInfo) {
           return { type: tubeInfo.type, moment: tubeInfo.moment, quantity: tubeInfo.quantity };
-        })
+        }),
+        transportationReceipt: self.transportationReceipt
       };
 
       return json;
