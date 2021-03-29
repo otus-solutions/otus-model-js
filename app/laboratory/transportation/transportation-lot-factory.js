@@ -39,6 +39,7 @@
     self.operator = lotInfo.operator || '';
     self.aliquotsInfo = lotInfo.aliquotsInfo || [];
     self.tubesInfo = lotInfo.tubesInfo || [];
+    self.receivedMaterials = lotInfo.receivedMaterials || [];
     self.originLocationPoint = lotInfo.originLocationPoint ? lotInfo.originLocationPoint.hasOwnProperty('$oid') ? lotInfo.originLocationPoint.$oid : lotInfo.originLocationPoint : '';
     self.destinationLocationPoint = lotInfo.destinationLocationPoint ? lotInfo.destinationLocationPoint.hasOwnProperty('$oid') ? lotInfo.destinationLocationPoint.$oid : lotInfo.destinationLocationPoint : '';
     self.transportationReceipt = lotInfo.transportationReceipt || {};
@@ -374,6 +375,7 @@
         destinationLocationPoint: self.destinationLocationPoint,
         tubeList: self.tubeList,
         aliquotList: self.aliquotList,
+        receivedMaterials: self.receivedMaterials,
         aliquotsInfo: self.aliquotsInfo.map(function (aliquotInfo) {
           return { aliquotName: aliquotInfo.aliquotName, role: aliquotInfo.role, quantity: aliquotInfo.quantity };
         }),
