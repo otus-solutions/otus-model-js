@@ -240,6 +240,7 @@ describe('the transportation lot factory', function() {
       destinationLocationPoint: '',
       tubeList: [],
       aliquotList: [],
+      receivedMaterials: [],
       aliquotsInfo: [],
       tubesInfo: [],
       transportationReceipt: []
