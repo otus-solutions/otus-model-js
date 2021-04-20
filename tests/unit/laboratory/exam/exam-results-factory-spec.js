@@ -98,6 +98,7 @@ describe('the exam results factory', function() {
       code: "354005001",
       resultName: "Basofilos",
       releaseDate: "2018-01-10T09:49:50.000Z",
+      realizationDate: "2018-01-10T09:49:50.000Z",
       observations: [],
       value: 32,
       cutOffValue: "55",
