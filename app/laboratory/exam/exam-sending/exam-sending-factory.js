@@ -68,6 +68,7 @@
             resultName: result.resultName,
             value: result.value,
             releaseDate: result.releaseDate,
+            realizationDate: result.realizationDate,
             isValid: result.isValid
           };
           _examList.push(_json);
