@@ -6,8 +6,6 @@
     .factory('otusjs.laboratory.laboratoryCrud.LaboratoryConfigurationFactory', factory);
 
   factory.$inject = [
-    // 'otusjs.laboratory.participant.ParticipanTubeFactory',
-    // 'otusjs.laboratory.configuration.LaboratoryConfigurationService'
   ];
 
   function factory() {
@@ -44,27 +42,30 @@
 
     /* methods */
     self.toJSON = toJSON;
+    self.buildLaboratory = buildLaboratory;
 
     function toJSON() {
-      var json = {
+      return {
         objectType: self.objectType,
         codeConfiguration: self.codeConfiguration,
         aliquotConfiguration: self.aliquotConfiguration,
         collectMomentConfiguration: self.collectMomentConfiguration,
         collectGroupConfiguration: self.collectGroupConfiguration,
         labelPrintConfiguration: self.labelPrintConfiguration,
-        metadataConfiguration: self.metadataConfiguration ,
+        metadataConfiguration: self.metadataConfiguration,
         lotConfiguration: self.lotConfiguration
       };
-      return json;
     }
 
-    function buildLaboratory(groups, tubes,
-                             moments, aliquots,
-                             codeConfiguration, aliquotCenterDescriptors,
-                             materialConfiguration) {
-      _buildConfigurations(groups, tubes, moments, aliquots, codeConfiguration);
-      _buildAliquotConfiguration(aliquotCenterDescriptors, materialConfiguration)
+    function buildLaboratory(groups,
+                             tubes,
+                             moments,
+                             aliquots,
+                             codeConfiguration,
+                             aliquotCenterDescriptors,
+                             laboratoryMaterialConfiguration) {
+      _buildConfigurations(codeConfiguration, groups, tubes, moments, aliquots);
+      _buildAliquotConfiguration(aliquotCenterDescriptors, groups, laboratoryMaterialConfiguration);
     }
 
     function _buildConfigurations(codeConfiguration, groups, tubes, moments, aliquots) {
@@ -106,10 +107,12 @@
       self.aliquotConfiguration.aliquotDescriptors = aliquots;
     }
 
-    function _buildAliquotConfiguration(aliquotCenterDescriptors, materialConfigurations) {
+    function _buildAliquotConfiguration(aliquotCenterDescriptors, groups, laboratoryMaterialConfigs) {
       self.aliquotConfiguration.objectType = "AliquotConfiguration";
       _buildAliquotCenterDescriptors(aliquotCenterDescriptors);
-      _buildAliquotGroupDescriptors(materialConfigurations)
+      _buildAliquotGroupDescriptors(groups);
+      _buildAliquotMomentDescriptors(groups);
+      _buildAliquotTypesDescriptors(laboratoryMaterialConfigs);
     }
 
     function _buildAliquotCenterDescriptors(aliquotCenterDescriptors) {
@@ -117,21 +120,85 @@
         return {
           objectType: "AliquotCenterDescriptor",
           name: descriptor.name,
-          aliquotCodeSizes: descriptor.aliquotCodeSize,
+          aliquotCodeSizes: descriptor.aliquotCodeSizes,
           aliquotGroupDescriptors: []
         }
       });
     }
 
-    //Todo finalizar build, verificar se group sera associado a aliquotCenter antes;
-    function _buildAliquotGroupDescriptors(materialConfigurations) {
-      materialConfigurations.forEach(materialConfig => {
-        self.aliquotConfiguration.aliquotCenterDescriptors.forEach(aliquotCenterDesc => {
-          if(materialConfig.center === aliquotCenterDesc.name) {
+    function _buildAliquotGroupDescriptors(groups) {
+      const aliquotGroupDescriptor = groups.map(group => {
+        return {
+          objectType: "AliquotGroupDescriptor",
+          name: group.name,
+          aliquotMomentDescriptors: []
+        }
+      });
+      self.aliquotConfiguration.aliquotCenterDescriptors.forEach(centerDescriptor => {
+        centerDescriptor.aliquotGroupDescriptors = aliquotGroupDescriptor;
+      })
+    }
 
+    function _buildAliquotMomentDescriptors(groups) {
+      const groupMoments = groups.map(group => {
+        return {
+          name: group.type,
+          moments: _distinct(group.tubeSet, 'moment')
+        }
+      });
+      self.aliquotConfiguration.aliquotCenterDescriptors.forEach(aliquotCenter => {
+        aliquotCenter.aliquotGroupDescriptors.forEach(aliquotGroup => {
+          groupMoments.forEach(groupMoment => {
+            if(aliquotGroup.name === groupMoment.name) {
+              aliquotGroup.aliquotMomentDescriptors = groupMoment.moments.map(moment => {
+                return {
+                  objectType: "AliquotMomentDescriptor",
+                  name: moment,
+                  aliquotTypesDescriptors: []
+                }
+              });
+            }
+          })
+        });
+      })
+    }
+
+    function _buildAliquotTypesDescriptors(laboratoryMaterialConfigs) {
+      laboratoryMaterialConfigs.forEach(laboratoryMaterialConfig => {
+        self.aliquotConfiguration.aliquotCenterDescriptors.forEach(center => {
+          center.aliquotGroupDescriptors.forEach(group => {
+            if(group.name === laboratoryMaterialConfig.group.name) {
+              group.aliquotMomentDescriptors.forEach(moment => {
+                if(moment.name === laboratoryMaterialConfig.moment.name) {
+                  moment.aliquotTypesDescriptors.push(_structAliquotTypesDescriptor(laboratoryMaterialConfig));
+                }
+              })
+            }
+          });
+        });
+      })
+    }
+
+    function _structAliquotTypesDescriptor(laboratoryMaterialConfig) {
+      return {
+        objectType: "AliquotTypesDescriptor",
+        name: laboratoryMaterialConfig.tube.type,
+        aliquots: laboratoryMaterialConfig.tube.aliquots.map(aliquot => {
+          return {
+            name: aliquot.name,
+            role: aliquot.type
           }
         })
-      })
+      };
+    }
+
+    function _distinct(arr, key) {
+      return Object.keys(
+        arr.reduce((acc, curr) => {
+          (acc[curr[key]] = acc[curr[key]] || []).push(curr);
+          return acc;
+        }, {})
+      )
     }
   }
 }());
